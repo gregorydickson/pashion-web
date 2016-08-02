@@ -1,0 +1,6 @@
+#Tue, 02 Aug 2016 13:02:41 -0500
+
+info.app.version=0.1
+info.app.name=pashion-web
+grails.env=development
+info.app.grailsVersion=3.1.10
