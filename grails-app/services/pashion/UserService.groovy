@@ -6,13 +6,19 @@ import org.mindrot.jbcrypt.BCrypt
 @Transactional
 class UserService {
 
-    def createUser(Map params) {
+    def createUser(User user) {
+
+    	user.password = hashPassword(user.password)
+        user.userCreatedId = session?.user?.id
+    	user.save(flush:true)
+
+    }
+    def updateUser(User user, def newPassword){
 
     }
 
 
-
-    private static int workload = 12;
+  private static int workload = 12;
 	/**
 	 * This method can be used to generate a string representing an account password
 	 * suitable for storing in a database. It will be an OpenBSD-style crypt(3) formatted
@@ -42,7 +48,7 @@ class UserService {
 	public static boolean checkPassword(String password_plaintext, String stored_hash) {
 		boolean password_verified = false;
 
-		
+
 		password_verified = BCrypt.checkpw(password_plaintext, stored_hash);
 
 		return(password_verified);

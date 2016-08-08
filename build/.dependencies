@@ -10,6 +10,7 @@ dependencies:
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.grails.plugins/hibernate4/5.0.10/e5c5ae9264c8290085b4081fe3bdb2bef1d28d2c/hibernate4-5.0.10.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.hibernate/hibernate-ehcache/4.3.11.Final/cea0e6aba102c00cf899bd547c338fcf54468433/hibernate-ehcache-4.3.11.Final.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/de.svenkubiak/jBCrypt/0.4.1/db11c827c234a831b58d9c794ce40c72ac0c7f76/jBCrypt-0.4.1.jar
+- file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.grails.plugins/jasypt-encryption/2.0.1/790854e9ceb0638fe07aefe6a77442f23b9e76fc/jasypt-encryption-2.0.1.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/com.bertramlabs.plugins/asset-pipeline-grails/2.8.2/97bceaa633ee9f01b272e0b7fe9d960309ae43ab/asset-pipeline-grails-2.8.2.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/mysql/mysql-connector-java/5.1.36/6bb5861f44c21c775ee713a438e5bc493c095f7a/mysql-connector-java-5.1.36.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.grails/grails-plugin-testing/3.1.10/d3c61250c1cadef25726fdd2f87649803e5ced37/grails-plugin-testing-3.1.10.jar
@@ -57,6 +58,9 @@ dependencies:
 - file:/Users/BigMac/.m2/repository/org/jboss/logging/jboss-logging-annotations/1.2.0.Beta1/jboss-logging-annotations-1.2.0.Beta1.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.hibernate/hibernate-core/4.3.11.Final/536ac0021240d97db99c7d2983067cef1a6f3af5/hibernate-core-4.3.11.Final.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/net.sf.ehcache/ehcache-core/2.4.3/fd258ef6959f27fb678b04f90139ded4588e2d15/ehcache-core-2.4.3.jar
+- file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.jasypt/jasypt/1.9.2/91eee489a389faba9fc57bfee75c87c615c19cd7/jasypt-1.9.2.jar
+- file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.jasypt/jasypt-hibernate4/1.9.2/e4da82eeca7ae42036d1a186151f8b6828e2d853/jasypt-hibernate4-1.9.2.jar
+- file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcprov-jdk16/1.46/ce091790943599535cbb4de8ede84535b0c1260c/bcprov-jdk16-1.46.jar
 - file:/Users/BigMac/.m2/repository/org/mozilla/rhino/1.7R4/rhino-1.7R4.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/com.bertramlabs.plugins/asset-pipeline-core/2.8.2/2a271f735f8ddd87dcc000ec1fba306b8504f428/asset-pipeline-core-2.8.2.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/cglib/cglib/2.2.2/a47a971686474124562bdd4a7ccbd8ac8c3e8b11/cglib-2.2.2.jar

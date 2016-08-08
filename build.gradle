@@ -62,6 +62,8 @@ dependencies {
 
     runtime 'mysql:mysql-connector-java:5.1.36'
     compile 'de.svenkubiak:jBCrypt:0.4.1'
+    
+    compile "org.grails.plugins:jasypt-encryption:2.0.1"
 }
 
 assets {

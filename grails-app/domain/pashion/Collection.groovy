@@ -33,7 +33,7 @@ class Collection {
 		lastModifiedUserId nullable: true
 		year nullable: true
 		season nullable: true
-		sex nullable: true
+		sex nullable: true, inList:["Men's","Women's"]
 
 	}
 }

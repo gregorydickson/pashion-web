@@ -7,7 +7,7 @@ import grails.transaction.Transactional
 class UserController {
 
     def userService
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE",doLogin:"POST", login:"GET"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -20,6 +20,24 @@ class UserController {
 
     def create() {
         respond new User(params)
+    }
+    def login(){
+
+    }
+    def doLogin(){
+        def user = User.findWhere(email:params['email'])
+        if(user){
+            if(userService.checkPassword(params['password'],user.password)){
+                session.user = user
+                redirect(controller:'dashboard',action:'index')
+            } else{
+                flash.message = "wrong password";
+                redirect(controller:'user',action:'login')
+            }
+        } else{
+            flash.message = "User not found"
+            redirect(controller:'user',action:'login')
+        }
     }
 
     @Transactional
