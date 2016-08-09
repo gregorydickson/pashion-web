@@ -1,5 +1,6 @@
 .DS_Store
 /.gradle
+/.bundle
 /build
 .asscache
 # web application files
