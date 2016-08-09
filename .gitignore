@@ -1,3 +1,7 @@
+.DS_Store
+/.gradle
+/build
+.asscache
 # web application files
 /web-app/WEB-INF/classes
 

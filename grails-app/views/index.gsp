@@ -15,6 +15,7 @@
 
                 <h1>Utility Pages</h1>
                 <h2><g:link controller="user" action="login">Login Page</g:link></h2>
+                <h2><g:link controller="dashboard">Dashboard Test</g:link></h2>
                 <h2><g:link controller="user">List, Create, Update Users</g:link></h2>
                 <h2><g:link controller="brand">List, Create, Update Brands</g:link></h2>
                 <h2><g:link controller="PRAgency">List, Create, Update PR Agencies</g:link></h2>

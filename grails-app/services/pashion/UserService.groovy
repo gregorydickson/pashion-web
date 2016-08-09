@@ -18,7 +18,7 @@ class UserService {
     }
 
 
-  private static int workload = 12;
+    private static int workload = 12;
 	/**
 	 * This method can be used to generate a string representing an account password
 	 * suitable for storing in a database. It will be an OpenBSD-style crypt(3) formatted
