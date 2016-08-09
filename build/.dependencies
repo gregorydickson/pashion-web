@@ -1,4 +1,5 @@
 dependencies:
+- file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/com.bertramlabs.plugins/sass-asset-pipeline/2.10.2/462c8a8d16ef8dc922264c8072398370ff30b09/sass-asset-pipeline-2.10.2.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-logging/1.3.7.RELEASE/2d8d0eeaddacf78c68e67d20797dedea9adc1f33/spring-boot-starter-logging-1.3.7.RELEASE.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-autoconfigure/1.3.7.RELEASE/e504fcf32d2e7f8ac86d838268f64cd53b528ebb/spring-boot-autoconfigure-1.3.7.RELEASE.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.grails/grails-core/3.1.10/d8843f3cd54835c3a166d387c3ade3931d471bec/grails-core-3.1.10.jar
@@ -11,12 +12,15 @@ dependencies:
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.hibernate/hibernate-ehcache/4.3.11.Final/cea0e6aba102c00cf899bd547c338fcf54468433/hibernate-ehcache-4.3.11.Final.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/de.svenkubiak/jBCrypt/0.4.1/db11c827c234a831b58d9c794ce40c72ac0c7f76/jBCrypt-0.4.1.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.grails.plugins/jasypt-encryption/2.0.1/790854e9ceb0638fe07aefe6a77442f23b9e76fc/jasypt-encryption-2.0.1.jar
-- file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/com.bertramlabs.plugins/asset-pipeline-grails/2.8.2/97bceaa633ee9f01b272e0b7fe9d960309ae43ab/asset-pipeline-grails-2.8.2.jar
+- file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/com.bertramlabs.plugins/asset-pipeline-grails/2.10.2/73122dcea9421bb27ac01e4331efdbd84031c996/asset-pipeline-grails-2.10.2.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/mysql/mysql-connector-java/5.1.36/6bb5861f44c21c775ee713a438e5bc493c095f7a/mysql-connector-java-5.1.36.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.grails/grails-plugin-testing/3.1.10/d3c61250c1cadef25726fdd2f87649803e5ced37/grails-plugin-testing-3.1.10.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.grails.plugins/geb/1.0.2/45b092c0ab8c49eee7be94591566a22f9aedd846/geb-1.0.2.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.seleniumhq.selenium/selenium-htmlunit-driver/2.47.1/e4a31a8f8c8a36074a506449c1b476af86de4a58/selenium-htmlunit-driver-2.47.1.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/net.sourceforge.htmlunit/htmlunit/2.18/ec30f76601f7010abbc09cc8ec401cb183916371/htmlunit-2.18.jar
+- file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/com.bertramlabs.plugins/asset-pipeline-core/2.10.2/e8ecd48b9c2b0a7e886aa5e3051ffb5c59f9f9c8/asset-pipeline-core-2.10.2.jar
+- file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/log4j/log4j/1.2.17/5af35056b4d257e4b64b9e8069c0746e8b08629f/log4j-1.2.17.jar
+- file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/io.bit3/jsass/5.1.0/3be42026d29f2caba38527cb80490e1bffe8d319/jsass-5.1.0.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-classic/1.1.7/9865cf6994f9ff13fce0bf93f2054ef6c65bb462/logback-classic-1.1.7.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.slf4j/jcl-over-slf4j/1.7.21/331b564a3a42f002a0004b039c1c430da89062cd/jcl-over-slf4j-1.7.21.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.slf4j/jul-to-slf4j/1.7.21/2f22c882ffa479d1e9ff4eb0e8e2c29f2a0871ed/jul-to-slf4j-1.7.21.jar
@@ -62,7 +66,6 @@ dependencies:
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.jasypt/jasypt-hibernate4/1.9.2/e4da82eeca7ae42036d1a186151f8b6828e2d853/jasypt-hibernate4-1.9.2.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcprov-jdk16/1.46/ce091790943599535cbb4de8ede84535b0c1260c/bcprov-jdk16-1.46.jar
 - file:/Users/BigMac/.m2/repository/org/mozilla/rhino/1.7R4/rhino-1.7R4.jar
-- file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/com.bertramlabs.plugins/asset-pipeline-core/2.8.2/2a271f735f8ddd87dcc000ec1fba306b8504f428/asset-pipeline-core-2.8.2.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/cglib/cglib/2.2.2/a47a971686474124562bdd4a7ccbd8ac8c3e8b11/cglib-2.2.2.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.grails/grails-test/3.1.10/6a7f3204d452960bf729de944014d558b593ef20/grails-test-3.1.10.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.grails/grails-logging/3.1.10/6c859d708141e18c001b265a2af6867f761d0df8/grails-logging-3.1.10.jar
@@ -87,6 +90,7 @@ dependencies:
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.4/b1b6ea3b7e4aa4f492509a4952029cd8e48019ad/commons-io-2.4.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.2/4bfc12adfe4842bf07b657f0369c4cb522955686/commons-logging-1.2.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-client/9.2.18.v20160721/6e253091f8eed8d1364c956a53d4f4c13145a853/websocket-client-9.2.18.v20160721.jar
+- file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/com.google.javascript/closure-compiler/v20160713/534e9057a5a2dc9bded7e47c5cbf1033b57df122/closure-compiler-v20160713.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-core/1.1.7/7873092d39ef741575ca91378a6a21c388363ac8/logback-core-1.1.7.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.springframework/spring-aop/4.2.6.RELEASE/5efbfccb19efda2956b8977561bf4da6b15b0d0e/spring-aop-4.2.6.RELEASE.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.springframework/spring-expression/4.2.6.RELEASE/c0182d73f348ab11d51d45cbe29f3820c32d0ccc/spring-expression-4.2.6.RELEASE.jar
@@ -117,7 +121,6 @@ dependencies:
 - file:/Users/BigMac/.m2/repository/org/jboss/spec/javax/transaction/jboss-transaction-api_1.2_spec/1.0.0.Final/jboss-transaction-api_1.2_spec-1.0.0.Final.jar
 - file:/Users/BigMac/.m2/repository/antlr/antlr/2.7.7/antlr-2.7.7.jar
 - file:/Users/BigMac/.m2/repository/org/jboss/jandex/1.1.0.Final/jandex-1.1.0.Final.jar
-- file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/com.google.javascript/closure-compiler/v20151015/8e20293908bc676ad6ed2013a4f52728b87af460/closure-compiler-v20151015.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/asm/asm/3.3.1/1d5f20b4ea675e6fab6ab79f1cd60ec268ddc015/asm-3.3.1.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.codehaus.groovy/groovy-test/2.4.7/ea885d613fb89f83abf6d529f8e02be40a4274fc/groovy-test-2.4.7.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.codehaus.gpars/gpars/1.2.1/c3ea0fbcd67a163bd5e3a3efdaa3428262d0d437/gpars-1.2.1.jar
@@ -130,7 +133,6 @@ dependencies:
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.gebish/geb-core/0.12.2/df0c0c35ea76e74e0805e7f731fd01d0f67e3440/geb-core-0.12.2.jar
 - file:/Users/BigMac/.m2/repository/cglib/cglib-nodep/2.1_3/cglib-nodep-2.1_3.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.seleniumhq.selenium/selenium-api/2.47.1/f586a13419a297427f01266c1013117232808373/selenium-api-2.47.1.jar
-- file:/Users/BigMac/.m2/repository/com/google/guava/guava/18.0/guava-18.0.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-exec/1.3/8dfb9facd0830a27b1b5f29f84593f0aeee7773b/commons-exec-1.3.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna/4.1.0/1c12d070e602efd8021891cdd7fd18bc129372d4/jna-4.1.0.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/net.java.dev.jna/jna-platform/4.1.0/23457ad1cf75c2c16763330de5565a0e67b4bc0a/jna-platform-4.1.0.jar
@@ -140,6 +142,10 @@ dependencies:
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-util/9.2.18.v20160721/b304329684d004c1d258609f6ccd9a8e2a0393f1/jetty-util-9.2.18.v20160721.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty/jetty-io/9.2.18.v20160721/9e2318fdf42815e78008f5942258cbf0ab9806d4/jetty-io-9.2.18.v20160721.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.eclipse.jetty.websocket/websocket-common/9.2.18.v20160721/b48b198c5dd66e497a3ffa3c5b019c243aef793f/websocket-common-9.2.18.v20160721.jar
+- file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/com.google.javascript/closure-compiler-externs/v20160713/36c8fa2e53148f8f00070d1d5df6e065bd9ebfb3/closure-compiler-externs-v20160713.jar
+- file:/Users/BigMac/.m2/repository/args4j/args4j/2.0.26/args4j-2.0.26.jar
+- file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/com.google.protobuf/protobuf-java/2.5.0/a10732c76bfacdbd633a7eb0f7968b1059a65dfa/protobuf-java-2.5.0.jar
+- file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/1.3.9/40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf/jsr305-1.3.9.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/aopalliance/aopalliance/1.0/235ba8b489512805ac13a8f9ea77a1ca5ebe3e8/aopalliance-1.0.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-annotations/2.6.7/7e08eafe72cbd11c955d92109108bd2bfaab979e/jackson-annotations-2.6.7.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.6.7/81838e08d5e10e33cdee7299f9682d836b78c63e/jackson-core-2.6.7.jar
@@ -193,6 +199,7 @@ dependencies:
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/net.minidev/json-smart/2.1.1/922d12fb1f394e2b6999ae0f7936ab13f4dffb81/json-smart-2.1.1.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/com.goldmansachs/gs-collections-api/5.1.0/ea605cdf64cab5fc7b48c99f061d4c8db05b6ff1/gs-collections-api-5.1.0.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/net.minidev/asm/1.0.2/63900a15f524db0b8c4fb2d9e24c0cb179842ea5/asm-1.0.2.jar
+- file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/com.google.guava/guava/19.0/6ce200f6b23222af3d8abb6b6459e6c44f4bb0e9/guava-19.0.jar
 - file:/Users/BigMac/.gradle/caches/modules-2/files-2.1/org.objenesis/objenesis/2.1/87c0ea803b69252868d09308b4618f766f135a96/objenesis-2.1.jar
 profiles:
 - file:/Users/BigMac/.m2/repository/org/grails/profiles/web/3.1.9/web-3.1.9.jar
