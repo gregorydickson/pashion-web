@@ -26,7 +26,7 @@ class Sample {
 	Date dateCreated
 	Date lastUpdated
 
-	static belongsTo = Look
+	static belongsTo = [Look, Collection]
 
 	static hasMany = [ collections:Collection, looks:Look,sampleRequests:SampleRequest, permissions:Permission,accessories:Sample]
 
