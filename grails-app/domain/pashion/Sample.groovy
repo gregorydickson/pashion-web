@@ -14,11 +14,13 @@ class Sample {
 	Integer availability
 	Date fromDate
 	Date toDate
+	String image
 
 	Long userCreatedId
 	Long lastModifiedUserId
-  String City
-  String Country
+
+	String location
+	//e.g. RL London
 
 	//auto fields
 	Date dateCreated
@@ -26,7 +28,7 @@ class Sample {
 
 	static belongsTo = Look
 
-	static hasMany = [ looks:Look,sampleRequests:SampleRequest, permissions:Permission,accessories:Sample]
+	static hasMany = [ collections:Collection, looks:Look,sampleRequests:SampleRequest, permissions:Permission,accessories:Sample]
 
 	static constraints = {
 		color nullable: true
@@ -39,9 +41,9 @@ class Sample {
 		userCreatedId nullable: true
 		lastModifiedUserId nullable: true
 
-		city nullable: true, inList: ["London", "Paris", "Milan"]
-		country nullable: true, inList: ["UK", "France", "Italy"]
+		location nullable: true
 
+		collections nullable: true
 		looks nullable: true
 		sampleRequests nullable: true
 		accessories nullable: true
