@@ -10,6 +10,7 @@ buildscript {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.10.2"
         classpath "org.grails.plugins:hibernate4:5.0.10"
+        classpath "org.grails.plugins:views-gradle:1.1.0.RC1"
     }
 }
 
@@ -20,6 +21,7 @@ apply plugin:"eclipse"
 apply plugin:"idea"
 apply plugin:"war"
 apply plugin:"org.grails.grails-web"
+apply plugin:"org.grails.plugins.views-json"
 apply plugin:"org.grails.grails-gsp"
 apply plugin:"asset-pipeline"
 
@@ -69,6 +71,7 @@ dependencies {
     compile 'de.svenkubiak:jBCrypt:0.4.1'
     //for encrypting sensitive data
     compile "org.grails.plugins:jasypt-encryption:2.0.1"
+    compile "org.grails.plugins:views-json:1.1.0.RC1"
 }
 
 assets {

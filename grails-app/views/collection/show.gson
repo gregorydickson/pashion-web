@@ -1,0 +1,4 @@
+model {
+    Collection collection
+}
+json g.render(collection)

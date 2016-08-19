@@ -11,7 +11,7 @@ class PRAgency {
 	Date lastUpdated
 
 	static hasMany = [brands: Brand , users:User]
-  static belongsTo = Brand
+  	static belongsTo = Brand
     static constraints = {
 
     }

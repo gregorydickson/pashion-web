@@ -79,7 +79,7 @@ environments:
 grails:
     profile: web
     codegen:
-        defaultPackage: pashion.web
+        defaultPackage: pashion
     spring:
         transactionManagement:
             proxies: false
@@ -100,6 +100,8 @@ endpoints:
 
 ---
 grails:
+    resources:
+        pattern: '/**'
     mime:
         disable:
             accept:

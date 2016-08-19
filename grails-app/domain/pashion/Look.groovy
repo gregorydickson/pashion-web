@@ -8,7 +8,7 @@ class Look {
 	String image
 	Integer status
 	Integer security
-	Boolean isPublic
+	Boolean isPublic = false
 	Integer availability
 	Date fromDate
 	Date toDate
@@ -33,13 +33,11 @@ class Look {
 
 		fromDate(nullable:true)
 		toDate(nullable:true)
-		isPublic(nullable:true)
+		
+		userCreatedId(nullable:true)
 		lastModifiedUserId(nullable:true)
 
-		collection(nullable:true)
-
 		sampleRequests(nullable:true)
-
 		permissions(nullable:true)
 		samples(nullable:true)
 	}

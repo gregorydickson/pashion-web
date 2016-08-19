@@ -8,21 +8,23 @@ class Brand {
 	String logo
 
 
-	Long lastModifiedUserId
-	Long userCreatedId
+
 
 	//auto fields
 	Date dateCreated
 	Date lastUpdated
 
-	static hasMany = [collections: Collection,PRAgencies:PRAgency,users:User]
+	static hasMany = [collections: Collection,pRAgencies:PRAgency,users:User]
 
 	static belongsTo = []
 
 
 	static constraints = {
+		name nullable: true 
+		city nullable: true 
 		logo nullable: true
-		lastModifiedUserId nullable: true
-		brandAgency nullable: true
+		collections nullable:true
+		pRAgencies nullable:true
+		users nullable:true
 	}
 }

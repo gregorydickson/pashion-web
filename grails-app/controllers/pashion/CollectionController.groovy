@@ -17,6 +17,11 @@ class CollectionController {
         respond collection
     }
 
+    def looks(Collection collection){
+        log.info collection.looks[0]
+        respond collection
+    }
+
     def create() {
         respond new Collection(params)
     }
