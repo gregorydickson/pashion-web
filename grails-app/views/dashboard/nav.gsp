@@ -3,10 +3,7 @@
   <head>
     <meta name="layout" content="dashboard" />
     <title>Aurelia 3</title>
-    <!--The FontAwesome version is locked at 4.6.3 in the package.json file to keep this from breaking.-->
-    <link rel="stylesheet" href="/jspm_packages/npm/font-awesome@4.6.3/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/styles/styles.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
   </head>
 
   <body>

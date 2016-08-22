@@ -26,7 +26,7 @@ System.register(['aurelia-framework', 'aurelia-fetch-client', 'fetch'], function
           this.looks = [];
 
           http.configure(function (config) {
-            config.useStandardConfiguration().withBaseUrl('http://localhost:8080');
+            config.useStandardConfiguration();
           });
 
           this.http = http;

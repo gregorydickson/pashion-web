@@ -10,8 +10,7 @@ export class Looks {
   constructor(http) {
     http.configure(config => {
       config
-        .useStandardConfiguration()
-        .withBaseUrl('http://localhost:8080');
+        .useStandardConfiguration();
     });
 
     this.http = http;
