@@ -8,8 +8,8 @@
     </title>
     <link rel='shortcut icon' type='image/x-icon' href='${createLinkTo(dir:'images',file:'pashion.ico')}' />
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    
-    <asset:stylesheet src="foundation/foundation.css"/>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,700" rel="stylesheet">
+    <asset:stylesheet src="baseapps/base.css"/>
     <asset:stylesheet src="dashboard.css"/>
 
     <g:layoutHead/>

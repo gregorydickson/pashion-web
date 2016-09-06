@@ -24,23 +24,35 @@ System.register(['aurelia-framework', 'aurelia-fetch-client', 'fetch'], function
 
           this.heading = 'Looks for a Collection';
           this.looks = [];
+          this.seasons = [];
+          this.brands = [];
+          this.searchtext = '';
 
           http.configure(function (config) {
             config.useStandardConfiguration();
           });
-
           this.http = http;
         }
 
         Looks.prototype.activate = function activate() {
           var _this = this;
 
-          return this.http.fetch('/collection/looks/1').then(function (response) {
+          return Promise.all([this.http.fetch('/collection/looks/1').then(function (response) {
             return response.json();
           }).then(function (collection) {
             return _this.looks = collection.looks;
-          });
+          }), this.http.fetch('/collection/seasons').then(function (response) {
+            return response.json();
+          }).then(function (seasons) {
+            return _this.seasons = seasons;
+          }), this.http.fetch('/brand/index.json').then(function (response) {
+            return response.json();
+          }).then(function (brands) {
+            return _this.brands = brands;
+          })]);
         };
+
+        Looks.prototype.submit = function submit() {};
 
         return Looks;
       }()) || _class));

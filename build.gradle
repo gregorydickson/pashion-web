@@ -68,7 +68,7 @@ dependencies {
     //using mysql for now
     runtime 'mysql:mysql-connector-java:5.1.36'
     //for hashing passwords
-    compile 'de.svenkubiak:jBCrypt:0.4.1'
+    
     //for encrypting sensitive data
     compile "org.grails.plugins:jasypt-encryption:2.0.1"
     compile "org.grails.plugins:views-json:1.1.0.RC1"

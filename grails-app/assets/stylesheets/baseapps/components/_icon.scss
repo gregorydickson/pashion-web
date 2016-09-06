@@ -1,0 +1,69 @@
+////
+/// @group icon
+////
+
+/// @type Color
+$icon-primary-fill: $primary-color !default;
+/// @type Color
+$icon-primary-stroke: $primary-color !default;
+/// @type Color
+$icon-accent-fill: $icon-primary-fill !default;
+/// @type Color
+$icon-accent-stroke: $icon-accent-fill !default;
+/// @type Map
+$icon-sizes: (
+  tiny: 0.5,
+  small: 1,
+  medium: 2,
+  large: 4
+) !default;
+/// @type Number
+$icon-default-size: 1rem !default;
+
+@include exports(icon) {
+  @each $iconclass in $icon-classes {
+    .#{$iconclass} {
+      width: $icon-default-size;
+      height: $icon-default-size;
+      vertical-align: middle;
+      @include color-icon($primary-color);
+
+      a > & {
+        @include color-icon($primary-color);
+        margin-top: -2px;
+        margin-right: 0.25rem;
+      }
+
+      @each $color in map-keys($base-apps-colors) {
+        $color-value: map-get($base-apps-colors, $color);
+        &.#{$color} {
+          @include color-icon($color-value);
+        }
+      }
+
+      @each $size in map-keys($icon-sizes) {
+        &.#{$size} {
+          $size-value: $icon-default-size * map-get($icon-sizes, $size);
+          @include size-icon($size-value, $size-value);
+        }
+      }
+    }
+  }
+
+  // support old coloring classes
+  @each $color in map-keys($base-apps-colors) {
+    .iconic-color-#{$color}, .iconic.iconic-color-#{$color}, a.iconic-color-#{$color} > .iconic {
+      @include color-icon(map-get($base-apps-colors, $color));
+    }
+  }
+
+  // override iconic fluid styling if size class provided
+  .iconic.iconic-fluid {
+    @each $size in map-keys($icon-sizes) {
+      &.#{$size} {
+        $size-value: $icon-default-size * map-get($icon-sizes, $size);
+        @include size-icon($size-value, $size-value);
+      }
+    }
+  }
+}

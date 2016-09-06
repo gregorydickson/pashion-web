@@ -1,7 +1,7 @@
 package pashion
 
 import grails.transaction.Transactional
-import org.mindrot.jbcrypt.BCrypt
+
 
 @Transactional
 class UserService {
@@ -31,10 +31,7 @@ class UserService {
 	 * @return String - a string of length 60 that is the bcrypt hashed password in crypt(3) format.
 	 */
 	public static String hashPassword(String password_plaintext) {
-		String salt = BCrypt.gensalt(workload);
-		String hashed_password = BCrypt.hashpw(password_plaintext, salt);
-
-		return(hashed_password);
+		
 	}
 
 	/**
@@ -46,11 +43,6 @@ class UserService {
 	 * @return boolean - true if the password matches the password of the stored hash, false otherwise
 	 */
 	public static boolean checkPassword(String password_plaintext, String stored_hash) {
-		boolean password_verified = false;
-
-
-		password_verified = BCrypt.checkpw(password_plaintext, stored_hash);
-
-		return(password_verified);
+		
 	}
 }
