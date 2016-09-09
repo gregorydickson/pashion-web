@@ -1,9 +1,9 @@
 <template>
     <div class="vertical grid-block">
-      <div class="grid-block tool-header">
-        <span>CALENDAR</span>
+      <div class="grid-block header">
+        <span class="calendarnav">CALENDAR</span>
         <span class="expando">
-           <a route-href="route: requestman;"><img src="/assets/nav/expando.png" /></a>
+           <a route-href="route: index;"><img src="/assets/nav/collapso.png" /></a>
         </span>
       </div>
       <div class="grid-block">
@@ -58,6 +58,48 @@
                       
      
       </div>
+
+      <div class="grid-block ">
+      
+        <table class="calendar">
+          <thead>
+            <tr>
+              <td repeat.for="cell of row0">${cell.dayString}
+              </td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="${cell.event}" repeat.for="cell of row1">${cell.dayString}
+              </td>
+            </tr>
+            <tr >
+              <td class="${cell.event}" repeat.for="cell of row2">${cell.dayString}
+              </td>
+            </tr>
+            <tr>
+              <td class="${cell.event}" repeat.for="cell of row3">${cell.dayString}
+              </td>
+            </tr>
+            <tr>
+              <td class="${cell.event}" repeat.for="cell of row4">${cell.dayString}
+              </td>
+            </tr>  
+            <tr>
+              <td class="${cell.event}" repeat.for="cell of row5">${cell.dayString}
+              </td>
+            </tr> 
+            <tr>
+              <td class="${cell.event}" repeat.for="cell of row6">${cell.dayString}SIX
+              </td>
+            </tr> 
+          </tbody>
+            
+        </table>   
+                      
+     
+      </div>
+
     </div>
     
 </template>

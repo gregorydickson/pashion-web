@@ -3,7 +3,7 @@
 System.register(['aurelia-framework', 'aurelia-fetch-client', 'common/dateFormat', 'fetch'], function (_export, _context) {
   "use strict";
 
-  var inject, HttpClient, DateFormat, _dec, _class, Calendar;
+  var inject, HttpClient, DateFormat, _dec, _class, RequestCalendar;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -20,9 +20,9 @@ System.register(['aurelia-framework', 'aurelia-fetch-client', 'common/dateFormat
       DateFormat = _commonDateFormat.DateFormat;
     }, function (_fetch) {}],
     execute: function () {
-      _export('Calendar', Calendar = (_dec = inject(HttpClient), _dec(_class = function () {
-        function Calendar(http) {
-          _classCallCheck(this, Calendar);
+      _export('RequestCalendar', RequestCalendar = (_dec = inject(HttpClient), _dec(_class = function () {
+        function RequestCalendar(http) {
+          _classCallCheck(this, RequestCalendar);
 
           this.calendar = [];
           this.row0 = [];
@@ -43,7 +43,7 @@ System.register(['aurelia-framework', 'aurelia-fetch-client', 'common/dateFormat
           this.http = http;
         }
 
-        Calendar.prototype.activate = function activate() {
+        RequestCalendar.prototype.activate = function activate() {
           var _this = this;
 
           var queryString = DateFormat.urlString(0);
@@ -63,7 +63,7 @@ System.register(['aurelia-framework', 'aurelia-fetch-client', 'common/dateFormat
           });
         };
 
-        Calendar.prototype.previous = function previous() {
+        RequestCalendar.prototype.previous = function previous() {
           var _this2 = this;
 
           var queryString = DateFormat.urlString(--this.offset);
@@ -82,7 +82,7 @@ System.register(['aurelia-framework', 'aurelia-fetch-client', 'common/dateFormat
           });
         };
 
-        Calendar.prototype.next = function next() {
+        RequestCalendar.prototype.next = function next() {
           var _this3 = this;
 
           var queryString = DateFormat.urlString(++this.offset);
@@ -102,11 +102,11 @@ System.register(['aurelia-framework', 'aurelia-fetch-client', 'common/dateFormat
           });
         };
 
-        return Calendar;
+        return RequestCalendar;
       }()) || _class));
 
-      _export('Calendar', Calendar);
+      _export('RequestCalendar', RequestCalendar);
     }
   };
 });
-//# sourceMappingURL=calendar.js.map
+//# sourceMappingURL=requestCalendar.js.map

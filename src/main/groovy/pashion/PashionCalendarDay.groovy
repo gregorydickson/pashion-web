@@ -1,9 +1,18 @@
 package pashion
 
+import groovy.transform.CompileStatic
 
-
+@CompileStatic
 class PashionCalendarDay{
-	def dayString
-	List event
 	
+	String dayString
+	String event
+	
+	public void setDayString(Object displayString){
+		dayString = displayString
+	}
+
+	public Object getDayString(){
+		dayString
+	}
 }

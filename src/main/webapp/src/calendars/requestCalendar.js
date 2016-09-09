@@ -4,8 +4,7 @@ import {DateFormat} from 'common/dateFormat';
 import 'fetch';
 
 @inject(HttpClient)
-export class Calendar {
-  
+export class RequestCalendar{
   calendar = [];
   row0 = [];
   row1 = [];
@@ -85,6 +84,4 @@ export class Calendar {
   }
 
   
-
-
 }

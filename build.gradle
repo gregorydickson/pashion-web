@@ -8,7 +8,7 @@ buildscript {
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
-        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.10.2"
+        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.11.1"
         classpath "org.grails.plugins:hibernate4:5.0.10"
         classpath "org.grails.plugins:views-gradle:1.1.0.RC1"
     }
@@ -57,8 +57,8 @@ dependencies {
     profile "org.grails.profiles:web"
 
     //updated to 2.10.2
-    runtime 'com.bertramlabs.plugins:asset-pipeline-grails:2.10.2'
-    assets 'com.bertramlabs.plugins:sass-asset-pipeline:2.10.2'
+    runtime 'com.bertramlabs.plugins:asset-pipeline-grails:2.11.1'
+    assets 'com.bertramlabs.plugins:sass-asset-pipeline:2.11.1'
     //testing
     testCompile "org.grails:grails-plugin-testing"
     testCompile "org.grails.plugins:geb"
