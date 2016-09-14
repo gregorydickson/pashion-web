@@ -1,10 +1,7 @@
 <template>
     <div class="vertical grid-block">
-      <div class="grid-block header">
-        <span class="calendarnav">CALENDAR</span>
-        <span class="expando">
-           <a route-href="route: index;"><img src="/assets/nav/collapso.png" /></a>
-        </span>
+      <div class="grid-block header tool-header">
+        <span class="">REQUEST MANAGER</span>
       </div>
       <div class="grid-block">
         <span class="calendarnav prev">
@@ -16,40 +13,20 @@
         </span>
       </div>
       <div class="grid-block">
-        <span class="calendarnav monthyear">${monthname}&emsp;${year}</span>
+        <span class="calendarnav monthyear">${calendar.calendarMonths[0].monthName}&emsp;${calendar.calendarMonths[0].year}</span>
       </div>
       <div class="grid-block ">
       
         <table class="calendar">
           <thead>
             <tr>
-              <td repeat.for="cell of row0">${cell.dayString}
+              <td repeat.for="cell of calendar.calendarMonths[0].dayNames">${cell.dayString}
               </td>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="${cell.event}" repeat.for="cell of row1">${cell.dayString}
-              </td>
-            </tr>
-            <tr >
-              <td class="${cell.event}" repeat.for="cell of row2">${cell.dayString}
-              </td>
-            </tr>
-            <tr>
-              <td class="${cell.event}" repeat.for="cell of row3">${cell.dayString}
-              </td>
-            </tr>
-            <tr>
-              <td class="${cell.event}" repeat.for="cell of row4">${cell.dayString}
-              </td>
-            </tr>  
-            <tr>
-              <td class="${cell.event}" repeat.for="cell of row5">${cell.dayString}
-              </td>
-            </tr> 
-            <tr>
-              <td class="${cell.event}" repeat.for="cell of row6">${cell.dayString}SIX
+            <tr repeat.for="row of calendar.calendarMonths[0].rows">
+              <td class="${cell.event}" repeat.for="cell of row">${cell.dayString}
               </td>
             </tr> 
           </tbody>
@@ -59,40 +36,23 @@
      
       </div>
 
+      <div class="grid-block">
+        <span class="calendarnav monthyear">${calendar.calendarMonths[1].monthName}&emsp;${calendar.calendarMonths[1].year}</span>
+      </div>
       <div class="grid-block ">
-      
         <table class="calendar">
           <thead>
             <tr>
-              <td repeat.for="cell of row0">${cell.dayString}
+              <td repeat.for="cell of calendar.calendarMonths[1].dayNames">${cell.dayString}
               </td>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="${cell.event}" repeat.for="cell of row1">${cell.dayString}
+            <tr repeat.for="row of calendar.calendarMonths[1].rows">
+              <td class="${cell.event}" repeat.for="cell of row">${cell.dayString}
               </td>
             </tr>
-            <tr >
-              <td class="${cell.event}" repeat.for="cell of row2">${cell.dayString}
-              </td>
-            </tr>
-            <tr>
-              <td class="${cell.event}" repeat.for="cell of row3">${cell.dayString}
-              </td>
-            </tr>
-            <tr>
-              <td class="${cell.event}" repeat.for="cell of row4">${cell.dayString}
-              </td>
-            </tr>  
-            <tr>
-              <td class="${cell.event}" repeat.for="cell of row5">${cell.dayString}
-              </td>
-            </tr> 
-            <tr>
-              <td class="${cell.event}" repeat.for="cell of row6">${cell.dayString}SIX
-              </td>
-            </tr> 
+            
           </tbody>
             
         </table>   

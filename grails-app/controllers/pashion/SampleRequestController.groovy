@@ -8,6 +8,7 @@ class SampleRequestController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond SampleRequest.list(params), model:[sampleRequestCount: SampleRequest.count()]

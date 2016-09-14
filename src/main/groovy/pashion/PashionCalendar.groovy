@@ -9,6 +9,7 @@ import grails.converters.XML
 
 import groovy.time.TimeCategory
 import java.time.YearMonth
+import java.time.Month
 import java.time.LocalDate
 import java.time.DayOfWeek
 import java.time.temporal.WeekFields
@@ -31,21 +32,16 @@ class PashionCalendar{
 		
 		LocalDate localDate
 		
-		
 		Locale localeObject = null
 		//println "locale:"+locale
 		if(locale == "en" || locale == "en_US") localeObject = Locale.US
 		if(locale == "fr") localeObject = Locale.FRANCE
 		if(locale == "es") localeObject = new Locale("es")
 		if(localeObject == null) localeObject = Locale.US
-		def yearMonthObject = YearMonth.of(year, day)
+		def yearMonthObject = YearMonth.of(year, month)
 		
 		localDate = LocalDate.of(year, month, day)
 		if(offset != 0)localDate = localDate.plusMonths((long) offset)
-		
-
-		
-		
 		
 		//DayOfWeek dayOfWeek = localDate.getDayOfWeek()
 		DayOfWeek dayNames = DayOfWeek.SUNDAY
@@ -69,6 +65,8 @@ class PashionCalendar{
 		localDate = localDate.plusMonths((long) increment)
 		LocalDate start = localDate.withDayOfMonth(1)
 		Integer daysInMonth = localDate.lengthOfMonth()
+		month.monthName = localDate.getMonth().getDisplayName(TextStyle.FULL,localeObject)
+		month.year = localDate.getYear().toString()
 		DayOfWeek firstDay = start.getDayOfWeek()
 		if(daysOfWeek == null){
 			daysOfWeek = []
@@ -78,12 +76,10 @@ class PashionCalendar{
 				daysOfWeek <<  calendarday
 				dayNames = dayNames.plus(1)
 			}
-		} else{
-			month.dayNames = daysOfWeek
-		}
-		
-		
-		for(i in 1..5){
+		} 
+		month.dayNames << daysOfWeek
+		//how many
+		for(i in 1..6){
 			def row = []
 			for(j in 0..6){
 				def calendarday	= new PashionCalendarDay()
@@ -102,7 +98,12 @@ class PashionCalendar{
 				//println calendarday as JSON
 				row << calendarday
 			}
-			month.rows << row
+			def first = (PashionCalendarDay) row[0]
+			if(i == 6 && first.dayString == ""){
+				//empty sixth row
+			} else{
+				month.rows << row
+			}
 		}
 		month.rows.each{ row ->
 			row.each{PashionCalendarDay pcd ->

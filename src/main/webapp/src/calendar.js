@@ -7,13 +7,7 @@ import 'fetch';
 export class Calendar {
   
   calendar = [];
-  row0 = [];
-  row1 = [];
-  row2 = [];
-  row3 = [];
-  row4 = [];
-  row5 = [];
-  row6 = [];
+  
   monthname = "";
   year = "";
   offset = 0;
@@ -31,56 +25,36 @@ export class Calendar {
 
   //add date and locale params
   activate() {
-    var queryString = DateFormat.urlString(0);
+    var queryString = DateFormat.urlString(0,1);
     
     return this.http.fetch('/calendar/index.json' + queryString)
           .then(response => response.json())
           .then(calendar => {
-              this.row0 = calendar.rows[0];
-              this.row1 = calendar.rows[1];
-              this.row2 = calendar.rows[2];
-              this.row3 = calendar.rows[3];
-              this.row4 = calendar.rows[4];
-              this.row5 = calendar.rows[5];
-              this.row6 = calendar.rows[6];
-              this.monthname = calendar.start.month.name;
-              this.year = calendar.start.year;
+              this.calendar = calendar;
+              this.monthname = calendar.calendarMonths[0].monthName;
+              this.year = calendar.calendarMonths[0].year;
           })
       
   }
 
   previous() {
-
-    var queryString = DateFormat.urlString(--this.offset);
+    var queryString = DateFormat.urlString(--this.offset, 1);
     return this.http.fetch('/calendar/index.json' + queryString)
           .then(response => response.json())
           .then(calendar => {
-              this.row0 = calendar.rows[0];
-              this.row1 = calendar.rows[1];
-              this.row2 = calendar.rows[2];
-              this.row3 = calendar.rows[3];
-              this.row4 = calendar.rows[4];
-              this.row5 = calendar.rows[5];
-              this.row6 = calendar.rows[6];
-              this.monthname = calendar.start.month.name;
-              this.year = calendar.start.year;
+              this.calendar = calendar;
+              this.monthname = calendar.calendarMonths[0].monthName;
+              this.year = calendar.calendarMonths[0].year;
           })
   }
   next() {
-    var queryString = DateFormat.urlString(++this.offset);
+    var queryString = DateFormat.urlString(++this.offset,1);
     return this.http.fetch('/calendar/index.json' + queryString)
           .then(response => response.json())
           .then(calendar => {
-              this.row0 = calendar.rows[0];
-              this.row1 = calendar.rows[1];
-              this.row2 = calendar.rows[2];
-              this.row3 = calendar.rows[3];
-              this.row4 = calendar.rows[4];
-              this.row5 = calendar.rows[5];
-              this.row6 = calendar.rows[6];
-
-              this.monthname = calendar.start.month.name;
-              this.year = calendar.start.year;
+              this.calendar = calendar;
+              this.monthname = calendar.calendarMonths[0].monthName;
+              this.year = calendar.calendarMonths[0].year;
           })
   }
 

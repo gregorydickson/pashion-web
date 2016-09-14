@@ -3,6 +3,7 @@ package pashion
 import grails.converters.JSON
 
 class CalendarController {
+    
 
     def index() {
     	log.info "locale:"+request.locale

@@ -23,38 +23,18 @@
         <table class="calendar">
           <thead>
             <tr>
-              <td repeat.for="cell of row0">${cell.dayString}
+              <td repeat.for="cell of calendar.calendarMonths[0].dayNames[0]">${cell.dayString}
               </td>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="${cell.event}" repeat.for="cell of row1">${cell.dayString}
-              </td>
-            </tr>
-            <tr >
-              <td class="${cell.event}" repeat.for="cell of row2">${cell.dayString}
-              </td>
-            </tr>
-            <tr>
-              <td class="${cell.event}" repeat.for="cell of row3">${cell.dayString}
-              </td>
-            </tr>
-            <tr>
-              <td class="${cell.event}" repeat.for="cell of row4">${cell.dayString}
-              </td>
-            </tr>  
-            <tr>
-              <td class="${cell.event}" repeat.for="cell of row5">${cell.dayString}
-              </td>
-            </tr> 
-            <tr>
-              <td class="${cell.event}" repeat.for="cell of row6">${cell.dayString}SIX
+            <tr repeat.for="row of calendar.calendarMonths[0].rows">
+              <td class="${cell.event}" repeat.for="cell of row">${cell.dayString}
               </td>
             </tr> 
           </tbody>
             
-        </table>   
+        </table> 
                       
      
       </div>

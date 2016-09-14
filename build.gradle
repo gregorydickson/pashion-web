@@ -72,6 +72,8 @@ dependencies {
     //for encrypting sensitive data
     compile "org.grails.plugins:jasypt-encryption:2.0.1"
     compile "org.grails.plugins:views-json:1.1.0.RC1"
+
+    runtime 'org.grails.plugins:grails-console:2.0.8'
 }
 
 assets {

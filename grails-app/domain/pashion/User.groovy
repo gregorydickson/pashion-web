@@ -21,8 +21,14 @@ class User {
 
 	static belongsTo = [ pressHouse:PressHouse,brand:Brand,prAgency:PRAgency]
 
-	static hasMany = [sampleRequests:SampleRequest,connections:Connection,permissions:Permission]
+	static hasMany = [connections:Connection,
+	                 permissions:Permission,
+	                 sampleRequestsSent: SampleRequest,
+	                 sampleRequestsReceived: SampleRequest]
 
+	
+    static mappedBy = [ sampleRequestsSent:"requestingUser", 
+   					    sampleRequestsReceived:"receivingUser"]
 	static constraints = {
 
 		username size: 1..100
@@ -38,7 +44,8 @@ class User {
 		brand nullable: true
 		prAgency nullable: true
 
-		sampleRequests nullable: true
+		sampleRequestsSent nullable: true
+		sampleRequestsReceived nullable: true
 		connections nullable: true
 		permissions nullable: true
 

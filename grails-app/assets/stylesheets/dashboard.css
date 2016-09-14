@@ -1,3 +1,10 @@
+/*
+
+*= require accordion
+*= require_self
+*/
+
+
 .footer{
 	
 }
@@ -7,7 +14,8 @@
 }
 
 #left-panel{
-	min-width: 200px;
+	min-width: 270px;
+  max-width:300px;
   padding-left:10px;
 	
 }
