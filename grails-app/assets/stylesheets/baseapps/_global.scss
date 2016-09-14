@@ -1,0 +1,167 @@
+/*
+  GLOBAL
+  ------
+
+  Global styles and settings for Angular Base Apps are stored here. This file must always
+  be imported, no matter what.
+
+  Includes:
+   -
+*/
+
+////
+/// @group global
+////
+
+// This sets 1rem to be 16px
+/// @type Number
+$rem-base: 16px;
+
+// The default font-size is set to 100% of the browser style sheet (usually 16px)
+// for compatibility with browser-based text zoom or user-set defaults.
+
+// Since the typical default browser font-size is 16px, that makes the calculation for grid size.
+// If you want your base font-size to be different and not have it affect the grid breakpoints,
+// set $rem-base to $base-font-size and make sure $base-font-size is a px value.
+/// @type Number
+$base-font-size: 100% !default;
+
+// $base-line-height is 24px while $base-font-size is 16px
+/// @type Number
+$base-line-height: 1.5 !default;
+
+// Text selector helpers
+/// @type String
+$headers: "h1,h2,h3,h4,h5,h6";
+
+// We use these to define default font weights
+/// @type Keyword | Number
+$font-weight-normal: normal !default;
+/// @type Keyword | Number
+$font-weight-bold: bold !default;
+
+// We use these to control various global styles
+/// @type Color
+$body-background: #fff !default;
+/// @type Color
+$body-font-color: #222 !default;
+/// @type String | List
+$body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !default;
+/// @type Number
+$body-font-weight: $font-weight-normal !default;
+/// @type Keyword | Number
+$body-font-style: normal !default;
+/// @type Boolean
+$body-antialiased: true;
+
+// Application Colors
+/// @type Color
+$primary-color: #00558b !default;
+/// @type Color
+$secondary-color: #f1f1f1 !default;
+/// @type Color
+$alert-color: #F04124 !default;
+/// @type Color
+$info-color: #A0D3E8 !default;
+/// @type Color
+$success-color: #43AC6A !default;
+/// @type Color
+$warning-color: #F08A24 !default;
+/// @type Color
+$dark-color: #232323 !default;
+/// @type Color
+$gray: #dfdfdf !default;
+/// @type Color
+$gray-dark: darken($gray, 8) !default;
+/// @type Color
+$gray-light: lighten($gray, 8) !default;
+
+// We use these to make sure border radius matches unless we want it different.
+/// @type Number
+$global-radius: 4px !default;
+/// @type Number
+$global-rounded: 1000px !default;
+
+// We use this for default spacing
+/// @type Number
+$global-padding: 1rem !default;
+/// @type Number
+$global-spacing: rem-calc(15) !default;
+
+// Custom classes for icons and loaders
+/// @type List
+$icon-classes: ('iconic', 'ionicons', 'material-icons', 'open-iconic') !default;
+/// @type List
+$loader-classes: ('sk-loader') !default;
+///
+
+// For internal use: a color map
+$base-apps-colors: (
+  primary: $primary-color,
+  secondary: $secondary-color,
+  success: $success-color,
+  warning: $warning-color,
+  alert: $alert-color,
+  dark: $dark-color,
+  info: $info-color
+);
+
+@include exports(global) {
+  // Make extra sure we're using the whole window
+  html, body {
+    height: 100%;
+    font-size: $base-font-size;
+  }
+  // Set box-sizing globally to handle padding and border widths
+  html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+
+  // Default body styles
+  body {
+    background: $body-background;
+    color: $body-font-color;
+    padding: 0;
+    margin: 0;
+    font-family: $body-font-family;
+    font-weight: $body-font-weight;
+    font-style: $body-font-style;
+    line-height: 1;
+    position: relative;
+
+    @if $body-antialiased {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  }
+
+  img {
+    // Grid Defaults to get images and embeds to work properly
+    max-width: 100%;
+    height: auto;
+    -ms-interpolation-mode: bicubic;
+
+    // Get rid of gap under images by making them display: inline-block; by default
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  // Give all anchors and interactive directives the hover cusor
+  a, [ui-sref], [ba-open], [ba-close], [ba-toggle] {
+    cursor: pointer;
+  }
+
+  #map_canvas,
+  .map_canvas {
+    img,
+    embed,
+    object { max-width: none !important; }
+  }
+
+  .padding {
+    padding: $global-padding;
+  }
+}

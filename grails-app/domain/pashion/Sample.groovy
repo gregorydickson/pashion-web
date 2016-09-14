@@ -28,25 +28,31 @@ class Sample {
 
 	static belongsTo = [Look, Collection]
 
-	static hasMany = [ collections:Collection, looks:Look,sampleRequests:SampleRequest, permissions:Permission,accessories:Sample]
+	static hasMany = [ collections:Collection, looks:Look, permissions:Permission]
 
 	static constraints = {
 		color nullable: true
 		type nullable: true
 		material nullable: true
 		size nullable: true
+		status nullable: true 
+		security nullable: true 
+
 		fromDate nullable: true
 		toDate nullable: true
+		image nullable: true
 		isPublic  nullable: true
+		availability nullable: true
 		userCreatedId nullable: true
 		lastModifiedUserId nullable: true
+
 
 		location nullable: true
 
 		collections nullable: true
 		looks nullable: true
-		sampleRequests nullable: true
-		accessories nullable: true
+		permissions nullable: true
+		
 	}
 
 

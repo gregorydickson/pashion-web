@@ -1,0 +1,60 @@
+/*
+  Odds and ends.
+*/
+////
+/// @group extras
+////
+
+/// @type List
+$closebutton-position: (top right) !default;
+/// @type Number
+$closebutton-size: 2em !default;
+/// @type Number
+$closebutton-lineheight: 0.5 !default;
+/// @type Color
+$closebutton-color: #999 !default;
+/// @type Color
+$closebutton-color-hover: #333 !default;
+/// @type Number
+$thumbnail-padding: 0.5rem !default;
+/// @type Color
+$thumbnail-shadow: 0 3px 15px rgba(black, 0.25) !default;
+
+// A basic close button. They pin to the corner of the thing they're inside.
+%close-button {
+  $x: nth($closebutton-position, 1);
+  $y: nth($closebutton-position, 2);
+
+  position: absolute;
+  color: $closebutton-color;
+  #{$x}: $global-padding;
+  #{$y}: $global-padding;
+  font-size: $closebutton-size;
+  line-height: $closebutton-lineheight;
+  cursor: pointer;
+
+  &:hover {
+    color: $closebutton-color-hover;
+  }
+}
+
+// Make your images fancy-like.
+%thumbnail {
+  padding: $thumbnail-padding;
+  box-shadow: $thumbnail-shadow;
+}
+
+@include exports(extras) {
+  .close-button {
+    @extend %close-button;
+  }
+  .thumbnail {
+    @extend %thumbnail;
+  }
+  ul.thumbnails > li {
+    margin-bottom: 1rem;
+
+    a { display: block; }
+    img { @extend %thumbnail; }
+  }
+}

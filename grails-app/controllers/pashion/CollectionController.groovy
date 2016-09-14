@@ -2,6 +2,7 @@ package pashion
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.converters.JSON
 
 @Transactional(readOnly = true)
 class CollectionController {
@@ -24,6 +25,13 @@ class CollectionController {
 
     def create() {
         respond new Collection(params)
+    }
+    def seasons(){
+        //quick list to get UI going
+        def seasons = ['Fall 2016 Couture', 'Spring 2017 Ready-to-Wear',
+                        'Spring 2017 Menswear', 'Resort 2017', 'Fall 2016 Ready-to-Wear',
+                        'Spring 2016 Couture','Fall 2016 Menswear'] as JSON
+        render seasons
     }
 
     @Transactional

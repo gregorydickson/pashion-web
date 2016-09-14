@@ -22,7 +22,7 @@ class Look {
 
 	static belongsTo = [collection: Collection]
 
-	static hasMany = [ sampleRequests:SampleRequest, permissions:Permission, samples:Sample]
+	static hasMany = [ permissions:Permission, samples:Sample]
 
 	static constraints = {
 		description(nullable:true)
@@ -37,7 +37,6 @@ class Look {
 		userCreatedId(nullable:true)
 		lastModifiedUserId(nullable:true)
 
-		sampleRequests(nullable:true)
 		permissions(nullable:true)
 		samples(nullable:true)
 	}
