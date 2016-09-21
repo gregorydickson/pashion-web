@@ -78,6 +78,6 @@ dependencies {
 
 assets {
     minifyJs = true
-    minifyCss = true
+    minifyCss = false
     developmentRuntime = true
 }
