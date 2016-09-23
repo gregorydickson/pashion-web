@@ -3,6 +3,9 @@
 /.bundle
 /build
 .asscache
+
+/src/main/webapp/node_modules
+/src/main/webapp/dist
 # web application files
 /web-app/WEB-INF/classes
 
