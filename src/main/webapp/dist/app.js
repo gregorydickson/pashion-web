@@ -21,7 +21,7 @@ System.register([], function (_export, _context) {
 
         App.prototype.configureRouter = function configureRouter(config, router) {
           this.router = router;
-          config.title = 'Pashion';
+          config.title = 'PASHION';
           config.map([{ route: ['', '/'], name: 'index', moduleId: 'index' }, { route: 'requestman', name: 'requestman', moduleId: 'requestman' }]);
         };
 
