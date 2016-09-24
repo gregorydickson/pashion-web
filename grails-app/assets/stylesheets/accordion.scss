@@ -1,153 +1,45 @@
 @import "compass/compass/functions";
 @import "compass/compass/css3";
-
-
-
-
-
-
-.accordion-container {
-
-	font-size: 9px;
-	font-weight: 300;
-	line-height: 1.5;
-	color: #383838;
-	
-	
-  
-  & > ul {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 20px 0;
-  }
-}
-
-// =============================================================================
-//	Mixins and Variables
-// =============================================================================
-
-
-$gray: #CCCCCC;
-
-@mixin ul-nostyle {
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-
-
-@mixin animation($content) {
-  animation: $content;
-  -moz-animation: $content;
-  -webkit-animation: $content;
-}
-
-@mixin keyframes($name) {
-  @keyframes #{$name} { @content; }
-  @-moz-keyframes #{$name} { @content; }
-  @-webkit-keyframes #{$name} { @content; }
-}
-
-// =============================================================================
-//	Classes
-// =============================================================================
-
-.dropdown {
-  position: relative;
-  
-	a { text-decoration: none; }
-
-	[data-toggle="dropdown"] {
-		display: block;
-		color: #383838;
-		background: white;
-		padding: 2px;
-    	margin-left:25px;
-
-    	&:before {
-			position: absolute;
-			display: block;
-      
-      		content: '\25BC';
-			font-size: 0.7em;
-			color: #383838;
-			top: 10px;
-			left: 10px;
-			@include transform(rotate(24deg));
-			@include transition(transform .6s);
-		}
-	}
-
-	& > .dropdown-menu {
-		max-height: 0;
-		overflow: hidden;
-    	background: $gray;
-		@include ul-nostyle;
-		@include transform(scaleY(0));
-		@include transform-origin(50%, 0%);
-		@include transition(max-height .6s ease-out);
-		@include animation(hideAnimation .4s ease-out);
-
-		li {
-			padding: 0;
-
-			a {
-				display: block;
-				color: darken($gray, 50%);
-				background: $gray;
-				padding: 10px 10px;
-			}
-		}
-	}
-  
-  & > input[type="checkbox"] {
-    opacity: 0;
-    display: block;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    height: 100%;
+button.accordion {
+    background-color: white;
+    color: #444;
     cursor: pointer;
-    
-    &:checked ~ .dropdown-menu {
-      		max-height: 9999px;
-      
-			display: block;
-			@include transform(scaleY(1));
-			@include animation(showAnimation .5s ease-in-out);
-			@include transition(max-height 2s ease-in-out);
-    }
-    
-    &:checked + a[data-toggle="dropdown"] {
-      &:before {
-        @include transform(rotate(-180deg));
-        @include transition(transform .6s);
-      }
-    }
-  }
+    padding: 5px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    transition: 0.4s;
 }
 
-@include keyframes(showAnimation) {
-	0% {
-		@include transform(scaleY(0.1));
-	}
-	100% {
-		@include transform(scaleY(1.00));
-	}		
-	
+button.accordion.active,
+button.accordion:hover {
+    background-color: #ddd;
 }
 
-@include keyframes(hideAnimation) {
-  0% {
-  	@include transform(scaleY(1));
-  }
-  60% {
-  	@include transform(scaleY(0.98));
-  }
-  80% {
-  	@include transform(scaleY(1.02));
-  }
-  100% {
-  	@include transform(scaleY(0));
-  }
+button.accordion:before {
+    content: '\02795';
+    font-size: 13px;
+    color: #777;
+    margin-right: 10px;
+}
+
+button.accordion.active:before {
+    content: "\2796";
+}
+
+div.panel {
+    padding-left: 20px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: 0.4s ease-in-out;
+    opacity: 1;
+    display: block;
+}
+
+div.panel.show {
+    opacity: 1;
+    max-height: 500px;
 }
