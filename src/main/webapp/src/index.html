@@ -22,28 +22,43 @@
     </div>
   </div>
   <!-- Accordion -->
-  <div class="vertical grid-block shrink">
+  <div class="vertical grid-content">
     <div>
       ID/Type Press Who
     </div>
     <div>
-      <button id="button1" class="accordion" click.delegate="closeExpand()">Section 1</button>
+      <button id="button1" class="accordion" click.delegate="closeExpand(1)">Section 1</button>
       <div id="panel1" class="panel vertical grid-block">
         <p>Lorem ipsum dolor sit amet</p>
         <p>Lorem ipsum dolor sit amet</p>
         <p>Lorem ipsum dolor sit amet</p>
-      </div>
-      <button class="accordion">Section 2</button>
-      <div class="panel vertical grid-block">
         <p>Lorem ipsum dolor sit amet</p>
         <p>Lorem ipsum dolor sit amet</p>
         <p>Lorem ipsum dolor sit amet</p>
       </div>
-      <button class="accordion">Section 3</button>
-      <div id="foo" class="panel vertical grid-block">
+      <button id="button2" class="accordion" click.delegate="closeExpand(2)">Section 2</button>
+      <div id="panel2" class="panel vertical grid-block">
         <p>Lorem ipsum dolor sit amet</p>
         <p>Lorem ipsum dolor sit amet</p>
         <p>Lorem ipsum dolor sit amet</p>
+      </div>
+      <button id="button3" class="accordion" click.delegate="closeExpand(3)">Section 3</button>
+      <div id="panel3" class="panel vertical grid-block">
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>      
+      </div>
+      <button id="button4" class="accordion" click.delegate="closeExpand(4)">Section 4</button>
+      <div id="panel4" class="panel vertical grid-block">
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>      
       </div>
     </div>
 
