@@ -36,10 +36,11 @@ div.panel {
     overflow: hidden;
     transition: 0.4s ease-in-out;
     opacity: 0;
-    display: block;
+    display: none;
 }
 
 div.panel.show {
     opacity: 1;
     max-height: 500px;
+    display:block;
 }
