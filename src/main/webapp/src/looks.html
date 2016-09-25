@@ -4,7 +4,7 @@
         <form submit.delegate='search()'>
           <ul class="menu-bar">
               <li>
-                  <input type="text" value.bind="searchtext" class="form-control" id="search" placeholder="Search Text">
+                  <input type="text" keypress.delegate="search($event)" value.two-way="searchtext" class="form-control" id="search" placeholder="Search Text">
               </li>
               <li><a href="#">Available </a></li>
               <li><a href="#">Theme</a></li>
