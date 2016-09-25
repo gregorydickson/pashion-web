@@ -17,6 +17,9 @@ class CollectionController {
     def show(Collection collection) {
         respond collection
     }
+    def search(){
+        
+    }
 
     def looks(Collection collection){
         log.info collection.looks[0]
