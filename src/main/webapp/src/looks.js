@@ -28,7 +28,17 @@ export class Looks {
     ]);
   }
 
-  submit() {
-    //send search params
-  }
+  search(event) {
+    var asearch = this.searchtext;
+    console.log("searching");
+    if(event.which == 13) {
+      return this.http.fetch('/collection/search?'+ encodeURI(asearch))
+          .then(response => response.json())
+          .then(collection => {
+              this.looks = collection.looks
+              
+          })
+    }
+      event.preventDefault();
+    }
 }
