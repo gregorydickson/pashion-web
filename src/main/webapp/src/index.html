@@ -1,62 +1,77 @@
 <template>
 <!-- Main building block -->
-      
-
-        <!-- Calendar + Request  Panel -->
-        <div id="left-panel" class="vertical grid-block">
-          <div class="grid-block calendar" >
-            <compose view-model="calendar"></compose>
-          </div>
-
-          <div class="vertical grid-block request">
-            <div class="grid-block accordion-container">
-              <ul>
-                <li class="dropdown">
-                  <input type="checkbox" />
-                  <a href="#" data-toggle="dropdown">Sample Request info</a>
-                  <ul class="dropdown-menu">
-                    <li>Details</li>
-                    <li>Details</li>
-                  </ul>
-                </li>
-                <li class="dropdown">
-                  <input type="checkbox" />
-                  <a href="#" data-toggle="dropdown">Sample Request info</a>
-                  <ul class="dropdown-menu">
-                    <li>Details</li>
-                    <li>Details</li>
-                  </ul>
-                </li>
-                <li class="dropdown">
-                  <input type="checkbox" />
-                  <a href="#" data-toggle="dropdown">Sample Request info</a>
-                  <ul class="dropdown-menu">
-                    <li>Details</li>
-                    <li>Details</li>
-                  </ul>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+<!-- RM accordion testing -->
 
 
-        <!-- Image Grid Large Panel-->
-        <div id="looks" class="vertical grid-block" >
+<!-- Calendar + Request  Panel -->
+<div id="left-panel" class="vertical grid-block">
+  <!-- Calendar -->
+  <div class="grid-block shrink calendar">
+    <compose view-model="calendar"></compose>
+  </div>
+  <!-- Search requests -->
+  <div class="vertical grid-block shrink">
+    <div class="grid-block">
+      <p>search</p>
+    </div>
+  </div>
+  <!-- filter requests -->
+  <div class="vertical grid-block shrink">
+    <div class="grid-block">
+      <p>Filter</p>
+    </div>
+  </div>
+  <!-- Accordion -->
+  <div class="vertical grid-content" style="padding:0">
+    <div class="ui-text-label-m">
+      ID/TYPE PRESS WHO
+    </div>
+    <div>
+      <button id="button1" class="accordion ui-text-label-m" click.delegate="closeExpand(1)"> ...2345/R    Ralph Lauren       Lauren</button>
+      <div id="panel1" class="panel vertical grid-block ">
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+      </div>
+      <button id="button2" class="accordion ui-text-label-m" click.delegate="closeExpand(2)"> ...2345/R    Ralph Lauren       Lauren 2</button>
+      <div id="panel2" class="panel vertical grid-block">
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+      </div>
+      <button id="button3" class="accordion ui-text-label-m" click.delegate="closeExpand(3)"> ...2345/R    Ralph Lauren       Lauren 3</button>
+      <div id="panel3" class="panel vertical grid-block">
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>      
+      </div>
+      <button id="button4" class="accordion ui-text-label-m" click.delegate="closeExpand(4)"> ...2345/R    Ralph Lauren       Lauren 4</button>
+      <div id="panel4" class="panel vertical grid-block">
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>
+        <p>Lorem ipsum dolor sit amet</p>      
+      </div>
+    </div>
 
-          <compose view-model="looks"></compose>
 
-        </div>
-
-        
-
-
-        <!-- Communications Panel  -->
-        <div id="right-panel" class="comms vertical grid-block">
-          <div id="comms_panel grid-block" >
-            <h6>comms panel</h6>
-          </div>
-        </div>
-
-      
+  </div>
+</div>
+<!-- Image Grid Large Panel-->
+<div id="looks" class="vertical grid-block" >
+  <compose view-model="looks"></compose>
+</div>
+<!-- Communications Panel  -->
+<div id="right-panel" class="comms vertical grid-block">
+  <div id="comms_panel grid-block" >
+    <h6>comms panel</h6>
+  </div>
+</div>
 </template>

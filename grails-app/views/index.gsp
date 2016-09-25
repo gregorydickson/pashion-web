@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Pashion Development Home</title>
+    <title>PASHION Development Home</title>
 
 </head>
 <body>
