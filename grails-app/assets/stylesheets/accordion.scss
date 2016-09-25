@@ -2,14 +2,12 @@
 @import "compass/compass/css3";
 button.accordion {
     background-color: white;
-    color: #444;
     cursor: pointer;
-    padding: 5px;
+    //padding: 5px;
     width: 100%;
     border: none;
     text-align: left;
     outline: none;
-    font-size: 15px;
     transition: 0.4s;
 }
 
@@ -19,18 +17,19 @@ button.accordion:hover {
 }
 
 button.accordion:before {
-    content: '\02795';
-    font-size: 13px;
-    color: #777;
+    content: '+';
+    font-size: 14px;
+    font-weight:900;
+    color: #9b9b9b;
     margin-right: 10px;
 }
 
 button.accordion.active:before {
-    content: "\2796";
+    content: "–";
 }
 
 div.panel {
-    padding-left: 20px;
+    //padding-left: 20px;
     background-color: white;
     max-height: 0;
     overflow: hidden;
@@ -41,6 +40,251 @@ div.panel {
 
 div.panel.show {
     opacity: 1;
-    max-height: 500px;
+    max-height: 5000px;
     display:block;
+}
+
+:root {
+	--black: #383838;
+	--white: #ffffff;
+	--black-two: #000000;
+	--black-three: #222222;
+	--muted-green: #59a559;
+	--white-two: #f7f7f7;
+	--warm-grey: #9b9b9b;
+	--scarlet: #d0021b;
+	--apple-green: #7ed321;
+	--pinkish-grey: #cccccc;
+	--flat-blue: #3971b1;
+	--white-three: #ebebeb;
+}
+
+/* Text styles */
+
+.w-a-r-n-i-n-g {
+	font-family: Avenir;
+	font-size: 72px;
+	font-weight: 500;
+	letter-spacing: 3.3px;
+	color: #d0021b;
+	color: var(--scarlet);
+}
+
+.welcome-header {
+	font-family: Avenir;
+	font-size: 24px;
+	font-weight: 900;
+	text-align: center;
+	color: #383838;
+	color: var(--black);
+}
+
+.welcome-text {
+	font-family: Avenir-Book;
+	font-size: 19px;
+	color: #383838;
+	color: var(--black);
+}
+
+.icon-style-white {
+	font-family: Avenir;
+	font-size: 16px;
+	font-weight: 900;
+	line-height: 0.6;
+	color: #ffffff;
+	color: var(--white);
+}
+
+.hover-text-style {
+	font-family: Avenir;
+	font-size: 16px;
+	//font-weight: 300;
+	line-height: 1.2;
+	color: #ffffff;
+	color: var(--white);
+}
+
+.nav-label-header {
+	font-family: Avenir;
+	font-size: 14px;
+	//font-weight: 300;
+	line-height: 1;
+	letter-spacing: 4px;
+	color: #ffffff;
+	color: var(--white);
+}
+
+.ui-text-label-l-dialogue-light {
+	font-family: Avenir;
+	font-size: 14px;
+	//font-weight: 300;
+	line-height: 1;
+	letter-spacing: 1px;
+	color: #ebebeb;
+	color: var(--white-three);
+}
+
+.ui-text-label-l-left {
+	font-family: Avenir;
+	font-size: 14px;
+	//font-weight: 300;
+	line-height: 1;
+	color: #383838;
+	color: var(--black);
+}
+
+.ui-text-label-l {
+	font-family: Avenir;
+	font-size: 14px;
+	//font-weight: 300;
+	line-height: 1;
+	text-align: center;
+	color: #383838;
+	color: var(--black);
+}
+
+.ui-text-label-l-dialogue {
+	font-family: Avenir;
+	font-size: 14px;
+	//font-weight: 300;
+	line-height: 1;
+	letter-spacing: 1px;
+	text-align: center;
+	color: #383838;
+	color: var(--black);
+}
+
+.button-text {
+	font-family: Avenir;
+	font-size: 12px;
+	//font-weight: 300;
+	text-align: center;
+	color: #383838;
+	color: var(--black);
+}
+
+.ui-text-label-m-blue {
+	font-family: Avenir;
+	font-size: 11px;
+	font-weight: 500;
+	line-height: 1.5;
+	letter-spacing: 0.5px;
+	color: #3971b1;
+	color: var(--flat-blue);
+}
+
+.ui-text-label-m-red {
+	font-family: Avenir;
+	font-size: 11px;
+	font-weight: 500;
+	line-height: 1.5;
+	letter-spacing: 0.5px;
+	color: #d0021b;
+	color: var(--scarlet);
+}
+
+.ui-text-label-m-broad {
+	font-family: Avenir;
+	font-size: 11px;
+	font-weight: 500;
+	line-height: 1.5;
+	letter-spacing: 1px;
+	color: #383838;
+	color: var(--black);
+}
+
+.nav-label-footer {
+	font-family: Avenir;
+	font-size: 11px;
+	font-weight: 500;
+	letter-spacing: 4px;
+	color: #ffffff;
+	color: var(--white);
+}
+
+.ui-text-label-m {
+	font-family: Avenir;
+	font-size: 11px;
+	font-weight: 500;
+	line-height: 1.5;
+	color: #383838;
+	color: var(--black);
+}
+
+
+.ui-text-label-m-light {
+	font-family: Avenir;
+	font-size: 11px;
+	//font-weight: 300;
+	line-height: 1.5;
+	color: #9b9b9b;
+	color: var(--warm-grey);
+}
+
+.calendar-day-numbers-white {
+	font-family: Avenir;
+	font-size: 10px;
+	font-weight: 900;
+	line-height: 1.1;
+	text-align: center;
+	color: #ffffff;
+	color: var(--white);
+}
+
+.calendar-day-numbers-lighter {
+	font-family: Avenir;
+	font-size: 10px;
+	font-weight: 900;
+	line-height: 1.1;
+	text-align: center;
+	color: #cccccc;
+	color: var(--pinkish-grey);
+}
+
+.text-style {
+	font-family: Avenir;
+	font-size: 10px;
+	font-weight: 900;
+	line-height: 1.1;
+	text-align: center;
+	color: #383838;
+	color: var(--black);
+}
+
+.ui-text-label-s {
+	font-family: Avenir;
+	font-size: 10px;
+	//font-weight: 300;
+	line-height: 1.1;
+	text-align: center;
+	color: #383838;
+	color: var(--black);
+}
+
+.copyright {
+	font-family: Avenir;
+	font-size: 10px;
+	//font-weight: 300;
+	text-align: right;
+	color: #ffffff;
+	color: var(--white);
+}
+
+.ui-text-label-s-light {
+	font-family: Avenir;
+	font-size: 10px;
+	//font-weight: 300;
+	line-height: 1.1;
+	text-align: justify;
+	color: #9b9b9b;
+	color: var(--warm-grey);
+}
+
+.ui-text-label-s-left {
+	font-family: Avenir;
+	font-size: 10px;
+	//font-weight: 300;
+	line-height: 1.1;
+	color: #383838;
+	color: var(--black);
 }
