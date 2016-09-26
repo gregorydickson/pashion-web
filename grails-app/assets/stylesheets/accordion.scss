@@ -3,7 +3,6 @@
 button.accordion {
     background-color: white;
     cursor: pointer;
-    //padding: 5px;
     width: 100%;
     border: none;
     text-align: left;
@@ -30,20 +29,46 @@ div.panel {
     background-color: white;
     max-height: 0;
     overflow: hidden;
-    transition: 0.4s ease-in-out;
     opacity: 0;
-    display: none;
+    visibility: hidden;
+    transition: 0.5s ease-in-out;
 }
 
 div.panel.show {
+    visibility: visible;
+	max-height: 500px;
     opacity: 1;
-    max-height: 5000px;
-    display: block;
 }
 
-td {
+td.accordion {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: left;
 }
+
+th.accordion {
+	text-align:left; 
+	border-bottom:2px solid var(--white-three);
+}
+
+table.accordion {
+	width:260px; /* not sure why 100% does not work here */
+	table-layout:fixed;
+}
+
+::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+} 
+::-webkit-scrollbar-track {
+      background-color: none;
+}
+::-webkit-scrollbar-thumb {
+
+	border: 1px solid var(--pinkish-grey);
+    background-color: var(--white-three); 
+    border-radius: 2px;
+
+} 
+ 
