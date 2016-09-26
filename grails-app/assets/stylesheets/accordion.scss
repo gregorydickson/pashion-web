@@ -11,13 +11,14 @@ button.accordion {
     transition: 0.4s;
 }
 
-button.accordion.active,
-/* button.accordion:hover { background-color: #ddd;} */
+button.accordion.active {
+    /* background-color: var(--white-two); */
+}
 
 button.accordion:before {
     content: '+';
     font-size: 14px;
-    font-weight:900;
+    font-weight: 900;
     color: #9b9b9b;
 }
 
@@ -29,7 +30,7 @@ div.panel {
     background-color: white;
     max-height: 0;
     overflow: hidden;
-    transition: 0.4s ease-in-out; 
+    transition: 0.4s ease-in-out;
     opacity: 0;
     display: none;
 }
@@ -37,10 +38,12 @@ div.panel {
 div.panel.show {
     opacity: 1;
     max-height: 5000px;
-    display:block;
+    display: block;
 }
 
-td {white-space: nowrap; 
+td {
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-	text-align: left;}
+    text-align: left;
+}
