@@ -56,6 +56,9 @@ table.accordion {
 	width:260px; /* not sure why 100% does not work here */
 	table-layout:fixed;
 }
+/* */
+/* should be global stuff */
+/* */
 
 ::-webkit-scrollbar {
       width: 7px;
@@ -71,4 +74,16 @@ table.accordion {
     border-radius: 2px;
 
 } 
+
+input.search-box {
+	padding: 5px;
+	height: 24px;
+	border: 0.5px solid var(--white-three);
+/* ui-text-label-m-light */
+	font-family: Avenir, Lato;
+	font-size: 11px;
+	line-height: 1.5;
+	color: #9b9b9b;
+	color: var(--warm-grey);
+}
  

@@ -1,3 +1,4 @@
+<!-- index.html -->
 <template>
     <!-- Main building block -->
     <!-- RM accordion testing -->
@@ -9,9 +10,10 @@
         </div>
         <!-- Search requests -->
         <div class="vertical grid-block shrink">
-            <div class="grid-block">
-                <p>search</p>
-            </div>
+          <form style="margin-top:20px;" submit.delegate='search()'>
+
+                  <input type="text" keypress.delegate="search($event)" value.two-way="searchtext" class="form-control search-box " id="search" placeholder="Search Text">
+          </form>
         </div>
         <!-- filter requests -->
         <div class="vertical grid-block shrink">
@@ -106,7 +108,7 @@
     <!-- Communications Panel  -->
     <div id="right-panel" class="comms vertical grid-block">
         <div id="comms_panel grid-block">
-            <h6>comms panel</h6>
+            
         </div>
     </div>
 </template>

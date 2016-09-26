@@ -11,6 +11,14 @@
 	--pinkish-grey: #cccccc;
 	--flat-blue: #3971b1;
 	--white-three: #ebebeb;
+
+	--font-size-small :10px;
+	--font-size-mid :11px;
+	--font-size-button :12px;
+	--font-size-large: 14px;
+	--font-size-extra-large: 16px;
+	--font-size-e-extra-large: 19px;
+	--font-size-headings: 24px;
 }
 
 /* Text styles */
@@ -26,7 +34,7 @@
 
 .welcome-header {
 	font-family: Avenir, Lato;
-	font-size: 24px;
+	font-size: var(--font-size-headings);
 	font-weight: 900;
 	text-align: center;
 	color: #383838;
@@ -35,14 +43,14 @@
 
 .welcome-text {
 	font-family: Avenir, Lato-Book;
-	font-size: 19px;
+	font-size: var(--font-size-e-extra-large);
 	color: #383838;
 	color: var(--black);
 }
 
 .icon-style-white {
 	font-family: Avenir, Lato;
-	font-size: 16px;
+	font-size: var(--font-size-extra-large);
 	font-weight: 900;
 	line-height: 0.6;
 	color: #ffffff;
@@ -51,7 +59,7 @@
 
 .hover-text-style {
 	font-family: Avenir, Lato;
-	font-size: 16px;
+	font-size: var(--font-size-extra-large);
 	//font-weight: 300;
 	line-height: 1.2;
 	color: #ffffff;
@@ -60,7 +68,7 @@
 
 .nav-label-header {
 	font-family: Avenir, Lato;
-	font-size: 14px;
+	font-size: var(--font-size-large);
 	//font-weight: 300;
 	line-height: 1;
 	letter-spacing: 4px;
@@ -70,7 +78,7 @@
 
 .ui-text-label-l-dialogue-light {
 	font-family: Avenir, Lato;
-	font-size: 14px;
+	font-size: var(--font-size-large);
 	//font-weight: 300;
 	line-height: 1;
 	letter-spacing: 1px;
@@ -80,7 +88,7 @@
 
 .ui-text-label-l-left {
 	font-family: Avenir, Lato;
-	font-size: 14px;
+	font-size: var(--font-size-large);
 	//font-weight: 300;
 	line-height: 1;
 	color: #383838;
@@ -89,7 +97,7 @@
 
 .ui-text-label-l {
 	font-family: Avenir, Lato;
-	font-size: 14px;
+	font-size: var(--font-size-large);
 	//font-weight: 300;
 	line-height: 1;
 	text-align: center;
@@ -99,7 +107,7 @@
 
 .ui-text-label-l-dialogue {
 	font-family: Avenir, Lato;
-	font-size: 14px;
+	font-size: var(--font-size-large);
 	//font-weight: 300;
 	line-height: 1;
 	letter-spacing: 1px;
@@ -110,7 +118,7 @@
 
 .button-text {
 	font-family: Avenir, Lato;
-	font-size: 12px;
+	font-size: var(--font-size-button);
 	//font-weight: 300;
 	text-align: center;
 	color: #383838;
@@ -119,7 +127,7 @@
 
 .ui-text-label-m-blue {
 	font-family: Avenir, Lato;
-	font-size: 11px;
+	font-size: var(--font-size-mid);
 	font-weight: 500;
 	line-height: 1.5;
 	letter-spacing: 0.5px;
@@ -129,7 +137,7 @@
 
 .ui-text-label-m-red {
 	font-family: Avenir, Lato;
-	font-size: 11px;
+	font-size: var(--font-size-mid);
 	font-weight: 500;
 	line-height: 1.5;
 	letter-spacing: 0.5px;
@@ -139,7 +147,7 @@
 
 .ui-text-label-m-broad {
 	font-family: Avenir, Lato;
-	font-size: 11px;
+	font-size: var(--font-size-mid);
 	font-weight: 500;
 	line-height: 1.5;
 	letter-spacing: 1px;
@@ -149,7 +157,7 @@
 
 .nav-label-footer {
 	font-family: Avenir, Lato;
-	font-size: 11px;
+	font-size: var(--font-size-mid);
 	font-weight: 500;
 	letter-spacing: 4px;
 	color: #ffffff;
@@ -158,7 +166,7 @@
 
 .ui-text-label-m {
 	font-family: Avenir, Lato;
-	font-size: 11px;
+	font-size: var(--font-size-mid); 
 	font-weight: 500;
 	line-height: 1.5;
 	color: #383838;
@@ -167,7 +175,7 @@
 
 .ui-text-label-m-light {
 	font-family: Avenir, Lato;
-	font-size: 11px;
+	font-size: var(--font-size-mid);
 	//font-weight: 300;
 	line-height: 1.5;
 	color: #9b9b9b;
@@ -176,7 +184,7 @@
 
 .calendar-day-numbers-white {
 	font-family: Avenir, Lato;
-	font-size: 10px;
+	font-size: var(--font-size-small);
 	font-weight: 900;
 	line-height: 1.1;
 	text-align: center;
@@ -186,7 +194,7 @@
 
 .calendar-day-numbers-lighter {
 	font-family: Avenir, Lato;
-	font-size: 10px;
+	font-size: var(--font-size-small);
 	font-weight: 900;
 	line-height: 1.1;
 	text-align: center;
@@ -196,7 +204,7 @@
 
 .text-style {
 	font-family: Avenir, Lato;
-	font-size: 10px;
+	font-size: var(--font-size-small);
 	font-weight: 900;
 	line-height: 1.1;
 	text-align: center;
@@ -206,7 +214,7 @@
 
 .ui-text-label-s {
 	font-family: Avenir, Lato;
-	font-size: 10px;
+	font-size: var(--font-size-small);
 	//font-weight: 300;
 	line-height: 1.1;
 	text-align: center;
@@ -216,7 +224,7 @@
 
 .copyright {
 	font-family: Avenir, Lato;
-	font-size: 10px;
+	font-size: var(--font-size-small);
 	//font-weight: 300;
 	text-align: right;
 	color: #ffffff;
@@ -225,7 +233,7 @@
 
 .ui-text-label-s-light {
 	font-family: Avenir, Lato;
-	font-size: 10px;
+	font-size: var(--font-size-small);
 	//font-weight: 300;
 	line-height: 1.1;
 	text-align: justify;
@@ -235,7 +243,7 @@
 
 .ui-text-label-s-left {
 	font-family: Avenir, Lato;
-	font-size: 10px;
+	font-size: var(--font-size-small);
 	//font-weight: 300;
 	line-height: 1.1;
 	color: #383838;
