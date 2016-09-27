@@ -2,6 +2,8 @@
 <template>
     <!-- Main building block -->
     <!-- RM accordion testing -->
+    <!-- global stuff -->
+
     <!-- Calendar + Request  Panel -->
     <div id="left-panel" class="vertical grid-block">
         <!-- Calendar -->
@@ -12,7 +14,7 @@
         <div class="vertical grid-block shrink">
           <form style="margin-top:20px;" submit.delegate='search()'>
 
-                  <input type="text" keypress.delegate="search($event)" value.two-way="searchtext" class="form-control search-box " id="search" placeholder="Search Text">
+                  <input type="text" keypress.delegate="search($event)" value.two-way="searchtext" class="form-control search-box" id="search" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
           </form>
         </div>
         <!-- filter requests -->
