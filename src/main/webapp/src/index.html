@@ -3,32 +3,33 @@
     <!-- Main building block -->
     <!-- RM accordion testing -->
     <!-- global stuff -->
-
     <!-- Calendar + Request  Panel -->
     <div id="left-panel" class="vertical grid-block">
         <!-- Calendar -->
         <div class="grid-block shrink calendar">
             <compose view-model="calendar"></compose>
         </div>
-        <!-- Search requests -->
+        <!-- search and filter requests -->
         <div class="vertical grid-block shrink">
-          <form style="margin-top:20px;" submit.delegate='search()'>
-
-                  <input type="text" keypress.delegate="search($event)" value.two-way="searchtext" class="form-control search-box" id="search" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
-          </form>
-        </div>
-        <!-- filter requests -->
-        <div class="vertical grid-block shrink">
-            <div class="grid-block">
-                <p>Filter</p>
-            </div>
-            
+            <form style="margin-top:20px;" submit.delegate='search()'>
+                <!-- Search requests -->
+                <input type="text" keypress.delegate="search($event)" value.two-way="searchtext" class="search-box" id="search" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
+                <!-- filter requests -->
+                <span class="inline-label">
+                    <span class="form-label">Filter</span>
+                    <select name="" id="">
+                        <option>By Date</option>
+                        <option>By Person</option>
+                        <option>By Number</option>
+                    </select>
+                </span>
+            </form>
         </div>
         <!-- Accordion -->
         <!--header -->
-        <div class="vertical grid-content shrink ui-text-label-m" style="padding:0;">
+        <div class="vertical grid-content shrink" style="padding:0;">
             <table class="accordion">
-                <tr> 
+                <tr>
                     <th class="accordion" style="width:10%;"></th>
                     <th class="accordion" style="width:22%;">ID/TYPE</th>
                     <th class="accordion" style="width:34%;">PRESS</th>
@@ -37,7 +38,7 @@
             </table>
         </div>
         <!-- row button + content -->
-        <div class="vertical grid-content ui-text-label-m" style="padding:0;">
+        <div class="vertical grid-content" style="padding:0;">
             <!-- row with button -->
             <table class="accordion">
                 <tr>
@@ -45,7 +46,7 @@
                         <button id="button1" class="accordion" click.delegate="closeExpand(1)"></button>
                     </td>
                     <td class="accordion" style="width:22%;">23457/R</td>
-                    <td class="accordion" style="width:34%;">Ralph Lauren, London</td>
+                    <td class="accordion" style="width:34%;">Ralph Lauren</td>
                     <td class="accordion" style="width:34%;">Lauren</td>
                 </tr>
             </table>
@@ -77,7 +78,7 @@
                         <button id="button2" class="accordion" click.delegate="closeExpand(2)"></button>
                     </td>
                     <td class="accordion" style="width:22%;">23457/R</td>
-                    <td class="accordion" style="width:34%;">Ralph Lauren, London</td>
+                    <td class="accordion" style="width:34%;">Channel</td>
                     <td sclass="accordion" tyle="width:34%;">Lauren</td>
                 </tr>
             </table>
@@ -86,7 +87,7 @@
                 <table class="accordion" style="background-color: var(--white-two);">
                     <tr>
                         <td class="accordion" style="width:45px;">Due:</td>
-                        <td class="accordion" >14th June 2016</td>
+                        <td class="accordion">14th June 2016</td>
                     </tr>
                     <tr>
                         <td class="accordion">Item 1:</td>
@@ -111,7 +112,6 @@
     <!-- Communications Panel  -->
     <div id="right-panel" class="comms vertical grid-block">
         <div id="comms_panel grid-block">
-            
         </div>
     </div>
 </template>

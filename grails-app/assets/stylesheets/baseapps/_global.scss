@@ -131,7 +131,7 @@ $base-apps-colors: (
     font-family: $body-font-family;
     font-weight: $body-font-weight;
     font-style: $body-font-style;
-    line-height: 1;
+    line-height: $base-line-height;
     position: relative;
 
     @if $body-antialiased {

@@ -51,7 +51,7 @@ td.accordion {
 
 th.accordion {
 	text-align:left; 
-	border-bottom:2px solid var(--white-three);
+	border-bottom:1px solid var(--white-three);
 }
 
 table.accordion {
@@ -81,7 +81,7 @@ table.accordion {
 
 
  
-input.search-box {
+input.search-box, input.search-box:hover, input.search-box:focus {
 	padding-left: 28px;
 	// height: 24px;
 	// border: 0.5px solid var(--white-three);
@@ -91,12 +91,7 @@ input.search-box {
 	// color: var(--warm-grey);
 	background-image: url('/assets/nav/MagGlass.png');
     background-repeat: no-repeat;
-    background-position: 6px center;
+    background-position: 6px 3px;
 }
 
-input.search-box:hover, input.search-box:focus {
-	background-image: url('/assets/nav/MagGlass.png');
-    background-repeat: no-repeat;
-    background-position: 6px center;
-}
 
