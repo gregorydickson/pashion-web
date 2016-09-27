@@ -14,6 +14,8 @@ class Brand {
 	Date dateCreated
 	Date lastUpdated
 
+	static searchable = true
+
 	static hasMany = [collections: Collection,pRAgencies:PRAgency,users:User]
 
 	static belongsTo = []

@@ -23,6 +23,10 @@ class Collection {
 	Date dateCreated
 	Date lastUpdated
 
+	static searchable = {
+		except:['permissions','samples']
+	}
+
 	static belongsTo = [brand:Brand]
 
 	static hasMany = [looks: Look, permissions:Permission, samples:Sample]

@@ -3,13 +3,11 @@ package pashion
 
 class SampleRequest {
 
-	static mapping = {
-
-	}
+	
 	String idString
 	Date dateRequested
 	Date dateDue
-	String status
+	String requestStatus
 	Long userCreatedId
 	
 	Brand brand
@@ -27,6 +25,8 @@ class SampleRequest {
 	//auto fields
 	Date dateCreated
 	Date lastUpdated
+
+	static searchable = true
 
 	static hasMany = [ samples:Sample, looks: Look ]
   	

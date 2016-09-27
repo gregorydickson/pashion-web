@@ -56,8 +56,10 @@ dependencies {
     compile "org.hibernate:hibernate-ehcache"
     profile "org.grails.profiles:web"
 
-    //updated to 2.10.2
-    runtime 'com.bertramlabs.plugins:asset-pipeline-grails:2.11.1'
+    //updated to 2.11.1
+    runtime ('com.bertramlabs.plugins:asset-pipeline-grails:2.11.1'){
+        exclude group: 'com.google.guava', module: 'guava'
+    }
     assets 'com.bertramlabs.plugins:sass-asset-pipeline:2.11.1'
     //testing
     testCompile "org.grails:grails-plugin-testing"
@@ -65,7 +67,7 @@ dependencies {
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
 
-    //using mysql for now
+    //using mysql 
     runtime 'mysql:mysql-connector-java:5.1.36'
     //for hashing passwords
     
@@ -74,6 +76,11 @@ dependencies {
     compile "org.grails.plugins:views-json:1.1.0.RC1"
 
     runtime 'org.grails.plugins:grails-console:2.0.8'
+
+    //https://github.com/noamt/elasticsearch-grails-plugin/issues/163
+    compile 'org.grails.plugins:elasticsearch:1.2.0'
+    compile "org.elasticsearch:elasticsearch:2.3.4"
+
 }
 
 assets {

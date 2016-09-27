@@ -38,17 +38,17 @@ class BootStrap {
              def due = today + 20
              
              def samplereq1 = new SampleRequest(brand:brand1,idString:"5555L",samples:[sample2],
-                                                status:"Overdue", dateRequested:today,
+                                                requestStatus:"Overdue", dateRequested:today,
                                                 receivingUserName: "Lauren",
                                                 requestingUserName: "Lauren Van Dooren",
                                                 editorial: "Punk Shoot",
-                                                got: 0,
-                                                out: 1,
+                                                itemsGot: 0,
+                                                itemsOut: 1,
                                                 dateDue:due ).save()
 
              def samplereq2 = new SampleRequest(brand:brand1,idString:"9696L",
                                                 samples:[sample1,sample2],
-                                                status:"Overdue", dateRequested:today,
+                                                requestStatus:"Overdue", dateRequested:today,
                                                 receivingUserName: "Lauren",
                                                 requestingUserName: "Jamie Bloom",
                                                 editorial: "Summer Fun",
