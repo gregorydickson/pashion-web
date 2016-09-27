@@ -1,3 +1,7 @@
+@import "compass/compass/functions";
+@import "compass/compass/css3";
+@import "baseapps/settings";
+
 :root {
 	--black: #383838;
 	--white: #ffffff;
@@ -13,15 +17,21 @@
 	--white-three: #ebebeb;
 
 	--font-size-small :10px;
-	--font-size-mid :11px;
+
 	--font-size-button :12px;
 	--font-size-large: 14px;
 	--font-size-extra-large: 16px;
 	--font-size-e-extra-large: 19px;
 	--font-size-headings: 24px;
+
+	font-size: 68.5%;
 }
 
+	$font-size-mid : 1.0rem;
+
+
 /* Text styles */
+/* reset for rem = 11px */
 
 .w-a-r-n-i-n-g {
 	font-family: Avenir, Lato, Nunito;
@@ -129,7 +139,6 @@
 	font-family: Avenir, Lato;
 	font-size: var(--font-size-mid);
 	font-weight: 500;
-	line-height: 1.5;
 	letter-spacing: 0.5px;
 	color: #3971b1;
 	color: var(--flat-blue);
@@ -139,7 +148,6 @@
 	font-family: Avenir, Lato;
 	font-size: var(--font-size-mid);
 	font-weight: 500;
-	line-height: 1.5;
 	letter-spacing: 0.5px;
 	color: #d0021b;
 	color: var(--scarlet);
@@ -149,7 +157,6 @@
 	font-family: Avenir, Lato;
 	font-size: var(--font-size-mid);
 	font-weight: 500;
-	line-height: 1.5;
 	letter-spacing: 1px;
 	color: #383838;
 	color: var(--black);
@@ -166,9 +173,8 @@
 
 .ui-text-label-m {
 	font-family: Avenir, Lato;
-	font-size: var(--font-size-mid); 
+	font-size: $font-size-mid; 
 	font-weight: 500;
-	line-height: 1.5;
 	color: #383838;
 	color: var(--black);
 }
@@ -176,8 +182,6 @@
 .ui-text-label-m-light {
 	font-family: Avenir, Lato;
 	font-size: var(--font-size-mid);
-	//font-weight: 300;
-	line-height: 1.5;
 	color: #9b9b9b;
 	color: var(--warm-grey);
 }
