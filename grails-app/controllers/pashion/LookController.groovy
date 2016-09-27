@@ -2,11 +2,16 @@ package pashion
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.converters.JSON
+
+import java.net.URLDecoder
 
 @Transactional(readOnly = true)
 class LookController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
+    def elasticSearchService
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -19,6 +24,16 @@ class LookController {
 
     def create() {
         respond new Look(params)
+    }
+
+    def search(){
+        log.info params
+        params.max = 3
+        def searchtext = URLDecoder.decode(params.searchtext)
+        log.info "searchtext:"+searchtext
+        def looks = Look.search(searchtext).searchResults as JSON
+        log.info looks
+        render looks
     }
 
     @Transactional

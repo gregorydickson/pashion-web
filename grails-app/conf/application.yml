@@ -1,3 +1,5 @@
+elasticSearch:
+    datastoreImpl: hibernateDatastore
 ---
 hibernate:
     cache:

@@ -8,7 +8,7 @@ class Look {
 	String image
 	Integer status
 	Integer security
-	Boolean isPublic = false
+	
 	Integer availability
 	Date fromDate
 	Date toDate
@@ -19,6 +19,11 @@ class Look {
 	//auto fields
 	Date dateCreated
 	Date lastUpdated
+	
+	static searchable = {
+		collection component: true
+		only: ['description','name']
+	}
 
 	static belongsTo = [collection: Collection]
 

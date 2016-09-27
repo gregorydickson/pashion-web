@@ -8,7 +8,7 @@ export class Looks {
   looks = [];
   seasons = [];
   brands = [];
-  searchtext = '';
+  searchText = '';
 
 
   constructor(http) {
@@ -17,9 +17,11 @@ export class Looks {
         .useStandardConfiguration();
     });
     this.http = http;
+    this.boundHandler = this.handleKeyInput.bind(this);
   }
 
   activate() {
+    window.addEventListener('keypress', this.boundHandler, false);
     return Promise.all([
       this.http.fetch('/collection/looks/1').then(response => response.json()).then(collection => this.looks = collection.looks),
       this.http.fetch('/collection/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
@@ -28,17 +30,23 @@ export class Looks {
     ]);
   }
 
-  search(event) {
-    var asearch = this.searchtext;
-    console.log("searching");
-    if(event.which == 13) {
-      return this.http.fetch('/collection/search?'+ encodeURI(asearch))
+  deactivate() {
+   window.removeEventListener('keypress', this.boundHandler);
+  }
+
+  handleKeyInput(event) {
+    console.log(event);
+    if(event.which == 13 && event.srcElement.id === "search") {
+      console.log("herow");
+      this.http.fetch('/look/search?searchtext='+ encodeURI(event.srcElement.value))
           .then(response => response.json())
-          .then(collection => {
-              this.looks = collection.looks
-              
+          .then(looks => {
+              this.looks = looks      
           })
+
     }
-      event.preventDefault();
-    }
+  }
+
+   
+    
 }

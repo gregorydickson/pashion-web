@@ -25,6 +25,8 @@ class Sample {
 	//auto fields
 	Date dateCreated
 	Date lastUpdated
+	
+	static searchable = true
 
 	static belongsTo = [Look, Collection]
 

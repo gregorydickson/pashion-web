@@ -1,10 +1,10 @@
 <template>
     <div class="grid-block">
       <div class="grid-content">
-        <form submit.delegate='search()'>
+        <form >
           <ul class="menu-bar">
               <li>
-                  <input type="text" keypress.delegate="search($event)" value.two-way="searchtext" class="form-control" id="search" placeholder="Search Text">
+                  <input type="text" value.bind="searchText" class="form-control" id="search" placeholder="Search Text">
               </li>
               <li><a href="#">Available </a></li>
               <li><a href="#">Theme</a></li>
