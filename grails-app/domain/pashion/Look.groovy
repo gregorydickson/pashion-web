@@ -20,12 +20,12 @@ class Look {
 	Date dateCreated
 	Date lastUpdated
 	
+	
 	static searchable = {
-		collection component: true
-		only: ['description','name']
+		brandCollection parent: true, reference: true
 	}
 
-	static belongsTo = [collection: Collection]
+	static belongsTo = [brandCollection: BrandCollection]
 
 	static hasMany = [ permissions:Permission, samples:Sample]
 

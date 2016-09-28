@@ -1,6 +1,6 @@
 package pashion
 
-class Collection {
+class BrandCollection {
 
 	String image
 
@@ -23,9 +23,7 @@ class Collection {
 	Date dateCreated
 	Date lastUpdated
 
-	static searchable = {
-		except:['permissions','samples']
-	}
+	static searchable = true
 
 	static belongsTo = [brand:Brand]
 
