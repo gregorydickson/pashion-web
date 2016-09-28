@@ -34,6 +34,15 @@ class BrandCollectionController {
                         'Spring 2016 Couture','Fall 2016 Menswear'] as JSON
         render seasons
     }
+    def itemTypes(){
+        //quick list to get UI going
+        def itemTypes = ['Runway', 'Looks', 'Samples', 'All'] as JSON
+        render itemTypes
+    }
+    def colors(){
+        def colors = ['Red', 'Black', 'White'] as JSON
+        render colors
+    }
 
     @Transactional
     def save(BrandCollection brandCollection) {

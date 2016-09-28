@@ -123,24 +123,31 @@
                             <li>
                                 <input type="text" class="form-control search-box" id="search" placeholder="Search Text">
                             </li>
-                            <li><a href="#">Available </a></li>
-                            <li><a href="#">Theme</a></li>
+                            <li>
+                                Available:<input type="date" value.bind="availableFrom" class="" change.delegate="filterChange($event.target)">
+                                to<input type="date" value.bind="availableFrom" class="" change.delegate="filterChange($event.target)">
+                            </li>
+                            
                         </ul>
                         <ul class="menu-bar">
-                            <li><a href="#">Brand</a></li>
                             <li>
-                                <select name="" id="">
+                                <select name="" id="" value.bind="selectedBrand" change.delegate="filterChange($event.target)">
+                                    <option>Select Brand</option>
+                                    <option repeat.for="brand of brands" model.bind="brand.id">${brand.name}</option>
+                                </select>
+                            </li>
+                            <li>
+                                <select name="" id="" value.bind="selectedSeason" change.delegate="filterChange($event.target)">
                                     <option>Select Season</option>
-                                    <option repeat.for="season of seasons" value.bind="seasons">${season}</option>
+                                    <option repeat.for="season of seasons" model.bind="season">${season}</option>
                                 </select>
                             </li>
                             <li>
-                                <select name="" id="">
+                                <select name="" id="" value.bind="selectedItemType" change.delegate="filterChange($event.target)">
                                     <option>Select Type</option>
-                                    <option repeat.for="season of seasons" value.bind="seasons">${season}</option>
+                                    <option repeat.for="type of itemTypes" model.bind="type">${type}</option>
                                 </select>
                             </li>
-                            <li><a href="#">Color</a></li>
                         </ul>
                     </form>
                 </div>
