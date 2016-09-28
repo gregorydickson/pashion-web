@@ -5,7 +5,7 @@
     <!-- Calendar + Request  Panel -->
     <div class="vertical grid-block" style="background: #ebebeb">
         <div id="top-panel-spacer" class="grid-block shrink">
-            <div style="height: 10px; opacity:0.1;">
+            <div style="height: 6px;">
             </div>
         </div>
         <div class="grid-block" style="overflow:visible;">
@@ -15,7 +15,7 @@
                     <compose view-model="calendar"></compose>
                 </div>
                 <!-- search and filter requests -->
-                <div class="vertical grid-block shrink" style="background: white">
+                <div class="vertical grid-block shrink" style="background: white; margin-left: 1rem; margin-right: 1rem;">
                     <form style="margin-top:20px;" submit.delegate='search()'>
                         <!-- Search requests -->
                         <input type="text" keypress.delegate="search($event)" value.two-way="searchtext" class="search-box" id="search" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
@@ -111,7 +111,7 @@
                 </div>
             </div>
             <div id="image-panel-spacer" class="grid-block shrink">
-                <div style="width:10px">
+                <div style="width: 7px">
                 </div>
             </div>
             <!-- Image Grid Large Panel-->
@@ -163,7 +163,7 @@
                 </div>
             </div>
             <div id="comms-panel-spacer" class="grid-block shrink">
-                <div style="width:10px">
+                <div style="width: 7px">
                 </div>
             </div>
             <!-- Communications Panel  -->
@@ -174,7 +174,7 @@
             </div>
         </div>
         <div id="bottom-panel-spacer" class="grid-content " style="overflow:visible;">
-            <div style="height:10px;">
+            <div style="height: 7px;">
             </div>
         </div>
     </div>
