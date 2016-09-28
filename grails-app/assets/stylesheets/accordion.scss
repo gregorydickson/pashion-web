@@ -1,5 +1,6 @@
 @import "compass/compass/functions";
 @import "compass/compass/css3";
+@import "baseapps/settings";
 
 button.accordion {
     background-color: white;
@@ -12,7 +13,7 @@ button.accordion {
 }
 
 button.accordion.active {
-    /* background-color: var(--white-two); */
+    // background-color: var(--white-two);
 }
 
 button.accordion:before {
@@ -45,21 +46,24 @@ td.accordion {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    text-align: left;
+    text-align: left; 
 }
 
 th.accordion {
 	text-align:left; 
-	border-bottom:2px solid var(--white-three);
+	border-bottom:1px solid var(--white-three);
+	font-weight: 300;
 }
 
 table.accordion {
-	width:260px; /* not sure why 100% does not work here */
+	width:260px; // not sure why 100% does not work here
 	table-layout:fixed;
 }
-/* */
-/* should be global stuff */
-/* */
+
+// RM
+// should be global stuff changes to _settings 
+
+//
 
 ::-webkit-scrollbar {
       width: 7px;
@@ -76,15 +80,22 @@ table.accordion {
 
 } 
 
-input.search-box {
-	padding: 5px;
-	height: 24px;
-	border: 0.5px solid var(--white-three);
-/* ui-text-label-m-light */
-	font-family: Avenir, Lato;
-	font-size: 11px;
-	line-height: 1.5;
-	color: #9b9b9b;
-	color: var(--warm-grey);
-}
+
  
+input.search-box, input.search-box:hover, input.search-box:focus {
+	padding-left: 28px;
+	// height: 24px;
+	// border: 0.5px solid var(--white-three);
+	// ui-text-label-m-light 
+	// font-family: Avenir, Lato;
+	// line-height: 1.5;
+	// color: var(--warm-grey);
+	background-image: url('/assets/nav/MagGlass.png');
+    background-repeat: no-repeat;
+    background-position: 6px 3px;
+}
+
+.grid-block-vertical-shadow {
+	box-shadow: 2px 2px 3px 0px rgba(0, 0, 0, 0.2);
+}
+

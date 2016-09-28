@@ -19,7 +19,7 @@
 // Forms
 // Basic form variables
 /// @type Number
-$form-fontsize: 1rem !default;
+$form-fontsize: 1rem !default; 
 /// @type Number
 $form-padding: 0.5rem !default;
 
@@ -118,7 +118,7 @@ $meter-radius: 0 !default;
   #{$text-input-selectors} {
     $top-padding: get-side($form-padding, top);
     $bottom-padding: get-side($form-padding, bottom);
-    $height: ($form-fontsize * 1.4) + $top-padding + $bottom-padding;
+    $height: ($form-fontsize *  1.4) + $top-padding + $bottom-padding;
 
     @include no-appearance;
     display: block;
@@ -230,7 +230,7 @@ $meter-radius: 0 !default;
       background: $inlinelabel-background;
       color: $inlinelabel-color;
       border: $inlinelabel-border;
-      padding: 0 $form-padding;
+      padding:  $form-padding;
       display: flex;
       align-items: center;
 
@@ -266,7 +266,7 @@ $meter-radius: 0 !default;
     $top-padding: get-side($form-padding, top);
     $bottom-padding: get-side($form-padding, bottom);
     $height: ($form-fontsize * 1.4) + $top-padding + $bottom-padding;
-    $color: isitlight($select-background);
+    $color: $select-background;
 
     @include no-appearance;
     display: block;

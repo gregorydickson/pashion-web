@@ -68,14 +68,14 @@ $include-css: (
 // 2. Global Styles
 // ----------------
 
-$rem-base: 16px;
+$rem-base: 11px;
 $base-font-size: 100%;
-$base-line-height: 1.5;
+$base-line-height: 1.6;
 $headers: "h1,h2,h3,h4,h5,h6";
-$font-weight-normal: normal;
-$font-weight-bold: bold;
+$font-weight-normal: 300;
+$font-weight-bold: 500;
 $body-background: #fff;
-$body-font-color: #222;
+$body-font-color: #383838;
 $body-font-family: 'Avenir','Lato', sans-serif;
 $body-font-weight: $font-weight-normal;
 $body-font-style: normal;
@@ -99,7 +99,7 @@ $loader-classes: ('sk-loader');
 
 // 3. Breakpoints
 // --------------
-
+ 
 $breakpoints: (
   small: rem-calc(0),
   medium: rem-calc(640),
@@ -140,7 +140,7 @@ $small-font-color: scale-color($header-font-color, $lightness: 35%);
 $paragraph-font-family: inherit;
 $paragraph-font-weight: $font-weight-normal;
 $paragraph-font-size: 1rem;
-$paragraph-line-height: 1.6;
+$paragraph-line-height: 1.5;
 $paragraph-margin-bottom: rem-calc(20);
 $paragraph-aside-font-size: rem-calc(14);
 $paragraph-aside-line-height: 1.35;
@@ -291,30 +291,32 @@ $thumbnail-shadow: 0 3px 15px rgba(black, 0.25);
 // 13. Forms
 // ---------
 
-$form-fontsize: 1rem;
+ 
+$form-fontsize: 1.0rem;
 $form-padding: 0.5rem;
-$input-color: #000;
+$input-color: $body-font-color;
 $input-color-hover: $input-color;
 $input-color-focus: $input-color;
 $input-background: #fff;
 $input-background-hover: $input-background;
 $input-background-focus: $input-background;
 $input-background-disabled: smartscale($input-background);
-$input-border: 1px solid #ccc;
+$input-border: 0.5px solid var(--white-three); 
+
 $input-border-hover: 1px solid #bbb;
 $input-border-focus: 1px solid #999;
 $input-cursor-disabled: not-allowed;
-$select-color: #000;
-$select-background: #fafafa;
+$select-color: $body-font-color;
+$select-background: white;
 $select-background-hover: smartscale($select-background, 4%);
 $select-arrow: true;
 $select-arrow-color: $select-color;
-$form-label-fontsize: 0.9rem;
+$form-label-fontsize: 1rem;
 $form-label-margin: 0.5rem;
 $form-label-color: #333;
 $inlinelabel-color: #333;
-$inlinelabel-background: #eee;
-$inlinelabel-border: $input-border;
+$inlinelabel-background: white;
+$inlinelabel-border: none;
 $slider-background: #ddd;
 $slider-height: 1rem;
 $slider-radius: 0px;
@@ -534,3 +536,7 @@ $titlebar-item-classes: (
   title: 'title',
 );
 
+// 27. Grid
+// ---------
+// Want to use this, but can't work out the scoping
+$grid-spacer-size: 10px;

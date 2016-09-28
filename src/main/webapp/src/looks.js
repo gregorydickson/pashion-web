@@ -41,12 +41,10 @@ export class Looks {
       this.http.fetch('/look/search?searchtext='+ encodeURI(event.srcElement.value))
           .then(response => response.json())
           .then(looks => {
-              this.looks = looks      
+              this.looks = looks        
           })
 
     }
   }
-
-   
     
 }

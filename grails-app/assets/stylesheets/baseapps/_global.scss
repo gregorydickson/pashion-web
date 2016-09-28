@@ -15,7 +15,8 @@
 
 // This sets 1rem to be 16px
 /// @type Number
-$rem-base: 16px;
+$rem-base: 11px;
+
 
 // The default font-size is set to 100% of the browser style sheet (usually 16px)
 // for compatibility with browser-based text zoom or user-set defaults.
@@ -24,7 +25,8 @@ $rem-base: 16px;
 // If you want your base font-size to be different and not have it affect the grid breakpoints,
 // set $rem-base to $base-font-size and make sure $base-font-size is a px value.
 /// @type Number
-$base-font-size: 100% !default;
+$base-font-size: 11px !default;
+
 
 // $base-line-height is 24px while $base-font-size is 16px
 /// @type Number
@@ -44,7 +46,7 @@ $font-weight-bold: bold !default;
 /// @type Color
 $body-background: #fff !default;
 /// @type Color
-$body-font-color: #222 !default;
+$body-font-color: #383838 !default;
 /// @type String | List
 $body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !default;
 /// @type Number
@@ -129,7 +131,7 @@ $base-apps-colors: (
     font-family: $body-font-family;
     font-weight: $body-font-weight;
     font-style: $body-font-style;
-    line-height: 1;
+    line-height: $base-line-height;
     position: relative;
 
     @if $body-antialiased {
