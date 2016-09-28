@@ -14,14 +14,13 @@
 }
 
 #left-panel{
-	min-width: 270px;
-  max-width:300px;
-  padding-left:10px;
+	min-width: 280px;
+  max-width: 280px;
 	
 }
 #right-panel{
-	min-width: 200px;
-
+	min-width: 280px;
+  max-width: 280px;
 	
 }
 #looks{

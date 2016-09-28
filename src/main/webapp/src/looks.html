@@ -1,41 +1,4 @@
 <template>
-    <div class="grid-block">
-      <div class="grid-content">
-        <form >
-          <ul class="menu-bar">
-              <li>
-                  <input type="text" class="form-control search-box" id="search" placeholder="Search Text">
-              </li>
-              <li><a href="#">Available </a></li>
-              <li><a href="#">Theme</a></li>
-          </ul>
-          <ul class="menu-bar">
-              <li><a href="#">Brand</a></li>
-              <li>
-                  <select name="" id="">
-                      <option>Select Season</option>
-                      <option repeat.for="season of seasons" value.bind="seasons">${season}</option>
-                  </select>
-              </li>
-              <li>
-                <select name="" id="">
-                      <option>Select Type</option>
-                      <option repeat.for="season of seasons" value.bind="seasons">${season}</option>
-                </select>
-              </li>
-              <li><a href="#">Color</a></li>
-          </ul>
-        </form>
-      </div>
-    </div>
-    <!-- Images/Looks -->
-    <div class="medium-up-4 align-spaced grid-block">
-        <div class="grid-content" repeat.for="look of looks">
-            <div class="card">
-                <img src.bind="look.image" ref="image" />
-                <div class="card-section">
-                </div>
-            </div>
-        </div>
-    </div>
+ 
+ 
 </template>

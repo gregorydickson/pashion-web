@@ -5,14 +5,10 @@
     <!-- Calendar + Request  Panel -->
     <div class="vertical grid-block" style="background: #ebebeb">
         <div id="top-panel-spacer" class="grid-block shrink">
-            <div style="height: 10px;">
+            <div style="height: 10px; opacity:0.1;">
             </div>
         </div>
-        <div class="grid-block" >
-            <div id="left-panel-spacer" class="grid-block shrink">
-                <div style="width:10px">
-                </div>
-            </div>
+        <div class="grid-block" style="overflow:visible;">
             <div id="left-panel" class="vertical grid-block grid-block-vertical-shadow" style="background: white">
                 <!-- Calendar -->
                 <div class="grid-block shrink calendar">
@@ -114,13 +110,50 @@
                     </div>
                 </div>
             </div>
-            <div id="image-panel-spacer" class="grid-block shrink" >
+            <div id="image-panel-spacer" class="grid-block shrink">
                 <div style="width:10px">
                 </div>
             </div>
             <!-- Image Grid Large Panel-->
-            <div id="looks" class="vertical grid-block grid-block-vertical-shadow" style="background: white">
-                <compose view-model="looks"></compose>
+            <div id="looks" class="vertical grid-block grid-block-vertical-shadow" style="background: white; overflow:hidden;">
+                <!-- <compose view-model="looks"></compose> -->
+                <div class="vertical grid-content shrink">
+                    <form>
+                        <ul class="menu-bar">
+                            <li>
+                                <input type="text" class="form-control search-box" id="search" placeholder="Search Text">
+                            </li>
+                            <li><a href="#">Available </a></li>
+                            <li><a href="#">Theme</a></li>
+                        </ul>
+                        <ul class="menu-bar">
+                            <li><a href="#">Brand</a></li>
+                            <li>
+                                <select name="" id="">
+                                    <option>Select Season</option>
+                                    <option repeat.for="season of seasons" value.bind="seasons">${season}</option>
+                                </select>
+                            </li>
+                            <li>
+                                <select name="" id="">
+                                    <option>Select Type</option>
+                                    <option repeat.for="season of seasons" value.bind="seasons">${season}</option>
+                                </select>
+                            </li>
+                            <li><a href="#">Color</a></li>
+                        </ul>
+                    </form>
+                </div>
+                <!-- Images/Looks -->
+                <div class="medium-up-4 align-spaced grid-block" style="overflow: auto;">
+                    <div class="grid-content" repeat.for="look of looks">
+                        <div class="card">
+                            <img src.bind="look.image" ref="image" />
+                            <div class="card-section">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div id="comms-panel-spacer" class="grid-block shrink">
                 <div style="width:10px">
@@ -129,15 +162,12 @@
             <!-- Communications Panel  -->
             <div id="right-panel" class="comms vertical grid-block grid-block-vertical-shadow" style="background: white">
                 <div id="comms_panel grid-block">
-                </div>
-            </div>
-            <div id="right-panel-spacer" class="grid-block shrink">
-                <div style="width:10px">
+                    <span>Comms Panel</span>
                 </div>
             </div>
         </div>
-        <div id="bottom-panel-spacer" class="grid-block shrink">
-            <div style="height:10px">
+        <div id="bottom-panel-spacer" class="grid-content " style="overflow:visible;">
+            <div style="height:10px;">
             </div>
         </div>
     </div>
