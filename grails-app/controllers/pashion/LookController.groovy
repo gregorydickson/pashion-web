@@ -26,6 +26,13 @@ class LookController {
         respond new Look(params)
     }
 
+    def filtersearch(){
+        def brand = Brand.findByName(params.brand)
+        def season = URLDecoder.decode(params.season)
+        def looks =  Look.filterResults( brand, season, type, availableFrom, availableTo, keywords).list() as JSON
+        render brand as JSON
+    }
+
     def search(){
         log.info params
         params.max = 3
@@ -33,8 +40,7 @@ class LookController {
         log.info "searchtext:"+searchtext
         def looks = Look.search(searchtext).searchResults as JSON
 
-        //def looks = elasticSearchService.search(searchtext,
-        //                                        [indices: Look, types: Look]).searchResults as JSON
+        
         log.info looks
         render looks
     }

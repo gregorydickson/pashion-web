@@ -8,6 +8,7 @@ class Look {
 	String image
 	Integer status
 	Integer security
+
 	
 	Integer availability
 	Date fromDate
@@ -19,6 +20,24 @@ class Look {
 	//auto fields
 	Date dateCreated
 	Date lastUpdated
+
+	static namedQueries = {
+        filterResults { brand, season, type, availableFrom, availableTo, keywords ->
+            brandCollection{
+            	if(brand) eq('brand', brand)
+            	if(season) eq('season',season)
+            }
+            if(type) eq('type',type)
+            if(availableFrom && availableTo) or {
+            	between('fromDate', availableFrom, availableTo)
+            	between('toDate', availableFrom, availableTo)
+            }
+            
+            
+            
+            
+        }
+    }
 	
 	
 	static searchable = {
