@@ -35,7 +35,7 @@ class SampleRequest {
 		idString nullable: true
 		dateRequested nullable: true
 		dateDue nullable: true
-		status nullable: true
+		requestStatus nullable: true
 		userCreatedId nullable: true
 		brand nullable:true 
 		receivingUser nullable:true

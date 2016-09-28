@@ -1,4 +1,0 @@
-model {
-    Collection collection
-}
-json g.render(collection, [expand:['looks']])

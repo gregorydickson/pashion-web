@@ -32,6 +32,9 @@ class LookController {
         def searchtext = URLDecoder.decode(params.searchtext)
         log.info "searchtext:"+searchtext
         def looks = Look.search(searchtext).searchResults as JSON
+
+        //def looks = elasticSearchService.search(searchtext,
+        //                                        [indices: Look, types: Look]).searchResults as JSON
         log.info looks
         render looks
     }

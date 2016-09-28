@@ -1,0 +1,4 @@
+model {
+    BrandCollection brandCollection
+}
+json g.render(brandCollection, [expand:['looks']])

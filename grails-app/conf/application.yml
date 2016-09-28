@@ -102,6 +102,8 @@ endpoints:
 
 ---
 grails:
+    servlet:
+        version: 3.0
     resources:
         pattern: '/**'
     mime:

@@ -23,8 +23,8 @@ export class Looks {
   activate() {
     window.addEventListener('keypress', this.boundHandler, false);
     return Promise.all([
-      this.http.fetch('/collection/looks/1').then(response => response.json()).then(collection => this.looks = collection.looks),
-      this.http.fetch('/collection/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
+      this.http.fetch('/brandCollection/looks/1').then(response => response.json()).then(collection => this.looks = collection.looks),
+      this.http.fetch('/brandCollection/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
       this.http.fetch('/brand/index.json').then(response => response.json()).then(brands => this.brands = brands)
 
     ]);
