@@ -15,7 +15,7 @@
                     <compose view-model="calendar"></compose>
                 </div>
                 <!-- search and filter requests -->
-                <div class="vertical grid-block shrink" style="background: white">
+                <div class="vertical grid-block shrink" style="background: white; margin-left: 1rem; margin-right: 1rem;">
                     <form style="margin-top:20px;" submit.delegate='search()'>
                         <!-- Search requests -->
                         <input type="text" keypress.delegate="search($event)" value.two-way="searchtext" class="search-box" id="search" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
