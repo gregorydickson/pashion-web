@@ -16,7 +16,7 @@ class Brand {
 
 	static searchable = true
 
-	static hasMany = [collections: Collection,pRAgencies:PRAgency,users:User]
+	static hasMany = [brandCollections: BrandCollection,pRAgencies:PRAgency,users:User]
 
 	static belongsTo = []
 
@@ -25,7 +25,7 @@ class Brand {
 		name nullable: true 
 		city nullable: true 
 		logo nullable: true
-		collections nullable:true
+		brandCollections nullable:true
 		pRAgencies nullable:true
 		users nullable:true
 	}

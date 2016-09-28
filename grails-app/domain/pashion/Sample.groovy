@@ -28,9 +28,9 @@ class Sample {
 	
 	static searchable = true
 
-	static belongsTo = [Look, Collection]
+	static belongsTo = [Look, BrandCollection]
 
-	static hasMany = [ collections:Collection, looks:Look, permissions:Permission]
+	static hasMany = [ brandCollections:BrandCollection, looks:Look, permissions:Permission]
 
 	static constraints = {
 		color nullable: true
@@ -51,7 +51,7 @@ class Sample {
 
 		location nullable: true
 
-		collections nullable: true
+		brandCollections nullable: true
 		looks nullable: true
 		permissions nullable: true
 		
