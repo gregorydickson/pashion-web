@@ -18,10 +18,10 @@
                 <div class="vertical grid-block shrink" style="background: white; margin-left: 1rem; margin-right: 1rem;">
                     <form style="margin-top:20px;" submit.delegate='search()'>
                         <!-- Search requests -->
-                        <input type="text" keypress.delegate="search($event)" value.two-way="searchtext" class="search-box" id="search" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
+                        <input type="text" keypress.delegate="search($event)" value.two-way="searchtext" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
                         <!-- filter requests -->
                         <span class="inline-label">
-                    <span class="form-label">Filter</span>
+                        <span class="form-label">Filter</span>
                         <select name="" id="">
                             <option>By Date</option>
                             <option>By Person</option>
@@ -123,12 +123,12 @@
                 </div>
                 <!-- search / filter area -->
                 <!-- top row -->
-                <div class="grid-block shrink">
+                <div class="grid-block shrink" style="margin-top: 1rem;">
                     <div class="grid-content shrink">
                         <a href="#">[ ]</a>
                     </div>
                     <div class="grid-content shrink">
-                        <input type="text" class="form-control search-box" id="search" placeholder="Search Text">
+                        <input type="text" keypress.delegate="search($event)" value.two-way="searchtext" class="search-box" id="search" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">  
                     </div>
                     <div class="grid-content shrink">
                         <a href="#">[ ] Trending</a>
