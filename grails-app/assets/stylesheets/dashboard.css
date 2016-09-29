@@ -52,13 +52,13 @@
 /* Styles for Calendar */
 .calendarnav {
   width: 100%;
-  margin-top:20px;
-  font-size: 11px;
-  font-weight: 300;
-  line-height: 1.5;
+  font-size: $font-size-small;
+  font-weight: 900;
   letter-spacing: 1px;
-  color: #383838;
+  color: var(--black);
 }
+
+
 .calendar-title a{
   font-size: 11px;
   font-weight: 300;
@@ -66,17 +66,23 @@
   letter-spacing: 1px;
 }
 .calendar-title a#titlelink{
-  color: #383838;
+  color: var(--black);
 }
+
 .calendar {
   padding-bottom: 0px;
   margin-top: 0px;
   width: 100%;
   display: block;
-  font-size: .5em;
   text-align: center;
-  color: #383838;
+  font-size: $font-size-small;
+  font-weight: 900;
+  letter-spacing: 1px;
+  color: var(--black);
+
 }
+
+
 .calendar thead td {
   font-size: 11px;
   font-weight: 300;

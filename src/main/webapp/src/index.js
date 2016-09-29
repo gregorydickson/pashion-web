@@ -54,6 +54,8 @@ closeExpand(buttonNumber) {
   buttonChoice.classList.toggle("active");
   panelChoice.classList.toggle("show");  
 }
+
+
     
 }
 
