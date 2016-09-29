@@ -27,7 +27,7 @@
                             <option>By Person</option>
                             <option>By Request Number</option>
                         </select>
-                        </span>
+                    </span>
                     </form>
                 </div>
                 <!-- Accordion -->
@@ -115,37 +115,103 @@
                 </div>
             </div>
             <!-- Image Grid Large Panel-->
+            <!-- Header -->
             <div id="looks" class="vertical grid-block grid-block-vertical-shadow" style="background: white; overflow:hidden;">
                 <div id="comms_panel" class="vertical grid-content align-left tool-header shrink">
                     <span class="ui-text-label-m-broad">IMAGE SEARCH</span>
+                    <span class="ui-text-label-m-broad" style="margin-left:1rem;">n Images</span>
                 </div>
-                <div class="vertical grid-content shrink">
-                    <form>
-                        <ul class="menu-bar">
-                            <li>
-                                <input type="text" class="form-control search-box" id="search" placeholder="Search Text">
-                            </li>
-                            <li><a href="#">Available </a></li>
-                            <li><a href="#">Theme</a></li>
-                        </ul>
-                        <ul class="menu-bar">
-                            <li><a href="#">Brand</a></li>
-                            <li>
+                <!-- search / filter area -->
+                <div class=grid-block>
+                    <!-- top row -->
+                    <div class="grid-content shrink">
+                        <a href="#">[ ]</a>
+                    </div>
+                    <div class="grid-content shrink">
+                        <input type="text" class="form-control search-box" id="search" placeholder="Search Text">
+                    </div>
+                    <div class="grid-content shrink">
+                        <a href="#">[ ] Trending</a>
+                    </div>
+                    <div class="grid-content shrink">
+                       <a href="#">[ ] Latest</a>
+                    </div>
+                    <div class="grid-content shrink">
+                        <span class="inline-label">
+                            <a href="#">[ ] Available</a>
+                            <input type="text" class="" id="start-date" placeholder="Start Date">
+                        </span>
+                    </div>
+                    <div class="grid-content shrink">
+                        <span class="inline-label">
+                            <span class="form-label">to</span>
+                            <input type="text" class="" id="end-date" placeholder="End Date">
+                        </span>
+                    </div>
+                    <div class="grid-content shrink">
+                        <span class="inline-label">
+                            <span class="form-label">Theme</span>
                                 <select name="" id="">
-                                    <option>Select Season</option>
-                                    <option repeat.for="season of seasons" value.bind="seasons">${season}</option>
+                                    <option>Military</option>
+                                    <option>Punk</option>
+                                    <option>Evening</option>
                                 </select>
-                            </li>
-                            <li>
-                                <select name="" id="">
-                                    <option>Select Type</option>
-                                    <option repeat.for="season of seasons" value.bind="seasons">${season}</option>
-                                </select>
-                            </li>
-                            <li><a href="#">Color</a></li>
-                        </ul>
-                    </form>
+                        </span>
+                    </div>
                 </div>
+                <div class="grid-block">
+                <!-- 2nd row -->
+                <div class="grid-content shrink">
+                        <a href="#">[ ]</a>
+                </div>
+                <div class="grid-content shrink">
+                    <span class="inline-label">
+                        <span class="form-label">Brand</span>
+                            <select name="" id="">
+                                <option>Select</option>
+                                <option>Alphy Bets</option>
+                                <option>Beta Boutique</option>
+                                <option>Couture spelling</option>
+                            </select>
+                    </span>
+                </div>
+                <div class="grid-content shrink">
+                    <span class="inline-label">
+                        <span class="form-label">Season</span>
+                            <select name="" id="">
+                                    <option>Select</option>
+                                    <option repeat.for="season of seasons" value.bind="seasons">${season}</option>
+                            </select>
+                    </span>
+                </div> 
+                <div class="grid-content shrink">
+                    <span class="inline-label">
+                        <span class="form-label">Type</span>
+                            <select name="" id="">
+                                <option>Runway</option>
+                                <option>Looks</option>
+                                <option>Samples</option>
+                                <option>All</option>
+                            </select>
+                    </span>
+                </div>
+                <div class="grid-content shrink">
+                    <span class="inline-label">
+                        <span class="form-label">Color</span>
+                            <select name="" id="">
+                                <option>Select</option>
+                                <option>Ocra (345)</option>
+                                <option>Beige (234)</option>
+                                <option>Aquamarine (345)</option>
+                            </select>
+                    </span>
+                </div>
+
+
+
+                </div>
+
+
                 <!-- Images/Looks -->
                 <div class="medium-up-4 align-spaced grid-block" style="overflow: auto;">
                     <div class="grid-content" repeat.for="look of looks">
@@ -166,9 +232,6 @@
                 <div id="comms_panel" class="vertical grid-content align-left tool-header shrink">
                     <span class="ui-text-label-m-broad">MESSAGES</span>
                 </div>
-
-
-
             </div>
         </div>
         <div id="bottom-panel-spacer" class="grid-content " style="overflow:visible;">
