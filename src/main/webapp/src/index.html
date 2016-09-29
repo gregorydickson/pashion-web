@@ -124,28 +124,26 @@
                 <!-- search / filter area -->
                 <!-- top row -->
                 <div class="grid-block shrink" style="margin-top: 1rem;">
-                    <div class="grid-content shrink">
+                    <div class="grid-content shrink" style="margin-top: 0.5rem;">
                         <input id="checkbox-search" type="checkbox" checked>
                     </div>
                     <div class="grid-content shrink">
                         <input type="text" keypress.delegate="search($event)" value.two-way="searchtext" class="search-box" id="search" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">  
                     </div>
-                    <div class="grid-content shrink">
+                    <div class="grid-content shrink" style="margin-top: 0.5rem;">
                         <input id="checkbox-trending" type="checkbox"><label for="checkbox-trending">Trending</label>
                     </div>
-                    <div class="grid-content shrink">
+                    <div class="grid-content shrink" style="margin-top: 0.5rem;">
                        <input id="checkbox-latest" type="checkbox"><label for="checkbox-latest">Latest</label>
                     </div>
-                    <div class="grid-content shrink">
-
-                            <input id="checkbox-available" type="checkbox"><label for="checkbox-available">Available</label>
-
+                    <div class="grid-content shrink" style="padding-right:0; margin-top: 0.5rem;">
+                            <input id="checkbox-available" type="checkbox"><label for="checkbox-available" style="margin-right:0.5rem;">Available</label>
                     </div>
-                    <div class="grid-content shrink">
+                    <div class="grid-content shrink" style="padding-left:0; padding-right:0;">
                             <input type="text" class="" id="start-date" placeholder="Start Date">
 
                     </div>
-                    <div class="grid-content shrink">
+                    <div class="grid-content shrink" style="padding-left:0; padding-right:0;">
                         <span class="inline-label">
                             <span class="form-label">to</span>
                             <input type="text" class="" id="end-date" placeholder="End Date">
@@ -164,7 +162,7 @@
                 </div>
                 <!-- 2nd row -->
                 <div class="grid-block shrink">
-                    <div class="grid-content shrink">
+                    <div class="grid-content shrink" style="margin-top: 0.5rem;">
                             <input id="checkbox-brand" type="checkbox">
                     </div>
                     <div class="grid-content shrink">
