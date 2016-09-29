@@ -6,6 +6,7 @@ class Look {
 	String name
 	String description
 	String image
+	String type
 	Integer status
 	Integer security
 
@@ -49,19 +50,21 @@ class Look {
 	static hasMany = [ permissions:Permission, samples:Sample]
 
 	static constraints = {
-		description(nullable:true)
-		image(nullable:true)
-		status(nullable:true)
-		security(nullable:true)
-		availability(nullable:true)
+		name nullable:true
+		description nullable:true
+		image nullable:true
+		type nullable: true
+		status nullable:true
+		security nullable:true
+		availability nullable:true
 
-		fromDate(nullable:true)
-		toDate(nullable:true)
+		fromDate nullable:true
+		toDate nullable:true
 		
-		userCreatedId(nullable:true)
-		lastModifiedUserId(nullable:true)
+		userCreatedId nullable:true
+		lastModifiedUserId nullable:true
 
-		permissions(nullable:true)
-		samples(nullable:true)
+		permissions nullable:true
+		samples nullable:true
 	}
 }

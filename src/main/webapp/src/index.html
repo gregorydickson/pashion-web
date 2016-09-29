@@ -132,19 +132,19 @@
                         <ul class="menu-bar">
                             <li>
                                 <select name="" id="" value.bind="selectedBrand" change.delegate="filterChange($event.target)">
-                                    <option>Select Brand</option>
+                                    <option value="">Select Brand</option>
                                     <option repeat.for="brand of brands" model.bind="brand.id">${brand.name}</option>
                                 </select>
                             </li>
                             <li>
                                 <select name="" id="" value.bind="selectedSeason" change.delegate="filterChange($event.target)">
-                                    <option>Select Season</option>
+                                    <option value="">Select Season</option>
                                     <option repeat.for="season of seasons" model.bind="season">${season}</option>
                                 </select>
                             </li>
                             <li>
                                 <select name="" id="" value.bind="selectedItemType" change.delegate="filterChange($event.target)">
-                                    <option>Select Type</option>
+                                    <option value="">Select Type</option>
                                     <option repeat.for="type of itemTypes" model.bind="type">${type}</option>
                                 </select>
                             </li>
