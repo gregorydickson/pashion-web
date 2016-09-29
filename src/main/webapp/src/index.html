@@ -115,15 +115,15 @@
                 </div>
             </div>
             <!-- Image Grid Large Panel-->
-            <!-- Header -->
             <div id="looks" class="vertical grid-block grid-block-vertical-shadow" style="background: white; overflow:hidden;">
-                <div id="comms_panel" class="vertical grid-content align-left tool-header shrink">
+                <!-- Header -->
+                <div id="comms_panel" class="grid-content align-left tool-header shrink">
                     <span class="ui-text-label-m-broad">IMAGE SEARCH</span>
                     <span class="ui-text-label-m-broad" style="margin-left:1rem;">n Images</span>
                 </div>
                 <!-- search / filter area -->
-                <div class=grid-block>
-                    <!-- top row -->
+                <!-- top row -->
+                <div class="grid-block shrink">
                     <div class="grid-content shrink">
                         <a href="#">[ ]</a>
                     </div>
@@ -159,59 +159,54 @@
                         </span>
                     </div>
                 </div>
-                <div class="grid-block">
                 <!-- 2nd row -->
-                <div class="grid-content shrink">
-                        <a href="#">[ ]</a>
-                </div>
-                <div class="grid-content shrink">
-                    <span class="inline-label">
-                        <span class="form-label">Brand</span>
-                            <select name="" id="">
-                                <option>Select</option>
-                                <option>Alphy Bets</option>
-                                <option>Beta Boutique</option>
-                                <option>Couture spelling</option>
-                            </select>
-                    </span>
-                </div>
-                <div class="grid-content shrink">
-                    <span class="inline-label">
-                        <span class="form-label">Season</span>
-                            <select name="" id="">
+                <div class="grid-block shrink">
+                    <div class="grid-content shrink">
+                            <a href="#">[ ]</a>
+                    </div>
+                    <div class="grid-content shrink">
+                        <span class="inline-label">
+                            <span class="form-label">Brand</span>
+                                <select name="" id="">
                                     <option>Select</option>
-                                    <option repeat.for="season of seasons" value.bind="seasons">${season}</option>
-                            </select>
-                    </span>
-                </div> 
-                <div class="grid-content shrink">
-                    <span class="inline-label">
-                        <span class="form-label">Type</span>
-                            <select name="" id="">
-                                <option>Runway</option>
-                                <option>Looks</option>
-                                <option>Samples</option>
-                                <option>All</option>
-                            </select>
-                    </span>
+                                    <option>Alphy Bets</option>
+                                    <option>Beta Boutique</option>
+                                    <option>Couture spelling</option>
+                                </select>
+                        </span>
+                    </div>
+                    <div class="grid-content shrink">
+                        <span class="inline-label">
+                            <span class="form-label">Season</span>
+                                <select name="" id="">
+                                        <option>Select</option>
+                                        <option repeat.for="season of seasons" value.bind="seasons">${season}</option>
+                                </select>
+                        </span>
+                    </div> 
+                    <div class="grid-content shrink">
+                        <span class="inline-label">
+                            <span class="form-label">Type</span>
+                                <select name="" id="">
+                                    <option>All</option>
+                                    <option>Looks</option>
+                                    <option>Samples</option>
+                                    <option>Runway</option>
+                                </select>
+                        </span>
+                    </div>
+                    <div class="grid-content shrink">
+                        <span class="inline-label">
+                            <span class="form-label">Color</span>
+                                <select name="" id="">
+                                    <option>Select</option>
+                                    <option>Ocra (345)</option>
+                                    <option>Beige (234)</option>
+                                    <option>Aquamarine (345)</option>
+                                </select>
+                        </span>
+                    </div>
                 </div>
-                <div class="grid-content shrink">
-                    <span class="inline-label">
-                        <span class="form-label">Color</span>
-                            <select name="" id="">
-                                <option>Select</option>
-                                <option>Ocra (345)</option>
-                                <option>Beige (234)</option>
-                                <option>Aquamarine (345)</option>
-                            </select>
-                    </span>
-                </div>
-
-
-
-                </div>
-
-
                 <!-- Images/Looks -->
                 <div class="medium-up-4 align-spaced grid-block" style="overflow: auto;">
                     <div class="grid-content" repeat.for="look of looks">
@@ -234,7 +229,7 @@
                 </div>
             </div>
         </div>
-        <div id="bottom-panel-spacer" class="grid-content " style="overflow:visible;">
+        <div id="bottom-panel-spacer" class="grid-content shrink" style="overflow:visible;">
             <div style="height: 7px;">
             </div>
         </div>
