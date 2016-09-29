@@ -29,10 +29,21 @@ class BrandCollectionController {
     }
     def seasons(){
         //quick list to get UI going
-        def seasons = ['Fall 2016 Couture', 'Spring 2017 Ready-to-Wear',
-                        'Spring 2017 Menswear', 'Resort 2017', 'Fall 2016 Ready-to-Wear',
-                        'Spring 2016 Couture','Fall 2016 Menswear'] as JSON
+        def seasons = ['Fall 2016 Couture','Spring 2016 Couture','Fall 2016 Menswear',
+                         'Fall 2016 Ready-to-Wear','Spring 2017 Ready-to-Wear',
+                        'Spring 2017 Menswear', 'Resort 2017', 
+                        ,'Spring 2017 Couture',
+                        'Winter 2017 Menswear'] as JSON
         render seasons
+    }
+    def itemTypes(){
+        //quick list to get UI going
+        def itemTypes = ['Runway', 'Looks', 'Samples', 'All'] as JSON
+        render itemTypes
+    }
+    def colors(){
+        def colors = ['Red', 'Black', 'White'] as JSON
+        render colors
     }
 
     @Transactional

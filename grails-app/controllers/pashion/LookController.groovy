@@ -3,6 +3,8 @@ package pashion
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.converters.JSON
+import java.text.SimpleDateFormat
+import java.util.Date
 
 import java.net.URLDecoder
 
@@ -26,6 +28,29 @@ class LookController {
         respond new Look(params)
     }
 
+    
+    
+    def filterSearch(){
+        def dateFormatString = "yyyy-MM-dd"
+        def dateFormat =  new SimpleDateFormat(dateFormatString)
+        Date availableFrom = null
+        Date availableTo = null
+        Brand brand = null
+        if(params.brand != "")
+            brand = Brand.get(params.brand)
+            
+        def season = URLDecoder.decode(params.season)
+        def itemtype = params.itemType
+        if(params.availableFrom != "")
+            availableFrom = dateFormat.parse(params.availableFrom)
+        if(params.availableTo != "")   
+            availableTo = dateFormat.parse(params.availableTo)
+        def keywords = URLDecoder.decode(params.searchtext)
+        def looks =  Look.filterResults( brand, season, itemtype, availableFrom, availableTo, keywords).list() as JSON
+        log.info looks
+        render looks
+    }
+
     def search(){
         log.info params
         params.max = 3
@@ -33,8 +58,7 @@ class LookController {
         log.info "searchtext:"+searchtext
         def looks = Look.search(searchtext).searchResults as JSON
 
-        //def looks = elasticSearchService.search(searchtext,
-        //                                        [indices: Look, types: Look]).searchResults as JSON
+        
         log.info looks
         render looks
     }
