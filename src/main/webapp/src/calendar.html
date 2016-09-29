@@ -4,25 +4,25 @@
             <div class="grid-block align-left">
                 <span class="ui-text-label-m-broad" style="margin-left:1rem;">CALENDAR</span>
             </div>
-            <div class="grid-block align-right" >
+            <div class="grid-block align-right">
                 <span class="expando" style="margin-right:1rem;">
-           <a route-href="route: requestman;"><img src="/assets/nav/expando.png" /></a>
-        </span>
+                  <a route-href="route: requestman;"><img src="/assets/nav/expando.png" /></a>
+                </span>
             </div>
         </div>
-        <div class="grid-block">
+        <div class="grid-block" style="margin-top: 1.5rem;" >
             <span class="calendarnav prev">
-          <a click.delegate="previous()"><img src="/assets/calendar/prev.png"  /></a>
-        </span>
+              <a click.delegate="previous()"><img src="/assets/calendar/prev.png"  /></a>
+            </span>
             <span class="calendarnav calendar-title"><a id="titlelink" click.delegate="activate()">TODAY</a></span>
             <span class="calendarnav next">
-          <a click.delegate="next()"><img src="/assets/calendar/next.png" /></a>
-        </span>
+              <a click.delegate="next()"><img src="/assets/calendar/next.png" /></a>
+            </span>
         </div>
-        <div class="grid-block">
+        <div class="grid-block" style="margin-top: 1rem; ">
             <span class="calendarnav monthyear">${monthname}&emsp;${year}</span>
         </div>
-        <div class="grid-block ">
+        <div class="grid-block " style="margin-left: 1rem; margin-top: 1rem; margin-right: 1rem;">
             <table class="calendar">
                 <thead>
                     <tr>
