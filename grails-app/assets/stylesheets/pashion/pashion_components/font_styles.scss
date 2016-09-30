@@ -5,52 +5,52 @@
 	font-size: 72px;
 	font-weight: 500;
 	letter-spacing: 3.3px;
-	color: var(--scarlet);
+	color: $scarlet;
 }
 
 .welcome-header {
 	font-size: $font-size-headings;
 	font-weight: 900;
 	text-align: center;
-	color: var(--black);
+	color: $black;
 }
 
 .welcome-text {
 	font-size: $font-size-e-extra-large;
-	color: var(--black);
+	color: $black;
 }
 
 .icon-style-white {
 	font-size: $font-size-extra-large;
 	font-weight: 900;
 	line-height: 0.6;
-	color: var(--white);
+	color: $white;
 }
 
 .hover-text-style {
 	font-size: $font-size-extra-large;
 	line-height: 1.2;
 	color: #ffffff;
-	color: var(--white);
+	color: $white;
 }
 
 .nav-label-header {
 	font-size: $font-size-large;
 	line-height: 1;
 	letter-spacing: 4px;
-	color: var(--white);
+	color: $white;
 }
 
 .ui-text-label-l-dialogue-light {
 	font-size: $font-size-large;
 	letter-spacing: 1px;
-	color: var(--white-three);
+	color: $white-three;
 }
 
 .ui-text-label-l-left {
 	font-size: $font-size-large;
 	line-height: 1;
-	color: var(--black);
+	color: $black;
 	text-align:left;
 }
 
@@ -58,7 +58,7 @@
 	font-size: $font-size-large;
 	line-height: 1;
 	text-align: center;
-	color: var(--black);
+	color: $black;
 }
 
 .ui-text-label-l-dialogue {
@@ -66,52 +66,52 @@
 	line-height: 1;
 	letter-spacing: 1px;
 	text-align: center;
-	color: var(--black);
+	color: $black;
 }
 
 .button-text {
 	font-size: $font-size-button;
 	text-align: center;
-	color: var(--black);
+	color: $black;
 }
 
 .ui-text-label-m-blue {
 	font-size: $font-size-mid;
 	font-weight: 500;
 	letter-spacing: 0.5px;
-	color: var(--flat-blue);
+	color: $flat-blue;
 }
 
 .ui-text-label-m-red {
 	font-size: $font-size-mid;
 	font-weight: 500;
 	letter-spacing: 0.5px;
-	color: var(--scarlet);
+	color: $scarlet;
 }
 
 .ui-text-label-m-broad {
 	font-size: $font-size-mid;
 	font-weight: 500;
 	letter-spacing: 1px;
-	color: var(--black);
+	color: $black;
 }
 
 .nav-label-footer {
 	font-size: $font-size-mid;
 	font-weight: 500;
 	letter-spacing: 4px;
-	color: var(--white);
+	color: $white;
 }
 
 .ui-text-label-m {
 	font-size: $font-size-mid; 
 	font-weight: 500;
-	color: var(--black);
+	color: $black;
 }
 
 .ui-text-label-m-light {
 	font-size: $font-size-mid;
-	color: var(--warm-grey);
+	color: $warm-grey;
 }
 
 .calendar-day-numbers-white {
@@ -119,7 +119,7 @@
 	font-weight: 900;
 	line-height: 1.1;
 	text-align: center;
-	color: var(--white);
+	color: $white;
 }
 
 .calendar-day-numbers-lighter {
@@ -127,7 +127,7 @@
 	font-weight: 900;
 	line-height: 1.1;
 	text-align: center;
-	color: var(--pinkish-grey);
+	color: $pinkish-grey;
 }
 
 .text-style {
@@ -135,21 +135,21 @@
 	font-weight: 900;
 	line-height: 1.1;
 	text-align: center;
-	color: var(--black);
+	color: $black;
 }
 
 .ui-text-label-s {
 	font-size: $font-size-small;
 	line-height: 1.1;
 	text-align: center;
-	color: var(--black);
+	color: $black;
 }
 
 .copyright {
 	font-size: $font-size-small; 
 	//font-weight: 300;
 	text-align: right;
-	color: var(--white);
+	color: $white;
 }
 
 .ui-text-label-s-light {
@@ -157,12 +157,12 @@
 	//font-weight: 300;
 	line-height: 1.1;
 	text-align: justify;
-	color: var(--warm-grey);
+	color: $warm-grey;
 }
 
 .ui-text-label-s-left {
 	font-size: $font-size-small;
 	//font-weight: 300;
 	line-height: 1.1;
-	color: var(--black);
+	color: $black;
 }

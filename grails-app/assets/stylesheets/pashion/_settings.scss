@@ -69,7 +69,7 @@ $include-css: (
 // ----------------
 
 $rem-base: 11px;
-$base-font-size: 100%;
+$base-font-size: 68.5%;
 $base-line-height: 1.6;
 $headers: "h1,h2,h3,h4,h5,h6";
 $font-weight-normal: 300;
@@ -99,23 +99,21 @@ $loader-classes: ('sk-loader');
 
 //Pashion Globals
 // --------------
-:root {
-  --black: #383838;
-  --white: #ffffff;
-  --black-two: #000000;
-  --black-three: #222222;
-  --muted-green: #59a559;
-  --white-two: #f7f7f7;
-  --warm-grey: #9b9b9b;
-  --scarlet: #d0021b;
-  --apple-green: #7ed321;
-  --pinkish-grey: #cccccc;
-  --flat-blue: #3971b1;
-  --white-three: #ebebeb;
 
-  font-size: 68.5%; //11px
-}
+  $black: #383838;
+  $white: #ffffff;
+  $black-two: #000000;
+  $black-three: #222222;
+  $muted-green: #59a559;
+  $white-two: #f7f7f7;
+  $warm-grey: #9b9b9b;
+  $scarlet: #d0021b;
+  $apple-green: #7ed321;
+  $pinkish-grey: #cccccc;
+  $flat-blue: #3971b1;
+  $white-three: #ebebeb;
 
+ 
   $font-size-small : 0.9rem; //10px;
   $font-size-mid : 1.0rem; //11px
   $font-size-button : 1.1rem; //12px;

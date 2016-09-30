@@ -4,7 +4,7 @@
   font-size: $font-size-small;
   font-weight: 900;
   letter-spacing: 1px;
-  color: var(--black);
+  color: $black;
 }
 
 
@@ -15,7 +15,7 @@
   letter-spacing: 1px;
 }
 .calendar-title a#titlelink{
-  color: var(--black);
+  color: $black;
 }
 
 .calendar {
@@ -27,7 +27,7 @@
   font-size: $font-size-small;
   font-weight: 900;
   letter-spacing: 1px;
-  color: var(--black);
+  color: $black;
 
 }
 
