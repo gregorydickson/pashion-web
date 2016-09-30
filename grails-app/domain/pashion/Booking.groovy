@@ -2,7 +2,8 @@ package pashion
 
 class Booking {
 
-	Date bookingDate
+	Date bookingStartDate
+	Date bookingEndDate
 	Long userCreatedId
 
 	//auto fields

@@ -9,11 +9,9 @@ class Look {
 	String type
 	String color
 	String theme
-	Integer status
-	Integer security
 
-	
-	Integer availability
+
+
 	Date fromDate
 	Date toDate
 
@@ -49,7 +47,7 @@ class Look {
 
 	static belongsTo = [brandCollection: BrandCollection]
 
-	static hasMany = [ permissions:Permission, samples:Sample]
+	static hasMany = [ permissions:Permission, samples:Sample, bookings:Bookings]
 
 	static mapping = {
 		type index: 'type_idx'
@@ -66,9 +64,7 @@ class Look {
 		type nullable: true
 		color nullable: true
 		theme nullable:true
-		status nullable:true
-		security nullable:true
-		availability nullable:true
+
 
 		fromDate nullable:true
 		toDate nullable:true
