@@ -60,5 +60,7 @@ table.accordion {
 	table-layout:fixed;
 }
 
-
+table.accordion.expanded {
+    background-color: $white-two;
+}
 
