@@ -1,198 +1,228 @@
-@import "compass/compass/functions";
-@import "compass/compass/css3";
-@import "baseapps/settings";
-
-:root {
-	--black: #383838;
-	--white: #ffffff;
-	--black-two: #000000;
-	--black-three: #222222;
-	--muted-green: #59a559;
-	--white-two: #f7f7f7;
-	--warm-grey: #9b9b9b;
-	--scarlet: #d0021b;
-	--apple-green: #7ed321;
-	--pinkish-grey: #cccccc;
-	--flat-blue: #3971b1;
-	--white-three: #ebebeb;
-
-	font-size: 68.5%; //11px
-}
-
-	$font-size-small : 0.9rem; //10px;
-	$font-size-mid : 1.0rem; //11px
-	$font-size-button : 1.1rem; //12px;
-	$font-size-headings: 2.2rem; //24px
-	$font-size-large: 1.27rem; // 14px;
-	$font-size-extra-large: 1.45rem; //16px;
-	$font-size-e-extra-large: 1.73rem; // 19px;
-
-
 /* Text styles */
-/* reset for rem = 11px */
 
 .w-a-r-n-i-n-g {
+	font-family: Avenir, Lato, Nunito;
 	font-size: 72px;
 	font-weight: 500;
 	letter-spacing: 3.3px;
+	color: #d0021b;
 	color: var(--scarlet);
 }
 
 .welcome-header {
-	font-size: $font-size-headings;
+	font-family: Avenir, Lato;
+	font-size: 24px;
 	font-weight: 900;
 	text-align: center;
+	color: #383838;
 	color: var(--black);
 }
 
 .welcome-text {
-	font-size: $font-size-e-extra-large;
+	font-family: Avenir, Lato-Book;
+	font-size: 19px;
+	color: #383838;
 	color: var(--black);
 }
 
 .icon-style-white {
-	font-size: $font-size-extra-large;
+	font-family: Avenir, Lato;
+	font-size: 16px;
 	font-weight: 900;
 	line-height: 0.6;
+	color: #ffffff;
 	color: var(--white);
 }
 
 .hover-text-style {
-	font-size: $font-size-extra-large;
+	font-family: Avenir, Lato;
+	font-size: 16px;
+	//font-weight: 300;
 	line-height: 1.2;
 	color: #ffffff;
 	color: var(--white);
 }
 
 .nav-label-header {
-	font-size: $font-size-large;
+	font-family: Avenir, Lato;
+	font-size: 14px;
+	//font-weight: 300;
 	line-height: 1;
 	letter-spacing: 4px;
+	color: #ffffff;
 	color: var(--white);
 }
 
 .ui-text-label-l-dialogue-light {
-	font-size: $font-size-large;
+	font-family: Avenir, Lato;
+	font-size: 14px;
+	//font-weight: 300;
+	line-height: 1;
 	letter-spacing: 1px;
+	color: #ebebeb;
 	color: var(--white-three);
 }
 
 .ui-text-label-l-left {
-	font-size: $font-size-large;
+	font-family: Avenir, Lato;
+	font-size: 14px;
+	//font-weight: 300;
 	line-height: 1;
+	color: #383838;
 	color: var(--black);
-	text-align:left;
 }
 
 .ui-text-label-l {
-	font-size: $font-size-large;
+	font-family: Avenir, Lato;
+	font-size: 14px;
+	//font-weight: 300;
 	line-height: 1;
 	text-align: center;
+	color: #383838;
 	color: var(--black);
 }
 
 .ui-text-label-l-dialogue {
-	font-size: $font-size-large;
+	font-family: Avenir, Lato;
+	font-size: 14px;
+	//font-weight: 300;
 	line-height: 1;
 	letter-spacing: 1px;
 	text-align: center;
+	color: #383838;
 	color: var(--black);
 }
 
 .button-text {
-	font-size: $font-size-button;
+	font-family: Avenir, Lato;
+	font-size: 12px;
+	//font-weight: 300;
 	text-align: center;
+	color: #383838;
 	color: var(--black);
 }
 
 .ui-text-label-m-blue {
-	font-size: $font-size-mid;
+	font-family: Avenir, Lato;
+	font-size: 11px;
 	font-weight: 500;
+	line-height: 1.5;
 	letter-spacing: 0.5px;
+	color: #3971b1;
 	color: var(--flat-blue);
 }
 
 .ui-text-label-m-red {
-	font-size: $font-size-mid;
+	font-family: Avenir, Lato;
+	font-size: 11px;
 	font-weight: 500;
+	line-height: 1.5;
 	letter-spacing: 0.5px;
+	color: #d0021b;
 	color: var(--scarlet);
 }
 
 .ui-text-label-m-broad {
-	font-size: $font-size-mid;
+	font-family: Avenir, Lato;
+	font-size: 11px;
 	font-weight: 500;
+	line-height: 1.5;
 	letter-spacing: 1px;
+	color: #383838;
 	color: var(--black);
 }
 
 .nav-label-footer {
-	font-size: $font-size-mid;
+	font-family: Avenir, Lato;
+	font-size: 11px;
 	font-weight: 500;
 	letter-spacing: 4px;
+	color: #ffffff;
 	color: var(--white);
 }
 
 .ui-text-label-m {
-	font-size: $font-size-mid; 
+	/*font-family: Avenir, Lato;*/
+	font-size: 11px;
 	font-weight: 500;
+	line-height: 1.5;
+	color: #383838;
 	color: var(--black);
 }
 
 .ui-text-label-m-light {
-	font-size: $font-size-mid;
+	font-family: Avenir, Lato;
+	font-size: 11px;
+	//font-weight: 300;
+	line-height: 1.5;
+	color: #9b9b9b;
 	color: var(--warm-grey);
 }
 
 .calendar-day-numbers-white {
-	font-size: $font-size-small;
+	font-family: Avenir, Lato;
+	font-size: 10px;
 	font-weight: 900;
 	line-height: 1.1;
 	text-align: center;
+	color: #ffffff;
 	color: var(--white);
 }
 
 .calendar-day-numbers-lighter {
-	font-size: $font-size-small;
+	font-family: Avenir, Lato;
+	font-size: 10px;
 	font-weight: 900;
 	line-height: 1.1;
 	text-align: center;
+	color: #cccccc;
 	color: var(--pinkish-grey);
 }
 
 .text-style {
-	font-size: $font-size-small;
+	font-family: Avenir, Lato;
+	font-size: 10px;
 	font-weight: 900;
 	line-height: 1.1;
 	text-align: center;
+	color: #383838;
 	color: var(--black);
 }
 
 .ui-text-label-s {
-	font-size: $font-size-small;
+	font-family: Avenir, Lato;
+	font-size: 10px;
+	//font-weight: 300;
 	line-height: 1.1;
 	text-align: center;
+	color: #383838;
 	color: var(--black);
 }
 
 .copyright {
-	font-size: $font-size-small; 
+	font-family: Avenir, Lato;
+	font-size: 10px;
 	//font-weight: 300;
 	text-align: right;
+	color: #ffffff;
 	color: var(--white);
 }
 
 .ui-text-label-s-light {
-	font-size: $font-size-small;
+	font-family: Avenir, Lato;
+	font-size: 10px;
 	//font-weight: 300;
 	line-height: 1.1;
 	text-align: justify;
+	color: #9b9b9b;
 	color: var(--warm-grey);
 }
 
 .ui-text-label-s-left {
-	font-size: $font-size-small;
+	font-family: Avenir, Lato;
+	font-size: 10px;
 	//font-weight: 300;
 	line-height: 1.1;
+	color: #383838;
 	color: var(--black);
 }

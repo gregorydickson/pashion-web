@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="layout" content="dashboard" />
-    <title>Aurelia 3</title>
+    <meta name="layout" content="pashion" />
+    <title>Pashion</title>
     
   </head>
 

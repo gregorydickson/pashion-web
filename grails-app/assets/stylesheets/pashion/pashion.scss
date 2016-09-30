@@ -54,3 +54,57 @@
 "components/utilities";
 
 
+@import
+"pashion_components/accordion",
+"pashion_components/font_styles",
+"pashion_components/fonts",
+"pashion_components/spinner",
+"pashion_components/calendar";
+
+.footer{
+	
+}
+
+.comms{
+	
+}
+
+#left-panel{
+	min-width: 280px;
+  max-width: 280px;
+	
+}
+#right-panel{
+	min-width: 280px;
+  max-width: 280px;
+	
+}
+#looks{
+  
+}
+.request{
+	border:2px solid lightgrey;
+}
+
+.title-bar{
+	height:50px;
+}
+.tool-header{
+  background-color: #f7f7f7;
+  height: 35px;
+  line-height: 35px;
+
+}
+.tool-header span{
+  font-weight: 300;
+  vertical-align: middle;
+  display: inline-block;
+  line-height: 35px;
+}
+.tool-header .expando{
+
+}
+
+
+
+

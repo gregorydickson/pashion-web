@@ -49,6 +49,7 @@ export class Index {
   activate() {
     window.addEventListener('keypress', this.boundHandler, false);
     return Promise.all([
+      this.http.fetch('/look/index.json').then(response => response.json()).then(looks => this.looks = looks),
       this.http.fetch('/brandCollection/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
       this.http.fetch('/brandCollection/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes),
       this.http.fetch('/brand/index.json').then(response => response.json()).then(brands => this.brands = brands)
