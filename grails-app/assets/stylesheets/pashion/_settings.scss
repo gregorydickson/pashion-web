@@ -69,7 +69,7 @@ $include-css: (
 // ----------------
 
 $rem-base: 11px;
-$base-font-size: 68.5%;
+$base-font-size: 11px;
 $base-line-height: 1.6;
 $headers: "h1,h2,h3,h4,h5,h6";
 $font-weight-normal: 300;
@@ -294,8 +294,8 @@ $btngroup-radius: $button-radius;
 // --------
 
 $card-background: #fff;
-$card-color: grey; //RM isitlight($card-background);
-$card-border: 0.5px solid grey; // RM var(--black); // RM smartscale($card-background, 7%);
+$card-color: $white-three; //RM isitlight($card-background);
+$card-border: 0.5px solid $white-three; // RM var(--black); // RM smartscale($card-background, 7%);
 $card-radius: 0px; //RM $global-radius;
 $card-shadow: none; //RM 0 1px 2px rgba(#000, 0.2);
 $card-padding: $global-padding;
@@ -326,7 +326,7 @@ $input-background: #fff;
 $input-background-hover: $input-background;
 $input-background-focus: $input-background;
 $input-background-disabled: smartscale($input-background);
-$input-border: 0.5px solid var(--white-three); 
+$input-border: 0.5px solid $white-three; 
 
 $input-border-hover: 1px solid #bbb;
 $input-border-focus: 1px solid #999;
