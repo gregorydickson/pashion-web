@@ -290,6 +290,7 @@ $meter-radius: 0 !default;
 
     &:hover {
       background-color: $select-background-hover;
+      border-color: $pinkish-grey; //RM
     }
 
     &:focus {

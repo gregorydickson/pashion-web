@@ -100,18 +100,19 @@ $loader-classes: ('sk-loader');
 //Pashion Globals
 // --------------
 
-  $black: #383838;
-  $white: #ffffff;
   $black-two: #000000;
   $black-three: #222222;
-  $muted-green: #59a559;
-  $white-two: #f7f7f7;
+  $black: #383838;
   $warm-grey: #9b9b9b;
+  $pinkish-grey: #cccccc;
+  $white-three: #ebebeb;
+  $white-two: #f7f7f7;
+  $white: #ffffff;
+
+  $muted-green: #59a559;
   $scarlet: #d0021b;
   $apple-green: #7ed321;
-  $pinkish-grey: #cccccc;
   $flat-blue: #3971b1;
-  $white-three: #ebebeb;
 
  
   $font-size-small : 0.9rem; //10px;
@@ -319,6 +320,7 @@ $thumbnail-shadow: 0 3px 15px rgba(black, 0.25);
  
 $form-fontsize: 1.0rem;
 $form-padding: 0.5rem;
+
 $input-color: $body-font-color;
 $input-color-hover: $input-color;
 $input-color-focus: $input-color;
@@ -326,28 +328,32 @@ $input-background: #fff;
 $input-background-hover: $input-background;
 $input-background-focus: $input-background;
 $input-background-disabled: smartscale($input-background);
-$input-border: 0.5px solid $white-three; 
-
-$input-border-hover: 1px solid #bbb;
-$input-border-focus: 1px solid #999;
+$input-border: 0.5px solid $white-three; //RM
+$input-border-hover: 0.5px solid $pinkish-grey; //RM
+$input-border-focus: 0.5px solid $pinkish-grey; //RM
 $input-cursor-disabled: not-allowed;
+
 $select-color: $body-font-color;
 $select-background: white;
 $select-background-hover: smartscale($select-background, 4%);
 $select-arrow: true;
 $select-arrow-color: $select-color;
+
 $form-label-fontsize: 1rem;
 $form-label-margin: 0.5rem;
-$form-label-color: #333;
-$inlinelabel-color: #333;
+$form-label-color: $body-font-color; //RM
+
+$inlinelabel-color: $body-font-color; //RM
 $inlinelabel-background: white;
-$inlinelabel-border: none;
+$inlinelabel-border: none; //RM
+
 $slider-background: #ddd;
 $slider-height: 1rem;
 $slider-radius: 0px;
 $slider-thumb-height: 1.5rem;
 $slider-thumb-color: $primary-color;
 $slider-thumb-radius: 0px;
+
 $meter-height: 1.5rem;
 $meter-background: #ccc;
 $meter-fill: $primary-color;
