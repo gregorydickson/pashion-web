@@ -28,7 +28,7 @@
   font-weight: 900;
   letter-spacing: 1px;
   color: $black;
-
+  margin-right: 1rem;
 }
 
 
@@ -42,6 +42,11 @@
   height: 27px;
 }
 
+
+.calendar-header-align{
+  margin-top: 1rem; 
+  text-align:center;
+}
 
 .overdue, .international,.waiting {
     position: relative;

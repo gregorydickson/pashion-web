@@ -3,6 +3,7 @@
         <div class="grid-block tool-header">
             <div class="grid-block align-left">
                 <span class="ui-text-label-m-broad" style="margin-left:1rem;">CALENDAR</span>
+                <span class="alert-box">3</span>
             </div>
             <div class="grid-block align-right">
                 <span class="expando" style="margin-right:1rem;">
@@ -10,7 +11,7 @@
                 </span>
             </div>
         </div>
-        <div class="grid-block" style="margin-top: 1.5rem;" >
+        <div class="grid-block calendar-header-align"  >
             <span class="calendarnav prev">
               <a click.delegate="previous()"><img src="/assets/calendar/prev.png"  /></a>
             </span>
@@ -19,10 +20,10 @@
               <a click.delegate="next()"><img src="/assets/calendar/next.png" /></a>
             </span>
         </div>
-        <div class="grid-block" style="margin-top: 1rem; ">
+        <div class="grid-block calendar-header-align">
             <span class="calendarnav monthyear">${monthname}&emsp;${year}</span>
         </div>
-        <div class="grid-block " style="margin-left: 1rem; margin-top: 1rem; margin-right: 1rem;">
+        <div class="grid-block calendar-header-align">
             <table class="calendar">
                 <thead>
                     <tr>

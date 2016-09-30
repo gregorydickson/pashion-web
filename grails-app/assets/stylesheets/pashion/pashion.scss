@@ -90,16 +90,15 @@
 }
 .tool-header{
   background-color: #f7f7f7;
-  height: 35px;
+  height: 3rem;
   line-height: 35px;
 
 }
 .tool-header span{
-  font-weight: 300;
   vertical-align: middle;
   display: inline-block;
-  line-height: 35px;
 }
+
 .tool-header .expando{
 
 }
@@ -146,7 +145,24 @@ input.search-box, input.search-box:hover, input.search-box:focus {
 
 .grid-block-vertical-shadow {
   box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.2);
+  background: white;
 }
+
+.alert-box {
+  width: 17px;
+  height: 17px;
+  border-radius: 3px;
+  background-color: $flat-blue;
+  font-size: $font-size-extra-large;
+  font-weight: 700;
+  line-height: 0.6;
+  color: $white;
+  padding-top: 0.5rem;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
+  text-align:center;
+}
+
 
 
 

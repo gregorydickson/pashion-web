@@ -10,9 +10,9 @@
             </div>
         </div>
         <div class="grid-block" style="overflow:visible;">
-            <div id="left-panel" class="vertical grid-block grid-block-vertical-shadow" style="background: white ">
+            <div id="left-panel" class="vertical grid-block grid-block-vertical-shadow">
                 <!-- Calendar -->
-                <div class="grid-block shrink calendar">
+                <div class="grid-block shrink">
                     <compose view-model="calendar"></compose>
                 </div>
                 <!-- search and filter requests -->
@@ -120,7 +120,7 @@
             <!-- -->
             <!-- Image Grid Large Panel-->
             <!-- -->
-            <div id="looks" class="vertical grid-block grid-block-vertical-shadow" style="background: white; overflow:hidden;">
+            <div id="looks" class="vertical grid-block grid-block-vertical-shadow" style="overflow:hidden;">
                 <!-- Header -->
                 <div id="comms_panel" class="grid-content align-left tool-header shrink">
                     <span class="ui-text-label-m-broad">IMAGE SEARCH</span>
@@ -154,7 +154,7 @@
                     <!--<div class="grid-content shrink" style="padding-right:0; margin-top: 0.5rem;">
                             <input id="checkbox-available" type="checkbox"><label for="checkbox-available" style="margin-right:0.5rem;">Available</label>
                     </div> -->
-                    
+
                     <!-- start date -->
                     <div class="grid-content shrink" style="padding-left:0; padding-right:0;">
                         <input type="date" value.bind="availableFrom" class="" change.delegate="filterChange($event.target)">
@@ -242,9 +242,12 @@
             <!-- -->
             <!-- Communications Panel  -->
             <!-- -->
-            <div id="right-panel" class="comms vertical grid-block grid-block-vertical-shadow" style="background: white">
+
+
+            <div id="right-panel" class="vertical grid-block grid-block-vertical-shadow">
                 <div id="comms_panel" class="vertical grid-content align-left tool-header shrink">
                     <span class="ui-text-label-m-broad">MESSAGES</span>
+                    <span class="alert-box">8</span>
                 </div>
             </div>
         </div>
