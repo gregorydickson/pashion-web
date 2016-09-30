@@ -28,10 +28,12 @@
                             <option>By Person</option>
                             <option>By Request Number</option>
                         </select>
-                    </span>
+                        </span>
                     </form>
                 </div>
+                <!-- -->
                 <!-- Accordion -->
+                <!-- -->
                 <!--header -->
                 <div class="vertical grid-content shrink" style="padding:0; background: white; margin-left: 1rem; margin-right: 1rem;">
                     <table class="accordion">
@@ -115,7 +117,9 @@
                 <div style="width: 7px">
                 </div>
             </div>
+            <!-- -->
             <!-- Image Grid Large Panel-->
+            <!-- -->
             <div id="looks" class="vertical grid-block grid-block-vertical-shadow" style="background: white; overflow:hidden;">
                 <!-- Header -->
                 <div id="comms_panel" class="grid-content align-left tool-header shrink">
@@ -127,47 +131,51 @@
                 <div class="medium-up-1  grid-block shrink" style="margin-top: 1rem;">
                     <!-- <div class="grid-content shrink" style="margin-top: 0.5rem;">
                         <input id="checkbox-search" type="checkbox" checked>
-                    </div> --><!-- change to UI, use "All" for each filter instead -->
+                    </div> -->
+                    <!-- change to UI, use "All" for each filter instead -->
+
                     <!-- Search -->
                     <div class="grid-content shrink">
-                        <input type="text" keypress.delegate="search($event)" value.two-way="searchtext" class="search-box" id="search" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">  
+                        <input type="text" keypress.delegate="search($event)" value.two-way="searchtext" class="search-box" id="search" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
                     </div>
                     <!-- Trending -->
                     <!--<div class="grid-content shrink" style="margin-top: 0.5rem;">
                         <input id="checkbox-trending" type="checkbox"><label for="checkbox-trending">Trending</label>
-                    </div> --> <!-- Trending postponed until later release -->
+                    </div> -->
+                    <!-- Trending postponed until later release -->
                     <!-- Latest -->
                     <!-- <div class="grid-content shrink" style="margin-top: 0.5rem;">
                        <input id="checkbox-latest" type="checkbox"><label for="checkbox-latest">Latest</label>
-                    </div> --> <!-- Latest postponed until later release -->
+                    </div> -->
+                    <!-- Latest postponed until later release -->
 
                     <!-- Available -->
                     <span class="inline-label" style="margin-left: 1rem; margin-right:4px; margin-top:0.5rem;">Available</span>
                     <!--<div class="grid-content shrink" style="padding-right:0; margin-top: 0.5rem;">
                             <input id="checkbox-available" type="checkbox"><label for="checkbox-available" style="margin-right:0.5rem;">Available</label>
                     </div> -->
+                    
                     <!-- start date -->
                     <div class="grid-content shrink" style="padding-left:0; padding-right:0;">
-                            <input type="date" value.bind="availableFrom" class="" change.delegate="filterChange($event.target)">
-
+                        <input type="date" value.bind="availableFrom" class="" change.delegate="filterChange($event.target)">
                     </div>
                     <!-- end date -->
                     <div class="grid-content shrink" style="padding-left:0; padding-right:0;">
                         <span class="inline-label">
                             <span class="form-label">to</span>
-                            <input type="date" value.bind="availableTo" class="" change.delegate="filterChange($event.target)"> 
+                        <input type="date" value.bind="availableTo" class="" change.delegate="filterChange($event.target)">
                         </span>
                     </div>
                     <!-- theme -->
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Theme</span>
-                                <select name="" id="">
-                                    <option>All</option>
-                                    <option>Military</option>
-                                    <option>Punk</option>
-                                    <option>Evening</option>
-                                </select>
+                        <select name="" id="">
+                            <option>All</option>
+                            <option>Military</option>
+                            <option>Punk</option>
+                            <option>Evening</option>
+                        </select>
                         </span>
                     </div>
                 </div>
@@ -180,40 +188,40 @@
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Brand</span>
-                                <select name="" id="" value.bind="selectedBrand" change.delegate="filterChange($event.target)">
-                                    <option value="">All</option>
-                                    <option repeat.for="brand of brands" model.bind="brand.id">${brand.name}</option>
-                                </select>
+                        <select name="" id="" value.bind="selectedBrand" change.delegate="filterChange($event.target)">
+                            <option value="">All</option>
+                            <option repeat.for="brand of brands" model.bind="brand.id">${brand.name}</option>
+                        </select>
                         </span>
                     </div>
                     <!-- Seasons -->
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Season</span>
-                                <select name="" id="" value.bind="selectedSeason" change.delegate="filterChange($event.target)">
-                                    <option value="">All</option>
-                                    <option repeat.for="season of seasons" model.bind="season">${season}</option>
-                                </select>
+                        <select name="" id="" value.bind="selectedSeason" change.delegate="filterChange($event.target)">
+                            <option value="">All</option>
+                            <option repeat.for="season of seasons" model.bind="season">${season}</option>
+                        </select>
                         </span>
-                    </div> 
+                    </div>
                     <!-- Type -->
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Type</span>
-                                <select name="" id="" value.bind="selectedItemType" change.delegate="filterChange($event.target)">
-                                    <option value="">All</option>
-                                    <option repeat.for="type of itemTypes" model.bind="type">${type}</option>
-                                </select>
+                        <select name="" id="" value.bind="selectedItemType" change.delegate="filterChange($event.target)">
+                            <option value="">All</option>
+                            <option repeat.for="type of itemTypes" model.bind="type">${type}</option>
+                        </select>
                         </span>
                     </div>
                     <!--- Color -->
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Color</span>
-                                <select name="" id="" value.bind="selectedColor" change.delegate="filterChange($event.target)">
-                                    <option value="">All</option>
-                                    <option repeat.for="color of colors" model.bind="color">${color}</option>
-                                </select>
+                        <select name="" id="" value.bind="selectedColor" change.delegate="filterChange($event.target)">
+                            <option value="">All</option>
+                            <option repeat.for="color of colors" model.bind="color">${color}</option>
+                        </select>
                         </span>
                     </div>
                 </div>
@@ -222,7 +230,6 @@
                     <div class="grid-content shrink" repeat.for="look of looks">
                         <div class="card">
                             <img src.bind="look.image" ref="image" />
-
                         </div>
                     </div>
                 </div>
@@ -232,7 +239,9 @@
                 <div style="width: 7px">
                 </div>
             </div>
+            <!-- -->
             <!-- Communications Panel  -->
+            <!-- -->
             <div id="right-panel" class="comms vertical grid-block grid-block-vertical-shadow" style="background: white">
                 <div id="comms_panel" class="vertical grid-content align-left tool-header shrink">
                     <span class="ui-text-label-m-broad">MESSAGES</span>
