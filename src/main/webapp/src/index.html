@@ -4,6 +4,7 @@
     <!-- RM accordion testing -->
     <!-- Calendar + Request  Panel -->
     <div class="vertical grid-block" style="background: #ebebeb">
+        <!-- top spacer -->
         <div id="top-panel-spacer" class="grid-block shrink">
             <div style="height: 6px;">
             </div>
@@ -127,28 +128,35 @@
                     <div class="grid-content shrink" style="margin-top: 0.5rem;">
                         <input id="checkbox-search" type="checkbox" checked>
                     </div>
+                    <!-- Search -->
                     <div class="grid-content shrink">
                         <input type="text" keypress.delegate="search($event)" value.two-way="searchtext" class="search-box" id="search" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">  
                     </div>
+                    <!-- Trending -->
                     <div class="grid-content shrink" style="margin-top: 0.5rem;">
                         <input id="checkbox-trending" type="checkbox"><label for="checkbox-trending">Trending</label>
                     </div>
+                    <!-- Latest -->
                     <div class="grid-content shrink" style="margin-top: 0.5rem;">
                        <input id="checkbox-latest" type="checkbox"><label for="checkbox-latest">Latest</label>
                     </div>
+                    <!-- Available -->
                     <div class="grid-content shrink" style="padding-right:0; margin-top: 0.5rem;">
                             <input id="checkbox-available" type="checkbox"><label for="checkbox-available" style="margin-right:0.5rem;">Available</label>
                     </div>
+                    <!-- start date -->
                     <div class="grid-content shrink" style="padding-left:0; padding-right:0;">
                             <input type="date" value.bind="availableFrom" class="" change.delegate="filterChange($event.target)">
 
                     </div>
+                    <!-- end date -->
                     <div class="grid-content shrink" style="padding-left:0; padding-right:0;">
                         <span class="inline-label">
                             <span class="form-label">to</span>
-                            <input type="date" value.bind="availableFrom" class="" change.delegate="filterChange($event.target)">
+                            <input type="date" value.bind="availableFrom" class="" change.delegate="filterChange($event.target)"> <!-- should this be availableTo? -->
                         </span>
                     </div>
+                    <!-- theme -->
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Theme</span>
@@ -166,6 +174,7 @@
                     <div class="grid-content shrink" style="margin-top: 0.5rem;">
                             <input id="checkbox-brand" type="checkbox">
                     </div>
+                    <!-- Brand -->
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Brand</span>
@@ -175,6 +184,7 @@
                                 </select>
                         </span>
                     </div>
+                    <!-- Seasons -->
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Season</span>
@@ -184,6 +194,7 @@
                                 </select>
                         </span>
                     </div> 
+                    <!-- type -->
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Type</span>
@@ -193,6 +204,7 @@
                                 </select>
                         </span>
                     </div>
+                    <!--- Color -->
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Color</span>
@@ -206,8 +218,8 @@
                     </div>
                 </div>
                 <!-- Images/Looks -->
-                <div class="medium-up-4 align-spaced grid-block" style="overflow: auto;">
-                    <div class="grid-content" repeat.for="look of looks">
+                <div class="medium-up-4 align-spaced grid-block" style="overflow: auto; flex: 0 1 auto; justify-content: flex-start;">
+                    <div class="grid-content shrink" repeat.for="look of looks">
                         <div class="card">
                             <img src.bind="look.image" ref="image" />
 
@@ -215,6 +227,7 @@
                     </div>
                 </div>
             </div>
+            <!-- Bottom spacer -->
             <div id="comms-panel-spacer" class="grid-block shrink">
                 <div style="width: 7px">
                 </div>
