@@ -116,94 +116,40 @@
             </div>
             <!-- Image Grid Large Panel-->
             <div id="looks" class="vertical grid-block grid-block-vertical-shadow" style="background: white; overflow:hidden;">
-                <!-- Header -->
-                <div id="comms_panel" class="grid-content align-left tool-header shrink">
-                    <span class="ui-text-label-m-broad">IMAGE SEARCH</span>
-                    <span class="ui-text-label-m-broad" style="margin-left:1rem;">n Images</span>
-                </div>
-                <!-- search / filter area -->
-                <!-- top row -->
-                <div class="grid-block shrink" style="margin-top: 1rem;">
-                    <div class="grid-content shrink" style="margin-top: 0.5rem;">
-                        <input id="checkbox-search" type="checkbox" checked>
-                    </div>
-                    <div class="grid-content shrink">
-                        <input type="text" keypress.delegate="search($event)" value.two-way="searchtext" class="search-box" id="search" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">  
-                    </div>
-                    <div class="grid-content shrink" style="margin-top: 0.5rem;">
-                        <input id="checkbox-trending" type="checkbox"><label for="checkbox-trending">Trending</label>
-                    </div>
-                    <div class="grid-content shrink" style="margin-top: 0.5rem;">
-                       <input id="checkbox-latest" type="checkbox"><label for="checkbox-latest">Latest</label>
-                    </div>
-                    <div class="grid-content shrink" style="padding-right:0; margin-top: 0.5rem;">
-                            <input id="checkbox-available" type="checkbox"><label for="checkbox-available" style="margin-right:0.5rem;">Available</label>
-                    </div>
-                    <div class="grid-content shrink" style="padding-left:0; padding-right:0;">
-                            <input type="date" value.bind="availableFrom" class="" change.delegate="filterChange($event.target)">
-
-                    </div>
-                    <div class="grid-content shrink" style="padding-left:0; padding-right:0;">
-                        <span class="inline-label">
-                            <span class="form-label">to</span>
-                            <input type="date" value.bind="availableFrom" class="" change.delegate="filterChange($event.target)">
-                        </span>
-                    </div>
-                    <div class="grid-content shrink">
-                        <span class="inline-label">
-                            <span class="form-label">Theme</span>
-                                <select name="" id="">
-                                    <option>Select</option>
-                                    <option>Military</option>
-                                    <option>Punk</option>
-                                    <option>Evening</option>
-                                </select>
-                        </span>
-                    </div>
-                </div>
-                <!-- 2nd row -->
-                <div class="grid-block shrink">
-                    <div class="grid-content shrink" style="margin-top: 0.5rem;">
-                            <input id="checkbox-brand" type="checkbox">
-                    </div>
-                    <div class="grid-content shrink">
-                        <span class="inline-label">
-                            <span class="form-label">Brand</span>
+                <!-- <compose view-model="looks"></compose> -->
+                <div class="vertical grid-content shrink">
+                    <form>
+                        <ul class="menu-bar">
+                            <li>
+                                <input type="text" class="form-control search-box" id="search" placeholder="Search Text">
+                            </li>
+                            <li>
+                                Available:<input type="date" value.bind="availableFrom" class="" change.delegate="filterChange($event.target)">
+                                to<input type="date" value.bind="availableFrom" class="" change.delegate="filterChange($event.target)">
+                            </li>
+                            
+                        </ul>
+                        <ul class="menu-bar">
+                            <li>
                                 <select name="" id="" value.bind="selectedBrand" change.delegate="filterChange($event.target)">
                                     <option value="">Select Brand</option>
                                     <option repeat.for="brand of brands" model.bind="brand.id">${brand.name}</option>
                                 </select>
-                        </span>
-                    </div>
-                    <div class="grid-content shrink">
-                        <span class="inline-label">
-                            <span class="form-label">Season</span>
+                            </li>
+                            <li>
                                 <select name="" id="" value.bind="selectedSeason" change.delegate="filterChange($event.target)">
                                     <option value="">Select Season</option>
                                     <option repeat.for="season of seasons" model.bind="season">${season}</option>
                                 </select>
-                        </span>
-                    </div> 
-                    <div class="grid-content shrink">
-                        <span class="inline-label">
-                            <span class="form-label">Type</span>
+                            </li>
+                            <li>
                                 <select name="" id="" value.bind="selectedItemType" change.delegate="filterChange($event.target)">
                                     <option value="">Select Type</option>
                                     <option repeat.for="type of itemTypes" model.bind="type">${type}</option>
                                 </select>
-                        </span>
-                    </div>
-                    <div class="grid-content shrink">
-                        <span class="inline-label">
-                            <span class="form-label">Color</span>
-                                <select name="" id="">
-                                    <option>Select</option>
-                                    <option>Ocra (345)</option>
-                                    <option>Beige (234)</option>
-                                    <option>Aquamarine (345)</option>
-                                </select>
-                        </span>
-                    </div>
+                            </li>
+                        </ul>
+                    </form>
                 </div>
                 <!-- Images/Looks -->
                 <div class="medium-up-4 align-spaced grid-block" style="overflow: auto;">
