@@ -114,8 +114,15 @@
 	color: $warm-grey;
 }
 
+.calendar-day-numbers {
+	font-size: $font-size-medium;
+	font-weight: 900;
+	line-height: 1.1;
+	text-align: center;
+	color: $black;
+}
 .calendar-day-numbers-white {
-	font-size: $font-size-small;
+	font-size: $font-size-medium;
 	font-weight: 900;
 	line-height: 1.1;
 	text-align: center;
@@ -123,7 +130,7 @@
 }
 
 .calendar-day-numbers-lighter {
-	font-size: $font-size-small;
+	font-size: $font-size-medium;
 	font-weight: 900;
 	line-height: 1.1;
 	text-align: center;

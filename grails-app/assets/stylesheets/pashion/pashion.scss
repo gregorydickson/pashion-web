@@ -91,7 +91,7 @@
 .tool-header{
   background-color: #f7f7f7;
   height: 3rem;
-  line-height: 35px;
+  line-height: 3rem;
 
 }
 .tool-header span{
@@ -99,8 +99,8 @@
   display: inline-block;
 }
 
-.tool-header .expando{
-
+.expando{
+  margin-right:1rem;
 }
 
 // RM

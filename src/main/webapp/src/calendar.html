@@ -6,7 +6,7 @@
                 <span class="alert-box">3</span>
             </div>
             <div class="grid-block align-right">
-                <span class="expando" style="margin-right:1rem;">
+                <span class="expando">
                   <a route-href="route: requestman;"><img src="/assets/nav/expando.png" /></a>
                 </span>
             </div>
@@ -15,16 +15,16 @@
             <span class="calendarnav prev">
               <a click.delegate="previous()"><img src="/assets/calendar/prev.png"  /></a>
             </span>
-            <span class="calendarnav calendar-title"><a id="titlelink" click.delegate="activate()">TODAY</a></span>
+            <span class="calendarnav calendar-title"><a id="titlelink" click.delegate="activate()">Today</a></span>
             <span class="calendarnav next">
               <a click.delegate="next()"><img src="/assets/calendar/next.png" /></a>
             </span>
         </div>
         <div class="grid-block calendar-header-align">
-            <span class="calendarnav monthyear">${monthname}&emsp;${year}</span>
+            <span class="calendarnav ui-text-label-m-broad monthyear">${monthname}&emsp;${year}</span>
         </div>
         <div class="grid-block calendar-header-align">
-            <table class="calendar">
+            <table class="calendar calendar-day-numbers">
                 <thead>
                     <tr>
                         <td repeat.for="cell of calendar.calendarMonths[0].dayNames[0]">${cell.dayString}
