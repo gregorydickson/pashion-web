@@ -2,11 +2,10 @@ package pashion
 
 class BrandCollection {
 
-	String image
 
 	Integer status
 	Integer security
-	Integer isPublic
+	
 	Integer availability
 	Date fromDate
 	Date toDate
@@ -29,13 +28,19 @@ class BrandCollection {
 
 	static hasMany = [looks: Look, permissions:Permission, samples:Sample]
 
+	static mapping = {
+		season index: 'season_idx'
+
+		
+	}
+
 	static constraints = {
-		image nullable: true
+
 		status nullable: true
 		security nullable: true
 		fromDate nullable: true
 		toDate nullable: true
-		isPublic nullable: true
+
 		availability nullable: true
 		lastModifiedUserId nullable: true
 		userCreatedId nullable:true

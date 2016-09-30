@@ -9,10 +9,12 @@ export class Index {
   seasons = [];
   brands = [];
   itemTypes = [];
+  colors = [];
   
   selectedBrand = '';
   selectedSeason = '';
   selectedItemType = '';
+  selectedColor = '';
   searchText = '';
   availableFrom = '';
   availableTo = '';
@@ -52,7 +54,8 @@ export class Index {
       this.http.fetch('/look/index.json').then(response => response.json()).then(looks => this.looks = looks),
       this.http.fetch('/brandCollection/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
       this.http.fetch('/brandCollection/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes),
-      this.http.fetch('/brand/index.json').then(response => response.json()).then(brands => this.brands = brands)
+      this.http.fetch('/brand/index.json?max=200').then(response => response.json()).then(brands => this.brands = brands),
+      this.http.fetch('/brandCollection/colors').then(response => response.json()).then(colors => this.colors = colors)
 
     ]);
   }

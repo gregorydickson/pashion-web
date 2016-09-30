@@ -7,6 +7,8 @@ class Look {
 	String description
 	String image
 	String type
+	String color
+	String theme
 	Integer status
 	Integer security
 
@@ -49,11 +51,21 @@ class Look {
 
 	static hasMany = [ permissions:Permission, samples:Sample]
 
+	static mapping = {
+		type index: 'type_idx'
+		theme index: 'theme_idx'
+		fromDate index: 'fromDate_idx'
+		toDate index: 'toDate_idx'
+		color index: 'color_idx'
+	}
+
 	static constraints = {
 		name nullable:true
 		description nullable:true
 		image nullable:true
 		type nullable: true
+		color nullable: true
+		theme nullable:true
 		status nullable:true
 		security nullable:true
 		availability nullable:true

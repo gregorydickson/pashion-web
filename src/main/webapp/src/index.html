@@ -155,7 +155,7 @@
                     <div class="grid-content shrink" style="padding-left:0; padding-right:0;">
                         <span class="inline-label">
                             <span class="form-label">to</span>
-                            <input type="date" value.bind="availableTo" class="" change.delegate="filterChange($event.target)"> <!-- should this be availableTo? -->
+                            <input type="date" value.bind="availableTo" class="" change.delegate="filterChange($event.target)"> 
                         </span>
                     </div>
                     <!-- theme -->
@@ -210,11 +210,9 @@
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Color</span>
-                                <select name="" id="">
-                                    <option>All</option>
-                                    <option>Ocra</option>
-                                    <option>Beige</option>
-                                    <option>Aquamarine</option>
+                                <select name="" id="" value.bind="selectedColor" change.delegate="filterChange($event.target)">
+                                    <<option value="">All</option>
+                                    <option repeat.for="color of colors" model.bind="color">${color}</option>
                                 </select>
                         </span>
                     </div>

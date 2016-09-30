@@ -16,7 +16,7 @@ class LookController {
     def elasticSearchService
 
     def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+        params.max = Math.min(max ?: 100, 200)
         respond Look.list(params), model:[lookCount: Look.count()]
     }
 
@@ -45,9 +45,11 @@ class LookController {
             availableFrom = dateFormat.parse(params.availableFrom)
         if(params.availableTo != "")   
             availableTo = dateFormat.parse(params.availableTo)
+        
+        
         def keywords = URLDecoder.decode(params.searchtext)
         def looks =  Look.filterResults( brand, season, itemtype, availableFrom, availableTo, keywords).list() as JSON
-        log.info looks
+        //log.info looks
         render looks
     }
 
