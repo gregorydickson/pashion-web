@@ -4,13 +4,26 @@
     <!-- RM accordion testing -->
     <!-- Calendar + Request  Panel -->
     <div class="vertical grid-block" style="background: #ebebeb">
-        <!-- top spacer -->
-        <div id="top-panel-spacer" class="grid-block shrink">
-            <div style="height: 6px;">
-            </div>
+        <!-- spacer -->
+        <div id="top-panel-spacer" class="grid-block shrink spa-v-spacer "> 
         </div>
+        <!-- -->
+        <!-- Calendar / Request panel -->
+        <!-- -->
         <div class="grid-block" style="overflow:visible;">
             <div id="left-panel" class="vertical grid-block grid-block-vertical-shadow">
+                <!-- header -->
+                <div class="grid-block tool-header shrink">
+                    <div class="grid-block align-left">
+                        <span class="ui-text-label-m-broad" style="margin-left:1rem;">CALENDAR</span>
+                        <span class="alert-box">3</span>
+                    </div>
+                    <div class="grid-block align-right">
+                        <span class="expando">
+                      <a route-href="route: requestman;"><img src="/assets/nav/expando.png" /></a>
+                    </span>
+                    </div>
+                </div>
                 <!-- Calendar -->
                 <div class="grid-block shrink">
                     <compose view-model="calendar"></compose>
@@ -31,9 +44,7 @@
                         </span>
                     </form>
                 </div>
-                <!-- -->
                 <!-- Accordion -->
-                <!-- -->
                 <!--header -->
                 <div class="vertical grid-content shrink" style="padding:0; background: white; margin-left: 1rem; margin-right: 1rem;">
                     <table class="accordion">
@@ -113,9 +124,8 @@
                     </div>
                 </div>
             </div>
-            <div id="image-panel-spacer" class="grid-block shrink">
-                <div style="width: 7px">
-                </div>
+            <!-- spacer -->
+            <div id="image-panel-spacer" class="grid-block shrink spa-h-spacer">
             </div>
             <!-- -->
             <!-- Image Grid Large Panel-->
@@ -133,7 +143,6 @@
                         <input id="checkbox-search" type="checkbox" checked>
                     </div> -->
                     <!-- change to UI, use "All" for each filter instead -->
-
                     <!-- Search -->
                     <div class="grid-content shrink">
                         <input type="text" keypress.delegate="search($event)" value.two-way="searchtext" class="search-box" id="search" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
@@ -148,13 +157,11 @@
                        <input id="checkbox-latest" type="checkbox"><label for="checkbox-latest">Latest</label>
                     </div> -->
                     <!-- Latest postponed until later release -->
-
                     <!-- Available -->
                     <span class="inline-label" style="margin-left: 1rem; margin-right:4px; margin-top:0.5rem;">Available</span>
                     <!--<div class="grid-content shrink" style="padding-right:0; margin-top: 0.5rem;">
                             <input id="checkbox-available" type="checkbox"><label for="checkbox-available" style="margin-right:0.5rem;">Available</label>
                     </div> -->
-
                     <!-- start date -->
                     <div class="grid-content shrink" style="padding-left:0; padding-right:0;">
                         <input type="date" value.bind="availableFrom" class="" change.delegate="filterChange($event.target)">
@@ -239,10 +246,8 @@
                     </div>
                 </div>
             </div>
-            <!-- comms panel spacer -->
-            <div id="comms-panel-spacer" class="grid-block shrink">
-                <div style="width: 7px">
-                </div>
+            <!-- spacer -->
+            <div id="comms-panel-spacer" class="grid-block shrink spa-h-spacer">
             </div>
             <!-- -->
             <!-- Communications Panel  -->
@@ -254,10 +259,8 @@
                 </div>
             </div>
         </div>
-        <!-- Bottom spacer -->
-        <div id="bottom-panel-spacer" class="grid-content shrink" style="overflow:visible;">
-            <div style="height: 7px;">
-            </div>
+        <!-- spacer -->
+        <div id="bottom-panel-spacer" class="grid-content shrink spa-v-spacer">
         </div>
     </div>
 </template>
