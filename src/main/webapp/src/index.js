@@ -23,7 +23,10 @@ export class Index {
   availableTo = '';
 
   options = {
-        dateFormat: "yy-mm-dd"
+        dateFormat: "yy-mm-dd",
+        autoclose: true,
+        showButtonPanel: true,
+        closeText: 'Close'
     };
 
   filterChange(event){
