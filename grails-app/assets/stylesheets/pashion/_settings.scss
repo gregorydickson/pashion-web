@@ -32,6 +32,34 @@
 
 @import 'helpers/functions';
 
+
+// 0. Pashion Globals
+// --------------
+
+  $black-two: #000000;
+  $black-three: #222222;
+  $black: #383838;
+  $warm-grey: #9b9b9b;
+  $pinkish-grey: #cccccc;
+  $white-three: #ebebeb;
+  $white-two: #f7f7f7;
+  $white: #ffffff;
+
+  $muted-green: #59a559;
+  $scarlet: #d0021b;
+  $apple-green: #7ed321;
+  $flat-blue: #3971b1;
+
+ 
+  $font-size-small : 0.9rem; //10px;
+  $font-size-mid : 1.0rem; //11px
+  $font-size-button : 1.1rem; //12px;
+  $font-size-medium : 1.1rem; //12px;
+  $font-size-headings: 2.2rem; //24px
+  $font-size-large: 1.27rem; // 14px;
+  $font-size-extra-large: 1.45rem; //16px;
+  $font-size-e-extra-large: 1.73rem; // 19px;
+
 // 1. CSS Exports
 // --------------
 
@@ -96,33 +124,6 @@ $global-padding: 1rem;
 $global-spacing: rem-calc(15);
 $icon-classes: ('iconic', 'ionicons', 'material-icons', 'open-iconic');
 $loader-classes: ('sk-loader');
-
-//Pashion Globals
-// --------------
-
-  $black-two: #000000;
-  $black-three: #222222;
-  $black: #383838;
-  $warm-grey: #9b9b9b;
-  $pinkish-grey: #cccccc;
-  $white-three: #ebebeb;
-  $white-two: #f7f7f7;
-  $white: #ffffff;
-
-  $muted-green: #59a559;
-  $scarlet: #d0021b;
-  $apple-green: #7ed321;
-  $flat-blue: #3971b1;
-
- 
-  $font-size-small : 0.9rem; //10px;
-  $font-size-mid : 1.0rem; //11px
-  $font-size-button : 1.1rem; //12px;
-  $font-size-medium : 1.1rem; //12px;
-  $font-size-headings: 2.2rem; //24px
-  $font-size-large: 1.27rem; // 14px;
-  $font-size-extra-large: 1.45rem; //16px;
-  $font-size-e-extra-large: 1.73rem; // 19px;
 
 // 3. Breakpoints
 // --------------
