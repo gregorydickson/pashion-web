@@ -2,15 +2,16 @@
 <template>
     <!-- Main building block -->
     <!-- RM accordion testing -->
-    <!-- Calendar + Request  Panel -->
+
     <div class="vertical grid-block spa-background">
         <!-- spacer -->
         <div id="top-panel-spacer" class="grid-block shrink spa-v-spacer "> 
         </div>
-        <!-- -->
-        <!-- Calendar / Request panel -->
-        <!-- -->
-        <div class="grid-block" >
+
+        <div class="grid-block" style="overflow:visible;">
+            <!-- -->
+            <!-- Calendar + Request  Panel -->
+            <!-- -->
             <div id="left-panel" class="vertical grid-block grid-block-vertical-shadow">
                 <!-- header -->
                 <div class="grid-block tool-header shrink">
@@ -166,11 +167,11 @@
                             <input id="checkbox-available" type="checkbox"><label for="checkbox-available" style="margin-right:0.5rem;">Available</label>
                     </div> -->
                     <!-- start date -->
-                    <div class="grid-content shrink" style="padding-left:0; padding-right:0;">
+                    <div class="grid-content shrink" style="overflow:hidden; padding-left:0; padding-right:0;">
                         <input type="text" class="datepickerfrom" value.bind="availableFrom">
                     </div>
                     <!-- end date -->
-                    <div class="grid-content shrink" style="padding-left:0; padding-right:0;">
+                    <div class="grid-content shrink" style="overflow:hidden; padding-left:0; padding-right:0;">
                         <span class="inline-label">
                             <span class="form-label">to</span>
                             <input type="text" value.bind="availableTo" class="datepickerto" change.delegate="filterChange($event.target)">
