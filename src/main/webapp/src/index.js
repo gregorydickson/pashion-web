@@ -2,6 +2,9 @@ import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-fetch-client';
 import 'fetch';
 
+import $ from 'jquery';
+import { datepicker } from 'jquery-ui';
+
 @inject(HttpClient)
 export class Index {
   heading = 'Looks for a Collection';
@@ -18,6 +21,10 @@ export class Index {
   searchText = '';
   availableFrom = '';
   availableTo = '';
+
+  options = {
+        dateFormat: "yy-mm-dd"
+    };
 
   filterChange(event){
     console.log("changing");
@@ -46,15 +53,25 @@ export class Index {
     });
     this.http = http;
     this.boundHandler = this.handleKeyInput.bind(this);
+
+  }
+  attached(){
+     $('.datepickerfrom').datepicker(this.options)
+        .datepicker('setDate', new Date());
+     $('.datepickerto').datepicker(this.options);
+     
+     return this.http.fetch('/look/index.json')
+        .then(response => response.json())
+        .then(looks => this.looks = looks);
   }
 
   activate() {
     window.addEventListener('keypress', this.boundHandler, false);
+
     return Promise.all([
-      this.http.fetch('/look/index.json').then(response => response.json()).then(looks => this.looks = looks),
       this.http.fetch('/brandCollection/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
       this.http.fetch('/brandCollection/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes),
-      this.http.fetch('/brand/index.json?max=200').then(response => response.json()).then(brands => this.brands = brands),
+      this.http.fetch('/brand/index.json').then(response => response.json()).then(brands => this.brands = brands),
       this.http.fetch('/brandCollection/colors').then(response => response.json()).then(colors => this.colors = colors)
 
     ]);

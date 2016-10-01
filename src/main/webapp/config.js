@@ -23,18 +23,28 @@ System.config({
     "aurelia-templating-router": "npm:aurelia-templating-router@1.0.0",
     "bluebird": "npm:bluebird@3.4.1",
     "bootstrap": "github:twbs/bootstrap@3.3.7",
+    "bootstrap-datepicker": "npm:bootstrap-datepicker@1.6.4",
     "fetch": "github:github/fetch@1.0.0",
     "font-awesome": "npm:font-awesome@4.6.3",
-    "jquery": "npm:jquery@2.2.4",
+    "jquery": "npm:jquery@3.1.1",
+    "jquery-ui": "github:components/jqueryui@1.12.1",
+    "moment": "npm:moment@2.15.1",
+    "nodep-date-input-polyfill": "npm:nodep-date-input-polyfill@4.0.6",
     "text": "github:systemjs/plugin-text@0.0.8",
+    "github:components/jqueryui@1.12.1": {
+      "jquery": "npm:jquery@3.1.1"
+    },
     "github:jspm/nodelibs-assert@0.1.0": {
       "assert": "npm:assert@1.4.1"
     },
     "github:jspm/nodelibs-buffer@0.1.0": {
       "buffer": "npm:buffer@3.6.0"
     },
+    "github:jspm/nodelibs-path@0.1.0": {
+      "path-browserify": "npm:path-browserify@0.0.0"
+    },
     "github:jspm/nodelibs-process@0.1.2": {
-      "process": "npm:process@0.11.6"
+      "process": "npm:process@0.11.9"
     },
     "github:jspm/nodelibs-util@0.1.0": {
       "util": "npm:util@0.10.3"
@@ -43,7 +53,7 @@ System.config({
       "vm-browserify": "npm:vm-browserify@0.0.4"
     },
     "github:twbs/bootstrap@3.3.7": {
-      "jquery": "npm:jquery@2.2.4"
+      "jquery": "npm:jquery@3.1.1"
     },
     "npm:assert@1.4.1": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",
@@ -170,7 +180,16 @@ System.config({
       "aurelia-path": "npm:aurelia-path@1.0.0",
       "aurelia-task-queue": "npm:aurelia-task-queue@1.0.0"
     },
+    "npm:babel-runtime@6.11.6": {
+      "core-js": "npm:core-js@2.4.1",
+      "regenerator-runtime": "npm:regenerator-runtime@0.9.5"
+    },
     "npm:bluebird@3.4.1": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:bootstrap-datepicker@1.6.4": {
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "jquery": "npm:jquery@3.1.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:buffer@3.6.0": {
@@ -181,16 +200,33 @@ System.config({
       "isarray": "npm:isarray@1.0.0",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
+    "npm:core-js@2.4.1": {
+      "fs": "github:jspm/nodelibs-fs@0.1.2",
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2",
+      "systemjs-json": "github:systemjs/plugin-json@0.1.2"
+    },
     "npm:font-awesome@4.6.3": {
       "css": "github:systemjs/plugin-css@0.1.25"
     },
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"
     },
-    "npm:process@0.11.6": {
+    "npm:nodep-date-input-polyfill@4.0.6": {
+      "babel-runtime": "npm:babel-runtime@6.11.6",
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:path-browserify@0.0.0": {
+      "process": "github:jspm/nodelibs-process@0.1.2"
+    },
+    "npm:process@0.11.9": {
       "assert": "github:jspm/nodelibs-assert@0.1.0",
       "fs": "github:jspm/nodelibs-fs@0.1.2",
       "vm": "github:jspm/nodelibs-vm@0.1.0"
+    },
+    "npm:regenerator-runtime@0.9.5": {
+      "path": "github:jspm/nodelibs-path@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:util@0.10.3": {
       "inherits": "npm:inherits@2.0.1",

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+  <head>
+    <meta charset="UTF-8">
+    <title>nodep Polyfill Test</title>
+    <meta name="description" content="nodep Polyfill Test">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+
+    <script src="nodep-date-input-polyfill.dist.js" data-nodep-date-input-polyfill-debug async></script>
+  </head>
+  <body style="width: 200%; height: 200%;">
+
+    <p>
+      normal:
+      <input type="date" />
+      <script>
+        var theDate = document.querySelector('input[type="date"]');
+        theDate.addEventListener('change', function() {
+          console.log('blank date input:', theDate.value);
+        });
+      </script>
+    </p>
+
+    <p>
+      with value:
+      <input type="date" value="2015-03-28" lang="de-DE" />
+    </p>
+
+    <p id="dynamic" style="margin-top: 5%; margin-left: 5%;">
+      dynamically created:
+      <script>
+        setTimeout(function() {
+          var input = document.createElement("input");
+          input.setAttribute("type", "date");
+          document.getElementById("dynamic").appendChild(input);
+        }, 2000);
+      </script>
+    </p>
+  </body>
+</html>

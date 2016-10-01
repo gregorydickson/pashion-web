@@ -47,7 +47,7 @@ class Look {
 
 	static belongsTo = [brandCollection: BrandCollection]
 
-	static hasMany = [ permissions:Permission, samples:Sample, bookings:Bookings]
+	static hasMany = [ permissions:Permission, samples:Sample, bookings:Booking]
 
 	static mapping = {
 		type index: 'type_idx'

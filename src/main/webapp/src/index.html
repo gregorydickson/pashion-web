@@ -167,13 +167,13 @@
                     </div> -->
                     <!-- start date -->
                     <div class="grid-content shrink" style="padding-left:0; padding-right:0;">
-                        <input type="date" value.bind="availableFrom" class="" change.delegate="filterChange($event.target)">
+                        <input type="text" class="datepickerfrom" value.bind="availableFrom">
                     </div>
                     <!-- end date -->
                     <div class="grid-content shrink" style="padding-left:0; padding-right:0;">
                         <span class="inline-label">
                             <span class="form-label">to</span>
-                        <input type="date" value.bind="availableTo" class="" change.delegate="filterChange($event.target)">
+                            <input type="text" value.bind="availableTo" class="datepickerto" change.delegate="filterChange($event.target)">
                         </span>
                     </div>
                     <!-- theme -->

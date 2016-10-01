@@ -1,0 +1,37 @@
+MultipleErrors: /Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/locales.js:314:1: Unexpected reserved word export
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/locales.js:314:8: Semi-colon expected
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/locales.js:314:8: Unexpected reserved word default
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/locales.js:314:16: Semi-colon expected
+
+MultipleErrors: /Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/input.js:1:1: Unexpected reserved word import
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/input.js:1:8: Semi-colon expected
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/input.js:1:15: Semi-colon expected
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/input.js:1:20: Semi-colon expected
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/input.js:2:1: Unexpected reserved word import
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/input.js:2:8: Semi-colon expected
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/input.js:2:16: Semi-colon expected
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/input.js:2:21: Semi-colon expected
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/input.js:4:1: Unexpected reserved word export
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/input.js:4:8: Semi-colon expected
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/input.js:4:8: Unexpected reserved word default
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/input.js:4:16: Semi-colon expected
+
+MultipleErrors: /Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/nodep-date-input-polyfill.js:1:1: Unexpected reserved word import
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/nodep-date-input-polyfill.js:1:8: Semi-colon expected
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/nodep-date-input-polyfill.js:2:1: Unexpected reserved word import
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/nodep-date-input-polyfill.js:2:8: Semi-colon expected
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/nodep-date-input-polyfill.js:2:15: Semi-colon expected
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/nodep-date-input-polyfill.js:2:20: Semi-colon expected
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/nodep-date-input-polyfill.js:3:1: Unexpected reserved word import
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/nodep-date-input-polyfill.js:3:8: Semi-colon expected
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/nodep-date-input-polyfill.js:3:14: Semi-colon expected
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/nodep-date-input-polyfill.js:3:19: Semi-colon expected
+
+MultipleErrors: /Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/picker.js:295:1: Unexpected reserved word export
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/picker.js:295:8: Semi-colon expected
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/picker.js:295:8: Unexpected reserved word default
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/picker.js:295:16: Semi-colon expected
+
+MultipleErrors: /Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/test.js:3:1: Unexpected reserved word import
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/test.js:3:8: Semi-colon expected
+/Users/BigMac/.jspm/packages/npm/nodep-date-input-polyfill@4.0.6/test.js:3:24: Semi-colon expected

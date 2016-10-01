@@ -12,7 +12,8 @@ class Booking {
 	
 	static searchable = true
 
-	static hasMany = [ samples:Sample, looks:Look]
+	static hasMany = [ samples:Sample]
+	static belongsTo = [look: Look]
 
 	static constraints = {
 		samples nullable: true
