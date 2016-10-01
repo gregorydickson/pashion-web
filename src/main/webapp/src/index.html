@@ -29,7 +29,7 @@
                     <compose view-model="calendar"></compose>
                 </div>
                 <!-- search and filter requests -->
-                <div class="vertical grid-block shrink" style="background: white; margin-left: 1rem; margin-right: 1rem;">
+                <div class="vertical grid-block shrink" style="margin-left: 1rem; margin-right: 1rem;">
                     <form style="margin-top:20px;" submit.delegate='search()'>
                         <!-- Search requests -->
                         <input type="text" keypress.delegate="search($event)" value.two-way="searchtext" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
@@ -46,7 +46,7 @@
                 </div>
                 <!-- Accordion -->
                 <!--header -->
-                <div class="vertical grid-content shrink" style="padding:0; background: white; margin-left: 1rem; margin-right: 1rem;">
+                <div class="vertical grid-content shrink" style="padding:0; margin-left: 1rem; margin-right: 1rem;">
                     <table class="accordion">
                         <tr>
                             <th class="accordion" style="width:10%;"></th>
@@ -57,7 +57,7 @@
                     </table>
                 </div>
                 <!-- row button + content -->
-                <div class="vertical grid-content" style="background:white; overflow-x:hidden;">
+                <div class="vertical grid-content" style="overflow-x:hidden;">
                     <!-- row with button -->
                     <table class="accordion">
                         <tr>
@@ -70,7 +70,7 @@
                         </tr>
                     </table>
                     <!-- expanding data -->
-                    <div id="panel1" class="panel vertical grid-block" style="margin-left: 0.5rem; background: white;">
+                    <div id="panel1" class="panel vertical grid-block" style="margin-left: 0.5rem;">
                         <table class="accordion expanded">
                             <tr>
                                 <td class="accordion" style="width:45px;">Due:</td>
@@ -102,7 +102,7 @@
                         </tr>
                     </table>
                     <!-- expanding data -->
-                    <div id="panel2" class="panel vertical grid-block" style="margin-left: 0.5rem; background: white;">
+                    <div id="panel2" class="panel vertical grid-block" style="margin-left: 0.5rem;">
                         <table class="accordion expanded">
                             <tr>
                                 <td class="accordion" style="width:45px;">Due:</td>
