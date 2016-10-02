@@ -164,7 +164,7 @@ input.search-box, input.search-box:hover, input.search-box:focus {
   line-height: 0.6;
   color: $white;
   padding-top: 0.5rem;
-  margin-left: 1rem;
+  margin-left: 0.5rem;
   margin-top: 0.5rem;
   text-align:center;
 }
@@ -190,6 +190,10 @@ input.search-box, input.search-box:hover, input.search-box:focus {
 
 .tool-header-greyed-out{
   color: $pinkish-grey;
+}
+
+.tool-header-selected {
+  border-bottom: 1px solid $black;
 }
 
 
