@@ -16,7 +16,7 @@
 
 // Menu Bar
 /// @type Number
-$menubar-fontsize: 1rem !default;
+$menubar-fontsize: $font-size-large; //RM  1rem !default;
 /// @type Color
 $menubar-background: #fff !default;
 /// @type Color
@@ -63,7 +63,8 @@ $menubar-icon-spacing: $menubar-item-padding !default;
       align-items: center;
       padding: $menubar-item-padding;
       font-size: $menubar-fontsize;
-      line-height: 1;
+      letter-spacing: 4px; //RM
+      line-height: 2.2;
     }
   }
 }
@@ -244,7 +245,7 @@ $menubar-icon-spacing: $menubar-item-padding !default;
     @if $position == top {
       > a {
         flex-flow: column nowrap;
-        > img { margin: 0 0 $menubar-icon-spacing 0; }
+        > img { margin: 5px 0 5px 0; } //RM
 
         @if using(icon) {
           @each $iconclass in $icon-classes {
