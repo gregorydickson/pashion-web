@@ -35,6 +35,7 @@ $titlebar-item-classes: (
 ) !default;
 ///
 
+
 %title-bar {
   $center: map-get($titlebar-item-classes, center);
   $left: map-get($titlebar-item-classes, left);
@@ -43,7 +44,7 @@ $titlebar-item-classes: (
 
   display: flex;
   flex: 0 0 auto;
-  align-items: center;
+  align-items: left; //RM
   justify-content: flex-start;
   overflow: visible;
 
@@ -109,7 +110,7 @@ $titlebar-item-classes: (
   background: $background;
   color: $color;
   padding: $padding;
-  border-bottom: $border;
+  //RM border-bottom: $border;
 }
 
 @mixin title-bar(
