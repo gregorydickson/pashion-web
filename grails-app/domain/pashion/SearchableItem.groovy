@@ -1,16 +1,19 @@
 package pashion
 
-class Look {
+class SearchableItem {
 //A runway look, more than one piece, a top, trousers, assessories
 
 	String name
+	Brand brand
 	String description
 	String image
-	String type
 	String color
+	String type //Look or Sample
+	String material
+	String size
 	String theme
 
-
+	Season season
 
 	Date fromDate
 	Date toDate
@@ -24,10 +27,10 @@ class Look {
 
 	static namedQueries = {
         filterResults { brand, season, type, availableFrom, availableTo, keywords ->
-            brandCollection{
-            	if(brand) eq('brand', brand)
-            	if(season) eq('season',season)
-            }
+            
+            if(brand) eq('brand', brand)
+            
+            if(season) eq('season',season)
             if(type) eq('type',type)
             if(availableFrom && availableTo) or {
             	between('fromDate', availableFrom, availableTo)
@@ -35,19 +38,13 @@ class Look {
             }
             
             
-            
-            
         }
     }
 	
-	
-	static searchable = {
-		brandCollection parent: true, reference: true
-	}
 
 	static belongsTo = [brandCollection: BrandCollection]
 
-	static hasMany = [ permissions:Permission, samples:Sample, bookings:Booking]
+	static hasMany = [ permissions:Permission, sampleRequests:SampleRequest]
 
 	static mapping = {
 		type index: 'type_idx'
@@ -59,12 +56,14 @@ class Look {
 
 	static constraints = {
 		name nullable:true
+		brand nullable: true
 		description nullable:true
 		image nullable:true
-		type nullable: true
 		color nullable: true
+		type nullable: true
+		material nullable: true
+		size nullable: true
 		theme nullable:true
-
 
 		fromDate nullable:true
 		toDate nullable:true
@@ -72,7 +71,8 @@ class Look {
 		userCreatedId nullable:true
 		lastModifiedUserId nullable:true
 
+		brandCollection nullable: true
 		permissions nullable:true
-		samples nullable:true
+		sampleRequests nullable:true
 	}
 }

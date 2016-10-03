@@ -15,7 +15,7 @@ class BrandCollection {
 
 	// Season: e.g. "Fall 2016 Ready-to-Wear”, “Spring 2017 Couture",
 	//  "Winter 2017 Menswear"
-	String season
+	Season season
 	
 
 	//auto fields
@@ -26,7 +26,7 @@ class BrandCollection {
 
 	static belongsTo = [brand:Brand]
 
-	static hasMany = [looks: Look, permissions:Permission, samples:Sample]
+	static hasMany = [ permissions:Permission, searchableItems:SearchableItem]
 
 	static mapping = {
 		season index: 'season_idx'
@@ -46,9 +46,9 @@ class BrandCollection {
 		userCreatedId nullable:true
 		season nullable: true
 		
-		looks nullable: true
+		
 		permissions nullable: true 
-		samples nullable: true
+		searchableItems nullable: true
 
 	}
 }

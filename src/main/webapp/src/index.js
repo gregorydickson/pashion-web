@@ -38,7 +38,7 @@ export class Index {
     console.log(this.availableFrom);
     console.log(this.availableTo);
 
-    this.http.fetch('/look/filterSearch?searchtext='+ encodeURI(this.searchText) + 
+    this.http.fetch('/pashionSearch/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                       '&season=' + encodeURI(this.selectedSeason) + 
                                       '&itemType=' + this.selectedItemType + 
@@ -63,7 +63,7 @@ export class Index {
         .datepicker('setDate', new Date());
      $('.datepickerto').datepicker(this.options);
      
-     return this.http.fetch('/look/index.json')
+     return this.http.fetch('/search/index.json')
         .then(response => response.json())
         .then(looks => this.looks = looks);
   }

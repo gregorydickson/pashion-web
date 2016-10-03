@@ -7,7 +7,9 @@ class SampleRequest {
 	String idString
 	Date dateRequested
 	Date dateDue
-	String requestStatus
+	Date bookingStartDate
+	Date bookingEndDate
+	String requestStatus //"Requested", "Approved"
 	Long userCreatedId
 	
 	Brand brand
@@ -26,15 +28,17 @@ class SampleRequest {
 	Date dateCreated
 	Date lastUpdated
 
-	static searchable = true
+	static belongsTo = SearchableItem
 
-	static hasMany = [ samples:Sample, looks: Look ]
+	static hasMany = [ searchableItems:SearchableItem ]
   	
 
 	static constraints = {
 		idString nullable: true
 		dateRequested nullable: true
 		dateDue nullable: true
+		bookingStartDate nullable: true
+	    bookingEndDate nullable: true
 		requestStatus nullable: true
 		userCreatedId nullable: true
 		brand nullable:true 
@@ -48,7 +52,7 @@ class SampleRequest {
 		itemsGot nullable: true
 		itemsOut nullable: true 
 
-		samples nullable: true 
-		looks nullable:true
+		searchableItems nullable: true 
+		
 	}
 }

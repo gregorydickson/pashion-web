@@ -78,8 +78,7 @@ dependencies {
     runtime 'org.grails.plugins:grails-console:2.0.8'
 
     //https://github.com/noamt/elasticsearch-grails-plugin/issues/163
-    compile 'org.grails.plugins:elasticsearch:1.2.0'
-    compile "org.elasticsearch:elasticsearch:2.3.4"
+
 
 }
 

@@ -10,13 +10,12 @@ class Permission {
 	Date dateCreated
 	Date lastUpdated
 
-	static belongsTo = [user:User, look:Look, sample:Sample, brandCollection:BrandCollection]
+	static belongsTo = [user:User,searchableItem:SearchableItem, brandCollection:BrandCollection]
 
     static constraints = {
-    	userCreatedId(nullable:true)
+    	userCreatedId nullable:true 
     	user nullable:true
-    	look nullable: true
-    	sample nullable: true
     	brandCollection nullable: true
+        searchableItem nullable:true
     }
 }
