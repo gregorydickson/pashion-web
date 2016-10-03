@@ -196,6 +196,18 @@ input.search-box, input.search-box:hover, input.search-box:focus {
   border-bottom: 1px solid $black;
 }
 
+select.top-menu-modifier {
+  background-color: $black-three;
+  border: none; 
+  margin-top: 1.5rem;
+}
+
+select.top-menu-modifier:hover {
+  background-color: $black; 
+  border: none; 
+  margin-top: 1.5rem;
+}
+
 
 
 

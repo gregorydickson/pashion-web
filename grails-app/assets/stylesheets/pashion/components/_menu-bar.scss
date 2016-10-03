@@ -20,13 +20,13 @@ $menubar-fontsize: $font-size-large; //RM  1rem !default;
 /// @type Color
 $menubar-background: #fff !default;
 /// @type Color
-$menubar-background-hover: smartscale($menubar-background, 7%) !default;
+$menubar-background-hover: #fff; //RM smartscale($menubar-background, 7%) !default;
 /// @type Color
 $menubar-background-active: $menubar-background-hover;
 /// @type Color
 $menubar-color: isitlight($menubar-background) !default;
 /// @type Color
-$menubar-color-hover: $menubar-color !default;
+$menubar-color-hover: #fff; //$menubar-color !default;
 /// @type Color
 $menubar-color-active: $menubar-color-hover;
 
