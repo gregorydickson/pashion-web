@@ -31,9 +31,9 @@
                 </div>
                 <!-- search and filter requests -->
                 <div class="vertical grid-block shrink" style="margin-left: 1rem; margin-right: 1rem;">
-                    <form style="margin-top:20px;" submit.delegate='search()'>
+                    <form style="margin-top:20px;">
                         <!-- Search requests -->
-                        <input type="text" keypress.delegate="search($event)" value.two-way="searchtext" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
+                        <input type="text" value.two-way="searchtext" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'" >
                         <!-- filter requests -->
                         <span class="inline-label">
                         <span class="form-label">Filter</span>
@@ -138,7 +138,7 @@
                 <!-- Header -->
                 <div id="comms_panel" class="grid-content align-left tool-header tool-header-spacer shrink">
                     <span class="ui-text-label-m-broad">IMAGE SEARCH</span>
-                    <span class="ui-text-label-m-broad" style="margin-left:1rem;">n Images</span>
+                    <span class="ui-text-label-m-broad" style="margin-left:1rem;">${numberImages} Images</span>
                 </div>
                 <!-- search / filter area -->
                 <!-- top row -->
@@ -149,7 +149,7 @@
                     <!-- change to UI, use "All" for each filter instead -->
                     <!-- Search -->
                     <div class="grid-content shrink">
-                        <input type="text" keypress.delegate="search($event)" value.two-way="searchtext" class="search-box" id="search" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
+                        <input type="text" value.bind="searchText" class="search-box" id="search-images" placeholder="Search Text">
                     </div>
                     <!-- Trending -->
                     <!--<div class="grid-content shrink" style="margin-top: 0.5rem;">

@@ -22,12 +22,17 @@ export class Index {
   availableFrom = '';
   availableTo = '';
 
+  numberImages = 0;
+
   options = {
         dateFormat: "yy-mm-dd",
         autoclose: true,
         showButtonPanel: true,
         closeText: 'Close'
     };
+  search(){
+    console.log("search");
+  }
 
   filterChange(event){
     console.log("changing");
@@ -63,7 +68,7 @@ export class Index {
         .datepicker('setDate', new Date());
      $('.datepickerto').datepicker(this.options);
      
-     return this.http.fetch('/search/index.json')
+     return this.http.fetch('/pashionSearch/index.json')
         .then(response => response.json())
         .then(looks => this.looks = looks);
   }
@@ -86,9 +91,9 @@ export class Index {
 
   handleKeyInput(event) {
     console.log(event);
-    if(event.which == 13 && event.srcElement.id === "search") {
+    if(event.which == 13 && event.srcElement.id === 'search-images') {
       console.log("herow");
-      filterChange();
+      this.filterChange(event);
 
     }
   }

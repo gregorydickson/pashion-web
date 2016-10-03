@@ -5,7 +5,7 @@ class SearchableItem {
 
 	String name
 	Brand brand
-	String description
+
 	String image
 	String color
 	String type //Look or Sample
@@ -29,7 +29,7 @@ class SearchableItem {
         filterResults { brand, season, type, availableFrom, availableTo, keywords ->
             
             if(brand) eq('brand', brand)
-            
+            if(keywords)  ilike ('description', keywords)
             if(season) eq('season',season)
             if(type) eq('type',type)
             if(availableFrom && availableTo) or {
@@ -57,7 +57,7 @@ class SearchableItem {
 	static constraints = {
 		name nullable:true
 		brand nullable: true
-		description nullable:true
+
 		image nullable:true
 		color nullable: true
 		type nullable: true

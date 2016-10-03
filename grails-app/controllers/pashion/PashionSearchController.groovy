@@ -15,7 +15,10 @@ class PashionSearchController {
 
     def elasticSearchService
 
-    
+    def index(){
+         def daStuff = SearchableItem.list() as JSON
+         render daStuff
+    }
        
     def filterSearch(){
         def dateFormatString = "yyyy-MM-dd"
