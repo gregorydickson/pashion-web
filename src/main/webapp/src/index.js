@@ -22,7 +22,11 @@ export class Index {
   availableFrom = '';
   availableTo = '';
 
+<<<<<<< Updated upstream
   numberImages = 0;
+=======
+  numberImages = 0; //RM
+>>>>>>> Stashed changes
 
   options = {
         dateFormat: "yy-mm-dd",
