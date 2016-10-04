@@ -1,20 +1,19 @@
 <template>
     <div class="vertical grid-block">
-      <div class="grid-block">
+      <div class="grid-block calendar-header-align">
         <span class="calendarnav prev">
           <a click.delegate="previous()"><img src="/assets/calendar/prev.png"  /></a>
         </span>
-        <span class="calendarnav calendar-title"><a id="titlelink" click.delegate="activate()">TODAY</a></span>
+        <span class="calendarnav calendar-title"><a id="titlelink" click.delegate="activate()">Today</a></span>
         <span class="calendarnav next">
           <a click.delegate="next()"><img src="/assets/calendar/next.png" /></a>
         </span>
       </div>
-      <div class="grid-block">
-        <span class="calendarnav monthyear">${calendar.calendarMonths[0].monthName}&emsp;${calendar.calendarMonths[0].year}</span>
+      <div class="grid-block calendar-header-align">
+        <span class="calendarnav ui-text-label-m-broad monthyear">${calendar.calendarMonths[0].monthName}&emsp;${calendar.calendarMonths[0].year}</span>
       </div>
-      <div class="grid-block ">
-      
-        <table class="calendar">
+      <div class="grid-block  calendar-header-align">    
+        <table class="calendar calendar-day-numbers">
           <thead>
             <tr>
               <td repeat.for="cell of calendar.calendarMonths[0].dayNames[0]">${cell.dayString}
@@ -33,11 +32,11 @@
      
       </div>
 
-      <div class="grid-block">
-        <span class="calendarnav monthyear">${calendar.calendarMonths[1].monthName}&emsp;${calendar.calendarMonths[1].year}</span>
+      <div class="grid-block calendar-header-align">
+        <span class="calendarnav ui-text-label-m-broad monthyear">${calendar.calendarMonths[1].monthName}&emsp;${calendar.calendarMonths[1].year}</span>
       </div>
-      <div class="grid-block ">
-        <table class="calendar">
+      <div class="grid-block calendar-header-align">
+        <table class="calendar calendar-day-numbers">
           <thead>
             <tr>
               <td repeat.for="cell of calendar.calendarMonths[1].dayNames[0]">${cell.dayString}
