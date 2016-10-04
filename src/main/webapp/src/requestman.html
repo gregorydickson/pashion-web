@@ -1,32 +1,172 @@
+<!-- index.html -->
 <template>
-<!-- Main building block -->
-      <div class="grid-block">
+<require from="./calendars/datepicker"></require>
+    <!-- Main building block -->
 
-        <!-- Calendar + Request  Panel -->
-        <div id="left-panel" class="vertical grid-block">
-          <div class="grid-block calendar" >
-            <compose view-model="calendars/requestCalendar"></compose>
-          </div>
-          
+    <div class="vertical grid-block spa-background">
+        <!-- spacer -->
+        <div id="top-panel-spacer" class="grid-block shrink spa-v-spacer "> 
         </div>
 
+        <div class="grid-block" style="overflow:visible;">
+            <!-- -->
+            <!-- Calendar + Request  Panel -->
+            <!-- -->
+            <div id="left-panel-wide" class="vertical grid-block grid-block-vertical-shadow">
+                <!-- header -->
+                <div class="grid-block tool-header shrink">
+                    <div class="grid-block align-left tool-header-spacer">
+                        <span class="ui-text-label-m-broad ">REQUEST MANAGER</span>
+                        <span class="alert-box">3</span>
+                    </div>
+                    <div class="grid-block align-right tool-header-spacer">
+                        <span class="expando">
+                      <a route-href="route: index;"><img src="/assets/nav/collapso.png" /></a>
+                    </span>
+                    </div>
+                </div>
+                <!-- Calendar -->
+                <div class="grid-block shrink">
+                    <compose view-model="calendars/requestCalendar"></compose>
+                </div>
+                <!-- search and filter requests -->
+                <div class="vertical grid-block shrink" style="margin-left: 1rem; margin-right: 1rem;">
+                    <form style="margin-top:20px;">
+                        <!-- Search requests -->
+                        <input type="text" value.two-way="searchtext" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'" >
+                        <!-- filter requests -->
+                        <span class="inline-label">
+                        <span class="form-label">Filter</span>
+                        <select name="" id="">
+                            <option>By Date</option>
+                            <option>By Person</option>
+                            <option>By Request Number</option>
+                        </select>
+                        </span>
+                    </form>
+                </div>
+                <!-- Accordion -->
+                <!--header -->
+                <div class="vertical grid-content shrink" style="padding:0; margin-left: 1rem; margin-right: 1rem;">
+                    <table class="accordion">
+                        <tr>
+                            <th class="accordion" style="width:10%;"></th>
+                            <th class="accordion" style="width:22%;">ID/TYPE</th>
+                            <th class="accordion" style="width:34%;">PRESS</th>
+                            <th class="accordion" style="width:34%;">WHO</th>
+                        </tr>
+                    </table>
+                </div>
+                <!-- row button + content -->
+                <div class="vertical grid-content" style="overflow-x:hidden;">
+                    <!-- row with button -->
+                    <table class="accordion">
+                        <tr>
+                            <td class="accordion" style="width:10%;">
+                                <button id="button1" class="accordion" click.delegate="closeExpand(1)"></button>
+                            </td>
+                            <td class="accordion" style="width:22%;">23457/R</td>
+                            <td class="accordion" style="width:34%;">Ralph Lauren</td>
+                            <td class="accordion" style="width:34%;">Lauren</td>
+                        </tr>
+                    </table>
+                    <!-- expanding data -->
+                    <div id="panel1" class="panel vertical grid-block" style="margin-left: 0.5rem;">
+                        <table class="accordion expanded">
+                            <tr>
+                                <td class="accordion" style="width:45px;">Due:</td>
+                                <td class="accordion">14th June 2016</td>
+                            </tr>
+                            <tr>
+                                <td class="accordion">Item 1:</td>
+                                <td class="accordion">4567kjl Red Dress with long sleeves</td>
+                            </tr>
+                            <tr>
+                                <td class="accordion">Item 2:</td>
+                                <td class="accordion">4447ABC/Slippers, green stitching</td>
+                            </tr>
+                            <tr>
+                                <td class="accordion">Item 3:</td>
+                                <td class="accordion">4221/Little black dress, open at the back with long slit</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- additional rows to ensure working expansion scrolling etc. For testing only will be replaced as rows generated by backend-->
+                    <table class="accordion">
+                        <tr>
+                            <td class="accordion" style="width:10%;">
+                                <button id="button2" class="accordion" click.delegate="closeExpand(2)"></button>
+                            </td>
+                            <td class="accordion" style="width:22%;">23457/R</td>
+                            <td class="accordion" style="width:34%;">Channel</td>
+                            <td sclass="accordion" tyle="width:34%;">Lauren</td>
+                        </tr>
+                    </table>
+                    <!-- expanding data -->
+                    <div id="panel2" class="panel vertical grid-block" style="margin-left: 0.5rem;">
+                        <table class="accordion expanded">
+                            <tr>
+                                <td class="accordion" style="width:45px;">Due:</td>
+                                <td class="accordion">14th June 2016</td>
+                            </tr>
+                            <tr>
+                                <td class="accordion">Item 1:</td>
+                                <td class="accordion">4567kjl Red Dress with long sleeves</td>
+                            </tr>
+                            <tr>
+                                <td class="accordion">Item 2:</td>
+                                <td class="accordion">4447ABC/Slippers, green stitching</td>
+                            </tr>
+                            <tr>
+                                <td class="accordion">Item 3:</td>
+                                <td class="accordion">4221/Little black dress, open at the back with long slit</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <!-- white lip at bottom of scroll region -->
+                <div id="image-panel-border" class="grid-content shrink scrolling-lip" >
+                </div>
+            </div>
 
-        <!-- Image Grid Large Panel-->
-        <div class="vertical grid-block" >
+            <!-- spacer -->
+            <div id="comms-panel-spacer" class="grid-block shrink spa-h-spacer">
+            </div>
+            <!-- -->
+            <!-- Communications Panel  -->
+            <!-- -->
 
-          <compose view-model="requests/requests"></compose>
 
+
+            <div id="right-panel" class="vertical grid-block grid-block-vertical-shadow">
+            <!-- Header -->
+            <div class="grid-block tool-header shrink">
+                <div class="grid-block align-left tool-header tool-header-spacer">
+                    <span class="ui-text-label-m-broad tool-header-selected">MESSAGES</span>
+                </div>
+                <div class="grid-block tool-header tool-header-spacer">
+                    <span class="ui-text-label-m-broad">CONTACTS</span>
+                    <span class="alert-box">8</span>
+                </div>
+                <div id="comms_panel" class="grid-block align-right tool-header tool-header-spacer">
+                    <span class="ui-text-label-m-broad tool-header-greyed-out">NEWS</span>
+                </div>
+            </div>
+            </div>
         </div>
-
-        
-
-
-        <!-- Communications Panel  -->
-        <div id="right-panel" class="comms vertical grid-block">
-          <div id="comms_panel grid-block" >
-            <h6>comms panel</h6>
-          </div>
+        <!-- spacer -->
+        <div id="bottom-panel-spacer" class="grid-content shrink spa-v-spacer">
         </div>
-
-      </div>
+    </div>
 </template>
+
+
+
+
+
+
+
+
+<!-- old 
+          <compose view-model="requests/requests"></compose>
+old -->
