@@ -3,8 +3,6 @@ import {HttpClient} from 'aurelia-fetch-client';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import 'fetch';
 
-import $ from 'jquery';
-import { datepicker } from 'jquery-ui';
 
 @inject(HttpClient, EventAggregator)
 export class Index {
@@ -23,10 +21,8 @@ export class Index {
   availableFrom = '';
   availableTo = '';
 
-  numberImages = 143;
+  numberImages = 0;
   
-
- 
 
   filterChange(event){
     console.log("changing");
@@ -45,6 +41,7 @@ export class Index {
                                       '&availableTo=' + this.availableTo)
           .then(response => response.json())
           .then(looks => {this.looks = looks})
+          .then(looks => {this.numberImages = looks.length});
   }
 
 
@@ -59,13 +56,10 @@ export class Index {
 
   }
 
-  
-
 
 
   attached(){
     
-        
      
     this.subscriber = this.ea.subscribe('datepicker', response => {
             if(response.elementId === 'datepickerto')
@@ -78,7 +72,8 @@ export class Index {
      
     return this.http.fetch('/pashionSearch/index.json')
         .then(response => response.json())
-        .then(looks => this.looks = looks);
+        .then(looks => this.looks = looks)
+        .then(looks => {this.numberImages = looks.length});
   }
 
   activate() {
