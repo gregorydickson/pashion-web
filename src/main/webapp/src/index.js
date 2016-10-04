@@ -24,20 +24,9 @@ export class Index {
   availableTo = '';
 
   numberImages = 143;
-  theIndex = this;
+  
 
-  options = {
-        dateFormat: "yy-mm-dd",
-        autoclose: true,
-        showButtonPanel: true,
-        closeText: 'Close',
-        onSelect: function() {
-          console.log(theIndex);
-        }
-    };
-  search(my){
-    console.log("search"+my);
-  }
+ 
 
   filterChange(event){
     console.log("changing");

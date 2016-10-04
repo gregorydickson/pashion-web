@@ -8,7 +8,7 @@ class SearchableItem {
 
 	String image
 	String color
-	String type //Look or Sample
+	SearchableItemType type //Look or Sample
 	String material
 	String size
 	String theme
@@ -25,23 +25,7 @@ class SearchableItem {
 	Date dateCreated
 	Date lastUpdated
 
-	static namedQueries = {
-        filterResults { brand, season, type, availableFrom, availableTo, keywords ->
-            
-            if(brand) eq('brand', brand)
-            if(keywords)  ilike ('description', keywords)
-            if(season) eq('season',season)
-            if(type) eq('type',type)
-            if(availableFrom && availableTo) or {
-            	between('fromDate', availableFrom, availableTo)
-            	between('toDate', availableFrom, availableTo)
-            }
-            
-            
-        }
-    }
 	
-
 	static belongsTo = [brandCollection: BrandCollection]
 
 	static hasMany = [ permissions:Permission, sampleRequests:SampleRequest]

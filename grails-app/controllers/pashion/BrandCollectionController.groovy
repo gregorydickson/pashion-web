@@ -34,7 +34,7 @@ class BrandCollectionController {
     }
     def itemTypes(){
         //quick list to get UI going
-        def itemTypes = ['Runway', 'Looks', 'Samples'] as JSON
+        def itemTypes = SearchableItemType.list() as JSON
         render itemTypes
     }
     def colors(){

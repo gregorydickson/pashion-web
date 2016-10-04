@@ -28,7 +28,7 @@ class PashionSearchController {
         Brand brand = null
         def type = null
         if(params.itemType != "")
-            type = params.itemType
+            type = SearchableItemType.findByDisplay(params.itemType)
         if(params.brand != "")
             brand = Brand.get(params.brand)
             
@@ -64,11 +64,16 @@ class PashionSearchController {
                     }
                     
                 }
+                if(availableFrom && availableTo) and {  
+                            gt('fromDate',  availableFrom)
+                            lt('toDate',  availableTo)
+                }
                 if(availableFrom && !availableTo) sampleRequests{
                     not{
                             between('bookingStartDate', availableFrom, availableTo)
                     }
                 }
+                
                 
 
             } 
