@@ -26,21 +26,55 @@ class PashionSearchController {
         Date availableFrom = null
         Date availableTo = null
         Brand brand = null
+        def type = null
+        if(params.itemType != "")
+            type = params.itemType
         if(params.brand != "")
             brand = Brand.get(params.brand)
             
         def season = Season.findByName(URLDecoder.decode(params.season))
-        def itemtype = params.itemType
-        if(params.availableFrom != "")
+        
+        if(params.availableFrom != "" )
             availableFrom = dateFormat.parse(params.availableFrom)
         if(params.availableTo != "")   
             availableTo = dateFormat.parse(params.availableTo)
         
         
         def keywords = URLDecoder.decode(params.searchtext)
-        def items =  SearchableItem.filterResults( brand, season, itemtype, availableFrom, availableTo, keywords).list() as JSON
+        keywords = keywords.split(" ")
+        //def items =  SearchableItem.filterResults( brand, season, itemtype, availableFrom, availableTo, keywords).list() as JSON
+        def items = []
         
-        render items
+        def criteria = SearchableItem.createCriteria()
+        def results = criteria.listDistinct () {
+                if(brand) eq('brand', brand)
+                if(keywords) or {
+                    keywords.each {  ilike('name', '%'+it+'%') }
+                }
+                if(season) eq('season',season)
+                if(type) eq('type',type)
+                if(availableFrom && availableTo) sampleRequests{
+                    and{
+                        not{
+                            between('bookingStartDate', availableFrom, availableTo)
+                        }
+                        not{
+                            between('bookingEndDate', availableFrom, availableTo)
+                        }
+                    }
+                    
+                }
+                if(availableFrom && !availableTo) sampleRequests{
+                    not{
+                            between('bookingStartDate', availableFrom, availableTo)
+                    }
+                }
+                
+
+            } 
+        
+        log.info results
+        render results as JSON
     }
 
     

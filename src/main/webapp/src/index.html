@@ -1,5 +1,6 @@
 <!-- index.html -->
 <template>
+<require from="./calendars/datepicker"></require>
     <!-- Main building block -->
     <!-- RM accordion testing -->
 
@@ -168,13 +169,14 @@
                     </div> -->
                     <!-- start date -->
                     <div class="grid-content shrink" style="padding-right:0;">
-                        <input type="text" class="datepickerfrom" value.bind="availableFrom">
+                        <input datepicker class="datepickerfrom" id=datepickerfrom >
                     </div>
                     <!-- end date -->
                     <div class="grid-content shrink" style="padding-left:0; padding-right:0;">
                         <span class="inline-label">
                             <span class="form-label">to</span>
-                            <input type="text" value.bind="availableTo" class="datepickerto" change.delegate="filterChange($event.target)">
+                            
+                            <input datepicker id="datepickerto" class="datepickerto">
                         </span>
                     </div>
                     <!-- theme -->
