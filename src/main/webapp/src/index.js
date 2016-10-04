@@ -1,11 +1,12 @@
 import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-fetch-client';
+import {EventAggregator} from 'aurelia-event-aggregator';
 import 'fetch';
 
 import $ from 'jquery';
 import { datepicker } from 'jquery-ui';
 
-@inject(HttpClient)
+@inject(HttpClient, EventAggregator)
 export class Index {
   heading = 'Looks for a Collection';
   looks = [];
@@ -23,15 +24,19 @@ export class Index {
   availableTo = '';
 
   numberImages = 143;
+  theIndex = this;
 
   options = {
         dateFormat: "yy-mm-dd",
         autoclose: true,
         showButtonPanel: true,
-        closeText: 'Close'
+        closeText: 'Close',
+        onSelect: function() {
+          console.log(theIndex);
+        }
     };
-  search(){
-    console.log("search");
+  search(my){
+    console.log("search"+my);
   }
 
   filterChange(event){
@@ -54,21 +59,35 @@ export class Index {
   }
 
 
-  constructor(http) {
+  constructor(http, eventAggregator) {
     http.configure(config => {
       config
         .useStandardConfiguration();
     });
+    this.ea = eventAggregator;
     this.http = http;
     this.boundHandler = this.handleKeyInput.bind(this);
 
   }
+
+  
+
+
+
   attached(){
-     $('.datepickerfrom').datepicker(this.options)
-        .datepicker('setDate', new Date());
-     $('.datepickerto').datepicker(this.options);
+    
+        
      
-     return this.http.fetch('/pashionSearch/index.json')
+    this.subscriber = this.ea.subscribe('datepicker', response => {
+            if(response.elementId === 'datepickerto')
+              this.availableTo = response.elementValue;
+            if(response.elementId === 'datepickerfrom') 
+              this.availableFrom = response.elementValue;
+            this.filterChange();
+            console.log(response);
+    });
+     
+    return this.http.fetch('/pashionSearch/index.json')
         .then(response => response.json())
         .then(looks => this.looks = looks);
   }
