@@ -1,18 +1,20 @@
 <!-- index.html -->
 <template>
 <require from="./calendars/datepicker"></require>
-    <!-- Main building block -->
 
+    <!-- Main building block -->
     <div class="vertical grid-block spa-background">
         <!-- spacer -->
-        <div id="top-panel-spacer" class="grid-block shrink spa-v-spacer "> 
+        <div class="grid-block shrink spa-v-spacer "> 
         </div>
-
         <div class="grid-block" style="overflow:visible;">
+
+ <div class="grid-block grid-block-vertical-shadow">
+
             <!-- -->
             <!-- Calendar + Request  Panel -->
             <!-- -->
-            <div id="left-panel-wide" class="vertical grid-block grid-block-vertical-shadow">
+            <div id="left-panel" class="vertical grid-block ">
                 <!-- header -->
                 <div class="grid-block tool-header shrink">
                     <div class="grid-block align-left tool-header-spacer">
@@ -29,6 +31,21 @@
                 <div class="grid-block shrink">
                     <compose view-model="calendars/requestCalendar"></compose>
                 </div>
+
+                <!-- Image holder -->
+                <div class="grid-block">
+                  <span>Image block</span>
+                </div>
+
+                <!-- Image information holder -->
+                <div class="grid-block">
+                  <span>Image information</span>
+                </div>
+
+
+</div>
+<div class="grid-block vertical">
+
                 <!-- search and filter requests -->
                 <div class="vertical grid-block shrink" style="margin-left: 1rem; margin-right: 1rem;">
                     <form style="margin-top:20px;">
@@ -45,6 +62,7 @@
                         </span>
                     </form>
                 </div>
+
                 <!-- Accordion -->
                 <!--header -->
                 <div class="vertical grid-content shrink" style="padding:0; margin-left: 1rem; margin-right: 1rem;">
@@ -125,19 +143,18 @@
                     </div>
                 </div>
                 <!-- white lip at bottom of scroll region -->
-                <div id="image-panel-border" class="grid-content shrink scrolling-lip" >
+                <div class="grid-content shrink scrolling-lip" >
                 </div>
             </div>
+</div>            
 
             <!-- spacer -->
-            <div id="comms-panel-spacer" class="grid-block shrink spa-h-spacer">
+            <div class="grid-block shrink spa-h-spacer">
             </div>
+
             <!-- -->
             <!-- Communications Panel  -->
             <!-- -->
-
-
-
             <div id="right-panel" class="vertical grid-block grid-block-vertical-shadow">
             <!-- Header -->
             <div class="grid-block tool-header shrink">
@@ -155,7 +172,7 @@
             </div>
         </div>
         <!-- spacer -->
-        <div id="bottom-panel-spacer" class="grid-content shrink spa-v-spacer">
+        <div class="grid-content shrink spa-v-spacer">
         </div>
     </div>
 </template>
