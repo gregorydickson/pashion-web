@@ -55,6 +55,8 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
 
       
 
+      this.flushing = false;
+
       this.microTaskQueue = [];
       this.microTaskQueueCapacity = 1024;
       this.taskQueue = [];
@@ -98,6 +100,7 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
       this.taskQueue = [];
 
       try {
+        this.flushing = true;
         while (index < queue.length) {
           task = queue[index];
           task.call();
@@ -105,6 +108,8 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
         }
       } catch (error) {
         onError(error, task);
+      } finally {
+        this.flushing = false;
       }
     };
 
@@ -115,6 +120,7 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
       var task = void 0;
 
       try {
+        this.flushing = true;
         while (index < queue.length) {
           task = queue[index];
           task.call();
@@ -131,6 +137,8 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
         }
       } catch (error) {
         onError(error, task);
+      } finally {
+        this.flushing = false;
       }
 
       queue.length = 0;

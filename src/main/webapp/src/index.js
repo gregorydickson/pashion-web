@@ -23,6 +23,11 @@ export class Index {
 
   numberImages = 0;
   
+  getMore(topIndex, isAtBottom, isAtTop) {
+        for(let i = 0; i < 100; ++i) {
+            this.looks.push('look' + i);
+        }
+    }
 
   filterChange(event){
     console.log("changing");
@@ -41,7 +46,7 @@ export class Index {
                                       '&availableTo=' + this.availableTo)
           .then(response => response.json())
           .then(looks => {this.looks = looks})
-          .then(looks => {this.numberImages = looks.length});
+          .then(looks => {this.numberImages = this.looks.length});
   }
 
 
@@ -60,20 +65,21 @@ export class Index {
 
   attached(){
     
-     
     this.subscriber = this.ea.subscribe('datepicker', response => {
             if(response.elementId === 'datepickerto')
               this.availableTo = response.elementValue;
             if(response.elementId === 'datepickerfrom') 
               this.availableFrom = response.elementValue;
             this.filterChange();
-            console.log(response);
+            
     });
-     
-    return this.http.fetch('/pashionSearch/index.json')
+
+    return this.http.fetch('/searchableItems.json')
         .then(response => response.json())
-        .then(looks => this.looks = looks)
+        .then(response => this.looks = response.searchableItems)
         .then(looks => {this.numberImages = looks.length});
+     
+    
   }
 
   activate() {
@@ -95,7 +101,7 @@ export class Index {
   handleKeyInput(event) {
     console.log(event);
     if(event.which == 13 && event.srcElement.id === 'search-images') {
-      console.log("herow");
+      console.log("user hit enter");
       this.filterChange(event);
 
     }

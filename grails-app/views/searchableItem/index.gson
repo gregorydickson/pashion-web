@@ -1,0 +1,9 @@
+import pashion.SearchableItem
+
+model {  
+  Iterable<SearchableItem> searchableItemList
+}
+
+json {  
+  searchableItems g.render(template: 'searchableItem', collection: searchableItemList ?: [], var: 'searchableItem')
+}

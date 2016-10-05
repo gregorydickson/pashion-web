@@ -11,16 +11,23 @@ import java.net.URLDecoder
 @Transactional(readOnly = true)
 class PashionSearchController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    
 
-    def elasticSearchService
 
-    def index(){
-         def daStuff = SearchableItem.list() as JSON
-         render daStuff
+
+    def looks(){
+        long startTime = System.currentTimeMillis()
+        List daStuff = SearchableItem.list()
+        
+
+        respond daStuff
+        long endTime = System.currentTimeMillis()
+        long duration = (endTime - startTime)
+        log.info "image list duration:"+duration
     }
        
     def filterSearch(){
+        long startTime = System.currentTimeMillis()
         def dateFormatString = "yyyy-MM-dd"
         def dateFormat =  new SimpleDateFormat(dateFormatString)
         Date availableFrom = null
@@ -42,10 +49,11 @@ class PashionSearchController {
         
         def keywords = URLDecoder.decode(params.searchtext)
         keywords = keywords.split(" ")
-        //def items =  SearchableItem.filterResults( brand, season, itemtype, availableFrom, availableTo, keywords).list() as JSON
+        
         def items = []
         
         def criteria = SearchableItem.createCriteria()
+        
         def results = criteria.listDistinct () {
                 if(brand) eq('brand', brand)
                 if(keywords) or {
@@ -62,23 +70,13 @@ class PashionSearchController {
                             between('bookingEndDate', availableFrom, availableTo)
                         }
                     }
-                    
                 }
-                if(availableFrom && availableTo) and {  
-                            gt('fromDate',  availableFrom)
-                            lt('toDate',  availableTo)
-                }
-                if(availableFrom && !availableTo) sampleRequests{
-                    not{
-                            between('bookingStartDate', availableFrom, availableTo)
-                    }
-                }
-                
-                
-
             } 
         
-        log.info results
+        
+        long endTime = System.currentTimeMillis()
+        long duration = (endTime - startTime)
+        log.info "search duration:"+duration
         render results as JSON
     }
 

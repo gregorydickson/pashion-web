@@ -20,13 +20,10 @@ export class DatePicker {
         autoclose: true,
         showButtonPanel: true,
         closeText: 'Close'})
-      .on('change', e => fireEvent(e.target, 'input'))
-      .on('change', e =>  this.ea.publish('datepicker', {elementId: this.element.id,
+      .on('change', e => fireEvent(e.target, 'input'));
+      
+    $(this.element).on('change', e =>  this.ea.publish('datepicker', {elementId: this.element.id,
                                                          elementValue:this.element.value}));
-    if(this.element.id === 'datepickerfrom'){
-      $(this.element).datepicker('setDate', new Date());
-      this.ea.publish('datepicker', {elementId: this.element.id,elementValue:this.element.value});
-    }
   }
   
   detached() {

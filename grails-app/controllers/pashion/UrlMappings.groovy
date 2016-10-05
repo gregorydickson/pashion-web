@@ -1,4 +1,4 @@
-package pashion.web
+package pashion
 
 class UrlMappings {
 
@@ -8,6 +8,8 @@ class UrlMappings {
                 // apply constraints here
             }
         }
+
+        "/searchableItems"(resources:'searchableItem')
 
         "/"(view:"/index")
         "500"(view:'/error')
