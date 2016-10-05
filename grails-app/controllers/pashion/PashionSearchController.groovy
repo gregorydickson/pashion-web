@@ -11,21 +11,7 @@ import java.net.URLDecoder
 @Transactional(readOnly = true)
 class PashionSearchController {
 
-    
-
-
-
-    def looks(){
-        long startTime = System.currentTimeMillis()
-        List daStuff = SearchableItem.list()
-        
-
-        respond daStuff
-        long endTime = System.currentTimeMillis()
-        long duration = (endTime - startTime)
-        log.info "image list duration:"+duration
-    }
-       
+         
     def filterSearch(){
         long startTime = System.currentTimeMillis()
         def dateFormatString = "yyyy-MM-dd"
