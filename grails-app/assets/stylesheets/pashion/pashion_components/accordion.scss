@@ -43,21 +43,30 @@ div.panel.show {
 }
 
 td.accordion {
+    text-align: left; 
+    text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
-    text-align: left; 
 }
 
 th.accordion {
 	text-align:left; 
-	border-bottom:1px solid $white-three;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 	font-weight: 300;
+    overflow: hidden;
+    border-bottom:1px solid $white-three;
 }
+
 
 table.accordion {
 	width: 255px; // not sure why 100% does not work here
 	table-layout:fixed;
+}
+
+table.big-accordion {
+    width: 100%;
+    table-layout:fixed;
 }
 
 table.accordion.expanded {
