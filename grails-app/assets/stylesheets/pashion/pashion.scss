@@ -119,7 +119,7 @@
     height: 18px;
 }
 ::-webkit-scrollbar-thumb {
-    height: 6px;
+    height: 30px;
     border: 4px solid rgba(0, 0, 0, 0);
     background-clip: padding-box;
     -webkit-border-radius: 7px;
@@ -222,5 +222,10 @@ select.top-menu-modifier:hover {
   padding:0;
 }
 
+.request-image-info-fix {
+  margin-top: 1rem; 
+  min-height:100px;  //RM Match number of rows of data 
+  overflow:hidden;
+}
 
 
