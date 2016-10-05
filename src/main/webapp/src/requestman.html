@@ -33,9 +33,7 @@
                             <compose view-model="calendars/requestCalendar"></compose>
                         </div>
 
-
                         <!-- Image holder -->
-
                         <div class="grid-content request-image-fix" 
                             style="
                               background-image: url('/assets/looks/11.jpg');
@@ -54,33 +52,45 @@
                             <br>
                             <span>Black boots</span>
                         </div>
-
-
                     </div>
                     <!-- spacers -->
                     <div class="grid-block shrink spa-h-spacer">
                     </div>
                     <div class="grid-block shrink spa-h-spacer">
                     </div>
+
+
                     <!-- 2nd Column -->
-                    <!-- request info -->
                     <!-- -->
                     <div class="grid-block vertical">
                         <!-- search and filter requests -->
-                        <div class="grid-content shrink" style="margin-left: 1rem; margin-right: 1rem;">
-                            <form style="margin-top:20px;">
-                                <!-- Search requests -->
-                                <input type="text" value.two-way="searchtext" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
-                                <!-- filter requests -->
-                                <span class="inline-label">
-                        <span class="form-label">Filter</span>
-                                <select name="" id="">
-                                    <option>By Date</option>
-                                    <option>By Person</option>
-                                    <option>By Request Number</option>
-                                </select>
-                                </span>
-                            </form>
+                        <div class="grid-block shrink" style="margin-left: 1rem; margin-right: 1rem; margin-top:1rem;">
+                          <div class="grid-block">                       
+                              <!-- Search requests -->
+                              <input type="text" value.two-way="searchtext" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
+                          </div>
+                          <div class="grid-block align-center">
+                              <!-- filter requests -->
+                              <span class="inline-label">
+                                  <span class="form-label">Filter</span>
+                                  <select name="" id="">
+                                      <option>Overdue</option>
+                                      <option>Waiting</option>
+                                      <option>All</option>
+                                  </select>
+                              </span>
+                            </div>    
+                            <div class="grid-block align-cent">
+                              <!-- order results -->
+                              <span class="inline-label">
+                                  <span class="form-label">Order</span>
+                                  <select name="" id="">
+                                      <option>By Date</option>
+                                      <option>By Person</option>
+                                      <option>By Request Number</option>
+                                  </select>
+                              </span>
+                          </div>
                         </div>
                         <!-- Accordion -->
                         <!--header -->
