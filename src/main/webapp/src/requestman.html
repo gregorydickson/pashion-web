@@ -1,18 +1,16 @@
 <!-- index.html -->
 <template>
     <require from="./calendars/datepicker"></require>
-
     <!-- Main building block -->
     <div class="vertical grid-block spa-background">
         <!-- spacer -->
         <div class="grid-block shrink spa-v-spacer ">
         </div>
         <div class="grid-block" style="overflow:visible;">
-
-        <!-- -->
-        <!-- Request Panel -->
-        <!-- -->
-            <div class="grid-block  vertical grid-block-vertical-shadow">
+            <!-- -->
+            <!-- Request Panel -->
+            <!-- -->
+            <div class="grid-block noscroll vertical grid-block-vertical-shadow ">
                 <!-- header -->
                 <div class="grid-block tool-header shrink ">
                     <div class="grid-block align-left tool-header-spacer">
@@ -25,26 +23,41 @@
                     </span>
                     </div>
                 </div>
-                <div class="grid-block ">
-
+                <div class="grid-block">
                     <!-- First Column -->
                     <!-- Calendar + Image detail -->
                     <!-- -->
-                    <div id="left-panel" class="vertical grid-block ">
+                    <div id="left-panel" class="vertical grid-block">
                         <!-- Calendar -->
                         <div class="grid-block shrink">
                             <compose view-model="calendars/requestCalendar"></compose>
                         </div>
-                        <!-- Image holder -->
-                        <div class="grid-content shrink" style="overflow:hidden">
+
+
+                        <!-- Image holder
+                        <div class="grid-content" style="margin-top: 2rem;">
                             <img class="request-image-fix" src="/assets/looks/10.jpg" />
+                        </div> -->
+
+
+                        <div class="grid-content request-image-fix" style="margin-top: 2rem;">
+                          
                         </div>
+
+
+
                         <!-- Image information holder -->
-                        <div class="grid-content shrink">
-                            <span>Look 3456BL</span><br>
-                            <span>Ralph Lauren</span><br>
-                            <span>Black smock with black pants</span><br>
+                        <div class="grid-content shrink ui-text-label-m" style="margin-top: 1rem;">
+                            <span>Look 3456BL</span>
+                            <br>
+                            <span>Ralph Lauren</span>
+                            <br>
+                            <span>Black smock with black pants</span>
+                            <br>
                             <span>Start necklaces</span>
+                        </div>
+                        <!-- white lip at bottom of scroll region -->
+                        <div class="grid-content shrink scrolling-lip">
                         </div>
                     </div>
                     <!-- spacers -->
@@ -52,7 +65,6 @@
                     </div>
                     <div class="grid-block shrink spa-h-spacer">
                     </div>
-
                     <!-- 2nd Column -->
                     <!-- request info -->
                     <!-- -->
@@ -161,7 +173,6 @@
             <!-- spacer -->
             <div class="grid-block shrink spa-h-spacer">
             </div>
-
             <!-- -->
             <!-- Communications Panel  -->
             <!-- -->
@@ -177,6 +188,9 @@
                     </div>
                     <div id="comms_panel" class="grid-block align-right tool-header tool-header-spacer">
                         <span class="ui-text-label-m-broad tool-header-greyed-out">NEWS</span>
+                    </div>
+                    <!-- white lip at bottom of scroll region -->
+                    <div class="grid-content shrink scrolling-lip">
                     </div>
                 </div>
             </div>
