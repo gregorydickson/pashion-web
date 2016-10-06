@@ -107,6 +107,9 @@ endpoints:
 
 ---
 grails:
+    json:
+        legacy:
+            builder: false
     servlet:
         version: 3.0
     resources:

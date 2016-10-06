@@ -40,7 +40,7 @@ class PashionSearchController {
         
         def criteria = SearchableItem.createCriteria()
         
-        def results = criteria.listDistinct () {
+        List results = criteria.listDistinct () {
                 if(brand) eq('brand', brand)
                 if(keywords) or {
                     keywords.each {  ilike('name', '%'+it+'%') }
@@ -60,10 +60,46 @@ class PashionSearchController {
             } 
         
         
+        Integer resultsSize = results.size()
+        Integer rows = resultsSize/5
+        
+        if(results.size() % 5)
+            rows = rows + 1
+        List resultList = []
+        log.info "rows:"+rows
+        def j = 0
+        for(def i=1; i<=rows; i++){
+
+            PashionUiRow arow = new PashionUiRow()
+            if(j <= resultsSize){
+                arow.numberImages = resultsSize
+                arow.item1 = results[j]
+                j = j + 1
+            }
+            if(j <= resultsSize){
+                arow.item2 = results[j]
+                j = j + 1
+            }
+            if(j <= resultsSize){
+                arow.item3 = results[j]
+                j = j + 1
+            }
+            if(j <= resultsSize){
+                arow.item4 = results[j]
+                j = j + 1
+            }
+            if(j <= resultsSize){
+                arow.item5 = results[j]
+                j = j + 1
+            }
+            resultList << arow
+        }
+        
+        render resultList as JSON
+
         long endTime = System.currentTimeMillis()
         long duration = (endTime - startTime)
         log.info "search duration:"+duration
-        render results as JSON
     }
 
     

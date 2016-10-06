@@ -238,10 +238,43 @@
                     </div>
                 </div>
                 <!-- Images/Looks -->
-                <div class="medium-up-4 align-spaced grid-block" style="overflow: auto; flex: 0 1 auto; justify-content: flex-start; margin-top:-0.5rem;">
-                    <div class="grid-content shrink" virtual-repeat.for="look of looks">
+                <div class="" style="overflow: scroll;
+                                     height: 1000px">
+                    <div class=" " virtual-repeat.for="row of rows" 
+                                                        style="display: -webkit-flex;
+                                                        display: flex;
+                                                        -webkit-flex-direction: row;
+                                                        flex-direction: row;
+                                                        height:300px">
                         <div class="card">
-                            <img src.bind="look.image" ref="image" />
+                            <img src.bind="row.item1.image" ref="image" />
+                            <div class="card-section">
+                                <h3>First</h3>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src.bind="row.item2.image" ref="image" />
+                            <div class="card-section">
+                                <h3>second</h3>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src.bind="row.item3.image" ref="image" />
+                            <div class="card-section">
+                               <h3>third</h3>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src.bind="row.item4.image" ref="image" />
+                            <div class="card-section">
+                                <p>4.</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img src.bind="row.item5.image" ref="image" />
+                            <div class="card-section">
+                                <p>5.</p>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -7,7 +7,7 @@ import 'fetch';
 @inject(HttpClient, EventAggregator)
 export class Index {
   heading = 'Looks for a Collection';
-  looks = [];
+  rows = [];
   seasons = [];
   brands = [];
   itemTypes = [];
@@ -23,11 +23,7 @@ export class Index {
 
   numberImages = 0;
   
-  getMore(topIndex, isAtBottom, isAtTop) {
-        for(let i = 0; i < 100; ++i) {
-            this.looks.push('look' + i);
-        }
-    }
+  
 
   filterChange(event){
     console.log("changing");
@@ -45,8 +41,8 @@ export class Index {
                                       '&availableFrom=' + this.availableFrom + 
                                       '&availableTo=' + this.availableTo)
           .then(response => response.json())
-          .then(looks => {this.looks = looks})
-          .then(looks => {this.numberImages = this.looks.length});
+          .then(rows => {this.rows = rows})
+          .then(rows => {this.numberImages = this.rows[0].item1.numberImages});
   }
 
 
@@ -74,10 +70,7 @@ export class Index {
             
     });
 
-    return this.http.fetch('/searchableItems.json')
-        .then(response => response.json())
-        .then(response => this.looks = response.searchableItems)
-        .then(looks => {this.numberImages = looks.length});
+    
      
     
   }
