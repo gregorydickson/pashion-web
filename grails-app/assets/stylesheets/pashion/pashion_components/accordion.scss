@@ -3,7 +3,28 @@
 
 
 button.accordion {
+    background-color: $white-two;
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    transition: 0.4s;
+}
+
+
+button.accordion-white {
     background-color: white;
+    cursor: pointer;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    transition: 0.4s;
+}
+
+button.accordion-grey-background {
+    background-color: $white-two;
     cursor: pointer;
     width: 100%;
     border: none;
@@ -49,6 +70,20 @@ td.accordion {
     overflow: hidden;
 }
 
+td.accordion-grey {
+    text-align: left; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    background-color:$white-two;
+}
+
+td.sample-padding {
+    padding-left: 1rem;
+    padding-right: 2.5rem;
+    vertical-align:top;
+}
+
 th.accordion {
 	text-align:left; 
     text-overflow: ellipsis;
@@ -67,9 +102,26 @@ table.accordion {
 table.big-accordion {
     width: 100%;
     table-layout:fixed;
+
 }
 
 table.accordion.expanded {
     background-color: $white-two;
 }
+
+th.w3 , td.w3 {width:3%;}
+th.w4 , td.w4 {width:4%;}
+th.w5 , td.w5 {width:5%;}
+th.w6 , td.w6 {width:6%;}
+th.w7 , td.w7 {width:7%;}
+th.w8 , td.w8 {width:8%;}
+th.w9 , td.w9 {width:9%;}
+th.w10 , td.w10 {width:10%;}
+th.w11 , td.w11 {width:11%;}
+th.w12 , td.w12 {width:12%;}
+th.w13 , td.w13 {width:13%;}
+th.w14 , td.w14 {width:14%;}
+th.w15 , td.w15 {width:15%;}
+th.w22 , td.w22 {width:22%;}
+th.w34 , td.w34 {width:34%;}
 
