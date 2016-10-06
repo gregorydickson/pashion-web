@@ -9,28 +9,7 @@ button.accordion {
     border: none;
     text-align: left;
     outline: none;
-    transition: 0.4s;
-}
-
-
-button.accordion-white {
-    background-color: white;
-    cursor: pointer;
-    width: 100%;
-    border: none;
-    text-align: left;
-    outline: none;
-    transition: 0.4s;
-}
-
-button.accordion-grey-background {
-    background-color: $white-two;
-    cursor: pointer;
-    width: 100%;
-    border: none;
-    text-align: left;
-    outline: none;
-    transition: 0.4s;
+    // transition: 0.4s;
 }
 
 button.accordion.active {
@@ -54,7 +33,7 @@ div.panel {
     overflow: hidden;
     opacity: 0;
     visibility: hidden;
-    transition: 0.5s ease-in-out;
+    //transition: 0.1s ease-in-out;
 }
 
 div.panel.show {
