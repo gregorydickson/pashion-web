@@ -46,13 +46,24 @@ td.accordion {
     text-align: left; 
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-weight:300;
     overflow: hidden;
+}
+
+th.accordion {
+    text-align:left; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 300;
+    overflow: hidden;
+    border-bottom:1px solid $white-three;
 }
 
 td.accordion-grey {
     text-align: left; 
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-weight:300;
     overflow: hidden;
     background-color:$white-two;
 }
@@ -63,14 +74,6 @@ td.sample-padding {
     vertical-align:top;
 }
 
-th.accordion {
-	text-align:left; 
-    text-overflow: ellipsis;
-    white-space: nowrap;
-	font-weight: 300;
-    overflow: hidden;
-    border-bottom:1px solid $white-three;
-}
 
 
 table.accordion {
@@ -80,7 +83,7 @@ table.accordion {
 
 table.big-accordion {
     width: 100%;
-    table-layout:fixed;
+    table-layout:auto;
 
 }
 
@@ -101,6 +104,7 @@ th.w12 , td.w12 {width:12%;}
 th.w13 , td.w13 {width:13%;}
 th.w14 , td.w14 {width:14%;}
 th.w15 , td.w15 {width:15%;}
+th.w18 , td.w18 {width:18%;}
 th.w22 , td.w22 {width:22%;}
 th.w34 , td.w34 {width:34%;}
 
