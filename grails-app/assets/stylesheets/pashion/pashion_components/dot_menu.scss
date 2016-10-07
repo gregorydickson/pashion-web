@@ -1,0 +1,25 @@
+
+.menu-stripe {
+  position: relative;
+
+  width: 48px;
+  height: 48px;
+  margin-bottom:-50px;
+  padding-left:120px;
+}
+
+.menu-stripe:before, .menu-stripe:after {
+  background: white;
+  content: "";
+  position: absolute;
+  height: 5px;
+  top: 12px;
+  border-radius: 5px;
+  box-shadow: 0 10px white, 0 20px white;
+}
+
+.menu-stripe:before {
+  width: 5px;
+  
+}
+
