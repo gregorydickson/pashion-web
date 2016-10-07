@@ -230,4 +230,14 @@ select.top-menu-modifier:hover {
   overflow:hidden;
 }
 
+img.contact-entry {
+  height:44px;
+}
+
+.clip-circle {
+  clip-path: circle(20px at center);
+  -webkit-clip-path: circle(20px at center);
+}
+
+
 

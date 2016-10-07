@@ -1,0 +1,15 @@
+<template>
+    <div class="grid-block vertical">
+        <!-- search and filter requests -->
+        <div class="grid-block vertical shrink" style="margin-top:1rem;">
+        	<!-- Search -->
+            <div class="grid-content">
+                <!-- Search requests -->
+                <input type="text" value.two-way="searchtext" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
+            </div>
+            <div class="grid-block">
+            	<compose view-model="comms/contactEntry"></compose>
+            </div>
+        </div>
+    </div>
+</template>
