@@ -171,6 +171,20 @@ input.search-box, input.search-box:hover, input.search-box:focus {
   text-align:center;
 }
 
+.edit-box {
+  width: 17px;
+  height: 17px;
+  font-size: $font-size-extra-large;
+  font-weight: 700;
+  line-height: 0.6;
+  color: $black;
+  padding-top: 0.5rem;
+  margin-left: 1.5rem;
+  margin-top: 0.5rem;
+  text-align:center;
+
+}
+
 .spa-v-spacer {
   height: 7px;
   overflow:visible;
