@@ -1,12 +1,20 @@
 import pashion.*
 import java.text.SimpleDateFormat
 import java.util.Date
+import grails.converters.JSON
 
 
 
 class BootStrap {
     def sessionFactory
     def init = { servletContext ->
+
+      JSON.registerObjectMarshaller(SearchableItem) {
+                def returnArray = [:]
+                returnArray['image'] = it.image
+                
+                return returnArray
+          }
 
         if (Brand.count() == 0) {
             log.info "Creating Test Data"

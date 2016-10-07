@@ -153,6 +153,9 @@ grails:
         defaultScope: singleton
     converters:
         encoding: UTF-8
+        json:
+            default:
+                deep: false
     views:
         default:
             codec: html

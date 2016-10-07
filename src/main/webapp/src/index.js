@@ -34,7 +34,7 @@ export class Index {
     console.log(this.availableFrom);
     console.log(this.availableTo);
 
-    this.http.fetch('/pashionSearch/filterSearch?searchtext='+ encodeURI(this.searchText) + 
+    this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                       '&season=' + encodeURI(this.selectedSeason) + 
                                       '&itemType=' + this.selectedItemType + 
