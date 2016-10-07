@@ -50,6 +50,15 @@ td.accordion {
     overflow: hidden;
 }
 
+td.accordion-underline {
+    text-align: left; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight:300;
+    overflow: hidden;
+    border-bottom:1px solid $white-three;
+}
+
 th.accordion {
     text-align:left; 
     text-overflow: ellipsis;
