@@ -2,14 +2,54 @@
     <div class="grid-block vertical">
         <!-- search and filter requests -->
         <div class="grid-block vertical shrink" style="margin-top:1rem;">
-        	<!-- Search -->
+            <!-- Search -->
             <div class="grid-content">
                 <!-- Search requests -->
                 <input type="text" value.two-way="searchtext" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
             </div>
-            <div class="grid-block">
-            	<compose view-model="comms/contactEntry"></compose>
+            <!-- category -->
+            <div class="grid-block vertical">
+                <table class="big-accordion">
+                    <tr>
+                        <td class="accordion w3">
+                            <button id="button11" class="accordion" style="background-color: white"  click.delegate="closeExpand(11)"></button>
+                        </td>
+                        <td> <span>Recent Activity</span>
+                        </td>
+                    </tr>
+                </table>
+                <div id="panel11" class="panel grid-block vertical" style="margin-left: 0.5rem; margin-top:0.5rem;">
+                    <div>
+                        <compose view-model="comms/contactEntry"></compose>
+                        <compose view-model="comms/contactEntry"></compose>
+                        <compose view-model="comms/contactEntry"></compose>
+                        <compose view-model="comms/contactEntry"></compose>
+                    </div>
+                </div>
             </div>
+
+                        <!-- category -->
+            <div class="grid-block vertical">
+                <table class="big-accordion">
+                    <tr>
+                        <td class="accordion w3">
+                            <button id="button12" class="accordion" style="background-color: white" click.delegate="closeExpand(12)"></button>
+                        </td>
+                        <td> <span>Alphabetical</span>
+                        </td>
+                    </tr>
+                </table>
+                <div id="panel12" class="panel grid-block vertical" style="margin-left: 0.5rem; margin-top:0.5rem;">
+                    <div>
+                        <compose view-model="comms/contactEntry"></compose>
+                        <compose view-model="comms/contactEntry"></compose>
+                        <compose view-model="comms/contactEntry"></compose>
+                        <compose view-model="comms/contactEntry"></compose>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     </div>
 </template>

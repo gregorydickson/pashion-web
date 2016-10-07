@@ -5,7 +5,7 @@
 button.accordion {
     background-color: $white-two;
     cursor: pointer;
-    width: 100%;
+    width: 9px;
     border: none;
     text-align: left;
     outline: none;
@@ -25,6 +25,9 @@ button.accordion:before {
 
 button.accordion.active:before {
     content: "–";
+    font-size: 14px;
+    font-weight: 900;
+    color: #9b9b9b;
 }
 
 div.panel {
