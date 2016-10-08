@@ -1,31 +1,21 @@
 <template>
-    <div class="grid-block vertical">
+
         <!-- search and filter requests -->
-        <div class="grid-block vertical" style="margin-top:1rem;">
-            <!-- contact -->
-            <div class="grid-block" style="margin-left: 1rem;">
-                <compose view-model="comms/contactEntry"></compose>
-            </div>
-            <!-- Search -->
-            <div class="grid-block" style="margin-left:1rem;">
-                <!-- Search requests -->
-                <input type="text" value.two-way="searchtext" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
-            </div>
-        </div>
-        <!-- category -->
-        <div class="grid-block vertical" style="margin-left:1rem; ">
-            <compose view-model="comms/messageEntry"></compose>
-            <compose view-model="comms/messageEntryNotMe"></compose>
-            <compose view-model="comms/messageEntry"></compose>
-            <compose view-model="comms/messageEntryNotMe"></compose>
-            <compose view-model="comms/messageEntry"></compose>
-            <compose view-model="comms/messageEntry"></compose>
-            <compose view-model="comms/messageEntryNotMe"></compose>
-            <compose view-model="comms/messageEntryNotMe"></compose>
-            <compose view-model="comms/messageEntry"></compose>
-            <compose view-model="comms/messageEntryNotMe"></compose>
-            <compose view-model="comms/messageEntryNotMe"></compose>
-            <compose view-model="comms/messageEntry"></compose>
-        </div>
+        <compose view-model="comms/messagesHeader"></compose>
+
+
+    <div class="grid-content vertical" style="margin-left:1rem; ">
+        <compose view-model="comms/messageEntry"></compose>
+        <compose view-model="comms/messageEntryNotMe"></compose>
+        <compose view-model="comms/messageEntry"></compose>
+        <compose view-model="comms/messageEntryNotMe"></compose>
+        <compose view-model="comms/messageEntry"></compose>
+        <compose view-model="comms/messageEntry"></compose>
+        <compose view-model="comms/messageEntryNotMe"></compose>
+        <compose view-model="comms/messageEntryNotMe"></compose>
+        <compose view-model="comms/messageEntry"></compose>
+        <compose view-model="comms/messageEntryNotMe"></compose>
+        <compose view-model="comms/messageEntryNotMe"></compose>
+        <compose view-model="comms/messageEntry"></compose>
     </div>
 </template>
