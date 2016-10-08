@@ -1,8 +1,8 @@
 <template>
     <div class="grid-block vertical">
         <!-- search and filter requests -->
-        <div class="grid-block vertical shrink" style="margin-top:1rem;">
-        <!-- contact -->
+        <div class="grid-block vertical" style="margin-top:1rem;">
+            <!-- contact -->
             <div class="grid-block" style="margin-left: 1rem;">
                 <compose view-model="comms/contactEntry"></compose>
             </div>
@@ -11,10 +11,9 @@
                 <!-- Search requests -->
                 <input type="text" value.two-way="searchtext" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
             </div>
-
-            <!-- category -->
-            <div class="grid-block vertical" style="margin-left:1rem; " >
-
+        </div>
+        <!-- category -->
+        <div class="grid-block vertical" style="margin-left:1rem; ">
             <compose view-model="comms/messageEntry"></compose>
             <compose view-model="comms/messageEntryNotMe"></compose>
             <compose view-model="comms/messageEntry"></compose>
@@ -27,9 +26,6 @@
             <compose view-model="comms/messageEntryNotMe"></compose>
             <compose view-model="comms/messageEntryNotMe"></compose>
             <compose view-model="comms/messageEntry"></compose>
-
-
-            </div>
         </div>
     </div>
 </template>
