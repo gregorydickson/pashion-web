@@ -171,6 +171,27 @@ input.search-box, input.search-box:hover, input.search-box:focus {
   text-align:center;
 }
 
+.message-box {
+  width: 175px;
+  height: 30px;
+  border-radius: 0px;
+  font-size: $font-size-mid;
+  color: $black;
+  padding: 0.5rem;
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+}
+.message-me-box {
+  background-color: $white;
+  text-align:right;
+  border: 0.5px solid $white-three;
+}
+.message-not-me-box {
+  background-color: $white-three;
+  text-align:left;
+}
+
+
 .edit-box {
   width: 17px;
   height: 17px;
