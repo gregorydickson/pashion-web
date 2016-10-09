@@ -173,12 +173,11 @@ input.search-box, input.search-box:hover, input.search-box:focus {
 
 .message-box {
   width: 175px;
-  height: 30px;
+  height: auto;
   border-radius: 0px;
   font-size: $font-size-mid;
   color: $black;
-  padding: 0.5rem;
-  margin-left: 0.5rem;
+  padding: 9px;
   margin-top: 0.5rem;
 }
 .message-me-box {
@@ -189,6 +188,17 @@ input.search-box, input.search-box:hover, input.search-box:focus {
 .message-not-me-box {
   background-color: $white-two;
   text-align:left;
+}
+.message-text{
+  font-size: $font-size-small;
+  line-height: 2.0;
+  color: $warm-grey;
+}
+.message-left-text {
+  text-align: left;
+}
+.message-right-text {
+  text-align: right;
 }
 
 
