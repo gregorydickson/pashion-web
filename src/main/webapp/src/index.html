@@ -1,13 +1,11 @@
 <!-- index.html -->
 <template>
-<require from="./calendars/datepicker"></require>
+    <require from="./calendars/datepicker"></require>
     <!-- Main building block -->
-
     <div class="vertical grid-block spa-background">
         <!-- spacer -->
-        <div class="grid-block shrink spa-v-spacer "> 
+        <div class="grid-block shrink spa-v-spacer ">
         </div>
-
         <div class="grid-block" style="overflow:visible;">
             <!-- -->
             <!-- Calendar + Request  Panel -->
@@ -33,7 +31,7 @@
                 <div class="vertical grid-block shrink" style="margin-left: 1rem; margin-right: 1rem;">
                     <form style="margin-top:20px;">
                         <!-- Search requests -->
-                        <input type="text" value.two-way="searchtext" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'" >
+                        <input type="text" value.two-way="searchtext" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
                         <!-- filter requests -->
                         <span class="inline-label">
                         <span class="form-label">Filter</span>
@@ -125,7 +123,7 @@
                     </div>
                 </div>
                 <!-- white lip at bottom of scroll region -->
-                <div class="grid-content shrink scrolling-lip" >
+                <div class="grid-content shrink scrolling-lip">
                 </div>
             </div>
             <!-- spacer -->
@@ -137,16 +135,16 @@
             <div id="looks" class="vertical grid-block grid-block-vertical-shadow" style="overflow:hidden;">
                 <!-- Header -->
                 <div class="grid-block tool-header shrink ">
-                <div id="comms_panel" class="grid-block align-left tool-header tool-header-spacer shrink">
-                    <span class="ui-text-label-m-broad">IMAGE SEARCH</span>
-                    <span class="ui-text-label-m-broad" style="margin-left:1rem;">${numberImages} Images</span>
-                </div>
-                <div class="grid-block align-right tool-header-spacer">
+                    <div id="comms_panel" class="grid-block align-left tool-header tool-header-spacer shrink">
+                        <span class="ui-text-label-m-broad">IMAGE SEARCH</span>
+                        <span class="ui-text-label-m-broad" style="margin-left:1rem;">${numberImages} Images</span>
+                    </div>
+                    <div class="grid-block align-right tool-header-spacer">
                         <span class="expando">
                       <a route-href="route: requestman;"><img  src="/assets/nav/collapso.png" /></a>
                     </span>
                     </div>
-                    </div>
+                </div>
                 <!-- search / filter area -->
                 <!-- top row -->
                 <div class="medium-up-1  grid-block shrink" style="margin-top: 1rem;">
@@ -175,14 +173,13 @@
                     </div> -->
                     <!-- start date -->
                     <div class="grid-content shrink" style="padding-right:0;">
-                        <input type="text" datepicker placeholder="Start Date" class="datepickerfrom" id=datepickerfrom >
+                        <input type="text" datepicker placeholder="Start Date" class="datepickerfrom" id=datepickerfrom>
                     </div>
                     <!-- end date -->
                     <div class="grid-content shrink" style="padding-left:0; padding-right:0;">
                         <span class="inline-label">
                             <span class="form-label">to</span>
-                            
-                            <input type="text" datepicker id="datepickerto" placeholder="End Date" class="datepickerto">
+                        <input type="text" datepicker id="datepickerto" placeholder="End Date" class="datepickerto">
                         </span>
                     </div>
                     <!-- theme -->
@@ -247,8 +244,7 @@
                 <!-- Images/Looks -->
                 <div class="" style="overflow: scroll;
                                      height: 1000px">
-                    <div class=" " virtual-repeat.for="row of rows" 
-                                                        style="display: -webkit-flex;
+                    <div class=" " virtual-repeat.for="row of rows" style="display: -webkit-flex;
                                                         display: flex;
                                                         -webkit-flex-direction: row;
                                                         flex-direction: row;
@@ -262,7 +258,7 @@
                                 <h3>First</h3>
                             </div>
                             <div class="look-menu">
-                            <span class="look-menu-heading">Look 39393/J</span>
+                                <span class="look-menu-heading">Look 39393/J</span>
                                 <ul class="look-menu-list">
                                     <li class="look-menu-item"><a href="#" class="look-menu-link">Request</a></li>
                                     <li class="look-menu-item"><a href="#" class="look-menu-link">Details</a></li>
@@ -285,7 +281,7 @@
                             </a>
                             <img src.bind="row.item3.image" ref="image" />
                             <div class="card-section">
-                               <h3>third</h3>
+                                <h3>third</h3>
                             </div>
                         </div>
                         <div class="card" style="height:300px;">
@@ -305,7 +301,6 @@
                             <div class="card-section">
                                 <p>5.</p>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -319,35 +314,29 @@
             <!-- -->
             <!-- Communications Panel  -->
             <!-- -->
-
-
-
-            <div id="right-panel" class="vertical grid-block grid-block-vertical-shadow">
-            <!-- Header -->
-            <div class="grid-block tool-header shrink">
-                <div class="grid-block align-left tool-header tool-header-spacer">
-                    <span class="ui-text-label-m-broad tool-header-selected">MESSAGES</span>
+            <div id="right-panel" class="vertical grid-block grid-block-vertical-shadow" style="overflow:auto;">
+                <!-- Header -->
+                <div class="grid-block tool-header shrink">
+                    <div class="grid-block align-left tool-header tool-header-spacer">
+                        <span class="ui-text-label-m-broad tool-header-selected">MESSAGES</span>
+                    </div>
+                    <div class="grid-block tool-header tool-header-spacer">
+                        <span class="ui-text-label-m-broad">CONTACTS</span>
+                        <span class="alert-box">8</span>
+                    </div>
+                    <div id="comms_panel" class="grid-block align-right tool-header tool-header-spacer">
+                        <span class="ui-text-label-m-broad tool-header-greyed-out">NEWS</span>
+                    </div>
                 </div>
-                <div class="grid-block tool-header tool-header-spacer">
-                    <span class="ui-text-label-m-broad">CONTACTS</span>
-                    <span class="alert-box">8</span>
+                <compose view-model="comms/messagesHeader" style="overflow:hidden; min-height:90px; margin-top: 1rem; margin-right:1rem;margin-left: 1rem;"></compose>
+                <compose view-model="comms/messages" style="overflow-x:hidden;"></compose>
+                <!-- white lip at bottom of scroll region -->
+                <div class="grid-content shrink scrolling-fat-lip">
                 </div>
-                <div id="comms_panel" class="grid-block align-right tool-header tool-header-spacer">
-                    <span class="ui-text-label-m-broad tool-header-greyed-out">NEWS</span>
+                <!-- New message -->
+                <div class="grid-content shrink">
+                    <input type="text" placeholder="New Message" style="text-align:right;">
                 </div>
-            </div>
-
-
-            <compose view-model="comms/messagesHeader" style="overflow:hidden; min-height:90px; margin-top: 1rem; margin-right:1rem;margin-left: 1rem;"></compose>
-            <compose view-model="comms/messages" style="overflow-x:hidden;"></compose>
-
-
-            <!-- white lip at bottom of scroll region -->
-            <div class="grid-content shrink scrolling-fat-lip">
-            </div>
-            <!-- new IM box -->
-            <div class="grid-content shrink">
-                <input type="text" placeholder="New Message" style="text-align:right;">
             </div>
         </div>
         <!-- spacer -->
