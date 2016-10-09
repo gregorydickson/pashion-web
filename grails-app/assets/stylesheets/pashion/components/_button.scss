@@ -176,8 +176,11 @@ $button-icon-spacing: 0.5em !default;
   $radius: $button-radius,
   $btngroup: false
 ){
+
+  border: 1px solid $white-three;
+  
   @if $style == hollow {
-    border: 1px solid $white-three;
+    
     padding-top: calc(#{get-side($button-padding, top)} - 1px);
     padding-right: calc(#{get-side($button-padding, right)} - 1px);
     padding-bottom: calc(#{get-side($button-padding, bottom)} - 1px);
