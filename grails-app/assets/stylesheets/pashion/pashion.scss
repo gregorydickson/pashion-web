@@ -171,8 +171,10 @@ input.search-box, input.search-box:hover, input.search-box:focus {
   text-align:center;
 }
 
+$message-box-width: 225px;
+
 .message-box {
-  width: 225px;
+  width: $message-box-width;
   height: auto;
   border-radius: 0px;
   font-size: $font-size-mid;
@@ -203,7 +205,12 @@ input.search-box, input.search-box:hover, input.search-box:focus {
 .inter-message-gap{
   margin-top: 1.5rem;
 }
-
+.message-new-message-box{ //RM need to properly create a text entry method for this type of box //
+  text-align: right;
+  width: $message-box-width;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
 
 .edit-box {
   width: 17px;
