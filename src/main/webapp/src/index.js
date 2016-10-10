@@ -117,10 +117,13 @@ export class Index {
 
   }
 
-  createSampleRequestModal(lookId) {
-    
-    this.dialogService.open({viewModel: Create, model: 'Test' }).then(response => {
-      console.log('look:'+lookId);
+  createSampleRequestModal(itemId) {
+    var currentItem = {};
+    this.http.fetch('/searchableItems/' +itemId+ '.json')
+      .then(response => response.json()).then(item => this.currentItem = item)
+
+    this.dialogService.open({viewModel: Create, model: currentItem }).then(response => {
+      
       
       if (!response.wasCancelled) {
         console.log('OK');

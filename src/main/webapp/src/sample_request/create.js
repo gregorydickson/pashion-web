@@ -2,12 +2,12 @@ import {DialogController} from 'aurelia-dialog';
 
 export class Create {
   static inject = [DialogController];
-  look = {};
-  
+  currentItem = {};
+
   constructor(controller){
     this.controller = controller;
   }
-  activate(look){
-    this.person = look;
+  activate(currentItem){
+    this.currentItem = currentItem;
   }
 }
