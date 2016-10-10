@@ -1,0 +1,49 @@
+<template>
+
+
+
+            <!-- category -->
+            <div class="grid-block vertical" style="margin-left:1rem; margin-right:1rem;" >
+
+                    <table class="big-accordion">
+                        <tr>
+                            <td class="accordion-grey" style="width:20px;">
+                                <button id="button11" class="accordion" click.delegate="closeExpand(11)"></button>
+                            </td>
+                            <td class="accordion-grey"> <span>Recent Activity</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <div id="panel11" class="panel grid-block vertical" style="margin-top:0.5rem;">
+                        <div>
+                            <compose view-model="comms/contactEntry"></compose>
+                            <compose view-model="comms/contactEntry"></compose>
+                            <compose view-model="comms/contactEntry"></compose>
+                            <compose view-model="comms/contactEntry"></compose>
+                        </div>
+                    </div>
+
+                <!-- category -->
+
+                    <table class="big-accordion">
+                        <tr>
+                            <td class="accordion-grey" style="width:20px;">
+                                <button id="button12" class="accordion" click.delegate="closeExpand(12)"></button>
+                            </td>
+                            <td class="accordion-grey"> <span>Alphabetical</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <div id="panel12" class="panel grid-block vertical" style="margin-top:0.5rem;">
+                        <div>
+                            <compose view-model="comms/contactEntry"></compose>
+                            <compose view-model="comms/contactEntry"></compose>
+                            <compose view-model="comms/contactEntry"></compose>
+                            <compose view-model="comms/contactEntry"></compose>
+                        </div>
+                    </div>
+
+            </div>
+
+
+</template>
