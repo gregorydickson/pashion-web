@@ -247,17 +247,17 @@
                                                         flex-direction: row;
                                                         height:300px;">
                         <div class="card" style="height:300px;">
-                            <a href="#" class="">
+                            <a href="#" class="look-menu-click" click.delegate="lookMenu(row.item1.id)">
                                 <div class=menu-stripe></div>
+                                <img src.bind="row.item1.image" ref="image" />
                             </a>
-                            <img src.bind="row.item1.image" ref="image" />
                             <div class="card-section">
                                 <h3>First</h3>
                             </div>
-                            <div class="look-menu">
+                            <div class="look-menu" id="look-${row.item1.id}">
                             <span class="look-menu-heading">Look 39393/J</span>
                                 <ul class="look-menu-list">
-                                    <li class="look-menu-item"><a href="#" class="look-menu-link">Request</a></li>
+                                    <li class="look-menu-item"><a href="#" click.delegate="createSampleRequestModal(row.item1.id)" class="look-menu-link">Request</a></li>
                                     <li class="look-menu-item"><a href="#" class="look-menu-link">Details</a></li>
                                     <li class="pure-menu-item"><a href="#" class="look-menu-link">Chat To Designer</a></li>
                                 </ul>
@@ -266,8 +266,9 @@
                         <div class="card" style="height:300px;">
                             <a href="#" class="">
                                 <div class=menu-stripe></div>
+                            
+                                <img src.bind="row.item2.image" ref="image" />
                             </a>
-                            <img src.bind="row.item2.image" ref="image" />
                             <div class="card-section">
                                 <h3>second</h3>
                             </div>
@@ -275,8 +276,9 @@
                         <div class="card" style="height:300px;">
                             <a href="#" class="">
                                 <div class=menu-stripe></div>
+                            
+                                <img src.bind="row.item3.image" ref="image" />
                             </a>
-                            <img src.bind="row.item3.image" ref="image" />
                             <div class="card-section">
                                <h3>third</h3>
                             </div>
@@ -284,8 +286,9 @@
                         <div class="card" style="height:300px;">
                             <a href="#" class="">
                                 <div class=menu-stripe></div>
+                            
+                                <img src.bind="row.item4.image" ref="image" />
                             </a>
-                            <img src.bind="row.item4.image" ref="image" />
                             <div class="card-section">
                                 <p>4.</p>
                             </div>

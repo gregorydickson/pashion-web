@@ -12,6 +12,7 @@ class BootStrap {
       JSON.registerObjectMarshaller(SearchableItem) {
                 def returnArray = [:]
                 returnArray['image'] = it.image
+                returnArray['id'] =  it.id
                 
                 return returnArray
           }

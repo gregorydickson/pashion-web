@@ -25,6 +25,12 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
     return target;
   };
 
+  var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+    return typeof obj;
+  } : function (obj) {
+    return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj;
+  };
+
   
 
   var metadata = exports.metadata = {
@@ -76,11 +82,13 @@ define(['exports', 'aurelia-pal'], function (exports, _aureliaPal) {
 
       if (origin === undefined) {
         _aureliaPal.PLATFORM.eachModule(function (key, value) {
-          for (var name in value) {
-            var exp = value[name];
-            if (exp === fn) {
-              originStorage.set(fn, origin = new Origin(key, name));
-              return true;
+          if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {
+            for (var name in value) {
+              var exp = value[name];
+              if (exp === fn) {
+                originStorage.set(fn, origin = new Origin(key, name));
+                return true;
+              }
             }
           }
 

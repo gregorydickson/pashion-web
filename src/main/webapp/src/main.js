@@ -4,7 +4,8 @@ export function configure(aurelia) {
   aurelia.use
     .standardConfiguration()
     .developmentLogging()
-    .plugin('aurelia-ui-virtualization');
+    .plugin('aurelia-ui-virtualization')
+    .plugin('aurelia-dialog');
 
   //Uncomment the line below to enable animation.
   //aurelia.use.plugin('aurelia-animator-css');

@@ -1,10 +1,12 @@
 import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-fetch-client';
 import {EventAggregator} from 'aurelia-event-aggregator';
+import {DialogService} from 'aurelia-dialog';
 import 'fetch';
+import {Create} from './sample_request/create';
 
 
-@inject(HttpClient, EventAggregator)
+@inject(HttpClient, EventAggregator, DialogService)
 export class Index {
   heading = 'Looks for a Collection';
   rows = [];
@@ -46,7 +48,7 @@ export class Index {
   }
 
 
-  constructor(http, eventAggregator) {
+  constructor(http, eventAggregator,dialogService) {
     http.configure(config => {
       config
         .useStandardConfiguration();
@@ -54,6 +56,7 @@ export class Index {
     this.ea = eventAggregator;
     this.http = http;
     this.boundHandler = this.handleKeyInput.bind(this);
+    this.dialogService = dialogService;
 
   }
 
@@ -106,6 +109,26 @@ export class Index {
     var panelChoice = document.getElementById("panel" + buttonNumber);
     buttonChoice.classList.toggle("active");
     panelChoice.classList.toggle("show");  
+  }
+
+  lookMenu(id){
+    var menu = document.getElementById("look-"+id);
+    menu.classList.toggle("look-menu-show");
+
+  }
+
+  createSampleRequestModal(lookId) {
+    
+    this.dialogService.open({viewModel: Create, model: 'Test' }).then(response => {
+      console.log('look:'+lookId);
+      
+      if (!response.wasCancelled) {
+        console.log('OK');
+      } else {
+        console.log('cancelled');
+      }
+       console.log(response.output);
+    });
   }
     
 }
