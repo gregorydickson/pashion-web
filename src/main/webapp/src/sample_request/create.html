@@ -1,14 +1,76 @@
 <template>
    <ai-dialog>
       <ai-dialog-body>
-         <h2>${currentItem.id}</h2>
+         <div class="grid-block row">
+            <div class="vertical grid-block">
+                <div class="grid-block calendar-header-align">
+                     <span class="calendarnav prev">
+                     <a click.delegate="startPrevious()">
+                        <img src="/assets/calendar/prev.png"  />
+                     </a>
+                     </span>
+                     <span class="calendarnav calendar-title"><a id="titlelink" click.delegate="startReset()">Today</a></span>
+                     <span class="calendarnav next">
+                     <a click.delegate="startNext()"><img src="/assets/calendar/next.png" /></a>
+                     </span>
+                </div>
+                <div class="grid-block calendar-header-align">
+                    <span class="calendarnav ui-text-label-m-broad monthyear">${startCalendar.calendarMonths[0].monthName}&emsp;${startCalendar.calendarMonths[0].year}</span>
+                </div>
+                <div class="grid-block  calendar-header-align">
+                    <table class="calendar calendar-day-numbers">
+                        <thead>
+                            <tr>
+                                <td repeat.for="cell of startCalendar.calendarMonths[0].dayNames[0]">${cell.dayString}
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr repeat.for="row of startCalendar.calendarMonths[0].rows">
+                                <td class="${cell.event}" repeat.for="cell of row">${cell.dayString}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="vertical grid-block">
+               <div class="grid-block calendar-header-align">
+                  <span class="calendarnav prev">
+                     <a click.delegate="endPrevious()">
+                        <img src="/assets/calendar/prev.png"  />
+                     </a>
+                  </span>
+                  <span class="calendarnav calendar-title"><a id="titlelink" click.delegate="endReset()">Today</a></span>
+                  <span class="calendarnav next">
+                     <a click.delegate="endNext()"><img src="/assets/calendar/next.png" /></a>
+                  </span>
+               </div>
+                <div class="grid-block calendar-header-align">
+                    <span class="calendarnav ui-text-label-m-broad monthyear">${endCalendar.calendarMonths[0].monthName}&emsp;${endCalendar.calendarMonths[0].year}</span>
+                </div>
+                <div class="grid-block calendar-header-align">
+                    <table class="calendar calendar-day-numbers">
+                        <thead>
+                            <tr>
+                                <td repeat.for="cell of endCalendar.calendarMonths[0].dayNames[0]">${cell.dayString}
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr repeat.for="row of endCalendar.calendarMonths[0].rows">
+                                <td class="${cell.event}" repeat.for="cell of row">${cell.dayString}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+         </div>
       </ai-dialog-body>
-
       <ai-dialog-footer>
-         <button click.trigger = "controller.cancel()">Cancel</button>
-         <button click.trigger = "controller.ok(message)">Ok</button>
+         <button click.trigger="controller.cancel()">Cancel</button>
+         <button click.trigger="controller.ok(message)">Ok</button>
       </ai-dialog-footer>
-	
    </ai-dialog>
-	
 </template>
