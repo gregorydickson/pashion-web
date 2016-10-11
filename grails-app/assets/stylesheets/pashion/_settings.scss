@@ -108,7 +108,7 @@ $body-font-family: 'Avenir','Lato', sans-serif;
 $body-font-weight: $font-weight-normal;
 $body-font-style: normal;
 $body-antialiased: true;
-$primary-color: #00558b;
+$primary-color: $black; // #00558b;
 $secondary-color: #f1f1f1;
 $alert-color: #F04124;
 $info-color: #A0D3E8;
@@ -185,7 +185,7 @@ $code-padding: rem-calc(2) rem-calc(5) rem-calc(1);
 $anchor-text-decoration: none;
 $anchor-text-decoration-hover: none;
 $anchor-font-color: $primary-color;
-$anchor-font-color-hover: scale-color($anchor-font-color, $lightness: -14%);
+$anchor-font-color-hover: $primary-color; // scale-color($anchor-font-color, $lightness: -14%); //RM
 $hr-border-width: 1px;
 $hr-border-style: solid;
 $hr-border-color: #ddd;
