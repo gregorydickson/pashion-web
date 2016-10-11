@@ -12,6 +12,8 @@ export class Create {
   endCalendar = {};
   startOffset = 0;
   endOffset = 0;
+  startDate = "";
+  endDate = "";
 
   constructor(http, controller){
     this.controller = controller;
@@ -34,7 +36,39 @@ export class Create {
           });
     
   }
+  setStartDate(event,day){
+  	console.log("start date"+event);
+  	console.log("day"+day);
+  	var element = event.srcElement.parentElement;
+  	var document = element.ownerDocument;
+  	var elems = document.querySelectorAll(".start-selected");
+  	[].forEach.call(elems, function(el) {
+    	el.classList.remove("start-selected");
+	});
+  	element.className += " start-selected";
+  	this.redraw(element);
+  	this.startDate = day;
 
+  }
+  setEndDate(event, day){
+  	console.log("end date"+event);
+  	console.log("day"+day);
+  	var element = event.srcElement.parentElement;
+  	var document = element.ownerDocument;
+  	var elems = document.querySelectorAll(".end-selected");
+  	[].forEach.call(elems, function(el) {
+    	el.classList.remove("end-selected");
+	});
+  	element.className += " end-selected";
+  	this.redraw(element);
+  	this.endDate = day;
+  }
+
+  redraw(element){
+  	element.style.display='none';
+	element.offsetHeight; 
+	element.style.display='';
+  }
   startNext(){
   	var queryString = DateFormat.urlString(++this.startOffset,1);
     return this.http.fetch('/calendar/searchableItemPicker' + queryString+

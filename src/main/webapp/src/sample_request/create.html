@@ -27,7 +27,10 @@
                         </thead>
                         <tbody>
                             <tr repeat.for="row of startCalendar.calendarMonths[0].rows">
-                                <td class="${cell.event}" repeat.for="cell of row">${cell.dayString}
+                                <td class="${cell.event}"  repeat.for="cell of row">
+                                <a href="#" click.delegate="setStartDate($event,cell.dayString)">
+                                ${cell.dayString}
+                                </a>
                                 </td>
                             </tr>
                         </tbody>
@@ -59,13 +62,20 @@
                         </thead>
                         <tbody>
                             <tr repeat.for="row of endCalendar.calendarMonths[0].rows">
-                                <td class="${cell.event}" repeat.for="cell of row">${cell.dayString}
+                                <td class="${cell.event}" repeat.for="cell of row">
+                                    <a href="#" click.delegate="setEndDate($event,cell.dayString)">
+                                    ${cell.dayString}
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+         </div>
+         <div class="grid-block row">
+         <p>startdate ${startDate}</p>
+         <p>endDate ${endDate}</p>
          </div>
       </ai-dialog-body>
       <ai-dialog-footer>
