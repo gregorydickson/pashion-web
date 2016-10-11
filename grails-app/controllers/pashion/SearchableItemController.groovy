@@ -38,6 +38,7 @@ class SearchableItemController {
         def criteria = SearchableItem.createCriteria()
         
         List results = criteria.listDistinct () {
+                isNotNull('image')
                 if(brand) eq('brand', brand)
                 if(keywords) or {
                     keywords.each {  ilike('name', '%'+it+'%') }

@@ -25,10 +25,11 @@ class SearchableItem {
 	Date dateCreated
 	Date lastUpdated
 
+	SearchableItem look
 	
 	static belongsTo = [brandCollection: BrandCollection]
 
-	static hasMany = [ permissions:Permission, sampleRequests:SampleRequest]
+	static hasMany = [ permissions:Permission, sampleRequests:SampleRequest, samples:SearchableItem]
 
 	static mapping = {
 		type index: 'type_idx'
@@ -52,11 +53,14 @@ class SearchableItem {
 		fromDate nullable:true
 		toDate nullable:true
 		
+		look nullable: true 
+		
 		userCreatedId nullable:true
 		lastModifiedUserId nullable:true
 
 		brandCollection nullable: true
 		permissions nullable:true
 		sampleRequests nullable:true
+		samples nullable:true
 	}
 }
