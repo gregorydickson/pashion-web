@@ -1,10 +1,15 @@
 <template>
-    <div class="title-bar">
-        <span class="title left">Book Look ${currentItem.id}</span>
-        <span class="right"><a href="" click.trigger="controller.cancel()">X</a></span>
-    </div>
     
    <ai-dialog>
+           <ai-dialog-header>
+            <!-- header -->
+            <div class="grid-block align-center tool-header shrink ">
+                <div id="comms_panel" class="grid-block tool-header shrink">
+                    <span class="ui-text-label-m-broad" style="margin-left:32px;">Book Sample </span>
+                    <span class="ui-text-label-m-broad"> ${currentItem.id}</span>
+                </div>
+            </div>
+        </ai-dialog-header>
         <p>Status: ${status}</p>
       <ai-dialog-body>
         
@@ -103,8 +108,7 @@
          
       </ai-dialog-body>
       <ai-dialog-footer>
-         <button click.trigger="controller.cancel()">Cancel</button>
-         <button click.trigger="controller.ok(message)">Ok</button>
+         <button click.trigger="controller.ok(message)">Book Selected</button>
       </ai-dialog-footer>
    </ai-dialog>
 </template>
