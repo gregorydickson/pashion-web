@@ -1,9 +1,20 @@
 <template>
+    <div class="title-bar">
+        <span class="title left">Book Look ${currentItem.id}</span>
+        <span class="right"><a href="" click.trigger="controller.cancel()">X</a></span>
+    </div>
+    
    <ai-dialog>
+        <p>Status: ${status}</p>
       <ai-dialog-body>
+        
          <div class="grid-block row">
             <div class="vertical grid-block">
+                <div class="grid-block ">
+                    <p>Start</p>
+                </div>
                 <div class="grid-block calendar-header-align">
+
                      <span class="calendarnav prev">
                      <a click.delegate="startPrevious()">
                         <img src="/assets/calendar/prev.png"  />
@@ -38,6 +49,9 @@
                 </div>
             </div>
             <div class="vertical grid-block">
+                <div class="grid-block">
+                    <p>End</p>
+                </div>
                <div class="grid-block calendar-header-align">
                   <span class="calendarnav prev">
                      <a click.delegate="endPrevious()">

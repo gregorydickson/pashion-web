@@ -14,6 +14,7 @@ export class Create {
   endOffset = 0;
   startDate = "";
   endDate = "";
+  status = "Not Requested";
 
   constructor(http, controller){
     this.controller = controller;
