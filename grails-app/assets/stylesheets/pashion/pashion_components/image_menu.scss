@@ -14,7 +14,7 @@
 	z-index: 10;
 	background-color: white;
     border: 0.5px solid $pinkish-grey;
-    box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 15px rgba(0,0,0,.5);
 }
 .look-menu-show{
 	display:block;
@@ -27,7 +27,7 @@
 }
 
 .look-menu-link:hover {
-    background-color: #eee;
+    background-color: $white-two;
 }
 
 .look-menu-list,
