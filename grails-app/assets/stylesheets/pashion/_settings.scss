@@ -226,7 +226,7 @@ $button-padding: 0.85em 1em;
 $button-margin: 0 $global-padding $global-padding 0;
 $button-style: solid;
 $button-background: $white-two;
-$button-background-hover: scale-color($button-background, $lightness: -15%);
+$button-background-hover: $white-three; // scale-color($button-background, $lightness: -15%);
 $button-color: $black;
 $button-radius: 0;
 $button-sizes: (

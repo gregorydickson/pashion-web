@@ -1,22 +1,17 @@
 <template>
     <ai-dialog>
-        <ai-dialog-body>
+        <ai-dialog-header>
             <!-- header -->
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad">EDIT </span>
-                    <span class="ui-text-label-m-broad" style="margin-left:1rem;"> -number-</span>
-                </div>
-                <div class="grid-block align-right tool-header-spacer">
-                    <span class="expando">
-                      <a route-href="route: requestman;"><img  src="/assets/nav/collapso.png" /></a>
-                    </span>
+                    <span class="ui-text-label-m-broad" style="margin-left:32px;">EDIT </span>
+                    <span class="ui-text-label-m-broad"> number</span>
                 </div>
             </div>
-
+        </ai-dialog-header>
+        <ai-dialog-body>
             <!-- Column One -->
             <div class="medium-up-1  grid-block shrink" style="margin-top: 1rem;">
-
                 <!-- theme -->
                 <div class="grid-content shrink">
                     <span class="inline-label">
@@ -31,10 +26,8 @@
                 </div>
             </div>
         </ai-dialog-body>
-
         <!-- buttons -->
         <ai-dialog-footer>
-            <button click.trigger="controller.cancel()">X</button>
             <button click.trigger="controller.ok(message)">Save Changes</button>
         </ai-dialog-footer>
     </ai-dialog>

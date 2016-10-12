@@ -197,7 +197,7 @@ $button-icon-spacing: 0.5em !default;
   // Solid is the default
   @else {
     @if $color == auto {
-      $color: isitlight($background);
+      $color: $black; //isitlight($background);
     }
 
     background: $background;
@@ -205,12 +205,14 @@ $button-icon-spacing: 0.5em !default;
 
     &:hover, &:focus {
       @if $background-hover == auto {
-        background: scale-color($background, $lightness: -15%);
+        // background: scale-color($background, $lightness: -15%); RM
+        background: $background-hover;
       }
       @else {
         background: $background-hover;
       }
       color: $color;
+      border-color: $pinkish-grey;
     }
   }
 

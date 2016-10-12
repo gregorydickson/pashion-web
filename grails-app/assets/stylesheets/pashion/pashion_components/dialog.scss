@@ -57,7 +57,7 @@ ai-dialog {
   display: table;
   box-shadow: 0 5px 15px rgba(0,0,0,.5);
   border: 1px solid rgba(0,0,0,.2);
-  border-radius: 5px;
+  border-radius: 0px;
   padding: 3;
   min-width: 300px;
   width: -moz-fit-content;
@@ -76,8 +76,8 @@ ai-dialog {
 
   > ai-dialog-header {
     display: block;
-    padding: 16px;
-    border-bottom: 1px solid #e5e5e5;
+    //padding: 16px;
+    //border-bottom: 1px solid #e5e5e5;
 
     > button {
       float: right;
@@ -85,10 +85,10 @@ ai-dialog {
       display: block;
       width: 32px;
       height: 32px;
-      background: none;
+      background: $white-two;
       font-size: 22px;
       line-height: 16px;
-      margin: -14px -16px 0 0;
+      //margin: -14px -16px 0 0;
       padding: 0;
       cursor: pointer;
     }
@@ -102,15 +102,15 @@ ai-dialog {
   > ai-dialog-footer {
     display: block;
     padding: 6px;
-    border-top: 1px solid #e5e5e5;
-    text-align: right;
+    // border-top: 1px solid #e5e5e5;
+    text-align: center;
 
     button {
-      color: #333;
-      background-color: #fff;
+      color: $black;
+      background-color: $white-two;
 
       padding: 6px 12px;
-      font-size: 14px;
+      font-size: $font-size-button;
       text-align: center;
       white-space: nowrap;
       vertical-align: middle;
@@ -118,8 +118,8 @@ ai-dialog {
       touch-action: manipulation;
       cursor: pointer;
       background-image: none;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+      border: 0.5px solid $white-three;
+      border-radius: 0px;
       margin: 5px 0 5px 5px;
 
       &:disabled {
@@ -128,9 +128,9 @@ ai-dialog {
       }
 
       &:hover:enabled {
-        color: #333;
-        background-color: #e6e6e6;
-        border-color: #adadad;
+        color: $black;
+        background-color: $white-three;
+        border-color: $pinkish-grey;
       }
     }
   }
