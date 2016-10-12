@@ -1,0 +1,41 @@
+<template>
+    <ai-dialog>
+        <ai-dialog-body>
+            <!-- header -->
+            <div class="grid-block align-center tool-header shrink ">
+                <div id="comms_panel" class="grid-block tool-header shrink">
+                    <span class="ui-text-label-m-broad">EDIT </span>
+                    <span class="ui-text-label-m-broad" style="margin-left:1rem;"> -number-</span>
+                </div>
+                <div class="grid-block align-right tool-header-spacer">
+                    <span class="expando">
+                      <a route-href="route: requestman;"><img  src="/assets/nav/collapso.png" /></a>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Column One -->
+            <div class="medium-up-1  grid-block shrink" style="margin-top: 1rem;">
+
+                <!-- theme -->
+                <div class="grid-content shrink">
+                    <span class="inline-label">
+                            <span class="form-label">Theme</span>
+                    <select name="" id="">
+                        <option>All</option>
+                        <option>Military</option>
+                        <option>Punk</option>
+                        <option>Evening</option>
+                    </select>
+                    </span>
+                </div>
+            </div>
+        </ai-dialog-body>
+
+        <!-- buttons -->
+        <ai-dialog-footer>
+            <button click.trigger="controller.cancel()">X</button>
+            <button click.trigger="controller.ok(message)">Save Changes</button>
+        </ai-dialog-footer>
+    </ai-dialog>
+</template>

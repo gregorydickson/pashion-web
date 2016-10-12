@@ -4,6 +4,7 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {DialogService} from 'aurelia-dialog';
 import 'fetch';
 import {Create} from './sample_request/create';
+import {CreateEditDialog} from './edit_request/create-edit-dialog';
 
 
 @inject(HttpClient, EventAggregator, DialogService)
@@ -114,8 +115,9 @@ export class Index {
   lookMenu(id){
     var menu = document.getElementById("look-"+id);
     menu.classList.toggle("look-menu-show");
-
   }
+
+
 
   createSampleRequestModal(itemId) {
     var menu = document.getElementById("look-"+itemId);
@@ -131,6 +133,31 @@ export class Index {
        console.log(response.output);
     });
   }
+
+
+// RM additional stuff for request edit -- needs to be abstracted //
+
+lookEditMenu(id){
+    var menu = document.getElementById("requestTest"+id);
+    menu.classList.toggle("look-menu-show");
+  }
+
+  createSampleEditModal(itemId) {
+    var menu = document.getElementById("requestTest"+itemId);
+    menu.classList.toggle("look-menu-show");
+    this.dialogService.open({viewModel: CreateEditDialog, model: itemId }).then(response => {
+      
+      
+      if (!response.wasCancelled) {
+        console.log('OK');
+      } else {
+        console.log('cancelled');
+      }
+       console.log(response.output);
+    });
+  }
+
+
     
 }
 

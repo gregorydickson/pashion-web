@@ -4,10 +4,9 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-
     display: none;
 	width: 149px;
-	position:relative;
+	position:relative; 
 	margin-top:-260px;
     margin-left: 1rem;
     margin-right: 1rem;
@@ -16,6 +15,24 @@
     border: 0.5px solid $pinkish-grey;
     box-shadow: 0 5px 15px rgba(0,0,0,.5);
 }
+
+.look-menu-absolute {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: none;
+    width: 149px;
+    position:absolute; 
+    margin-left: 107px;
+    margin-right: 1rem;
+    z-index: 110;
+    background-color: white;
+    border: 0.5px solid $pinkish-grey;
+    box-shadow: 0 5px 15px rgba(0,0,0,.5);
+}
+
+
+
 .look-menu-show{
 	display:block;
 }
