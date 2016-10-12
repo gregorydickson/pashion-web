@@ -10,6 +10,10 @@ export class Create {
   currentItem = {};
   startCalendar = {};
   endCalendar = {};
+  required = [];
+  selectedRequired = "";
+  deliverTo = [];
+  deliverToSelected = "";
   startOffset = 0;
   endOffset = 0;
   startDate = "";
@@ -27,6 +31,12 @@ export class Create {
   activate(itemId){
   	this.http.fetch('/searchableItems/' +itemId+ '.json')
       .then(response => response.json()).then(item => this.currentItem = item);
+
+    this.http.fetch('/dashboard/required')
+      .then(response => response.json()).then(required => this.required = required);
+    
+    this.http.fetch('/dashboard/deliverTo')
+      .then(response => response.json()).then(deliverTo => this.deliverTo = deliverTo);
 
     var queryString = DateFormat.urlString(0, 2);
     this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+itemId)

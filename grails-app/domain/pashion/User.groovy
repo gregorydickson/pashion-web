@@ -37,6 +37,7 @@ class User {
 		email nullable: true
 		role nullable: true, inList:['Brand','Admin','Press']
 		userCreatedId nullable: true
+		lastModifiedDate nullable: true
 		lastModifiedUserId nullable: true
 		viewed nullable: true
 

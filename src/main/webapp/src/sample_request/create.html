@@ -9,6 +9,7 @@
       <ai-dialog-body>
         
          <div class="grid-block row">
+            <!--Start Left column -->
             <div class="vertical grid-block">
                 <div class="grid-block ">
                     <p>Start</p>
@@ -47,7 +48,18 @@
                         </tbody>
                     </table>
                 </div>
+                <!-- Required Time -->
+                <div class="grid-content shrink">
+                    <span class="inline-label">
+                        <span class="form-label">Required</span>
+                    <select name="" id="" value.bind="selectedRequired">
+                        <option value="">All</option>
+                        <option repeat.for="item of required" model.bind="item">${item}</option>
+                    </select>
+                    </span>
+                </div>
             </div>
+            <!--Start Right column -->
             <div class="vertical grid-block">
                 <div class="grid-block">
                     <p>End</p>
@@ -86,11 +98,9 @@
                     </table>
                 </div>
             </div>
+            <!--end Right column -->
          </div>
-         <div class="grid-block row">
-         <p>startdate ${startDate}</p>
-         <p>endDate ${endDate}</p>
-         </div>
+         
       </ai-dialog-body>
       <ai-dialog-footer>
          <button click.trigger="controller.cancel()">Cancel</button>

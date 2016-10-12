@@ -3,7 +3,7 @@ package pashion
 
 class SearchableItemType{
 	
-	String display  // Looks
-	String searchCode // look
+	String display  // Looks, Samples
+	String searchCode // look, sample
 
 }

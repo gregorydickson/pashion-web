@@ -78,11 +78,14 @@ class BootStrap {
              
              def due = today + 20
              
-             
 
             def pragency1 = new PRAgency(name:'Karla Otto' ).save(failOnError : true)
+            def user1 = new User(name:'Paco Rodriquez', username:'prod',password:'password',prAgency:pragency1).save(failOnError : true)
 
             brand1 = new Brand(name:'Paco Rabanne', city:'Paris' ).save(failOnError : true)
+            user1 = new User(name:'Jean Reno', username:'jreno',password:'password',brand:brand1).save(failOnError : true)
+            user1 = new User(name:'Bridgette Bardot', username:'bbardot',password:'password',brand:brand1).save(failOnError : true)
+            
             collection1 = new BrandCollection(season: s5, brand:brand1).save(failOnError : true)
             
             availableFrom = dateFormat.parse("2017-01-01")
