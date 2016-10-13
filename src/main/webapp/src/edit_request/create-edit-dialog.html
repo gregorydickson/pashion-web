@@ -1,11 +1,11 @@
 <template>
-    <ai-dialog style="width: 600px;">
+    <ai-dialog style="width: 600px;"> <!-- Based on the design. would prefer to be flexible, but postpone this -->
         
         <!-- header -->
         <ai-dialog-header>
             <div class="grid-block align-center tool-header shrink ">
                 <div id="" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad" style="margin-left:32px;">EDIT </span>
+                    <span class="ui-text-label-m-broad" style="margin-left:32px;">EDIT </span> <!-- fudge to take account of the X -->
                     <span class="ui-text-label-m-broad"> number</span>
                 </div>
             </div>
@@ -21,28 +21,31 @@
                         <span style="margin-bottom: 1rem;">OVERVIEW</span>
                         <!-- Type -->
                         <div class="grid-block shrink" >                        
-                                <span class="inline-label">
-                                        <span class="form-label">Type</span>
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">Type</span>
                                 <select name="" id="">
                                     <option>All</option>
                                     <option>Looks</option>
                                     <option>Samples</option>
                                 </select>
-                                </span>
+                            </span>
                         </div>
 
                         <!-- Requested -->
-                        <div class="grid-block shrink">
-                            <span class="inline-label slim-text-box-label">Requested</span>
-                            <div class="">
-                                <input type="text" class="slim-text-box">
-                            </div>
+                        <div class="grid-block shrink">                       
+
+                                <span class="inline-label slim-text-box-label">Requested</span>
+                                <div class="">
+                                    <input type="text" class="slim-text-box">
+                                </div>
+
                         </div>
+
 
                         <!-- Due -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Due</span>
-                            <div class="grid-content shrink">
+                            <div class="">
                                 <input type="text" class="slim-text-box">
                             </div>
                         </div>
@@ -50,7 +53,7 @@
                         <!-- Type -->
                         <div class="grid-block shrink">        
                                 <span class="inline-label">
-                                        <span class="form-label">Company</span>
+                                        <span class="slim-text-box-label">Company</span>
                                 <select name="" id="">
                                     <option>All</option>
                                     <option>Ralph Lauren</option>
@@ -62,32 +65,32 @@
                         <!-- Owner -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Owner</span>
-                            <div class="grid-content shrink"> 
-                                <input type="text" class="" >
+                            <div class=""> 
+                                <input type="text" class="slim-text-box" >
                             </div>
                         </div>
 
                         <!-- Requested -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Requested</span>
-                            <div class="grid-content shrink" >
-                                <input type="text" class="" style="width: 32px;">
+                            <div class="" >
+                                <input type="text" class="slim-text-box-narrow">
                             </div>
                         
 
                          <!-- Got -->
                         
-                            <span class="inline-label slim-text-box-label">Got</span>
-                            <div class="grid-content shrink" >
-                                <input type="text" class="" style="width: 32px;">
+                            <span class="inline-label slim-text-box-label-narow">Got</span>
+                            <div class="" >
+                                <input type="text" class="slim-text-box-narrow">
                             </div>
                                                                 
 
                          <!-- Out -->
                         
-                            <span class="inline-label slim-text-box-label">Out</span>
-                            <div class="grid-content shrink" >
-                                <input type="text" class="" style="width: 32px;">
+                            <span class="inline-label slim-text-box-label-narrow">Out</span>
+                            <div class="" >
+                                <input type="text" class="slim-text-box-narrow">
                             </div>
                         </div> 
 
@@ -99,14 +102,14 @@
                         <!-- ID -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">ID</span>
-                            <div class="grid-content shrink" >
+                            <div class="" >
                                 <input type="text" class="" >
                             </div>
                         </div>
                         <!-- Pickup -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Pickup</span>
-                            <div class="grid-content shrink" >
+                            <div class="" >
                                 <input type="text" class="" >
                             </div>
                         </div>
@@ -114,7 +117,7 @@
                         <!-- Destination -->
                         <div class="grid-block shrink"> 
                                 <span class="inline-label">
-                                        <span class="form-label">Destination</span>
+                                        <span class="slim-text-box-label">Destination</span>
                                 <select name="" id="">
                                     <option>Ralph Lauren London</option>
                                     <option>Ralph Lauren Paris</option>
@@ -126,9 +129,9 @@
                         <!-- Addressee -->
                         <div class="grid-block shrink" >       
                                 <span class="inline-label">
-                                        <span class="form-label">Addressee</span>
+                                        <span class="slim-text-box-label">Addressee</span>
                                 <select name="" id="">
-                                    <option>Seth Gree</option>
+                                    <option>Seth Green</option>
                                     <option>Pat Brown</option>
                                     <option>Simon Belvoir</option>
                                 </select>
@@ -138,21 +141,21 @@
                         <!-- Name -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Name</span>
-                            <div class="grid-content shrink" >
+                            <div class="" >
                                 <input type="text" class="" >
                             </div>
                         </div>
                         <!-- Who -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Who</span>
-                            <div class="grid-content shrink" >
+                            <div class="" >
                                 <input type="text" class="" >
                             </div>
                         </div>
                         <!-- When -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">When</span>
-                            <div class="grid-content shrink" >
+                            <div class="" >
                                 <input type="text" class="" >
                             </div>
                         </div>

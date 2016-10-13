@@ -154,13 +154,26 @@ input.search-box, input.search-box:hover, input.search-box:focus {
 }
 
 span.slim-text-box-label {
-  margin-left: 1rem; 
+  // margin-left: 1rem; 
   margin-right: 0.5rem; 
-  margin-top: 0.5rem;
+  // margin-top: 0.5rem;
+  width: 63px;
+  padding: 0.5rem;
+}
+
+span.slim-text-box-label-narrow {
+  // margin-left: 1rem; 
+  margin-right: 0.5rem; 
+  // margin-top: 0.5rem;
+  width: 35px;
+  padding: 0.5rem;
 }
 
 input.slim-text-box {
   width: 124px;
+}
+input.slim-text-box-narrow {
+  width: 3rem;
 }
 
 .grid-block-vertical-shadow {
