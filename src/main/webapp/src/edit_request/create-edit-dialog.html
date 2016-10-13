@@ -1,32 +1,172 @@
 <template>
-    <ai-dialog>
+    <ai-dialog style="width: 600px;">
+        
+        <!-- header -->
         <ai-dialog-header>
-            <!-- header -->
             <div class="grid-block align-center tool-header shrink ">
-                <div id="comms_panel" class="grid-block tool-header shrink">
+                <div id="" class="grid-block tool-header shrink">
                     <span class="ui-text-label-m-broad" style="margin-left:32px;">EDIT </span>
                     <span class="ui-text-label-m-broad"> number</span>
                 </div>
             </div>
         </ai-dialog-header>
+
+        <!-- body-->
         <ai-dialog-body>
-            <!-- Column One -->
-            <div class="medium-up-1  grid-block shrink" style="margin-top: 1rem;">
-                <!-- theme -->
-                <div class="grid-content shrink">
-                    <span class="inline-label">
-                            <span class="form-label">Theme</span>
-                    <select name="" id="">
-                        <option>All</option>
-                        <option>Military</option>
-                        <option>Punk</option>
-                        <option>Evening</option>
-                    </select>
-                    </span>
+            <div class="grid-block vertical">
+                <div class="grid-block">
+
+                    <!-- Column One -->
+                    <div class="grid-block vertical medium-6">                   
+                        <span style="margin-bottom: 1rem;">OVERVIEW</span>
+                        <!-- Type -->
+                        <div class="grid-block shrink" >                        
+                                <span class="inline-label">
+                                        <span class="form-label">Type</span>
+                                <select name="" id="">
+                                    <option>All</option>
+                                    <option>Looks</option>
+                                    <option>Samples</option>
+                                </select>
+                                </span>
+                        </div>
+
+                        <!-- Requested -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Requested</span>
+                            <div class="">
+                                <input type="text" class="slim-text-box">
+                            </div>
+                        </div>
+
+                        <!-- Due -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Due</span>
+                            <div class="grid-content shrink">
+                                <input type="text" class="slim-text-box">
+                            </div>
+                        </div>
+
+                        <!-- Type -->
+                        <div class="grid-block shrink">        
+                                <span class="inline-label">
+                                        <span class="form-label">Company</span>
+                                <select name="" id="">
+                                    <option>All</option>
+                                    <option>Ralph Lauren</option>
+                                    <option>Chanel</option>
+                                </select>
+                                </span>
+                        </div>
+
+                        <!-- Owner -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Owner</span>
+                            <div class="grid-content shrink"> 
+                                <input type="text" class="" >
+                            </div>
+                        </div>
+
+                        <!-- Requested -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Requested</span>
+                            <div class="grid-content shrink" >
+                                <input type="text" class="" style="width: 32px;">
+                            </div>
+                        
+
+                         <!-- Got -->
+                        
+                            <span class="inline-label slim-text-box-label">Got</span>
+                            <div class="grid-content shrink" >
+                                <input type="text" class="" style="width: 32px;">
+                            </div>
+                                                                
+
+                         <!-- Out -->
+                        
+                            <span class="inline-label slim-text-box-label">Out</span>
+                            <div class="grid-content shrink" >
+                                <input type="text" class="" style="width: 32px;">
+                            </div>
+                        </div> 
+
+                    </div>
+                    <!-- Column Two -->
+                    <div class="grid-block vertical medium-6">
+                        <span style="margin-bottom: 1rem;">RETURN DETAILS</span>
+
+                        <!-- ID -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">ID</span>
+                            <div class="grid-content shrink" >
+                                <input type="text" class="" >
+                            </div>
+                        </div>
+                        <!-- Pickup -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Pickup</span>
+                            <div class="grid-content shrink" >
+                                <input type="text" class="" >
+                            </div>
+                        </div>
+
+                        <!-- Destination -->
+                        <div class="grid-block shrink"> 
+                                <span class="inline-label">
+                                        <span class="form-label">Destination</span>
+                                <select name="" id="">
+                                    <option>Ralph Lauren London</option>
+                                    <option>Ralph Lauren Paris</option>
+                                    <option>Ralph Lauren Madrid</option>
+                                </select>
+                                </span>
+                        </div>
+
+                        <!-- Addressee -->
+                        <div class="grid-block shrink" >       
+                                <span class="inline-label">
+                                        <span class="form-label">Addressee</span>
+                                <select name="" id="">
+                                    <option>Seth Gree</option>
+                                    <option>Pat Brown</option>
+                                    <option>Simon Belvoir</option>
+                                </select>
+                                </span>
+                        </div>
+                        <span style="margin-bottom: 1rem;">EDITORIAL</span>
+                        <!-- Name -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Name</span>
+                            <div class="grid-content shrink" >
+                                <input type="text" class="" >
+                            </div>
+                        </div>
+                        <!-- Who -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Who</span>
+                            <div class="grid-content shrink" >
+                                <input type="text" class="" >
+                            </div>
+                        </div>
+                        <!-- When -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">When</span>
+                            <div class="grid-content shrink" >
+                                <input type="text" class="" >
+                            </div>
+                        </div>
+
+                    </div>                    
                 </div>
+                <!-- Bottom Row -->
+                <div class="grid-block">
+                    <span>STATUS OF ITEMS</span>
+                </div>   
             </div>
         </ai-dialog-body>
-        <!-- buttons -->
+
+        <!-- Footer buttons -->
         <ai-dialog-footer>
             <button click.trigger="controller.ok(message)">Save Changes</button>
         </ai-dialog-footer>

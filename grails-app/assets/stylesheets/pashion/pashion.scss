@@ -153,6 +153,16 @@ input.search-box, input.search-box:hover, input.search-box:focus {
     background-position: 6px 3px;
 }
 
+span.slim-text-box-label {
+  margin-left: 1rem; 
+  margin-right: 0.5rem; 
+  margin-top: 0.5rem;
+}
+
+input.slim-text-box {
+  width: 124px;
+}
+
 .grid-block-vertical-shadow {
   box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.2);
   background: white;
