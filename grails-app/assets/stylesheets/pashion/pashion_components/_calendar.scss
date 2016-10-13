@@ -1,0 +1,144 @@
+/* Styles for Calendar */
+.calendarnav {
+  width: 100%;
+
+}
+
+
+.calendar-title a{
+  font-size: 11px;
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: 1px;
+}
+.calendar-title a#titlelink{
+  color: $black;
+}
+
+.calendar {
+  padding-bottom: 0px;
+  margin-top: 0px;
+  width: 100%;
+  display: block;
+  text-align: center;
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+
+.calendar thead td {
+  font-size: 11px;
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: 1px;
+  display: table-cell;
+  width: 38px;
+  height: 27px;
+}
+
+
+.calendar-header-align{
+  margin-top: 1rem; 
+  text-align:center;
+}
+
+.overdue, .international,.waiting {
+    position: relative;
+}
+.calendar .overdue:after { 
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0; 
+    height: 0; 
+    display: block;
+    border-left: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+
+    border-top: 10px solid #f00;
+}
+.calendar .international:after { 
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0; 
+    height: 0; 
+    display: block;
+    border-left: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+
+    border-top: 10px solid #cccccc;
+}
+.calendar .waiting:after { 
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0; 
+    height: 0; 
+    display: block;
+    border-left: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+
+    border-top: 10px solid #3971b1;
+}
+
+.calendar td  {
+  display: block;
+  
+}
+
+.calendar tbody td {
+  display: table-cell;
+  width: 38px;
+  height: 27px;
+  position: relative;
+  border: solid 1px #f7f7f7;
+}
+
+
+
+
+.calendar .overdue {
+  
+}
+.calendar .event.blue {
+  background: #3a87ad;
+}
+.calendar .event.yellow {
+  background: #f9c846;
+}
+.calendar .event.green {
+  background: #a7d85b;
+}
+
+/*  ======================================
+displaying for small 
+ ======================================*/
+@media only screen and (max-width: 767px) {
+  .calendar tbody td {
+    width: 100% !important;
+  }
+  .calendar tbody td span {
+    position: relative;
+  }
+  .calendar .event {
+    float: none;
+    margin-top: 5px;
+    position: relative;
+    margin-left: 15px;
+    margin-bottom: 0;
+  }
+  .calendar tbody tr, .calendar tbody {
+    width: 100%;
+    display: block;
+  }
+}
+@media only screen and (min-width: 767px) {
+  .event {
+    width: 100%;
+    display: block;
+  }
+}

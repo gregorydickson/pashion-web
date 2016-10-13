@@ -1,0 +1,123 @@
+@import "../compass/compass/functions";
+@import "../compass/compass/css3";
+
+
+button.accordion {
+    background-color: $white-two;
+    cursor: pointer;
+    width: 9px;
+    border: none;
+    text-align: left;
+    outline: none;
+    // transition: 0.4s;
+}
+
+button.accordion.active {
+    // background-color: var(--white-two);
+}
+
+button.accordion:before {
+    content: '+';
+    font-size: 14px;
+    font-weight: 900;
+    color: #9b9b9b;
+}
+
+button.accordion.active:before {
+    content: "–";
+    font-size: 14px;
+    font-weight: 900;
+    color: #9b9b9b;
+}
+
+div.panel {
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    //transition: 0.1s ease-in-out;
+}
+
+div.panel.show {
+    visibility: visible;
+	max-height: 500px;
+    opacity: 1;
+}
+
+td.accordion {
+    text-align: left; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight:300;
+    overflow: hidden;
+    line-height:1.6rem;
+}
+
+td.accordion-underline {
+    text-align: left; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight:300;
+    overflow: hidden;
+    border-bottom:1px solid $white-three;
+}
+
+th.accordion {
+    text-align:left; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight: 300;
+    overflow: hidden;
+    border-bottom:1px solid $white-three;
+}
+
+td.accordion-grey {
+    text-align: left; 
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-weight:300;
+    overflow: hidden;
+    background-color:$white-two;
+}
+
+td.sample-padding {
+    padding-left: 1rem;
+    padding-right: 2.5rem;
+    vertical-align:top;
+}
+
+
+
+table.accordion {
+	width: 255px; // not sure why 100% does not work here
+	table-layout:fixed;
+}
+
+table.big-accordion {
+    width: 100%;
+    table-layout:auto;
+
+}
+
+table.accordion.expanded {
+    background-color: $white-two;
+}
+
+th.w3 , td.w3 {width:3%;}
+th.w4 , td.w4 {width:4%;}
+th.w5 , td.w5 {width:5%;}
+th.w6 , td.w6 {width:6%;}
+th.w7 , td.w7 {width:7%;}
+th.w8 , td.w8 {width:8%;}
+th.w9 , td.w9 {width:9%;}
+th.w10 , td.w10 {width:10%;}
+th.w11 , td.w11 {width:11%;}
+th.w12 , td.w12 {width:12%;}
+th.w13 , td.w13 {width:13%;}
+th.w14 , td.w14 {width:14%;}
+th.w15 , td.w15 {width:15%;}
+th.w18 , td.w18 {width:18%;}
+th.w22 , td.w22 {width:22%;}
+th.w34 , td.w34 {width:34%;}
+

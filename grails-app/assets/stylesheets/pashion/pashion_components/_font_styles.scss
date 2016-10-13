@@ -1,0 +1,175 @@
+/* Text styles */
+/* reset for rem = 11px */
+
+.w-a-r-n-i-n-g {
+	font-size: 72px;
+	font-weight: 500;
+	letter-spacing: 3.3px;
+	color: $scarlet;
+}
+
+.welcome-header {
+	font-size: $font-size-headings;
+	font-weight: 900;
+	text-align: center;
+	color: $black;
+}
+
+.welcome-text {
+	font-size: $font-size-e-extra-large;
+	color: $black;
+}
+
+.icon-style-white {
+	font-size: $font-size-extra-large;
+	font-weight: 900;
+	line-height: 0.6;
+	color: $white;
+}
+
+.hover-text-style {
+	font-size: $font-size-extra-large;
+	line-height: 1.2;
+	color: #ffffff;
+	color: $white;
+}
+
+.nav-label-header {
+	font-size: $font-size-large;
+	line-height: 1;
+	letter-spacing: 4px;
+	color: $white;
+}
+
+.ui-text-label-l-dialogue-light {
+	font-size: $font-size-large;
+	letter-spacing: 1px;
+	color: $white-three;
+}
+
+.ui-text-label-l-left {
+	font-size: $font-size-large;
+	line-height: 1;
+	color: $black;
+	text-align:left;
+}
+
+.ui-text-label-l {
+	font-size: $font-size-large;
+	line-height: 1;
+	text-align: center;
+	color: $black;
+}
+
+.ui-text-label-l-dialogue {
+	font-size: $font-size-large;
+	line-height: 1;
+	letter-spacing: 1px;
+	text-align: center;
+	color: $black;
+}
+
+.button-text {
+	font-size: $font-size-button;
+	text-align: center;
+	color: $black;
+}
+
+.ui-text-label-m-blue {
+	font-size: $font-size-mid;
+	font-weight: 500;
+	letter-spacing: 0.5px;
+	color: $flat-blue;
+}
+
+.ui-text-label-m-red {
+	font-size: $font-size-mid;
+	font-weight: 500;
+	letter-spacing: 0.5px;
+	color: $scarlet;
+}
+
+.ui-text-label-m-broad {
+	font-size: $font-size-mid;
+	font-weight: 500;
+	letter-spacing: 1px;
+	color: $black;
+}
+
+.nav-label-footer {
+	font-size: $font-size-mid;
+	font-weight: 500;
+	letter-spacing: 4px;
+	color: $white;
+}
+
+.ui-text-label-m {
+	font-size: $font-size-mid; 
+	font-weight: 500;
+	color: $black;
+}
+
+.ui-text-label-m-light {
+	font-size: $font-size-mid;
+	color: $warm-grey;
+}
+
+.calendar-day-numbers {
+	font-size: $font-size-medium;
+	font-weight: 900;
+	line-height: 1.1;
+	text-align: center;
+	color: $black;
+}
+.calendar-day-numbers-white {
+	font-size: $font-size-medium;
+	font-weight: 900;
+	line-height: 1.1;
+	text-align: center;
+	color: $white;
+}
+
+.calendar-day-numbers-lighter {
+	font-size: $font-size-medium;
+	font-weight: 900;
+	line-height: 1.1;
+	text-align: center;
+	color: $pinkish-grey;
+}
+
+.text-style {
+	font-size: $font-size-small;
+	font-weight: 900;
+	line-height: 1.1;
+	text-align: center;
+	color: $black;
+}
+
+.ui-text-label-s {
+	font-size: $font-size-small;
+	line-height: 1.1;
+	text-align: center;
+	color: $black;
+}
+
+.copyright {
+	font-size: $font-size-small; 
+	//font-weight: 300;
+	text-align: right;
+	color: $white;
+}
+
+.ui-text-label-s-light {
+	font-size: $font-size-small;
+	//font-weight: 300;
+	line-height: 1.1;
+	text-align: justify;
+	color: $warm-grey;
+}
+
+.ui-text-label-s-left {
+	font-size: $font-size-small;
+	//font-weight: 300;
+	line-height: 1.1;
+	color: $black;
+}
