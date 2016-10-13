@@ -154,19 +154,19 @@ input.search-box, input.search-box:hover, input.search-box:focus {
 }
 
 span.slim-text-box-label {
-  // margin-left: 1rem; 
-  margin-right: 0.5rem; 
-  // margin-top: 0.5rem;
   width: 63px;
+  // margin-right: 0.5rem; 
   padding: 0.5rem;
+  display: inline-block;
+  text-align: right;
 }
 
 span.slim-text-box-label-narrow {
-  // margin-left: 1rem; 
-  margin-right: 0.5rem; 
-  // margin-top: 0.5rem;
   width: 35px;
+  //margin-right: 0.5rem; 
   padding: 0.5rem;
+  display: inline-block;
+  text-align: right;
 }
 
 input.slim-text-box {
