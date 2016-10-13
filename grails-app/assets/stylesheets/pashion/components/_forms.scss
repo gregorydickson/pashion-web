@@ -278,6 +278,7 @@ $meter-radius: 0 !default;
     color: $select-color;
     border-radius: 0;
     border: $input-border;
+    padding-top: 5px;
 
     @if $select-arrow {
       background: $select-background url(image-triangle($select-arrow-color)) right 10px center no-repeat;
