@@ -1,5 +1,5 @@
 <template>
-    <ai-dialog style="width: 600px;"> <!-- Based on the design. would prefer to be flexible, but postpone this -->
+    <ai-dialog style="width: auto;"> <!-- Based on the design. would prefer to be flexible, but postpone this -->
         
         <!-- header -->
         <ai-dialog-header>
@@ -17,7 +17,7 @@
                 <div class="grid-block">
 
                     <!-- Column One -->
-                    <div class="grid-block vertical medium-6">                   
+                    <div class="grid-block vertical medium-6 align-left" style="padding-right:16px;">                   
                         <span style="margin-bottom: 1rem;">OVERVIEW</span>
                         <!-- Type -->
                         <div class="grid-block shrink" >                        
@@ -93,8 +93,9 @@
                         </div> 
 
                     </div>
-                    <!-- Column Two -->
-                    <div class="grid-block vertical medium-6">
+
+                    <!-- Column Three -->
+                    <div class="grid-block vertical medium-6 align-right" style="padding-left:16px; padding-right: 10px;"> <!-- to make it LOOK balanced -->
                         <span style="margin-bottom: 1rem;">RETURN DETAILS</span>
 
                         <!-- ID -->
@@ -162,8 +163,20 @@
                 </div>
                 <!-- Bottom Row -->
                 <div class="grid-block">
-                    <span>STATUS OF ITEMS</span>
-                </div>   
+                    <span style="margin-bottom: 8px;">STATUS OF ITEMS</span>
+                </div>  
+
+                <div class="vertical grid-content accordion" style="overflow-x:hidden; height:7rem;"> <!-- scroll after 4 items -->
+                    <!-- row -->
+                    <compose view-model="edit_request/create-edit-dialog-entry"></compose>
+                    <compose view-model="edit_request/create-edit-dialog-entry"></compose>
+                    <compose view-model="edit_request/create-edit-dialog-entry"></compose>
+                    <compose view-model="edit_request/create-edit-dialog-entry"></compose>
+                    <compose view-model="edit_request/create-edit-dialog-entry"></compose>
+                    <compose view-model="edit_request/create-edit-dialog-entry"></compose>
+                    <compose view-model="edit_request/create-edit-dialog-entry"></compose>
+
+                </div>
             </div>
         </ai-dialog-body>
 
