@@ -154,8 +154,7 @@ input.search-box, input.search-box:hover, input.search-box:focus {
 }
 
 span.slim-text-box-label {
-  width: 63px;
-  // margin-right: 0.5rem; 
+  width: 68px; 
   padding: 0.5rem;
   display: inline-block;
   text-align: right;
@@ -163,14 +162,13 @@ span.slim-text-box-label {
 
 span.slim-text-box-label-narrow {
   width: 35px;
-  //margin-right: 0.5rem; 
   padding: 0.5rem;
   display: inline-block;
   text-align: right;
 }
 
 input.slim-text-box {
-  width: 124px;
+  width: 169px;
 }
 input.slim-text-box-narrow {
   width: 3rem;
