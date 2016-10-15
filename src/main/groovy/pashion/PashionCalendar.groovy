@@ -60,11 +60,14 @@ class PashionCalendar{
 		
 		
 		PashionCalendarMonth month = new PashionCalendarMonth()
+
 		Integer dayOfMonth = 1
 		
 		localDate = localDate.plusMonths((long) increment)
+		month.localDate = localDate
 		LocalDate start = localDate.withDayOfMonth(1)
 		Integer daysInMonth = localDate.lengthOfMonth()
+		month.numberOfDays = daysInMonth
 		month.monthName = localDate.getMonth().getDisplayName(TextStyle.FULL,localeObject)
 		month.year = localDate.getYear().toString()
 		DayOfWeek firstDay = start.getDayOfWeek()
@@ -86,6 +89,7 @@ class PashionCalendar{
 				
 				if(i == 1 && j >= firstDay.getValue()){
 					calendarday.dayString = dayOfMonth.toString()
+					month.days << [(dayOfMonth):calendarday]
 					dayOfMonth += 1
 				} else if(i == 1 && j < firstDay.getValue()){
 					calendarday.dayString = ""
@@ -93,6 +97,7 @@ class PashionCalendar{
 					
 				} else {
 					calendarday.dayString = dayOfMonth.toString()
+					month.days << [(dayOfMonth):calendarday]
 					dayOfMonth += 1
 				}
 				//println calendarday as JSON

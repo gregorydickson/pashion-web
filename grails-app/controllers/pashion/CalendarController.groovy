@@ -56,8 +56,10 @@ class CalendarController {
                                              request.locale.toString(),
                                              params.offset.toInteger(),
                                              params.months.toInteger())
-
+        log.info "updating availability"
+        aCalendar = calendarService.availableDaysInMonth(theItem,localDate,aCalendar)
         render aCalendar as JSON
+        
 
     }
 }

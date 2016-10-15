@@ -7,11 +7,17 @@ import java.time.LocalDate
 @Transactional
 class CalendarService {
 
-    Map availableDaysInMonthSample(SearchableItem sample,LocalDate localDate ) {
-    	Integer daysInMonth = localDate.lengthOfMonth()
+
+    PashionCalendar availableDaysInMonth(SearchableItem look, LocalDate localDate,
+    							         PashionCalendar pashionCalendar){
+    	log.info "Calendar Service - available Days in Month"
+    	pashionCalendar = look.bookedDaysInMonth(localDate, pashionCalendar)
+
     }
 
-    Map availableDaysInMonthLook(SearchableItem look, LocalDate localDate){
-    	
+
+    PashionCalendar availableDaysForSamples(List samples, LocalDate localDate,
+    							            PashionCalendar pashionCalendar) {
+
     }
 }

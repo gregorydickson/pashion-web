@@ -14,6 +14,13 @@ export class Create {
   selectedRequired = "";
   deliverTo = [];
   deliverToSelected = "";
+  returnBy = [];
+  returnBySelected = "";
+  returnTo = [];
+  returnToSelected = "";
+
+  selectedProductIds = [];
+
   startOffset = 0;
   endOffset = 0;
   startDate = "";
@@ -29,14 +36,7 @@ export class Create {
     this.http = http;
   }
   activate(itemId){
-  	this.http.fetch('/searchableItems/' +itemId+ '.json')
-      .then(response => response.json()).then(item => this.currentItem = item);
 
-    this.http.fetch('/dashboard/required')
-      .then(response => response.json()).then(required => this.required = required);
-    
-    this.http.fetch('/dashboard/deliverTo')
-      .then(response => response.json()).then(deliverTo => this.deliverTo = deliverTo);
 
     var queryString = DateFormat.urlString(0, 2);
     this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+itemId)
@@ -45,6 +45,21 @@ export class Create {
               this.startCalendar = calendar;
               this.endCalendar = calendar;
           });
+
+    this.http.fetch('/searchableItems/'+itemId+'.json')
+      .then(response => response.json()).then(item => this.currentItem = item);
+
+    this.http.fetch('/dashboard/required')
+      .then(response => response.json()).then(required => this.required = required);
+    
+    this.http.fetch('/dashboard/deliverTo')
+      .then(response => response.json()).then(deliverTo => this.deliverTo = deliverTo);
+
+    this.http.fetch('/dashboard/returnBy')
+      .then(response => response.json()).then(returnBy => this.returnBy = returnBy);
+
+    this.http.fetch('/dashboard/returnTo')
+      .then(response => response.json()).then(returnTo => this.returnTo = returnTo);
     
   }
   setStartDate(event,day){

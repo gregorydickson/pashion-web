@@ -21,6 +21,19 @@ class DashboardController {
     }
 
     def deliverTo(){
-    	SearchableItem item = SearchableItem.get(params.item)
+    	render User.list() as JSON
+    }
+
+    def returnTo(){
+        render User.list() as JSON
+    }
+
+    def renderLook() {
+        //use the custom JSON marshaller defined in Boostrap.groovy
+        // instead of json view
+        def item = SearchableItem.get(params.id.toInteger())
+        
+        render item as JSON
+        
     }
 }

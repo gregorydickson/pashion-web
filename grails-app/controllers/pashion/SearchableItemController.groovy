@@ -96,24 +96,35 @@ class SearchableItemController {
         }
         
         render resultList as JSON
-        log.info "json thing:"+JSON
+        
+        
         long endTime = System.currentTimeMillis()
         long duration = (endTime - startTime)
         log.info "search duration:"+duration
     }
 
     def index(Integer max) {
+        long startTime = System.currentTimeMillis()
+        log.info "searchable Index"
         params.max = Math.min(max ?: 1000, 5000)
-        respond SearchableItem.list(params), model:[searchableItemCount: SearchableItem.count()]
+        respond SearchableItem.list()
+        long endTime = System.currentTimeMillis()
+        long duration = (endTime - startTime)
+        log.info "search duration:"+duration
     }
 
     def show(SearchableItem searchableItem) {
+        log.info "SHOW"
+        log.info searchableItem.samples
         respond searchableItem
     }
 
     def create() {
         respond new SearchableItem(params)
     }
+
+    
+
 
     @Transactional
     def save(SearchableItem searchableItem) {

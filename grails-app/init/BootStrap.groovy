@@ -8,14 +8,21 @@ import grails.converters.JSON
 class BootStrap {
     def sessionFactory
     def init = { servletContext ->
-
+      
       JSON.registerObjectMarshaller(SearchableItem) {
-                def returnArray = [:]
-                returnArray['image'] = it.image
-                returnArray['id'] =  it.id
-                
-                return returnArray
-          }
+        def returnArray = [:]
+        returnArray['image'] = it.image
+        returnArray['id'] =  it.id
+        return returnArray
+      }
+
+      JSON.registerObjectMarshaller(User) {
+        def returnArray = [:]
+        returnArray['name'] = it.name
+        returnArray['id'] =  it.id
+        
+        return returnArray
+      }
 
         if (Brand.count() == 0) {
           log.info "Creating Test Data"
@@ -48,53 +55,51 @@ class BootStrap {
 
           def look1 = new SearchableItem(type:itemtype1,brand:brand1,season: s3, color:"white",fromDate:availableFrom, toDate:availableTo, name: 'black dress', image: '/assets/looks/1.jpg', brandCollection:collection1).save(failOnError : true)
           
-            def look2 = new SearchableItem(type:itemtype1,brand:brand1,season: s3, color:"white",fromDate:availableFrom, toDate:availableTo, name: 'silk dress', image: '/assets/looks/2.jpg', brandCollection:collection1).save(failOnError : true)
-            def look3 = new SearchableItem(type:itemtype1,brand:brand1,season: s3, color:"white",fromDate:availableFrom, toDate:availableTo, name: 'skirt', image: '/assets/looks/3.jpg', brandCollection:collection1).save(failOnError : true)
-            def look4 = new SearchableItem(type:itemtype1,brand:brand1,season: s3, color:"white",fromDate:availableFrom, toDate:availableTo, name: 'red', image: '/assets/looks/4.jpg', brandCollection:collection1).save(failOnError : true)
-            def look5 = new SearchableItem(type:itemtype1,brand:brand1,season: s3, color:"white",fromDate:availableFrom, toDate:availableTo, name: 'A look 5', image: '/assets/looks/5.jpg', brandCollection:collection1).save(failOnError : true)
-            def look6 = new SearchableItem(type:itemtype1,brand:brand1,season: s3, color:"white",fromDate:availableFrom, toDate:availableTo, name: 'A look 6', image: '/assets/looks/6.jpg', brandCollection:collection1).save(failOnError : true)
-            def look7 = new SearchableItem(type:itemtype1,brand:brand1,season: s3, color:"white",fromDate:availableFrom, toDate:availableTo, name: 'A look 7', image: '/assets/looks/7.jpg', brandCollection:collection1).save(failOnError : true)
-            def look8 = new SearchableItem(type:itemtype1,brand:brand1,season: s3, color:"white",fromDate:availableFrom, toDate:availableTo, name: 'A look 8', image: '/assets/looks/8.jpg', brandCollection:collection1).save(failOnError : true)
-            def look9 = new SearchableItem(type:itemtype1,brand:brand1,season: s3, color:"white",fromDate:availableFrom, toDate:availableTo, name: 'A look 9', image: '/assets/looks/9.jpg', brandCollection:collection1).save(failOnError : true)
+          def look2 = new SearchableItem(type:itemtype1,brand:brand1,season: s3, color:"white",fromDate:availableFrom, toDate:availableTo, name: 'silk dress', image: '/assets/looks/2.jpg', brandCollection:collection1).save(failOnError : true)
+          def look3 = new SearchableItem(type:itemtype1,brand:brand1,season: s3, color:"white",fromDate:availableFrom, toDate:availableTo, name: 'skirt', image: '/assets/looks/3.jpg', brandCollection:collection1).save(failOnError : true)
+          def look4 = new SearchableItem(type:itemtype1,brand:brand1,season: s3, color:"white",fromDate:availableFrom, toDate:availableTo, name: 'red', image: '/assets/looks/4.jpg', brandCollection:collection1).save(failOnError : true)
+          def look5 = new SearchableItem(type:itemtype1,brand:brand1,season: s3, color:"white",fromDate:availableFrom, toDate:availableTo, name: 'A look 5', image: '/assets/looks/5.jpg', brandCollection:collection1).save(failOnError : true)
+          def look6 = new SearchableItem(type:itemtype1,brand:brand1,season: s3, color:"white",fromDate:availableFrom, toDate:availableTo, name: 'A look 6', image: '/assets/looks/6.jpg', brandCollection:collection1).save(failOnError : true)
+          def look7 = new SearchableItem(type:itemtype1,brand:brand1,season: s3, color:"white",fromDate:availableFrom, toDate:availableTo, name: 'A look 7', image: '/assets/looks/7.jpg', brandCollection:collection1).save(failOnError : true)
+          def look8 = new SearchableItem(type:itemtype1,brand:brand1,season: s3, color:"white",fromDate:availableFrom, toDate:availableTo, name: 'A look 8', image: '/assets/looks/8.jpg', brandCollection:collection1).save(failOnError : true)
+          def look9 = new SearchableItem(type:itemtype1,brand:brand1,season: s3, color:"white",fromDate:availableFrom, toDate:availableTo, name: 'A look 9', image: '/assets/looks/9.jpg', brandCollection:collection1).save(failOnError : true)
 
 
-             look1 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'blue dress', image: '/assets/looks/1.jpg', brandCollection:collection2).save(failOnError : true)
-             look2 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'rock star', image: '/assets/looks/2.jpg', brandCollection:collection2).save(failOnError : true)
-             look3 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'A look 3', image: '/assets/looks/3.jpg', brandCollection:collection2).save(failOnError : true)
-             look4 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'A look 4', image: '/assets/looks/4.jpg', brandCollection:collection2).save(failOnError : true)
-             look5 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'A look 5', image: '/assets/looks/5.jpg', brandCollection:collection2).save(failOnError : true)
-             look6 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'A look 6', image: '/assets/looks/6.jpg', brandCollection:collection2).save(failOnError : true)
-             look7 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'A look 7', image: '/assets/looks/7.jpg', brandCollection:collection2).save(failOnError : true)
+          look1 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'blue dress', image: '/assets/looks/1.jpg', brandCollection:collection2).save(failOnError : true)
+          look2 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'rock star', image: '/assets/looks/2.jpg', brandCollection:collection2).save(failOnError : true)
+          look3 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'A look 3', image: '/assets/looks/3.jpg', brandCollection:collection2).save(failOnError : true)
+          look4 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'A look 4', image: '/assets/looks/4.jpg', brandCollection:collection2).save(failOnError : true)
+          look5 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'A look 5', image: '/assets/looks/5.jpg', brandCollection:collection2).save(failOnError : true)
+          look6 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'A look 6', image: '/assets/looks/6.jpg', brandCollection:collection2).save(failOnError : true)
+          look7 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'A look 7', image: '/assets/looks/7.jpg', brandCollection:collection2).save(failOnError : true)
 
-             look1 = new SearchableItem(type:itemtype1,brand:brand1,season: s8,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'big dress', image: '/assets/looks/1.jpg', brandCollection:collection3).save(failOnError : true)
-             look2 = new SearchableItem(type:itemtype1,brand:brand1,season: s8,color:"white",fromDate:availableFrom, toDate:availableTo, name: 'rock star', image: '/assets/looks/2.jpg', brandCollection:collection3).save(failOnError : true)
-             look3 = new SearchableItem(type:itemtype1,brand:brand1,season: s8,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'red things', image: '/assets/looks/3.jpg', brandCollection:collection3).save(failOnError : true)
-             look4 = new SearchableItem(type:itemtype1,brand:brand1,season: s8,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'purple things', image: '/assets/looks/4.jpg', brandCollection:collection3).save(failOnError : true)
-             look5 = new SearchableItem(type:itemtype1,brand:brand1,season: s8,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'black things', image: '/assets/looks/5.jpg', brandCollection:collection3).save(failOnError : true)
-             look6 = new SearchableItem(type:itemtype1,brand:brand1,season: s8,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'A look 6', image: '/assets/looks/6.jpg', brandCollection:collection3).save(failOnError : true)
+          look1 = new SearchableItem(type:itemtype1,brand:brand1,season: s8,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'big dress', image: '/assets/looks/1.jpg', brandCollection:collection3).save(failOnError : true)
+          look2 = new SearchableItem(type:itemtype1,brand:brand1,season: s8,color:"white",fromDate:availableFrom, toDate:availableTo, name: 'rock star', image: '/assets/looks/2.jpg', brandCollection:collection3).save(failOnError : true)
+          look3 = new SearchableItem(type:itemtype1,brand:brand1,season: s8,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'red things', image: '/assets/looks/3.jpg', brandCollection:collection3).save(failOnError : true)
+          look4 = new SearchableItem(type:itemtype1,brand:brand1,season: s8,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'purple things', image: '/assets/looks/4.jpg', brandCollection:collection3).save(failOnError : true)
+          look5 = new SearchableItem(type:itemtype1,brand:brand1,season: s8,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'black things', image: '/assets/looks/5.jpg', brandCollection:collection3).save(failOnError : true)
+          look6 = new SearchableItem(type:itemtype1,brand:brand1,season: s8,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'A look 6', image: '/assets/looks/6.jpg', brandCollection:collection3).save(failOnError : true)
+           
+           
+          def today = new Date().clearTime()
+           
+          def due = today + 20
              
-             
-             def today = new Date().clearTime()
-             
-             def due = today + 20
-             
 
-            def pragency1 = new PRAgency(name:'Karla Otto' ).save(failOnError : true)
-            def user1 = new User(name:'Paco Rodriquez', username:'prod',password:'password',prAgency:pragency1).save(failOnError : true)
+          def pragency1 = new PRAgency(name:'Karla Otto' ).save(failOnError : true)
+          def user1 = new User(name:'Paco Rodriquez', username:'prod',password:'password',prAgency:pragency1).save(failOnError : true)
 
-            brand1 = new Brand(name:'Paco Rabanne', city:'Paris' ).save(failOnError : true)
-            user1 = new User(name:'Jean Reno', username:'jreno',password:'password',brand:brand1).save(failOnError : true)
-            user1 = new User(name:'Bridgette Bardot', username:'bbardot',password:'password',brand:brand1).save(failOnError : true)
+          brand1 = new Brand(name:'Paco Rabanne', city:'Paris' ).save(failOnError : true)
+          user1 = new User(name:'Jean Reno', username:'jreno',password:'password',brand:brand1).save(failOnError : true)
+          user1 = new User(name:'Bridgette Bardot', username:'bbardot',password:'password',brand:brand1).save(failOnError : true)
             
-            collection1 = new BrandCollection(season: s5, brand:brand1).save(failOnError : true)
+          collection1 = new BrandCollection(season: s5, brand:brand1).save(failOnError : true)
             
-            availableFrom = dateFormat.parse("2017-01-01")
-            availableTo = dateFormat.parse("2017-01-15")
-
-            
-
-        
-            
+          availableFrom = dateFormat.parse("2017-01-01")
+          availableTo = dateFormat.parse("2017-01-15")
+          def bookingFrom = dateFormat.parse("2017-01-10")
+          def bookingTo = dateFormat.parse("2017-01-14")
+      
             for(i in 1..20){
                   log.info "creating lots of looks"
                   def look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"white",fromDate:availableFrom, toDate:availableTo, name: 'white no sleeves pink waist pants', image: '/assets/looks/paco/10.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
@@ -104,14 +109,16 @@ class BootStrap {
                   def sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   def sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   def sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
-
+                  def request = new SampleRequest(searchableItems:[sample1,sample2,sample3,sample4,sample5],bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved').save(failOnError : true, flush: true)
+                  
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"white",fromDate:availableFrom, toDate:availableTo, name: 'white hoodie dress', image: '/assets/looks/paco/11.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample2 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "hat", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
-
+                  request = new SampleRequest(searchableItems:[sample1,sample2,sample3,sample4,sample5],bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved').save(failOnError : true, flush: true)
+                  
 
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"white",fromDate:availableFrom, toDate:availableTo, name: 'white hoodie short jacket shorts', image: '/assets/looks/paco/12.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
