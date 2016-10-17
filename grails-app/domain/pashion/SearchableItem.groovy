@@ -1,6 +1,7 @@
 package pashion
 
 import java.time.LocalDate
+import java.time.ZoneId
 
 /*
  * A Searchable Item is the main domain object for Pashion's image search
@@ -41,9 +42,13 @@ class SearchableItem {
 		if(type.id == 1){
 			println "SearchableItem:"+id+" - booked Days In Month - Look Case"
 			samples.each{
-				
 				println "sample: "+it.id
 				pashionCalendar = it.bookedDaysInMonth(monthToCheck, pashionCalendar)
+			}
+			LocalDate now = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+			if(pashionCalendar.calendarMonths[0].sameMonth(now)){
+				pashionCalendar.calendarMonths[0].days[now.getDayOfMonth()].event =
+					pashionCalendar.calendarMonths[0].days[now.getDayOfMonth()].event + " today"
 			}
 		} else if(type.id == 2){//The SearchableItem is a Sample and can have requests
 			println "SearchableItem - Im a sample:"+id+" - going through my sample requests"
