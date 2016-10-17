@@ -6,7 +6,8 @@ import java.time.ZoneId
 /*
  * A Searchable Item is the main domain object for Pashion's image search
  * a searchable item can be a Look, Sample, or Runway photo. 
- * a Look will probably have samples associated with it.
+ * a Look (a type of SearchableItem) will probably have samples (another type
+ * of Searchable Item) associated with it.
  */
 class SearchableItem {
 
