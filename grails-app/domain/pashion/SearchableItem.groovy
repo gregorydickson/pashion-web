@@ -9,7 +9,7 @@ import java.time.LocalDate
  */
 class SearchableItem {
 
-
+	Long id
 	String name
 	Brand brand
 
@@ -39,15 +39,17 @@ class SearchableItem {
 		println "Searchable Item - bookedDaysInMonth"
 		//type 1 is Look which will have samples
 		if(type.id == 1){
-			println "SearchableItem - booked Days In Month - Look Case"
+			println "SearchableItem:"+id+" - booked Days In Month - Look Case"
 			samples.each{
-				println "SearchableItem - I'm a look - going through my samples"
+				
+				println "sample: "+it.id
 				pashionCalendar = it.bookedDaysInMonth(monthToCheck, pashionCalendar)
 			}
 		} else if(type.id == 2){//The SearchableItem is a Sample and can have requests
-			println "SearchableItem - Im a sample - going through my sample requests"
-				
+			println "SearchableItem - Im a sample:"+id+" - going through my sample requests"
+			println "sample requests:"+ sampleRequests
 			sampleRequests.each{
+				println "a sample request"
 				pashionCalendar = it.checkMonthForEvents(monthToCheck,pashionCalendar)
 			}
 			

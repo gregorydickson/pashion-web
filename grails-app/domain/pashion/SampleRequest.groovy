@@ -29,8 +29,9 @@ class SampleRequest {
 	//auto fields
 	Date dateCreated
 	Date lastUpdated
+	Collection searchableItems
 
-	static belongsTo = SearchableItem
+	static belongsTo = SearchableItem 
 
 	static hasMany = [ searchableItems:SearchableItem ]
 
@@ -39,7 +40,7 @@ class SampleRequest {
 		
 		LocalDate start = bookingStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
 		LocalDate end = bookingEndDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-
+		println "Sample Request - check month for events"
 		if(pashionCalendar.calendarMonths[0].sameMonth(start)
 		   && pashionCalendar.calendarMonths[0].sameMonth(end)) {
 		   	println "check month for events - same month"
@@ -55,28 +56,31 @@ class SampleRequest {
 	PashionCalendar inSameMonth(PashionCalendar pashionCalendar, LocalDate start,
 									LocalDate end){
 		println "Sample Request - In Same Month"
-		def range = start.getDayOfMonth()..end.getDayOfMonth()
+		IntRange range = start.getDayOfMonth()..end.getDayOfMonth()
 		range.each{
 			pashionCalendar.calendarMonths[0].days[it].event = 
-						pashionCalendar.calendarMonths[0].days[it].event + " booked"
+					pashionCalendar.calendarMonths[0].days[it].event + " booked"
 		}
+		pashionCalendar
 
 	}
 
 	PashionCalendar startInSameMonth(PashionCalendar pashionCalendar, LocalDate start){
-		def range = start.getDayOfMonth()..pashionCalendar.calendarMonths[0].numberOfDays
+		IntRange range = start.getDayOfMonth()..pashionCalendar.calendarMonths[0].numberOfDays
 		range.each{
 			pashionCalendar.calendarMonths[0].days[it].event = 
 						pashionCalendar.calendarMonths[0].days[it].event + " booked"
 		}
+		pashionCalendar
 	}
 
 	PashionCalendar endInSameMonth(PashionCalendar pashionCalendar, LocalDate end){
-		def range = 1..end.getDayOfMonth()
+		IntRange range = 1..end.getDayOfMonth()
 		range.each{
 			pashionCalendar.calendarMonths[0].days[it].event = 
 						pashionCalendar.calendarMonths[0].days[it].event + " booked"
 		}
+		pashionCalendar
 	}
   	
 

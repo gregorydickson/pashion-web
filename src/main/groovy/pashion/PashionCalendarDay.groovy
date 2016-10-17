@@ -6,7 +6,7 @@ import groovy.transform.CompileStatic
 class PashionCalendarDay{
 	
 	String dayString
-	String event
+	String event = ""
 	
 	public void setDayString(Object displayString){
 		dayString = displayString

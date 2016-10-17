@@ -109,7 +109,13 @@ class BootStrap {
                   def sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   def sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   def sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
-                  def request = new SampleRequest(searchableItems:[sample1,sample2,sample3,sample4,sample5],bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved').save(failOnError : true, flush: true)
+                  def request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
                   
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"white",fromDate:availableFrom, toDate:availableTo, name: 'white hoodie dress', image: '/assets/looks/paco/11.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
@@ -117,15 +123,27 @@ class BootStrap {
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
-                  request = new SampleRequest(searchableItems:[sample1,sample2,sample3,sample4,sample5],bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved').save(failOnError : true, flush: true)
-                  
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
 
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"white",fromDate:availableFrom, toDate:availableTo, name: 'white hoodie short jacket shorts', image: '/assets/looks/paco/12.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample2 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "hat", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
-                  sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
+                  sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0")
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
 
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"white",fromDate:availableFrom, toDate:availableTo, name: 'white cut blouse medium skirt', image: '/assets/looks/paco/13.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
@@ -133,6 +151,13 @@ class BootStrap {
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
 
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"white",fromDate:availableFrom, toDate:availableTo, name: 'white hoodie baggy pants', image: '/assets/looks/paco/14.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
@@ -140,6 +165,13 @@ class BootStrap {
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
 
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"blue",fromDate:availableFrom, toDate:availableTo, name: 'aqua stripe top blue knee skirt', image: '/assets/looks/paco/15.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
@@ -147,6 +179,13 @@ class BootStrap {
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
 
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"blue",fromDate:availableFrom, toDate:availableTo, name: 'blue baggie dress black hood', image: '/assets/looks/paco/16.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
@@ -154,6 +193,13 @@ class BootStrap {
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
 
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"white",fromDate:availableFrom, toDate:availableTo, name: 'white sleeveless blouse white pants', image: '/assets/looks/paco/17.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
@@ -161,6 +207,13 @@ class BootStrap {
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
 
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"white",fromDate:availableFrom, toDate:availableTo, name: 'white sleeveless cutout blouse white flared pants', image: '/assets/looks/paco/18.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
@@ -168,6 +221,13 @@ class BootStrap {
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
 
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"white",fromDate:availableFrom, toDate:availableTo, name: 'white sleeveless flared blouse white flared pants', image: '/assets/looks/paco/19.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
@@ -175,6 +235,13 @@ class BootStrap {
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
 
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'black and grey stripes long sleeve blouse back and grey knee length skirt', image: '/assets/looks/paco/20.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
@@ -182,27 +249,55 @@ class BootStrap {
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
-
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
+                  
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"white",fromDate:availableFrom, toDate:availableTo, name: 'white and silver sleeveless blouse long silver skirt', image: '/assets/looks/paco/21.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample2 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "hat", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
-
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
+                  
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'black tie across hoodie black shorts', image: '/assets/looks/paco/22.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample2 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "hat", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
-
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
+                  
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'black jacket pocket square black leather skirt', image: '/assets/looks/paco/23.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample2 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "hat", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
 
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"white",fromDate:availableFrom, toDate:availableTo, name: 'white with black lines blouse and long dress', image: '/assets/looks/paco/24.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
@@ -210,13 +305,27 @@ class BootStrap {
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
-
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
+                  
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"white",fromDate:availableFrom, toDate:availableTo, name: 'white blouse 60s hip hugger pants', image: '/assets/looks/paco/25.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample2 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "hat", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
 
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"white",fromDate:availableFrom, toDate:availableTo, name: 'blue lace see through white dress', image: '/assets/looks/paco/26.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
@@ -224,13 +333,27 @@ class BootStrap {
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
-
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
+                  
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"white",fromDate:availableFrom, toDate:availableTo, name: 'white lace white shorts', image: '/assets/looks/paco/27.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample2 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "hat", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
 
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'black short dress with black shorts', image: '/assets/looks/paco/28.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
@@ -238,6 +361,13 @@ class BootStrap {
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
 
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"white",fromDate:availableFrom, toDate:availableTo, name: 'white long sleeve white knee length skirt', image: '/assets/looks/paco/29.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
@@ -245,6 +375,13 @@ class BootStrap {
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
 
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"white",fromDate:availableFrom, toDate:availableTo, name: 'high neck dress with white shorts', image: '/assets/looks/paco/30.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
@@ -252,6 +389,13 @@ class BootStrap {
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
 
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"white",fromDate:availableFrom, toDate:availableTo, name: 'silk dress', image: '/assets/looks/paco/31.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
@@ -259,6 +403,13 @@ class BootStrap {
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
 
                   look101 = new SearchableItem(type:itemtype1,brand:brand1,season: s5,color:"white",fromDate:availableFrom, toDate:availableTo, name: 'lacy dress with pink', image: '/assets/looks/paco/32.jpg', brandCollection:collection1).save(failOnError : true, flush: true);
                   sample1 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "dress", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
@@ -266,7 +417,14 @@ class BootStrap {
                   sample3 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "shoes", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample4 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "bracelet", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
-
+                  request = new SampleRequest(bookingStartDate:bookingFrom, bookingEndDate:bookingTo,requestStatus:'Approved')
+                  request.addToSearchableItems(sample1)
+                  request.addToSearchableItems(sample2)
+                  request.addToSearchableItems(sample3)
+                  request.addToSearchableItems(sample4)
+                  request.addToSearchableItems(sample5)
+                  request.save(failOnError : true, flush: true)
+                  
                   sessionFactory.getCurrentSession().clear();
             }
 
