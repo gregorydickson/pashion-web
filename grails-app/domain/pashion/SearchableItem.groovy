@@ -51,6 +51,7 @@ class SearchableItem {
 				pashionCalendar.calendarMonths[0].days[now.getDayOfMonth()].event =
 					pashionCalendar.calendarMonths[0].days[now.getDayOfMonth()].event + " today"
 			}
+			pashionCalendar = availableDaysInMonth(pashionCalendar)
 		} else if(type.id == 2){//The SearchableItem is a Sample and can have requests
 			println "SearchableItem - Im a sample:"+id+" - going through my sample requests"
 			println "sample requests:"+ sampleRequests
@@ -59,6 +60,55 @@ class SearchableItem {
 				pashionCalendar = it.checkMonthForEvents(monthToCheck,pashionCalendar)
 			}
 			
+		}
+		pashionCalendar
+	}
+
+
+
+	PashionCalendar availableDaysInMonth(PashionCalendar pashionCalendar){
+		LocalDate start = fromDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+		LocalDate end = toDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+		println "Searchable Item - available days in month"
+		if(pashionCalendar.calendarMonths[0].sameMonth(start)
+		   && pashionCalendar.calendarMonths[0].sameMonth(end)) {
+		   	println "check month for events - same month"
+			pashionCalendar = inSameMonth(pashionCalendar, start, end)
+		} else if (pashionCalendar.calendarMonths[0].sameMonth(start)){
+			pashionCalendar = startInSameMonth()
+		} else if(pashionCalendar.calendarMonths[0].sameMonth(end)){
+			pashionCalendar = endInSameMonth(pashionCalendar, end)
+		}
+		pashionCalendar
+
+	}
+
+	PashionCalendar inSameMonth(PashionCalendar pashionCalendar, LocalDate start,
+									LocalDate end){
+		println "Sample Request - In Same Month"
+		IntRange range = start.getDayOfMonth()..end.getDayOfMonth()
+		range.each{
+			pashionCalendar.calendarMonths[0].days[it].event = 
+					pashionCalendar.calendarMonths[0].days[it].event + " available"
+		}
+		pashionCalendar
+
+	}
+
+	PashionCalendar startInSameMonth(PashionCalendar pashionCalendar, LocalDate start){
+		IntRange range = start.getDayOfMonth()..pashionCalendar.calendarMonths[0].numberOfDays
+		range.each{
+			pashionCalendar.calendarMonths[0].days[it].event = 
+						pashionCalendar.calendarMonths[0].days[it].event + " available"
+		}
+		pashionCalendar
+	}
+
+	PashionCalendar endInSameMonth(PashionCalendar pashionCalendar, LocalDate end){
+		IntRange range = 1..end.getDayOfMonth()
+		range.each{
+			pashionCalendar.calendarMonths[0].days[it].event = 
+						pashionCalendar.calendarMonths[0].days[it].event + " available"
 		}
 		pashionCalendar
 	}
