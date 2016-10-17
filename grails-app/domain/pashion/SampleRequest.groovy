@@ -59,7 +59,7 @@ class SampleRequest {
 		IntRange range = start.getDayOfMonth()..end.getDayOfMonth()
 		range.each{
 			pashionCalendar.calendarMonths[0].days[it].event = 
-					pashionCalendar.calendarMonths[0].days[it].event + " booked"
+					pashionCalendar.calendarMonths[0].days[it].event + " not-available"
 		}
 		pashionCalendar
 
@@ -69,7 +69,7 @@ class SampleRequest {
 		IntRange range = start.getDayOfMonth()..pashionCalendar.calendarMonths[0].numberOfDays
 		range.each{
 			pashionCalendar.calendarMonths[0].days[it].event = 
-						pashionCalendar.calendarMonths[0].days[it].event + " booked"
+						pashionCalendar.calendarMonths[0].days[it].event + " not-available"
 		}
 		pashionCalendar
 	}
@@ -78,7 +78,7 @@ class SampleRequest {
 		IntRange range = 1..end.getDayOfMonth()
 		range.each{
 			pashionCalendar.calendarMonths[0].days[it].event = 
-						pashionCalendar.calendarMonths[0].days[it].event + " booked"
+						pashionCalendar.calendarMonths[0].days[it].event + " not-available"
 		}
 		pashionCalendar
 	}
