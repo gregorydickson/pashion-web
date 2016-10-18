@@ -1,5 +1,5 @@
 import {DialogController} from 'aurelia-dialog';
-import {HttpClient} from 'aurelia-fetch-client';
+import {HttpClient,json} from 'aurelia-fetch-client';
 import 'fetch';
 import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
@@ -91,9 +91,9 @@ export class Create {
   }
 
   redraw(element){
-  	element.style.display='none';
-	element.offsetHeight; 
-	element.style.display='';
+    element.style.display='none';
+    element.offsetHeight; 
+	  element.style.display='';
   }
   startNext(){
   	var queryString = DateFormat.urlString(++this.startOffset,1);
@@ -143,7 +143,7 @@ export class Create {
           .then(response => response.json())
           .then(calendar => {
               this.endCalendar = calendar;
-          })
+          });
 
   }
   endReset(){
@@ -153,7 +153,34 @@ export class Create {
           .then(response => response.json())
           .then(calendar => {
               this.endCalendar = calendar;
-          })
+          });
 
   }
+
+  updateAvailability(){
+    console.log ("update availability");
+    console.log (this.selectedProductIds);
+    var queryString = DateFormat.urlString(this.endOffset,1);
+    this.http.fetch('/calendar/updateAvailabilitySamples'+queryString, {
+            method: 'post',
+            body: json(this.selectedProductIds)
+          })
+          .then(response => response.json())
+          .then(calendar => {
+              this.endCalendar = calendar;
+          });
+
+    queryString = DateFormat.urlString(this.startOffset,1);
+    this.http.fetch('/calendar/updateAvailabilitySamples'+queryString, {
+            method: 'post',
+            body: json(this.selectedProductIds)
+          })
+          .then(response => response.json())
+          .then(calendar => {
+              this.startCalendar = calendar;
+          });
+
+  }
+
+
 }

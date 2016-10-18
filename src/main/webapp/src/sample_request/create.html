@@ -136,7 +136,7 @@
         <div class="grid-block">
             <label repeat.for="sample of currentItem.samples">
             <div class="grid-block row">
-            <input type="checkbox" model.bind="sample.id" checked.bind="selectedProductIds">
+            <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="selectedProductIds" checked.bind="checked">
             ${sample.name}
             </div>
             </label>

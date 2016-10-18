@@ -36,18 +36,11 @@ class CalendarController {
         log.info "year:"+params.year
         SearchableItem theItem = SearchableItem.get(params.item)
         
-        def dateFormatString = "yyyy-MM-dd"
-        def dateFormat =  new SimpleDateFormat(dateFormatString)
-
-        def today = dateFormat.parse(params.year+"-"+
-                                         params.month+"-"+
-                                         params.day)
         //checkavailable days
         def localDate = LocalDate.of(params.year.toInteger(),
                                      params.month.toInteger(),
                                      params.day.toInteger())
         
-
         Map events = [:]
         def aCalendar = new PashionCalendar( events,
                                              params.month.toInteger(),
@@ -61,5 +54,28 @@ class CalendarController {
         render aCalendar as JSON
         
 
+    }
+
+    def updateAvailabilitySamples(){
+        def jsonObject = request.JSON
+        List samples = []
+        jsonObject.each{
+            samples << SearchableItem.get(it)
+        }
+        
+        def localDate = LocalDate.of(params.year.toInteger(),
+                                     params.month.toInteger(),
+                                     params.day.toInteger())
+        Map events = [:]
+        def aCalendar = new PashionCalendar( events,
+                                             params.month.toInteger(),
+                                             params.day.toInteger(),
+                                             params.year.toInteger(),
+                                             request.locale.toString(),
+                                             params.offset.toInteger(),
+                                             params.months.toInteger())
+        log.info "updating availability"
+        aCalendar = calendarService.availableDaysForSamples(samples,localDate,aCalendar)
+        render aCalendar as JSON
     }
 }
