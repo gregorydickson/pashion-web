@@ -21,11 +21,11 @@ export class Create {
 
   selectedProductIds = [];
 
+  sampleRequest = {};
   startOffset = 0;
   endOffset = 0;
   startDate = "";
   endDate = "";
-  status = "Not Requested";
 
   constructor(http, controller){
     this.controller = controller;
@@ -180,6 +180,27 @@ export class Create {
               this.startCalendar = calendar;
           });
 
+  }
+
+  submit(){
+    console.log("submitting Sample Request");
+    var sr = this.sampleRequest;
+    sr.startDate = this.startDate;
+    sr.endDate = this.endDate;
+    sr.selectedRequired = this.selectedRequired;
+    sr.deliverToSelected = this.deliverToSelected;
+    sr.returnBySelected = this.returnBySelected;
+    sr.returnToSelected = this.returnToSelected;
+    sr.selectedProductIds = this.selectedProductIds;
+    this.http.fetch('/sampleRequest/create'+queryString, {
+            method: 'post',
+            body: json(this.selectedProductIds)
+          })
+          .then(response => response.json())
+          .then(calendar => {
+              this.startCalendar = calendar;
+          });
+    this.controller.ok();
   }
 
 

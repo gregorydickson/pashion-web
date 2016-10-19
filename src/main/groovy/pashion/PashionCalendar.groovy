@@ -15,7 +15,9 @@ import java.time.DayOfWeek
 import java.time.temporal.WeekFields
 import java.time.temporal.TemporalField
 import java.time.format.TextStyle
+import groovy.util.logging.Slf4j
 
+@Slf4j
 @CompileStatic
 class PashionCalendar{
 
@@ -33,7 +35,7 @@ class PashionCalendar{
 		LocalDate localDate
 		
 		Locale localeObject = null
-		//println "locale:"+locale
+		
 		if(locale == "en" || locale == "en_US") localeObject = Locale.US
 		if(locale == "fr") localeObject = Locale.FRANCE
 		if(locale == "es") localeObject = new Locale("es")

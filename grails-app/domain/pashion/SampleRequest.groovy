@@ -40,10 +40,10 @@ class SampleRequest {
 		
 		LocalDate start = bookingStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
 		LocalDate end = bookingEndDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-		println "Sample Request - check month for events"
+		log.info "Sample Request - check month for events"
 		if(pashionCalendar.calendarMonths[0].sameMonth(start)
 		   && pashionCalendar.calendarMonths[0].sameMonth(end)) {
-		   	println "check month for events - same month"
+		   	log.info "check month for events - same month"
 			pashionCalendar = inSameMonth(pashionCalendar, start, end)
 		} else if (pashionCalendar.calendarMonths[0].sameMonth(start)){
 			pashionCalendar = startInSameMonth()
@@ -55,7 +55,7 @@ class SampleRequest {
 
 	PashionCalendar inSameMonth(PashionCalendar pashionCalendar, LocalDate start,
 									LocalDate end){
-		println "Sample Request - In Same Month"
+		log.info "Sample Request - In Same Month"
 		IntRange range = start.getDayOfMonth()..end.getDayOfMonth()
 		range.each{
 			pashionCalendar.calendarMonths[0].days[it].event = 

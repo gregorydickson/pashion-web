@@ -11,30 +11,47 @@ class SearchableItemController {
     
     def filterSearch(){
         long startTime = System.currentTimeMillis()
-        def dateFormatString = "yyyy-MM-dd"
-        def dateFormat =  new SimpleDateFormat(dateFormatString)
+        String dateFormatString = "yyyy-MM-dd"
+        SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
         Date availableFrom = null
         Date availableTo = null
         Brand brand = null
-        def type = null
+        SearchableItemType type = null
+        Season season = null
+        def keywords = null
+
+        log.info "params itemType:"+params.itemType
         if(params.itemType != "")
             type = SearchableItemType.findByDisplay(params.itemType)
+
+        log.info "params brand:"+params.brand
         if(params.brand != "")
             brand = Brand.get(params.brand)
-            
-        def season = Season.findByName(URLDecoder.decode(params.season))
         
+        log.info "params season:"+params.season
+        if(params.season != "")
+            season = Season.findByName(URLDecoder.decode(params.season))
+        
+        log.info "params availableFrom:"+params.availableFrom
         if(params.availableFrom != "" )
             availableFrom = dateFormat.parse(params.availableFrom)
+
+        log.info "params availableTo:"+params.availableTo
         if(params.availableTo != "")   
             availableTo = dateFormat.parse(params.availableTo)
         
+        log.info "params keywords:"+params.keywords
+        if(params.searchtext != null && params.searchtext != ""){
+            keywords = URLDecoder.decode(params.searchtext)
+            keywords = keywords.split(" ")
+        }
         
-        def keywords = URLDecoder.decode(params.searchtext)
-        keywords = keywords.split(" ")
-        
-        def items = []
-        
+        log.info "Brand:"+brand
+        log.info "keywords:"+keywords
+        log.info "season:"+season
+        log.info "type:"+type
+        log.info "availableFrom:"+availableFrom
+        log.info "availableTo:"+ availableTo
         def criteria = SearchableItem.createCriteria()
         
         List results = criteria.listDistinct () {
@@ -59,15 +76,15 @@ class SearchableItemController {
         
         
         Integer resultsSize = results.size()
+        log.info "result size:"+resultsSize 
         Integer rows = resultsSize/5
         
         if(results.size() % 5)
             rows = rows + 1
         List resultList = []
         log.info "rows:"+rows
+        
         def j = 0
-
-
         for(def i=1; i<=rows; i++){
 
             def arow = [:]

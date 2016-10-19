@@ -130,7 +130,7 @@ export class Index {
       } else {
         console.log('cancelled');
       }
-       console.log(response.output);
+       
     });
   }
 

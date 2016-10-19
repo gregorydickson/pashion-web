@@ -38,12 +38,12 @@ class SearchableItem {
 
 
 	PashionCalendar bookedDaysInMonth(LocalDate monthToCheck, PashionCalendar pashionCalendar){
-		println "Searchable Item - bookedDaysInMonth"
+		log.info "Searchable Item - bookedDaysInMonth"
 		//type 1 is Look which will have samples
 		if(type.id == 1){
-			println "SearchableItem:"+id+" - booked Days In Month - Look Case"
+			log.info "SearchableItem:"+id+" - booked Days In Month - Look Case"
 			samples.each{
-				println "sample: "+it.id
+				log.info "sample: "+it.id
 				pashionCalendar = it.bookedDaysInMonth(monthToCheck, pashionCalendar)
 			}
 			LocalDate now = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
@@ -53,10 +53,10 @@ class SearchableItem {
 			}
 			pashionCalendar = availableDaysInMonth(pashionCalendar)
 		} else if(type.id == 2){//The SearchableItem is a Sample and can have requests
-			println "SearchableItem - Im a sample:"+id+" - going through my sample requests"
-			println "sample requests:"+ sampleRequests
+			log.info "SearchableItem - Im a sample:"+id+" - going through my sample requests"
+			log.info "sample requests:"+ sampleRequests
 			sampleRequests.each{
-				println "a sample request"
+				log.info "a sample request"
 				pashionCalendar = it.checkMonthForEvents(monthToCheck,pashionCalendar)
 			}
 			
@@ -69,10 +69,10 @@ class SearchableItem {
 	PashionCalendar availableDaysInMonth(PashionCalendar pashionCalendar){
 		LocalDate start = fromDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
 		LocalDate end = toDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-		println "Searchable Item - available days in month"
+		log.info "Searchable Item - available days in month"
 		if(pashionCalendar.calendarMonths[0].sameMonth(start)
 		   && pashionCalendar.calendarMonths[0].sameMonth(end)) {
-		   	println "check month for events - same month"
+		   	log.info "check month for events - same month"
 			pashionCalendar = inSameMonth(pashionCalendar, start, end)
 		} else if (pashionCalendar.calendarMonths[0].sameMonth(start)){
 			pashionCalendar = startInSameMonth()
@@ -85,7 +85,7 @@ class SearchableItem {
 
 	PashionCalendar inSameMonth(PashionCalendar pashionCalendar, LocalDate start,
 									LocalDate end){
-		println "Sample Request - In Same Month"
+		log.info "Sample Request - In Same Month"
 		IntRange range = start.getDayOfMonth()..end.getDayOfMonth()
 		range.each{
 			pashionCalendar.calendarMonths[0].days[it].event = 

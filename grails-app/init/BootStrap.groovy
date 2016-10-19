@@ -24,6 +24,21 @@ class BootStrap {
         return returnArray
       }
 
+      if(Brand.findByName("Chanel") == null){
+        def brand1 = new Brand(name:'Chanel', city:'Paris' ).save(failOnError : true)
+        def sea =  Season.findByName('Spring 2017 Ready-to-Wear')
+        def collection1 = new BrandCollection(season: sea, brand:brand1).save(failOnError : true)
+        def itemtype1 =  SearchableItemType.findBySearchCode('look')
+        def range = 1..369
+        range.each{
+          String imageNumber = it.toString().padLeft(4,'0')
+          String imageLocation = "//s3.eu-central-1.amazonaws.com/pashion-tool/chanel/2017/spring/ready-to-wear/"+imageNumber+".jpg"
+          def look1 = new SearchableItem(type:itemtype1,brand:brand1,season: sea, image: imageLocation,brandCollection:collection1).save(flush:true,failOnError : true)
+          log.info "created look:"+look1
+        }
+
+      }
+
         if (Brand.count() == 0) {
           log.info "Creating Test Data"
           def itemtype1 = new SearchableItemType(display:'Looks',searchCode:'look').save(failOnError : true)
@@ -37,7 +52,7 @@ class BootStrap {
           
           def s4 = new Season(name:'Resort 2017').save(failOnError : true)
           def s5 = new Season(name:'Spring 2017 Couture').save(failOnError : true)
-          def s6 = new Season(name:'Spring 2017 Ready-to-Wear').save(failOnError : true)
+          
           def s7 = new Season(name:'Spring 2017 Menswear').save(failOnError : true)
           def s8 = new Season(name:'Winter 2017 Menswear').save(failOnError : true)
           
