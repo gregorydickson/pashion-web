@@ -2,6 +2,7 @@ package pashion
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import java.text.SimpleDateFormat
 import grails.converters.JSON
 
 @Transactional(readOnly = true)
@@ -9,17 +10,20 @@ class SampleRequestController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
+    String dateFormatString = "yyyy-M-d"
+    SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
     
     @Transactional
     def savejson(){
         def jsonObject = request.JSON
+        log.info "json:"+jsonObject
         def sr = new SampleRequest()
-        sr.bookingStartDate = jsonObject.startDate
-        sr.bookingEndDate = jsonObject.endDate
+        sr.bookingStartDate = dateFormat.parse(jsonObject.startDate)
+        sr.bookingEndDate = dateFormat.parse(jsonObject.endDate)
         sr.requiredBy = jsonObject.selectedRequired
-        sr.deliverTo = User.findByName("jsonObject.deliverToSelected")
+        sr.deliverTo = User.get(jsonObject.deliverToSelected)
         sr.returnBy = jsonObject.returnBySelected
-        sr.returnTo = User.findByName("jsonObject.returnToSelected")
+        sr.returnTo = User.get(jsonObject.returnToSelected)
         sr.requestStatus = "Requested"
         
         jsonObject.selectedProductIds.each{
@@ -28,7 +32,7 @@ class SampleRequestController {
         } 
         sr.save(failOnError : true, flush: true)
         
-        render sr as JSON
+        render "Sample Request Sent" as JSON
 
     }
 

@@ -35,6 +35,7 @@ class SearchableItem {
 	Date lastUpdated
 
 	SearchableItem look
+	User owner
 
 
 	PashionCalendar bookedDaysInMonth(LocalDate monthToCheck, PashionCalendar pashionCalendar){
@@ -146,6 +147,7 @@ class SearchableItem {
 		toDate nullable:true
 		
 		look nullable: true 
+		owner nullable:true
 		
 		userCreatedId nullable:true
 		lastModifiedUserId nullable:true

@@ -15,8 +15,8 @@ class SampleRequest {
 	Long userCreatedId
 	
 	Brand brand
-	User receivingUser
-	User requestingUser
+	User receivingUser // SearchableItem.owner
+	User requestingUser // current User
 	User deliverTo
 	User returnTo
 	String returnBy
@@ -98,8 +98,7 @@ class SampleRequest {
 		brand nullable:true 
 		receivingUser nullable:true
 		requestingUser nullable: true 
-		receivingUserName nullable: true
-		requestingUserName nullable: true 
+
 		editorial nullable: true 
 		comments nullable: true 
 

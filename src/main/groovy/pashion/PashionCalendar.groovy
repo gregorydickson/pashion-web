@@ -71,6 +71,7 @@ class PashionCalendar{
 		Integer daysInMonth = localDate.lengthOfMonth()
 		month.numberOfDays = daysInMonth
 		month.monthName = localDate.getMonth().getDisplayName(TextStyle.FULL,localeObject)
+		month.monthNumber = localDate.getMonthValue()
 		month.year = localDate.getYear().toString()
 		DayOfWeek firstDay = start.getDayOfWeek()
 		if(daysOfWeek == null){

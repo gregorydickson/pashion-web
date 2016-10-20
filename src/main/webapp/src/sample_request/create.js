@@ -27,8 +27,11 @@ export class Create {
   startDate = "";
   endDate = "";
 
+  result = "";
+
   constructor(http, controller){
     this.controller = controller;
+    //controller.settings.lock = true;
     http.configure(config => {
       config
         .useStandardConfiguration();
@@ -70,10 +73,10 @@ export class Create {
   	var elems = document.querySelectorAll(".start-selected");
   	[].forEach.call(elems, function(el) {
     	el.classList.remove("start-selected");
-	});
+	  });
   	element.className += " start-selected";
   	this.redraw(element);
-  	this.startDate = day;
+  	this.startDate = this.startCalendar.calendarMonths[0].year+"-"+this.startCalendar.calendarMonths[0].monthNumber+"-"+day;
 
   }
   setEndDate(event, day){
@@ -84,10 +87,10 @@ export class Create {
   	var elems = document.querySelectorAll(".end-selected");
   	[].forEach.call(elems, function(el) {
     	el.classList.remove("end-selected");
-	});
+	  });
   	element.className += " end-selected";
   	this.redraw(element);
-  	this.endDate = day;
+    this.endDate = this.endCalendar.calendarMonths[0].year+"-"+this.endCalendar.calendarMonths[0].monthNumber+"-"+day;
   }
 
   redraw(element){
@@ -192,15 +195,19 @@ export class Create {
     sr.returnBySelected = this.returnBySelected;
     sr.returnToSelected = this.returnToSelected;
     sr.selectedProductIds = this.selectedProductIds;
-    this.http.fetch('/sampleRequest/savejson'+queryString, {
+    this.http.fetch('/sampleRequest/savejson', {
             method: 'post',
-            body: json(this.selectedProductIds)
+            body: json(sr)
           })
           .then(response => response.json())
-          .then(calendar => {
-              this.startCalendar = calendar;
+          .then(result => {
+              this.result = result;
           });
-    this.controller.ok();
+    this.currentItem.id = this.result;
+    setTimeout(function () {
+        this.controller.ok();
+    }, 3000);
+    
   }
 
 

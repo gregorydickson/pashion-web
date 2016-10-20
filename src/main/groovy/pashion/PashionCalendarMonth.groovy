@@ -10,6 +10,7 @@ class PashionCalendarMonth{
 	
 	String year = ""
 	String monthName = ""
+	Integer monthNumber = 0
 	Map days =[:]
 	List rows = []
 	List dayNames = []
