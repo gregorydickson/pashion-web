@@ -192,7 +192,7 @@ export class Create {
     sr.returnBySelected = this.returnBySelected;
     sr.returnToSelected = this.returnToSelected;
     sr.selectedProductIds = this.selectedProductIds;
-    this.http.fetch('/sampleRequest/create'+queryString, {
+    this.http.fetch('/sampleRequest/savejson'+queryString, {
             method: 'post',
             body: json(this.selectedProductIds)
           })

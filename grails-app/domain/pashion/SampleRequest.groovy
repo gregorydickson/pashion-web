@@ -17,8 +17,11 @@ class SampleRequest {
 	Brand brand
 	User receivingUser
 	User requestingUser
-	String receivingUserName
-	String requestingUserName
+	User deliverTo
+	User returnTo
+	String returnBy
+	String requiredBy
+	
 
 	String editorial
 	String comments

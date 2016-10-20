@@ -2,6 +2,7 @@ package pashion
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.converters.JSON
 
 @Transactional(readOnly = true)
 class SampleRequestController {
@@ -9,6 +10,28 @@ class SampleRequestController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     
+    @Transactional
+    def savejson(){
+        def jsonObject = request.JSON
+        def sr = new SampleRequest()
+        sr.bookingStartDate = jsonObject.startDate
+        sr.bookingEndDate = jsonObject.endDate
+        sr.requiredBy = jsonObject.selectedRequired
+        sr.deliverTo = User.findByName("jsonObject.deliverToSelected")
+        sr.returnBy = jsonObject.returnBySelected
+        sr.returnTo = User.findByName("jsonObject.returnToSelected")
+        sr.requestStatus = "Requested"
+        
+        jsonObject.selectedProductIds.each{
+            SearchableItem item = SearchableItem.get(it)
+            sr.addToSearchableItems(item)
+        } 
+        sr.save(failOnError : true, flush: true)
+        
+        render sr as JSON
+
+    }
+
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond SampleRequest.list(params), model:[sampleRequestCount: SampleRequest.count()]
