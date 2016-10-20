@@ -36,9 +36,7 @@ class SearchableItem {
 
 	SearchableItem look
 	User owner
-	PashionCalendar bookedDaysInMonthOnlyLook(LocalDate monthToCheck, PashionCalendar pashionCalendar){
-	}
-	
+		
 	/**
 	 * Goes through a Look and all Samples recursively to find all booked days in a month.
 	 * Also, marks the current date with 'today'
