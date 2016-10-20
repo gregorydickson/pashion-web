@@ -75,6 +75,7 @@ class CalendarController {
                                              params.offset.toInteger(),
                                              params.months.toInteger())
         log.info "updating availability"
+        aCalendar = calendarService.availableDaysForALook(look,aCalendar)
         aCalendar = calendarService.availableDaysForSamples(samples,localDate,aCalendar)
         render aCalendar as JSON
     }

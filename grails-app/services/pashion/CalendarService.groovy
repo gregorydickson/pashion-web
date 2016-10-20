@@ -16,7 +16,9 @@ class CalendarService {
     	pashionCalendar = look.bookedDaysInMonth(localDate, pashionCalendar)
 
     }
-
+    PashionCalendar availableDaysForALook(SearchableItem look, PashionCalendar pashionCalendar){
+        pashionCalendar = look.availableDaysInMonth(pashionCalendar)
+    }
 
     PashionCalendar availableDaysForSamples(List samples, LocalDate localDate,
     							            PashionCalendar pashionCalendar) {

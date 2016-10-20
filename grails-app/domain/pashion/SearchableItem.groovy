@@ -36,8 +36,16 @@ class SearchableItem {
 
 	SearchableItem look
 	User owner
-
-
+	PashionCalendar bookedDaysInMonthOnlyLook(LocalDate monthToCheck, PashionCalendar pashionCalendar){
+	}
+	
+	/**
+	 * Goes through a Look and all Samples recursively to find all booked days in a month.
+	 * Also, marks the current date with 'today'
+	 *
+	 * @param monthToCheck the month to use for finding any booked days
+	 * @param pashionCalendar calendar to be mutated with any booked days for the monthToCheck
+	 */
 	PashionCalendar bookedDaysInMonth(LocalDate monthToCheck, PashionCalendar pashionCalendar){
 		log.info "Searchable Item - bookedDaysInMonth"
 		//type 1 is Look which will have samples
@@ -66,19 +74,31 @@ class SearchableItem {
 	}
 
 
-
+	/**
+	 * Goes through a Look object and marks all available days on the pashion calendar
+	 * using the fromDate and ToDate on the Look (Samples don't use fromDate and ToDate).
+	 * Used to mark available Days in a calendar month
+	 *
+	 * @param monthToCheck the month to use for finding any booked days
+	 * @param pashionCalendar calendar to be mutated with any booked days for the monthToCheck
+	 */
 	PashionCalendar availableDaysInMonth(PashionCalendar pashionCalendar){
 		LocalDate start = fromDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
 		LocalDate end = toDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
 		log.info "Searchable Item - available days in month"
 		if(pashionCalendar.calendarMonths[0].sameMonth(start)
 		   && pashionCalendar.calendarMonths[0].sameMonth(end)) {
-		   	log.info "check month for events - same month"
+
 			pashionCalendar = inSameMonth(pashionCalendar, start, end)
+		
 		} else if (pashionCalendar.calendarMonths[0].sameMonth(start)){
+			
 			pashionCalendar = startInSameMonth()
+		
 		} else if(pashionCalendar.calendarMonths[0].sameMonth(end)){
+			
 			pashionCalendar = endInSameMonth(pashionCalendar, end)
+		
 		}
 		pashionCalendar
 
@@ -86,7 +106,7 @@ class SearchableItem {
 
 	PashionCalendar inSameMonth(PashionCalendar pashionCalendar, LocalDate start,
 									LocalDate end){
-		log.info "Sample Request - In Same Month"
+		log.info "Sample Request - start and end In Same Month"
 		IntRange range = start.getDayOfMonth()..end.getDayOfMonth()
 		range.each{
 			pashionCalendar.calendarMonths[0].days[it].event = 

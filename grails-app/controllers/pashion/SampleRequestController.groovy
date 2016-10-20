@@ -31,8 +31,8 @@ class SampleRequestController {
             sr.addToSearchableItems(item)
         } 
         sr.save(failOnError : true, flush: true)
-        
-        render "Sample Request Sent" as JSON
+        def sent = [message:'Sample Request Sent']
+        render sent as JSON
 
     }
 
