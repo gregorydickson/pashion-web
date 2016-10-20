@@ -51,7 +51,7 @@ export class Create {
 
     this.http.fetch('/searchableItems/'+itemId+'.json')
       .then(response => response.json()).then(item => this.currentItem = item);
-
+      //.then(console.log("curent item:"))
     this.http.fetch('/dashboard/required')
       .then(response => response.json()).then(required => this.required = required);
     
@@ -64,6 +64,7 @@ export class Create {
     this.http.fetch('/dashboard/returnTo')
       .then(response => response.json()).then(returnTo => this.returnTo = returnTo);
     
+
   }
   setStartDate(event,day){
   	console.log("start date"+event);

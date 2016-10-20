@@ -156,19 +156,21 @@
                     </table>
                 </div>
 
-                <div class="vertical grid-content accordion" style="overflow-x:hidden; max-height:8rem;"> <!-- scroll after n items -->
-                    <!-- row -->
-                    <compose view-model="requests/request-dialog-entry" style="margin-bottom: 0px;"></compose>                    
-                  
-                    <compose view-model="requests/request-dialog-entry" style="margin-bottom: 0px;"></compose>
+                <div class="vertical grid-content accordion" style="overflow-x:hidden; max-height:8rem;"> 
+                    <table class="big-accordion" style="margin-bottom:0px;" repeat.for="sample of currentItem.samples">
+                        <tr>
+                            <td class="accordion w5">1</td>
+                            <td class="accordion w19">${sample.id}</td>
+                            <td class="accordion w73">${sample.name}</td>
+                            <td class="accordion w3">
+                                
 
-                    <compose view-model="requests/request-dialog-entry" style="margin-bottom: 0px;"></compose>                    
-                  
-                    <compose view-model="requests/request-dialog-entry" style="margin-bottom: 0px;"></compose>
+                               <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="selectedProductIds" >
 
-
-
-                    <compose view-model="requests/request-dialog-entry"></compose>
+                            </td>
+                        </tr>
+                    </table>
+                    
 
                 </div>
 
