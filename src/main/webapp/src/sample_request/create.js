@@ -214,10 +214,8 @@ export class Create {
               this.result = result;
           });
     this.currentItem.id = this.result;
-    
-    setTimeout(function () {
-        alert('Request Sent');
-    }, 3000);
+    alert('Request Sent');
+    this.controller.close();
     
   }
 
