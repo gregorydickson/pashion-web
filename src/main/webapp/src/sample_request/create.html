@@ -133,16 +133,7 @@
             </div>
             <!--end Right column -->
         </div>
-        <div class="grid-block">
-            <label repeat.for="sample of currentItem.samples">
-            <div class="grid-block row">
-            <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="selectedProductIds" checked.bind="checked">
-            ${sample.name}
-            </div>
-            </label>
-            <br />
-        </div>
-
+        
              <!-- Bottom Row -->  
                 <div class="vertical grid-content accordion">
                     <table class="big-accordion" style="margin-bottom:4px;">

@@ -50,8 +50,16 @@ export class Create {
           });
 
     this.http.fetch('/searchableItems/'+itemId+'.json')
-      .then(response => response.json()).then(item => this.currentItem = item);
-      //.then(console.log("curent item:"))
+      .then(response => response.json())
+      .then(item => {
+          this.currentItem = item;
+          var ids = this.selectedProductIds;
+          item.samples.forEach(function(item){
+            ids.push(item.id);
+          })
+        }
+      );
+      
     this.http.fetch('/dashboard/required')
       .then(response => response.json()).then(required => this.required = required);
     
@@ -163,6 +171,7 @@ export class Create {
 
   updateAvailability(){
     console.log ("update availability");
+    console.log ("current item samples:"+this.currentItem.samples);
     console.log (this.selectedProductIds);
     var queryString = DateFormat.urlString(this.endOffset,1);
     this.http.fetch('/calendar/updateAvailabilitySamples'+queryString, {
