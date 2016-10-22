@@ -117,10 +117,12 @@
   height: 300px;
 }
 
-// RM
-// should be global stuff changes to _settings 
+.indigital-align {
+  position:relative; 
+  margin-top: -35px;
+  margin-left:4px;
+}
 
-//
 
 ::-webkit-scrollbar {
     width: 14px;
