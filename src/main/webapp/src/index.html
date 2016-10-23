@@ -253,16 +253,18 @@
                 </div>
                 <!-- Images/Looks -->
                 <div class="" style="overflow: scroll;
-                                     height: auto;">
-                    <div  virtual-repeat.for="row of rows" style="display: -webkit-flex;
+                                     height: 100vh;">
+                                     <!-- I removed the "virtial" -->
+                    <div  repeat.for="row of rows" style="display: -webkit-flex;
                                                         display: flex;
                                                         -webkit-flex-direction: row;
-                                                        flex-direction: row;">
+                                                        flex-direction: row;
+                                                        ">
                         <div class="card image-card-sizing">
                             <a href="#" class="look-menu-click" click.delegate="lookMenu(row.item1.id)">
                                 <div class=menu-stripe></div>
                                 <img src.bind="row.item1.image" ref="image" />
-                                <img src="/assets/indigital.png" style="width:100px;" class="indigital-align"/>
+                               <img src="/assets/indigital.png" style="width:120px;" class="indigital-align"/> 
                             </a>
                            <!--  <div class="card-section">
                                 <h3>First</h3>
@@ -283,7 +285,7 @@
                                 <div class=menu-stripe></div>
                             
                                 <img src.bind="row.item2.image" ref="image" />
-                                <img src="/assets/indigital.png" style="width:100px;" class="indigital-align"/>
+                                <img src="/assets/indigital.png" style="width:120px;" class="indigital-align"/>
                             </a>
                             
                         </div>
@@ -292,26 +294,24 @@
                                 <div class=menu-stripe></div>
                             
                                 <img src.bind="row.item3.image" ref="image" />
-                                <img src="/assets/indigital.png" style="width:100px;" class="indigital-align"/>
+                                <img src="/assets/indigital.png" style="width:120px;" class="indigital-align"/>
                             </a>
                             
                         </div>
                         <div class="card  image-card-sizing">
                             <a href="#" class="">
-                                <div class=menu-stripe></div>
-                            
+                                <div class=menu-stripe></div>                           
                                 <img src.bind="row.item4.image" ref="image" />
-                                <img src="/assets/indigital.png" style="width:100px;" class="indigital-align"/>
+                                <img src="/assets/indigital.png" style="width:120px;" class="indigital-align"/>
                             </a>
                            
                         </div>
                         <div class="card image-card-sizing">
                             <a href="#" class="">
                                 <div class=menu-stripe></div>
+                                <img src.bind="row.item5.image" ref="image" />
+                                <img src="/assets/indigital.png" style="width:120px;" class="indigital-align"/>
                             </a>
-                            <img src.bind="row.item5.image" ref="image" />
-                            <img src="/assets/indigital.png" style="width:100px;" class="indigital-align"/>
-                            
                         </div>
                     </div>
                 </div>

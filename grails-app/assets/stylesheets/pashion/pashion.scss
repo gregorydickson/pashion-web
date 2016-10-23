@@ -113,12 +113,12 @@
   
 }
 
-.image-card-sizing {
+.image-card-sizing { // mostly designed to constrain loading sizes while row builds
   // height: 300px;
-    min-width: 150px;
-    max-width: 250px;
-    min-height: 100px;
-    max-height: 375px;
+   //min-width: 100px;
+   max-width: 275px;
+   //min-height: 100px;
+   //max-height: 445px;
 }
 
 .indigital-align {
