@@ -12,7 +12,8 @@ import java.time.ZoneId
 class SearchableItem {
 
 	Long id
-	String name
+	String name //string for ID set by user
+	String description
 	Brand brand
 
 	String image
@@ -147,11 +148,15 @@ class SearchableItem {
 		sampleRequests lazy: false
 		samples lazy:false
 		type lazy:false
+		brandCollection lazy:false
+
+		description type: 'text'
 
 	}
 
 	static constraints = {
 		name nullable:true
+		description nullable:true
 		brand nullable: true
 
 		image nullable:true
