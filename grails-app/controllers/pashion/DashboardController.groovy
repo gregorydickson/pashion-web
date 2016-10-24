@@ -15,11 +15,36 @@ class DashboardController {
     	render list
     }
 
+    def itemTypes(){
+        //quick list to get UI going
+        def itemTypes = SearchableItemType.list() as JSON
+        render itemTypes
+    }
+
+    def colors(){
+        def colors = ['baby blue','beige','bicolour','black','bleu','blue','bordeaux',
+                'bright','bronze','burgundy','camel','cobalt','cognac','colorful',
+                'coral','cream','fuschia','glitter','gold','gray','green','grey','jaune',
+                'khaki','lavendar','light blue','lilac','lime','metallic','monochrome',
+                'multicolour','mustard','navy','noir','nude','orange','pastel','pearl',
+                'pink','powder','purple','red','rust','shine','silver','transparence',
+                'turquoise','white','yellow'] as JSON
+        render colors
+    }
+    def seasons(){
+        //quick list to get UI going
+        def seasons = Season.list().collect{it.name} as JSON
+        render seasons
+    }
+
     def returnBy(){
     	def list = ['Morning','Noon','Afternoon'] as JSON
     	render list
     }
 
+    def type(){
+        render SearchableItemType as JSON
+    }
     def deliverTo(){
     	render User.list() as JSON
     }

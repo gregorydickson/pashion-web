@@ -8,11 +8,11 @@ class CalendarController {
     
     def calendarService
     def index() {
-    	log.info "locale:"+request.locale
-    	log.info "offset:"+params.offset
-    	log.info "day:"+params.day
-    	log.info "month:"+params.month
-    	log.info "year:"+params.year
+    	log.debug "locale:"+request.locale
+    	log.debug "offset:"+params.offset
+    	log.debug "day:"+params.day
+    	log.debug "month:"+params.month
+    	log.debug "year:"+params.year
     	Map events = ["3":"overdue","10":"international","12":"waiting"]
         //TODO: look up this user's events and add them for current month
     	def aCalendar = new PashionCalendar( events,
@@ -27,34 +27,45 @@ class CalendarController {
     }
 
     def searchableItemPicker(){
-        log.info "item:"+params.item
 
-        log.info "locale:"+request.locale
-        log.info "offset:"+params.offset
-        log.info "day:"+params.day
-        log.info "month:"+params.month
-        log.info "year:"+params.year
         SearchableItem theItem = SearchableItem.get(params.item)
         
-        //checkavailable days
         def localDate = LocalDate.of(params.year.toInteger(),
                                      params.month.toInteger(),
                                      params.day.toInteger())
         
-        Map events = [:]
-        def aCalendar = new PashionCalendar( events,
+        def aCalendar = new PashionCalendar( null,
                                              params.month.toInteger(),
                                              params.day.toInteger(),
                                              params.year.toInteger(),
                                              request.locale.toString(),
                                              params.offset.toInteger(),
                                              params.months.toInteger())
-        log.info "updating availability"
+        
+        log.debug "Calendar Controller - Searchable Item Picker"
         aCalendar = calendarService.availableDaysInMonth(theItem,localDate,aCalendar)
         render aCalendar as JSON
-        
-
     }
+
+    def datePickerNoAvailability(){
+        
+        def localDate = LocalDate.of(params.year.toInteger(),
+                                     params.month.toInteger(),
+                                     params.day.toInteger())
+        
+        def aCalendar = new PashionCalendar( null,
+                                             params.month.toInteger(),
+                                             params.day.toInteger(),
+                                             params.year.toInteger(),
+                                             request.locale.toString(),
+                                             params.offset.toInteger(),
+                                             params.months.toInteger())
+        
+        log.debug "Calendar Controller - Searchable Item Picker"
+        render aCalendar as JSON
+    }
+
+
 
     def updateAvailabilitySamples(){
         def jsonObject = request.JSON
@@ -66,15 +77,15 @@ class CalendarController {
         def localDate = LocalDate.of(params.year.toInteger(),
                                      params.month.toInteger(),
                                      params.day.toInteger())
-        Map events = [:]
-        def aCalendar = new PashionCalendar( events,
+
+        def aCalendar = new PashionCalendar( null,
                                              params.month.toInteger(),
                                              params.day.toInteger(),
                                              params.year.toInteger(),
                                              request.locale.toString(),
                                              params.offset.toInteger(),
                                              params.months.toInteger())
-        log.info "updating availability"
+        log.debug "updating availability"
         aCalendar = calendarService.availableDaysForALook(samples[0].look,aCalendar)
         aCalendar = calendarService.availableDaysForSamples(samples,localDate,aCalendar)
         render aCalendar as JSON

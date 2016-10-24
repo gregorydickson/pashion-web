@@ -3,8 +3,9 @@ import {HttpClient} from 'aurelia-fetch-client';
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {DialogService} from 'aurelia-dialog';
 import 'fetch';
-import {Create} from './sample_request/create';
+import {CreateSampleRequest} from './sample_request/createSampleRequest';
 import {CreateEditDialog} from './edit_request/create-edit-dialog';
+import {EditSearchableItem} from './items/editSearchableItem';
 
 
 @inject(HttpClient, EventAggregator, DialogService)
@@ -83,10 +84,10 @@ export class Index {
     window.addEventListener('keypress', this.boundHandler, false);
 
     return Promise.all([
-      this.http.fetch('/brandCollection/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
-      this.http.fetch('/brandCollection/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes),
+      this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
+      this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes),
       this.http.fetch('/brand/index.json').then(response => response.json()).then(brands => this.brands = brands),
-      this.http.fetch('/brandCollection/colors').then(response => response.json()).then(colors => this.colors = colors)
+      this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors)
 
     ]);
   }
@@ -117,27 +118,21 @@ export class Index {
     menu.classList.toggle("look-menu-show");
   }
 
-
-
   createSampleRequestModal(itemId) {
-    var menu = document.getElementById("look-"+itemId);
-    menu.classList.toggle("look-menu-show");
-    this.dialogService.open({viewModel: Create, model: itemId }).then(response => {
-      
-      
-      if (!response.wasCancelled) {
-        console.log('OK');
-      } else {
-        console.log('cancelled');
-      }
-       
-    });
+    this.lookMenu(itemId);
+    this.dialogService.open({viewModel: CreateSampleRequest, model: itemId })
+      .then(response => {});
   }
 
+  editSearchableItem(itemId) {
+    this.lookMenu(itemId);
+    this.dialogService.open({viewModel: EditSearchableItem, model: itemId })
+      .then(response => {});
+  }
 
-// RM additional stuff for request edit -- needs to be abstracted //
+  // RM additional stuff for request edit -- needs to be abstracted //
 
-lookEditMenu(id){
+  lookEditMenu(id){
     var menu = document.getElementById("requestTest"+id);
     menu.classList.toggle("look-menu-show");
   }
@@ -145,16 +140,8 @@ lookEditMenu(id){
   createSampleEditModal(itemId) {
     var menu = document.getElementById("requestTest"+itemId);
     menu.classList.toggle("look-menu-show");
-    this.dialogService.open({viewModel: CreateEditDialog, model: itemId }).then(response => {
-      
-      
-      if (!response.wasCancelled) {
-        console.log('OK');
-      } else {
-        console.log('cancelled');
-      }
-       console.log(response.output);
-    });
+    this.dialogService.open({viewModel: CreateEditDialog, model: itemId })
+      .then(response => {});
   }
 
 

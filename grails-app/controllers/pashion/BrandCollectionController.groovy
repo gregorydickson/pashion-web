@@ -19,29 +19,11 @@ class BrandCollectionController {
     }
     
 
-    def looks(BrandCollection brandCollection){
-        log.info brandCollection.looks[0]
-        respond brandCollection
-    }
 
     def create() {
         respond new BrandCollection(params)
     }
-    def seasons(){
-        //quick list to get UI going
-        def seasons = Season.list().collect{it.name} as JSON
-        render seasons
-    }
-    def itemTypes(){
-        //quick list to get UI going
-        def itemTypes = SearchableItemType.list() as JSON
-        render itemTypes
-    }
-    def colors(){
-        def colors = ['Red','Yellow','Blue', 'Black', 'White'] as JSON
-        render colors
-    }
-
+    
     @Transactional
     def save(BrandCollection brandCollection) {
         if (brandCollection == null) {

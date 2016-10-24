@@ -31,7 +31,8 @@ class PashionCalendar{
 						 Integer offset, Integer months){
 		
 		
-		
+		if(events == null)
+			events = [:]
 		LocalDate localDate
 		
 		Locale localeObject = null
