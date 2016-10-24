@@ -9,10 +9,9 @@ export class EditSearchableItem {
   static inject = [DialogController];
   
   currentItem = {};
-  calendar = {};
-  offset = 0;
+
+
   itemTypes = [];
-  startDate = "";
   currentSample = {};
   colors = [];
 
@@ -31,11 +30,7 @@ export class EditSearchableItem {
 
   activate(itemId){
     var queryString = DateFormat.urlString(0, 1);
-    this.http.fetch('/calendar/datePickerNoAvailability' +queryString)
-    	.then(response => response.json())
-      .then(calendar => {
-              this.calendar = calendar;
-    });
+    
     this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes);
     this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors);
     this.http.fetch('/searchableItems/'+itemId+'.json')
@@ -56,7 +51,7 @@ export class EditSearchableItem {
 	  });
   	element.className += " start-selected";
   	this.redraw(element);
-  	this.startDate = this.calendar.calendarMonths[0].year+"-"+this.calendar.calendarMonths[0].monthNumber+"-"+day;
+  	this.currentItem.fromDate = this.calendar.calendarMonths[0].year+"-"+this.calendar.calendarMonths[0].monthNumber+"-"+day;
 
   }
   
@@ -98,7 +93,7 @@ export class EditSearchableItem {
 
   submit(){
     console.log("submitting Image Data");
-    var item = this.curentItem;
+    var item = this.currentItem;
     
     this.http.fetch('/searchableItem/savejson', {
             method: 'post',
@@ -108,8 +103,8 @@ export class EditSearchableItem {
           .then(result => {
               this.result = result;
           });
-    this.currentItem.id = this.result;
-    alert('Image Updated');
+    
+    alert('Item Updated');
     this.controller.close();
     
   }

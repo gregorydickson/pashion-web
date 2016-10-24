@@ -130,9 +130,28 @@ class SearchableItemController {
         log.info "search duration:"+duration
     }
 
+    @Transactional
+    def savejson(){
+        def jsonObject = request.JSON
+        log.info "json:"+jsonObject
+
+        def item =  SearchableItem.get(jsonObject.id)
+        item.name = jsonObject.name
+        item.description = jsonObject.description
+        
+        jsonObject.samples.each{
+            
+        } 
+        item.save(failOnError : true, flush: true)
+        def sent = [message:'Sample Request Sent']
+        render sent as JSON
+
+    }
+
+
+
     def show(SearchableItem searchableItem) {
         log.info "SHOW"
-        log.info searchableItem.samples
         respond searchableItem
     }
 
