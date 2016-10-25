@@ -96,6 +96,7 @@ export class EditSearchableItem {
     newsample.name = "NEW";
     newsample.description = "NEW";
     this.currentItem.samples.push(newsample)
+    this.selectedSample = newsample
     
   }
  
