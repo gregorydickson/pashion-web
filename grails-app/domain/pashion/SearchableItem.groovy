@@ -20,6 +20,7 @@ class SearchableItem {
 	String color
 	SearchableItemType type //Look or Sample or Runway
 	String material
+	String sampleType
 	String size
 	String theme
 
@@ -161,8 +162,10 @@ class SearchableItem {
 
 		image nullable:true
 		color nullable: true
+
 		type nullable: true
 		material nullable: true
+		sampleType nullable:true
 		size nullable: true
 		theme nullable:true
 

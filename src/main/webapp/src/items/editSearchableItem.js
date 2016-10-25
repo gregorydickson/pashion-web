@@ -12,6 +12,7 @@ export class EditSearchableItem {
   result = {};
 
   itemTypes = [];
+  sampleTypes = [];
   currentSample = {};
   colors = [];
 
@@ -32,6 +33,7 @@ export class EditSearchableItem {
     var queryString = DateFormat.urlString(0, 1);
     
     this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes);
+    this.http.fetch('/dashboard/sampleTypes').then(response => response.json()).then(sampleTypes => this.sampleTypes = sampleTypes);
     this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors);
     this.http.fetch('/searchableItem/fetchdeep/'+itemId+'.json')
       .then(response => response.json())
@@ -88,11 +90,16 @@ export class EditSearchableItem {
           })
   }
 
-  sample(){
-    console.log("sample:"+this.selectedSample)
-    //this.currentSample = this.currentItem.samples[id];
+  newsample(){
+    
+    var newsample = {};
+    newsample.name = "NEW";
+    newsample.description = "NEW";
+    this.currentItem.samples.push(newsample)
+    
   }
  
+
 
   submit(){
     console.log("submitting Image Data");
@@ -107,7 +114,7 @@ export class EditSearchableItem {
               this.result = result;
           });
     
-    alert(this.result.message);
+    alert("Updated");
     this.controller.close();
     
   }

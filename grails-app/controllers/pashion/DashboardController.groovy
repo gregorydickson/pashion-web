@@ -15,6 +15,46 @@ class DashboardController {
     	render list
     }
 
+    def material(){
+        def list = ['CASHMERE','CORDUROY','CREPE','CUIR','DENIM','DUNGAREE','FLUFFY',
+                    'FRILL','FUR','GLITTER','JOUY','KNIT','LACE','LAMÉ','LEATHER','LINEN',
+                    'METAL','MOHAIR','ORGANZA','OXFORD','PAISLEY','PLAID','PLASTIC','PVC',
+                    'QUILT','RIB','SHEARLING','SHEEP','SILK','SNAKE','SNAKESKIN','STITCH',
+                    'TARTAN','TULLE','TWEED','VELVET','WATERPROOF','WOOL','WRAP'] as JSON
+        render list
+    }
+
+    def theme(){
+        def list = ['ALIEN','ALPINA','ANDROGYNE','ANDROGYNOUS','ANIMAL','ARCHITECTURE',
+                    'ARMY','ART','AVIATION','AVIATOR','BABY','BALLET','BARBIE','BAROQUE',
+                    'BOARD','BOMBER','BOUDOIR','BRIDAL','CABLE','CIRCUS','CLEAVAGE',
+                    'CLUELESS','COWBOY','DISCO','DOLL','DOMINATRIX','FAIRY','FAIRYTALE',
+                    'FISHNET','FLORAL','FLOWER','FUTURIST','FUTURISTIC','GRAPHIC','HUNT',
+                    'JAMES BOND','JUNGLE','MANGA','MUSIC','NATURE','NAUTICAL','NAVY',
+                    'OLYMPIC','OPULENT','POP','POWER','PRINCESS','PSYCHEDELIC','PURE',
+                    'RETRO','ROBOT','ROYAL','S&M','SAFARI','SALSA','SCHOOL','SEA','SEXY',
+                    'SPACE','STAR','STUDIO 54','TEXTURE','TRANSPARENT','TROPICAL','TUDOR',
+                    'UTILITY','VICTORIAN','VINYL','WARRIOR','WESTERN','ZIGGY'] as JSON
+        render list
+    }
+
+    def sampleTypes(){
+
+        def list = ['bikini','blazer','blouse','body','boyfriend jeans','boots','bra',
+                    'bustier','cape','cardigan','coat','cocktail dress','corsage','corset',
+                    'costume','culotte','dress','dressing gown','dungarees','flared jeans',
+                    'gilet','gown','hoodie','jacket','jean','jeggings','jogging','jumper',
+                    'jumpsuit','jupe','kilt','kimono','laysuit','legging','lingerie','mao',
+                    'nightgown','nightwear','overalls','oxford','pajama','pants','parka',
+                    'pantyhose','pensil skirt','perfecto','platform boots','pocket','polo',
+                    'poncho','puffer','pyjama','raincoat','reefer','scarf','shirt',
+                    'shirt dress','shorts','skirt','skirt dress','sleeve','sleeveless',
+                    'slip','slip dress','smoking','stilletos','suit','sweater','sweatpants',
+                    'sweatshirt','teeshirt','tennis','top','trench','trenchcoat','trousers',
+                    'turtleneck','tuxedo','vest','waistcoat'] as JSON
+        render list
+    }
+
     def itemTypes(){
         //quick list to get UI going
         def itemTypes = SearchableItemType.list() as JSON

@@ -141,10 +141,19 @@ class SearchableItemController {
         
         jsonObject.samples.each{
             def sample = SearchableItem.get(it.id)
-            log.info "item saving:"+sample.id
+            if(!sample){
+                sample = new SearchableItem()
+                sample.look = item
+                sample.season = item.season
+                sample.brandCollection = item.brandCollection
+                sample.brand = item.brand
+                sample.type = SearchableItemType.get(2)
+            }
+            sample.sampleType = it.sampleType
             sample.color = it.color
             sample.name = it.name
             sample.description = it.description
+
             sample.save(failOnError : true, flush: true)
         } 
         item.save(failOnError : true, flush: true)
