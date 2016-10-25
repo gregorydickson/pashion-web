@@ -21,6 +21,10 @@ class UserController {
     def create() {
         respond new User(params)
     }
+
+    def login(){
+        
+    }
     
     def doLogin(){
         def user = User.findWhere(email:params['email'])

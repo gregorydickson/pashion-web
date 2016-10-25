@@ -7,6 +7,7 @@ import {CreateSampleRequest} from './sample_request/createSampleRequest';
 import {CreateEditDialog} from './edit_request/create-edit-dialog';
 import {EditSearchableItem} from './items/editSearchableItem';
 import {CheckSetAvailability} from './items/checkSetAvailability';
+import {Introduction} from './hello/introduction';
 
 
 @inject(HttpClient, EventAggregator, DialogService)
@@ -76,14 +77,14 @@ export class Index {
             
     });
 
-    
+    this.dialogService.open({viewModel: Introduction, model: "no-op" }).then(response => {});
      
     
   }
 
   activate() {
     window.addEventListener('keypress', this.boundHandler, false);
-
+    
     return Promise.all([
       this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
       this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes),
