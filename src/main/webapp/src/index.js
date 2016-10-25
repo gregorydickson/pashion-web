@@ -6,6 +6,7 @@ import 'fetch';
 import {CreateSampleRequest} from './sample_request/createSampleRequest';
 import {CreateEditDialog} from './edit_request/create-edit-dialog';
 import {EditSearchableItem} from './items/editSearchableItem';
+import {CheckSetAvailability} from './items/checkSetAvailability';
 
 
 @inject(HttpClient, EventAggregator, DialogService)
@@ -118,9 +119,15 @@ export class Index {
     menu.classList.toggle("look-menu-show");
   }
 
-  createSampleRequestModal(itemId) {
+  createSampleRequest(itemId) {
     this.lookMenu(itemId);
     this.dialogService.open({viewModel: CreateSampleRequest, model: itemId })
+      .then(response => {});
+  }
+
+  availabilitySearchableItem(itemId) {
+    this.lookMenu(itemId);
+    this.dialogService.open({viewModel: CheckSetAvailability, model: itemId })
       .then(response => {});
   }
 

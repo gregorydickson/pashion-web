@@ -77,8 +77,8 @@ dependencies {
 
     runtime 'org.grails.plugins:grails-console:2.0.8'
 
-    //https://github.com/noamt/elasticsearch-grails-plugin/issues/163
-
+    compile "com.stormpath.sdk:stormpath-sdk-api:1.1.1"
+    runtime "com.stormpath.sdk:stormpath-sdk-httpclient:1.1.1"
 
 }
 

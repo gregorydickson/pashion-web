@@ -21,13 +21,11 @@ class UserController {
     def create() {
         respond new User(params)
     }
-    def login(){
-
-    }
+    
     def doLogin(){
         def user = User.findWhere(email:params['email'])
         if(user){
-            if(userService.checkPassword(params['password'],user.password)){
+            if(userService.login(params['password'],user.password)){
                 session.user = user
                 redirect(controller:'dashboard',action:'index')
             } else{
