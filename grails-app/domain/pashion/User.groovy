@@ -1,19 +1,18 @@
 
 package pashion
 
-import com.bloomhealthco.jasypt.GormEncryptedStringType
+
 
 class User {
 
 	String username
 	String name
-	String password
+
 	String email
-	String role
+	String role 
 	Long userCreatedId
 	Date lastModifiedDate
 	Long lastModifiedUserId
-	Integer viewed
 
 	//auto fields
 	Date dateCreated
@@ -33,13 +32,13 @@ class User {
 
 		username size: 1..100
 		name size: 1..100
-		password size: 1..500, password:true
+
 		email nullable: true
 		role nullable: true, inList:['Brand','Admin','Press']
 		userCreatedId nullable: true
 		lastModifiedDate nullable: true
 		lastModifiedUserId nullable: true
-		viewed nullable: true
+
 
 		pressHouse nullable: true
 		brand nullable: true
