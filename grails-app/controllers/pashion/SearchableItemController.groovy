@@ -140,12 +140,22 @@ class SearchableItemController {
         item.description = jsonObject.description
         
         jsonObject.samples.each{
-            
+            def sample = SearchableItem.get(it.id)
+            log.info "item saving:"+sample.id
+            sample.color = it.color
+            sample.name = it.name
+            sample.description = it.description
+            sample.save(failOnError : true, flush: true)
         } 
         item.save(failOnError : true, flush: true)
-        def sent = [message:'Sample Request Sent']
+        def sent = [message:'Items Updated']
         render sent as JSON
 
+    }
+
+    def fetchdeep(){
+        def item = SearchableItem.findById(params.id.toInteger(),[fetch:[brandCollection:"join"]])
+        respond item
     }
 
 

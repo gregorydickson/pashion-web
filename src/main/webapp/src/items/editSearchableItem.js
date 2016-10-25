@@ -9,13 +9,13 @@ export class EditSearchableItem {
   static inject = [DialogController];
   
   currentItem = {};
-
+  result = {};
 
   itemTypes = [];
   currentSample = {};
   colors = [];
 
-
+  selectedSample = {};
   
 
   constructor(http, controller){
@@ -33,7 +33,7 @@ export class EditSearchableItem {
     
     this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes);
     this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors);
-    this.http.fetch('/searchableItems/'+itemId+'.json')
+    this.http.fetch('/searchableItem/fetchdeep/'+itemId+'.json')
       .then(response => response.json())
       .then(item => {
           this.currentItem = item;
@@ -88,7 +88,10 @@ export class EditSearchableItem {
           })
   }
 
-  
+  sample(){
+    console.log("sample:"+this.selectedSample)
+    //this.currentSample = this.currentItem.samples[id];
+  }
  
 
   submit(){
@@ -104,7 +107,7 @@ export class EditSearchableItem {
               this.result = result;
           });
     
-    alert('Item Updated');
+    alert(this.result.message);
     this.controller.close();
     
   }

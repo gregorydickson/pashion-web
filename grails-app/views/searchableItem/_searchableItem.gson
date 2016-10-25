@@ -4,4 +4,4 @@ model {
     SearchableItem searchableItem
 }
 
-json g.render(searchableItem,[expand:['type','samples','brandCollection'],includes:['image','id','type','samples','name','description','color','size', 'brandCollection','material']])  
+json g.render(searchableItem,[expand:['type','samples']])  

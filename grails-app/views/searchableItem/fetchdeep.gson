@@ -1,0 +1,11 @@
+import pashion.SearchableItem
+
+model {  
+    SearchableItem searchableItem
+}
+
+json g.render(searchableItem,[excludes:'brandCollection',expand:['type', 'samples']])  {
+	brandCollection{
+		season searchableItem.brandCollection.season.name
+	}
+}

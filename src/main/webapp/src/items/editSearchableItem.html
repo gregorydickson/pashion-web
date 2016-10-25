@@ -28,21 +28,36 @@
                 <input type="text" value.bind="currentItem.description">
             </span>
         </div>
+        <div class="grid-content shrink" style="margin-top: 1rem;">
+            <span class="inline-label">
+                <span class="form-label">Collection:</span>
+                <span class="form-label">${currentItem.brandCollection.season}</span>
+            </span>
+        </div>
+
         <!-- Sample -->
         <div class="grid-content shrink" style="margin-top: 1rem;">
             <span class="inline-label">
-                <span class="form-label">Select Sample</span>
-            <select name="" id="" value.bind="currentSample">
+                <span class="form-label">Sample:</span>
+            <select name="" id="" value.bind="selectedSample">
                 <option value="">Select Sample</option>
                 <option repeat.for="sample of currentItem.samples" model.bind="sample">${sample.name}</option>
             </select>
             </span>
         </div>
+        <!-- Sample -->
+        <div class="grid-content shrink" style="margin-top: 1rem;">
+            <span class="inline-label">
+                <span class="form-label">ID</span>
+                <input type="text" value.bind="selectedSample.name">
+            </span>
+            <span class="inline-label">
+                <span class="form-label">Description</span>
+                <input type="text" value.bind="selectedSample.description">
+            </span>
+        </div>
 
-
-        
-             
-        <!-- Type -->
+        <!-- Color -->
         <div class="grid-content shrink" style="margin-top: 1rem;">
             <span class="inline-label">
                 <span class="form-label">Color</span>
