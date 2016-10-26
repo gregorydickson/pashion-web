@@ -18,11 +18,16 @@ To setup the Development Environment:
 
 * Ensure that Gulp is installed globally `npm install -g gulp`
 
-* run `gulp build` to do an initial build, then run `gulp watch` to start developing. Gulp will build the project upon any file change.
+* run `gulp build` to do an initial build, then run `gulp watch` to start developing. Gulp will re-build the project upon any file change.
 
 * All of the Aurelia (Javascript) for the application lives under src/main/webapp/src
 
 * The CSS/SCSS for the application lives under grails-app/assets/stylesheets/pashion and is built using the JVM Asset Pipeline.
+
+* With the grails server running you can view the dashboard at: http://localhost:8080/dashboard/nav  Login will be enabled at some point over the next few days, the login page is at http://localhost:8080/user/login 
+
+* The application uses a development database on Amazon AWS which will require internet connectivity. If this is too slow then you can setup MySQL locally.
+
 
 dev database on aws:
 pashionweb
