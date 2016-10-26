@@ -1,10 +1,10 @@
-
 package pashion
 
+import com.stormpath.sdk.account.Account
 
 
 class User {
-
+	Account account
 	String username
 	String name
 
@@ -28,8 +28,9 @@ class User {
 	
     static mappedBy = [ sampleRequestsSent:"requestingUser", 
    					    sampleRequestsReceived:"receivingUser"]
+   	static transients = ['account']
 	static constraints = {
-
+		account nullable: true
 		username size: 1..100
 		name size: 1..100
 

@@ -25,6 +25,7 @@ class BootStrap {
       }
 
 
+
         if (Brand.count() == 0) {
           log.info "Creating Base Test Data"
           def itemtype1 = new SearchableItemType(display:'Looks',searchCode:'look').save(failOnError : true)
@@ -349,6 +350,13 @@ class BootStrap {
 
       }
 
+      if (User.findByEmail("ellen@pashiontool.com") == null){
+        def press = new PressHouse(name:"Elle Magazine").save(flush:true,failOnError : true)
+        def ellen = new User(name:"Ellen",username:"Ellen Mcinsky", email:"ellen@pashiontool.com",pressHouse:press).save(flush:true,failOnError : true)
+
+        def brand = Brand.findByName("Ralph Lauren")
+        def lauren = new User(name:"Lauren",email:"lauren@pashiontool.com",username:"Lauren Van Doren",brand:brand).save(flush:true,failOnError : true)
+      }
 
     }
     def destroy = {

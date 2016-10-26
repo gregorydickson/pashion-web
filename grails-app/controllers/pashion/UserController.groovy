@@ -3,6 +3,8 @@ package pashion
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 
+import com.stormpath.sdk.account.Account
+
 @Transactional(readOnly = true)
 class UserController {
 
@@ -23,15 +25,19 @@ class UserController {
     }
 
     def login(){
-        
+
     }
     
     def doLogin(){
+        def account = null
         def user = User.findWhere(email:params['email'])
         if(user){
-            if(userService.login(params['password'],user.password)){
+            account = userService.login(params.email,params.password)
+
+            if(account instanceof Account){
                 session.user = user
-                redirect(controller:'dashboard',action:'index')
+                user.account = account
+                redirect(controller:'dashboard',action:'nav')
             } else{
                 flash.message = "wrong password";
                 redirect(controller:'user',action:'login')
