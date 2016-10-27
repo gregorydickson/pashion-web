@@ -17,6 +17,10 @@ import com.stormpath.sdk.client.Client
 import com.stormpath.sdk.client.ClientBuilder
 import com.stormpath.sdk.client.Clients
 import com.stormpath.sdk.directory.CustomData
+import com.stormpath.sdk.directory.Directory
+import com.stormpath.sdk.group.Group
+import com.stormpath.sdk.group.GroupList
+import com.stormpath.sdk.group.Groups
 import com.stormpath.sdk.resource.ResourceException
 import com.stormpath.sdk.tenant.Tenant
 
@@ -30,6 +34,7 @@ class UserService {
 	def elle_directory = "https://api.stormpath.com/v1/directories/jVKqqTZOmOFXPWO53PgoY"
 	def ralph_lauren = "https://api.stormpath.com/v1/directories/Z14nWfywLDah6jS8NByk2"
 	Application stormpathApp
+	Client client
 	
 	@PostConstruct
     def init(){
@@ -43,7 +48,7 @@ class UserService {
 		ClientBuilder builder = Clients.builder().setApiKey(apiKey);    
 
 		// Build the client instance that you will use throughout your application code
-		Client client = builder.build();
+		client = builder.build();
 
 		Tenant tenant = client.getCurrentTenant();
 		ApplicationList applications = tenant.getApplications(
@@ -54,6 +59,15 @@ class UserService {
 
 		log.info "stormpath app:"+stormpathApp
     
+    }
+
+
+    Group createGroup(Directory directory,String groupName, String description){
+    	Group agroup = client.instantiate(Group.class)
+    		.setName(groupName)
+    		.setDescription(description)
+    	directory.createGroup(agroup)
+    	agroup
     }
 
     def login(String email, String password){
@@ -76,10 +90,27 @@ class UserService {
         account
     }
 
-    def createUser(){
+    def createUser(String email,String name,String surname, 
+    				 def owner, String rawpassword ){
+    	def role
+    	User user
+    	if(owner instanceof Brand){
+    		role = "brand-users"
+    		user = new User(name:name,surname:surname, email:email,brand:owner).save(failOnError : true)
+    	} else if(owner instanceof PressHouse){
+    		role = "press-users"
+    		user = new User(name:name,surname:surname, email:email,pressHouse:owner).save(failOnError : true)
+    	}
+    	Directory directory = client.getResource(owner.stormpathDirectory, Directory.class)
+    
+    	Account account = client.instantiate(Account.class)
+    						.setEmail(email)
+    						.setGivenName(name)
+    						.setSurname(surname)
+    						.setPassword(rawpassword)
 
-    	
-
+		directory.createAccount(account)
+		user
     }
 
 

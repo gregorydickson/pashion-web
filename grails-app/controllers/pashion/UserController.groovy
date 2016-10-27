@@ -25,7 +25,6 @@ class UserController {
     }
 
     def login(){
-
     }
     
     def doLogin(){
@@ -35,9 +34,9 @@ class UserController {
             account = userService.login(params.email,params.password)
 
             if(account instanceof Account){
-                session.user = user
                 user.account = account
-                redirect(controller:'dashboard',action:'nav')
+                session.user = user
+                redirect(controller:'dashboard',action:'index')
             } else{
                 flash.message = "wrong password";
                 redirect(controller:'user',action:'login')

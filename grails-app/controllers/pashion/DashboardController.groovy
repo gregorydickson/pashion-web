@@ -3,10 +3,16 @@ package pashion
 import grails.converters.JSON
 
 class DashboardController {
+    static scope = "singleton"
 
-    def index() { }
+    def index() {
+        if (!session.user){
+            redirect(controller:'user',action: 'login')
+            return
+        }
 
-    def nav() {}
+     }
+
 
     def required(){
     	def list = ['9:00','9:30','10:00','10:30','11:00','11:30',

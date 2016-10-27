@@ -86,8 +86,7 @@ class BootStrap {
            
           
           brand1 = new Brand(name:'Paco Rabanne', city:'Paris', stormpathDirectory:"https://api.stormpath.com/v1/directories/5kWuLmjcZnIr3fezLeYRH9" ).save(failOnError : true)
-          def user1 = new User(name:'Jean Reno', username:'jreno',password:'password',brand:brand1).save(failOnError : true)
-          user1 = new User(name:'Bridgette Bardot', username:'bbardot',password:'password',brand:brand1).save(failOnError : true)
+          
             
           collection1 = new BrandCollection(season: s5, brand:brand1).save(failOnError : true)
             
@@ -351,10 +350,10 @@ class BootStrap {
       if (User.findByEmail("ellen@pashiontool.com") == null){
 
         def press = new PressHouse(name:"Elle Magazine",stormpathDirectory:"https://api.stormpath.com/v1/directories/jVKqqTZOmOFXPWO53PgoY").save(flush:true,failOnError : true)
-        def ellen = new User(name:"Ellen",username:"Ellen Mcinsky", email:"ellen@pashiontool.com",pressHouse:press).save(flush:true,failOnError : true)
+        def ellen = new User(name:"Ellen",surname:"Mcinsky", email:"ellen@pashiontool.com",pressHouse:press).save(flush:true,failOnError : true)
 
         def brand = Brand.findByName("Ralph Lauren")
-        def lauren = new User(name:"Lauren",email:"lauren@pashiontool.com",username:"Lauren Van Doren",brand:brand).save(flush:true,failOnError : true)
+        def lauren = new User(name:"Lauren",surname:"Van Doren",email:"lauren@pashiontool.com",brand:brand).save(flush:true,failOnError : true)
       }
 
     }

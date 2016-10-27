@@ -24,7 +24,11 @@ To setup the Development Environment:
 
 * The CSS/SCSS for the application lives under grails-app/assets/stylesheets/pashion and is built using the JVM Asset Pipeline.
 
-* With the grails server running you can view the dashboard at: http://localhost:8080/dashboard/nav  Login will be enabled at some point over the next few days, the login page is at http://localhost:8080/user/login 
+* With the grails server running you can view the dashboard at: http://localhost:8080/ which will first require a login
+
+* Press test user account: ellen@pashiontool.com / Pashion123 - Elle Magazine
+
+* Brand test user account:  lauren@pashiontool.com / Pashion123 - Ralph Lauren 
 
 * The application uses a development database on Amazon AWS which will require internet connectivity. If this is too slow then you can setup MySQL locally.
 
