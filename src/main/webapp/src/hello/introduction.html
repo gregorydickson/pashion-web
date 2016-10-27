@@ -1,25 +1,25 @@
 <template>
     
-   <ai-dialog>
+   <ai-dialog style="width: auto;">
         <ai-dialog-header>
             <!-- header -->
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad-blue" style="margin-left:32px;">Hi  </span>
+                    <span class="welcome-header" style="margin-left:32px;">Hi {name}</span> <!-- fudge to take account of the X -->
                     
                 </div>
             </div>
         </ai-dialog-header>
-      <ai-dialog-body style="width:500px;">
+      <ai-dialog-body style="width:400px;">
 
-        <h4>Welcome to PASHION, here are some of the most
-useful features for you to explore:</h4>
-        <ul>
-            <li>Send messages to colleagues</li>
-            <li>Browse or search for looks</li>
-            <li>Add images to your lightboxes</li>
-            <li>Request samples from imges for specific dates</li>
-            <li>Monitor your sample requests</li>
+        <span class="welcome-text">Welcome to PASHION, here are some of the most
+useful features for you to explore:</span>
+
+        <ul style="margin-bottom: 0px;">
+            <li class="welcome-text">Send messages to colleagues</li>
+            <li class="welcome-text">Browse or search for looks</li>
+            <li class="welcome-text">Request samples from images for specific dates</li>
+            <li class="welcome-text">Monitor your sample requests</li>
         </ul>
 
 
