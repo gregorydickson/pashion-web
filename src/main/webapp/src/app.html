@@ -2,40 +2,9 @@
     <!-- page frame -->
     <div class="grid-frame vertical">
         <!-- header -->
-        <!-- <div class="dark title-bar">
-            <span class="title center">
-            <img src="/assets/PashionRMPlainWhite.png" width="127px" /></span>
-            <span class="left"><a href="#">Login/Register</a></span>
-            <span class="right"><a href="#">View</a><a href="#">Dashboard</a></span>
-        </div> -->
-        <div class="">
-            <ul class="menu-bar dark">
-                <li>
-                    <img src="/assets/lauren.png" style="margin-right: 1rem;"/>
-                    <select name="LAUREN" id="headerModeSelect" class="nav-label-header top-menu-modifier">
-                        <option>LAUREN</option>
-                        <option>LOGOUT</option>
-                    </select>
-                    <li></li>
-                    <li></li>
-                    <li>
-                        <a href="#"><img src="/assets/PashionRMPlainWhite.png" width="127px" /></a>
-                    </li>
-                    <li></li>
-                    <li></li>
-                    <li>
-                        <select id="headerModeSelect" class="nav-label-header top-menu-modifier">
-                            <option>DASHBOARD</option>
-                            <option>ADMIN</option>
-                            <option>TREND ANALYSIS</option>
-                        </select>
-                    </li>
-                </li>
-            </ul>
-        </div>
+        <compose view-model="header"></compose> 
         <!-- Main Body -->
-        <router-view class="grid-block">
-        </router-view>
+        <router-view class="grid-block"></router-view>
         <!-- footer -->
         <compose view-model="footer"></compose> 
     </div>
