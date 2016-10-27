@@ -4,10 +4,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
     <asset:stylesheet src="pashion/login.css"/>
+    <asset:stylesheet src="pashion/pashion.css"/>
 
     <title>User Login</title>
 </head>
 <body>
+
+    <!-- page frame -->
+    <div class="grid-frame vertical">
+    <!-- Header -->
+    <div class="">
+        <ul class="menu-bar dark">
+            <li>
+                <select name="LAUREN" id="headerModeSelect" class="nav-label-header top-menu-modifier" style="margin-left:64px;">
+                    <option>LOGIN</option>
+                </select>
+                <li></li>
+                <li></li>
+                <li>
+                    <a href="#"><img src="/assets/PashionRMPlainWhite.png" width="127px" /></a>
+                </li>
+                <li></li>
+                <li></li>
+                <li>
+                </li>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Body -->
+
+    <router-view class="grid-block">
+   </router-view>
+    
     <div class="body">
         <g:form action="doLogin" method="post">
             <div class="dialog">
@@ -42,5 +71,8 @@
             </div>
         </g:form>
     </div>
+    <!-- footer -->
+    <compose view-model="footer"></compose>  
+    
 </body>
 </html>

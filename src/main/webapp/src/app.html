@@ -30,20 +30,13 @@
                             <option>TREND ANALYSIS</option>
                         </select>
                     </li>
+                </li>
             </ul>
         </div>
         <!-- Main Body -->
         <router-view class="grid-block">
         </router-view>
         <!-- footer -->
-        <div class="footer dark title-bar">
-            <div class="left nav-label-footer">
-                <span style="margin-right: 1rem;"><a href="#">HELP</a></span>
-                <span style="margin-right: 1rem;"><a href="#">ABOUT</a></span>
-                <span><a href="#">CONTACT</a></span>
-            </div>
-            <!-- <span class="left nav-label-footer"><a href="#">CONTACT</a></span> -->
-            <span class="right copyright">Copyright 2016 PASHION Ltd. All Rights Reserved.</a></span>
-        </div>
+        <compose view-model="footer"></compose> 
     </div>
 </template>
