@@ -49,8 +49,8 @@ class BootStrap {
           def dateFormat =  new SimpleDateFormat(dateFormatString)
           Date availableFrom = dateFormat.parse("2016-12-01")
           Date availableTo = dateFormat.parse("2016-12-15")
-
-          def brand1 = new Brand(name:'Ralph Lauren', city:'London' ).save(failOnError : true)
+  
+          def brand1 = new Brand(name:'Ralph Lauren', city:'London', stormpathDirectory:"https://api.stormpath.com/v1/directories/Z14nWfywLDah6jS8NByk2" ).save(failOnError : true)
 
           def collection1 = new BrandCollection(season: s3, brand:brand1).save(failOnError : true)
           def collection2 = new BrandCollection(season: s5, brand:brand1).save(failOnError : true)
@@ -84,11 +84,9 @@ class BootStrap {
           look6 = new SearchableItem(type:itemtype1,brand:brand1,season: s8,color:"black",fromDate:availableFrom, toDate:availableTo, name: 'A look 6', image: '/assets/looks/6.jpg', brandCollection:collection3).save(failOnError : true)
            
            
-          def pragency1 = new PRAgency(name:'Karla Otto' ).save(failOnError : true)
-          def user1 = new User(name:'Paco Rodriquez', username:'prod',password:'password',prAgency:pragency1).save(failOnError : true)
-
-          brand1 = new Brand(name:'Paco Rabanne', city:'Paris' ).save(failOnError : true)
-          user1 = new User(name:'Jean Reno', username:'jreno',password:'password',brand:brand1).save(failOnError : true)
+          
+          brand1 = new Brand(name:'Paco Rabanne', city:'Paris', stormpathDirectory:"https://api.stormpath.com/v1/directories/5kWuLmjcZnIr3fezLeYRH9" ).save(failOnError : true)
+          def user1 = new User(name:'Jean Reno', username:'jreno',password:'password',brand:brand1).save(failOnError : true)
           user1 = new User(name:'Bridgette Bardot', username:'bbardot',password:'password',brand:brand1).save(failOnError : true)
             
           collection1 = new BrandCollection(season: s5, brand:brand1).save(failOnError : true)
@@ -351,7 +349,8 @@ class BootStrap {
       }
 
       if (User.findByEmail("ellen@pashiontool.com") == null){
-        def press = new PressHouse(name:"Elle Magazine").save(flush:true,failOnError : true)
+
+        def press = new PressHouse(name:"Elle Magazine",stormpathDirectory:"https://api.stormpath.com/v1/directories/jVKqqTZOmOFXPWO53PgoY").save(flush:true,failOnError : true)
         def ellen = new User(name:"Ellen",username:"Ellen Mcinsky", email:"ellen@pashiontool.com",pressHouse:press).save(flush:true,failOnError : true)
 
         def brand = Brand.findByName("Ralph Lauren")

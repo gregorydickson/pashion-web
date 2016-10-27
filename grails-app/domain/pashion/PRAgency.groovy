@@ -5,6 +5,7 @@ package pashion
 class PRAgency {
 
 	String name
+	String stormpathDirectory
 
 	//auto fields
 	Date dateCreated
@@ -13,6 +14,6 @@ class PRAgency {
 	static hasMany = [brands: Brand , users:User]
   	static belongsTo = Brand
     static constraints = {
-
+    	stormpathDirectory nullable:true
     }
 }

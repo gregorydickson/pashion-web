@@ -6,6 +6,7 @@ class PressHouse {
     String name
     Long lastModifiedUserId
     Long userCreatedId
+    String stormpathDirectory 
 
 	//auto fields
 	Date dateCreated
@@ -19,6 +20,7 @@ class PressHouse {
 
         lastModifiedUserId nullable: true
         userCreatedId nullable: true
+        stormpathDirectory nullable: true
 
         users nullable: true
     }

@@ -27,6 +27,8 @@ class UserService {
 	def grailsApplication
 
 	def APPLICATION_NAME = "pashiontool"
+	def elle_directory = "https://api.stormpath.com/v1/directories/jVKqqTZOmOFXPWO53PgoY"
+	def ralph_lauren = "https://api.stormpath.com/v1/directories/Z14nWfywLDah6jS8NByk2"
 	Application stormpathApp
 	
 	@PostConstruct
@@ -72,6 +74,12 @@ class UserService {
             account = ex.getMessage()
         }
         account
+    }
+
+    def createUser(){
+
+    	
+
     }
 
 

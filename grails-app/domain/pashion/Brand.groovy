@@ -7,7 +7,7 @@ class Brand {
 	String city
 	String logo
 
-
+	String stormpathDirectory 
 
 
 	//auto fields
@@ -25,6 +25,7 @@ class Brand {
 		name nullable: true 
 		city nullable: true 
 		logo nullable: true
+		stormpathDirectory nullable: true
 		brandCollections nullable:true
 		pRAgencies nullable:true
 		users nullable:true
