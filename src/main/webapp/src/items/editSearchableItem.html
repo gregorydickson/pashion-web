@@ -5,8 +5,8 @@
             <!-- header -->
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad-blue" style="margin-left:32px;">EDIT SAMPLE / LOOK </span>
-                    <span class="ui-text-label-m-broad-blue"> ${currentItem.id}</span>
+                    <span class="ui-text-label-m-broad" style="margin-left:32px;">EDIT SAMPLE / LOOK </span>
+                    <span class="ui-text-label-m-broad"> ${currentItem.id}</span>
                 </div>
             </div>
         </ai-dialog-header>
@@ -38,7 +38,7 @@
             <!-- ID (Name in the object) -->
             <div class="grid-content shrink" style="margin-top: 1rem;">
                 <span class="inline-label">
-                    <span class="form-label">Sample:</span>
+                    <span class="form-label">Sample</span>
                 <select name="" id="" value.bind="selectedSample">
                     <option value="">Select Sample</option>
                     <option repeat.for="sample of currentItem.samples" model.bind="sample">${sample.name}</option>
