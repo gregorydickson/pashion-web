@@ -66,9 +66,10 @@ class CalendarController {
     }
 
 
-
-    def updateAvailabilitySamples(){
+    // for a specific list of samples and the Look
+    def showAvailabilityLookAndSamples(){
         def jsonObject = request.JSON
+        log.info "json:"+jsonObject
         List samples = []
         jsonObject.each{
             samples << SearchableItem.get(it)
@@ -85,7 +86,7 @@ class CalendarController {
                                              request.locale.toString(),
                                              params.offset.toInteger(),
                                              params.months.toInteger())
-        log.debug "updating availability"
+        log.debug "showing availability for Look and Samples"
         aCalendar = calendarService.availableDaysForALook(samples[0].look,aCalendar)
         aCalendar = calendarService.availableDaysForSamples(samples,localDate,aCalendar)
         render aCalendar as JSON

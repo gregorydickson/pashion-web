@@ -13,8 +13,8 @@ export class CheckAvailability {
   offset = 0;
 
   startDate = "";
-  currentSample = {};
-
+ 
+  selectedProductIds = [];
 
 
   
@@ -34,11 +34,16 @@ export class CheckAvailability {
       .then(response => response.json())
       .then(item => {
           this.currentItem = item;
-    });
+          var ids = this.selectedProductIds;
+          item.samples.forEach(function(item){
+            ids.push(item.id);
+          })
+        }
+      );
 
 
     var queryString = DateFormat.urlString(0, 1);
-    this.http.fetch('/calendar/datePickerNoAvailability' +queryString)
+    this.http.fetch('/calendar/searchableItemPicker' +queryString+"&item="+itemId)
     	.then(response => response.json())
       .then(calendar => {
               this.calendar = calendar;
@@ -47,71 +52,67 @@ export class CheckAvailability {
     
   }
 
-  setStartDate(event,day){
-  	console.log("start date"+event);
-  	console.log("day"+day);
-  	var element = event.srcElement.parentElement;
-  	var document = element.ownerDocument;
-  	var elems = document.querySelectorAll(".start-selected");
-  	[].forEach.call(elems, function(el) {
-    	el.classList.remove("start-selected");
-	  });
-  	element.className += " start-selected";
-  	this.redraw(element);
-  	this.startDate = this.calendar.calendarMonths[0].year+"-"+this.calendar.calendarMonths[0].monthNumber+"-"+day;
-
-  }
+  
   
 
-  redraw(element){
-    element.style.display='none';
-    element.offsetHeight; 
-	  element.style.display='';
-  }
+  
   next(){
   	var queryString = DateFormat.urlString(++this.offset,1);
-    return this.http.fetch('/calendar/datePickerNoAvailability' + queryString)
+    this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
+            method: 'post',
+            body: json(this.selectedProductIds)
+          })
           .then(response => response.json())
           .then(calendar => {
               this.calendar = calendar;
-          })
+          });
   }
 
   previous(){
   	var queryString = DateFormat.urlString(--this.offset,1);
-    return this.http.fetch('/calendar/datePickerNoAvailability' +queryString)
+    this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
+            method: 'post',
+            body: json(this.selectedProductIds)
+          })
           .then(response => response.json())
           .then(calendar => {
               this.calendar = calendar;
-          })
+          });
   }
 
   reset(){
   	var queryString = DateFormat.urlString(0,1);
-    return this.http.fetch('/calendar/datePickerNoAvailability' + queryString)
+    this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
+            method: 'post',
+            body: json(this.selectedProductIds)
+          })
           .then(response => response.json())
           .then(calendar => {
               this.calendar = calendar;
-          })
+          });
   }
 
   
- 
-
-  submit(){
-    console.log("submitting Availability Data");
-    var item = this.curentItem;
-    
-    this.http.fetch('/searchableItem/savejson', {
+ updateAvailability(){
+    console.log ("update availability");
+    console.log ("current item samples:"+this.currentItem.samples);
+    console.log (this.selectedProductIds);
+    var queryString = DateFormat.urlString(this.offset,1);
+    this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
             method: 'post',
-            body: json(item)
+            body: json(this.selectedProductIds)
           })
           .then(response => response.json())
-          .then(result => {
-              this.result = result;
+          .then(calendar => {
+              this.calendar = calendar;
           });
-    this.currentItem.id = this.result;
-    alert('Image Updated');
+
+    
+
+  }
+
+  close(){
+    
     this.controller.close();
     
   }

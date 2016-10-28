@@ -174,7 +174,7 @@ export class CreateSampleRequest {
     console.log ("current item samples:"+this.currentItem.samples);
     console.log (this.selectedProductIds);
     var queryString = DateFormat.urlString(this.endOffset,1);
-    this.http.fetch('/calendar/updateAvailabilitySamples'+queryString, {
+    this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
             method: 'post',
             body: json(this.selectedProductIds)
           })
@@ -184,7 +184,7 @@ export class CreateSampleRequest {
           });
 
     queryString = DateFormat.urlString(this.startOffset,1);
-    this.http.fetch('/calendar/updateAvailabilitySamples'+queryString, {
+    this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
             method: 'post',
             body: json(this.selectedProductIds)
           })

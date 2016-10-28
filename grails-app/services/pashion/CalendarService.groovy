@@ -10,16 +10,18 @@ class CalendarService {
 
 	static transactional = false
 	
+    //Shows availability for a Look and all its Samples
     PashionCalendar availableDaysInMonth(SearchableItem look, LocalDate localDate,
     							         PashionCalendar pashionCalendar){
     	log.info "Calendar Service - available Days in Month"
     	pashionCalendar = look.bookedDaysInMonth(localDate, pashionCalendar)
 
     }
+    //Used for just the Look
     PashionCalendar availableDaysForALook(SearchableItem look, PashionCalendar pashionCalendar){
         pashionCalendar = look.availableDaysInMonth(pashionCalendar)
     }
-
+    //Used for Specific Samples - Not all samples in a Look
     PashionCalendar availableDaysForSamples(List samples, LocalDate localDate,
     							            PashionCalendar pashionCalendar) {
     	samples.each{
