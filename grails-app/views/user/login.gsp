@@ -17,17 +17,14 @@
 </head>
 <body>
 
-
     <!-- Main Body -->
-        <router-view class="grid-block vertical">
+        <router-view class="grid-block vertical login-background">
             <div class="body grid-content"></div>
             <div class="grid-block">
                 <div class="grid-content"></div>
-                <div class="body grid-content">
-                <g:form action="doLogin" method="post" style="    width: 200px;
-    border: 0.5px solid lightgray;
-    padding: 2rem;">
-                    <div class="ai-dialog">
+                <div class="body grid-content ai-dialog">
+                <g:form action="doLogin" method="post">
+                    <div class="">
                         <p>Enter your login details below:</p>
                         <g:if test="${flash.message}">
                             <div class="message" role="status">${flash.message}</div>
