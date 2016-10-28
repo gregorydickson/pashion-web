@@ -7,10 +7,10 @@
     <meta name="layout" content="header-and-footer"/>
 
     
+    
+    <asset:stylesheet src="pashion/pashion.css"/>
     <asset:stylesheet src="pashion/login.css"/>
-    <asset:stylesheet src="pashion/pashion.scss"/>
-    <asset:stylesheet src="pashion/pashion_components/_dialog.scss"/>
-    <asset:stylesheet src="pashion/_settings.scss"/>
+
    
 
     <title>User Login</title>
