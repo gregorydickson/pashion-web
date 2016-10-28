@@ -298,7 +298,7 @@ class BootStrap {
         def range = 1..369
         range.each{
           String imageNumber = it.toString().padLeft(4,'0')
-          String imageLocation = "//s3.eu-central-1.amazonaws.com/pashion-tool/chanel/2017/spring/ready-to-wear/"+imageNumber+".jpg"
+          String imageLocation = "//dvch4zq3tq7l4.cloudfront.net/chanel/2017/spring/ready-to-wear/"+imageNumber+".jpg"
           def look1 = new SearchableItem(type:itemtype1,brand:brand1,season: sea, image: imageLocation,brandCollection:collection1).save(flush:true,failOnError : true)
           log.info "created look:"+look1
         }
@@ -313,7 +313,7 @@ class BootStrap {
         def range = 1..277
         range.each{
           String imageNumber = it.toString().padLeft(4,'0')
-          String imageLocation = "//s3.eu-central-1.amazonaws.com/pashion-tool/miu-miu/2017/spring/ready-to-wear/"+imageNumber+".jpg"
+          String imageLocation = "//dvch4zq3tq7l4.cloudfront.net/miu-miu/2017/spring/ready-to-wear/"+imageNumber+".jpg"
           def look1 = new SearchableItem(type:itemtype1,brand:brand1,season: sea, image: imageLocation,brandCollection:collection1).save(flush:true,failOnError : true)
           log.info "created look:"+look1
         }
@@ -328,7 +328,7 @@ class BootStrap {
         def range = 1..281
         range.each{
           String imageNumber = it.toString().padLeft(4,'0')
-          String imageLocation = "//s3.eu-central-1.amazonaws.com/pashion-tool/alberta-ferretti/2016/fall/ready-to-wear/"+imageNumber+".jpg"
+          String imageLocation = "//dvch4zq3tq7l4.cloudfront.net/alberta-ferretti/2016/fall/ready-to-wear/"+imageNumber+".jpg"
           def look1 = new SearchableItem(type:itemtype1,brand:brand1,season: sea, image: imageLocation,brandCollection:collection1).save(flush:true,failOnError : true)
           log.info "created look:"+look1
         }
@@ -344,7 +344,7 @@ class BootStrap {
         def range = 1..206
         range.each{
           String imageNumber = it.toString().padLeft(4,'0')
-          String imageLocation = "//s3.eu-central-1.amazonaws.com/pashion-tool/ralph-lauren/2017/spring/ready-to-wear/"+imageNumber+".jpg"
+          String imageLocation = "//dvch4zq3tq7l4.cloudfront.net/ralph-lauren/2017/spring/ready-to-wear/"+imageNumber+".jpg"
           def look1 = new SearchableItem(type:itemtype1,brand:brand1,season: sea, image: imageLocation,brandCollection:collection1).save(flush:true,failOnError : true)
           log.info "created look:"+look1
         }
@@ -361,8 +361,8 @@ class BootStrap {
       }
 
       if(User.findByEmail("paco@pashiontool.com") == null){
-        def pacobrand = Brand.findByName('Paco Rabanne')
-        userService.createUser("paco@pashiontool.com","Paco","Notorious", pacobrand, "Pashion123")
+        //def pacobrand = Brand.findByName('Paco Rabanne')
+        //userService.createUser("paco@pashiontool.com","Paco","Notorious", pacobrand, "Pashion123")
       }
 
     }

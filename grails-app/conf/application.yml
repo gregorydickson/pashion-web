@@ -33,24 +33,7 @@ environments:
             url: jdbc:mysql://pashionweb.c7nidmmcu7kv.us-east-1.rds.amazonaws.com:3306/pashionweb
             username: pashionweb
             password: ETWxa634WwxGaW6v
-            properties:
-                jmxEnabled: true
-                initialSize: 5
-                maxActive: 3
-                minIdle: 2
-                maxIdle: 2
-                maxWait: 10000
-                maxAge: 600000
-                timeBetweenEvictionRunsMillis: 5000
-                minEvictableIdleTimeMillis: 60000
-                validationQuery: SELECT 1
-                validationQueryTimeout: 3
-                validationInterval: 15000
-                testOnBorrow: true
-                testWhileIdle: true
-                testOnReturn: false
-                jdbcInterceptors: ConnectionState
-                defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+           
     test:
         dataSource:
             dbCreate: update
@@ -58,34 +41,12 @@ environments:
             username: pashionweb
             password: ETWxa634WwxGaW6v
     production:
-        elasticSearch:
-            client:
-                mode: local
-                transport.sniff: true
-            bulkIndexOnStartup: true
         dataSource:
             dbCreate: update
             url: jdbc:mysql://pashionweb.c7nidmmcu7kv.us-east-1.rds.amazonaws.com:3306/pashionweb
             username: pashionweb
             password: ETWxa634WwxGaW6v
-            properties:
-                jmxEnabled: true
-                initialSize: 5
-                maxActive: 50
-                minIdle: 5
-                maxIdle: 25
-                maxWait: 10000
-                maxAge: 600000
-                timeBetweenEvictionRunsMillis: 5000
-                minEvictableIdleTimeMillis: 60000
-                validationQuery: SELECT 1
-                validationQueryTimeout: 3
-                validationInterval: 15000
-                testOnBorrow: true
-                testWhileIdle: true
-                testOnReturn: false
-                jdbcInterceptors: ConnectionState
-                defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
+            
 
 ---
 ---
