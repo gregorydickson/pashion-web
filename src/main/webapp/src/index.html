@@ -275,7 +275,10 @@
                                 <ul class="look-menu-list">
                                     <li class="look-menu-item"><a href="#" click.delegate="createSampleRequest(row.item1.id)" class="look-menu-link">Request</a></li>
                                     <li class="look-menu-item"><a href="#" class="look-menu-link">Details</a></li>
-                                    <li class="pure-menu-item"><a href="#" click.delegate="availabilitySearchableItem(row.item1.id)" class="look-menu-link">Check/Set Availability</a></li>
+                                    
+                                    <li if.bind="!row.item1.fromDate" class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.item1.id)" class="look-menu-link">Set Availability</a></li>
+                                    <li if.bind="row.item1.fromDate" class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.item1.id)" class="look-menu-link">Check Availability</a></li>
+
                                     <li class="pure-menu-item"><a href="#" click.delegate="editSearchableItem(row.item1.id)" class="look-menu-link">Edit</a></li>
                                 </ul>
                             </div>

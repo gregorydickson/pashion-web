@@ -7,11 +7,12 @@ import java.text.SimpleDateFormat
 
 @Transactional(readOnly = true)
 class SearchableItemController {
-
+    
+    String dateFormatString = "yyyy-MM-dd"
+    
     
     def filterSearch(){
         long startTime = System.currentTimeMillis()
-        String dateFormatString = "yyyy-MM-dd"
         SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
         Date availableFrom = null
         Date availableTo = null
@@ -129,6 +130,20 @@ class SearchableItemController {
         long duration = (endTime - startTime)
         log.info "search duration:"+duration
     }
+
+    @Transactional
+    def saveFromDate(){
+        def jsonObject = request.JSON
+        log.info "json:"+jsonObject
+        SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
+        def item =  SearchableItem.get(jsonObject.id)
+        item.fromDate = dateFormat.parse(jsonObject.fromDate)
+        item.save(failOnError : true, flush: true)
+        def sent = [message:'Items Updated']
+        render sent as JSON
+
+    }
+    
 
     @Transactional
     def savejson(){

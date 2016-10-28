@@ -31,7 +31,7 @@ export class CreateSampleRequest {
 
   constructor(http, controller){
     this.controller = controller;
-    //controller.settings.lock = true;
+
     http.configure(config => {
       config
         .useStandardConfiguration();

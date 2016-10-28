@@ -12,13 +12,7 @@
         </ai-dialog-header>
       <ai-dialog-body>
         <div class="grid-block row">
-            <!--Start Left column -->
-            <div class="vertical grid-block">
-                 
-                
-                
-            </div>
-            <!--Start Right column -->
+       
             <div class="vertical grid-block">
                 <div class="grid-block">
                     <span class="calendarnav ui-text-label-m-blue" style="text-align:center;">Availability Start</span>
@@ -57,46 +51,12 @@
                     </table>
                 </div>
             </div>
-            <!--end Right column -->
+           
         </div>
 
-        <!-- Sample -->
-        <div class="grid-content shrink" style="margin-top: 1rem;">
-            <span class="inline-label">
-                <span class="form-label">Select Sample</span>
-            <select name="" id="" value.bind="currentSample">
-                <option value="">Select Sample</option>
-                <option repeat.for="sample of currentItem.samples" model.bind="sample">${sample.name}</option>
-            </select>
-            </span>
-        </div>
+        
     
-    <div class="grid-block row">
-            <!--Start Left column -->
-            <div class="vertical grid-block">
-                 
-                <!-- Type -->
-                <div class="grid-content shrink" style="margin-top: 1rem;">
-                    <span class="inline-label">
-                        <span class="form-label">Color</span>
-                    <select name="" id="" value.bind="selectedSample.color">
-                        <option value="">Select Color</option>
-                        <option repeat.for="color of colors" model.bind="color">${color}</option>
-                    </select>
-                    </span>
-                </div>
-                
-            </div>
-            <!--Start Right column -->
-            <div class="vertical grid-block">
-                <div class="grid-block">
-                    
-                </div>
-               
-                
-            </div>
-            <!--end Right column -->
-        </div>
+   
 
       </ai-dialog-body>
       <ai-dialog-footer>

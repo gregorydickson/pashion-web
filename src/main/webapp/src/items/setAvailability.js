@@ -5,16 +5,16 @@ import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 
 @inject(HttpClient, DialogController)
-export class CheckSetAvailability {
+export class SetAvailability {
   static inject = [DialogController];
   
   currentItem = {};
   calendar = {};
   offset = 0;
-  itemTypes = [];
-  startDate = "";
-  currentSample = {};
-  colors = [];
+
+  
+ 
+
 
 
   
@@ -30,24 +30,25 @@ export class CheckSetAvailability {
   }
 
   activate(itemId){
+    this.http.fetch('/searchableItems/'+itemId+'.json')
+      .then(response => response.json())
+      .then(item => {
+          this.currentItem = item;
+    });
+
+
     var queryString = DateFormat.urlString(0, 1);
     this.http.fetch('/calendar/datePickerNoAvailability' +queryString)
     	.then(response => response.json())
       .then(calendar => {
               this.calendar = calendar;
     });
-    this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes);
-    this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors);
-    this.http.fetch('/searchableItems/'+itemId+'.json')
-      .then(response => response.json())
-      .then(item => {
-          this.currentItem = item;
-    });
+
+    
   }
 
   setStartDate(event,day){
-  	console.log("start date"+event);
-  	console.log("day"+day);
+
   	var element = event.srcElement.parentElement;
   	var document = element.ownerDocument;
   	var elems = document.querySelectorAll(".start-selected");
@@ -56,7 +57,7 @@ export class CheckSetAvailability {
 	  });
   	element.className += " start-selected";
   	this.redraw(element);
-  	this.startDate = this.calendar.calendarMonths[0].year+"-"+this.calendar.calendarMonths[0].monthNumber+"-"+day;
+  	this.currentItem.fromDate = this.calendar.calendarMonths[0].year+"-"+this.calendar.calendarMonths[0].monthNumber+"-"+day;
 
   }
   
@@ -97,10 +98,12 @@ export class CheckSetAvailability {
  
 
   submit(){
-    console.log("submitting Image Data");
-    var item = this.curentItem;
+    console.log("submitting Availability Data");
+
+    var item = this.currentItem;
+    console.log("item:"+item);
     
-    this.http.fetch('/searchableItem/savejson', {
+    this.http.fetch('/searchableItem/saveFromDate', {
             method: 'post',
             body: json(item)
           })
@@ -109,7 +112,7 @@ export class CheckSetAvailability {
               this.result = result;
           });
     this.currentItem.id = this.result;
-    alert('Image Updated');
+    alert('Start Date Updated');
     this.controller.close();
     
   }

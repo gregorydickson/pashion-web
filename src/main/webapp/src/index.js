@@ -6,7 +6,8 @@ import 'fetch';
 import {CreateSampleRequest} from './sample_request/createSampleRequest';
 import {CreateEditDialog} from './edit_request/create-edit-dialog';
 import {EditSearchableItem} from './items/editSearchableItem';
-import {CheckSetAvailability} from './items/checkSetAvailability';
+import {CheckAvailability} from './items/checkAvailability';
+import {SetAvailability} from './items/setAvailability';
 import {Introduction} from './hello/introduction';
 
 
@@ -126,9 +127,15 @@ export class Index {
       .then(response => {});
   }
 
-  availabilitySearchableItem(itemId) {
+  checkAvailabilitySearchableItem(itemId) {
     this.lookMenu(itemId);
-    this.dialogService.open({viewModel: CheckSetAvailability, model: itemId })
+    this.dialogService.open({viewModel: CheckAvailability, model: itemId })
+      .then(response => {});
+  }
+
+  setAvailabilitySearchableItem(itemId) {
+    this.lookMenu(itemId);
+    this.dialogService.open({viewModel: SetAvailability, model: itemId })
       .then(response => {});
   }
 
