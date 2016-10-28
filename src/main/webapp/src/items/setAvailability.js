@@ -95,7 +95,9 @@ export class SetAvailability {
   }
 
   
- 
+  cancel(){
+    this.controller.close();
+  }
 
   submit(){
     console.log("submitting Availability Data");

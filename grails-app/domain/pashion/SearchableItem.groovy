@@ -153,6 +153,8 @@ class SearchableItem {
 
 		description type: 'text'
 
+		cache true
+
 	}
 
 	static constraints = {

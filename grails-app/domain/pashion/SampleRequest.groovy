@@ -34,6 +34,10 @@ class SampleRequest {
 	Date lastUpdated
 	Collection searchableItems
 
+	static mapping = {
+        cache true
+    }
+
 	static belongsTo = SearchableItem 
 
 	static hasMany = [ searchableItems:SearchableItem ]

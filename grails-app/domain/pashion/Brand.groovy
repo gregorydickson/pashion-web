@@ -20,6 +20,9 @@ class Brand {
 
 	static belongsTo = []
 
+	static mapping = {
+        cache true
+    }
 
 	static constraints = {
 		name nullable: true 

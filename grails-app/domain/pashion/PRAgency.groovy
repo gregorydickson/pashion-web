@@ -16,4 +16,8 @@ class PRAgency {
     static constraints = {
     	stormpathDirectory nullable:true
     }
+
+    static mapping = {
+        cache true
+    }
 }

@@ -28,6 +28,10 @@ class User {
 	
     static mappedBy = [ sampleRequestsSent:"requestingUser", 
    					    sampleRequestsReceived:"receivingUser"]
+
+   	static mapping = {
+        cache true
+    }
    	static transients = ['account']
 	static constraints = {
 		account nullable: true

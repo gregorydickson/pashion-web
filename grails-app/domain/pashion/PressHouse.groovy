@@ -15,6 +15,10 @@ class PressHouse {
 	//Press House has many
 	static hasMany = [users: User]
 
+    static mapping = {
+        cache true
+    }
+
     static constraints = {
         name size: 1..100, blank: false
 
