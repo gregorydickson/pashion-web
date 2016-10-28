@@ -1,4 +1,4 @@
-ai-dialog-overlay {
+ai-dialog-overlay, .ai-dialog-overlay {
   bottom: 0;
   left: 0;
   position: fixed;
@@ -74,7 +74,7 @@ ai-dialog, .ai-dialog {
   border-image-repeat: initial;
   background: white;
 
-  > ai-dialog-header {
+  > ai-dialog-header, .ai-dialog-header {
     display: block;
     //padding: 16px;
     //border-bottom: 1px solid #e5e5e5;
@@ -95,7 +95,7 @@ ai-dialog, .ai-dialog {
     }
   }
 
-  > ai-dialog-body {
+  > ai-dialog-body, .ai-dialog-body{
     display: block;
     padding-top: 16px;
     padding-left: 16px;
@@ -103,7 +103,7 @@ ai-dialog, .ai-dialog {
     padding-bottom: 12px;
   }
 
-  > ai-dialog-footer {
+  > ai-dialog-footer, .ai-dialog-footer{
     display: block;
     padding-top: 6px;
     padding-left: 6px;

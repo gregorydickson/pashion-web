@@ -18,48 +18,52 @@
 <body>
 
     <!-- Main Body -->
-        <router-view class="grid-block vertical login-background">
-            <div class="body grid-content"></div>
-            <div class="grid-block">
-                <div class="grid-content"></div>
-                <div class="body grid-content ai-dialog">
-                <g:form action="doLogin" method="post">
-                    <div class="">
-                        <p>Enter your login details below:</p>
-                        <g:if test="${flash.message}">
-                            <div class="message" role="status">${flash.message}</div>
-                        </g:if>
-                        <table class="userForm">
-                            <tr class='prop'>
-                                <td valign='top' style='text-align:left;' width='20%'>
-                                    <label for='email'>Email:</label>
-                                </td>
-                                <td valign='top' style='text-align:left;' width='80%'>
-                                    <input id="email" type='text' name='email' value='${user?.email}'/>
-                                </td>
-                            </tr>
-                            <tr class='prop'>
-                                <td valign='top' style='text-align:left;' width='20%'>
-                                    <label for='password'>Password:</label>
-                                </td>
-                                <td valign='top' style='text-align:left;' width='80%'>
-                                    <input id="password" type='password' name='password' value='${user?.password}'/>
-                                </td>
-                            </tr>
+        <router-view class="grid-block  login-background">                
+            <div class="ai-dialog" style="width: auto;">
 
-                        </table>
+                <!-- dialog header -->
+                <div class="ai-dialog-header">
+                    <div class="grid-block align-center tool-header shrink ">
+                        <div id="" class="grid-block tool-header shrink">
+                            <span class="ui-text-label-m-broad">LOGIN </span> 
+                        </div>
                     </div>
-                    <div>
+                </div> <!-- ai-dialog-header -->
 
-                            <input class="button" type="submit" value="Login"></input>
-
-                    </div>
-                </g:form>
+                <!-- error messages -->
+                <div class="">
+                    <g:if test="${flash.message}">
+                        <div class="message" role="status">${flash.message}</div>
+                    </g:if>
                 </div>
-                <div class="body grid-content"></div>
-            </div>
-            <div class="grid-content"></div>
 
+                <!-- dialog body-->
+                <g:form action="doLogin" method="post">
+                    <div class="ai-dialog-body">
+                    <div class="vertical grid-block">
+                        <div class="grid-content shrink" style="margin-top: 1rem;">
+                            <span class="inline-label">
+                                <span class="form-label">Username</span>
+                                <input id="email" type='text' name='email' value='${user?.email}'>
+                            </span>
+                        </div>
+                        <div class="grid-content shrink" style="margin-top: 1rem;">
+                               
+                            <span class="inline-label">
+                                <span class="form-label">Password</span>
+                                <input id="password" type='password' name='password' value='${user?.password}'/>
+                            </span>
+                        </div>
+                    </div>
+                    </div> <!-- ai-dialog-body -->
+
+                    <!-- Dialog Footer button -->
+                    <div class="ai-dialog-footer">
+                        <input class="button" type="submit" value="Login"></input>
+                    </div> <!-- ai-dialog-footer> -->
+
+                </g:form>
+            </div> <!-- ai-dialog -->
         </router-view>
     
 </body>
