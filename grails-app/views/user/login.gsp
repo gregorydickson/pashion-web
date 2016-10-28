@@ -14,7 +14,7 @@
 
 
     <!-- Main Body -->
-        <router-view class="grid-block"></router-view>
+        <router-view class="grid-block">
         
         <div class="body">
             <g:form action="doLogin" method="post">
@@ -50,6 +50,8 @@
                 </div>
             </g:form>
         </div>
+
+        </router-view>
     
 </body>
 </html>
