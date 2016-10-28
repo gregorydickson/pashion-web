@@ -1,22 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta name="layout" content="pashion" />
-    <title>Pashion</title>
+    <meta name="layout" content="header-and-footer" /> <!-- nee pashion -->
+    <asset:stylesheet src="pashion/pashion.css"/>
+
+    <title>PASHION Loading</title>
     
   </head>
 
   <body>
-    <div class="splash">
-      <div class="message">Loading</div>
-      <i class="fa fa-spinner fa-spin"></i>
-    </div>
+    <router-view class="grid-block">
+      <div class="splash">
+        <div class="message">Loading using Indigital Images</div>
+        <i class="fa fa-spinner fa-spin"></i>
+      </div>
 
-  
-    <script src="/jspm_packages/system.js"></script>
-    <script src="/config.js"></script>
-    <script>
-      System.import('aurelia-bootstrapper');
-    </script>
+    
+      <script src="/jspm_packages/system.js"></script>
+      <script src="/config.js"></script>
+      <script>
+        System.import('aurelia-bootstrapper');
+      </script>
+
+    </router-view>
   </body>
 </html>

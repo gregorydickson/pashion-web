@@ -8,7 +8,7 @@
     <g:layoutHead/>
 </head>
 
-<body>
+<body aurelia-app="main">
     <!-- page frame -->
     <div class="grid-frame vertical">
         <!-- Header -->
@@ -35,10 +35,10 @@
         <!-- footer -->
         <div class="footer dark title-bar">
             <div class="left nav-label-footer">
-                <span style="margin-right: 1rem;"><a href="#">HELP</a></span>
-                <span style="margin-right: 1rem;"><a href="#">ABOUT</a></span>
-                <span style="margin-right: 1rem;"><a href="#">CONTACT</a></span>
-                <img src="/assets/indigital.png" style="width:120px; margin-top: -4px;" />
+                <span style="margin-right: 1rem;"><a class="inactiveLink" href="#">HELP</a></span>
+                <span style="margin-right: 1rem;"><a class="inactiveLink" href="#">ABOUT</a></span>
+                <span style="margin-right: 1rem;"><a class="inactiveLink" href="#">CONTACT</a></span>
+                <a href="#"><img src="/assets/indigital.png" style="width:120px; margin-top: -4px;" /></a>
             </div>
             <!-- <span class="left nav-label-footer"><a href="#">CONTACT</a></span> -->
             <span class="right copyright">Copyright 2016 PASHION Ltd. All Rights Reserved.</a></span>

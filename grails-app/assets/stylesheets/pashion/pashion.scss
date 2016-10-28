@@ -342,6 +342,10 @@ img.contact-entry {
   -webkit-clip-path: circle(20px at center);
 }
 
-
+.inactiveLink {
+   pointer-events: none;
+   cursor: default;
+   color: $black !important;
+}
 
 
