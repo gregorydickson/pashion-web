@@ -28,7 +28,9 @@ To setup the Development Environment:
 
 * Press test user account: ellen@pashiontool.com / Pashion123 - Elle Magazine
 
-* Brand test user account:  lauren@pashiontool.com / Pashion123 - Ralph Lauren 
+* Brand test user account:  lauren@pashiontool.com / Pashion123 - Ralph Lauren
+
+* Brand test user account: paco@pashiontool.com / Pashion123 - Paco Rabanne
 
 * The application uses a development database on Amazon AWS which will require internet connectivity. If this is too slow then you can setup MySQL locally.
 

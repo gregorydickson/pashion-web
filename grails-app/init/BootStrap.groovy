@@ -7,8 +7,11 @@ import grails.converters.JSON
 
 class BootStrap {
     def sessionFactory
+    def grailsApplication
     def init = { servletContext ->
       
+      def ctx = grailsApplication.mainContext
+      def userService = ctx.userService
       JSON.registerObjectMarshaller(SearchableItem) {
         def returnArray = [:]
         returnArray['image'] = it.image
@@ -354,6 +357,11 @@ class BootStrap {
 
         def brand = Brand.findByName("Ralph Lauren")
         def lauren = new User(name:"Lauren",surname:"Van Doren",email:"lauren@pashiontool.com",brand:brand).save(flush:true,failOnError : true)
+      }
+
+      if(User.findByEmail("paco@pashiontool.com") == null){
+        def pacobrand = Brand.findByName('Paco Rabanne')
+        userService.createUser("paco@pashiontool.com","Paco","Notorious", pacobrand, "Pashion123")
       }
 
     }

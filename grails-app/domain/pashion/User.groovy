@@ -9,7 +9,7 @@ class User {
 	String name
 	String surname
 	String email
-	String role 
+
 	Long userCreatedId
 	Date lastModifiedDate
 	Long lastModifiedUserId
@@ -35,7 +35,6 @@ class User {
 		name nullable:true
 		surname nullable:true
 		email nullable: true
-		role nullable: true, inList:['Brand','Admin','Press']
 		userCreatedId nullable: true
 		lastModifiedDate nullable: true
 		lastModifiedUserId nullable: true
