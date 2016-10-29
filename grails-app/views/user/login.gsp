@@ -40,26 +40,50 @@
                 <!-- dialog body-->
                 <g:form action="doLogin" method="post">
                     <div class="ai-dialog-body">
-                    <div class="vertical grid-block">
+                        <div class="vertical grid-block">
+
+                            <!-- Username -->
+                            <div class="grid-content shrink" style="margin-top: 1rem;">
+                                <span class="inline-label">
+                                    <span class="form-label">Username</span>
+                                    <input id="email" type='text' name='email' value='${user?.email}'>
+                                </span>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="grid-content shrink" style="margin-top: 1rem;">
+                                <span class="inline-label">
+                                    <span class="form-label">Password</span>
+                                    <input id="password" type='password' name='password' value='${user?.password}'/>
+                                </span>
+                                <a href="#" style="">Show</a>
+                            </div>
+                        </div>
+
+                        <!-- Role -->
                         <div class="grid-content shrink" style="margin-top: 1rem;">
                             <span class="inline-label">
-                                <span class="form-label">Username</span>
-                                <input id="email" type='text' name='email' value='${user?.email}'>
+                                <span class="form-label">Role</span>
+                            <select name="" id="" value.bind="selectedSample">
+                                <option value="">Brand</option>
+                                <option value="">Press</option>
+                                <option value="">Administrator</option>
+                            </select>
                             </span>
                         </div>
-                        <div class="grid-content shrink" style="margin-top: 1rem;">
-                               
-                            <span class="inline-label">
-                                <span class="form-label">Password</span>
-                                <input id="password" type='password' name='password' value='${user?.password}'/>
-                            </span>
-                        </div>
-                    </div>
+
+
                     </div> <!-- ai-dialog-body -->
 
                     <!-- Dialog Footer button -->
                     <div class="ai-dialog-footer">
-                        <input class="button" type="submit" value="Login"></input>
+                        <div class="grid-block vertical">
+                            <div class="grid-content">
+                                <input style="margin-top: 0.5rem;" class="button" type="submit" value="Log me in"></input>
+                            </div>
+                            <a href="#" style="margin-top: 0.5rem;">Request Access</a>
+                            <a href="#" style="margin-top: 0.5rem;">Help Getting Started</a>
+                        </div>
                     </div> <!-- ai-dialog-footer> -->
 
                 </g:form>
