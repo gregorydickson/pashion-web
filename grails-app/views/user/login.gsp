@@ -43,38 +43,39 @@
                         <div class="vertical grid-block">
 
                             <!-- Username -->
-                            <div class="grid-content shrink" style="margin-top: 1rem;">
+                            <div class="grid-content shrink" >
                                 <span class="inline-label">
-                                    <span class="form-label">Username</span>
+                                    <span class="slim-text-box-label">Username</span>
                                     <input id="email" type='text' name='email' value='${user?.email}'>
                                 </span>
                             </div>
 
                             <!-- Password -->
-                            <div class="grid-content shrink" style="margin-top: 1rem;">
+                            <div class="grid-content shrink" >
                                 <span class="inline-label">
-                                    <span class="form-label">Password</span>
+                                    <span class="slim-text-box-label">Password</span>
                                     <input id="password" type='password' name='password' value='${user?.password}'/>
+                                    <a style= "width: 30px; margin-left: 1rem;" href="#" style="">Show</a>
                                 </span>
-                                <a href="#" style="">Show</a>
                             </div>
                         </div>
 
                         <!-- Role -->
-                        <div class="grid-content shrink" style="margin-top: 1rem;">
+                        <div class="grid-content shrink" >
                             <span class="inline-label">
-                                <span class="form-label">Role</span>
+                                <span class="slim-text-box-label">Role</span>
                             <select name="" id="" value.bind="selectedSample">
                                 <option value="">Brand</option>
                                 <option value="">Press</option>
                                 <option value="">Administrator</option>
                             </select>
+                            <a style= "width: 30px; margin-left: 1rem;" href="#" style=""><img src="/assets/QuestionMark.png" /></a>
                             </span>
                         </div>
 
                         <!-- Remember me -->
-                        <div class="grid-content shrink" style="text-align:right; margin-top: 1rem;">
-                            <span>Remember me</span>
+                        <div class="grid-content shrink" style="text-align:left; margin-top: 1rem; margin-left: 0.5rem;">
+                            <span>Remember Me</span>
                             <input id="" type="checkbox">
                         </div>
 
