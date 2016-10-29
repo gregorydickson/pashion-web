@@ -72,6 +72,12 @@
                             </span>
                         </div>
 
+                        <!-- Remember me -->
+                        <div class="grid-content shrink" style="text-align:right; margin-top: 1rem;">
+                            <span>Remember me</span>
+                            <input id="" type="checkbox">
+                        </div>
+
 
                     </div> <!-- ai-dialog-body -->
 
@@ -85,7 +91,6 @@
                             <a href="#" style="margin-top: 0.5rem;">Help Getting Started</a>
                         </div>
                     </div> <!-- ai-dialog-footer> -->
-
                 </g:form>
             </div> <!-- ai-dialog -->
         </router-view>
