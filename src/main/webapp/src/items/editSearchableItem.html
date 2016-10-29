@@ -48,7 +48,7 @@
                             <option value="">Select Sample</option>
                             <option repeat.for="sample of currentItem.samples" model.bind="sample">${sample.name}</option>
                         </select>
-                        <a style= "width: 30px; margin-left: 1rem;" href="#" style="">Add</a>
+                        <a style= "width: 30px; margin-left: 1rem;" click.delegate="newsample()">Add</a>
                     </span>
                 </div>
                 <!-- Sample ID -->
@@ -119,7 +119,7 @@
       </ai-dialog-body>
 
       <ai-dialog-footer>
-         <a class="hollow button" click.delegate="newsample()">Cancel</a>
+         <a class="hollow button" click.delegate="cancel()">Cancel</a>
          <a class="button" click.delegate="submit()">Save Changes</a>
       </ai-dialog-footer>
    </ai-dialog>
