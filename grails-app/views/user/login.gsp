@@ -86,7 +86,7 @@
                     <div class="ai-dialog-footer">
                         <div class="grid-block vertical">
                             <div class="grid-content">
-                                <input style="margin-top: 0.5rem;" class="button" type="submit" value="Log me in"></input>
+                                <input style="margin-top: 0.5rem;" class="button" type="submit" value="Log Me In"></input>
                             </div>
                             <a href="#" style="margin-top: 0.5rem;">Request Access</a>
                             <a href="#" style="margin-top: 0.5rem;">Help Getting Started</a>
