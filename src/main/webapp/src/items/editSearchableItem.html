@@ -51,11 +51,15 @@
                         <a style= "width: 30px; margin-left: 1rem;" click.delegate="newsample()">Add</a>
                     </span>
                 </div>
-                <!-- Sample ID -->
+                <!-- Sample ID & count -->
                 <div class="grid-block shrink">                       
                     <span class="inline-label slim-text-box-label">ID</span>
                     <div class="">
-                        <input type="text" class="slim-text-box" value.bind="selectedSample.name">
+                        <input type="text" class="slim-text-box-mid" value.bind="selectedSample.name">
+                    </div>
+                    <span class="inline-label slim-text-box-label">Count</span>
+                    <div class="">
+                        <input type="text" class="slim-text-box-narrow" value.bind="selectedSample.count">
                     </div>
                 </div>
                 <!-- Sample Type -->
