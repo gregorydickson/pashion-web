@@ -2,6 +2,8 @@ package pashion
 
 import com.stormpath.sdk.account.Account
 
+import com.bloomhealthco.jasypt.*
+
 
 class User {
 	Account account
@@ -9,6 +11,8 @@ class User {
 	String name
 	String surname
 	String email
+
+	String stormpathString
 
 	Long userCreatedId
 	Date lastModifiedDate
@@ -31,6 +35,7 @@ class User {
 
    	static mapping = {
         cache true
+        //stormpathString type: GormEncryptedStringType
     }
    	static transients = ['account']
 	static constraints = {
@@ -39,6 +44,7 @@ class User {
 		name nullable:true
 		surname nullable:true
 		email nullable: true
+		stormpathString nullable:true, maxSize: 1000
 		userCreatedId nullable: true
 		lastModifiedDate nullable: true
 		lastModifiedUserId nullable: true

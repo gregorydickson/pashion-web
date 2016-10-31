@@ -15,6 +15,8 @@ export class EditSearchableItem {
   sampleTypes = [];
   currentSample = {};
   colors = [];
+  material = [];
+
 
   selectedSample = {};
   
@@ -35,6 +37,7 @@ export class EditSearchableItem {
     this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes);
     this.http.fetch('/dashboard/sampleTypes').then(response => response.json()).then(sampleTypes => this.sampleTypes = sampleTypes);
     this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors);
+    this.http.fetch('/dashboard/material').then(response => response.json()).then(material => this.material = material);
     this.http.fetch('/searchableItem/fetchdeep/'+itemId+'.json')
       .then(response => response.json())
       .then(item => {

@@ -5,10 +5,14 @@ import grails.converters.JSON
 
 
 
+
 class BootStrap {
     def sessionFactory
     def grailsApplication
     def init = { servletContext ->
+
+      
+
       
       def ctx = grailsApplication.mainContext
       def userService = ctx.userService

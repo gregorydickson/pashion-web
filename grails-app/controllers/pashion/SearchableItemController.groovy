@@ -161,6 +161,7 @@ class SearchableItemController {
                 sample.look = item
                 sample.season = item.season
                 sample.brandCollection = item.brandCollection
+                sample.material = item.material
                 sample.brand = item.brand
                 sample.type = SearchableItemType.get(2)
             }
