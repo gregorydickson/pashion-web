@@ -76,7 +76,7 @@
                         <!-- Remember me -->
                         <div class="grid-content shrink" style="text-align:left; margin-top: 1rem; margin-left: 0.5rem;">
                             <span>Remember Me</span>
-                            <input id="" type="checkbox">
+                            <input id="" name="remember" type="checkbox">
                         </div>
 
 

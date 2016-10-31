@@ -71,14 +71,17 @@ dependencies {
     runtime 'mysql:mysql-connector-java:5.1.36'
     //for hashing passwords
     
-    //for encrypting sensitive data
-    compile "org.grails.plugins:jasypt-encryption:2.0.1"
+   
     compile "org.grails.plugins:views-json:1.1.1"
 
     runtime 'org.grails.plugins:grails-console:2.0.8'
 
     compile "com.stormpath.sdk:stormpath-sdk-api:1.1.1"
     runtime "com.stormpath.sdk:stormpath-sdk-httpclient:1.1.1"
+
+    compile 'org.grails.plugins:grails-cookie:2.0.3'
+
+    compile "org.grails.plugins:jasypt-encryption:2.0.1"
 
 }
 

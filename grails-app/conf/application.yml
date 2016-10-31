@@ -1,3 +1,8 @@
+jasypt:
+    algorithm: "PBEWITHSHAAND128BITAES-CBC-BC"
+    providerName: "BC"
+    password: "pashion"
+    keyObtentionIterations: 1000
 server:
    sessionTimeout: 3600
 ---

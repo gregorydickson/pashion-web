@@ -9,6 +9,8 @@ import com.stormpath.sdk.account.Account
 class UserController {
 
     def userService
+    def cookieService
+
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE",doLogin:"POST", login:"GET"]
 
     def index(Integer max) {
@@ -25,9 +27,25 @@ class UserController {
     }
 
     def login(){
+        def coooookie = cookieService.getCookie("remember")
+        def account = null
+        if(coooookie){
+            log.info "has Cookie:"+coooookie
+            def user = User.findWhere(email:coooookie)
+            account = userService.login(user.email,user.stormpathString)
+            if(account instanceof Account){
+               user.account = account
+               session.user = user
+               redirect(controller:'dashboard',action:'index')
+            }
+
+
+        }
     }
-    
+
+    @Transactional
     def doLogin(){
+        log.info "do Login params:"+params
         def account = null
         def user = User.findWhere(email:params['email'])
         if(user){
@@ -36,6 +54,13 @@ class UserController {
             if(account instanceof Account){
                 user.account = account
                 session.user = user
+                if(params.remember){
+                    response.setCookie('remember', user.email)
+                    log.info "set cookie"
+                    user.stormpathString = params.password
+                    user.save(flush:true)
+                }
+
                 redirect(controller:'dashboard',action:'index')
             } else{
                 flash.message = "wrong password";
