@@ -219,5 +219,8 @@ export class CreateSampleRequest {
     
   }
 
+  close(){
+    this.controller.close();
+  }
 
 }

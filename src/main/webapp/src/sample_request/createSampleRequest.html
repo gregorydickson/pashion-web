@@ -148,6 +148,7 @@
                 </div>
 
                 <div class="vertical grid-content accordion" style="overflow-x:hidden; max-height:8rem;"> 
+<form action="" class="custom">
                     <table class="big-accordion" style="margin-bottom:0px;" repeat.for="sample of currentItem.samples">
                         <tr>
                             <td class="accordion w5">1</td>
@@ -155,20 +156,20 @@
                             <td class="accordion w73">${sample.name}</td>
                             <td class="accordion w3">
                                 
-
-                               <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="selectedProductIds" >
-
+<label for="sample.id">
+                               <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="selectedProductIds" ><span class="custom checkbox"></span>
+</label>
                             </td>
                         </tr>
                     </table>
-                    
+              </form>      
 
                 </div>
 
 
       </ai-dialog-body>
       <ai-dialog-footer>
-         <a class="hollow button" href="javascript:;">Cancel</a>
+         <a class="hollow button" href="javascript:void(0);" click.delegate="close()">Cancel</a>
          <a class="button" href="javascript:;">Book Selected</a>
       </ai-dialog-footer>
    </ai-dialog>

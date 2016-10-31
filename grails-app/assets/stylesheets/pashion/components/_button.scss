@@ -181,10 +181,10 @@ $button-icon-spacing: 0.5em !default;
   
   @if $style == hollow {
     
-    padding-top: calc(#{get-side($button-padding, top)} - 1px);
-    padding-right: calc(#{get-side($button-padding, right)} - 1px);
-    padding-bottom: calc(#{get-side($button-padding, bottom)} - 1px);
-    padding-left: calc(#{get-side($button-padding, left)} - 1px);
+//    padding-top: calc(#{get-side($button-padding, top)} - 1px);
+//    padding-right: calc(#{get-side($button-padding, right)} - 1px);
+//    padding-bottom: calc(#{get-side($button-padding, bottom)} - 1px);
+//    padding-left: calc(#{get-side($button-padding, left)} - 1px);
     background: transparent;
     color: $black;
 
