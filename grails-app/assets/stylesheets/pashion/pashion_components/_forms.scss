@@ -1,0 +1,49 @@
+.form-label-width-sm {
+	min-width: 80px;
+}
+
+
+.checkbox-styled {
+  width: 14px;
+  height: 14px;
+  position: relative;
+
+  input[type="checkbox"] {
+  	width: 14px;
+  	height: 14px;
+    position: absolute; opacity: 0; z-index: -1; 
+    &:checked + label:after {
+      opacity: 1;
+    }  	
+  }
+
+  input[type="checkbox"] + label {
+  	margin: 0; 
+  }
+  input[type="checkbox"]:checked + label:after {
+      content: '';
+      width: 7px;
+      height: 4px;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      border: 1px solid #3971b1;
+      border-top: none;
+      border-right: none;
+      background: transparent;
+      opacity: 0;
+      transform: rotate(-45deg);
+  }
+  label {
+  	margin: 0;
+  	padding: 0;
+    width: 12px;
+    height: 12px;
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: #fff;
+    border: 1px #ebebeb solid; 
+  }
+}
