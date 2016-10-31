@@ -64,7 +64,8 @@
 "pashion_components/image_menu",
 "pashion_components/date_range_picker",
 "pashion_components/dialog", 
-"pashion_components/forms";
+"pashion_components/forms", 
+"pashion_components/card";
 
 .footer{
 	
@@ -112,14 +113,6 @@
 
 .expando{
   
-}
-
-.image-card-sizing { // mostly designed to constrain loading sizes while row builds
-  // height: 300px;
-   //min-width: 100px;
-   max-width: 275px;
-   //min-height: 100px;
-   //max-height: 445px;
 }
 
 .indigital-align {

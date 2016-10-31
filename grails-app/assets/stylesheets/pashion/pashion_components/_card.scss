@@ -1,0 +1,24 @@
+.cards-list-wrap {
+	overflow-y: scroll;
+    height: 100vh;
+}
+
+.cards-list {
+	display: flex; 
+	display: -webkit-flex; 
+	flex-wrap: wrap; 
+	flex-flow: row wrap; 
+	justify-content: center; 
+}
+.cards-list .card { 
+   width: 33%;
+   margin-bottom: 0; 
+}
+@media (min-width: 1600px) {
+	.cards-list .card { 
+	   width: 24.8%;
+	}
+}
+.cards-list .card {
+	position: relative; 
+}

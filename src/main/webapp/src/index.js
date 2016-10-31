@@ -121,6 +121,11 @@ export class Index {
     menu.classList.toggle("look-menu-show");
   }
 
+  closeMenu(id){
+    var menu = document.getElementById("look-"+id);
+    menu.classList.toggle("look-menu-show");
+  }
+
   createSampleRequest(itemId) {
     this.lookMenu(itemId);
     this.dialogService.open({viewModel: CreateSampleRequest, model: itemId })
@@ -160,6 +165,13 @@ export class Index {
   }
 
 
+  // Big image (zoom)
+  zoomImage(id){
+    var image = document.getElementById("image-zoom-"+id);
+    image.classList.toggle("card-image-zoom-show");
+
+    document.getElementsByTagName('body')[0].className+='zoom-body-overlay';
+  }
     
 }
 

@@ -251,72 +251,57 @@
                         </span>
                     </div>
                 </div>
+                
+
+
+
                 <!-- Images/Looks -->
-                <div class="" style="overflow: scroll;
-                                     height: 100vh;">
-                                     <!-- I removed the "virtial" -->
-                    <div  repeat.for="row of rows" style="display: -webkit-flex;
-                                                        display: flex;
-                                                        -webkit-flex-direction: row;
-                                                        flex-direction: row;
-                                                        ">
-                        <div class="card image-card-sizing">
+                <div class="cards-list-wrap">
+                    <div class="cards-list" >
+                        <div class="card"  repeat.for="row of rows">
+                            
+                            <!-- Three dots menu -->
                             <a href="#" class="look-menu-click" click.delegate="lookMenu(row.item1.id)">
                                 <div class=menu-stripe></div>
+                            </a>
+
+                            <!-- Zoom big image -->
+                            <div id="image-zoom-${row.item1.id}" class="card-image-zoom">
                                 <img src.bind="row.item1.image" ref="image" />
-                               <img src="/assets/indigital.png" style="width:120px;" class="indigital-align"/> 
-                            </a>
-                           <!--  <div class="card-section">
-                                <h3>First</h3>
-                            </div> -->
+                            </div> 
 
-                            <div class="look-menu" id="look-${row.item1.id}">
-                                <span class="look-menu-heading">LOOK ${row.item1.id}</span>
-                                <ul class="look-menu-list">
-                                    <li class="look-menu-item"><a href="#" click.delegate="createSampleRequest(row.item1.id)" class="look-menu-link">Request</a></li>
-                                    <li class="look-menu-item"><a href="#" class="look-menu-link">Details</a></li>
-                                    
-                                    <li if.bind="!row.item1.fromDate" class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.item1.id)" class="look-menu-link">Set Availability</a></li>
-                                    <li if.bind="row.item1.fromDate" class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.item1.id)" class="look-menu-link">Check Availability</a></li>
-
-                                    <li class="pure-menu-item"><a href="#" click.delegate="editSearchableItem(row.item1.id)" class="look-menu-link">Edit</a></li>
-                                </ul>
+                            <!-- Main image -->
+                            <div class="card-image">
+                                <img src.bind="row.item1.image" ref="image" click.delegate="zoomImage(row.item1.id)" />
+                                <div class="card-image-overlay"><div class="plus">+</div></div>
                             </div>
+                            <img src="/assets/indigital.png" style="width:120px;" class="indigital-align"/> 
 
+
+                            <!-- Menu on image when three dots clicked -->                            
+                            <div class="look-menu" id="look-${row.item1.id}">
+                                <div class="look-menu-wrap">
+                                    <div class="look-menu-heading">
+                                        LOOK ${row.item1.id}
+                                        <button type="button" class="close" click.delegate="closeMenu(row.item1.id)">
+                                              <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+
+                                    <ul class="look-menu-list">
+                                        <li class="look-menu-item"><a href="#" click.delegate="createSampleRequest(row.item1.id)" class="look-menu-link">Request</a></li>
+                                        <li class="look-menu-item"><a href="#" class="look-menu-link">Details</a></li>
+                                        
+                                        <li if.bind="!row.item1.fromDate" class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.item1.id)" class="look-menu-link">Set Availability</a></li>
+
+                                        <li if.bind="row.item1.fromDate" class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.item1.id)" class="look-menu-link">Check Availability</a></li>
+
+                                        <li class="pure-menu-item"><a href="#" click.delegate="editSearchableItem(row.item1.id)" class="look-menu-link">Edit</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card image-card-sizing">
-                            <a href="#" class="">
-                                <div class=menu-stripe></div>
-                            
-                                <img src.bind="row.item2.image" ref="image" />
-                                <img src="/assets/indigital.png" style="width:120px;" class="indigital-align"/>
-                            </a>
-                            
-                        </div>
-                        <div class="card image-card-sizing">
-                            <a href="#" class="">
-                                <div class=menu-stripe></div>
-                            
-                                <img src.bind="row.item3.image" ref="image" />
-                                <img src="/assets/indigital.png" style="width:120px;" class="indigital-align"/>
-                            </a>
-                            
-                        </div>
-                        <div class="card  image-card-sizing">
-                            <a href="#" class="">
-                                <div class=menu-stripe></div>                           
-                                <img src.bind="row.item4.image" ref="image" />
-                                <img src="/assets/indigital.png" style="width:120px;" class="indigital-align"/>
-                            </a>
-                           
-                        </div>
-                        <div class="card image-card-sizing">
-                            <a href="#" class="">
-                                <div class=menu-stripe></div>
-                                <img src.bind="row.item5.image" ref="image" />
-                                <img src="/assets/indigital.png" style="width:120px;" class="indigital-align"/>
-                            </a>
-                        </div>
+                  
                     </div>
                 </div>
                 <!-- white lip at bottom of scroll region -->

@@ -1,11 +1,25 @@
+.look-menu-click {
+  display: block; 
+    height: 48px;
+    position: absolute;
+    width: 48px;
+    top: 0;
+    right: 0; 
+    z-index: 1;
+}
+
+.look-menu-click:hover {
+  opacity: 0.7;
+}
+
 
 .menu-stripe {
   position: relative;
-
   width: 48px;
   height: 48px;
   margin-bottom:-50px;
   padding-left:80%;
+  transform: rotate(90deg);
 }
 
 .menu-stripe:before, .menu-stripe:after {
@@ -13,7 +27,8 @@
   content: "";
   position: absolute;
   height: 5px;
-  top: 12px;
+  top: 13px;
+  left: 13px; 
   border-radius: 5px;
   box-shadow: 0 10px white, 0 20px white;
 }
