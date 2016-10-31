@@ -54,7 +54,7 @@
                 <!-- Required Time -->
                 <div class="grid-content shrink" style="margin-top: 1rem;">
                     <span class="inline-label">
-                        <span class="form-label">Required By</span>
+                        <span class="form-label form-label-width-sm">Required By</span>
                     <select name="" id="" value.bind="selectedRequired">
                         <option value="">Select Time</option>
                         <option repeat.for="item of required" model.bind="item">${item}</option>
@@ -64,7 +64,7 @@
                 <!-- Deliver To-->
                 <div class="grid-content shrink">
                     <span class="inline-label">
-                        <span class="form-label">Deliver To</span>
+                        <span class="form-label form-label-width-sm">Deliver To</span>
                     <select name="" id="" value.bind="deliverToSelected">
                         <option value="">Select Name</option>
                         <option repeat.for="item of deliverTo" model.bind="item.id">${item.name}</option>
@@ -113,7 +113,7 @@
                 <!-- Return By Time -->
                 <div class="grid-content shrink" style="margin-top: 1rem;">
                     <span class="inline-label">
-                        <span class="form-label">Return By</span>
+                        <span class="form-label form-label-width-sm">Return By</span>
                     <select name="" id="" value.bind="returnBySelected">
                         <option value="">Select</option>
                         <option repeat.for="item of returnBy" model.bind="item">${item}</option>
@@ -123,7 +123,7 @@
                 <!-- Return To-->
                 <div class="grid-content shrink">
                     <span class="inline-label">
-                        <span class="form-label">Return To</span>
+                        <span class="form-label form-label-width-sm">Return To</span>
                     <select name="" id="" value.bind="returnToSelected">
                         <option value="">Select Name</option>
                         <option repeat.for="item of returnTo" model.bind="item.id">${item.name}</option>
@@ -141,7 +141,7 @@
                                 <td class="accordion w24">SELECT SAMPLES</td>
                                 <td class="accordion w73" style="text-align:right; padding-right: 0.5rem;" >Select All</td>
                                 <td class="accordion w3">
-                                    <input id="" type="checkbox">
+                                    <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="selectedProductIds.IsChecked" value.one-way="selectedProductIds.Value">
                                 </td>
                             </tr>
                     </table>
@@ -154,21 +154,17 @@
                             <td class="accordion w19">${sample.id}</td>
                             <td class="accordion w73">${sample.name}</td>
                             <td class="accordion w3">
-                                
-
-                               <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="selectedProductIds" >
-
+                               <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="selectedProductIds">
                             </td>
                         </tr>
                     </table>
-                    
 
                 </div>
 
 
       </ai-dialog-body>
       <ai-dialog-footer>
-         <a class="hollow button" href="javascript:;">Cancel</a>
+         <a class="hollow button" href="javascript:void(0);" click.delegate="close()">Cancel</a>
          <a class="button" href="javascript:;">Book Selected</a>
       </ai-dialog-footer>
    </ai-dialog>

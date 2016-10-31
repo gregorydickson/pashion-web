@@ -63,7 +63,8 @@
 "pashion_components/dot_menu",
 "pashion_components/image_menu",
 "pashion_components/date_range_picker",
-"pashion_components/dialog";
+"pashion_components/dialog", 
+"pashion_components/forms";
 
 .footer{
 	
@@ -180,8 +181,10 @@ span.slim-text-box-label-narrow {
 input.slim-text-box {
   width: 169px;
 }
-input.slim-text-box-narrow {
-  width: 3rem;
+input.slim-text-box-mid {
+  width: 58px;
+}input.slim-text-box-narrow {
+  width: 33px;
 }
 
 .grid-block-vertical-shadow {
@@ -352,6 +355,10 @@ img.contact-entry {
   background-image: url('/assets/colored-background-2-faded.jpg'); 
   background-repeat: no-repeat; 
   background-size:cover;
+}
+
+.menu-divider {
+  border-bottom: 0.5px solid $white-three;
 }
 
 

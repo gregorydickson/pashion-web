@@ -5,87 +5,126 @@
             <!-- header -->
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad" style="margin-left:32px;">EDIT SAMPLE / LOOK </span>
+                    <span class="ui-text-label-m-broad" style="margin-left:32px;">EDIT LOOK &nbsp;</span>
                     <span class="ui-text-label-m-broad"> ${currentItem.id}</span>
                 </div>
             </div>
-        </ai-dialog-header>
-      <ai-dialog-body>
-        
- 
-            
-            
-       <div class="vertical grid-block">
+        </ai-dialog-header>  
 
-            <!-- Sample -->
-            <div class="grid-content shrink" style="margin-top: 1rem;">
-                <span class="inline-label">
-                    <span class="form-label">ID</span>
-                    <input type="text" value.bind="currentItem.name">
-                </span>
-                <span class="inline-label">
-                    <span class="form-label">Description</span>
-                    <input type="text" value.bind="currentItem.description">
-                </span>
-            </div>
-            <div class="grid-content shrink" style="margin-top: 1rem;">
-                <span class="inline-label">
-                    <span class="form-label">Collection:</span>
-                    <span class="form-label">${currentItem.brandCollection.season}</span>
-                </span>
-            </div>
+        <ai-dialog-body>               
+           <div class="vertical grid-block">
 
-            <!-- ID (Name in the object) -->
-            <div class="grid-content shrink" style="margin-top: 1rem;">
-                <span class="inline-label">
-                    <span class="form-label">Sample</span>
-                <select name="" id="" value.bind="selectedSample">
-                    <option value="">Select Sample</option>
-                    <option repeat.for="sample of currentItem.samples" model.bind="sample">${sample.name}</option>
-                </select>
-                </span>
-            </div>
-            <!-- Descripton -->
-            <div class="grid-content shrink" style="margin-top: 1rem;">
-                <span class="inline-label">
-                    <span class="form-label">ID</span>
-                    <input type="text" value.bind="selectedSample.name">
-                </span>
-                <span class="inline-label">
-                    <span class="form-label">Description</span>
-                    <input type="text" value.bind="selectedSample.description">
-                </span>
-            </div>
+                <div class="grid-content shrink">
+                    <!-- LOOK title-->
+                    <span style="margin-bottom: 1rem;">LOOK</span>
+                </div>
+                <!-- Look ID -->
+                <div class="grid-block shrink">                       
+                    <span class="inline-label slim-text-box-label">ID</span>
+                    <div style="">
+                        <input type="text" class="slim-text-box" value.bind="currentItem.name">
+                    </div>
+                </div>
+                <!-- Collection -->
+                <div class="grid-block shrink">                       
+                    <span class="inline-label slim-text-box-label">Collection:</span>
+                    <div style="padding-top: 0.5rem;">
+                        <span class="">${currentItem.brandCollection.season}</span>
+                    </div>
+                </div>
+                <!-- Look Description -->
+                <div class="grid-block shrink menu-divider">                       
+                    <span class="inline-label slim-text-box-label">Description</span>
+                    <div class="">
+                        <textarea rows="1" type="textarea" class="slim-text-box" style="min-width:169px;" value.bind="selectedSample.description"></textarea>
+                    </div>
+                </div>
 
-            <!-- Color -->
-            <div class="grid-content shrink" style="margin-top: 1rem;">
-                <span class="inline-label">
-                    <span class="form-label">Color</span>
-                <select name="" id="" value.bind="selectedSample.color">
-                    <option value="">Select Color</option>
-                    <option repeat.for="color of colors" model.bind="color">${color}</option>
-                </select>
-                </span>
+                <!-- Choose Sample -->
+                <div class="grid-block shrink" style="margin-top: 1rem;">                        
+                    <span class="inline-label">
+                        <span class="slim-text-box-label">SAMPLE</span>
+                        <select name="" id="" value.bind="selectedSample">
+                            <option value="">Select Sample</option>
+                            <option repeat.for="sample of currentItem.samples" model.bind="sample">${sample.name}</option>
+                        </select>
+                        <a style= "width: 30px; margin-left: 1rem;" click.delegate="newsample()">Add</a>
+                    </span>
+                </div>
+                <!-- Sample ID & count -->
+                <div class="grid-block shrink">                       
+                    <span class="inline-label slim-text-box-label">ID</span>
+                    <div class="">
+                        <input type="text" class="slim-text-box-mid" value.bind="selectedSample.name">
+                    </div>
+                    <span class="inline-label slim-text-box-label">Count</span>
+                    <div class="">
+                        <input type="text" class="slim-text-box-narrow" value.bind="selectedSample.count">
+                    </div>
+                </div>
+                <!-- Sample Type -->
+                <div class="grid-block shrink" >                        
+                    <span class="inline-label">
+                        <span class="slim-text-box-label">Type</span>
+                        <select name="" id="" value.bind="selectedSample.sampleType">
+                            <option value="">Select Type</option>
+                            <option repeat.for="type of sampleTypes" model.bind="type">${type}</option>
+                        </select>
+                    </span>
+                </div>
+                <!-- Sample Description -->
+                <div class="grid-block shrink">                       
+                    <span class="inline-label slim-text-box-label">Description</span>
+                    <div class="">
+                        <textarea rows="1" type="textarea" class="slim-text-box" style="min-width:169px;"  value.bind="selectedSample.description"></textarea>
+                    </div>
+                </div>
+                <!-- Colour -->
+                <div class="grid-block shrink" >                        
+                    <span class="inline-label">
+                        <span class="slim-text-box-label">Colour</span>
+                        <select name="" id="" value.bind="selectedSample.color">
+                            <option value="">Select Colour</option>
+                            <option repeat.for="color of colors" model.bind="color">${color}</option>
+                        </select>
+                    </span>
+                </div>
+                <!-- Material -->
+                <div class="grid-block shrink" >                        
+                    <span class="inline-label">
+                        <span class="slim-text-box-label">Material</span>
+                        <select name="" id="" value.bind="selectedSample.material">
+                            <option value="">Select Material</option>
+                            <option repeat.for="material of material" model.bind="material">${material}</option>
+                        </select>
+                    </span>
+                </div>
+                <!-- Size -->
+                <div class="grid-block shrink" >                        
+                    <span class="inline-label">
+                        <span class="slim-text-box-label">Size</span>
+                        <select name="" id="" value.bind="selectedSample.size">
+                            <option value="">Size</option>
+                            <option repeat.for="size of size" model.bind="size">${size}</option>
+                        </select>
+                    </span>
+                </div>  
+                <!-- Location -->
+                <div class="grid-block shrink" >                        
+                    <span class="inline-label">
+                        <span class="slim-text-box-label">Location</span>
+                        <select name="" id="" value.bind="selectedSample.location">
+                            <option value="">Select Location</option>
+                            <option repeat.for="location of location" model.bind="size">${location}</option>
+                        </select>
+                    </span> 
+                </div>
             </div>
-            <!-- Sample Type -->
-            <div class="grid-content shrink" style="margin-top: 1rem;">
-                <span class="inline-label">
-                    <span class="form-label">Item Type</span>
-                <select name="" id="" value.bind="selectedSample.sampleType">
-                    <option value="">Select Item Type</option>
-                    <option repeat.for="type of sampleTypes" model.bind="type">${type}</option>
-                </select>
-                </span>
-            </div>
-            
-            
-            
-        </div>
-
       </ai-dialog-body>
+
       <ai-dialog-footer>
-         <button click.delegate="newsample()">New Sample</button>
-         <button click.delegate="submit()">Update Item</button>
+         <a class="hollow button" click.delegate="cancel()">Cancel</a>
+         <a class="button" click.delegate="submit()">Save Changes</a>
       </ai-dialog-footer>
    </ai-dialog>
 </template>
