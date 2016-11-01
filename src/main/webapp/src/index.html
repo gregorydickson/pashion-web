@@ -269,15 +269,20 @@
 
                             <!-- Zoom big image -->
                             <div id="image-zoom-${row.item1.id}" class="card-image-zoom">
-                                <img src.bind="row.item1.image" ref="image" />
-                            </div> 
+                                <div class="card-image-zoom-wrap">
+                                            <button type="button" class="close" click.delegate="closeZoom(row.item1.id)">
+                                                  <span aria-hidden="true">×</span>
+                                            </button>
+                                            <img src.bind="row.item1.image" ref="image" />
+                                </div>
+                            </div>
 
                             <!-- Main image -->
                             <div class="card-image">
-                                <img src.bind="row.item1.image" ref="image" click.delegate="zoomImage(row.item1.id)" />
-                                <div class="card-image-overlay"><div class="plus">+</div></div>
+                                <img src.bind="row.item1.image" ref="image"  />
+                                <div class="card-image-overlay" click.delegate="zoomImage(row.item1.id)"><div class="plus">+</div></div>
                             </div>
-                            <img src="/assets/indigital.png" style="width:120px;" class="indigital-align"/> 
+                            <img src="/assets/indigital.png" class="indigital-align"/> 
 
 
                             <!-- Menu on image when three dots clicked -->                            
@@ -304,7 +309,7 @@
                             </div>
                         </div>
 
-    <!-- Card number 2 -->       
+                      <!-- Card number 2 -->       
                         <div class="card">
                             
                             <!-- Three dots menu -->
@@ -314,15 +319,20 @@
 
                             <!-- Zoom big image -->
                             <div id="image-zoom-${row.item2.id}" class="card-image-zoom">
-                                <img src.bind="row.item2.image" ref="image" />
-                            </div> 
+                                <div class="card-image-zoom-wrap">
+                                            <button type="button" class="close" click.delegate="closeZoom(row.item2.id)">
+                                                  <span aria-hidden="true">×</span>
+                                            </button>
+                                            <img src.bind="row.item2.image" ref="image" />
+                                </div>
+                            </div>
 
                             <!-- Main image -->
                             <div class="card-image">
-                                <img src.bind="row.item2.image" ref="image" click.delegate="zoomImage(row.item2.id)" />
-                                <div class="card-image-overlay"><div class="plus">+</div></div>
+                                <img src.bind="row.item2.image" ref="image"  />
+                                <div class="card-image-overlay" click.delegate="zoomImage(row.item2.id)"><div class="plus">+</div></div>
                             </div>
-                            <img src="/assets/indigital.png" style="width:120px;" class="indigital-align"/> 
+                            <img src="/assets/indigital.png" class="indigital-align"/> 
 
 
                             <!-- Menu on image when three dots clicked -->                            
@@ -349,7 +359,7 @@
                             </div>
                         </div>
 
-   <!-- Card number 3 -->       
+                                              <!-- Card number 3 -->       
                         <div class="card">
                             
                             <!-- Three dots menu -->
@@ -359,15 +369,20 @@
 
                             <!-- Zoom big image -->
                             <div id="image-zoom-${row.item3.id}" class="card-image-zoom">
-                                <img src.bind="row.item3.image" ref="image" />
-                            </div> 
+                                <div class="card-image-zoom-wrap">
+                                            <button type="button" class="close" click.delegate="closeZoom(row.item3.id)">
+                                                  <span aria-hidden="true">×</span>
+                                            </button>
+                                            <img src.bind="row.item3.image" ref="image" />
+                                </div>
+                            </div>
 
                             <!-- Main image -->
                             <div class="card-image">
-                                <img src.bind="row.item3.image" ref="image" click.delegate="zoomImage(row.item3.id)" />
-                                <div class="card-image-overlay"><div class="plus">+</div></div>
+                                <img src.bind="row.item3.image" ref="image"  />
+                                <div class="card-image-overlay" click.delegate="zoomImage(row.item3.id)"><div class="plus">+</div></div>
                             </div>
-                            <img src="/assets/indigital.png" style="width:120px;" class="indigital-align"/> 
+                            <img src="/assets/indigital.png" class="indigital-align"/> 
 
 
                             <!-- Menu on image when three dots clicked -->                            
@@ -394,7 +409,7 @@
                             </div>
                         </div>
 
-   <!-- Card number 4 -->       
+                                              <!-- Card number 4 -->       
                         <div class="card">
                             
                             <!-- Three dots menu -->
@@ -404,15 +419,20 @@
 
                             <!-- Zoom big image -->
                             <div id="image-zoom-${row.item4.id}" class="card-image-zoom">
-                                <img src.bind="row.item4.image" ref="image" />
-                            </div> 
+                                <div class="card-image-zoom-wrap">
+                                            <button type="button" class="close" click.delegate="closeZoom(row.item4.id)">
+                                                  <span aria-hidden="true">×</span>
+                                            </button>
+                                            <img src.bind="row.item4.image" ref="image" />
+                                </div>
+                            </div>
 
                             <!-- Main image -->
                             <div class="card-image">
-                                <img src.bind="row.item4.image" ref="image" click.delegate="zoomImage(row.item4.id)" />
-                                <div class="card-image-overlay"><div class="plus">+</div></div>
+                                <img src.bind="row.item4.image" ref="image"  />
+                                <div class="card-image-overlay" click.delegate="zoomImage(row.item4.id)"><div class="plus">+</div></div>
                             </div>
-                            <img src="/assets/indigital.png" style="width:120px;" class="indigital-align"/> 
+                            <img src="/assets/indigital.png" class="indigital-align"/> 
 
 
                             <!-- Menu on image when three dots clicked -->                            
@@ -439,7 +459,7 @@
                             </div>
                         </div>
 
-   <!-- Card number 5 -->       
+                                              <!-- Card number 5 -->       
                         <div class="card">
                             
                             <!-- Three dots menu -->
@@ -449,15 +469,20 @@
 
                             <!-- Zoom big image -->
                             <div id="image-zoom-${row.item5.id}" class="card-image-zoom">
-                                <img src.bind="row.item5.image" ref="image" />
-                            </div> 
+                                <div class="card-image-zoom-wrap">
+                                            <button type="button" class="close" click.delegate="closeZoom(row.item5.id)">
+                                                  <span aria-hidden="true">×</span>
+                                            </button>
+                                            <img src.bind="row.item5.image" ref="image" />
+                                </div>
+                            </div>
 
                             <!-- Main image -->
                             <div class="card-image">
-                                <img src.bind="row.item5.image" ref="image" click.delegate="zoomImage(row.item5.id)" />
-                                <div class="card-image-overlay"><div class="plus">+</div></div>
+                                <img src.bind="row.item5.image" ref="image"  />
+                                <div class="card-image-overlay" click.delegate="zoomImage(row.item5.id)"><div class="plus">+</div></div>
                             </div>
-                            <img src="/assets/indigital.png" style="width:120px;" class="indigital-align"/> 
+                            <img src="/assets/indigital.png" class="indigital-align"/> 
 
 
                             <!-- Menu on image when three dots clicked -->                            
@@ -482,8 +507,7 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
-                       
+                        </div>                       
                   
                     </div>
                 </div>

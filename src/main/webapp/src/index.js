@@ -165,14 +165,18 @@ export class Index {
   }
 
 
-  // Big image (zoom)
+  // Zoom image
   zoomImage(id){
     var image = document.getElementById("image-zoom-"+id);
     image.classList.toggle("card-image-zoom-show");
-
-    document.getElementsByTagName('body')[0].className+='zoom-body-overlay';
+    document.getElementsByTagName("body")[0].classList.toggle("zoom-body-overlay");
   }
-    
+  closeZoom(id){
+    var image = document.getElementById("image-zoom-"+id);
+    image.classList.toggle("card-image-zoom-show");
+    document.getElementsByTagName("body")[0].classList.toggle("zoom-body-overlay");
+  }
+
 }
 
 

@@ -18,3 +18,11 @@
 .cards-list .card {
 	position: relative; 
 }
+
+.cards-list .card .indigital-align {
+	width: 95px; 
+	position: absolute;
+	height: 20px; 
+	left: 0; 
+	bottom: 0; 
+}
