@@ -70,22 +70,24 @@ class UserService {
     	agroup
     }
 
-    def login(String email, String password){
+    def login(def email, def password){
     	def account = null
         // Create an authentication request using the credentials
-        AuthenticationRequest request = UsernamePasswordRequests.builder()
-                .setUsernameOrEmail(email)
-                .setPassword(password)
-                .build();
+        if(email && password){
+            AuthenticationRequest request = UsernamePasswordRequests.builder()
+                    .setUsernameOrEmail(email)
+                    .setPassword(password)
+                    .build();
 
-        //Now let's authenticate the account with the application:
-        try {
-            AuthenticationResult result = stormpathApp.authenticateAccount(request)
-            account = result.getAccount()
-            log.info("Authenticated Account: " + account.getUsername() + ", Email: " + account.getEmail());
-        } catch (ResourceException ex) {
-            log.error ex.getMessage()
-            account = ex.getMessage()
+            //Now let's authenticate the account with the application:
+            try {
+                AuthenticationResult result = stormpathApp.authenticateAccount(request)
+                account = result.getAccount()
+                log.info("Authenticated Account: " + account.getUsername() + ", Email: " + account.getEmail());
+            } catch (ResourceException ex) {
+                log.error ex.getMessage()
+                account = ex.getMessage()
+            }
         }
         account
     }
