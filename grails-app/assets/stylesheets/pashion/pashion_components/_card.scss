@@ -11,14 +11,10 @@
 	justify-content: center; 
 }
 .cards-list .card { 
-   width: 33%;
+   width: 20%;
    margin-bottom: 0; 
 }
-@media (min-width: 1600px) {
-	.cards-list .card { 
-	   width: 24.8%;
-	}
-}
+
 .cards-list .card {
 	position: relative; 
 }
