@@ -34,8 +34,10 @@ class SampleRequest {
 	Date lastUpdated
 	Collection searchableItems
 
+
 	static mapping = {
         cache true
+        searchableItems lazy:false
     }
 
 	static belongsTo = SearchableItem 

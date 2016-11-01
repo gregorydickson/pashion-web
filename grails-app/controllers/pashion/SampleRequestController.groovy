@@ -8,6 +8,8 @@ import grails.converters.JSON
 @Transactional(readOnly = true)
 class SampleRequestController {
 
+    def sampleRequestService
+
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     String dateFormatString = "yyyy-M-d"
@@ -34,6 +36,14 @@ class SampleRequestController {
         def sent = [message:'Sample Request Sent']
         render sent as JSON
 
+    }
+
+
+    def filterSearch(){
+        def user = session.user
+
+        def results = sampleRequestService.listByUserOrganization(user)
+        render results as JSON 
     }
 
     def index(Integer max) {

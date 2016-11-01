@@ -36,6 +36,10 @@ class User {
    	static mapping = {
         cache true
         //stormpathString type: GormEncryptedStringType
+        pressHouse lazy:false
+        brand lazy:false
+        prAgency lazy:false
+        
     }
    	static transients = ['account']
 	static constraints = {

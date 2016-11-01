@@ -49,7 +49,7 @@ export class Index {
                                       '&availableTo=' + this.availableTo)
           .then(response => response.json())
           .then(rows => {this.rows = rows})
-          .then(rows => {this.numberImages = this.rows[0].item1.numberImages});
+          .then(rows => {this.numberImages = this.rows[0].numberImages});
   }
 
 

@@ -1,4 +1,4 @@
-package pashion
+    package pashion
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
@@ -24,6 +24,13 @@ class UserController {
 
     def create() {
         respond new User(params)
+    }
+
+    def logout(){
+        session.user = null
+        session.invalidate()
+        redirect(controller:'user',action:'login')
+
     }
 
     def login(){

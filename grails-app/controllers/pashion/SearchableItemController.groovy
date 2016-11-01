@@ -89,27 +89,34 @@ class SearchableItemController {
         for(def i=1; i<=rows; i++){
 
             def arow = [:]
-            if(j <= resultsSize){
+            def item = []
+            if(j < resultsSize){
                 arow.numberImages = resultsSize
-                arow.item1 = results[j]
+                arow.numberImagesThisRow = 1
+                item << results[j]
                 j = j + 1
             }
-            if(j <= resultsSize){
-                arow.item2 = results[j]
+            if(j < resultsSize){
+                arow.numberImagesThisRow = 2
+                item << results[j]
                 j = j + 1
             }
-            if(j <= resultsSize){
-                arow.item3 = results[j]
+            if(j < resultsSize){
+                arow.numberImagesThisRow = 3
+                item << results[j]
                 j = j + 1
             }
-            if(j <= resultsSize){
-                arow.item4 = results[j]
+            if(j < resultsSize){
+                arow.numberImagesThisRow = 4
+                item << results[j]
                 j = j + 1
             }
-            if(j <= resultsSize){
-                arow.item5 = results[j]
+            if(j < resultsSize){
+                arow.numberImagesThisRow = 5
+                item << results[j]
                 j = j + 1
             }
+            arow.items = item
             resultList << arow
         }
         

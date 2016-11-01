@@ -13,6 +13,20 @@ class DashboardController {
 
      }
 
+     def user(){
+        
+        def user = session.user
+        def type
+        if(user.brand){
+            type = 'brand'
+        }else{
+            type = 'press'
+        }
+        //creating a map is more simple than a bunch of marshalling code
+        def userInfo = [email:user.email,type:type,name:user.name,surname:user.surname ] as JSON
+        render userInfo
+     }
+
 
     def required(){
     	def list = ['9:00','9:30','10:00','10:30','11:00','11:30',
