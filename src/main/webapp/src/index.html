@@ -257,8 +257,10 @@
 
                 <!-- Images/Looks -->
                 <div class="cards-list-wrap">
-                    <div class="cards-list" >
-                        <div class="card"  repeat.for="row of rows">
+                    <div class="cards-list" repeat.for="row of rows" >
+
+                        <!-- Card number 1 -->       
+                        <div class="card">
                             
                             <!-- Three dots menu -->
                             <a href="#" class="look-menu-click" click.delegate="lookMenu(row.item1.id)">
@@ -301,6 +303,187 @@
                                 </div>
                             </div>
                         </div>
+
+    <!-- Card number 2 -->       
+                        <div class="card">
+                            
+                            <!-- Three dots menu -->
+                            <a href="#" class="look-menu-click" click.delegate="lookMenu(row.item2.id)">
+                                <div class=menu-stripe></div>
+                            </a>
+
+                            <!-- Zoom big image -->
+                            <div id="image-zoom-${row.item2.id}" class="card-image-zoom">
+                                <img src.bind="row.item2.image" ref="image" />
+                            </div> 
+
+                            <!-- Main image -->
+                            <div class="card-image">
+                                <img src.bind="row.item2.image" ref="image" click.delegate="zoomImage(row.item2.id)" />
+                                <div class="card-image-overlay"><div class="plus">+</div></div>
+                            </div>
+                            <img src="/assets/indigital.png" style="width:120px;" class="indigital-align"/> 
+
+
+                            <!-- Menu on image when three dots clicked -->                            
+                            <div class="look-menu" id="look-${row.item2.id}">
+                                <div class="look-menu-wrap">
+                                    <div class="look-menu-heading">
+                                        LOOK ${row.item2.id}
+                                        <button type="button" class="close" click.delegate="closeMenu(row.item2.id)">
+                                              <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+
+                                    <ul class="look-menu-list">
+                                        <li class="look-menu-item"><a href="#" click.delegate="createSampleRequest(row.item2.id)" class="look-menu-link">Request</a></li>
+                                        <li class="look-menu-item"><a href="#" class="look-menu-link">Details</a></li>
+                                        
+                                        <li if.bind="!row.item2.fromDate" class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.item2.id)" class="look-menu-link">Set Availability</a></li>
+
+                                        <li if.bind="row.item2.fromDate" class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.item2.id)" class="look-menu-link">Check Availability</a></li>
+
+                                        <li class="pure-menu-item"><a href="#" click.delegate="editSearchableItem(row.item2.id)" class="look-menu-link">Edit</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+   <!-- Card number 3 -->       
+                        <div class="card">
+                            
+                            <!-- Three dots menu -->
+                            <a href="#" class="look-menu-click" click.delegate="lookMenu(row.item3.id)">
+                                <div class=menu-stripe></div>
+                            </a>
+
+                            <!-- Zoom big image -->
+                            <div id="image-zoom-${row.item3.id}" class="card-image-zoom">
+                                <img src.bind="row.item3.image" ref="image" />
+                            </div> 
+
+                            <!-- Main image -->
+                            <div class="card-image">
+                                <img src.bind="row.item3.image" ref="image" click.delegate="zoomImage(row.item3.id)" />
+                                <div class="card-image-overlay"><div class="plus">+</div></div>
+                            </div>
+                            <img src="/assets/indigital.png" style="width:120px;" class="indigital-align"/> 
+
+
+                            <!-- Menu on image when three dots clicked -->                            
+                            <div class="look-menu" id="look-${row.item3.id}">
+                                <div class="look-menu-wrap">
+                                    <div class="look-menu-heading">
+                                        LOOK ${row.item3.id}
+                                        <button type="button" class="close" click.delegate="closeMenu(row.item3.id)">
+                                              <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+
+                                    <ul class="look-menu-list">
+                                        <li class="look-menu-item"><a href="#" click.delegate="createSampleRequest(row.item3.id)" class="look-menu-link">Request</a></li>
+                                        <li class="look-menu-item"><a href="#" class="look-menu-link">Details</a></li>
+                                        
+                                        <li if.bind="!row.item3.fromDate" class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.item3.id)" class="look-menu-link">Set Availability</a></li>
+
+                                        <li if.bind="row.item3.fromDate" class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.item3.id)" class="look-menu-link">Check Availability</a></li>
+
+                                        <li class="pure-menu-item"><a href="#" click.delegate="editSearchableItem(row.item3.id)" class="look-menu-link">Edit</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+   <!-- Card number 4 -->       
+                        <div class="card">
+                            
+                            <!-- Three dots menu -->
+                            <a href="#" class="look-menu-click" click.delegate="lookMenu(row.item4.id)">
+                                <div class=menu-stripe></div>
+                            </a>
+
+                            <!-- Zoom big image -->
+                            <div id="image-zoom-${row.item4.id}" class="card-image-zoom">
+                                <img src.bind="row.item4.image" ref="image" />
+                            </div> 
+
+                            <!-- Main image -->
+                            <div class="card-image">
+                                <img src.bind="row.item4.image" ref="image" click.delegate="zoomImage(row.item4.id)" />
+                                <div class="card-image-overlay"><div class="plus">+</div></div>
+                            </div>
+                            <img src="/assets/indigital.png" style="width:120px;" class="indigital-align"/> 
+
+
+                            <!-- Menu on image when three dots clicked -->                            
+                            <div class="look-menu" id="look-${row.item4.id}">
+                                <div class="look-menu-wrap">
+                                    <div class="look-menu-heading">
+                                        LOOK ${row.item4.id}
+                                        <button type="button" class="close" click.delegate="closeMenu(row.item4.id)">
+                                              <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+
+                                    <ul class="look-menu-list">
+                                        <li class="look-menu-item"><a href="#" click.delegate="createSampleRequest(row.item4.id)" class="look-menu-link">Request</a></li>
+                                        <li class="look-menu-item"><a href="#" class="look-menu-link">Details</a></li>
+                                        
+                                        <li if.bind="!row.item4.fromDate" class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.item4.id)" class="look-menu-link">Set Availability</a></li>
+
+                                        <li if.bind="row.item4.fromDate" class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.item4.id)" class="look-menu-link">Check Availability</a></li>
+
+                                        <li class="pure-menu-item"><a href="#" click.delegate="editSearchableItem(row.item4.id)" class="look-menu-link">Edit</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+   <!-- Card number 5 -->       
+                        <div class="card">
+                            
+                            <!-- Three dots menu -->
+                            <a href="#" class="look-menu-click" click.delegate="lookMenu(row.item5.id)">
+                                <div class=menu-stripe></div>
+                            </a>
+
+                            <!-- Zoom big image -->
+                            <div id="image-zoom-${row.item5.id}" class="card-image-zoom">
+                                <img src.bind="row.item5.image" ref="image" />
+                            </div> 
+
+                            <!-- Main image -->
+                            <div class="card-image">
+                                <img src.bind="row.item5.image" ref="image" click.delegate="zoomImage(row.item5.id)" />
+                                <div class="card-image-overlay"><div class="plus">+</div></div>
+                            </div>
+                            <img src="/assets/indigital.png" style="width:120px;" class="indigital-align"/> 
+
+
+                            <!-- Menu on image when three dots clicked -->                            
+                            <div class="look-menu" id="look-${row.item5.id}">
+                                <div class="look-menu-wrap">
+                                    <div class="look-menu-heading">
+                                        LOOK ${row.item5.id}
+                                        <button type="button" class="close" click.delegate="closeMenu(row.item5.id)">
+                                              <span aria-hidden="true">×</span>
+                                        </button>
+                                    </div>
+
+                                    <ul class="look-menu-list">
+                                        <li class="look-menu-item"><a href="#" click.delegate="createSampleRequest(row.item5.id)" class="look-menu-link">Request</a></li>
+                                        <li class="look-menu-item"><a href="#" class="look-menu-link">Details</a></li>
+                                        
+                                        <li if.bind="!row.item5.fromDate" class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.item5.id)" class="look-menu-link">Set Availability</a></li>
+
+                                        <li if.bind="row.item5.fromDate" class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.item5.id)" class="look-menu-link">Check Availability</a></li>
+
+                                        <li class="pure-menu-item"><a href="#" click.delegate="editSearchableItem(row.item5.id)" class="look-menu-link">Edit</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                       
                   
                     </div>
                 </div>
