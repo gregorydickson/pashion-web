@@ -77,12 +77,15 @@ class SearchableItemController {
                 }
             } 
         
-        
+        def fixImagesPerRow = 5
+        if(fixImagesPerRow > 5) fixImagesPerRow = 5
+        if(fixImagesPerRow < 3) fixImagesPerRow = 3
+        log.info "Images per row: "+fixImagesPerRow
         Integer resultsSize = results.size()
         log.info "result size:"+resultsSize 
-        Integer rows = resultsSize/5
+        Integer rows = resultsSize/fixImagesPerRow  
         
-        if(resultsSize % 5 > 0)
+        if(resultsSize % fixImagesPerRow > 0)
             rows = rows + 1
         List resultList = []
         log.info "rows:"+rows
@@ -95,26 +98,31 @@ class SearchableItemController {
             if(j < resultsSize){
                 arow.numberImages = resultsSize
                 arow.numberImagesThisRow = 1
+                arow.numberImagesThisRowPC = 100
                 item << results[j]
                 j = j + 1
             }
-            if(j < resultsSize){
+            if(j < resultsSize ){
                 arow.numberImagesThisRow = 2
+                arow.numberImagesThisRowPC = 50
                 item << results[j]
                 j = j + 1
             }
-            if(j < resultsSize){
+            if(j < resultsSize && fixImagesPerRow >= 3){
                 arow.numberImagesThisRow = 3
+                arow.numberImagesThisRowPC = 33
                 item << results[j]
                 j = j + 1
             }
-            if(j < resultsSize){
+            if(j < resultsSize && fixImagesPerRow >= 4){
                 arow.numberImagesThisRow = 4
+                arow.numberImagesThisRowPC = 25
                 item << results[j]
                 j = j + 1
             }
-            if(j < resultsSize){
+            if(j < resultsSize && fixImagesPerRow >= 5) {
                 arow.numberImagesThisRow = 5
+                arow.numberImagesThisRowPC = 20
                 item << results[j]
                 j = j + 1
             }
