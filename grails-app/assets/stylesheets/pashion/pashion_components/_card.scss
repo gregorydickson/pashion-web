@@ -49,7 +49,8 @@
 		display: none;
 		margin: 0 auto;
 		min-width: 80%;
-		width: autp; 
+		width: auto; 
+		max-width: 96%;
 		z-index: 110;
 		background-color: $white;
 		border: 0.5px solid $pinkish-grey;
@@ -156,34 +157,6 @@
 
 	.card-image:hover {
 		cursor: pointer;
-	}
-
-	.card-image-overlay {
-		background: rgba(0, 0, 0, .5);
-		text-align: center;
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		left: 0;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		opacity: 0;
-		z-index: 1;
-		cursor: pointer;
-		-webkit-transition: opacity .25s ease;
-		-moz-transition: opacity .25s ease;
-	}
-
-	.card-image:hover .card-image-overlay {
-		opacity: 1;
-		cursor: pointer;
-	}
-
-	.card-image-overlay .plus {
-		color: rgba(255, 255, 255, .85);
-		font-size: 60px;
 	}
 
 }

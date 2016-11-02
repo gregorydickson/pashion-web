@@ -3,17 +3,14 @@
    <ai-dialog class="card-image-zoom">
         <ai-dialog-header>
             <!-- header -->
-            <div class="grid-block align-center tool-header shrink ">
-                <div id="comms_panel" class="grid-block tool-header shrink">
-                    <span class="welcome-header" style="margin-left:32px;">${currentItem.id}</span> 
-                    
-                </div>
+            <div class="align-center tool-header">
+                    <span class="ui-text-label-m-broad">${currentItem.name}</span> 
             </div>
         </ai-dialog-header>
       <ai-dialog-body>
-
-          <img src="/assets/looks/paco/10.jpg" ref="image" click.delegate="close()" />
-
+          <div class="card-image-zoom-wrap">
+                    <img src.bind="currentItem.image" ref="image" click.delegate="close()" />
+          </div>
       </ai-dialog-body>
 
    </ai-dialog>

@@ -5,16 +5,30 @@ import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 
 
-@inject(DialogController)
+@inject(HttpClient, DialogController)
 export class Zoom {
+   static inject = [DialogController];
   currentItem = {};
- 
 
-  constructor(controller){
+  constructor(http, controller){
     this.controller = controller;
-    
+
+    http.configure(config => {
+      config
+        .useStandardConfiguration();
+    });
+    this.http = http;
   }
-  
+
+  activate(itemId){
+    this.http.fetch('/searchableItems/'+itemId+'.json')
+         .then(response => response.json())
+         .then(item => {
+             this.currentItem = item;
+           }
+         );
+  }
+
   close(){
     this.controller.close();
   }

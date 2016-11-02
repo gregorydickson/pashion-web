@@ -272,8 +272,7 @@
 
                                 <!-- Main image -->
                                 <div class="card-image">
-                                    <img src.bind="row.items[i].image" ref="image"  />
-                                    <div class="card-image-overlay" click.delegate="createZoomDialog(row.items[i].id)"><div class="plus">+</div></div>
+                                    <img src.bind="row.items[i].image" ref="image"  click.delegate="createZoomDialog(row.items[i].id)"/>
                                 </div>
                                 <img src="/assets/indigital.png" style="width:120px;" class="indigital-align"/> 
 
