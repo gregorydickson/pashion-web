@@ -77,7 +77,7 @@ class SearchableItemController {
                 }
             } 
         
-        def fixImagesPerRow = 5
+        def fixImagesPerRow = 4
         if(fixImagesPerRow > 5) fixImagesPerRow = 5
         if(fixImagesPerRow < 3) fixImagesPerRow = 3
         log.info "Images per row: "+fixImagesPerRow

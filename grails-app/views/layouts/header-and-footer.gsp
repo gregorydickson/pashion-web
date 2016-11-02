@@ -38,7 +38,7 @@
                 <span style="margin-right: 1rem;"><a class="inactiveLink" href="#">HELP</a></span>
                 <span style="margin-right: 1rem;"><a class="inactiveLink" href="#">ABOUT</a></span>
                 <span style="margin-right: 1rem;"><a class="inactiveLink" href="#">CONTACT</a></span>
-                <a href="#"><img src="/assets/indigital.png" style="width:120px; margin-top: -4px;" /></a>
+                <a href="#"><img src="/assets/indigitalimages_logo.png" style="width:120px; height:auto;" /></a>
             </div>
             <!-- <span class="left nav-label-footer"><a href="#">CONTACT</a></span> -->
             <span class="right copyright">Copyright 2016 PASHION Ltd. All Rights Reserved.</a></span>
