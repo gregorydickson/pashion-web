@@ -21,6 +21,7 @@ class BootStrap {
         returnArray['image'] = it.image
         returnArray['id'] =  it.id
         returnArray['fromDate'] =  it.fromDate
+        returnArray['name'] =  it.name
         return returnArray
       }
 
