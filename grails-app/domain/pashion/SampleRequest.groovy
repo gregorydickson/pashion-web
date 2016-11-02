@@ -21,9 +21,18 @@ class SampleRequest {
 	User returnTo
 	String returnBy
 	String requiredBy
-	
 
-	String editorial
+	String overview
+	
+	String pickupId
+	Date pickupDate
+	String pickupDestination
+
+
+	String editorialName
+	String editorialWho
+	Date editorialWhen
+
 	String comments
 
 	Integer itemsGot
@@ -32,12 +41,51 @@ class SampleRequest {
 	//auto fields
 	Date dateCreated
 	Date lastUpdated
+
 	Collection searchableItems
+	Collection<BookingStatus> searchableItemsStatus
+
+	ShippingEvent shippingOut
+	ShippingEvent shippingReturn
+
+	static constraints = {
+		idString nullable: true
+		dateRequested nullable: true
+		dateDue nullable: true
+		bookingStartDate nullable: true
+	    bookingEndDate nullable: true
+		requestStatus nullable: true
+		userCreatedId nullable: true
+		brand nullable:true 
+		receivingUser nullable:true
+		requestingUser nullable: true 
+
+		overview nullable:true
+
+		pickupId nullable: true
+		pickupDate nullable: true
+	 	pickupDestination nullable: true
+
+		editorialName nullable: true 
+		editorialWho nullable: true 
+		editorialWhen nullable: true 
+		comments nullable: true 
+
+		itemsGot nullable: true
+		itemsOut nullable: true 
+
+		shippingOut nullable: true 
+		shippingReturn nullable: true
+
+		searchableItemsStatus nullable:true
+		
+	}
 
 
 	static mapping = {
         cache true
         searchableItems lazy:false
+        searchableItemsStatus lazy:false
     }
 
 	static belongsTo = SearchableItem 
@@ -93,24 +141,5 @@ class SampleRequest {
 	}
   	
 
-	static constraints = {
-		idString nullable: true
-		dateRequested nullable: true
-		dateDue nullable: true
-		bookingStartDate nullable: true
-	    bookingEndDate nullable: true
-		requestStatus nullable: true
-		userCreatedId nullable: true
-		brand nullable:true 
-		receivingUser nullable:true
-		requestingUser nullable: true 
-
-		editorial nullable: true 
-		comments nullable: true 
-
-		itemsGot nullable: true
-		itemsOut nullable: true 
-
-		
-	}
+	
 }

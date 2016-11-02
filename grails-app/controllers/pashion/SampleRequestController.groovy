@@ -27,11 +27,19 @@ class SampleRequestController {
         sr.returnBy = jsonObject.returnBySelected
         sr.returnTo = User.get(jsonObject.returnToSelected)
         sr.requestStatus = "Requested"
-        
+        SearchableItem item
         jsonObject.selectedProductIds.each{
-            SearchableItem item = SearchableItem.get(it)
+            item = SearchableItem.get(it)
             sr.addToSearchableItems(item)
+            def status = new BookingStatus()
+            status.itemId = item.id
+            status.brandStatus = "Not Arrived"
+            status.pressStatus = "Not Shot"
+            sr.addToSearchableItemsStatus(status)
         } 
+        sr.requestingUser = session.user
+        sr.brand = item.brand
+        sr.dateRequested = new Date()
         sr.save(failOnError : true, flush: true)
         def sent = [message:'Sample Request Sent']
         render sent as JSON
