@@ -1,20 +1,189 @@
 .cards-list-wrap {
 	overflow-y: scroll;
-    height: 100vh;
+	height: 100vh;
 }
 
 .cards-list {
-	display: flex; 
-	display: -webkit-flex; 
-	flex-wrap: wrap; 
-	flex-flow: row wrap; 
-	justify-content: center; 
-}
-.cards-list .card { 
-   width: 20%;
-   margin-bottom: 0; 
+	display: flex;
+	display: -webkit-flex;
+	flex-wrap: wrap;
+	flex-flow: row wrap;
+	justify-content: center;
 }
 
-.cards-list .card {
-	position: relative; 
+.cards-list {
+	.card {
+		width: 20%;
+		margin-bottom: 0;
+		position: relative;
+	}
+
+	.card .indigital-align {
+		width: 95px;
+		position: absolute;
+		height: 20px;
+		left: 0;
+		bottom: 0;
+	}
+
+	.look-menu {
+		width: 100%;
+		height: 100%;
+		display: none;
+		align-items: center;
+		position: absolute;
+		top: 0;
+		left: 0;
+		margin: 0; 
+		background-color: transparent; 
+	}
+
+	.look-menu-show.look-menu {
+		display: flex;
+	}
+
+	.look-menu-wrap {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		display: none;
+		margin: 0 auto;
+		min-width: 80%;
+		width: autp; 
+		z-index: 110;
+		background-color: $white;
+		border: 0.5px solid $pinkish-grey;
+		box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+	}
+
+	.look-menu-show  .look-menu-wrap {
+		display: block;
+	}
+
+	.look-menu-absolute {
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		display: none;
+		width: 90%;
+		height: 60%;
+		top: 20%;
+		left: 5%;
+		position: absolute;
+		z-index: 110;
+		background-color: $white;
+		border: 0.5px solid $pinkish-grey;
+		box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+	}
+
+	.look-menu-show {
+		display: flex;
+	}
+
+	.look-menu-heading {
+		background-color: $white-two;
+		text-align: center;
+		font-weight: 500;
+		height: auto;
+		padding: 0.5rem 25px 0.5rem 1rem;
+		min-height: 26px;
+	}
+
+	.look-menu-link:hover {
+		background-color: $white-two;
+	}
+
+	.look-menu-list,
+	.look-menu-item {
+		position: relative;
+	}
+
+	.look-menu-list {
+		list-style: none;
+		margin: 0;
+		padding-bottom: 3px;
+		padding-top: 0.5rem;
+		line-height: 2rem;
+	}
+
+	.look-menu-item {
+		padding: 0;
+		margin: 0;
+		height: 100%;
+	}
+
+	.look-menu-link,
+	.look-menu-heading {
+		display: block;
+		text-decoration: none;
+		white-space: wrap;
+		position: relative;
+		color: $black;
+	}
+
+	a.look-menu-link {
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+
+	.look-menu-heading button.close {
+		background: $white-two none repeat scroll 0 0;
+		border: medium none;
+		color: $warm-grey;
+		cursor: pointer;
+		display: block;
+		float: right;
+		font-size: 16px;
+		height: 25px;
+		line-height: 26px;
+		padding: 0;
+		width: 25px;
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
+
+	.look-menu-heading button.close span {
+		color: $warm-grey;
+		cursor: pointer;
+		font-size: 16px;
+		line-height: 25px;
+	}
+
+	.card-image {
+		position: relative;
+	}
+
+	.card-image:hover {
+		cursor: pointer;
+	}
+
+	.card-image-overlay {
+		background: rgba(0, 0, 0, .5);
+		text-align: center;
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0;
+		z-index: 1;
+		cursor: pointer;
+		-webkit-transition: opacity .25s ease;
+		-moz-transition: opacity .25s ease;
+	}
+
+	.card-image:hover .card-image-overlay {
+		opacity: 1;
+		cursor: pointer;
+	}
+
+	.card-image-overlay .plus {
+		color: rgba(255, 255, 255, .85);
+		font-size: 60px;
+	}
+
 }

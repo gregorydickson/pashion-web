@@ -9,6 +9,7 @@ import {EditSearchableItem} from './items/editSearchableItem';
 import {CheckAvailability} from './items/checkAvailability';
 import {SetAvailability} from './items/setAvailability';
 import {Introduction} from './hello/introduction';
+import {Zoom} from './zoom/zoom';
 
 
 @inject(HttpClient, EventAggregator, DialogService)
@@ -165,14 +166,14 @@ export class Index {
   }
 
 
-  // Big image (zoom)
-  zoomImage(id){
-    var image = document.getElementById("image-zoom-"+id);
-    image.classList.toggle("card-image-zoom-show");
+  // Zoom image
 
-    document.getElementsByTagName('body')[0].className+='zoom-body-overlay';
+  createZoomDialog(itemId) {
+    this.dialogService.open({viewModel: Zoom, model: itemId })
+      .then(response => {});
   }
-    
+
+
 }
 
 
