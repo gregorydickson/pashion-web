@@ -256,10 +256,11 @@
 
 
                 <!-- Images/Looks -->
-                 <div class="cards-list-wrap">
-                        
-
-                    <div class="cards-list" repeat.for="row of rows" >
+ 
+                <!-- Images/Looks -->
+                <div class="cards-list-wrap">
+                
+                        <div class="cards-list" repeat.for="row of rows" >
 
                             <div class="card" repeat.for="i of row.numberImagesThisRow">
                             
@@ -271,12 +272,7 @@
 
                                 <!-- Zoom big image -->
                                 <div id="image-zoom-${row.items[i].id}" class="card-image-zoom">
-                                     <div class="card-image-zoom-wrap">
-                                            <button type="button" class="close" click.delegate="closeZoom(row.item1.id)">
-                                                  <span aria-hidden="true">×</span>
-                                            </button>
-                                        <img src.bind="row.items[i].image" ref="image" />
-                                    </div>
+                                    <img src.bind="row.items[i].image" ref="image" />
                                 </div> 
 
                                 <!-- Main image -->
@@ -309,8 +305,7 @@
                                         </ul>
                                     </div>
                                 </div>
-                        
-                            </div>
+                        </div>
 
                   
                     </div>
