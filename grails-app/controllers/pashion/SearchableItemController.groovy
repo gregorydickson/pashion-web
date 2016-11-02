@@ -56,6 +56,8 @@ class SearchableItemController {
         def criteria = SearchableItem.createCriteria()
         
         List results = criteria.listDistinct () {
+
+                log.info "image:"+'image'
                 isNotNull('image')
                 if(brand) eq('brand', brand)
                 if(keywords) or {
@@ -80,7 +82,7 @@ class SearchableItemController {
         log.info "result size:"+resultsSize 
         Integer rows = resultsSize/5
         
-        if(results.size() % 5)
+        if(resultsSize % 5 > 0)
             rows = rows + 1
         List resultList = []
         log.info "rows:"+rows
