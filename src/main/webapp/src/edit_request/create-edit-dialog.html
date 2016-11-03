@@ -1,3 +1,5 @@
+<!-- Note same layout for Press and Brand, only content and Ttiles change -->
+<!-- Currently this static template is setup for Press -->
 <template>
     <ai-dialog style="width: auto;"> <!-- Based on the design. would prefer to be flexible, but postpone this -->
         
@@ -17,19 +19,10 @@
                 <div class="grid-block">
 
                     <!-- Column One -->
-                    <div class="grid-block vertical medium-6 align-left" style="padding-right:16px;">                   
+                    <div class="grid-block vertical medium-6 align-left" style="padding-right:16px;">  
+
+                        <!-- OVERVIEW -->                 
                         <span style="margin-bottom: 1rem;">OVERVIEW</span>
-                        <!-- Type -->
-                        <div class="grid-block shrink" >                        
-                            <span class="inline-label">
-                                <span class="slim-text-box-label">Type</span>
-                                <select name="" id="">
-                                    <option>All</option>
-                                    <option>Looks</option>
-                                    <option>Samples</option>
-                                </select>
-                            </span>
-                        </div>
 
                         <!-- Requested -->
                         <div class="grid-block shrink">                       
@@ -48,7 +41,7 @@
                             </div>
                         </div>
 
-                        <!-- Type -->
+                        <!-- Company -->
                         <div class="grid-block shrink">        
                                 <span class="inline-label">
                                         <span class="slim-text-box-label">Company</span>
@@ -73,29 +66,48 @@
                             <span class="inline-label slim-text-box-label">Requested</span>
                             <div class="" >
                                 <input type="text" class="slim-text-box-narrow">
-                            </div>
-                        
+                            </div>                       
 
-                         <!-- Got -->
-                        
+                         <!-- Press: Got, Brand: Sent-->                      
                             <span class="inline-label slim-text-box-label-narrow">Got</span>
                             <div class="" >
                                 <input type="text" class="slim-text-box-narrow">
                             </div>
                                                                 
-
-                         <!-- Out -->
-                        
-                            <span class="inline-label slim-text-box-label-narrow">Out</span>
+                         <!-- Press: Due, Brand: Arrived -->                        
+                            <span class="inline-label slim-text-box-label-narrow">Due</span>
                             <div class="" >
                                 <input type="text" class="slim-text-box-narrow">
                             </div>
                         </div> 
 
+
+                        <!-- Press: DELIVERY DETAILS, Brand: RETURN DETAILS -->
+                        <span style="margin-bottom: 1rem;">DELIVERY DETAILS</span>
+
+                        <!-- ID -->
+                        <div class="grid-block shrink">                       
+                            <span class="inline-label slim-text-box-label">ID</span>
+                            <div class="">
+                                <input type="text" class="slim-text-box">
+                            </div>
+                        </div>
+
+
+                        <!-- Arrives -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Arrives</span>
+                            <div class="">
+                                <input type="text" class="slim-text-box">
+                            </div>
+                        </div>
+
                     </div>
 
                     <!-- Column Two -->
                     <div class="grid-block vertical medium-6 align-right" style="padding-left:16px; padding-right: 10px;"> <!-- to make it LOOK balanced -->
+
+                        <!-- Press: RETURN DETAILS, Brand: DELIVERY DETAILS -->
                         <span style="margin-bottom: 1rem;">RETURN DETAILS</span>
 
                         <!-- ID -->
@@ -136,7 +148,10 @@
                                 </select>
                                 </span>
                         </div>
+
+                        <!-- Editorial -->
                         <span style="margin-bottom: 1rem;">EDITORIAL</span>
+
                         <!-- Name -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Name</span>
@@ -144,6 +159,7 @@
                                 <input type="text" class="slim-text-box">
                             </div>
                         </div>
+
                         <!-- Who -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Who</span>
@@ -151,6 +167,7 @@
                                 <input type="text" class="slim-text-box">
                             </div>
                         </div>
+
                         <!-- When -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">When</span>
@@ -158,7 +175,6 @@
                                 <input type="text" class="slim-text-box">
                             </div>
                         </div>
-
                     </div>                    
                 </div>
                 <!-- Bottom Row -->
