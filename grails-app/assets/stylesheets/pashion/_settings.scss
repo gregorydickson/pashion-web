@@ -331,9 +331,9 @@ $input-background: #fff;
 $input-background-hover: $input-background;
 $input-background-focus: $input-background;
 $input-background-disabled: smartscale($input-background);
-$input-border: 0.5px solid $white-three; //RM
-$input-border-hover: 0.5px solid $pinkish-grey; //RM
-$input-border-focus: 0.5px solid $pinkish-grey; //RM
+$input-border: 1px solid $white-three; //RM
+$input-border-hover: 1px solid $pinkish-grey; //RM
+$input-border-focus: 1px solid $pinkish-grey; //RM
 $input-cursor-disabled: not-allowed;
 
 $select-color: $body-font-color;
