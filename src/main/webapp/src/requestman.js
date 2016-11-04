@@ -1,11 +1,8 @@
 import {inject} from 'aurelia-framework';
-import {HttpClient} from 'aurelia-fetch-client';
-import 'fetch';
 import {UserService} from './services/userService';
 import {SampleRequestService} from './services/sampleRequestService';
-import {bindable} from 'aurelia-framework';
 
-@inject(HttpClient, UserService,SampleRequestService)
+@inject(UserService,SampleRequestService)
 export class Requestman{
 	  
   bookings = [];
@@ -14,13 +11,8 @@ export class Requestman{
   selectedStatus = "";
   user = {};
 
-  constructor(http,userService,sampleRequestService) {
-    http.configure(config => {
-      config
-        .useStandardConfiguration();
-    });
+  constructor(userService,sampleRequestService) {
     
-    this.http = http;
     this.userService = userService;
     this.sampleRequestService = sampleRequestService;
 
