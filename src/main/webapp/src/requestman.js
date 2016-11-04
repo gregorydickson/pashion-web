@@ -6,7 +6,7 @@ import {UserService} from './services/userService';
 @inject(HttpClient, UserService)
 export class Requestman{
 	  
-  bookings = {};
+  bookings = [];
   searchTest = "";
   status = [];
   selectedStatus = "";
@@ -24,9 +24,12 @@ export class Requestman{
 
 	activate() {
 
-      this.http.fetch('/sampleRequest/filterSearch')
+      this.http.fetch('/sampleRequest.json')
       	.then(response => response.json())
-      	.then(bookings => this.bookings = bookings);
+      	.then(bookings =>{ 
+          this.bookings = bookings;
+        });
+
 
       this.user = this.userService.getUser().then(user => this.user = user);
 
@@ -36,7 +39,7 @@ export class Requestman{
 	filterChange(event){
 	    console.log("changing");
 
-	    this.http.fetch('/sampleRequest/filterSearch?searchtext='+ encodeURI(this.searchText) + 
+	    this.http.fetch('/sampleRequest.json?searchtext='+ encodeURI(this.searchText) + 
 	                                      '&status=' + this.selectedStatus)
 	          .then(response => response.json())
 	          .then(rows => {this.bookings = bookings});

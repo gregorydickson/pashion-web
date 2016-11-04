@@ -1,0 +1,6 @@
+import pashion.SampleRequest
+import groovy.transform.Field
+
+@Field List<SampleRequest> sampleRequestList
+
+json tmpl.sampleRequest(sampleRequestList)

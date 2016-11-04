@@ -11,12 +11,15 @@ class SampleRequest {
 	Date dateDue
 	Date bookingStartDate
 	Date bookingEndDate
-	String requestStatus //"Requested", "Approved"
+	String requestStatus //Pending ->Shipped -> delivered -> due back ->overdue ->closed
 	Long userCreatedId
 	
 	Brand brand
-	User receivingUser // SearchableItem.owner
-	User requestingUser // current User
+	PressHouse pressHouse
+	Courier courierOut
+	Courier courierIn
+	User receivingUser 
+	User requestingUser 
 	User deliverTo
 	User returnTo
 	String returnBy
@@ -37,6 +40,7 @@ class SampleRequest {
 
 	Integer itemsGot
 	Integer itemsOut
+	Integer itemsIn
 
 	//auto fields
 	Date dateCreated
@@ -57,6 +61,9 @@ class SampleRequest {
 		requestStatus nullable: true
 		userCreatedId nullable: true
 		brand nullable:true 
+		pressHouse nullable: true
+		courierOut nullable: true
+		courierIn nullable: true
 		receivingUser nullable:true
 		requestingUser nullable: true 
 
@@ -73,6 +80,7 @@ class SampleRequest {
 
 		itemsGot nullable: true
 		itemsOut nullable: true 
+		itemsIn nullable: true
 
 		shippingOut nullable: true 
 		shippingReturn nullable: true

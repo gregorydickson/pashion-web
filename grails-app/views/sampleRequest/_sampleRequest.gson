@@ -1,0 +1,12 @@
+import pashion.SampleRequest
+
+
+model {  
+    SampleRequest sampleRequest
+}
+
+json g.render(sampleRequest,[excludes:['pressHouse'],expand:['searchableItemsStatus','searchableItems','requestingUser']]){
+	pressHouse {
+		name sampleRequest.pressHouse.name
+	}
+}
