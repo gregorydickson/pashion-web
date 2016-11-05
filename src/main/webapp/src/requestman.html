@@ -93,8 +93,8 @@
                                 <table class="big-accordion">
                                     <tr>
                                         <td class="accordion-underline w3"></td>
-                                        <td class="accordion-underline w7">ID</td>
-                                        <td class="accordion-underline w8">DUE</td>
+                                        <td class="accordion-underline w4">ID</td>
+                                        <td class="accordion-underline w11">DUE</td>
                                         <td class="accordion-underline w18">SHOOT</td>
                                         <td class="accordion-underline w14">COMPANY</td>
                                         <td class="accordion-underline w13">WHO</td>
@@ -115,12 +115,12 @@
                                             <td class="accordion-grey w3">
                                                 <button id="button${$index}" class="accordion" click.delegate="closeExpand($index)"></button>
                                             </td>
-                                            <td class="accordion-grey w7">${booking.id}</td>
-                                            <td class="accordion-grey w8">${booking.bookingStartDate | viewDateFormat}</td>
+                                            <td class="accordion-grey w4">${booking.id}</td>
+                                            <td class="accordion-grey w11">${booking.bookingStartDate | viewDateFormat}</td>
                                             <td class="accordion-grey w18">${booking.editorialName}</td>
                                             <td class="accordion-grey w14">${booking.pressHouse.name}</td>
                                             <td class="accordion-grey w13">${booking.requestingUser.name} ${booking.requestingUser.surname}</td>
-                                            <td class="accordion-grey w5;">${booking.searchableItems.length}</td>
+                                            <td class="accordion-grey w5">${booking.searchableItems.length}</td>
                                             <td class="accordion-grey w8">${booking.itemsOut}</td>
                                             <td class="accordion-grey w6">${booking.itemsIn}</td>
                                             <td class="accordion-grey w10">${booking.requestStatus}</td>
@@ -161,9 +161,9 @@
                                                         <td class="accordion sample-padding">${item.name}</td>
                                                     </div>
                                                 </tr>
-                                                <tr>
+                                               <!-- <tr>
                                                     <td repeat.for="status of booking.searchableItemsStatus" class="accordion sample-padding">${status.brandStatus}</td>
-                                                </tr>
+                                                </tr> -->
                                             </table>
                                         </div>
                                         
