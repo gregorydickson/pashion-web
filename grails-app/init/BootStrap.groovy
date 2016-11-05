@@ -10,12 +10,10 @@ class BootStrap {
     def sessionFactory
     def grailsApplication
     def init = { servletContext ->
-
-      
-
-      
+  
       def ctx = grailsApplication.mainContext
       def userService = ctx.userService
+
       JSON.registerObjectMarshaller(SearchableItem) {
         def returnArray = [:]
         returnArray['image'] = it.image
@@ -31,6 +29,7 @@ class BootStrap {
         returnArray['id'] =  it.id
         return returnArray
       }
+
 
 
 

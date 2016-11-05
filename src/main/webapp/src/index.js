@@ -10,11 +10,13 @@ import {CheckAvailability} from './items/checkAvailability';
 import {SetAvailability} from './items/setAvailability';
 import {Introduction} from './hello/introduction';
 import {Zoom} from './zoom/zoom';
+import {SampleRequestService} from './services/sampleRequestService';
+import {UserService} from './services/userService'
 
 
-@inject(HttpClient, EventAggregator, DialogService)
+@inject(HttpClient, EventAggregator, DialogService,SampleRequestService, UserService)
 export class Index {
-  heading = 'Looks for a Collection';
+  bookings = [];
   rows = [];
   seasons = [];
   brands = [];
@@ -54,7 +56,7 @@ export class Index {
   }
 
 
-  constructor(http, eventAggregator,dialogService) {
+  constructor(http, eventAggregator,dialogService,sampleRequestService,userService) {
     http.configure(config => {
       config
         .useStandardConfiguration();
@@ -63,6 +65,8 @@ export class Index {
     this.http = http;
     this.boundHandler = this.handleKeyInput.bind(this);
     this.dialogService = dialogService;
+    this.sampleRequestService = sampleRequestService;
+    this.userService = userService;
 
   }
 
@@ -80,8 +84,8 @@ export class Index {
     });
 
     this.dialogService.open({viewModel: Introduction, model: "no-op" }).then(response => {});
-     
     
+      
   }
 
   activate() {
@@ -91,7 +95,9 @@ export class Index {
       this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
       this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes),
       this.http.fetch('/brand/index.json').then(response => response.json()).then(brands => this.brands = brands),
-      this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors)
+      this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors),
+      this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings),
+      this.user = this.userService.getUser().then(user => this.user = user)
 
     ]);
   }

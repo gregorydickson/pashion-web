@@ -1,45 +1,36 @@
 import {inject} from 'aurelia-framework';
-import {HttpClient} from 'aurelia-fetch-client';
-import 'fetch';
 import {UserService} from './services/userService';
+import {SampleRequestService} from './services/sampleRequestService';
 
-@inject(HttpClient, UserService)
+@inject(UserService,SampleRequestService)
 export class Requestman{
 	  
-  bookings = {};
+  bookings = [];
   searchTest = "";
   status = [];
   selectedStatus = "";
   user = {};
 
-  constructor(http,userService) {
-    http.configure(config => {
-      config
-        .useStandardConfiguration();
-    });
+  constructor(userService,sampleRequestService) {
     
-    this.http = http;
     this.userService = userService;
+    this.sampleRequestService = sampleRequestService;
+
   }
 
 	activate() {
-
-      this.http.fetch('/sampleRequest/filterSearch')
-      	.then(response => response.json())
-      	.then(bookings => this.bookings = bookings);
-
       this.user = this.userService.getUser().then(user => this.user = user);
-
-  	}
+      return this.bookings = this.sampleRequestService.getSampleRequests()
+        .then(bookings => {
+          this.bookings = bookings;
+          console.log("bookings:");
+          console.log(bookings.length);
+        });
+  }
 
 
 	filterChange(event){
 	    console.log("changing");
-
-	    this.http.fetch('/sampleRequest/filterSearch?searchtext='+ encodeURI(this.searchText) + 
-	                                      '&status=' + this.selectedStatus)
-	          .then(response => response.json())
-	          .then(rows => {this.bookings = bookings});
 	}
 
   

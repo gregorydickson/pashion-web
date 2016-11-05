@@ -1,5 +1,6 @@
 <!-- requestman.html -->
 <template>
+    <require from="./common/viewDateFormatter"></require>
     <require from="./calendars/datepicker"></require>
     <!-- Main building block -->
     <div class="vertical grid-block spa-background">
@@ -87,94 +88,91 @@
                         </div>
                         <!-- Accordion -->
                         <!--Header -->
-                        <div class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
-                            <table class="big-accordion">
-                                <tr>
-                                    <td class="accordion-underline w3"></td>
-                                    <td class="accordion-underline w7">ID</td>
-                                    <td class="accordion-underline w8">TYPE</td>
-                                    <td class="accordion-underline w8">DUE</td>
-                                    <td class="accordion-underline w18">SHOOT</td>
-                                    <td class="accordion-underline w14">COMPANY</td>
-                                    <td class="accordion-underline w13">WHO</td>
-                                    <td class="accordion-underline w5">#</td>
-                                    <td class="accordion-underline w8">OUT</td>
-                                    <td class="accordion-underline w6">IN</td>
-                                    <td class="accordion-underline w10">STATUS</td>
-                                </tr>
-                            </table>
-                        </div>
-                        <!-- Rows of content -->
-                        <div class="grid-content" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left: 1rem; margin-right: 1rem;">
-                            <table class="big-accordion">
-                                <tr>
-                                    <td class="accordion-grey w3">
-                                        <button id="button1" class="accordion" click.delegate="closeExpand(1)"></button>
-                                    </td>
-                                    <td class="accordion-grey w7">23457</td>
-                                    <td class="accordion-grey w8">Sample</td>
-                                    <td class="accordion-grey w8">16 July</td>
-                                    <td class="accordion-grey w18">Modern Pop</td>
-                                    <td class="accordion-grey w14">Elle</td>
-                                    <td class="accordion-grey w13">Ellen Mcinsky</td>
-                                    <td class="accordion-grey w5;">2</td>
-                                    <td class="accordion-grey w8">2</td>
-                                    <td class="accordion-grey w6">?</td>
-                                    <td class="accordion-grey w10">Out</td>
-                                </tr>
-                            </table>
-                            <!-- expanding data -->
-                            <div id="panel1" class="panel grid-block vertical" style="margin-left: 0.5rem; margin-top:0.5rem;">
-                                <div class="grid-content">
-                                    <span>OVERVIEW</span>
-                                </div>
-                                <div class="grid-content">
-                                    <span>Shoot by Simon Photog styled by Josh Hartnet at High Barnet studios 19-20 June for June ‘16 issue</span>
-                                </div>
-                                <div class="grid-content" style="margin-top:0.5rem;">
-                                    <span>SHIPPING OUT:</span><span style="margin-left:0.5rem;">s346x</span>
-                                </div>
-                                <div class="grid-content">
-                                    <span class="ui-text-label-m-blue">Occured</span>
-                                    <span>on 12 July 2016 by CourierCo (we paid) going to Elle Magazine, 234 St. James Street, London SE1 1RL picked up at 15:33 by Tim. Insured for £2,134 </span>
-                                </div>
-                                <div class="grid-content" style="margin-top:0.5rem;">
-                                    <span>RETURN:</span><span style="margin-left:0.5rem;">s346y</span>
-                                </div>
-                                <div class="grid-content">
-                                    <span class="ui-text-label-m-blue">Scheduled</span>
-                                    <span>for Tuesday 29 July 2016 by CourierCo (we pay) coming back to RL London at 09:00 addressed to Shep Sheppard. Insured for £2,134</span>
-                                </div>
-                                <div class="grid-content" style="margin-top:0.5rem;">
-                                    <span>SAMPLES:</span><span style="margin-left:0.5rem;">3</span>
-                                </div>
-                                <div class="grid-content">
-                                    <table class="" style="table-layout:fixed;">
-                                        <!-- image group -->
-                                        <tr style="height:1rem;">
-                                            <td rowspan="2" class="accordion"><img src="/assets/looks/11.jpg" width="40" /></td>
-                                            <td class="accordion sample-padding">34567677</td>
-                                            <td rowspan="2" class="accordion"><img src="/assets/looks/9.jpg" width="40" /></td>
-                                            <td class="accordion sample-padding">34567677</td>
-                                            <td rowspan="2" class="accordion"><img src="/assets/looks/8.jpg" width="40" /></td>
-                                            <td class="accordion sample-padding">34567677</td>
-                                        </tr>
+                       
+                            <div if.bind="user.type === 'brand'"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
+                                <table class="big-accordion">
+                                    <tr>
+                                        <td class="accordion-underline w3"></td>
+                                        <td class="accordion-underline w4">ID</td>
+                                        <td class="accordion-underline w11">DUE</td>
+                                        <td class="accordion-underline w18">SHOOT</td>
+                                        <td class="accordion-underline w14">COMPANY</td>
+                                        <td class="accordion-underline w13">WHO</td>
+                                        <td class="accordion-underline w5">#</td>
+                                        <td class="accordion-underline w8">OUT</td>
+                                        <td class="accordion-underline w6">IN</td>
+                                        <td class="accordion-underline w10">STATUS</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <!-- Content Container-->
+                            <!-- Rows of content Brand View-->
+                            <div class="grid-content" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left: 1rem; margin-right: 1rem;">
+                                
+                                <div repeat.for="booking of bookings">
+                                    <table  class="big-accordion">
                                         <tr>
-                                            <td class="accordion sample-padding">Was shot</td>
-                                            <td class="accordion sample-padding">Was not shot</td>
-                                            <td class="accordion sample-padding">Was shot</td>
+                                            <td class="accordion-grey w3">
+                                                <button id="button${$index}" class="accordion" click.delegate="closeExpand($index)"></button>
+                                            </td>
+                                            <td class="accordion-grey w4">${booking.id}</td>
+                                            <td class="accordion-grey w11">${booking.bookingStartDate | viewDateFormat}</td>
+                                            <td class="accordion-grey w18">${booking.editorialName}</td>
+                                            <td class="accordion-grey w14">${booking.pressHouse.name}</td>
+                                            <td class="accordion-grey w13">${booking.requestingUser.name} ${booking.requestingUser.surname}</td>
+                                            <td class="accordion-grey w5">${booking.searchableItems.length}</td>
+                                            <td class="accordion-grey w8">${booking.itemsOut}</td>
+                                            <td class="accordion-grey w6">${booking.itemsIn}</td>
+                                            <td class="accordion-grey w10">${booking.requestStatus}</td>
                                         </tr>
                                     </table>
-                                </div>
-                                <div class="grid-content" style="margin-top:0.75rem; ">
-                                    <span>COMMENTS</span>
-                                </div>
-                                <div class="grid-content" style="margin-bottom:1rem;">
-                                    <span>Please do not ship unless all items are available. Please contact me through PASHION IM for issues.</span>
-                                </div>
+                                    <!-- expanding data -->
+                                    <div id="panel${$index}" class="panel grid-block vertical" style="margin-left: 0.5rem; margin-top:0.5rem;">
+                                        <div class="grid-content">
+                                            <span>OVERVIEW</span>
+                                        </div>
+                                        <div class="grid-content">
+                                            <span>Shoot by Simon Photog styled by Josh Hartnet at High Barnet studios 19-20 June for June ‘16 issue</span>
+                                        </div>
+                                        <div class="grid-content" style="margin-top:0.5rem;">
+                                            <span>SHIPPING OUT:</span><span style="margin-left:0.5rem;">s346x</span>
+                                        </div>
+                                        <div class="grid-content">
+                                            <span class="ui-text-label-m-blue">Occured</span>
+                                            <span>on 12 July 2016 by CourierCo (we paid) going to Elle Magazine, 234 St. James Street, London SE1 1RL picked up at 15:33 by Tim. Insured for £2,134 </span>
+                                        </div>
+                                        <div class="grid-content" style="margin-top:0.5rem;">
+                                            <span>RETURN:</span><span style="margin-left:0.5rem;">s346y</span>
+                                        </div>
+                                        <div class="grid-content">
+                                            <span class="ui-text-label-m-blue">Scheduled</span>
+                                            <span>for ${booking.bookingEndDate | viewDateFormat} by  (we pay) coming back to RL London at 09:00 addressed to Shep Sheppard. Insured for £2,134</span>
+                                        </div>
+                                        <div class="grid-content" style="margin-top:0.5rem;">
+                                            <span>SAMPLES:</span><span style="margin-left:0.5rem;">${booking.searchableItems.length}</span>
+                                        </div>
+                                        <div class="grid-content" style="margin-top:0.5rem; margin-bottom: 1rem;">
+                                            <table class="" style="table-layout:fixed;">
+                                                <tr  style="height:1rem;">
+                                                    <td repeat.for="item of booking.searchableItems" class="accordion"><img src="/assets/looks/11.jpg" width="60px;" /></td> <!-- src="${item.image}" -->
+                                                </tr>
+                                                <tr style="height:1rem;">
+                                                    <td repeat.for="item of booking.searchableItems"  class="accordion sample-padding">${item.id}</td>
+                                                </tr>
+                                                <tr  style="height:1rem;">
+                                                    <td repeat.for="item of booking.searchableItems" class="accordion sample-padding">${item.name}</td>
+                                                </tr>
+                                               <tr>
+                                                    <td repeat.for="status of booking.searchableItemsStatus" class="accordion sample-padding">${status.brandStatus}</td>
+                                                </tr> 
+                                            </table>
+                                        </div>
+                                        
+                                    </div>
+                                </div>  
+                                
                             </div>
-                            
-                        </div>
+                       
                     </div>
                 </div>
                 <!-- white lip at bottom of scroll region -->

@@ -11,33 +11,89 @@ class SampleRequest {
 	Date dateDue
 	Date bookingStartDate
 	Date bookingEndDate
-	String requestStatus //"Requested", "Approved"
+	String requestStatus //Pending ->Shipped -> delivered -> due back ->overdue ->closed
 	Long userCreatedId
 	
 	Brand brand
-	User receivingUser // SearchableItem.owner
-	User requestingUser // current User
+	PressHouse pressHouse
+	Courier courierOut
+	Courier courierIn
+	User receivingUser 
+	User requestingUser 
 	User deliverTo
 	User returnTo
 	String returnBy
 	String requiredBy
-	
 
-	String editorial
+	String overview
+	
+	String pickupId
+	Date pickupDate
+	String pickupDestination
+
+
+	String editorialName
+	String editorialWho
+	Date editorialWhen
+
 	String comments
 
 	Integer itemsGot
 	Integer itemsOut
+	Integer itemsIn
 
 	//auto fields
 	Date dateCreated
 	Date lastUpdated
+
 	Collection searchableItems
+	Collection<BookingStatus> searchableItemsStatus
+
+	ShippingEvent shippingOut
+	ShippingEvent shippingReturn
+
+	static constraints = {
+		idString nullable: true
+		dateRequested nullable: true
+		dateDue nullable: true
+		bookingStartDate nullable: true
+	    bookingEndDate nullable: true
+		requestStatus nullable: true
+		userCreatedId nullable: true
+		brand nullable:true 
+		pressHouse nullable: true
+		courierOut nullable: true
+		courierIn nullable: true
+		receivingUser nullable:true
+		requestingUser nullable: true 
+
+		overview nullable:true
+
+		pickupId nullable: true
+		pickupDate nullable: true
+	 	pickupDestination nullable: true
+
+		editorialName nullable: true 
+		editorialWho nullable: true 
+		editorialWhen nullable: true 
+		comments nullable: true 
+
+		itemsGot nullable: true
+		itemsOut nullable: true 
+		itemsIn nullable: true
+
+		shippingOut nullable: true 
+		shippingReturn nullable: true
+
+		searchableItemsStatus nullable:true
+		
+	}
 
 
 	static mapping = {
         cache true
         searchableItems lazy:false
+        searchableItemsStatus lazy:false
     }
 
 	static belongsTo = SearchableItem 
@@ -93,24 +149,5 @@ class SampleRequest {
 	}
   	
 
-	static constraints = {
-		idString nullable: true
-		dateRequested nullable: true
-		dateDue nullable: true
-		bookingStartDate nullable: true
-	    bookingEndDate nullable: true
-		requestStatus nullable: true
-		userCreatedId nullable: true
-		brand nullable:true 
-		receivingUser nullable:true
-		requestingUser nullable: true 
-
-		editorial nullable: true 
-		comments nullable: true 
-
-		itemsGot nullable: true
-		itemsOut nullable: true 
-
-		
-	}
+	
 }

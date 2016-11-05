@@ -26,12 +26,25 @@ class SampleRequestController {
         sr.deliverTo = User.get(jsonObject.deliverToSelected)
         sr.returnBy = jsonObject.returnBySelected
         sr.returnTo = User.get(jsonObject.returnToSelected)
-        sr.requestStatus = "Requested"
-        
+        sr.requestStatus = "Pending"
+        sr.itemsGot = 0
+        sr.itemsOut = 0
+        sr.itemsIn = 0
+        SearchableItem item
         jsonObject.selectedProductIds.each{
-            SearchableItem item = SearchableItem.get(it)
+            item = SearchableItem.get(it)
             sr.addToSearchableItems(item)
+            def status = new BookingStatus()
+            status.itemId = item.id
+            status.brandStatus = "Not Arrived"
+            status.pressStatus = "Not Shot"
+            sr.addToSearchableItemsStatus(status)
         } 
+        sr.requestingUser = session.user
+        if(session.user.pressHouse)
+            sr.pressHouse = session.user.pressHouse
+        sr.brand = item.brand
+        sr.dateRequested = new Date()
         sr.save(failOnError : true, flush: true)
         def sent = [message:'Sample Request Sent']
         render sent as JSON
@@ -39,18 +52,15 @@ class SampleRequestController {
     }
 
 
-    def filterSearch(){
+    def index(){
         def user = session.user
 
-        def results = sampleRequestService.listByUserOrganization(user)
-        render results as JSON 
+        List<SampleRequest> results = sampleRequestService.listByUserOrganization(user)
+        log.info "sample requests count:"+results.size()
+        respond results
     }
 
-    def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
-        respond SampleRequest.list(params), model:[sampleRequestCount: SampleRequest.count()]
-    }
-
+    
     def show(SampleRequest sampleRequest) {
         respond sampleRequest
     }

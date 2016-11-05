@@ -8,9 +8,9 @@ buildscript {
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
-        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.11.2"
+        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.11.5"
         classpath "org.grails.plugins:hibernate4:5.0.10"
-        classpath "org.grails.plugins:views-gradle:1.1.1"
+        classpath "org.grails.plugins:views-gradle:1.1.2"
     }
 }
 
@@ -57,10 +57,10 @@ dependencies {
     profile "org.grails.profiles:web"
 
     //updated to 2.11.1
-    runtime ('com.bertramlabs.plugins:asset-pipeline-grails:2.11.2'){
+    runtime ('com.bertramlabs.plugins:asset-pipeline-grails:2.11.5'){
         exclude group: 'com.google.guava', module: 'guava'
     }
-    assets 'com.bertramlabs.plugins:sass-asset-pipeline:2.11.2'
+    assets 'com.bertramlabs.plugins:sass-asset-pipeline:2.11.5'
     //testing
     testCompile "org.grails:grails-plugin-testing"
     testCompile "org.grails.plugins:geb"
@@ -72,7 +72,7 @@ dependencies {
     //for hashing passwords
     
    
-    compile "org.grails.plugins:views-json:1.1.1"
+    compile "org.grails.plugins:views-json:1.1.2"
 
     runtime 'org.grails.plugins:grails-console:2.0.8'
 
