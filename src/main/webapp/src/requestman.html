@@ -153,17 +153,18 @@
                                         </div>
                                         <div class="grid-content">
                                             <table class="" style="table-layout:fixed;">
-                                                <!-- image group -->
-                                                <tr repeat.for="item of booking.searchableItems" style="height:1rem;">
-                                                    <div >
-                                                        <td  rowspan="2" class="accordion"><img src="${item.image}" width="40" /></td>
-                                                        <td class="accordion sample-padding">${item.id}</td>
-                                                        <td class="accordion sample-padding">${item.name}</td>
-                                                    </div>
+                                                <tr  style="height:1rem;">
+                                                    <td repeat.for="item of booking.searchableItems" class="accordion"><img src="/assets/looks/11.jpg" width="40px;" /></td> <!-- src="${item.image}" -->
                                                 </tr>
-                                               <!-- <tr>
+                                                <tr style="height:1rem;">
+                                                    <td repeat.for="item of booking.searchableItems"  class="accordion sample-padding">${item.id}</td>
+                                                </tr>
+                                                <tr  style="height:1rem;">
+                                                    <td repeat.for="item of booking.searchableItems" class="accordion sample-padding">${item.name}</td>
+                                                </tr>
+                                               <tr>
                                                     <td repeat.for="status of booking.searchableItemsStatus" class="accordion sample-padding">${status.brandStatus}</td>
-                                                </tr> -->
+                                                </tr> 
                                             </table>
                                         </div>
                                         
