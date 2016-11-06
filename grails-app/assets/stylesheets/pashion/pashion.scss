@@ -66,7 +66,8 @@
 "pashion_components/date_range_picker",
 "pashion_components/dialog", 
 "pashion_components/forms", 
-"pashion_components/card";
+"pashion_components/card",
+"pashion_components/utilities";
 
 .footer{
 	
@@ -174,12 +175,13 @@ span.slim-text-box-label-narrow {
   text-align: right;
 }
 
-input.slim-text-box {
+input.slim-text-box, select.slim-text-box {
   width: 169px;
 }
 input.slim-text-box-mid {
   width: 58px;
-}input.slim-text-box-narrow {
+}
+input.slim-text-box-narrow {
   width: 33px;
 }
 
@@ -187,20 +189,23 @@ input.slim-text-box-mid {
   box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.2);
   background: white;
 }
-
+.grid-block.grid-block-overflow-visible {
+  overflow: visible; 
+}
 .alert-box {
-  width: 17px;
+  min-width: 17px;
   height: 17px;
   border-radius: 3px;
   background-color: $flat-blue;
   font-size: $font-size-extra-large;
   font-weight: 700;
-  line-height: 0.6;
+  line-height: $font-size-extra-large;
   color: $white;
-  padding-top: 0.5rem;
+  padding: 0.1rem 0.4rem 0 0.4rem;
   margin-left: 0.5rem;
   margin-top: 0.5rem;
   text-align:center;
+  display: inline-block;
 }
 
 $message-box-width: 215px;
@@ -334,6 +339,10 @@ select.top-menu-modifier:hover {
 
 img.contact-entry {
   height:44px;
+  width: 44px;
+  min-width: 44px;
+  display: block; 
+  margin-right: 10px; 
 }
 
 .clip-circle {
@@ -358,3 +367,12 @@ img.contact-entry {
 }
 
 
+.align-top, .align-top td {
+  vertical-align: top;
+}
+.width100 {
+  width: 100%;
+}
+.wrapper-inner-5 {
+  padding: 5px; 
+}

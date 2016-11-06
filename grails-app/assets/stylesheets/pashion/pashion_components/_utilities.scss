@@ -1,0 +1,20 @@
+$step: 5;
+
+/* Wrappers with margin and padding */
+
+@for $i from 1 through 100 {
+   $value: ($i - 1) * $step;
+
+  .wrapper-inner-#{$value} {
+    padding: $value * 1px;
+  }
+
+  .wrapper-outer-#{$value} {
+    margin: $value * 1px;
+  }
+
+  .paragraph-#{$value} {
+    margin-top: $value * 1px;
+    margin-bottom: $value * 1px;
+  }
+}
