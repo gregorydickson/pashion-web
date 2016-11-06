@@ -59,37 +59,37 @@
                 </div>
                 <!-- row button + content -->
                
-                    <div   if.bind="user.type === 'brand'" class="vertical grid-content accordion" style="overflow-x:hidden;">
+                    <div if.bind="user.type === 'brand'" class="vertical grid-content accordion" style="overflow-x:hidden;">
                         <!-- row with button -->
                         <div repeat.for="booking of bookings">
                             <table class="accordion">
                                 <tr>
                                     <td class="accordion w10">
-                                        <button id="button${$index}" class="accordion" style="background-color: white" click.delegate="closeExpand($index)"></button>
+                                        <button id="button${booking.id}" class="accordion" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                     </td>
                                     <td class="accordion w22">${booking.id}</td>
                                     <td class="accordion w34">${booking.pressHouse.name}</td>
-                                    <td class="accordion w24"></td>
-                                    <td class="accordion w10"><span class="edit-box" ><a href="#" click.delegate="lookEditMenu($index)">...</a></span></td>
+                                    <td class="accordion w24">${booking.requestingUser.name}</td>
+                                    <td class="accordion w10"><span class="edit-box" ><a href="#" click.delegate="lookEditMenu(booking.id)">...</a></span></td>
                                 </tr>
                             </table>
                             <!-- edit request modal popup -->
-                             <div class="look-menu-absolute" id="requestTest${$index}">
+                             <div class="look-menu-absolute" id="requestTest${booking.id}">
                                 <span class="look-menu-heading">REQUEST #${booking.id}</span>
                                 <ul class="look-menu-list">
-                                    <li class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id )" class="look-menu-link">Edit</a></li>
+                                    <li class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id)" class="look-menu-link">Edit</a></li>
                                     <li class="look-menu-item"><a href="#" class="look-menu-link">What?</a></li>
                                 </ul>
                             </div>
                             <!-- expanding data -->
-                            <div id="panel${$index}" class="panel vertical grid-block" style="margin-left: 0.5rem;">
+                            <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0.5rem;">
                                 <table class="accordion expanded">
                                     <tr >
                                         <td class="accordion" style="width:45px;">Due:</td>
                                         <td class="accordion">${booking.bookingStartDate | viewDateFormat}</td>
                                     </tr>
                                     <tr repeat.for="sample of booking.searchableItems">
-                                        <td class="accordion">Item ${$index}:</td>
+                                        <td class="accordion">Item ${booking.id}:</td>
                                         <td class="accordion">${sample.id} ${sample.name}</td>
                                     </tr>
                                 </table>
