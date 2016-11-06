@@ -16,6 +16,7 @@ import {UserService} from './services/userService'
 
 @inject(HttpClient, EventAggregator, DialogService,SampleRequestService, UserService)
 export class Index {
+  user = {};
   bookings = [];
   rows = [];
   seasons = [];
@@ -71,9 +72,7 @@ export class Index {
   }
 
 
-
   attached(){
-    
     this.subscriber = this.ea.subscribe('datepicker', response => {
             if(response.elementId === 'datepickerto')
               this.availableTo = response.elementValue;
@@ -82,10 +81,7 @@ export class Index {
             this.filterChange();
             
     });
-
     this.dialogService.open({viewModel: Introduction, model: "no-op" }).then(response => {});
-    
-      
   }
 
   activate() {
@@ -164,7 +160,7 @@ export class Index {
     menu.classList.toggle("look-menu-show");
   }
 
-  createSampleEditModal(itemId) {
+  editSampleRequest(itemId) {
     var menu = document.getElementById("requestTest"+itemId);
     menu.classList.toggle("look-menu-show");
     this.dialogService.open({viewModel: CreateEditDialog, model: itemId })
