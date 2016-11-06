@@ -4,7 +4,7 @@ import {DialogService} from 'aurelia-dialog';
 import 'fetch';
 import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
-import {CreateDialogEditContact} from './../edit_request/create-dialog-edit-contact';
+import {CreateDialogEditContact} from './dialogEditContact';
 
 @inject(HttpClient, DialogController, DialogService)
 export class ContactEntry {
