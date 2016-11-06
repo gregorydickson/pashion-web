@@ -1,0 +1,123 @@
+
+<template>
+    <ai-dialog style="width: auto;">
+        
+        <!-- header -->
+        <ai-dialog-header>
+            <div class="grid-block align-center tool-header shrink ">
+                <div id="" class="grid-block tool-header shrink">
+                    <span class="ui-text-label-m-broad" style="margin-left:32px;">NEW CONTACT &nbsp;</span> <!-- fudge to take account of the X -->
+                </div>
+            </div>
+        </ai-dialog-header>
+
+        <!-- body-->
+        <ai-dialog-body>
+            <div class="grid-block vertical">
+                <div class="grid-block">
+
+                    <!-- Column One -->
+                    <div class="grid-block vertical align-left">  
+
+                        <!-- Username -->
+                        <div class="grid-block shrink">                       
+                            <span class="inline-label slim-text-box-label">Username</span>
+                            <input type="text" class="slim-text-box">
+                        </div>
+
+
+                        <!-- Name -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Name</span>
+                            <input type="text" class="slim-text-box">
+                        </div>
+
+                        <!-- Company -->
+                        <div class="grid-block shrink">        
+                                <span class="inline-label">
+                                    <span class="slim-text-box-label">Company</span>
+                                </span>
+                                <select name="" id=""  class="slim-text-box">
+                                    <option>Ralph Lauren</option>
+                                    <option>Chanel</option>
+                                </select>
+                        </div>
+
+                        <!-- Title -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Title</span>
+                            <input type="text" class="slim-text-box">
+                        </div>
+
+                        <!-- Role -->
+                        <div class="grid-block shrink">        
+                                <span class="inline-label">
+                                    <span class="slim-text-box-label">Role</span>
+                                </span>
+                                <select name="" id="" class="slim-text-box">
+                                    <option>Brand</option>
+                                    <option>Sales manager</option>
+                                </select>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="grid-block shrink">        
+                                <span class="inline-label">
+                                    <span class="slim-text-box-label">Location</span>
+                                </span>
+                                <select name="" id="" class="slim-text-box">
+                                    <option>London</option>
+                                    <option>Paris</option>
+                                </select>
+                        </div>
+
+                        <!-- Address 1 -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Address 1</span>
+                            <input type="text" class="slim-text-box">
+                        </div>
+
+                        <!-- Address 2 -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Address 2</span>
+                            <input type="text" class="slim-text-box">
+                        </div>
+
+                        <!-- Address 3 -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Address 3</span>
+                            <input type="text" class="slim-text-box">
+                        </div>                        
+
+                        <!-- Phone -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Phone</span>
+                            <input type="text" class="slim-text-box">
+                        </div>
+
+                        <!-- Email -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Email</span>
+                            <input type="text" class="slim-text-box">
+                        </div>
+
+                        <!-- Skype -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Skype</span>
+                            <input type="text" class="slim-text-box">
+                        </div>                        
+                   
+                    </div>
+
+                </div>
+              
+            </div>
+        </ai-dialog-body>
+
+        <!-- Footer buttons -->
+        <ai-dialog-footer>
+                    <a class="hollow button"  click.delegate="close()">Cancel</a>
+                    <a class="button" href="javascript:;">Create</a>
+        </ai-dialog-footer>
+    </ai-dialog>
+</template>

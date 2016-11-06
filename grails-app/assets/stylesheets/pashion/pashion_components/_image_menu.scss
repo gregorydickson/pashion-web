@@ -16,6 +16,7 @@
     box-shadow: 0 5px 15px rgba(0,0,0,.5);
 }
 
+
 .look-menu-absolute {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -31,8 +32,30 @@
     box-shadow: 0 5px 15px rgba(0,0,0,.5);
 }
 
+.look-menu-absolute-wrap {
+    position: relative; 
 
+}
+.look-menu-absolute-wrap .look-menu-absolute {
+    top: 24px;
+    right: 0; 
+    margin-right: 0;
 
+}
+
+.look-menu-absolute-wrap .edit-box {
+    display: inline-block; 
+    width: 20px; 
+    height: 20px; 
+}
+.look-menu-absolute-wrap .edit-box a {
+    display: block; 
+    width: 20px; 
+    height: 20px; 
+}
+.look-menu-absolute-wrap .edit-box a:hover {
+    color: $black;
+}
 .look-menu-show{
 	display:block;
 }

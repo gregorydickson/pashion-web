@@ -199,14 +199,14 @@
                         <span class="ui-text-label-m-broad tool-header-greyed-out">NEWS</span>
                     </div>
                 </div>
-                <compose view-model="comms/contactsHeader" style="overflow:hidden; min-height:36px; margin-top: 1rem;"></compose>
-                <compose view-model="comms/contacts" style="overflow-x:hidden;"></compose>
+                <compose view-model="contacts/contactsHeader" style="overflow:hidden; min-height:36px; margin-top: 1rem;"></compose>
+                <compose view-model="contacts/contactsList" style="overflow-x:hidden;"></compose>
                 <!-- white lip at bottom of scroll region -->
                 <div class="grid-content shrink scrolling-fat-lip">
                 </div>
                 <!-- BUTTONS -->
                 <div class="grid-block align-center shrink">
-                    <a class="hollow button" href="javascript:;">New Contact...</a>
+                    <a class="hollow button" href="#" click.delegate="createDialogNewContact(1)">New Contact...</a>
                     <a class="button" href="javascript:;">Import Contacts...</a>
                 </div>
             </div>

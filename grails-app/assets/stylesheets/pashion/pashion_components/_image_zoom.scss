@@ -1,6 +1,40 @@
-ai-dialog.card-image-zoom ai-dialog-body{
-	padding: 0; 
+ai-dialog.card-image-zoom {
+	height: 90%;
+	left: auto;
+	position: fixed;
+	right: auto;
+	top: 5%;
+	width: auto;
+	display: block;
 }
-ai-dialog.card-image-zoom ai-dialog-body img{
+
+ai-dialog.card-image-zoom ai-dialog-body {
+	padding: 0;
+	height: 100%;
+}
+
+ai-dialog.card-image-zoom  .tool-header {
+	padding-left: 5px;
+	padding-right: 32px;
+	text-align: center;
 	width: 100%;
+	text-transform: uppercase;
+	font-weight: 500;
+}
+
+.card-image-zoom-wrap {
+	height: 100%;
+	margin: 0 auto;
+	position: absolute;
+	text-align: center;
+	width: 100%;
+}
+
+.card-image-zoom-wrap img {
+	display: block;
+	margin: 0 auto;
+	position: relative;
+	text-align: center;
+	width: auto;
+	height: calc(100% - 3rem - 1px);
 }
