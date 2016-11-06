@@ -11,7 +11,7 @@ import {SetAvailability} from './items/setAvailability';
 import {Introduction} from './hello/introduction';
 import {Zoom} from './zoom/zoom';
 import {SampleRequestService} from './services/sampleRequestService';
-import {UserService} from './services/userService'
+import {UserService} from './services/userService';
 
 
 @inject(HttpClient, EventAggregator, DialogService,SampleRequestService, UserService)

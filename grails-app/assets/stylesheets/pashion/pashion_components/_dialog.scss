@@ -153,3 +153,7 @@ ai-dialog, .ai-dialog {
 .ai-dialog-open {
   overflow: hidden;
 }
+
+ai-dialog-header .tool-header{
+  white-space: nowrap;
+}
