@@ -58,8 +58,8 @@
                     </table>
                 </div>
                 <!-- row button + content -->
-                <div if.bind="user.type === 'brand'" >
-                    <div class="vertical grid-content accordion" style="overflow-x:hidden;">
+               
+                    <div   if.bind="user.type === 'brand'" class="vertical grid-content accordion" style="overflow-x:hidden;">
                         <!-- row with button -->
                         <div repeat.for="booking of bookings">
                             <table class="accordion">
@@ -97,9 +97,8 @@
                         </div>
                          
                     </div>
-                </div>
-                <div if.bind="user.type === 'press'" >
-                <div class="vertical grid-content accordion" style="overflow-x:hidden;">
+               
+                <div if.bind="user.type === 'press'"  class="vertical grid-content accordion" style="overflow-x:hidden;">
                         <!-- row with button -->
                         <div repeat.for="booking of bookings">
                             <table class="accordion">
@@ -136,7 +135,7 @@
                             </div>
                         </div>
                          
-                    </div>
+                
                 </div>
                 <!-- white lip at bottom of scroll region -->
                 <div class="grid-content shrink scrolling-lip">
