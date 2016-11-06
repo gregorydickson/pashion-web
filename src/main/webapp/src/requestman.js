@@ -1,8 +1,10 @@
 import {inject} from 'aurelia-framework';
 import {UserService} from './services/userService';
 import {SampleRequestService} from './services/sampleRequestService';
+import {DialogService} from 'aurelia-dialog';
+import {CreateDialogNewContact} from './contacts/dialogNewContact';
 
-@inject(UserService,SampleRequestService)
+@inject(DialogService, UserService, SampleRequestService)
 export class Requestman{
 	  
   bookings = [];
@@ -11,8 +13,11 @@ export class Requestman{
   selectedStatus = "";
   user = {};
 
-  constructor(userService,sampleRequestService) {
+
+
+  constructor(dialogService,userService,sampleRequestService) {
     
+    this.dialogService = dialogService;
     this.userService = userService;
     this.sampleRequestService = sampleRequestService;
 
@@ -42,5 +47,12 @@ export class Requestman{
     panelChoice.classList.toggle("show");  
   }
     
+  // Create dialog edit contact 
+
+  createDialogNewContact(itemId) {
+    this.dialogService.open({viewModel: CreateDialogNewContact, model: itemId })
+      .then(response => {});
+  }
+
 
 }
