@@ -40,8 +40,8 @@ class SampleRequestController {
             status.pressStatus = "Not Shot"
             sr.addToSearchableItemsStatus(status)
         } 
-        sr.shippingOut = new ShippingEvent()
-        sr.shippingReturn = new ShippingEvent()
+        sr.shippingOut = new ShippingEvent().save()
+        sr.shippingReturn = new ShippingEvent().save()
         sr.requestingUser = session.user
         if(session.user.pressHouse)
             sr.pressHouse = session.user.pressHouse
@@ -49,6 +49,18 @@ class SampleRequestController {
         sr.dateRequested = new Date()
         sr.save(failOnError : true, flush: true)
         def sent = [message:'Sample Request Sent']
+        render sent as JSON
+
+    }
+
+    @Transactional
+    def updatejson(){
+        def jsonObject = request.JSON
+        log.info "json:"+jsonObject
+        def sr = SampleRequest.get(jsonObject.id)
+        
+        sr.save(failOnError : true)
+        def sent = [message:'Sample Request Updated']
         render sent as JSON
 
     }
