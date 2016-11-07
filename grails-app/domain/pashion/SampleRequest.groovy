@@ -31,7 +31,6 @@ class SampleRequest {
 	Date pickupDate
 	String pickupDestination
 
-
 	String editorialName
 	String editorialWho
 	Date editorialWhen

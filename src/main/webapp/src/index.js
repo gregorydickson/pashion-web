@@ -4,7 +4,7 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {DialogService} from 'aurelia-dialog';
 import 'fetch';
 import {CreateSampleRequest} from './sample_request/createSampleRequest';
-import {CreateEditDialog} from './edit_request/create-edit-dialog';
+import {EditSampleRequest} from './sample_request/editSampleRequest';
 import {EditSearchableItem} from './items/editSearchableItem';
 import {CheckAvailability} from './items/checkAvailability';
 import {SetAvailability} from './items/setAvailability';
@@ -163,7 +163,7 @@ export class Index {
   editSampleRequest(itemId) {
     var menu = document.getElementById("requestTest"+itemId);
     menu.classList.toggle("look-menu-show");
-    this.dialogService.open({viewModel: CreateEditDialog, model: itemId })
+    this.dialogService.open({viewModel: EditSampleRequest, model: itemId })
       .then(response => {});
   }
 

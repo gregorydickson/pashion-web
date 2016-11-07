@@ -40,6 +40,8 @@ class SampleRequestController {
             status.pressStatus = "Not Shot"
             sr.addToSearchableItemsStatus(status)
         } 
+        sr.shippingOut = new ShippingEvent()
+        sr.shippingReturn = new ShippingEvent()
         sr.requestingUser = session.user
         if(session.user.pressHouse)
             sr.pressHouse = session.user.pressHouse

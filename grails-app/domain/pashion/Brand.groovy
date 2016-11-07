@@ -16,7 +16,7 @@ class Brand {
 
 	static searchable = true
 
-	static hasMany = [brandCollections: BrandCollection,pRAgencies:PRAgency,users:User]
+	static hasMany = [brandCollections: BrandCollection,prAgencies:PRAgency,users:User]
 
 	static belongsTo = []
 
@@ -30,7 +30,7 @@ class Brand {
 		logo nullable: true
 		stormpathDirectory nullable: true
 		brandCollections nullable:true
-		pRAgencies nullable:true
+		prAgencies nullable:true
 		users nullable:true
 	}
 }
