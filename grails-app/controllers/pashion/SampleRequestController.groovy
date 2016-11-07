@@ -23,7 +23,10 @@ class SampleRequestController {
         sr.bookingStartDate = dateFormat.parse(jsonObject.startDate)
         sr.bookingEndDate = dateFormat.parse(jsonObject.endDate)
         sr.requiredBy = jsonObject.selectedRequired
-        sr.deliverTo = User.get(jsonObject.deliverToSelected)
+        
+        
+        def presshouseUser = User.get(jsonObject.deliverToSelected)
+        sr.deliverTo = presshouseUser
         sr.returnBy = jsonObject.returnBySelected
         sr.returnTo = User.get(jsonObject.returnToSelected)
         sr.requestStatus = "Pending"
@@ -43,8 +46,11 @@ class SampleRequestController {
         sr.shippingOut = new ShippingEvent().save()
         sr.shippingReturn = new ShippingEvent().save()
         sr.requestingUser = session.user
-        if(session.user.pressHouse)
+        if(session?.user.pressHouse){
             sr.pressHouse = session.user.pressHouse
+        } else if(presshouseUser?.pressHouse){
+            sr.pressHouse = presshouseUser.pressHouse
+        }
         sr.brand = item.brand
         sr.dateRequested = new Date()
         sr.save(failOnError : true, flush: true)
