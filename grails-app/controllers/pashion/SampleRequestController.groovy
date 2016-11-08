@@ -24,7 +24,7 @@ class SampleRequestController {
         sr.bookingEndDate = dateFormat.parse(jsonObject.endDate)
         sr.requiredBy = jsonObject.selectedRequired
         
-        
+        sr.addressOrigin = Address.get(jsonObject.addressOrigin.toInteger())
         def presshouseUser = User.get(jsonObject.deliverToSelected)
         sr.deliverTo = presshouseUser
         sr.returnBy = jsonObject.returnBySelected

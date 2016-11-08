@@ -14,6 +14,8 @@ export class CreateSampleRequest {
   selectedRequired = "";
   deliverTo = [];
   deliverToSelected = "";
+  brandAddresses = [];
+  addressOrigin = "";
   returnBy = [];
   returnBySelected = "";
   returnTo = [];
@@ -38,8 +40,8 @@ export class CreateSampleRequest {
     });
     this.http = http;
   }
-  activate(itemId){
 
+  activate(itemId){
 
     var queryString = DateFormat.urlString(0, 2);
     this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+itemId)
@@ -48,17 +50,22 @@ export class CreateSampleRequest {
               this.startCalendar = calendar;
               this.endCalendar = calendar;
           });
-
+    
     this.http.fetch('/searchableItems/'+itemId+'.json')
       .then(response => response.json())
       .then(item => {
-          this.currentItem = item;
+          this.currentItem = item;        
+          this.http.fetch('/brand/addresses/'+item.brand.id)
+              .then(response => response.json())
+              .then(addresses => this.brandAddresses = addresses);
           var ids = this.selectedProductIds;
           item.samples.forEach(function(item){
             ids.push(item.id);
           })
+          
         }
-      );
+      )
+      
       
     this.http.fetch('/dashboard/required')
       .then(response => response.json()).then(required => this.required = required);
@@ -71,9 +78,8 @@ export class CreateSampleRequest {
 
     this.http.fetch('/dashboard/returnTo')
       .then(response => response.json()).then(returnTo => this.returnTo = returnTo);
-    
-
   }
+
   setStartDate(event,day){
   	console.log("start date"+event);
   	console.log("day"+day);
@@ -195,6 +201,10 @@ export class CreateSampleRequest {
 
   }
 
+  address(){
+
+  }
+
   submit(){
     console.log("submitting Sample Request");
     var sr = this.sampleRequest;
@@ -205,6 +215,7 @@ export class CreateSampleRequest {
     sr.returnBySelected = this.returnBySelected;
     sr.returnToSelected = this.returnToSelected;
     sr.selectedProductIds = this.selectedProductIds;
+
     this.http.fetch('/sampleRequest/savejson', {
             method: 'post',
             body: json(sr)

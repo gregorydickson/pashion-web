@@ -35,6 +35,11 @@ class DashboardController {
     	render list
     }
 
+    def cities(){
+        def list = ['London','Paris','Madrid','Milan'] as JSON
+        render list
+    }
+
     def material(){
         def list = ['CASHMERE','CORDUROY','CREPE','CUIR','DENIM','DUNGAREE','FLUFFY',
                     'FRILL','FUR','GLITTER','JOUY','KNIT','LACE','LAMÉ','LEATHER','LINEN',

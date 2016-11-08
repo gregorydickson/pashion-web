@@ -1,4 +1,4 @@
-<!-- Note same layout for Press and Brand, only content and Ttiles change -->
+<!-- Note same layout for Press and Brand, only content and Titles change -->
 <!-- Currently this static template is setup for Press -->
 <template>
     <require from="common/viewDateFormatter"></require>
@@ -17,7 +17,7 @@
 
         <!-- body-->
         <ai-dialog-body>
-            <div if.bind="user.type === 'press'" class="grid-block vertical">
+            
                 <div class="grid-block">
 
                     <!-- Column One -->
@@ -47,9 +47,7 @@
                         <div class="grid-block shrink">        
                                 <span class="inline-label">
                                         <span class="slim-text-box-label">Company</span>
-                                        <select name="" id="" value.bind="sampleRequest.brand.id">
-                                        <option repeat.for="brand of brands" model.bind="brand.id">${brand.name}</option>
-                                        </select>
+                                        ${sampleRequest.brand.name}
                                 </span>
                         </div>
 
@@ -57,7 +55,8 @@
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Owner</span>
                             <div class=""> 
-                                <input type="text" class="slim-text-box">
+                                ${sampleRequest.requestingUser.name} ${sampleRequest.requestingUser.surname}
+
                             </div>
                         </div>
 
@@ -66,16 +65,26 @@
                             <span class="inline-label slim-text-box-label">Number</span>
                             <div class="" >
                                 ${sampleRequest.searchableItems.length}
-                            </div>                       
+                            </div>
 
-                         <!-- Press: In, Brand: Out-->                      
-                            <span class="inline-label slim-text-box-label-narrow">In</span>
+                            <!-- Press: In,Brand: Out-->  
+                            <div if.bind="user.type === 'press'" class="grid-block vertical">    
+                                <span class="inline-label slim-text-box-label-narrow">In</span>
+                            </div>
+                            <div if.bind="user.type === 'brand'" class="grid-block vertical">                 
+                                <span class="inline-label slim-text-box-label-narrow">Out</span>
+                            </div>
                             <div class="" >
                                 ${sampleRequest.searchableItems.itemsGot}
                             </div>
                                                                 
-                         <!-- Press: Out, Brand: In -->                        
-                            <span class="inline-label slim-text-box-label-narrow">Out</span>
+                            <!-- Press: Out, Brand: In -->                        
+                            <div if.bind="user.type === 'press'" class="grid-block vertical">
+                                <span class="inline-label slim-text-box-label-narrow">Out</span>
+                            </div>
+                            <div if.bind="user.type === 'brand'" class="grid-block vertical">           
+                                <span class="inline-label slim-text-box-label-narrow">In</span>
+                            </div>
                             <div class="" >
                                 ${sampleRequest.searchableItems.itemsOut}
                             </div>
@@ -83,7 +92,12 @@
 
 
                         <!-- Press: DELIVERY DETAILS, Brand: RETURN DETAILS -->
-                        <span style="margin-bottom: 1rem;">DELIVERY DETAILS</span>
+                        <div if.bind="user.type === 'press'" class="grid-block vertical">
+                            <span style="margin-bottom: 1rem;">DELIVERY DETAILS</span>
+                        </div>
+                        <div if.bind="user.type === 'brand'" class="grid-block vertical">           
+                            <span style="margin-bottom: 1rem;">RETURN DETAILS</span>
+                        </div>
 
                         <!-- ID -->
                         <div class="grid-block shrink">                       
@@ -105,10 +119,16 @@
                     </div>
 
                     <!-- Column Two -->
-                    <div class="grid-block vertical medium-6 align-right" style="padding-left:16px; padding-right: 10px;"> <!-- to make it LOOK balanced -->
+                    <div class="grid-block vertical medium-6 align-right" style="padding-left:16px; padding-right: 10px;">
+                     <!-- to make it LOOK balanced -->
 
                         <!-- Press: RETURN DETAILS, Brand: DELIVERY DETAILS -->
-                        <span style="margin-bottom: 1rem;">RETURN DETAILS</span>
+                        <div if.bind="user.type === 'press'" class="grid-block vertical">
+                            <span style="margin-bottom: 1rem;">RETURN DETAILS</span>
+                        </div>
+                        <div if.bind="user.type === 'brand'" class="grid-block vertical">           
+                            <span style="margin-bottom: 1rem;">DELIVERY DETAILS</span>
+                        </div>
 
                         <!-- ID -->
                         <div class="grid-block shrink">
@@ -125,29 +145,16 @@
                             </div>
                         </div>
 
-                        <!-- Destination -->
-                        <div class="grid-block shrink"> 
+                        
+                        <div class="grid-block shrink" >       
                                 <span class="inline-label">
-                                        <span class="slim-text-box-label">Destination</span>
-                                <select name="" id="">
-                                    <option>Ralph Lauren London</option>
-                                    <option>Ralph Lauren Paris</option>
-                                    <option>Ralph Lauren Madrid</option>
-                                </select>
+                                    <span class="slim-text-box-label">Brand Location</span>
+                                    <select name="" id="" value.bind="">
+                                    <option repeat.for="address of addresses" model.bind="address.id">${address.name}</option>
+                                    </select>
                                 </span>
                         </div>
 
-                        <!-- Addressee -->
-                        <div class="grid-block shrink" >       
-                                <span class="inline-label">
-                                        <span class="slim-text-box-label">Addressee</span>
-                                <select name="" id="">
-                                    <option>Seth Green</option>
-                                    <option>Pat Brown</option>
-                                    <option>Simon Belvoir</option>
-                                </select>
-                                </span>
-                        </div>
 
                         <!-- Editorial -->
                         <span style="margin-bottom: 1rem;">EDITORIAL</span>
@@ -207,7 +214,7 @@
                 
 
                 </div>
-            </div>
+            
         </ai-dialog-body>
 
         <!-- Footer buttons -->

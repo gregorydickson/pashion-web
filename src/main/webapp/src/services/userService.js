@@ -23,7 +23,6 @@ export class UserService{
   	}
 
   	getUser(){
-  		console.log("getting user");
 
   		var promise = new Promise((resolve, reject) => {
   			if (!this.user) {

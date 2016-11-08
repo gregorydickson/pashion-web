@@ -32,7 +32,8 @@ class BootStrap {
 
 
 
-
+      SimpleDateFormat dateFormat
+      
         if (Brand.count() == 0) {
           log.info "Creating Base Test Data"
           def itemtype1 = new SearchableItemType(display:'Looks',searchCode:'look').save(failOnError : true)
@@ -53,11 +54,15 @@ class BootStrap {
           
 
           def dateFormatString = "yyyy-MM-dd"
-          def dateFormat =  new SimpleDateFormat(dateFormatString)
+          dateFormat =  new SimpleDateFormat(dateFormatString)
           Date availableFrom = dateFormat.parse("2016-12-01")
           Date availableTo = dateFormat.parse("2016-12-15")
-  
-          def brand1 = new Brand(name:'Ralph Lauren', city:'London', stormpathDirectory:"https://api.stormpath.com/v1/directories/Z14nWfywLDah6jS8NByk2" ).save(failOnError : true)
+          def address1 = new Address(name:'RL London East').save()
+          def address2 = new Address(name:'RL London West').save()
+          def brand1 = new Brand(name:'Ralph Lauren', city:'London', stormpathDirectory:"https://api.stormpath.com/v1/directories/Z14nWfywLDah6jS8NByk2" )
+          brand1.addToAddresses(address1)
+          brand1.addToAddresses(address2)
+          brand1.save(failOnError : true)
 
           def collection1 = new BrandCollection(season: s3, brand:brand1).save(failOnError : true)
           def collection2 = new BrandCollection(season: s5, brand:brand1).save(failOnError : true)
@@ -368,7 +373,7 @@ class BootStrap {
                   sample5 = new SearchableItem(look:look101,season:s5, type:itemtype2,brand:brand1,name: "belt", color:"red", material:"silk", size:"0").save(failOnError : true, flush: true)
                   
                   
-                  sessionFactory.getCurrentSession().clear();
+                  sessionFactory.getCurrentSession().clear()
             }
 
         }
@@ -378,11 +383,12 @@ class BootStrap {
         def sea =  Season.findByName('Spring 2017 Ready-to-Wear')
         def collection1 = new BrandCollection(season: sea, brand:brand1).save(failOnError : true)
         def itemtype1 =  SearchableItemType.findBySearchCode('look')
+        def available = dateFormat.parse("2017-01-15")
         def range = 1..369
         range.each{
           String imageNumber = it.toString().padLeft(4,'0')
           String imageLocation = "//dvch4zq3tq7l4.cloudfront.net/chanel/2017/spring/ready-to-wear/"+imageNumber+".jpg"
-          def look1 = new SearchableItem(type:itemtype1,brand:brand1,season: sea, image: imageLocation,brandCollection:collection1).save(flush:true,failOnError : true)
+          def look1 = new SearchableItem(type:itemtype1,brand:brand1,season: sea,availableFrom:available, image: imageLocation,brandCollection:collection1).save(flush:true,failOnError : true)
           log.info "created look:"+look1
         }
 
@@ -424,11 +430,12 @@ class BootStrap {
         def sea =  Season.findByName('Spring 2017 Ready-to-Wear')
         def collection1 = new BrandCollection(season: sea, brand:brand1).save(failOnError : true)
         def itemtype1 =  SearchableItemType.findBySearchCode('look')
+        def available = dateFormat.parse("2017-01-15")
         def range = 1..206
         range.each{
           String imageNumber = it.toString().padLeft(4,'0')
           String imageLocation = "//dvch4zq3tq7l4.cloudfront.net/ralph-lauren/2017/spring/ready-to-wear/"+imageNumber+".jpg"
-          def look1 = new SearchableItem(type:itemtype1,brand:brand1,season: sea, image: imageLocation,brandCollection:collection1).save(flush:true,failOnError : true)
+          def look1 = new SearchableItem(type:itemtype1,availableFrom:available,brand:brand1,season: sea, image: imageLocation,brandCollection:collection1).save(flush:true,failOnError : true)
           log.info "created look:"+look1
         }
 
@@ -436,16 +443,22 @@ class BootStrap {
 
       if (User.findByEmail("ellen@pashiontool.com") == null){
 
-        def press = new PressHouse(name:"Elle Magazine",stormpathDirectory:"https://api.stormpath.com/v1/directories/jVKqqTZOmOFXPWO53PgoY").save(flush:true,failOnError : true)
+        def press = new PressHouse(name:"Elle Magazine",stormpathDirectory:"https://api.stormpath.com/v1/directories/jVKqqTZOmOFXPWO53PgoY")
+        def address1 = new Address(name:'Elle London North').save()
+        def address2 = new Address(name:'Elle London South').save()
+        press.addToAddresses(address1)
+        press.addToAddresses(address2)
+        press.save(flush:true,failOnError : true)
         def ellen = new User(name:"Ellen",surname:"Mcinsky", email:"ellen@pashiontool.com",pressHouse:press).save(flush:true,failOnError : true)
+        
 
         def brand = Brand.findByName("Ralph Lauren")
         def lauren = new User(name:"Lauren",surname:"Van Doren",email:"lauren@pashiontool.com",brand:brand).save(flush:true,failOnError : true)
       }
 
       if(User.findByEmail("paco@pashiontool.com") == null){
-        //def pacobrand = Brand.findByName('Paco Rabanne')
-        //userService.createUser("paco@pashiontool.com","Paco","Notorious", pacobrand, "Pashion123")
+        def brand = Brand.findByName('Paco Rabanne')
+        def lauren = new User(name:"Paco",surname:"Notorious",email:"paco@pashiontool.com",brand:brand).save(flush:true,failOnError : true)
       }
 
     }

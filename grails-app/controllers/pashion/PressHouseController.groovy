@@ -2,6 +2,7 @@ package pashion
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.converters.JSON
 
 @Transactional(readOnly = true)
 class PressHouseController {
@@ -15,6 +16,12 @@ class PressHouseController {
 
     def show(PressHouse pressHouse) {
         respond pressHouse
+    }
+
+    def addresses(){
+        def brand = Brand.get(params.id.toInteger())
+        def addresses = brand.addresses as JSON
+        render addresses
     }
 
     def create() {

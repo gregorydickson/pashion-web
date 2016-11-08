@@ -15,7 +15,10 @@ class SampleRequest {
 	Long userCreatedId
 	
 	Brand brand
+	Address addressOrigin
 	PressHouse pressHouse
+	Address addressDestination
+
 	Courier courierOut
 	Courier courierIn
 	User receivingUser 
@@ -59,7 +62,9 @@ class SampleRequest {
 	    bookingEndDate nullable: true
 		requestStatus nullable: true
 		userCreatedId nullable: true
-		brand nullable:true 
+		brand nullable:true
+		addressOrigin nullable: true
+		addressDestination nullable:true
 		pressHouse nullable: true
 		courierOut nullable: true
 		courierIn nullable: true

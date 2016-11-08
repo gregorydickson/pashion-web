@@ -11,10 +11,11 @@ class PRAgency {
 	Date dateCreated
 	Date lastUpdated
 
-	static hasMany = [brands: Brand , users:User]
+	static hasMany = [brands: Brand , users:User,addresses:Address]
   	static belongsTo = Brand
     static constraints = {
     	stormpathDirectory nullable:true
+        addresses nullable:true
     }
 
     static mapping = {

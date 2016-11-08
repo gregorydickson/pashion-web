@@ -56,7 +56,6 @@
                     <span class="inline-label">
                         <span class="slim-text-box-label">Required By</span>
                     <select name="" id="" value.bind="selectedRequired">
-                        <option value="">Select Time</option>
                         <option repeat.for="item of required" model.bind="item">${item}</option>
                     </select>
                     </span>
@@ -66,11 +65,13 @@
                     <span class="inline-label">
                         <span class="slim-text-box-label">Deliver To</span>
                     <select name="" id="" value.bind="deliverToSelected">
-                        <option value="">Select Name</option>
-                        <option repeat.for="item of deliverTo" model.bind="item.id">${item.name}</option>
+                        <option repeat.for="person of deliverTo" model.bind="person.id">${person.name}</option>
                     </select>
                     </span>
                 </div>
+               
+                
+
 
                 <!-- Courier Section -->
                 <div class="grid-content shrink">
@@ -145,7 +146,6 @@
                     <span class="inline-label">
                         <span class="slim-text-box-label">Return By</span>
                     <select name="" id="" value.bind="returnBySelected">
-                        <option value="">Select</option>
                         <option repeat.for="item of returnBy" model.bind="item">${item}</option>
                     </select>
                     </span>
@@ -155,8 +155,15 @@
                     <span class="inline-label">
                         <span class="slim-text-box-label">Return To</span>
                     <select name="" id="" value.bind="returnToSelected">
-                        <option value="">Select Name</option>
                         <option repeat.for="item of returnTo" model.bind="item.id">${item.name}</option>
+                    </select>
+                    </span>
+                </div>
+                <div class="grid-content shrink">
+                    <span class="inline-label">
+                        <span class="slim-text-box-label">Location</span>
+                    <select name="" id="" value.bind="sampleRequest.addressOrigin">
+                        <option repeat.for="address of brandAddresses" model.bind="address.id">${address.name}</option>
                     </select>
                     </span>
                 </div>

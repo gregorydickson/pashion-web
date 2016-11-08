@@ -35,8 +35,7 @@ export class SampleRequestService{
   	}
 
   	getSampleRequests(searchText, status){
-  		console.log("getting user");
-
+  		
   		var promise = new Promise((resolve, reject) => {
   			if (!this.sampleRequests) {
 				this.http.fetch('/sampleRequest.json?searchtext='+ encodeURI(searchText) + 
