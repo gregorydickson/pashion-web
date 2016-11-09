@@ -7,7 +7,7 @@ import {DateFormat} from 'common/dateFormat';
 
 @inject(HttpClient, DialogController)
 export class Zoom {
-   static inject = [DialogController];
+  static inject = [DialogController];
   currentItem = {};
 
   constructor(http, controller){
@@ -33,5 +33,15 @@ export class Zoom {
     this.controller.close();
   }
 
+  attached() {
+ 
 
+    // Fit image to screen height
+    var h = window.innerHeight;
+    document.getElementById('imageZoom').style.height= h*0.8 +'px';     
+
+
+
+  }
+  
 }

@@ -17,6 +17,15 @@
 		margin-bottom: 0;
 		position: relative;
 	}
+	.card-image-name {
+		position: absolute;
+		top: 5px;
+		left: 10px;
+		z-index: 1;
+		width: calc(100% - 53px);
+		text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+		text-transform: capitalize; 
+	}
 
 	.card .indigital-align {
 		width: 95px;
