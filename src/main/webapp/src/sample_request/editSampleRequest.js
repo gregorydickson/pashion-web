@@ -14,7 +14,7 @@ export class EditSampleRequest {
   brandAddresses = [];
   user = {};
 
-  constructor(sampleRequestService,controller,userService,httpClient){
+  constructor(sampleRequestService,controller,userService,http){
     http.configure(config => {
       config
         .useStandardConfiguration();
@@ -28,9 +28,15 @@ export class EditSampleRequest {
   activate(requestId){
     return Promise.all([
       this.user = this.userService.getUser().then(user => this.user = user),
-      this.addresses = this.http.fetch('/brand/addresses/').then(response => response.json()).then(addresses => this.addresses = addresses),
-      this.sampleRequestService.getSampleRequest(requestId).then(sampleRequest => this.sampleRequest = sampleRequest)
-    ])
+      this.sampleRequestService.getSampleRequest(requestId)
+        .then(sampleRequest => {
+          this.sampleRequest = sampleRequest;
+          this.http.fetch('/brand/addresses/'+sampleRequest.brand.id)
+              .then(response => response.json())
+              .then(addresses => this.brandAddresses = addresses)
+          }),
+        ]);
+    
     
   }
 
