@@ -169,8 +169,9 @@ export class Index {
 
 
   // Zoom image
-
   createZoomDialog(itemId) {
+    var menu = document.getElementById("card-"+itemId);
+    menu.classList.toggle("blue-image");
     this.dialogService.open({viewModel: Zoom, model: itemId })
       .then(response => {});
   }
