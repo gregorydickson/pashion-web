@@ -40,7 +40,15 @@ export class Zoom {
     var h = window.innerHeight;
     document.getElementById('imageZoom').style.height= h*0.8 +'px';     
 
+    // Close dialog when click outside
+    var controller = this.controller;
 
+    document.getElementsByTagName('ai-dialog-container')[0].onclick = function(e) {
+
+     if(e.target.id != 'cardImageZoom') {
+      controller.close();
+     }
+    }
 
   }
   
