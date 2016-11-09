@@ -7,7 +7,7 @@ import {DateFormat} from 'common/dateFormat';
 
 @inject(HttpClient, DialogController)
 export class Zoom {
-   static inject = [DialogController];
+  static inject = [DialogController];
   currentItem = {};
 
   constructor(http, controller){
@@ -33,5 +33,23 @@ export class Zoom {
     this.controller.close();
   }
 
+  attached() {
+ 
 
+    // Fit image to screen height
+    var h = window.innerHeight;
+    document.getElementById('imageZoom').style.height= h*0.8 +'px';     
+
+    // Close dialog when click outside
+    var controller = this.controller;
+
+    document.getElementsByTagName('ai-dialog-container')[0].onclick = function(e) {
+
+     if(e.target.id != 'cardImageZoom') {
+      controller.close();
+     }
+    }
+
+  }
+  
 }

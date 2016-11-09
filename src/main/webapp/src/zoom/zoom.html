@@ -1,6 +1,6 @@
 <template>
-    
-   <ai-dialog class="card-image-zoom">
+
+   <ai-dialog id="cardImageZoom" class="card-image-zoom">
         <ai-dialog-header>
             <!-- header -->
             <div class="align-center tool-header">
@@ -9,7 +9,10 @@
         </ai-dialog-header>
       <ai-dialog-body>
           <div class="card-image-zoom-wrap">
-                    <img src.bind="currentItem.image" ref="image" click.delegate="close()" />
+                    <img id="imageZoom" src.bind="currentItem.image" ref="image" />
+
+                    <img src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align"/> 
+
           </div>
       </ai-dialog-body>
 

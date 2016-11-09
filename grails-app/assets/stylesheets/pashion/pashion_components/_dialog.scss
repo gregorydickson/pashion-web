@@ -5,7 +5,7 @@ ai-dialog-overlay, .ai-dialog-overlay {
   top: 0;
   right: 0;
   opacity: 0;
-
+pointer-events: auto;
   &.active {
     opacity: 1;
   }
@@ -13,6 +13,8 @@ ai-dialog-overlay, .ai-dialog-overlay {
 
 
 ai-dialog-container, .ai-dialog-container {
+pointer-events: auto;
+
   transition: opacity .2s linear;
   opacity: 0;
   overflow-x: hidden;
@@ -27,7 +29,6 @@ ai-dialog-container, .ai-dialog-container {
   bottom: 0; 
   -webkit-overflow-scrolling: touch;
   max-height: 100%;
-
   &.active {
     opacity: 1;
   }
