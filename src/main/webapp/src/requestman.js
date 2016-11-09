@@ -54,5 +54,10 @@ export class Requestman{
       .then(response => {});
   }
 
+    lookEditMenu(id){
+    var menu = document.getElementById("requestManTest"+id);
+    menu.classList.toggle("look-menu-show");
+  }
+
 
 }

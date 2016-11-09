@@ -1,6 +1,8 @@
-<!-- Note same layout for Press and Brand, only content and Ttiles change -->
+<!-- Note same layout for Press and Brand, only content and Titles change -->
 <!-- Currently this static template is setup for Press -->
 <template>
+    <require from="common/viewDateFormatter"></require>
+    <require from="calendars/datepicker"></require>
     <ai-dialog style="width: auto;"> <!-- Based on the design. would prefer to be flexible, but postpone this -->
         
         <!-- header -->
@@ -8,14 +10,14 @@
             <div class="grid-block align-center tool-header shrink ">
                 <div id="" class="grid-block tool-header shrink">
                     <span class="ui-text-label-m-broad" style="margin-left:32px;">EDIT REQUEST &nbsp;</span> <!-- fudge to take account of the X -->
-                    <span class="ui-text-label-m-broad"> number</span>
+                    <span class="ui-text-label-m-broad"> ${sampleRequest.id}</span>
                 </div>
             </div>
         </ai-dialog-header>
 
         <!-- body-->
         <ai-dialog-body>
-            <div class="grid-block vertical">
+            
                 <div class="grid-block">
 
                     <!-- Column One -->
@@ -28,7 +30,7 @@
                         <div class="grid-block shrink">                       
                             <span class="inline-label slim-text-box-label">Requested</span>
                             <div class="">
-                                <input type="text" class="slim-text-box">
+                                ${sampleRequest.dateRequested | viewDateFormat}
                             </div>
                         </div>
 
@@ -37,7 +39,7 @@
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Due</span>
                             <div class="">
-                                <input type="text" class="slim-text-box">
+                                 ${sampleRequest.bookingStartDate | viewDateFormat}
                             </div>
                         </div>
 
@@ -45,11 +47,7 @@
                         <div class="grid-block shrink">        
                                 <span class="inline-label">
                                         <span class="slim-text-box-label">Company</span>
-                                <select name="" id="">
-                                    <option>All</option>
-                                    <option>Ralph Lauren</option>
-                                    <option>Chanel</option>
-                                </select>
+                                        ${sampleRequest.brand.name}
                                 </span>
                         </div>
 
@@ -57,7 +55,8 @@
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Owner</span>
                             <div class=""> 
-                                <input type="text" class="slim-text-box">
+                                ${sampleRequest.requestingUser.name} ${sampleRequest.requestingUser.surname}
+
                             </div>
                         </div>
 
@@ -65,31 +64,46 @@
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Number</span>
                             <div class="" >
-                                <input type="text" class="slim-text-box-narrow">
-                            </div>                       
+                                ${sampleRequest.searchableItems.length}
+                            </div>
 
-                         <!-- Press: In, Brand: Out-->                      
-                            <span class="inline-label slim-text-box-label-narrow">In</span>
+                            <!-- Press: In,Brand: Out-->  
+                            <div if.bind="user.type === 'press'" class="grid-block vertical">    
+                                <span class="inline-label slim-text-box-label-narrow">In</span>
+                            </div>
+                            <div if.bind="user.type === 'brand'" class="grid-block vertical">                 
+                                <span class="inline-label slim-text-box-label-narrow">Out</span>
+                            </div>
                             <div class="" >
-                                <input type="text" class="slim-text-box-narrow">
+                                ${sampleRequest.searchableItems.itemsGot}
                             </div>
                                                                 
-                         <!-- Press: Out, Brand: In -->                        
-                            <span class="inline-label slim-text-box-label-narrow">Out</span>
+                            <!-- Press: Out, Brand: In -->                        
+                            <div if.bind="user.type === 'press'" class="grid-block vertical">
+                                <span class="inline-label slim-text-box-label-narrow">Out</span>
+                            </div>
+                            <div if.bind="user.type === 'brand'" class="grid-block vertical">           
+                                <span class="inline-label slim-text-box-label-narrow">In</span>
+                            </div>
                             <div class="" >
-                                <input type="text" class="slim-text-box-narrow">
+                                ${sampleRequest.searchableItems.itemsOut}
                             </div>
                         </div> 
 
 
                         <!-- Press: DELIVERY DETAILS, Brand: RETURN DETAILS -->
-                        <span style="margin-bottom: 1rem;">DELIVERY DETAILS</span>
+                        <div if.bind="user.type === 'press'" class="grid-block vertical">
+                            <span style="margin-bottom: 1rem;">DELIVERY DETAILS</span>
+                        </div>
+                        <div if.bind="user.type === 'brand'" class="grid-block vertical">           
+                            <span style="margin-bottom: 1rem;">RETURN DETAILS</span>
+                        </div>
 
                         <!-- ID -->
                         <div class="grid-block shrink">                       
                             <span class="inline-label slim-text-box-label">ID</span>
                             <div class="">
-                                <input type="text" class="slim-text-box">
+                                <input type="text" value="" class="slim-text-box">
                             </div>
                         </div>
 
@@ -105,10 +119,16 @@
                     </div>
 
                     <!-- Column Two -->
-                    <div class="grid-block vertical medium-6 align-right" style="padding-left:16px; padding-right: 10px;"> <!-- to make it LOOK balanced -->
+                    <div class="grid-block vertical medium-6 align-right" style="padding-left:16px; padding-right: 10px;">
+                     <!-- to make it LOOK balanced -->
 
                         <!-- Press: RETURN DETAILS, Brand: DELIVERY DETAILS -->
-                        <span style="margin-bottom: 1rem;">RETURN DETAILS</span>
+                        <div if.bind="user.type === 'press'" class="grid-block vertical">
+                            <span style="margin-bottom: 1rem;">RETURN DETAILS</span>
+                        </div>
+                        <div if.bind="user.type === 'brand'" class="grid-block vertical">           
+                            <span style="margin-bottom: 1rem;">DELIVERY DETAILS</span>
+                        </div>
 
                         <!-- ID -->
                         <div class="grid-block shrink">
@@ -125,29 +145,16 @@
                             </div>
                         </div>
 
-                        <!-- Destination -->
-                        <div class="grid-block shrink"> 
+                        
+                        <div class="grid-block shrink" >       
                                 <span class="inline-label">
-                                        <span class="slim-text-box-label">Destination</span>
-                                <select name="" id="">
-                                    <option>Ralph Lauren London</option>
-                                    <option>Ralph Lauren Paris</option>
-                                    <option>Ralph Lauren Madrid</option>
-                                </select>
+                                    <span class="slim-text-box-label">Brand Location</span>
+                                    <select name="" id="" value.bind="">
+                                    <option repeat.for="address of addresses" model.bind="address.id">${address.name}</option>
+                                    </select>
                                 </span>
                         </div>
 
-                        <!-- Addressee -->
-                        <div class="grid-block shrink" >       
-                                <span class="inline-label">
-                                        <span class="slim-text-box-label">Addressee</span>
-                                <select name="" id="">
-                                    <option>Seth Green</option>
-                                    <option>Pat Brown</option>
-                                    <option>Simon Belvoir</option>
-                                </select>
-                                </span>
-                        </div>
 
                         <!-- Editorial -->
                         <span style="margin-bottom: 1rem;">EDITORIAL</span>
@@ -156,7 +163,7 @@
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Name</span>
                             <div class="" >
-                                <input type="text" class="slim-text-box">
+                                <input type="text" value.bind="editorialName" class="slim-text-box">
                             </div>
                         </div>
 
@@ -164,7 +171,7 @@
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Who</span>
                             <div class="" >
-                                <input type="text" class="slim-text-box">
+                                <input type="text" value.bind="editorialWho" class="slim-text-box">
                             </div>
                         </div>
 
@@ -172,7 +179,7 @@
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">When</span>
                             <div class="" >
-                                <input type="text" class="slim-text-box">
+                                <input type="text" value.bind="editorialWhen" class="slim-text-box">
                             </div>
                         </div>
                     </div>                    
@@ -183,23 +190,38 @@
                 </div>  
 
                 <div class="vertical grid-content accordion" style="overflow-x:hidden; max-height:10rem;"> <!-- scroll after n items -->
+                    
                     <!-- row -->
-                    <compose view-model="edit_request/create-edit-dialog-entry" style="margin-bottom: 5px;"></compose>
-                <compose view-model="edit_request/create-edit-dialog-entry" style="margin-bottom: 5px;"></compose>
-                    <compose view-model="edit_request/create-edit-dialog-entry" style="margin-bottom: 5px;"></compose>
-                    <compose view-model="edit_request/create-edit-dialog-entry" style="margin-bottom: 5px;"></compose>
-                    <compose view-model="edit_request/create-edit-dialog-entry" style="margin-bottom: 5px;"></compose>
-                    <compose view-model="edit_request/create-edit-dialog-entry" style="margin-bottom: 5px;"></compose> 
-                    <compose view-model="edit_request/create-edit-dialog-entry"></compose>
+                    <table repeat.for="sample of sampleRequest.searchableItems" class="big-accordion" style="margin-bottom:7px;">
+                        <tr>
+                            <td class="accordion w3">${$index}</td>
+                            <td class="accordion w12">${sample.id}</td>
+                            <td class="accordion w54">${sample.name}</td>
+                            <td class="accordion w18">
+                                
+
+                                <select name="" id="" style="margin-bottom:0px;">
+                                    <option value=""></option>
+                                    <option>Shipped</option>
+                                    <option>Out</option>
+                                    <option>Returned</option>
+                                </select>
+
+                            </td>
+                            <td style="text-align:right;" class="accordion w13"><a style="padding:7px 6px 5px 6px; margin-right:0; margin-bottom:0px; font-size: 1rem;" class="hollow button" href="javascript:;">Remove</a></td> 
+                        </tr>
+                    </table>
+                
 
                 </div>
-            </div>
+            
         </ai-dialog-body>
 
         <!-- Footer buttons -->
         <ai-dialog-footer>
+                    <a class="hollow button"  click.delegate="deleteRequest()">Delete Request</a>
                     <a class="hollow button"  click.delegate="cancel()">Cancel</a>
-                    <a class="button" href="javascript:;">Save Changes</a>
+                    <a class="button" click.delegate="submit()">Save Changes</a>
         </ai-dialog-footer>
     </ai-dialog>
 </template>

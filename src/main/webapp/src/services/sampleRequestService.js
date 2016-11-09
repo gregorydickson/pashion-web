@@ -18,10 +18,24 @@ export class SampleRequestService{
   	activate() {
 
   	}
+  	
+  	getSampleRequest(id){
+  		var promise = new Promise((resolve, reject) => {
+			this.http.fetch('/sampleRequest/show/'+id+'.json')
+	  			.then(response => response.json())
+	  			.then(sampleRequest => {
+	  				this.sampleRequest = sampleRequest;
+	  				resolve( this.sampleRequest);
+	  			}).catch(err=>reject(err));
+	  		});
+
+	  	return promise;
+	      	
+		
+  	}
 
   	getSampleRequests(searchText, status){
-  		console.log("getting user");
-
+  		
   		var promise = new Promise((resolve, reject) => {
   			if (!this.sampleRequests) {
 				this.http.fetch('/sampleRequest.json?searchtext='+ encodeURI(searchText) + 
@@ -36,6 +50,19 @@ export class SampleRequestService{
 				resolve(this.sampleRequests);
 		});
 		return promise;
+  	}
+
+
+  	saveSampleRequest(sr){
+
+  		this.http.fetch('/sampleRequest/savejson', {
+            method: 'post',
+            body: json(sr)
+          })
+          .then(response => response.json())
+          .then(result => {
+              resolve(result);
+          });
   	}
 
 

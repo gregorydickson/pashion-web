@@ -5,7 +5,7 @@ model {
     SampleRequest sampleRequest
 }
 
-json g.render(sampleRequest,[excludes:['pressHouse'],expand:['searchableItemsStatus','searchableItems','requestingUser']]){
+json g.render(sampleRequest,[excludes:['pressHouse'],expand:['searchableItemsStatus','brand','searchableItems','requestingUser','returnTo']]){
 	pressHouse {
 		name sampleRequest.pressHouse.name
 	}

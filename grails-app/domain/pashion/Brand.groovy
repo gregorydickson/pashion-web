@@ -4,11 +4,9 @@ package pashion
 class Brand {
 
 	String name
-	String city
 	String logo
 
 	String stormpathDirectory 
-
 
 	//auto fields
 	Date dateCreated
@@ -16,7 +14,7 @@ class Brand {
 
 	static searchable = true
 
-	static hasMany = [brandCollections: BrandCollection,pRAgencies:PRAgency,users:User]
+	static hasMany = [brandCollections: BrandCollection,prAgencies:PRAgency,users:User,addresses:Address]
 
 	static belongsTo = []
 
@@ -26,11 +24,11 @@ class Brand {
 
 	static constraints = {
 		name nullable: true 
-		city nullable: true 
 		logo nullable: true
 		stormpathDirectory nullable: true
 		brandCollections nullable:true
-		pRAgencies nullable:true
+		prAgencies nullable:true
 		users nullable:true
+		addresses nullable:true
 	}
 }

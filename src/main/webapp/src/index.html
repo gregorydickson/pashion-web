@@ -1,6 +1,7 @@
 <!-- index.html -->
 <template>
     <require from="./calendars/datepicker"></require>
+    <require from="./common/viewDateFormatter"></require>
     <!-- Main building block -->
     <div class="vertical grid-block spa-background">
         <!-- spacer -->
@@ -44,94 +45,112 @@
                     </form>
                 </div>
                 <!-- Accordion -->
-                <!--header -->
-                <div class="vertical grid-content shrink" style="padding:0; margin-left: 1rem; margin-right: 1rem; margin-top: 0.5rem;">
-                    <table class="accordion">
-                        <tr>
-                            <th class="accordion w10"></th>
-                            <th class="accordion w22">ID</th>
-                            <th class="accordion w34">PRESS</th>
-                            <th class="accordion w24">WHO</th>
-                            <th class="accordion w10"></th>
-                        </tr>
-                    </table>
-                </div>
+                
                 <!-- row button + content -->
-                <div class="vertical grid-content accordion" style="overflow-x:hidden;">
+               
+                <div if.bind="user.type === 'brand'" class="vertical grid-content accordion" style="overflow-x:hidden;">
+                    <!--header -->
+                    <div class="vertical grid-content shrink" style="padding:0; margin-left: 1rem; margin-right: 1rem; margin-top: 0.5rem;">
+                        <table class="accordion">
+                            <tr>
+                                <th class="accordion w10"></th>
+                                <th class="accordion w22">ID</th>
+                                <th class="accordion w34">PRESS</th>
+                                <th class="accordion w24">WHO</th>
+                                <th class="accordion w10"></th>
+                            </tr>
+                        </table>
+                    </div>
                     <!-- row with button -->
-                    <table class="accordion">
-                        <tr>
-                            <td class="accordion w10">
-                                <button id="button1" class="accordion" style="background-color: white" click.delegate="closeExpand(1)"></button>
-                            </td>
-                            <td class="accordion w22">23457/R</td>
-                            <td class="accordion w34">Ralph Lauren</td>
-                            <td class="accordion w24">Lauren whatshername overflow</td>
-                            <td class="accordion w10"><span class="edit-box" ><a href="#" click.delegate="lookEditMenu(1)">...</a></span></td>
-                        </tr>
-                    </table>
-                    <!-- edit request modal popup -->
-                             <div class="look-menu-absolute" id="requestTest1">
-                                <span class="look-menu-heading">REQUEST #</span>
-                                <ul class="look-menu-list">
-                                    <li class="look-menu-item"><a href="#" click.delegate="createSampleEditModal(1)" class="look-menu-link">Edit</a></li>
-                                    <li class="look-menu-item"><a href="#" class="look-menu-link">What?</a></li>
-                                </ul>
-                            </div>
-                    <!-- expanding data -->
-                    <div id="panel1" class="panel vertical grid-block" style="margin-left: 0.5rem;">
-                        <table class="accordion expanded">
+                    <div repeat.for="booking of bookings">
+                        <table class="accordion">
                             <tr>
-                                <td class="accordion" style="width:45px;">Due:</td>
-                                <td class="accordion">14th June 2016</td>
+                                <td class="accordion w10">
+                                    <button id="button${booking.id}" class="accordion" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
+                                </td>
+                                <td class="accordion w22">${booking.id}</td>
+                                <td class="accordion w34">${booking.pressHouse.name}</td>
+                                <td class="accordion w24">${booking.requestingUser.name}</td>
+                                <td class="accordion w10"><span class="edit-box" ><a href="#" click.delegate="lookEditMenu(booking.id)">...</a></span></td>
                             </tr>
+                        </table>
+                        <!-- edit request modal popup -->
+                         <div class="look-menu-absolute" id="requestTest${booking.id}">
+                            <span class="look-menu-heading">REQUEST #${booking.id}</span>
+                            <ul class="look-menu-list">
+                                <li class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id)" class="look-menu-link">Edit</a></li>
+                                <li class="look-menu-item"><a href="#" class="look-menu-link">Approve</a></li>
+                                <li class="look-menu-item"><a href="#" class="look-menu-link">Deny</a></li>
+                                <li class="look-menu-item"><a href="#" class="look-menu-link">Delete</a></li>
+                            </ul>
+                        </div>
+                        <!-- expanding data -->
+                        <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0.5rem;">
+                            <table class="accordion expanded">
+                                <tr >
+                                    <td class="accordion" style="width:45px;">Due:</td>
+                                    <td class="accordion">${booking.bookingStartDate | viewDateFormat}</td>
+                                </tr>
+                                <tr repeat.for="sample of booking.searchableItems">
+                                    <td class="accordion">Item ${booking.id}:</td>
+                                    <td class="accordion">${sample.id} ${sample.name}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                     
+                </div>
+               
+                <div if.bind="user.type === 'press'"  class="vertical grid-content accordion" style="overflow-x:hidden;">
+                    <!--header -->
+                    <div class="vertical grid-content shrink" style="padding:0; margin-left: 1rem; margin-right: 1rem; margin-top: 0.5rem;">
+                        <table class="accordion">
                             <tr>
-                                <td class="accordion">Item 1:</td>
-                                <td class="accordion">4567kjl Red Dress with long sleeves</td>
-                            </tr>
-                            <tr>
-                                <td class="accordion">Item 2:</td>
-                                <td class="accordion">4447ABC/Slippers, green stitching</td>
-                            </tr>
-                            <tr>
-                                <td class="accordion">Item 3:</td>
-                                <td class="accordion">4221/Little black dress, open at the back with long slit</td>
+                                <th class="accordion w10"></th>
+                                <th class="accordion w22">ID</th>
+                                <th class="accordion w34">BRAND</th>
+                                <th class="accordion w24">WHO</th>
+                                <th class="accordion w10"></th>
                             </tr>
                         </table>
                     </div>
-                    <!-- additional rows to ensure working expansion scrolling etc. For testing only will be replaced as rows generated by backend-->
-                    <table class="accordion">
-                        <tr>
-                            <td class="accordion w10">
-                                <button id="button2" class="accordion" style="background-color: white" click.delegate="closeExpand(2)"></button>
-                            </td>
-                            <td class="accordion w22">23457/R</td>
-                            <td class="accordion w34">Channel</td>
-                            <td class="accordion w24">Lauren</td>
-                            <td class="accordion w10"><span class="edit-box" ><a href="javascript:;">...</a></span></td>
-                        </tr>
-                    </table>
-                    <!-- expanding data -->
-                    <div id="panel2" class="panel vertical grid-block" style="margin-left: 0.5rem;">
-                        <table class="accordion expanded">
+                    <!-- row with button -->
+                    <div repeat.for="booking of bookings">
+                        <table class="accordion">
                             <tr>
-                                <td class="accordion" style="width:45px;">Due:</td>
-                                <td class="accordion">14th June 2016</td>
-                            </tr>
-                            <tr>
-                                <td class="accordion">Item 1:</td>
-                                <td class="accordion">4567kjl Red Dress with long sleeves</td>
-                            </tr>
-                            <tr>
-                                <td class="accordion">Item 2:</td>
-                                <td class="accordion">4447ABC/Slippers, green stitching</td>
-                            </tr>
-                            <tr>
-                                <td class="accordion">Item 3:</td>
-                                <td class="accordion">4221/Little black dress, open at the back with long slit</td>
+                                <td class="accordion w10">
+                                    <button id="button${booking.id}" class="accordion" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
+                                </td>
+                                <td class="accordion w22">${booking.id}</td>
+                                <td class="accordion w34">${booking.brand.name}</td>
+                                <td class="accordion w24">${booking.returnTo.name}</td>
+                                <td class="accordion w10"><span class="edit-box" ><a href="#" click.delegate="lookEditMenu(booking.id)">...</a></span></td>
                             </tr>
                         </table>
+                        <!-- edit request modal popup -->
+                         <div class="look-menu-absolute" id="requestTest${booking.id}">
+                            <span class="look-menu-heading">REQUEST #${booking.id}</span>
+                            <ul class="look-menu-list">
+                                <li class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id)" class="look-menu-link">Edit</a></li>
+                                <li class="look-menu-item"><a href="#" class="look-menu-link">Delete</a></li>
+                            </ul>
+                        </div>
+                        <!-- expanding data -->
+                        <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0.5rem;">
+                            <table class="accordion expanded">
+                                <tr >
+                                    <td class="accordion" style="width:45px;">Due:</td>
+                                    <td class="accordion">${booking.bookingStartDate | viewDateFormat}</td>
+                                </tr>
+                                <tr repeat.for="sample of booking.searchableItems">
+                                    <td class="accordion">Item ${booking.id}:</td>
+                                    <td class="accordion">${sample.id} ${sample.name}</td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
+                         
+                
                 </div>
                 <!-- white lip at bottom of scroll region -->
                 <div class="grid-content shrink scrolling-lip">
