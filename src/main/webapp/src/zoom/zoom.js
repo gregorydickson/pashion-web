@@ -45,7 +45,7 @@ export class Zoom {
 
     document.getElementsByTagName('ai-dialog-container')[0].onclick = function(e) {
 
-     if(e.target.id != 'cardImageZoom') {
+     if(e.target.id != 'imageZoom' & e.target.id != 'prev' & e.target.id != 'next') {
       controller.close();
      }
     }
