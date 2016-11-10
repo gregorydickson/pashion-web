@@ -11,11 +11,18 @@ class Address{
 	String postalCode
 	Boolean defaultAddress
 
+	PressHouse pressHouse
+	PRAgency prAgency
+	Brand brand
+
 	static mapping ={
 		defaultAddress  defaultValue: false 
 	}
 
 	static constraints = {
+		brand nullable: true 
+		pressHouse nullable:true
+		prAgency nullable:true
 		address1 nullable: true
 		address2 nullable: true
 		city nullable: true

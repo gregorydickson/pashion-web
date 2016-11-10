@@ -53,7 +53,7 @@ class SampleRequestController {
         sr.requestingUser = session.user
         if(session?.user.pressHouse){
             sr.pressHouse = session.user.pressHouse
-            sr.addressDestination = Address.findByPressHouseAndDefault(user.pressHouse,true)
+            sr.addressDestination = Presshouse.findByPressHouseAndDefault(session.user.pressHouse,true)
         } else if(presshouseUser?.pressHouse){
             sr.pressHouse = presshouseUser.pressHouse
         }
