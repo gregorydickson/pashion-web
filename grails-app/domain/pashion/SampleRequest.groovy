@@ -8,7 +8,7 @@ class SampleRequest {
 	
 	String idString
 	Date dateRequested
-	Date dateDue
+
 	Date bookingStartDate
 	Date bookingEndDate
 	String requestStatus //Pending ->Shipped -> delivered -> due back ->overdue ->closed
@@ -60,7 +60,7 @@ class SampleRequest {
 	static constraints = {
 		idString nullable: true
 		dateRequested nullable: true
-		dateDue nullable: true
+
 		bookingStartDate nullable: true
 	    bookingEndDate nullable: true
 		requestStatus nullable: true

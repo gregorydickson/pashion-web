@@ -132,7 +132,9 @@ export class Index {
   createSampleRequest(itemId) {
     this.lookMenu(itemId);
     this.dialogService.open({viewModel: CreateSampleRequest, model: itemId })
-      .then(response => {});
+      .then(response => {
+        this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
+      });
   }
 
   checkAvailabilitySearchableItem(itemId) {

@@ -35,19 +35,17 @@ export class SampleRequestService{
   	}
 
   	getSampleRequests(searchText, status){
-  		
+  		console.log("getting sample requests");
   		var promise = new Promise((resolve, reject) => {
-  			if (!this.sampleRequests) {
-				this.http.fetch('/sampleRequest.json?searchtext='+ encodeURI(searchText) + 
-	                                      '&status=' + status)
-	      			.then(response => response.json())
-	      			.then(sampleRequests => {
-	      				this.sampleRequests = sampleRequests;
-	      				resolve(this.sampleRequests);
-	      			}).catch(err=>reject(err));
-	      	}
-			else
-				resolve(this.sampleRequests);
+  			
+			this.http.fetch('/sampleRequest.json?searchtext='+ encodeURI(searchText) + 
+                                      '&status=' + status)
+      			.then(response => response.json())
+      			.then(sampleRequests => {
+      				this.sampleRequests = sampleRequests;
+      				resolve(this.sampleRequests);
+      			}).catch(err=>reject(err));
+	      	
 		});
 		return promise;
   	}

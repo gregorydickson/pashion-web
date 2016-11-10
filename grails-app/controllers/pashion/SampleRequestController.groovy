@@ -21,12 +21,14 @@ class SampleRequestController {
         log.info "json:"+jsonObject
         def sr = new SampleRequest()
         sr.bookingStartDate = dateFormat.parse(jsonObject.startDate)
+
         sr.bookingEndDate = dateFormat.parse(jsonObject.endDate)
         sr.requiredBy = jsonObject.requiredBy
         
         sr.returnToAddress = Address.get(jsonObject.returnToAddress.toInteger())
-        def presshouseUser = User.get(jsonObject.deliverTo)
-        sr.deliverTo = presshouseUser
+        def aUser = User.get(jsonObject.deliverTo)
+        if(aUser.pressHouse) sr.pressHouse = aUser.pressHouse
+        sr.deliverTo = aUser
         sr.returnBy = jsonObject.returnBy
 
         sr.requestStatus = "Pending"
@@ -34,6 +36,7 @@ class SampleRequestController {
         sr.itemsOut = 0
         sr.itemsIn = 0
         SearchableItem item
+
         jsonObject.samples.each{
             item = SearchableItem.get(it)
             if(!sr.brand) sr.brand = item.brand
@@ -51,12 +54,7 @@ class SampleRequestController {
         sr.courierOut = jsonObject.courierOut
         sr.courierReturn = jsonObject.courierReturn
         sr.requestingUser = session.user
-        if(session?.user.pressHouse){
-            sr.pressHouse = session.user.pressHouse
-            sr.addressDestination = Address.findByPressHouseAndDefaultAddress(session.user.pressHouse,true)
-        } else if(presshouseUser?.pressHouse){
-            sr.pressHouse = presshouseUser.pressHouse
-        }
+        
         
         sr.dateRequested = new Date()
         sr.save(failOnError : true, flush: true)
