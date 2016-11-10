@@ -33,7 +33,7 @@
                 <!-- error messages -->
                 <div class="">
                     <g:if test="${flash.message}">
-                        <div class="message" style="color:red" role="status">${flash.message}</div>
+                        <div class="message" style="color:red; text-align: center; margin-top: 2rem;" role="status">${flash.message}</div>
                     </g:if>
                 </div>
 
