@@ -5,7 +5,8 @@ class ShippingEvent {
 
 	Date startDate
 	Date endDate
-	Courier courier
+	String courier
+	
 
 	//auto fields
 	Date dateCreated

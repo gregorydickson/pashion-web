@@ -57,8 +57,8 @@ class BootStrap {
           dateFormat =  new SimpleDateFormat(dateFormatString)
           Date availableFrom = dateFormat.parse("2016-12-01")
           Date availableTo = dateFormat.parse("2016-12-15")
-          def address1 = new Address(name:'RL London East').save()
-          def address2 = new Address(name:'RL London West').save()
+          def address1 = new Address(name:'RL London East',defaultAddress:true).save()
+          def address2 = new Address(name:'RL London West',defaultAddress:false).save()
           def brand1 = new Brand(name:'Ralph Lauren', city:'London', stormpathDirectory:"https://api.stormpath.com/v1/directories/Z14nWfywLDah6jS8NByk2" )
           brand1.addToAddresses(address1)
           brand1.addToAddresses(address2)
@@ -444,8 +444,8 @@ class BootStrap {
       if (User.findByEmail("ellen@pashiontool.com") == null){
 
         def press = new PressHouse(name:"Elle Magazine",stormpathDirectory:"https://api.stormpath.com/v1/directories/jVKqqTZOmOFXPWO53PgoY")
-        def address1 = new Address(name:'Elle London North').save()
-        def address2 = new Address(name:'Elle London South').save()
+        def address1 = new Address(name:'Elle London North',defaultAddress:true).save()
+        def address2 = new Address(name:'Elle London South',defaultAddress:false).save()
         press.addToAddresses(address1)
         press.addToAddresses(address2)
         press.save(flush:true,failOnError : true)

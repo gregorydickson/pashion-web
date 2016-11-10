@@ -10,26 +10,22 @@ export class CreateSampleRequest {
   currentItem = {};
   startCalendar = {};
   endCalendar = {};
-  required = [];
-  selectedRequired = "";
-  deliverTo = [];
-  deliverToSelected = "";
-  brandAddresses = [];
-  addressOrigin = "";
-  returnBy = [];
-  returnBySelected = "";
-  returnTo = [];
-  returnToSelected = "";
-
   selectedProductIds = [];
+  selectAll = true;
+  required = [];
+  deliverTo = [];
+  brandAddresses = [];
+  returnBy = [];
+  returnTo = [];
+  courier = [];
+  payment = [];
+
 
   sampleRequest = {};
   startOffset = 0;
   endOffset = 0;
-  startDate = "";
-  endDate = "";
 
-  result = "";
+
 
   constructor(http, controller){
     this.controller = controller;
@@ -66,18 +62,12 @@ export class CreateSampleRequest {
         }
       )
       
-      
-    this.http.fetch('/dashboard/required')
-      .then(response => response.json()).then(required => this.required = required);
-    
-    this.http.fetch('/dashboard/deliverTo')
-      .then(response => response.json()).then(deliverTo => this.deliverTo = deliverTo);
-
-    this.http.fetch('/dashboard/returnBy')
-      .then(response => response.json()).then(returnBy => this.returnBy = returnBy);
-
-    this.http.fetch('/dashboard/returnTo')
-      .then(response => response.json()).then(returnTo => this.returnTo = returnTo);
+    this.http.fetch('/dashboard/required').then(response => response.json()).then(required => this.required = required);
+    this.http.fetch('/dashboard/deliverTo').then(response => response.json()).then(deliverTo => this.deliverTo = deliverTo);
+    this.http.fetch('/dashboard/returnBy').then(response => response.json()).then(returnBy => this.returnBy = returnBy);
+    this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => this.courier = courier);
+    this.http.fetch('/dashboard/returnTo').then(response => response.json()).then(returnTo => this.returnTo = returnTo);
+    this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => this.payment = payment);
   }
 
   setStartDate(event,day){
@@ -91,7 +81,7 @@ export class CreateSampleRequest {
 	  });
   	element.className += " start-selected";
   	this.redraw(element);
-  	this.startDate = this.startCalendar.calendarMonths[0].year+"-"+this.startCalendar.calendarMonths[0].monthNumber+"-"+day;
+  	this.sampleRequest.startDate = this.startCalendar.calendarMonths[0].year+"-"+this.startCalendar.calendarMonths[0].monthNumber+"-"+day;
 
   }
   setEndDate(event, day){
@@ -105,7 +95,7 @@ export class CreateSampleRequest {
 	  });
   	element.className += " end-selected";
   	this.redraw(element);
-    this.endDate = this.endCalendar.calendarMonths[0].year+"-"+this.endCalendar.calendarMonths[0].monthNumber+"-"+day;
+    this.sampleRequest.endDate = this.endCalendar.calendarMonths[0].year+"-"+this.endCalendar.calendarMonths[0].monthNumber+"-"+day;
   }
 
   redraw(element){
@@ -172,17 +162,15 @@ export class CreateSampleRequest {
           .then(calendar => {
               this.endCalendar = calendar;
           });
-
   }
 
+
   updateAvailability(){
-    console.log ("update availability");
-    console.log ("current item samples:"+this.currentItem.samples);
-    console.log (this.selectedProductIds);
+
     var queryString = DateFormat.urlString(this.endOffset,1);
     this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
             method: 'post',
-            body: json(this.selectedProductIds)
+            body: json(this.sampleRequest.samples)
           })
           .then(response => response.json())
           .then(calendar => {
@@ -192,13 +180,12 @@ export class CreateSampleRequest {
     queryString = DateFormat.urlString(this.startOffset,1);
     this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
             method: 'post',
-            body: json(this.selectedProductIds)
+            body: json(this.sampleRequest.samples)
           })
           .then(response => response.json())
           .then(calendar => {
               this.startCalendar = calendar;
           });
-
   }
 
   address(){
@@ -207,26 +194,18 @@ export class CreateSampleRequest {
 
   submit(){
     console.log("submitting Sample Request");
-    var sr = this.sampleRequest;
-    sr.startDate = this.startDate;
-    sr.endDate = this.endDate;
-    sr.selectedRequired = this.selectedRequired;
-    sr.deliverToSelected = this.deliverToSelected;
-    sr.returnBySelected = this.returnBySelected;
-    sr.returnToSelected = this.returnToSelected;
-    sr.selectedProductIds = this.selectedProductIds;
 
     this.http.fetch('/sampleRequest/savejson', {
             method: 'post',
-            body: json(sr)
+            body: json(this.sampleRequest)
           })
           .then(response => response.json())
           .then(result => {
               this.result = result;
+              alert('Request Sent');
+              this.controller.close();
+
           });
-    this.currentItem.id = this.result;
-    alert('Request Sent');
-    this.controller.close();
     
   }
 

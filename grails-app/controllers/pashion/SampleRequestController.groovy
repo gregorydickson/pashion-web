@@ -22,20 +22,21 @@ class SampleRequestController {
         def sr = new SampleRequest()
         sr.bookingStartDate = dateFormat.parse(jsonObject.startDate)
         sr.bookingEndDate = dateFormat.parse(jsonObject.endDate)
-        sr.requiredBy = jsonObject.selectedRequired
+        sr.requiredBy = jsonObject.requiredBy
         
-        sr.addressOrigin = Address.get(jsonObject.addressOrigin.toInteger())
-        def presshouseUser = User.get(jsonObject.deliverToSelected)
+        sr.returnToAddress = Address.get(jsonObject.returnToAddress.toInteger())
+        def presshouseUser = User.get(jsonObject.deliverTo)
         sr.deliverTo = presshouseUser
-        sr.returnBy = jsonObject.returnBySelected
-        sr.returnTo = User.get(jsonObject.returnToSelected)
+        sr.returnBy = jsonObject.returnBy
+
         sr.requestStatus = "Pending"
         sr.itemsGot = 0
         sr.itemsOut = 0
         sr.itemsIn = 0
         SearchableItem item
-        jsonObject.selectedProductIds.each{
+        jsonObject.samples.each{
             item = SearchableItem.get(it)
+            if(!sr.brand) sr.brand = item.brand
             sr.addToSearchableItems(item)
             def status = new BookingStatus()
             status.itemId = item.id
@@ -43,15 +44,20 @@ class SampleRequestController {
             status.pressStatus = "Not Shot"
             sr.addToSearchableItemsStatus(status)
         } 
-        sr.shippingOut = new ShippingEvent().save()
+        sr.shippingOut = new ShippingEvent(courier:jsonObject.courier).save()
         sr.shippingReturn = new ShippingEvent().save()
+        sr.paymentOut = jsonObject.paymentOut
+        sr.paymentReturn = jsonObject.paymentReturn
+        sr.courierOut = jsonObject.courierOut
+        sr.courierReturn = jsonObject.courierReturn
         sr.requestingUser = session.user
         if(session?.user.pressHouse){
             sr.pressHouse = session.user.pressHouse
+            sr.addressDestination = Address.findByPressHouseAndDefault(user.pressHouse,true)
         } else if(presshouseUser?.pressHouse){
             sr.pressHouse = presshouseUser.pressHouse
         }
-        sr.brand = item.brand
+        
         sr.dateRequested = new Date()
         sr.save(failOnError : true, flush: true)
         def sent = [message:'Sample Request Sent']

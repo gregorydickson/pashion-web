@@ -107,11 +107,31 @@ class DashboardController {
     	render list
     }
 
+    def courier(){
+        def list = ['Stuart: Bike','Stuart: Car','Stuart: Foot',
+                        'Stuart: Scooter', 'My Courier'] as JSON
+        render list
+    }
+
+    def payment(){
+        def list = ['50/50','We Pay','They Pay'] as JSON
+        render list
+    }
+
     def type(){
         render SearchableItemType as JSON
     }
     def deliverTo(){
-    	render User.list() as JSON
+        def press = session.user.pressHouse
+        def brand = session.user.brand
+        def users
+        if(press){
+            users = User.findAllByPressHouse(press)
+        } else{
+            users = User.findAllByBrand(brand)
+        }
+
+    	render users as JSON
     }
 
     def returnTo(){

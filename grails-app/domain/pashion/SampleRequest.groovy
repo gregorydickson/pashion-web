@@ -15,16 +15,19 @@ class SampleRequest {
 	Long userCreatedId
 	
 	Brand brand
-	Address addressOrigin
+
 	PressHouse pressHouse
 	Address addressDestination
+	Address returnToAddress
 
-	Courier courierOut
-	Courier courierIn
+	String courierOut
+	String courierReturn
+	String paymentOut
+	String paymentReturn
 	User receivingUser 
 	User requestingUser 
 	User deliverTo
-	User returnTo
+	
 	String returnBy
 	String requiredBy
 
@@ -63,11 +66,12 @@ class SampleRequest {
 		requestStatus nullable: true
 		userCreatedId nullable: true
 		brand nullable:true
-		addressOrigin nullable: true
+		returnToAddress nullable: true
 		addressDestination nullable:true
+
 		pressHouse nullable: true
 		courierOut nullable: true
-		courierIn nullable: true
+		courierReturn nullable: true
 		receivingUser nullable:true
 		requestingUser nullable: true 
 

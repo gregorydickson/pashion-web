@@ -55,7 +55,7 @@
                 <div class="grid-content shrink" style="margin-top: 1rem;">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Required By</span>
-                    <select name="" id="" value.bind="selectedRequired">
+                    <select name="" id="" value.bind="sampleRequest.requiredBy">
                         <option repeat.for="item of required" model.bind="item">${item}</option>
                     </select>
                     </span>
@@ -70,32 +70,24 @@
                     </span>
                 </div>
                
-                
-
-
+ 
                 <!-- Courier Section -->
                 <div class="grid-content shrink">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Courier</span>
-                    <select name="" id="">
-                        <option value="">Stuart: Bike</option>
-                        <option value="">Stuart: Car</option>
-                        <option value="">Stuart: Foot</option>
-                        <option value="">Stuart: Scooter</option>
-                        <option value="">My Courier</option>
-                    </select>
+                        <select name="" id="" value.bind="sampleRequest.courierOut">
+                            <option repeat.for="option of courier" model.bind="option">${option}</option>
+                        </select>
                     </span>
 
                 </div>
                 <div class="grid-block shrink">
                     <div class="grid-content shrink">
                         <span class="inline-label">
-                            <span class=" slim-text-box-label">Split?</span>
-                        <select name="" id="" >
-                            <option value="">50/50</option>
-                            <option value="">We Pay</option>
-                            <option value="">They Pay</option>
-                        </select>
+                            <span class=" slim-text-box-label">Split</span>
+                            <select name="" id="" value.bind="sampleRequest.paymentOut">
+                                <option repeat.for="option of payment" model.bind="option">${option}</option>
+                            </select>
                         </span>
                     </div>
                     <div class="grid-content shrink" style="padding-top: 0.5rem;">
@@ -145,7 +137,7 @@
                 <div class="grid-content shrink" style="margin-top: 1rem;">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Return By</span>
-                    <select name="" id="" value.bind="returnBySelected">
+                    <select name="" id="" value.bind="sampleRequest.returnBy">
                         <option repeat.for="item of returnBy" model.bind="item">${item}</option>
                     </select>
                     </span>
@@ -154,15 +146,7 @@
                 <div class="grid-content shrink">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Return To</span>
-                    <select name="" id="" value.bind="returnToSelected">
-                        <option repeat.for="item of returnTo" model.bind="item.id">${item.name}</option>
-                    </select>
-                    </span>
-                </div>
-                <div class="grid-content shrink">
-                    <span class="inline-label">
-                        <span class="slim-text-box-label">Location</span>
-                    <select name="" id="" value.bind="sampleRequest.addressOrigin">
+                    <select name="" id="" value.bind="sampleRequest.returnToAddress">
                         <option repeat.for="address of brandAddresses" model.bind="address.id">${address.name}</option>
                     </select>
                     </span>
@@ -172,25 +156,20 @@
                 <div class="grid-content shrink">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Courier</span>
-                    <select name="" id="">
-                        <option value="">Stuart: Bike</option>
-                        <option value="">Stuart: Car</option>
-                        <option value="">Stuart: Foot</option>
-                        <option value="">Stuart: Scooter</option>
-                        <option value="">My Courier</option>
-                    </select>
+                        <select name="" id="" value.bind="sampleRequest.courierReturn">
+                            <option repeat.for="option of courier" model.bind="option">${option}</option>
+                        </select>
                     </span>
 
                 </div>
                 <div class="grid-block shrink">
                     <div class="grid-content shrink">
                         <span class="inline-label">
-                            <span class="slim-text-box-label">Split?</span>
-                        <select name="" id="" >
-                            <option value="">50/50</option>
-                            <option value="">We Pay</option>
-                            <option value="">They Pay</option>
-                        </select>
+                            <span class=" slim-text-box-label">Split</span>
+                            <select name="" id="" value.bind="sampleRequest.paymentReturn">
+                                <option repeat.for="option of payment" model.bind="option">${option}</option>
+                            </select>
+                        </span>
                         </span>
                     </div>
                     <div class="grid-content shrink" style="padding-top: 0.5rem;">
@@ -209,7 +188,7 @@
                                 <td class="accordion w24">SELECT SAMPLES</td>
                                 <td class="accordion w73" style="text-align:right; padding-right: 0.5rem;" >Select All</td>
                                 <td class="accordion w3">
-                                    <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="selectedProductIds.IsChecked" value.one-way="selectedProductIds.Value">
+                                    <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="selectAll">
                                 </td>
                             </tr>
                     </table>

@@ -9,8 +9,11 @@ class Address{
 	String city
 	String country
 	String postalCode
+	Boolean defaultAddress
 
-
+	static mapping ={
+		defaultAddress  defaultValue: false 
+	}
 
 	static constraints = {
 		address1 nullable: true
