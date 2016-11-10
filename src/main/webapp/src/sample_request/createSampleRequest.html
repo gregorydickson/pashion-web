@@ -64,7 +64,7 @@
                 <div class="grid-content shrink">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Deliver To</span>
-                    <select name="" id="" value.bind="deliverToSelected">
+                    <select name="" id="" value.bind="sampleRequest.deliverTo">
                         <option repeat.for="person of deliverTo" model.bind="person.id">${person.name}</option>
                     </select>
                     </span>
