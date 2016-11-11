@@ -166,8 +166,22 @@
                 <!-- Header -->
                 <div class="grid-block tool-header shrink ">
                     <div id="comms_panel" class="grid-block align-left tool-header tool-header-spacer shrink">
-                        <span class="ui-text-label-m-broad">IMAGE SEARCH</span>
-                        <span class="ui-text-label-m-broad" style="margin-left:1rem;">${numberImages} Images</span>
+
+                        <!-- Header for 'press'-->
+                        <span if.bind="user.type === 'press'">
+                            <span class="ui-text-label-m-broad">IMAGE SEARCH</span>
+                            <span class="ui-text-label-m-broad" style="margin-left:1rem;">${numberImages} Images</span>
+                        </span>
+
+                        <!-- Header for 'brand'-->
+                        <select if.bind="user.type === 'brand'" class="select-transparent" name="" id="">
+                            <option value=""> 
+                                <span class="ui-text-label-m-broad">IMAGE SEARCH</span>
+                                <span class="ui-text-label-m-broad" style="margin-left:1rem;">${numberImages} Images</span>
+                            </option>
+                            <option value="">MANAGE IMAGES</option>
+                        </select>
+                       
                     </div>
                     <div class="grid-block align-right tool-header-spacer">
                         <span class="expando">
@@ -270,7 +284,16 @@
                         </span>
                     </div>
                 </div>
-                
+ 
+
+                <!-- Add images for brand -->
+                <!-- 3nd row -->
+                <div if.bind="user.type === 'brand'"  class="medium-up-1 grid-block shrink" style="margin-top: -1rem;">
+                      <div class="grid-content shrink">
+                        <button id="btn-add-files" class="small button hollow" click.delegate="createAddfilesDialog()">Add Images</button>
+                        <button class="small button hollow">Delete Season</button>
+                    </div>              
+                </div>               
  
                 <!-- Images/Looks -->
                 <div class="cards-list-wrap">

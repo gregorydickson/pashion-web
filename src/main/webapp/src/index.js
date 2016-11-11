@@ -12,6 +12,7 @@ import {Introduction} from './hello/introduction';
 import {Zoom} from './zoom/zoom';
 import {SampleRequestService} from './services/sampleRequestService';
 import {UserService} from './services/userService';
+import {AddFilesDialog} from './add_files/add_files';
 
 
 @inject(HttpClient, EventAggregator, DialogService,SampleRequestService, UserService)
@@ -181,7 +182,11 @@ export class Index {
   }
 
 
-
+  // Add files (Add images) dialog
+  createAddfilesDialog() {
+    this.dialogService.open({viewModel: AddFilesDialog, model: "no-op" })
+      .then(response => {});
+  }  
 
 
 }

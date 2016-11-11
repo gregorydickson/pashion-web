@@ -18,3 +18,8 @@ $step: 5;
     margin-bottom: $value * 1px;
   }
 }
+
+div.disabled, span.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
