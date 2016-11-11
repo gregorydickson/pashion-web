@@ -95,34 +95,31 @@ class SearchableItemController {
 
             def arow = [:]
             def item = []
+
+            arow.numberImagesThisRowPC = 100/fixImagesPerRow
             if(j < resultsSize){
                 arow.numberImages = resultsSize
                 arow.numberImagesThisRow = 1
-                arow.numberImagesThisRowPC = 100
                 item << results[j]
                 j = j + 1
             }
             if(j < resultsSize ){
                 arow.numberImagesThisRow = 2
-                arow.numberImagesThisRowPC = 50
                 item << results[j]
                 j = j + 1
             }
             if(j < resultsSize && fixImagesPerRow >= 3){
                 arow.numberImagesThisRow = 3
-                arow.numberImagesThisRowPC = 33
                 item << results[j]
                 j = j + 1
             }
             if(j < resultsSize && fixImagesPerRow >= 4){
                 arow.numberImagesThisRow = 4
-                arow.numberImagesThisRowPC = 25
                 item << results[j]
                 j = j + 1
             }
             if(j < resultsSize && fixImagesPerRow >= 5) {
                 arow.numberImagesThisRow = 5
-                arow.numberImagesThisRowPC = 20
                 item << results[j]
                 j = j + 1
             }
