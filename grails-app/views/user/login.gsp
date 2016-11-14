@@ -5,13 +5,11 @@
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
 
     <meta name="layout" content="header-and-footer"/>
-
-    
     
     <asset:stylesheet src="pashion/pashion.css"/>
     <asset:stylesheet src="pashion/login.css"/>
+    <asset:javascript src="login.js"/>
 
-   
 
     <title>User Login</title>
 </head>
@@ -55,7 +53,7 @@
                                 <span class="inline-label">
                                     <span class="slim-text-box-label">Password</span>
                                     <input id="password" type='password' name='password' value='${user?.password}'/>
-                                    <a style= "width: 30px; margin-left: 1rem;" href="#" style="">Show</a>
+                                    <a id="password-word" style= "width: 30px; margin-left: 1rem;" href="javascript:hide_un_hide_password()" style="">Show</a>
                                 </span>
                             </div>
                         </div>
