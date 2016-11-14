@@ -47,3 +47,24 @@
     border: 1px #ebebeb solid; 
   }
 }
+select {
+  cursor: pointer;
+}
+.select-transparent {
+  background-color: transparent;
+  border-color: transparent;
+
+&:hover, &:focus {
+  border-color: transparent; 
+}
+}
+.tool-header .select-transparent {
+  height: auto;
+  margin: 0; 
+  color: #383838;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 1px;
+    min-height: 3rem;
+    line-height: 3rem;
+}

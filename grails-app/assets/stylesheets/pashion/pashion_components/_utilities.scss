@@ -18,3 +18,31 @@ $step: 5;
     margin-bottom: $value * 1px;
   }
 }
+
+div.disabled, span.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.controls-arrow {
+  display: inline-block;
+  cursor: pointer;
+  height: 32px;
+  width: 32px;
+  text-align: center;
+  line-height: 29px;
+  vertical-align: middle;
+}
+.controls-arrow-prev {
+  margin-right: 1rem; 
+}
+
+.controls-arrow-next {
+  margin-left: 1rem; 
+}
+
+.controls-arrow-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
