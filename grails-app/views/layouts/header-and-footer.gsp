@@ -6,6 +6,7 @@
         <g:layoutTitle default="Grails" />
     </title>
     <g:layoutHead/>
+    <link rel='shortcut icon' type='image/x-icon' href='${createLinkTo(dir:'images',file:'pashion.ico')}' />
 </head>
 
 <body aurelia-app="main">
