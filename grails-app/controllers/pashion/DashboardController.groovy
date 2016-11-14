@@ -56,7 +56,7 @@ class DashboardController {
         render list
     }
 
-    def theme(){
+    def themes(){
         def list = ['ALIEN','ALPINA','ANDROGYNE','ANDROGYNOUS','ANIMAL','ARCHITECTURE',
                     'ARMY','ART','AVIATION','AVIATOR','BABY','BALLET','BARBIE','BAROQUE',
                     'BOARD','BOMBER','BOUDOIR','BRIDAL','CABLE','CIRCUS','CLEAVAGE',

@@ -20,10 +20,14 @@ class SearchableItemController {
         SearchableItemType type = null
         Season season = null
         def keywords = null
+        def theme = null
 
         log.info "params itemType:"+params.itemType
-        if(params.itemType != "")
+        if(params.itemType != null && params.itemType != "")
             type = SearchableItemType.findByDisplay(params.itemType)
+
+        if(params.theme != null && params.theme != "")
+            theme = params.theme
 
         log.info "params brand:"+params.brand
         if(params.brand != "")
@@ -34,15 +38,15 @@ class SearchableItemController {
             season = Season.findByName(URLDecoder.decode(params.season))
         
         log.info "params availableFrom:"+params.availableFrom
-        if(params.availableFrom != "" )
+        if(params.availableFrom != null && params.availableFrom != "" )
             availableFrom = dateFormat.parse(params.availableFrom)
 
         log.info "params availableTo:"+params.availableTo
-        if(params.availableTo != "")   
+        if(params.availableTo != null && params.availableTo != "")   
             availableTo = dateFormat.parse(params.availableTo)
         
         log.info "params keywords:"+params.keywords
-        if(params.searchtext != null && params.searchtext != ""){
+        if(params.searchtext != null && params.searchtext != "" && params.searchtext != "undefined"){
             keywords = URLDecoder.decode(params.searchtext)
             keywords = keywords.split(" ")
         }
@@ -60,6 +64,7 @@ class SearchableItemController {
                 log.info "image:"+'image'
                 isNotNull('image')
                 if(brand) eq('brand', brand)
+                if(theme) eq('theme', theme)
                 if(keywords) or {
                     keywords.each {  ilike('name', '%'+it+'%') }
                 }
