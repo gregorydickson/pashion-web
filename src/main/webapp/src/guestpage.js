@@ -14,38 +14,26 @@ import {SampleRequestService} from './services/sampleRequestService';
 import {UserService} from './services/userService';
 
 
-@inject(HttpClient, EventAggregator, DialogService,SampleRequestService, UserService)
+@inject(HttpClient,  DialogService)
 export class Guestpage {
-  user = {};
-  bookings = [];
+ 
   rows = [];
   seasons = [];
   brands = [];
-  itemTypes = [];
+
   colors = [];
   themes = [];
   
   selectedBrand = '';
   selectedSeason = '';
-  selectedItemType = '';
+
   selectedColor = '';
   selectedTheme = '';
   searchText = '';
-  availableFrom = '';
-  availableTo = '';
-
-  numberImages = 0;
   
   
 
-  filterChange(text){
-    console.log("search:"+this.searchText);
-    console.log ("filterSearch:"+text);
-    //if(!(text instanceof KeyboardEvent)) this.searchText = text;
-    
-    console.log(this.selectedBrand);
-    console.log(this.selectedSeason);
-
+  filterChange(){
 
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
@@ -56,29 +44,20 @@ export class Guestpage {
   }
 
 
-  constructor(http, eventAggregator,dialogService,sampleRequestService,userService) {
+  constructor(http,dialogService) {
     http.configure(config => {
       config
         .useStandardConfiguration();
     });
-    this.ea = eventAggregator;
     this.http = http;
-    this.boundHandler = this.handleKeyInput.bind(this);
     this.dialogService = dialogService;
-    this.sampleRequestService = sampleRequestService;
-    this.userService = userService;
-
   }
 
 
   attached(){
-    
-    
   }
 
   activate() {
-    
-    
     return Promise.all([
       this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
       this.http.fetch('/brand/index.json').then(response => response.json()).then(brands => this.brands = brands),
@@ -87,9 +66,8 @@ export class Guestpage {
       this.http.fetch('/dashboard/keywords').then(response => response.json())
             .then(searchText => {
               this.searchText = searchText[0];
-              this.filterChange(searchText[0]);
+              this.filterChange();
               })
-
     ]);
   }
 
@@ -97,32 +75,6 @@ export class Guestpage {
    
   }
 
-  handleKeyInput(event) {
-    console.log(event);
-    if(event.which == 13 && event.srcElement.id === 'search-images') {
-      console.log("user hit enter");
-      
-
-    }
-  }
- 
-  
-  lookMenu(id){
-    var menu = document.getElementById("look-"+id);
-    menu.classList.toggle("look-menu-show");
-  }
-
-  closeMenu(id){
-    var menu = document.getElementById("look-"+id);
-    menu.classList.toggle("look-menu-show");
-  }
-
-  
-
-  
-
-  
-  // Zoom image
   createZoomDialog(itemId) {
     var menu = document.getElementById("card-"+itemId);
     menu.classList.toggle("blue-image");
@@ -131,8 +83,6 @@ export class Guestpage {
         menu.classList.toggle("blue-image");
       });
   }
-
-
 
 
 
