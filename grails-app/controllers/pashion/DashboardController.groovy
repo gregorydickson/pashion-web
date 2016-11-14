@@ -1,22 +1,27 @@
 package pashion
 
 import grails.converters.JSON
+import java.util.concurrent.ThreadLocalRandom
 
 class DashboardController {
     static scope = "singleton"
 
     def index() {
-       
-
     }
 
-     def user(){
-        if(!session.user){
-            def info = [type:'guest' ] as JSON
+    def user(){
+        def info
+        if(session.user == null){
+            info = [type:'guest' ] as JSON
+            session.user = 'guest'
+            render info 
+            return
+        } else if(session.user == 'guest'){
+            info = [type:'guest' ] as JSON
             render info 
             return
         }
-        
+
         def user = session.user
         def type
         if(user.brand){
@@ -27,7 +32,7 @@ class DashboardController {
         //creating a map is more simple than a bunch of marshalling code
         def userInfo = [email:user.email,type:type,name:user.name,surname:user.surname ] as JSON
         render userInfo
-     }
+    }
 
 
     def required(){
@@ -83,7 +88,7 @@ class DashboardController {
     }
 
     def itemTypes(){
-        //quick list to get UI going
+        
         def itemTypes = SearchableItemType.list() as JSON
         render itemTypes
     }
@@ -99,7 +104,7 @@ class DashboardController {
         render colors
     }
     def seasons(){
-        //quick list to get UI going
+        
         def seasons = Season.list().collect{it.name} as JSON
         render seasons
     }
@@ -120,9 +125,48 @@ class DashboardController {
         render list
     }
 
+    def keywords(){
+        def number = ThreadLocalRandom.current().nextInt(1, 11)
+        def list
+        switch(number){
+            case 1:
+                list = ["parka"]
+                break
+            case 2:
+                list = ["shoes dress"]
+                break
+            case 3:
+                list = ["hat"]
+                break
+            case 4:
+                list = ["boots"]
+                break
+            case 5:
+                list = ["coat"]
+                break
+            case 6:
+                list = ["hoodie"]
+                break
+            case 7:
+                list = ["suit"]
+                break
+            case 8:
+                list = ["sweater"]
+                break
+            case 9:
+                list = ["trousers"]
+                break
+            case 10:
+                list = ["teeshirt"]
+                break
+        }
+        render list as JSON
+    }
+
     def type(){
         render SearchableItemType as JSON
     }
+
     def deliverTo(){
         def press = session.user.pressHouse
         def brand = session.user.brand

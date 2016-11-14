@@ -5,6 +5,7 @@ import grails.transaction.Transactional
 
 import com.stormpath.sdk.account.Account
 
+
 @Transactional(readOnly = true)
 class UserController {
 
@@ -30,7 +31,6 @@ class UserController {
         session.user = null
         session.invalidate()
         redirect(controller:'user',action:'login')
-
     }
 
     def login(){
@@ -45,13 +45,12 @@ class UserController {
                session.user = user
                redirect(controller:'dashboard',action:'index')
             }
-
-
         }
     }
 
     def guest(){
-        redirect('/dashboard/#guestpage')
+        session.user = 'guest'
+        redirect (uri:'/dashboard/#guestpage' )
     }
 
     @Transactional

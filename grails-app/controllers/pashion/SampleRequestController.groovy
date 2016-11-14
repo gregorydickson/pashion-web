@@ -78,9 +78,14 @@ class SampleRequestController {
 
     def index(){
         def user = session.user
-
-        List<SampleRequest> results = sampleRequestService.listByUserOrganization(user)
-        log.info "sample requests count:"+results.size()
+        List<SampleRequest> results
+        if(user == 'guest'){
+            results = []
+            
+        } else {
+            results = sampleRequestService.listByUserOrganization(user)
+            log.info "sample requests count:"+results.size()
+        }
         respond results
     }
 
