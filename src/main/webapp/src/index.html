@@ -173,15 +173,15 @@
 
                         <!-- Header for 'press'-->
                         <span if.bind="user.type === 'press'">
-                            <span class="ui-text-label-m-broad">IMAGE SEARCH</span>
-                            <span class="ui-text-label-m-broad" style="margin-left:1rem;">${numberImages} Images</span>
+                            <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
+                            <span class="ui-text-label-m-broad">${numberImages} Images)</span>
                         </span>
 
                         <!-- Header for 'brand'-->
                         <select if.bind="user.type === 'brand'" class="select-transparent" name="" id="">
                             <option value=""> 
-                                <span class="ui-text-label-m-broad">IMAGE SEARCH</span>
-                                <span class="ui-text-label-m-broad" style="margin-left:1rem;">${numberImages} Images</span>
+                                <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
+                                <span class="ui-text-label-m-broad">${numberImages} Images )</span>
                             </option>
                             <option value="">MANAGE IMAGES</option>
                         </select>
