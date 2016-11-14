@@ -27,7 +27,7 @@
                 <div class="medium-up-1 align-center grid-block shrink" style="margin-top: 2.5rem;">
                     <!-- Search -->
                     <div class="grid-content shrink">
-                        <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Enter keyword">
+                        <input type="search" search.delegate="filterChange()" value.bind="searchText" class="search-box" id="search-images" placeholder="Enter keyword">
                     </div>
 
                     <!-- Brand -->
