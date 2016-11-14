@@ -173,7 +173,7 @@ $menubar-icon-spacing: $menubar-item-padding !default;
       margin: 0;
 
       @if $menubar-icon-size != false {
-        width: $menubar-icon-size;
+        min-width: $menubar-icon-size; //safari required
         height: $menubar-icon-size;
       }
 
