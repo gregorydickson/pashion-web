@@ -34,7 +34,7 @@
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Designer</span>
-                        <select name="" id="" value.bind="selectedBrand" change.delegate="filterChange($event.target)">
+                        <select name="" id="" value.bind="selectedBrand" change.delegate="filterChange()">
                             <option value="">Choose</option>
                             <option value="">All</option>
                             <option repeat.for="brandVar of brands" model.bind="brandVar.id">${brandVar.name}</option>
@@ -50,7 +50,7 @@
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Season</span>
-                        <select name="" id="" value.bind="selectedSeason" change.delegate="filterChange($event.target)">
+                        <select name="" id="" value.bind="selectedSeason" change.delegate="filterChange()">
                             <option value="">Choose</option>
                             <option value="">All</option>
                             <option repeat.for="seasonVar of seasons" model.bind="season">${seasonVar}</option>

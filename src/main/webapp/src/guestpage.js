@@ -37,7 +37,7 @@ export class Guestpage {
   
 
   filterChange(text){
-    if(text) this.searchText = text;
+    if(!(text instanceof KeyboardEvent)) this.searchText = text;
     console.log("search:"+this.searchText);
     console.log(this.selectedBrand);
     console.log(this.selectedSeason);
