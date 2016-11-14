@@ -91,8 +91,8 @@
                             </div>
                             <a href="#" style="margin-top: 0.5rem;">Request Access</a>
                             <a href="#" style="margin-top: 0.5rem;">Help Getting Started</a>
-                            <form action="/user/guest" method="post" id="2">
-                                <a style="margin-top: 0.5rem;" onclick="document.getElementById('2').submit();">Continue as Guest</a>
+                            <form style="margin-top: 0.5rem;" action="/user/guest" method="post" id="2">
+                                <a  onclick="document.getElementById('2').submit();">Continue as Guest</a>
                             </form>
                         </div>
                     </div> <!-- ai-dialog-footer> -->
