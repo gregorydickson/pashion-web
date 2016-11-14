@@ -5,7 +5,7 @@
 button.accordion {
     background-color: $white-two;
     cursor: pointer;
-    width: 9px;
+    min-width: 9px;
     border: none;
     text-align: left;
     outline: none;
