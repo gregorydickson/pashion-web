@@ -5,7 +5,7 @@ import {Router} from 'aurelia-router';
 import {UserService} from './services/userService';
 
 @inject(HttpClient,UserService,Router)
-export class Header {
+export class Guestheader {
 
 	user = {};
 

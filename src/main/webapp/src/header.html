@@ -3,10 +3,11 @@
         <div class="">
             <ul class="menu-bar dark">
                 <li>
-                    <img src="/assets/lauren.png" style="margin-right: 1rem;"/>
-                    <select change.trigger="logout()" name="LAUREN" id="headerModeSelect" class="nav-label-header top-menu-modifier">
-                        <option>${user.name}</option>
-                        <option >LOGOUT</option>
+                    <img  src="/assets/lauren.png" style="margin-right: 1rem;"/>
+                    <select value.bind="selectval" change.trigger="logout()" name="LAUREN" id="headerModeSelect" class="nav-label-header top-menu-modifier">
+                        <option value="no">${user.name}</option>
+                        <option value="guest">GUEST</option>
+                        <option value= "logout">LOGOUT</option>
                     </select>
                     <li></li>
                     <li></li>

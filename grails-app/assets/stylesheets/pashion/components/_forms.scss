@@ -156,6 +156,19 @@ $meter-radius: 0 !default;
     box-sizing: border-box;
   }
 
+  input[type="search"]::-webkit-search-cancel-button {
+
+  /* Remove default */
+  -webkit-appearance: searchfield-cancel-button;
+    
+  /* Now your own custom styles */
+  //height: 10px;
+  //width: 10px;
+  //background: red;
+  /* Will place small red box on the right of input (positioning carries over) */
+
+}
+
   // Disabled state
   input, textarea {
     &.disabled,

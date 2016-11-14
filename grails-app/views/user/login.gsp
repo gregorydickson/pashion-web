@@ -90,6 +90,7 @@
                             </div>
                             <a href="#" style="margin-top: 0.5rem;">Request Access</a>
                             <a href="#" style="margin-top: 0.5rem;">Help Getting Started</a>
+                            <a route-href="route: guestpage;" style="margin-top: 0.5rem;">Continue as Guest</a>
                         </div>
                     </div> <!-- ai-dialog-footer> -->
                 </g:form>

@@ -4,6 +4,10 @@
     <require from="./common/viewDateFormatter"></require>
     <!-- Main building block -->
     <div class="vertical grid-block spa-background">
+
+        <!-- header -->
+        <compose view-model="header"></compose> 
+
         <!-- spacer -->
         <div class="grid-block shrink spa-v-spacer ">
         </div>
@@ -32,7 +36,7 @@
                 <div class="vertical grid-block shrink" style="margin-left: 1rem; margin-right: 1rem;">
                     <form style="margin-top:20px;">
                         <!-- Search requests -->
-                        <input type="text" value.two-way="searchtext" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
+                        <input type="search" value.two-way="searchtext" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
                         <!-- filter requests -->
                         <span class="inline-label" style="margin-top:1.5rem;">
                         <span class="form-label">Order</span>
@@ -184,7 +188,7 @@
                     <!-- change to UI, use "All" for each filter instead -->
                     <!-- Search -->
                     <div class="grid-content shrink">
-                        <input type="text" value.bind="searchText" class="search-box" id="search-images" placeholder="Search Text">
+                        <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search Text">
                     </div>
                     <!-- Trending -->
                     <!--<div class="grid-content shrink" style="margin-top: 0.5rem;">
@@ -232,7 +236,7 @@
                     <!-- Brand -->
                     <div class="grid-content shrink">
                         <span class="inline-label">
-                            <span class="form-label">Brand</span>
+                            <span class="form-label">Designer</span>
                         <select name="" id="" value.bind="selectedBrand" change.delegate="filterChange($event.target)">
                             <option value="">All</option>
                             <option repeat.for="brand of brands" model.bind="brand.id">${brand.name}</option>
