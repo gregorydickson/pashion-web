@@ -81,6 +81,7 @@
 
 
                     </div> <!-- ai-dialog-body -->
+                </g:form>
 
                     <!-- Dialog Footer button -->
                     <div class="ai-dialog-footer">
@@ -90,10 +91,12 @@
                             </div>
                             <a href="#" style="margin-top: 0.5rem;">Request Access</a>
                             <a href="#" style="margin-top: 0.5rem;">Help Getting Started</a>
-                            <a route-href="route: guestpage;" style="margin-top: 0.5rem;">Continue as Guest</a>
+                            <form action="/user/guest" method="post" id="2">
+                                <a style="margin-top: 0.5rem;" onclick="document.getElementById('2').submit();">Continue as Guest</a>
+                            </form>
                         </div>
                     </div> <!-- ai-dialog-footer> -->
-                </g:form>
+                
             </div> <!-- ai-dialog -->
         </router-view>
     

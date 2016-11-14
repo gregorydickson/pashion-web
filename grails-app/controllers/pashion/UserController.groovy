@@ -50,6 +50,10 @@ class UserController {
         }
     }
 
+    def guest(){
+        redirect('/dashboard/#guestpage')
+    }
+
     @Transactional
     def doLogin(){
         log.info "do Login params:"+params

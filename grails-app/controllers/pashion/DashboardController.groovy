@@ -6,14 +6,16 @@ class DashboardController {
     static scope = "singleton"
 
     def index() {
-        if (!session.user){
-            redirect(controller:'user',action: 'login')
-            return
-        }
+       
 
-     }
+    }
 
      def user(){
+        if(!session.user){
+            def info = [type:'guest' ] as JSON
+            render info 
+            return
+        }
         
         def user = session.user
         def type
