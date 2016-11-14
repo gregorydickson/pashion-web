@@ -36,8 +36,9 @@ export class Guestpage {
   
   
 
-  filterChange(event){
-    console.log("changing");
+  filterChange(text){
+    if(text) this.searchText = text;
+    console.log("search:"+this.searchText);
     console.log(this.selectedBrand);
     console.log(this.selectedSeason);
     console.log(this.selectedItemType);
@@ -52,8 +53,7 @@ export class Guestpage {
                                       '&availableFrom=' + this.availableFrom + 
                                       '&availableTo=' + this.availableTo)
           .then(response => response.json())
-          .then(rows => {this.rows = rows})
-          .then(rows => {this.numberImages = this.rows[0].numberImages});
+          .then(rows => {this.rows = rows});
   }
 
 
@@ -93,16 +93,12 @@ export class Guestpage {
       this.http.fetch('/brand/index.json').then(response => response.json()).then(brands => this.brands = brands),
       this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors),
       this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings),
-      this.user = this.userService.getUser().then(user => {
-        this.user = user;
-        console.log("user type:"+user.type)
-        if(user.type === 'guest'){
-          this.http.fetch('/dashboard/keywords')
-            .then(response => response.json())
-            .then(searchText => this.searchText = searchText)
-            .then(this.filterChange());
-        }
-      })
+      this.user = this.userService.getUser().then(user => this.user = user),
+      this.http.fetch('/dashboard/keywords').then(response => response.json())
+            .then(searchText => {
+              this.searchText = searchText[0];
+              this.filterChange(searchText[0]);
+              })
 
     ]);
   }
