@@ -6,9 +6,8 @@ import {DateFormat} from 'common/dateFormat';
 
 
 @inject(HttpClient, DialogController)
-export class Zoom {
+export class ErrorDialogSample {
   static inject = [DialogController];
-  currentItem = {};
 
   constructor(http, controller){
     this.controller = controller;
@@ -23,35 +22,12 @@ export class Zoom {
   activate(itemId){
     this.http.fetch('/searchableItems/'+itemId+'.json')
          .then(response => response.json())
-         .then(item => {
-             this.currentItem = item;
-           }
+         .then(item => {}
          );
   }
 
   close(){
     this.controller.close();
-  }
-
-  attached() {
- 
-
-    // Fit image to screen height
-    var h = window.innerHeight;
-    document.getElementById('imageZoom').style.height= h*0.8 +'px';     
-
-    // Close dialog when click outside
-    var controller = this.controller;
-
-    document.getElementsByTagName('ai-dialog-container')[0].onclick = function(e) {
-
-     if(e.target.id != 'imageZoom' & e.target.id != 'prev' & e.target.id != 'next') {
-      controller.close();
-     }
-    }
-
-
-
   }
   
 }

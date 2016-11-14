@@ -170,9 +170,23 @@
                 <!-- Header -->
                 <div class="grid-block tool-header shrink ">
                     <div id="comms_panel" class="grid-block align-left tool-header tool-header-spacer shrink">
-                        <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
-                        <span class="ui-text-label-m-broad" >${numberImages} Images)</span>
-                    </div>
+
+                        <!-- Header for 'press'-->
+                        <span if.bind="user.type === 'press'">
+                            <span class="ui-text-label-m-broad">IMAGE SEARCH</span>
+                            <span class="ui-text-label-m-broad" style="margin-left:1rem;">${numberImages} Images</span>
+                        </span>
+
+                        <!-- Header for 'brand'-->
+                        <select if.bind="user.type === 'brand'" class="select-transparent" name="" id="">
+                            <option value=""> 
+                                <span class="ui-text-label-m-broad">IMAGE SEARCH</span>
+                                <span class="ui-text-label-m-broad" style="margin-left:1rem;">${numberImages} Images</span>
+                            </option>
+                            <option value="">MANAGE IMAGES</option>
+                        </select>
+                       
+                   </div>
                     <div class="grid-block align-right tool-header-spacer">
                         <span class="expando">
                       <a route-href="route: requestman;"><img  src="/assets/nav/collapso.png" /></a>
@@ -274,7 +288,16 @@
                         </span>
                     </div>
                 </div>
-                
+ 
+
+                <!-- Add images for brand -->
+                <!-- 3nd row -->
+                <div if.bind="user.type === 'brand'"  class="medium-up-1 grid-block shrink" style="margin-top: -1rem;">
+                      <div class="grid-content shrink">
+                        <button id="btn-add-files" class="small button hollow" click.delegate="createAddfilesDialog()">Add Images</button>
+                        <button class="small button hollow">Delete Season</button>
+                    </div>              
+                </div>               
  
                 <!-- Images/Looks -->
                 <div class="cards-list-wrap">
@@ -284,10 +307,31 @@
                             <div class="card" repeat.for="i of row.numberImagesThisRow" css="width: ${row.numberImagesThisRowPC}%;">
                             
                                 <!-- Three dots menu -->
-                                <a href="#" class="look-menu-click" click.delegate="lookMenu(row.items[i].id)">
-                                    <div class=menu-stripe></div>
-                                </a>
+                                <div class="look-menu-absolute-wrap">
+                                    <a href="#" class="look-menu-click " click.delegate="lookMenu(row.items[i].id)">
+                                        <div class=menu-stripe></div>
+                                    </a>
 
+                                    <!-- Menu on image when three dots clicked -->                            
+                                    <div class="look-menu-absolute" id="look-${row.items[i].id}">
+                                        <div class="look-menu-wrap">
+                                            <div class="look-menu-heading">
+                                                LOOK ${row.items[i].id} <!-- ${i} ${row.numberImagesThisRow} -->
+                                            </div>
+
+                                            <ul class="look-menu-list">
+                                                <li class="look-menu-item"><a href="#" click.delegate="createSampleRequest(row.items[i].id)" class="look-menu-link">Book Look/Sample &nbsp;</a></li>
+                                                <li class="look-menu-item"><a href="#" class="look-menu-link">Details</a></li>
+                                                
+                                                <li if.bind="!row.items[i].fromDate" class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Set Initial Availability</a></li>
+
+                                                <li if.bind="row.items[i].fromDate" class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
+
+                                                <li class="pure-menu-item"><a href="#" click.delegate="editSearchableItem(row.items[i].id)" class="look-menu-link">Edit</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div> 
 
                                 <!-- Main image -->
                                 <div id="card-${row.items[i].id}" class="card-image">
@@ -298,28 +342,7 @@
                                 <img src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align"/> 
 
 
-                                <!-- Menu on image when three dots clicked -->                            
-                                <div class="look-menu" id="look-${row.items[i].id}">
-                                    <div class="look-menu-wrap">
-                                        <div class="look-menu-heading">
-                                            LOOK ${row.items[i].id} <!-- ${i} ${row.numberImagesThisRow} -->
-                                            <button type="button" class="close" click.delegate="closeMenu(row.items[i].id)">
-                                                  <span aria-hidden="true">×</span>
-                                            </button>
-                                        </div>
 
-                                        <ul class="look-menu-list">
-                                            <li class="look-menu-item"><a href="#" click.delegate="createSampleRequest(row.items[i].id)" class="look-menu-link">Book Look/Sample &nbsp;</a></li>
-                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Details</a></li>
-                                            
-                                            <li if.bind="!row.items[i].fromDate" class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Set Initial Availability</a></li>
-
-                                            <li if.bind="row.items[i].fromDate" class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
-
-                                            <li class="pure-menu-item"><a href="#" click.delegate="editSearchableItem(row.items[i].id)" class="look-menu-link">Edit</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
                         </div>
 
                   

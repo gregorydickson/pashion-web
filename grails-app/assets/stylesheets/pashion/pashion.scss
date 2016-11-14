@@ -60,14 +60,14 @@
 "pashion_components/spinner",
 "pashion_components/calendar",
 "pashion_components/datepicker",
-"pashion_components/dot_menu",
-"pashion_components/image_menu",
+"pashion_components/dots_menu",
 "pashion_components/image_zoom",
 "pashion_components/date_range_picker",
 "pashion_components/dialog", 
 "pashion_components/forms", 
 "pashion_components/card",
-"pashion_components/utilities";
+"pashion_components/utilities",
+"pashion_components/add_files";
 
 .footer{
 	
@@ -384,4 +384,17 @@ img.contact-entry {
 }
 .wrapper-inner-5 {
   padding: 5px; 
+}
+
+.text-circled {
+  color: $pinkish-grey;
+  border: 1px $pinkish-grey solid; 
+  height: 40px;
+  width: 40px;  
+  line-height: 40px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  text-align: center;
+  font-size: 18px;
+  display: block;
 }
