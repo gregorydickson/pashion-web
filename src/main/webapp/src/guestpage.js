@@ -1,20 +1,13 @@
 import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-fetch-client';
-import {EventAggregator} from 'aurelia-event-aggregator';
 import {DialogService} from 'aurelia-dialog';
 import 'fetch';
-import {CreateSampleRequest} from './sample_request/createSampleRequest';
-import {EditSampleRequest} from './sample_request/editSampleRequest';
-import {EditSearchableItem} from './items/editSearchableItem';
-import {CheckAvailability} from './items/checkAvailability';
-import {SetAvailability} from './items/setAvailability';
-import {Introduction} from './hello/introduction';
 import {Zoom} from './zoom/zoom';
-import {SampleRequestService} from './services/sampleRequestService';
 import {UserService} from './services/userService';
+import {busy} from './services/busy';
 
 
-@inject(HttpClient,  DialogService)
+@inject(HttpClient,  DialogService, busy)
 export class Guestpage {
  
   rows = [];
@@ -34,23 +27,27 @@ export class Guestpage {
   
 
   filterChange(){
-
+    this.busy.on();
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                       '&season=' + encodeURI(this.selectedSeason) + 
                                       '&theme='+ this.selectedTheme)
           .then(response => response.json())
-          .then(rows => {this.rows = rows});
+          .then(rows => {
+            this.rows = rows;
+            this.busy.off();
+          });
   }
 
 
-  constructor(http,dialogService) {
+  constructor(http,dialogService,busy) {
     http.configure(config => {
       config
         .useStandardConfiguration();
     });
     this.http = http;
     this.dialogService = dialogService;
+    this.busy = busy;
   }
 
 
