@@ -25,6 +25,8 @@
 		width: calc(100% - 53px);
 		text-shadow: 0 2px 4px rgba(0,0,0,0.5);
 		text-transform: capitalize; 
+		font-size: $font-size-large;
+		font-weight: 500;
 	}
 
 	.card .indigital-align {
