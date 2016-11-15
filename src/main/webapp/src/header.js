@@ -32,5 +32,10 @@ export class Header {
   		if (this.selectval=="logout") window.location.href = '/user/login';
       if (this.selectval=="guest") this.theRouter.navigate("guestpage");
   }
+
+    admin(){
+      console.log("admin: " + this.selectval);
+      this.theRouter.navigate("adminpage");
+  }
     
 }
