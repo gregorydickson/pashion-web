@@ -4,7 +4,7 @@ package pashion
 class Message {
 
 	User from
-	User to
+
 	String title
     String message
 
@@ -13,7 +13,7 @@ class Message {
 	Date dateCreated
 	Date lastUpdated
 
-	static hasMany = []
+	static hasMany = [to:User]
 
 	static belongsTo = []
 
