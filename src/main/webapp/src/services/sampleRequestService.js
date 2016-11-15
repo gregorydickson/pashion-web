@@ -24,7 +24,13 @@ export class SampleRequestService{
 			this.http.fetch('/sampleRequest/show/'+id+'.json')
 	  			.then(response => response.json())
 	  			.then(sampleRequest => {
-	  				this.sampleRequest = sampleRequest;
+	  				
+            sampleRequest.searchableItems.forEach(function(item1) {
+              item1.status = sampleRequest.searchableItemsStatus.find(function (item2) {
+                return item2.itemId === item1.id;
+              });
+            });
+            this.sampleRequest = sampleRequest;
 	  				resolve( this.sampleRequest);
 	  			}).catch(err=>reject(err));
 	  		});
@@ -46,9 +52,20 @@ export class SampleRequestService{
       				resolve(this.sampleRequests);
       			}).catch(err=>reject(err));
 	      	
-		});
-		return promise;
+		  });
+		  return promise;
   	}
+
+    updateSampleRequest(sr){
+      this.http.fetch('/sampleRequest/updatejson', {
+            method: 'post',
+            body: json(sr)
+          })
+          .then(response => response.json())
+          .then(result => {
+              resolve(result);
+          });
+    }
 
 
   	saveSampleRequest(sr){
@@ -63,6 +80,7 @@ export class SampleRequestService{
           });
   	}
 
+    
 
 }
 

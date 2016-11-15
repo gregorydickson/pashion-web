@@ -149,8 +149,8 @@
                         <div class="grid-block shrink" >       
                                 <span class="inline-label">
                                     <span class="slim-text-box-label">Brand Location</span>
-                                    <select name="" id="" value.bind="">
-                                    <option repeat.for="address of addresses" model.bind="address.id">${address.name}</option>
+                                    <select name="" id="" value.bind="sampleRequest.returnToAddress.id">
+                                    <option repeat.for="address of brandAddresses" model.bind="address.id">${address.name}</option>
                                     </select>
                                 </span>
                         </div>
@@ -163,7 +163,7 @@
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Name</span>
                             <div class="" >
-                                <input type="text" value.bind="editorialName" class="slim-text-box">
+                                <input type="text" value.bind="sampleRequest.editorialName" class="slim-text-box">
                             </div>
                         </div>
 
@@ -171,7 +171,7 @@
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Who</span>
                             <div class="" >
-                                <input type="text" value.bind="editorialWho" class="slim-text-box">
+                                <input type="text" value.bind="sampleRequest.editorialWho" class="slim-text-box">
                             </div>
                         </div>
 
@@ -179,7 +179,7 @@
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">When</span>
                             <div class="" >
-                                <input type="text" value.bind="editorialWhen" class="slim-text-box">
+                                <input type="text" value.bind="sampleRequest.editorialWhen" class="slim-text-box">
                             </div>
                         </div>
                     </div>                    
@@ -189,7 +189,7 @@
                     <span style="margin-bottom: 8px;">STATUS OF SAMPLES</span>
                 </div>  
 
-                <div class="vertical grid-content accordion" style="overflow-x:hidden; max-height:10rem;"> <!-- scroll after n items -->
+                <div if.bind="user.type === 'brand'" class="vertical grid-content accordion" style="overflow-x:hidden; max-height:10rem;"> <!-- scroll after n items -->
                     
                     <!-- row -->
                     <table repeat.for="sample of sampleRequest.searchableItems" class="big-accordion" style="margin-bottom:7px;">
@@ -200,15 +200,15 @@
                             <td class="accordion w18">
                                 
 
-                                <select name="" id="" style="margin-bottom:0px;">
+                                <select value.bind="sample.status.brandStatus" style="margin-bottom:0px;">
                                     <option value=""></option>
-                                    <option>Shipped</option>
-                                    <option>Out</option>
-                                    <option>Returned</option>
+                                    <option value="Not Arrived">Not Arrived</option>
+                                    <option value="Out">Out</option>
+                                    <option value="Returned">Returned</option>
                                 </select>
 
                             </td>
-                            <td style="text-align:right;" class="accordion w13"><a style="padding:7px 6px 5px 6px; margin-right:0; margin-bottom:0px; font-size: 1rem;" class="hollow button" href="javascript:;">Remove</a></td> 
+                            <td style="text-align:right;" class="accordion w13"><a style="padding:7px 6px 5px 6px; margin-right:0; margin-bottom:0px; font-size: 1rem;" class="hollow button" href="javascript:;">Cancel</a></td> 
                         </tr>
                     </table>
                 

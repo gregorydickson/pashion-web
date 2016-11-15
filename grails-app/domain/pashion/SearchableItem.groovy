@@ -15,6 +15,7 @@ class SearchableItem {
 	String name //string for ID set by user
 	String description
 	Brand brand
+	String sex
 
 	String image
 	String color
@@ -161,6 +162,7 @@ class SearchableItem {
 		name nullable:true
 		description nullable:true
 		brand nullable: true
+		sex nullable:true
 
 		image nullable:true
 		color nullable: true

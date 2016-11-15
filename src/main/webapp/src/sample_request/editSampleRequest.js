@@ -31,6 +31,7 @@ export class EditSampleRequest {
       this.sampleRequestService.getSampleRequest(requestId)
         .then(sampleRequest => {
           this.sampleRequest = sampleRequest;
+          console.log("sampleRequest"+sampleRequest);
           this.http.fetch('/brand/addresses/'+sampleRequest.brand.id)
               .then(response => response.json())
               .then(addresses => this.brandAddresses = addresses)
