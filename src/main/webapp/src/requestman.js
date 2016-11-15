@@ -3,6 +3,7 @@ import {UserService} from './services/userService';
 import {SampleRequestService} from './services/sampleRequestService';
 import {DialogService} from 'aurelia-dialog';
 import {CreateDialogNewContact} from './contacts/dialogNewContact';
+import {CreateDialogImportContacts} from './contacts/dialogImportContacts';
 
 @inject(DialogService, UserService, SampleRequestService)
 export class Requestman{
@@ -57,6 +58,14 @@ export class Requestman{
     lookEditMenu(id){
     var menu = document.getElementById("requestManTest"+id);
     menu.classList.toggle("look-menu-show");
+  }
+
+
+  // Create dialog import contacts 
+
+  CreateDialogImportContacts(itemId) {
+    this.dialogService.open({viewModel: CreateDialogImportContacts, model: itemId })
+      .then(response => {});
   }
 
 
