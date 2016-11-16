@@ -72,7 +72,6 @@
                                   <span class="form-label">Filter</span>
                                 <select name="" id="">
                                     <option>Overdue</option>
-                                    <option>Waiting</option>
                                     <option>All</option>
                                 </select>
                                 </span>
@@ -91,26 +90,39 @@
                         </div>
                         <!-- Accordion -->
                         <!--Header -->
-                       
+                        
                             <div if.bind="user.type === 'brand'"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
                                 <table class="big-accordion">
                                     <tr>
                                         <td class="accordion-underline w3"></td>
                                         <td class="accordion-underline w4">ID</td>
-                                        <td class="accordion-underline w11">DUE</td>
-                                        <td class="accordion-underline w15">SHOOT</td>
+                                        <td class="accordion-underline w11">DUE DATE</td>
+                                        <td class="accordion-underline w25">SHOOT</td>
                                         <td class="accordion-underline w14">COMPANY</td>
                                         <td class="accordion-underline w13">WHO</td>
                                         <td class="accordion-underline w5">#</td>
-                                        <td class="accordion-underline w8">OUT</td>
-                                        <td class="accordion-underline w6">IN</td>
-                                        <td class="accordion-underline w10">STATUS</td>
+                                        <td class="accordion-underline w14">STATUS</td>
                                         <td class="accordion-underline w5"></td>
                                     </tr>
                                 </table>
                             </div>
+                            <div if.bind="user.type === 'press'"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
+                                <table class="big-accordion">
+                                    <tr>
+                                        <td class="accordion-underline w3"></td>
+                                        <td class="accordion-underline w4">ID</td>
+                                        <td class="accordion-underline w11">REQUESTED</td>
+                                        <td class="accordion-underline w15">BRAND</td>
+                                        <td class="accordion-underline w24">EDITORIAL</td>
+                                        <td class="accordion-underline w13">OWNER</td>
+                                        <td class="accordion-underline w5">#</td>
+                                        <td class="accordion-underline w14">STATUS</td>
+                                        <td class="accordion-underline w5"></td>
+                                    </tr>
+                                </table>
+                            </div>                            
                             <!-- Content Container-->
-                            <!-- Rows of content Brand View-->
+                            <!-- Rows of content BRAND View-->
                             <div class="grid-content" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left: 1rem; margin-right: 1rem;">
                                 
                                 <div repeat.for="booking of bookings">
@@ -121,13 +133,11 @@
                                             </td>
                                             <td class="accordion-grey w4">${booking.id}</td>
                                             <td class="accordion-grey w11">${booking.bookingStartDate | viewDateFormat}</td>
-                                            <td class="accordion-grey w15">${booking.editorialName}</td>
+                                            <td class="accordion-grey w25">${booking.editorialName}</td>
                                             <td class="accordion-grey w14">${booking.pressHouse.name}</td>
                                             <td class="accordion-grey w13">${booking.requestingUser.name} ${booking.requestingUser.surname}</td>
                                             <td class="accordion-grey w5">${booking.searchableItems.length}</td>
-                                            <td class="accordion-grey w8">${booking.itemsOut}</td>
-                                            <td class="accordion-grey w6">${booking.itemsIn}</td>
-                                            <td class="accordion-grey w10">${booking.requestStatus}</td>
+                                            <td class="accordion-grey w14">${booking.requestStatus}</td>
                                             <td class="accordion-grey w5"><span class="edit-box" ><a href="#" click.delegate="lookEditMenu(booking.id)">...</a></span></td>
                                         </tr>
                                     </table>
@@ -136,9 +146,12 @@
                                         <span class="look-menu-heading">REQUEST #${booking.id}</span>
                                         <ul class="look-menu-list">
                                             <li class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id)" class="look-menu-link">Edit</a></li>
-                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Approve</a></li>
-                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Deny</a></li>
-                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Delete</a></li>
+                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Ship</a></li>
+                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Send</a></li>
+                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Mark Picked Up</a></li>
+                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Mark Returned</a></li>
+                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Restocked</a></li>
+                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Delete Request</a></li>
                                         </ul>
                                     </div>
                                     <!-- expanding data -->
