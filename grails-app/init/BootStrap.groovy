@@ -31,8 +31,9 @@ class BootStrap {
       }
 
 
+      def dateFormatString = "yyyy-MM-dd"
+      SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
 
-      SimpleDateFormat dateFormat
       
         if (Brand.count() == 0) {
           log.info "Creating Base Test Data"
@@ -53,8 +54,7 @@ class BootStrap {
 
           
 
-          def dateFormatString = "yyyy-MM-dd"
-          dateFormat =  new SimpleDateFormat(dateFormatString)
+          
           Date availableFrom = dateFormat.parse("2016-12-01")
           Date availableTo = dateFormat.parse("2016-12-15")
           def address1 = new Address(name:'RL London East',defaultAddress:true).save()
@@ -435,6 +435,23 @@ class BootStrap {
         range.each{
           String imageNumber = it.toString().padLeft(4,'0')
           String imageLocation = "//dvch4zq3tq7l4.cloudfront.net/ralph-lauren/2017/spring/ready-to-wear/"+imageNumber+".jpg"
+          def look1 = new SearchableItem(type:itemtype1,availableFrom:available,brand:brand1,season: sea, image: imageLocation,brandCollection:collection1).save(flush:true,failOnError : true)
+          log.info "created look:"+look1
+        }
+
+      }
+
+      if(Brand.findByName("Christopher Kane") ==  null){
+        
+        def brand1 = new Brand(name:'Christopher Kane', city:'London' ).save(failOnError : true)
+        def sea =  Season.findByName('Spring 2017 Ready-to-Wear')
+        def collection1 = new BrandCollection(season: sea, brand:brand1).save(failOnError : true)
+        def itemtype1 =  SearchableItemType.findBySearchCode('look')
+        def available = dateFormat.parse("2017-01-15")
+        def range = 1..38
+        range.each{
+          String imageNumber = it.toString().padLeft(4,'0')
+          String imageLocation = "//dvch4zq3tq7l4.cloudfront.net/christopher-kane/2017/spring/ready-to-wear/"+imageNumber+".jpg"
           def look1 = new SearchableItem(type:itemtype1,availableFrom:available,brand:brand1,season: sea, image: imageLocation,brandCollection:collection1).save(flush:true,failOnError : true)
           log.info "created look:"+look1
         }

@@ -4,6 +4,7 @@ import {SampleRequestService} from './services/sampleRequestService';
 import {DialogService} from 'aurelia-dialog';
 import {CreateDialogNewContact} from './contacts/dialogNewContact';
 import {CreateDialogImportContacts} from './contacts/dialogImportContacts';
+import {EditSampleRequest} from './sample_request/editSampleRequest';
 
 @inject(DialogService, UserService, SampleRequestService)
 export class Requestman{
@@ -46,6 +47,13 @@ export class Requestman{
     var panelChoice = document.getElementById("panel" + buttonNumber);
     buttonChoice.classList.toggle("active");
     panelChoice.classList.toggle("show");  
+  }
+
+  editSampleRequest(itemId) {
+    var menu = document.getElementById("requestManTest"+itemId);
+    menu.classList.toggle("look-menu-show");
+    this.dialogService.open({viewModel: EditSampleRequest, model: itemId })
+      .then(response => {});
   }
     
   // Create dialog edit contact 

@@ -55,7 +55,7 @@
                         <select name="" id="" value.bind="selectedSeason" change.delegate="filterChange()">
                             <option value="">Choose</option>
                             <option value="All">All</option>
-                            <option repeat.for="seasonVar of seasons" model.bind="season">${seasonVar}</option>
+                            <option repeat.for="season of seasons" model.bind="season">${seasonVar}</option>
                         </select>
                         </span>
                     </div>
