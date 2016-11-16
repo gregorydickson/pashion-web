@@ -17,7 +17,7 @@ export class Guestpage {
   colors = [];
   themes = [];
   
-  selectedBrand = '';
+  selectedBrand = 8;
   selectedSeason = '';
 
   selectedColor = '';
@@ -52,6 +52,7 @@ export class Guestpage {
 
 
   attached(){
+    this.filterChange();
   }
 
   activate() {
@@ -62,8 +63,8 @@ export class Guestpage {
       this.http.fetch('/dashboard/themes').then(response => response.json()).then(themes => this.themes = themes),
       this.http.fetch('/dashboard/keywords').then(response => response.json())
             .then(searchText => {
-              this.searchText = searchText[0];
-              this.filterChange();
+              //this.searchText = searchText[0];
+              //this.filterChange();
               })
     ]);
   }
