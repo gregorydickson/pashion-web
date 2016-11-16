@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- index.gsp -->
 <html>
   <head>
     <meta name="layout" content="header-and-footer" /> <!-- nee pashion -->
@@ -15,12 +16,14 @@
         <i class="fa fa-spinner fa-spin"></i>
       </div>
 
-    
+
+      <script src="//messaging-public.realtime.co/js/2.1.0/ortc.js"></script>    
       <script src="/jspm_packages/system.js"></script>
       <script src="/config.js"></script>
       <script>
         System.import('aurelia-bootstrapper');
       </script>
+
 
     </router-view>
   </body>
