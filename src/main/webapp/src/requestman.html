@@ -138,22 +138,28 @@
                                             <td class="accordion-grey w13">${booking.requestingUser.name} ${booking.requestingUser.surname}</td>
                                             <td class="accordion-grey w5">${booking.searchableItems.length}</td>
                                             <td class="accordion-grey w14">${booking.requestStatus}</td>
-                                            <td class="accordion-grey w5"><span class="edit-box" ><a href="#" click.delegate="lookEditMenu(booking.id)">...</a></span></td>
+                                            <td class="accordion-grey w5">
+                                                <div class="look-menu-absolute-wrap">
+                                                    <span class="edit-box" ><a href="#" click.delegate="lookEditMenu(booking.id)">...</a></span>
+                                                    <!-- edit request modal popup -->
+                                                     <div class="look-menu-absolute" id="requestManTest${booking.id}">
+                                                        <span class="look-menu-heading">REQUEST #${booking.id}</span>
+                                                        <ul class="look-menu-list">
+                                                            <li class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id)" class="look-menu-link">Edit</a></li>
+                                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Ship</a></li>
+                                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Send</a></li>
+                                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Mark Picked Up</a></li>
+                                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Mark Returned</a></li>
+                                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Restocked</a></li>
+                                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Delete Request</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </td>
+
                                         </tr>
                                     </table>
-                                    <!-- edit request modal popup -->
-                                     <div class="look-menu-absolute" id="requestManTest${booking.id}">
-                                        <span class="look-menu-heading">REQUEST #${booking.id}</span>
-                                        <ul class="look-menu-list">
-                                            <li class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id)" class="look-menu-link">Edit</a></li>
-                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Ship</a></li>
-                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Send</a></li>
-                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Mark Picked Up</a></li>
-                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Mark Returned</a></li>
-                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Restocked</a></li>
-                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Delete Request</a></li>
-                                        </ul>
-                                    </div>
+
                                     <!-- expanding data -->
                                     <div id="panel${$index}" class="panel grid-block vertical" style="margin-left: 0.5rem; margin-top:0.5rem;">
                                         <div class="grid-content">
