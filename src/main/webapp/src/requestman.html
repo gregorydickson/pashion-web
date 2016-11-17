@@ -214,7 +214,29 @@
             <!-- Communications Panel  -->
             <!-- -->
             <div id="right-panel" class="vertical grid-block grid-block-vertical-shadow" >
-                <compose view-model="comms/commsContact"></compose>
+                <!-- Header -->
+                <div class="grid-block tool-header shrink">
+                    <div class="grid-block align-left tool-header tool-header-spacer">
+                        <span class="ui-text-label-m-broad ">MESSAGES</span>
+                    </div>
+                    <div class="grid-block tool-header tool-header-spacer">
+                        <span class="ui-text-label-m-broad tool-header-selected">CONTACTS</span>
+                        <span class="alert-box">7</span>
+                    </div>
+                    <div id="comms_panel" class="grid-block align-right tool-header tool-header-spacer">
+                        <span class="ui-text-label-m-broad tool-header-greyed-out">NEWS</span>
+                    </div>
+                </div>
+                <compose view-model="contacts/contactsHeader" style="overflow:hidden; min-height:36px; margin-top: 1rem;"></compose>
+                <compose view-model="contacts/contactsList" style="overflow-x:hidden;"></compose>
+                <!-- white lip at bottom of scroll region -->
+                <div class="grid-content shrink scrolling-fat-lip">
+                </div>
+                <!-- BUTTONS -->
+                <div class="grid-block align-center shrink">
+                    <a class="hollow button" href="#" click.delegate="createDialogNewContact(1)">New Contact...</a>
+                    <a class="button" href="#" click.delegate="CreateDialogImportContacts(1)">Import Contacts...</a>
+                </div>
             </div>
         </div>
         <!-- spacer -->
