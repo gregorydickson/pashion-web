@@ -2,6 +2,7 @@ import pashion.*
 import java.text.SimpleDateFormat
 import java.util.Date
 import grails.converters.JSON
+import grails.util.Environment
 
 
 
@@ -30,9 +31,10 @@ class BootStrap {
         return returnArray
       }
 
+      if (Environment.current == Environment.DEVELOPMENT) {
+        def dateFormatString = "yyyy-MM-dd"
+        SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
 
-
-      SimpleDateFormat dateFormat
       
         if (Brand.count() == 0) {
           log.info "Creating Base Test Data"
@@ -53,8 +55,7 @@ class BootStrap {
 
           
 
-          def dateFormatString = "yyyy-MM-dd"
-          dateFormat =  new SimpleDateFormat(dateFormatString)
+          
           Date availableFrom = dateFormat.parse("2016-12-01")
           Date availableTo = dateFormat.parse("2016-12-15")
           def address1 = new Address(name:'RL London East',defaultAddress:true).save()
@@ -378,87 +379,119 @@ class BootStrap {
 
         }
 
-      if(Brand.findByName("Chanel") == null){
-        def brand1 = new Brand(name:'Chanel', city:'Paris' ).save(failOnError : true)
-        def sea =  Season.findByName('Spring 2017 Ready-to-Wear')
-        def collection1 = new BrandCollection(season: sea, brand:brand1).save(failOnError : true)
-        def itemtype1 =  SearchableItemType.findBySearchCode('look')
-        def available = dateFormat.parse("2017-01-15")
-        def range = 1..369
-        range.each{
-          String imageNumber = it.toString().padLeft(4,'0')
-          String imageLocation = "//dvch4zq3tq7l4.cloudfront.net/chanel/2017/spring/ready-to-wear/"+imageNumber+".jpg"
-          def look1 = new SearchableItem(type:itemtype1,brand:brand1,season: sea,availableFrom:available, image: imageLocation,brandCollection:collection1).save(flush:true,failOnError : true)
-          log.info "created look:"+look1
+        if(Brand.findByName("Chanel") == null){
+          def brand1 = new Brand(name:'Chanel', city:'Paris' ).save(failOnError : true)
+          def sea =  Season.findByName('Spring 2017 Ready-to-Wear')
+          def collection1 = new BrandCollection(season: sea, brand:brand1).save(failOnError : true)
+          def itemtype1 =  SearchableItemType.findBySearchCode('look')
+          def available = dateFormat.parse("2017-01-15")
+          def range = 1..369
+          range.each{
+            String imageNumber = it.toString().padLeft(4,'0')
+            String imageLocation = "//dvch4zq3tq7l4.cloudfront.net/chanel/2017/spring/ready-to-wear/"+imageNumber+".jpg"
+            def look1 = new SearchableItem(type:itemtype1,brand:brand1,season: sea,availableFrom:available, image: imageLocation,brandCollection:collection1).save(flush:true,failOnError : true)
+            log.info "created look:"+look1
+          }
+
         }
 
-      }
+        if(Brand.findByName("Miu Miu") == null){
+          def brand1 = new Brand(name:'Miu Miu', city:'Paris' ).save(failOnError : true)
+          def sea =  Season.findByName('Spring 2017 Ready-to-Wear')
+          def collection1 = new BrandCollection(season: sea, brand:brand1).save(failOnError : true)
+          def itemtype1 =  SearchableItemType.findBySearchCode('look')
+          def range = 1..277
+          range.each{
+            String imageNumber = it.toString().padLeft(4,'0')
+            String imageLocation = "//dvch4zq3tq7l4.cloudfront.net/miu-miu/2017/spring/ready-to-wear/"+imageNumber+".jpg"
+            def look1 = new SearchableItem(type:itemtype1,brand:brand1,season: sea, image: imageLocation,brandCollection:collection1).save(flush:true,failOnError : true)
+            log.info "created look:"+look1
+          }
 
-      if(Brand.findByName("Miu Miu") == null){
-        def brand1 = new Brand(name:'Miu Miu', city:'Paris' ).save(failOnError : true)
-        def sea =  Season.findByName('Spring 2017 Ready-to-Wear')
-        def collection1 = new BrandCollection(season: sea, brand:brand1).save(failOnError : true)
-        def itemtype1 =  SearchableItemType.findBySearchCode('look')
-        def range = 1..277
-        range.each{
-          String imageNumber = it.toString().padLeft(4,'0')
-          String imageLocation = "//dvch4zq3tq7l4.cloudfront.net/miu-miu/2017/spring/ready-to-wear/"+imageNumber+".jpg"
-          def look1 = new SearchableItem(type:itemtype1,brand:brand1,season: sea, image: imageLocation,brandCollection:collection1).save(flush:true,failOnError : true)
-          log.info "created look:"+look1
         }
 
-      }
+        if(Brand.findByName("Alberta Ferretti") == null){
+          def brand1 = new Brand(name:'Alberta Ferretti', city:'Milan' ).save(failOnError : true)
+          def sea =  Season.findByName('Fall 2016 Ready-to-Wear')
+          def collection1 = new BrandCollection(season: sea, brand:brand1).save(failOnError : true)
+          def itemtype1 =  SearchableItemType.findBySearchCode('look')
+          def range = 1..281
+          range.each{
+            String imageNumber = it.toString().padLeft(4,'0')
+            String imageLocation = "//dvch4zq3tq7l4.cloudfront.net/alberta-ferretti/2016/fall/ready-to-wear/"+imageNumber+".jpg"
+            def look1 = new SearchableItem(type:itemtype1,brand:brand1,season: sea, image: imageLocation,brandCollection:collection1).save(flush:true,failOnError : true)
+            log.info "created look:"+look1
+          }
 
-      if(Brand.findByName("Alberta Ferretti") == null){
-        def brand1 = new Brand(name:'Alberta Ferretti', city:'Milan' ).save(failOnError : true)
-        def sea =  Season.findByName('Fall 2016 Ready-to-Wear')
-        def collection1 = new BrandCollection(season: sea, brand:brand1).save(failOnError : true)
-        def itemtype1 =  SearchableItemType.findBySearchCode('look')
-        def range = 1..281
-        range.each{
-          String imageNumber = it.toString().padLeft(4,'0')
-          String imageLocation = "//dvch4zq3tq7l4.cloudfront.net/alberta-ferretti/2016/fall/ready-to-wear/"+imageNumber+".jpg"
-          def look1 = new SearchableItem(type:itemtype1,brand:brand1,season: sea, image: imageLocation,brandCollection:collection1).save(flush:true,failOnError : true)
-          log.info "created look:"+look1
         }
 
-      }
+        if(Brand.findByName("Ralph Lauren").brandCollections.size() < 4){
+          
+          def brand1 =  Brand.findByName('Ralph Lauren')
+          def sea =  Season.findByName('Spring 2017 Ready-to-Wear')
+          def collection1 = new BrandCollection(season: sea, brand:brand1).save(failOnError : true)
+          def itemtype1 =  SearchableItemType.findBySearchCode('look')
+          def available = dateFormat.parse("2017-01-15")
+          def range = 1..206
+          range.each{
+            String imageNumber = it.toString().padLeft(4,'0')
+            String imageLocation = "//dvch4zq3tq7l4.cloudfront.net/ralph-lauren/2017/spring/ready-to-wear/"+imageNumber+".jpg"
+            def look1 = new SearchableItem(type:itemtype1,availableFrom:available,brand:brand1,season: sea, image: imageLocation,brandCollection:collection1).save(flush:true,failOnError : true)
+            log.info "created look:"+look1
+          }
 
-      if(Brand.findByName("Ralph Lauren").brandCollections.size() < 4){
-        
-        def brand1 =  Brand.findByName('Ralph Lauren')
-        def sea =  Season.findByName('Spring 2017 Ready-to-Wear')
-        def collection1 = new BrandCollection(season: sea, brand:brand1).save(failOnError : true)
-        def itemtype1 =  SearchableItemType.findBySearchCode('look')
-        def available = dateFormat.parse("2017-01-15")
-        def range = 1..206
-        range.each{
-          String imageNumber = it.toString().padLeft(4,'0')
-          String imageLocation = "//dvch4zq3tq7l4.cloudfront.net/ralph-lauren/2017/spring/ready-to-wear/"+imageNumber+".jpg"
-          def look1 = new SearchableItem(type:itemtype1,availableFrom:available,brand:brand1,season: sea, image: imageLocation,brandCollection:collection1).save(flush:true,failOnError : true)
-          log.info "created look:"+look1
         }
 
+        if(Brand.findByName("Christopher Kane") ==  null){
+          
+          def brand1 = new Brand(name:'Christopher Kane', city:'London' ).save(failOnError : true)
+          def sea =  Season.findByName('Spring 2017 Ready-to-Wear')
+          def collection1 = new BrandCollection(season: sea, brand:brand1).save(failOnError : true)
+          def itemtype1 =  SearchableItemType.findBySearchCode('look')
+          def available = dateFormat.parse("2017-01-15")
+          def range = 1..38
+          range.each{
+            String imageNumber = it.toString().padLeft(4,'0')
+            String imageLocation = "//dvch4zq3tq7l4.cloudfront.net/christopher-kane/2017/spring/ready-to-wear/"+imageNumber+".jpg"
+            def look1 = new SearchableItem(type:itemtype1,availableFrom:available,brand:brand1,season: sea, image: imageLocation,brandCollection:collection1).save(flush:true,failOnError : true)
+            log.info "created look:"+look1
+          }
+
+        }
+
+        if (User.findByEmail("ellen@pashiontool.com") == null){
+
+          def press = new PressHouse(name:"Elle Magazine",stormpathDirectory:"https://api.stormpath.com/v1/directories/jVKqqTZOmOFXPWO53PgoY")
+          def address1 = new Address(name:'Elle London North',defaultAddress:true).save()
+          def address2 = new Address(name:'Elle London South',defaultAddress:false).save()
+          press.addToAddresses(address1)
+          press.addToAddresses(address2)
+          press.save(flush:true,failOnError : true)
+          def ellen = new User(name:"Ellen",surname:"Mcinsky", email:"ellen@pashiontool.com",pressHouse:press).save(flush:true,failOnError : true)
+          
+
+          def brand = Brand.findByName("Ralph Lauren")
+          def lauren = new User(name:"Lauren",surname:"Van Doren",email:"lauren@pashiontool.com",brand:brand).save(flush:true,failOnError : true)
+        }
+
+        if(User.findByEmail("paco@pashiontool.com") == null){
+          def brand = Brand.findByName('Paco Rabanne')
+          def lauren = new User(name:"Paco",surname:"Notorious",email:"paco@pashiontool.com",brand:brand).save(flush:true,failOnError : true)
+        }
       }
 
-      if (User.findByEmail("ellen@pashiontool.com") == null){
+      if (Environment.current == Environment.PRODUCTION) {
 
-        def press = new PressHouse(name:"Elle Magazine",stormpathDirectory:"https://api.stormpath.com/v1/directories/jVKqqTZOmOFXPWO53PgoY")
-        def address1 = new Address(name:'Elle London North',defaultAddress:true).save()
-        def address2 = new Address(name:'Elle London South',defaultAddress:false).save()
-        press.addToAddresses(address1)
-        press.addToAddresses(address2)
-        press.save(flush:true,failOnError : true)
-        def ellen = new User(name:"Ellen",surname:"Mcinsky", email:"ellen@pashiontool.com",pressHouse:press).save(flush:true,failOnError : true)
-        
+        if(Brand.findByName("Christopher Kane") ==  null){
+          
+          def brand1 = new Brand(name:'Christopher Kane', city:'London' ).save(failOnError : true)
+          def sea =  Season.findByName('Spring 2017 Ready-to-Wear')
+          def collection1 = new BrandCollection(season: sea, brand:brand1).save(failOnError : true)
+          
+          
 
-        def brand = Brand.findByName("Ralph Lauren")
-        def lauren = new User(name:"Lauren",surname:"Van Doren",email:"lauren@pashiontool.com",brand:brand).save(flush:true,failOnError : true)
-      }
+        }
 
-      if(User.findByEmail("paco@pashiontool.com") == null){
-        def brand = Brand.findByName('Paco Rabanne')
-        def lauren = new User(name:"Paco",surname:"Notorious",email:"paco@pashiontool.com",brand:brand).save(flush:true,failOnError : true)
       }
 
     }

@@ -28,7 +28,7 @@
 
                         <!-- Requested -->
                         <div class="grid-block shrink">                       
-                            <span class="inline-label slim-text-box-label">Requested</span>
+                            <span class="inline-label slim-text-box-label">Requested:</span>
                             <div class="">
                                 ${sampleRequest.dateRequested | viewDateFormat}
                             </div>
@@ -37,7 +37,7 @@
 
                         <!-- Due -->
                         <div class="grid-block shrink">
-                            <span class="inline-label slim-text-box-label">Due</span>
+                            <span class="inline-label slim-text-box-label">Due:</span>
                             <div class="">
                                  ${sampleRequest.bookingStartDate | viewDateFormat}
                             </div>
@@ -46,47 +46,30 @@
                         <!-- Company -->
                         <div class="grid-block shrink">        
                                 <span class="inline-label">
-                                        <span class="slim-text-box-label">Company</span>
+                                        <span class="slim-text-box-label">Company:</span>
                                         ${sampleRequest.brand.name}
                                 </span>
                         </div>
 
                         <!-- Owner -->
                         <div class="grid-block shrink">
-                            <span class="inline-label slim-text-box-label">Owner</span>
+                            <span class="inline-label slim-text-box-label">Owner:</span>
                             <div class=""> 
                                 ${sampleRequest.requestingUser.name} ${sampleRequest.requestingUser.surname}
 
                             </div>
                         </div>
 
-                        <!-- Number -->
+                        <!-- Items -->
                         <div class="grid-block shrink">
-                            <span class="inline-label slim-text-box-label">Number</span>
+                            <span class="inline-label slim-text-box-label">Samples:</span>
                             <div class="" >
                                 ${sampleRequest.searchableItems.length}
                             </div>
 
-                            <!-- Press: In,Brand: Out-->  
-                            <div if.bind="user.type === 'press'" class="grid-block vertical">    
-                                <span class="inline-label slim-text-box-label-narrow">In</span>
-                            </div>
-                            <div if.bind="user.type === 'brand'" class="grid-block vertical">                 
-                                <span class="inline-label slim-text-box-label-narrow">Out</span>
-                            </div>
-                            <div class="" >
-                                ${sampleRequest.searchableItems.itemsGot}
-                            </div>
-                                                                
-                            <!-- Press: Out, Brand: In -->                        
-                            <div if.bind="user.type === 'press'" class="grid-block vertical">
-                                <span class="inline-label slim-text-box-label-narrow">Out</span>
-                            </div>
-                            <div if.bind="user.type === 'brand'" class="grid-block vertical">           
-                                <span class="inline-label slim-text-box-label-narrow">In</span>
-                            </div>
-                            <div class="" >
-                                ${sampleRequest.searchableItems.itemsOut}
+                            <!-- Status-->  
+                            <div class="grid-block vertical">    
+                                <span class="inline-label slim-text-box-label" style="margin-left: 2rem;">Status: [TBD] </span>
                             </div>
                         </div> 
 
@@ -145,14 +128,22 @@
                             </div>
                         </div>
 
-                        
+                        <!-- Destination -->
                         <div class="grid-block shrink" >       
                                 <span class="inline-label">
-                                    <span class="slim-text-box-label">Brand Location</span>
+                                    <span class="slim-text-box-label">Destination</span>
                                     <select name="" id="" value.bind="sampleRequest.returnToAddress.id">
                                     <option repeat.for="address of brandAddresses" model.bind="address.id">${address.name}</option>
                                     </select>
                                 </span>
+                        </div>
+
+                        <!-- Addressee -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Addressee</span>
+                            <div class="" >
+                                <input type="text" class="slim-text-box">
+                            </div>
                         </div>
 
 
@@ -186,11 +177,32 @@
                 </div>
                 <!-- Bottom Row -->
                 <div class="grid-block">
-                    <span style="margin-bottom: 8px;">STATUS OF SAMPLES</span>
+                    <span style="margin-bottom: 8px;">SAMPLES</span>
                 </div>  
 
-                <div if.bind="user.type === 'brand'" class="vertical grid-content accordion" style="overflow-x:hidden; max-height:10rem;"> <!-- scroll after n items -->
-                    
+                <!-- brand -->
+                <div if.bind="user.type === 'brand'" class="vertical grid-content accordion" style="overflow-x:hidden; max-height:10rem;"> <!-- scroll after n items -->                    
+                    <!-- row -->
+                    <table repeat.for="sample of sampleRequest.searchableItems" class="big-accordion" style="margin-bottom:7px;">
+                        <tr>
+                            <td class="accordion w3">${$index}</td>
+                            <td class="accordion w12">${sample.id}</td>
+                            <td class="accordion w54">${sample.name}</td>
+                            <td class="accordion w15">                              
+                                <span value.bind="sample.status.brandStatus" style="margin-bottom:0px;">{STATUS}</span>
+                            </td>
+                                <td style="text-align:right;" class="accordion w16">
+                                    <select style="margin-bottom:0px;">
+                                        <option value="">Approve</option>
+                                        <option value="Not Arrived">Deny</option>
+                                    </select>
+                            </td>
+                        </tr>
+                    </table>            
+                </div>
+
+                <!-- press -->
+                <div if.bind="user.type === 'press'" class="vertical grid-content accordion" style="overflow-x:hidden; max-height:10rem;"> <!-- scroll after n items -->                    
                     <!-- row -->
                     <table repeat.for="sample of sampleRequest.searchableItems" class="big-accordion" style="margin-bottom:7px;">
                         <tr>
@@ -198,30 +210,31 @@
                             <td class="accordion w12">${sample.id}</td>
                             <td class="accordion w54">${sample.name}</td>
                             <td class="accordion w18">
-                                
-
-                                <select value.bind="sample.status.brandStatus" style="margin-bottom:0px;">
-                                    <option value=""></option>
-                                    <option value="Not Arrived">Not Arrived</option>
-                                    <option value="Out">Out</option>
-                                    <option value="Returned">Returned</option>
-                                </select>
-
+                                <span value.bind="sample.status.brandStatus" style="margin-bottom:0px;">{STATUS}</span>
                             </td>
-                            <td style="text-align:right;" class="accordion w13"><a style="padding:7px 6px 5px 6px; margin-right:0; margin-bottom:0px; font-size: 1rem;" class="hollow button" href="javascript:;">Cancel</a></td> 
+                            <td style="text-align:right;" class="accordion w13">
+                                <a style="padding:7px 6px 5px 6px; margin-right:0; margin-bottom:0px; font-size: 1rem;" class="hollow button" href="javascript:;">Remove</a>
+                            </td> 
                         </tr>
-                    </table>
-                
-
+                    </table>            
                 </div>
+
             
         </ai-dialog-body>
 
         <!-- Footer buttons -->
         <ai-dialog-footer>
-                    <a class="hollow button"  click.delegate="deleteRequest()">Delete Request</a>
-                    <a class="hollow button"  click.delegate="cancel()">Cancel</a>
-                    <a class="button" click.delegate="submit()">Save Changes</a>
+            <div if.bind="user.type === 'brand'">
+                <a class="hollow button"  click.delegate="deleteRequest()">Delete Request</a>
+                <a class="hollow button"  click.delegate="cancel()">Cancel</a>
+                <a class="hollow button" click.delegate="submit()">Save Changes</a>
+                <a class="button" click.delegate="submit()">Ship</a>
+            </div>
+            <div if.bind="user.type === 'press'">
+                <a class="hollow button"  click.delegate="deleteRequest()">Delete Request</a>
+                <a class="hollow button"  click.delegate="cancel()">Cancel</a>
+                <a class="button" click.delegate="submit()">Save Changes</a>
+            </div>
         </ai-dialog-footer>
     </ai-dialog>
 </template>

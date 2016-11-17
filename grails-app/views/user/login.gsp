@@ -58,7 +58,7 @@
                             </div>
                         </div>
 
-                        <!-- Role -->
+                        <!-- Role
                         <div class="grid-content shrink" >
                             <span class="inline-label">
                                 <span class="slim-text-box-label">Role</span>
@@ -70,9 +70,10 @@
                             <a style= "width: 30px; margin-left: 1rem;" href="#" style=""><img src="/assets/QuestionMark.png" /></a>
                             </span>
                         </div>
+                        -->
 
                         <!-- Remember me -->
-                        <div class="grid-content shrink" style="text-align:left; margin-top: 1rem; margin-left: 0.5rem;">
+                        <div class="grid-content shrink" style="text-align:left; margin-top: 0.5rem; margin-left: 0.5rem;">
                             <span>Remember Me</span>
                             <input id="" name="remember" type="checkbox">
                         </div>

@@ -11,7 +11,7 @@ class SampleRequest {
 
 	Date bookingStartDate
 	Date bookingEndDate
-	String requestStatus //Pending ->Shipped -> delivered -> due back ->overdue ->closed
+	String requestStatus //Pending ->Approved->Shipped -> Delivered -> Due Back ->Overdue ->Closed
 	Long userCreatedId
 	
 	Brand brand
