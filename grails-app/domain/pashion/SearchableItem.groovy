@@ -18,13 +18,28 @@ class SearchableItem {
 	String sex
 
 	String image
-	String color
+	
 	SearchableItemType type //Look or Sample or Runway
+	
+	// Start of searchable attributes
+	String color
 	String material
-	String sampleType
-	String size
+	String itemsInLook // type in Look data entry sheet
+	String shape
+	String accessories
+	String occasion
+	String style
+	String motif
 	String theme
+	String culture
+	String lookSeason //season in Look data etnry
+	String decade
+	String attributes  //all attributes space separated (tag cloud)
 
+	String path
+
+	String size
+	
 	Season season
 
 	Date fromDate
@@ -37,8 +52,54 @@ class SearchableItem {
 	Date dateCreated
 	Date lastUpdated
 
-	SearchableItem look
+	SearchableItem look //if this is a sample, then it has a Look
 	User owner
+
+	static constraints = {
+		name nullable:true
+		description nullable:true
+		brand nullable: true
+		sex nullable:true
+		type nullable: true
+		image nullable:true
+
+		color nullable: true
+		material nullable: true
+		itemsInLook nullable: true
+		shape nullable: true
+	 	accessories nullable: true
+	 	occasion nullable: true
+	 	style nullable: true
+	 	motif nullable: true
+	 	theme nullable: true
+	 	culture nullable: true
+	 	lookSeason nullable: true
+	 	decade nullable: true
+
+	 	attributes nullable:true
+
+	 	path nullable:true
+
+		size nullable: true
+		theme nullable:true
+
+		fromDate nullable:true
+		toDate nullable:true
+		
+		look nullable: true 
+		owner nullable:true
+		
+		userCreatedId nullable:true
+		lastModifiedUserId nullable:true
+
+		brandCollection nullable: true
+		permissions nullable:true
+		sampleRequests nullable:true
+		samples nullable:true
+	}
+
+
+
 		
 	/**
 	 * Goes through a Look and all Samples recursively to find all booked days in a month.
@@ -155,36 +216,9 @@ class SearchableItem {
 		description type: 'text'
 
 		cache true
+		attributes length: 60000
 
 	}
 
-	static constraints = {
-		name nullable:true
-		description nullable:true
-		brand nullable: true
-		sex nullable:true
-
-		image nullable:true
-		color nullable: true
-
-		type nullable: true
-		material nullable: true
-		sampleType nullable:true
-		size nullable: true
-		theme nullable:true
-
-		fromDate nullable:true
-		toDate nullable:true
-		
-		look nullable: true 
-		owner nullable:true
-		
-		userCreatedId nullable:true
-		lastModifiedUserId nullable:true
-
-		brandCollection nullable: true
-		permissions nullable:true
-		sampleRequests nullable:true
-		samples nullable:true
-	}
+	
 }

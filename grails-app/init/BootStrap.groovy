@@ -485,11 +485,8 @@ class BootStrap {
         if(Brand.findByName("Christopher Kane") ==  null){
           
           def brand1 = new Brand(name:'Christopher Kane', city:'London' ).save(failOnError : true)
-          def sea =  Season.findByName('Spring 2017 Ready-to-Wear')
+          def sea =  Season.findOrSaveByName('Spring 2017 Ready-to-Wear')
           def collection1 = new BrandCollection(season: sea, brand:brand1).save(failOnError : true)
-          
-          
-
         }
 
       }

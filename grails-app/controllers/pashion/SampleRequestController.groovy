@@ -69,9 +69,34 @@ class SampleRequestController {
         log.info "json:"+jsonObject
         def sr = SampleRequest.get(jsonObject.id)
         
-        sr.save(failOnError : true)
+        
+        
+        
+        sr.returnToAddress = Address.get(jsonObject.returnToAddress.toInteger())
+        def aUser = User.get(jsonObject.deliverTo)
+        
+        sr.deliverTo = aUser
+        sr.returnBy = jsonObject.returnBy
+
+        sr.requestStatus = "Pending"
+        sr.itemsGot = 
+        sr.itemsOut = 0
+        sr.itemsIn = 0
+        SearchableItem item
+
+        jsonObject.searchableItems.each{
+            
+        } 
+        sr.shippingOut = new ShippingEvent(courier:jsonObject.courier).save()
+        sr.shippingReturn = new ShippingEvent().save()
+        
+        
+        
+        
+        sr.save(failOnError : true, flush: true)
         def sent = [message:'Sample Request Updated']
         render sent as JSON
+        
 
     }
 

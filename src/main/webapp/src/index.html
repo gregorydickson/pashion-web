@@ -377,20 +377,9 @@
 
             <div id="right-panel" class="vertical grid-block grid-block-vertical-shadow" style="overflow:auto;">
                 <!-- Header -->
-                <div class="grid-block tool-header shrink">
-                    <div class="grid-block align-left tool-header tool-header-spacer">
-                        <span class="ui-text-label-m-broad tool-header-selected">MESSAGES</span>
-                    </div>
-                    <div class="grid-block tool-header tool-header-spacer">
-                        <span class="ui-text-label-m-broad">CONTACTS</span>
-                        <span class="alert-box">8</span>
-                    </div>
-                    <div id="comms_panel" class="grid-block align-right tool-header tool-header-spacer">
-                        <span class="ui-text-label-m-broad tool-header-greyed-out">NEWS</span>
-                    </div>
-                </div>
-                <compose view-model="comms/messagesHeader" style="min-height:90px; margin-top: 1rem; margin-right:1rem;margin-left: 1rem;"></compose>
-                <compose id="message-container-dad"  view-model="comms/messages" style="overflow-x:hidden;"></compose>
+                <compose view-model="comms/commsHeader"></compose>
+                <compose view-model="messages/messagesHeader" style="min-height:90px; margin-top: 1rem; margin-right:1rem;margin-left: 1rem;"></compose>
+                <compose id="message-container-dad"  view-model="messages/messages" style="overflow-x:hidden;"></compose>
                 <!-- white lip at bottom of scroll region -->
                 <div class="grid-content shrink scrolling-fat-lip">
                 </div>
