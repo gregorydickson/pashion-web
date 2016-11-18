@@ -50,7 +50,7 @@
         <g:if test="${flash.message}">
             ${flash.message}
         </g:if>
-    <form enctype="multipart/form-data" action="${createLink(action: 'upload')}"
+    <form enctype="multipart/form-data" action="${createLink(action: 'uploaddetail')}"
           class="dropzone" id="my-awesome-dropzone" method="post">
           <h1> For uploading Look CSV Files
         <div class="fallback">

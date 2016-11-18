@@ -14,8 +14,12 @@ class UploadController {
 
     }
 
-    def details(){
+    def detail(){
 
+    }
+
+    def uploaddetail(){
+        
     }
 
     def upload() {
