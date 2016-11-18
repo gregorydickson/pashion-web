@@ -31,7 +31,7 @@
                     <!-- First Column -->
                     <!-- Calendar + Image detail -->
                     <!-- -->
-                    <div id="left-panel" class="vertical grid-block">
+                    <div id="left-panel" class="vertical grid-block noscroll">
                         <!-- Calendar -->
                         <div class="grid-block shrink">
                             <compose view-model="calendars/requestCalendar"></compose>
@@ -215,18 +215,7 @@
             <!-- -->
             <div id="right-panel" class="vertical grid-block grid-block-vertical-shadow" >
                 <!-- Header -->
-                <div class="grid-block tool-header shrink">
-                    <div class="grid-block align-left tool-header tool-header-spacer">
-                        <span class="ui-text-label-m-broad ">MESSAGES</span>
-                    </div>
-                    <div class="grid-block tool-header tool-header-spacer">
-                        <span class="ui-text-label-m-broad tool-header-selected">CONTACTS</span>
-                        <span class="alert-box">7</span>
-                    </div>
-                    <div id="comms_panel" class="grid-block align-right tool-header tool-header-spacer">
-                        <span class="ui-text-label-m-broad tool-header-greyed-out">NEWS</span>
-                    </div>
-                </div>
+                <compose view-model="comms/commsHeader"></compose>
                 <compose view-model="contacts/contactsHeader" style="overflow:hidden; min-height:36px; margin-top: 1rem;"></compose>
                 <compose view-model="contacts/contactsList" style="overflow-x:hidden;"></compose>
                 <!-- white lip at bottom of scroll region -->

@@ -1,44 +1,53 @@
 import {inject} from 'aurelia-framework';
 import {UserService} from './services/userService';
-import {SampleRequestService} from './services/sampleRequestService';
 import {DialogService} from 'aurelia-dialog';
-import {CreateDialogNewContact} from './contacts/dialogNewContact';
+import {CreateDialogNewUser} from './admin/dialogNewUser';
+import {CreateDialogImportUsers} from './admin/dialogImportUsers';
+import {CreateDialogNewOffice} from './admin/dialogNewOffice';
 
-@inject(DialogService, UserService, SampleRequestService)
+@inject(DialogService, UserService)
 export class Adminpage{
 	  
-  bookings = [];
-  searchTest = "";
-  status = [];
-  selectedStatus = "";
+
   user = {};
 
 
 
-  constructor(dialogService,userService,sampleRequestService) {
+  constructor(dialogService,userService) {
     
     this.dialogService = dialogService;
     this.userService = userService;
-    this.sampleRequestService = sampleRequestService;
 
   }
 
 	activate() {
       this.user = this.userService.getUser().then(user => this.user = user);
-      return this.bookings = this.sampleRequestService.getSampleRequests()
-        .then(bookings => {
-          this.bookings = bookings;
-          console.log("bookings:");
-          console.log(bookings.length);
-        });
   }
 
 
-	filterChange(event){
-	    console.log("changing");
-	}
+  // Create dialog NEW USER
 
-  
+  CreateDialogNewUser() {
+    this.dialogService.open({viewModel: CreateDialogNewUser, model: "no-op" })
+      .then(response => {});
+  }
+
+    // Create dialog IMPORT USERS
+
+  CreateDialogImportUsers() {
+    this.dialogService.open({viewModel: CreateDialogImportUsers, model: "no-op" })
+      .then(response => {});
+  }
+
+
+    // Create dialog NEW OFFICE
+
+  CreateDialogNewOffice() {
+    this.dialogService.open({viewModel: CreateDialogNewOffice, model: "no-op" })
+      .then(response => {});
+  }
+
+
   /* RM accordion expansion button */
   closeExpand(buttonNumber) {
     var buttonChoice = document.getElementById("button" + buttonNumber);
@@ -46,18 +55,7 @@ export class Adminpage{
     buttonChoice.classList.toggle("active");
     panelChoice.classList.toggle("show");  
   }
-    
-  // Create dialog edit contact 
 
-  createDialogNewContact(itemId) {
-    this.dialogService.open({viewModel: CreateDialogNewContact, model: itemId })
-      .then(response => {});
-  }
-
-    lookEditMenu(id){
-    var menu = document.getElementById("requestManTest"+id);
-    menu.classList.toggle("look-menu-show");
-  }
 
 
 }

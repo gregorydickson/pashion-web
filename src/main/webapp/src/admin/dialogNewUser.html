@@ -1,0 +1,93 @@
+<template>
+   <ai-dialog style="width: auto;">
+      <!-- header -->
+      <ai-dialog-header>
+         <div class="grid-block align-center tool-header shrink ">
+            <div id="" class="grid-block tool-header shrink">
+               <span class="ui-text-label-m-broad">NEW USER</span> <!-- fudge to take account of the X -->
+            </div>
+         </div>
+      </ai-dialog-header>
+      <!-- body-->
+      <ai-dialog-body>
+         <div class="grid-block vertical">
+            <div class="grid-block">
+               <!-- Column One -->
+               <div class="grid-block vertical align-left">
+                  <div class="grid-block-row">
+                     <div class="ui-text-label-m-broad ">PERSONAL DETAILS</div>
+                     <div class="grid-block-row-body">
+                        <!-- Name -->
+                        <div class="inline-label">
+                           <span class="slim-text-box-label">Name</span>
+                           <input class="slim-text-box" type='text' name='' value='Name'>
+                        </div>
+                        <!-- Username -->
+                        <div class="inline-label">
+                           <span class="slim-text-box-label">Username</span>
+                           <input class="slim-text-box" type='text' name='' value='lauren@email.com'>
+                           <span class="slim-text-box-label"><img src="/assets/CheckMark.png" /></span>
+                        </div>
+                        <!-- Company -->
+                        <div class="inline-label disabled">
+                           <span class="slim-text-box-label">Company</span>
+                           <input class="slim-text-box" type='text' name='' value='Company name'>
+                        </div>
+                        <!-- Email -->
+                        <div class="inline-label">
+                           <span class="slim-text-box-label">Email</span>
+                           <input class="slim-text-box" type='text' name='' value='lauren2@email.com'>
+                           <span class="slim-text-box-label"><img src="/assets/CheckMark.png" /></span>
+                        </div>
+                        <!-- Office -->
+                        <div class="inline-label">
+                           <span class="slim-text-box-label">Office</span>
+                           <select class="slim-text-box" name="" id="" value.bind="selectedSample">
+                              <option value="">London</option>
+                              <option value="">Paris</option>
+                           </select>
+                        </div>
+                        <!-- Password -->
+                        <div class="inline-label">
+                           <span class="slim-text-box-label">Password</span>
+                           <input class="slim-text-box" type='password' name='password' value='password'/>
+                           <span class="slim-text-box-label"><a id="" href="javascript:hide_un_hide_password()" style="">Show</a></span>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="grid-block-row">
+                     <div class="ui-text-label-m-broad ">PASHION SETTINGS</div>
+                     <div class="grid-block-row-body">
+                        <!-- Role -->
+                        <div class="inline-label">
+                           <span class="slim-text-box-label">Role</span>
+                           <select class="slim-text-box" name="" id="" value.bind="selectedSample">
+                              <option value="">Stylist</option>
+                              <option value="">Stylist</option>
+                              <option value="">Stylist</option>
+                           </select>
+                           <span class="slim-text-box-label"> <a  href="#" style=""><img src="/assets/QuestionMark.png" /></a></span>
+                        </div>
+                        <!-- Access -->
+                        <div class="inline-label">
+                           <span class="slim-text-box-label">Access</span>
+                           <select class="slim-text-box" name="" id="" value.bind="selectedSample">
+                              <option value="">Supervisor</option>
+                              <option value="">Sales manager</option>
+                              <option value="">Account manager</option>
+                           </select>
+                           <span class="slim-text-box-label"> <a  href="#" style=""><img src="/assets/QuestionMark.png" /></a></span>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </ai-dialog-body>
+      <!-- Footer buttons -->
+      <ai-dialog-footer>
+         <a class="hollow button"  click.delegate="close()">Cancel</a>
+         <a class="button" href="javascript:;">Add user</a>
+      </ai-dialog-footer>
+   </ai-dialog>
+</template>
