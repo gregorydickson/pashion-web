@@ -14,7 +14,7 @@ define(['exports', 'aurelia-metadata', 'aurelia-pal'], function (exports, _aurel
   exports.factory = factory;
   exports.newInstance = newInstance;
   exports.invoker = invoker;
-  exports.factory = factory;
+  exports.invokeAsFactory = invokeAsFactory;
   exports.registration = registration;
   exports.transient = transient;
   exports.singleton = singleton;
@@ -290,7 +290,7 @@ define(['exports', 'aurelia-metadata', 'aurelia-pal'], function (exports, _aurel
     };
   }
 
-  function factory(potentialTarget) {
+  function invokeAsFactory(potentialTarget) {
     var deco = function deco(target) {
       _aureliaMetadata.metadata.define(_aureliaMetadata.metadata.invoker, FactoryInvoker.instance, target);
     };
@@ -704,10 +704,10 @@ define(['exports', 'aurelia-metadata', 'aurelia-pal'], function (exports, _aurel
             var prevIndex = previousInject.indexOf(autoInject[i]);
             if (prevIndex > -1) {
               previousInject.splice(prevIndex, 1);
-              previousInject.splice(prevIndex > -1 && prevIndex < i ? i - 1 : i, 0, autoInject[i]);
-            } else if (!previousInject[i]) {
-              previousInject[i] = autoInject[i];
             }
+            previousInject.splice(prevIndex > -1 && prevIndex < i ? i - 1 : i, 0, autoInject[i]);
+          } else if (!previousInject[i]) {
+            previousInject[i] = autoInject[i];
           }
         }
       }
