@@ -20,7 +20,7 @@ export class CommsHeader {
     });
     this.http = http;
 
-    this.comms.status = this.statusValues.messages;
+    this.comms.status = this.statusValues.contacts;
     console.log("Init comms status to " + this.comms.status);
 
     // this.myTabs = [

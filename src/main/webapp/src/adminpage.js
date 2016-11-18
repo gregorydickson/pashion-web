@@ -40,7 +40,6 @@ export class Adminpage{
   }
 
 
-
     // Create dialog NEW OFFICE
 
   CreateDialogNewOffice() {
@@ -48,6 +47,14 @@ export class Adminpage{
       .then(response => {});
   }
 
+
+  /* RM accordion expansion button */
+  closeExpand(buttonNumber) {
+    var buttonChoice = document.getElementById("button" + buttonNumber);
+    var panelChoice = document.getElementById("panel" + buttonNumber);
+    buttonChoice.classList.toggle("active");
+    panelChoice.classList.toggle("show");  
+  }
 
 
 
