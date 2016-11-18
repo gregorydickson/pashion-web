@@ -75,22 +75,27 @@
                                 <td class="accordion w22">${booking.id}</td>
                                 <td class="accordion w34">${booking.pressHouse.name}</td>
                                 <td class="accordion w24">${booking.requestingUser.name}</td>
-                                <td class="accordion w10"><span class="edit-box" ><a href="#" click.delegate="lookEditMenu(booking.id)">...</a></span></td>
+                                <td class="accordion w10">
+                                    <div class="look-menu-absolute-wrap">
+                                        <span class="edit-box" ><a href="#" click.delegate="lookEditMenu(booking.id)">...</a></span>
+                                        <!-- edit request modal BRAND popup -->
+                                         <div class="look-menu-absolute" id="requestTest${booking.id}">
+                                            <span class="look-menu-heading">REQUEST #${booking.id}</span>
+                                            <ul class="look-menu-list">
+                                                <li class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id)" class="look-menu-link">Edit</a></li>                                            
+                                                <li class="look-menu-item"><a href="#" class="look-menu-link">Ship</a></li>
+                                                <li class="look-menu-item"><a href="#" class="look-menu-link">Send</a></li>
+                                                <li class="look-menu-item"><a href="#" class="look-menu-link">Mark Picked Up</a></li>
+                                                <li class="look-menu-item"><a href="#" class="look-menu-link">Mark Returned</a></li>
+                                                <li class="look-menu-item"><a href="#" class="look-menu-link">Restocked</a></li>
+                                                <li class="look-menu-item"><a href="#" class="look-menu-link">Delete Request</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>    
+                                </td>
                             </tr>
                         </table>
-                        <!-- edit request modal BRAND popup -->
-                         <div class="look-menu-absolute" id="requestTest${booking.id}">
-                            <span class="look-menu-heading">REQUEST #${booking.id}</span>
-                            <ul class="look-menu-list">
-                                <li class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id)" class="look-menu-link">Edit</a></li>                                            
-                                <li class="look-menu-item"><a href="#" class="look-menu-link">Ship</a></li>
-                                <li class="look-menu-item"><a href="#" class="look-menu-link">Send</a></li>
-                                <li class="look-menu-item"><a href="#" class="look-menu-link">Mark Picked Up</a></li>
-                                <li class="look-menu-item"><a href="#" class="look-menu-link">Mark Returned</a></li>
-                                <li class="look-menu-item"><a href="#" class="look-menu-link">Restocked</a></li>
-                                <li class="look-menu-item"><a href="#" class="look-menu-link">Delete Request</a></li>
-                            </ul>
-                        </div>
+
                         <!-- expanding data -->
                         <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0.5rem;">
                             <table class="accordion expanded">
@@ -131,20 +136,25 @@
                                 <td class="accordion w22">${booking.id}</td>
                                 <td class="accordion w34">${booking.brand.name}</td>
                                 <td class="accordion w24">${booking.returnTo.name}</td>
-                                <td class="accordion w10"><span class="edit-box" ><a href="#" click.delegate="lookEditMenu(booking.id)">...</a></span></td>
+                                <td class="accordion w10">
+                                    <div class="look-menu-absolute-wrap">
+                                        <span class="edit-box" ><a href="#" click.delegate="lookEditMenu(booking.id)">...</a></span>
+                                        <!-- edit request modal PRESS popup -->
+                                         <div class="look-menu-absolute" id="requestTest${booking.id}">
+                                            <span class="look-menu-heading">REQUEST #${booking.id}</span>
+                                            <ul class="look-menu-list">
+                                                <li class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id)" class="look-menu-link">Edit</a></li>
+                                                <li class="look-menu-item"><a href="#" class="look-menu-link">Mark Received</a></li>
+                                                <li class="look-menu-item"><a href="#" class="look-menu-link">Ship</a></li>
+                                                <li class="look-menu-item"><a href="#" class="look-menu-link">Mark Picked Up</a></li>
+                                                <li class="look-menu-item"><a href="#" class="look-menu-link">Delete Request</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         </table>
-                        <!-- edit request modal PRESS popup -->
-                         <div class="look-menu-absolute" id="requestTest${booking.id}">
-                            <span class="look-menu-heading">REQUEST #${booking.id}</span>
-                            <ul class="look-menu-list">
-                                <li class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id)" class="look-menu-link">Edit</a></li>
-                                <li class="look-menu-item"><a href="#" class="look-menu-link">Mark Received</a></li>
-                                <li class="look-menu-item"><a href="#" class="look-menu-link">Ship</a></li>
-                                <li class="look-menu-item"><a href="#" class="look-menu-link">Mark Picked Up</a></li>
-                                <li class="look-menu-item"><a href="#" class="look-menu-link">Delete Request</a></li>
-                            </ul>
-                        </div>
+
                         <!-- expanding data -->
                         <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0.5rem;">
                             <table class="accordion expanded">

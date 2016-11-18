@@ -50,7 +50,6 @@ td.accordion {
     text-overflow: ellipsis;
     white-space: nowrap;
     font-weight:300;
-    overflow: hidden;
     line-height:1.6rem;
 }
 
@@ -77,7 +76,6 @@ td.accordion-grey {
     text-overflow: ellipsis;
     white-space: nowrap;
     font-weight:300;
-    overflow: hidden;
     background-color:$white-two;
 }
 
@@ -154,3 +152,6 @@ th.w90 , td.w90 {width:90%;}
 th.w95 , td.w95 {width:95%;}
 th.w100 , td.w100 {width:100%;}
 
+.accordion .look-menu-absolute-wrap .edit-box {
+    margin-left: 0; 
+}
