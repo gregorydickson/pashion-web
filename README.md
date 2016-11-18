@@ -34,7 +34,15 @@ To setup the Development Environment:
 
 * The application uses a development database on Amazon AWS which will require internet connectivity. If this is too slow then you can setup MySQL locally.
 
+# Install a javascript package
+
+* We are using jspm and System.js to install and load javascript modules
+
+* to install a new javascript package jspm must be used. Some packages exist in the jspm repository and some exist in the npm repository. First, try using jspm:
+
+- from the src/main/webapp/ directory `jspm install <package>` if the package is not found, try with npm prefix `jspm install npm:<package>`
+
 
 dev database on aws:
-pashionweb
-ETWxa634WwxGaW6v
+user: pashionweb
+pass: ETWxa634WwxGaW6v
