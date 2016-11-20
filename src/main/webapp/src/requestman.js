@@ -56,24 +56,10 @@ export class Requestman{
       .then(response => {});
   }
     
-  // Create dialog edit contact 
-
-  createDialogNewContact(itemId) {
-    this.dialogService.open({viewModel: CreateDialogNewContact, model: itemId })
-      .then(response => {});
-  }
 
     lookEditMenu(id){
     var menu = document.getElementById("requestManTest"+id);
     menu.classList.toggle("look-menu-show");
-  }
-
-
-  // Create dialog import contacts 
-
-  CreateDialogImportContacts(itemId) {
-    this.dialogService.open({viewModel: CreateDialogImportContacts, model: itemId })
-      .then(response => {});
   }
 
 

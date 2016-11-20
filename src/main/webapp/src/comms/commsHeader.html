@@ -1,34 +1,63 @@
 <template>
     <!-- messages tab -->
-    <div id="tab-messages" class="grid-block tool-header shrink look-menu-show">
-        <div class="grid-block tool-header shrink">
-            <div class="grid-block align-left tool-header tool-header-spacer">
-                <span class="ui-text-label-m-broad tool-header-selected">MESSAGES</span>
-            </div>
-            <div class="grid-block tool-header tool-header-spacer">
-                <span class="ui-text-label-m-broad "><a href="#" click.delegate="setStatusTab('contacts')">CONTACTS</span>
-                <span class="alert-box">7</span>
-            </div>
-            <div id="comms_panel" class="grid-block align-right tool-header tool-header-spacer">
-                <span class="ui-text-label-m-broad tool-header-greyed-out">NEWS</span>
+    <div id="tab-messages" class="look-menu-show">
+        <!-- Tab Header -->
+        <div id="tab-messages" class="grid-block tool-header shrink">
+            <div class="grid-block tool-header shrink">
+                <div class="grid-block align-left tool-header tool-header-spacer">
+                    <span class="ui-text-label-m-broad tool-header-selected">MESSAGES</span>
+                </div>
+                <div class="grid-block tool-header tool-header-spacer">
+                    <span class="ui-text-label-m-broad "><a href="#" click.delegate="setStatusTab('contacts')">CONTACTS</span>
+                    <span class="alert-box">7</span>
+                </div>
+                <div id="comms_panel" class="grid-block align-right tool-header tool-header-spacer">
+                    <span class="ui-text-label-m-broad tool-header-greyed-out">NEWS</span>
+                </div>
             </div>
         </div>
+        <!-- messages header -->
+        <compose view-model="messages/messagesHeader" style="min-height:90px; margin-top: 1rem; margin-right:1rem;margin-left: 1rem;"></compose>
+        <!-- messages body -->
+        <compose id="message-container-dad" view-model="messages/messages" style="overflow-x:hidden;"></compose>
+        <!-- white lip at bottom of scroll region -->
+        <div class="grid-content shrink scrolling-fat-lip">
+        </div>
+        <!-- New message -->
+        <div class="grid-content align-right shrink">
+            <input type="text" id="msgInput" class="message-new-message-box" placeholder="New Message">
+        </div>
+        <a class="hollow button" click.delegate="sendMessage()">Send Message</a>
     </div>
 
     <!-- contacts tab -->
-    <div id="tab-contacts" class="grid-block tool-header shrink look-menu-hide">
+    <div id="tab-contacts" class="look-menu-hide">
+        <!-- Tab Header -->
         <div class="grid-block tool-header shrink">
-            <div class="grid-block align-left tool-header tool-header-spacer">
-                <span class="ui-text-label-m-broad "><a href="#" click.delegate="setStatusTab('messages')">MESSAGES</a></span>
-            </div>
-            <div class="grid-block tool-header tool-header-spacer">
-                <span class="ui-text-label-m-broad tool-header-selected">CONTACTS</span>
-                <span class="alert-box">7</span>
-            </div>
-            <div id="comms_panel" class="grid-block align-right tool-header tool-header-spacer">
-                <span class="ui-text-label-m-broad tool-header-greyed-out">NEWS</span>
+            <div class="grid-block tool-header shrink">
+                <div class="grid-block align-left tool-header tool-header-spacer">
+                    <span class="ui-text-label-m-broad "><a href="#" click.delegate="setStatusTab('messages')">MESSAGES</a></span>
+                </div>
+                <div class="grid-block tool-header tool-header-spacer">
+                    <span class="ui-text-label-m-broad tool-header-selected">CONTACTS</span>
+                    <span class="alert-box">7</span>
+                </div>
+                <div id="comms_panel" class="grid-block align-right tool-header tool-header-spacer">
+                    <span class="ui-text-label-m-broad tool-header-greyed-out">NEWS</span>
+                </div>
             </div>
         </div>
+        <!-- contacts header -->
+        <compose view-model="contacts/contactsHeader" style="overflow:hidden; min-height:36px; margin-top: 1rem;"></compose>
+        <!-- contacts body -->
+        <compose view-model="contacts/contactsList" style="overflow-x:hidden;"></compose>
+        <!-- white lip at bottom of scroll region -->
+        <div class="grid-content shrink scrolling-fat-lip">
+        </div>
+        <!-- BUTTONS -->
+        <div class="grid-block align-center shrink">
+            <a class="hollow button" href="#" click.delegate="createDialogNewContact(1)">New Contact...</a>
+            <a class="button" href="#" click.delegate="CreateDialogImportContacts(1)">Import Contacts...</a>
+        </div>
     </div>
-
 </template>

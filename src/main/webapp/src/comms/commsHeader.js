@@ -1,19 +1,22 @@
 import {DialogController} from 'aurelia-dialog';
 import {HttpClient,json} from 'aurelia-fetch-client';
+import {DialogService} from 'aurelia-dialog';
 import 'fetch';
 import {inject} from 'aurelia-framework';
+import {CreateDialogNewContact} from 'contacts/dialogNewContact';
+import {CreateDialogImportContacts} from 'contacts/dialogImportContacts';
 
 
-@inject(HttpClient, DialogController)
+@inject(HttpClient, DialogController, DialogService)
 export class CommsHeader {
   static inject = [DialogController];
   
   statusValues = {messages : "messages", contacts: "contacts", news : "news"};
   comms = {};
   
-  constructor(http, controller){
-    this.controller = controller;
-    
+  constructor(http, controller, dialogService){
+    this.dialogService = dialogService;
+    this.controller = controller;    
     http.configure(config => {
       config
         .useStandardConfiguration();
@@ -22,17 +25,15 @@ export class CommsHeader {
 
     this.comms.status = this.statusValues.messages;
     console.log("Init comms status to " + this.comms.status);
-
-//this.myTabs = [
-  //    { id: 'tab1', label: 'Contacts', active: true },
-    //  { id: 'tab2', label: 'Messages' },
-      //{ id: 'tab3', label: 'News' }
-    //];
  
   }
 
   activate(){
     
+  }
+
+  attached(){
+    // this.dialogService.open({viewModel: Introduction, model: "no-op" }).then(response => {});
   }
 
   setStatusTab (id) {
@@ -48,6 +49,21 @@ export class CommsHeader {
 
   submit(){
     
+  }
+
+    // Create dialog edit contact 
+
+  createDialogNewContact(itemId) {
+    this.dialogService.open({viewModel: CreateDialogNewContact, model: itemId })
+      .then(response => {});
+  }
+
+
+  // Create dialog import contacts 
+
+  CreateDialogImportContacts(itemId) {
+    this.dialogService.open({viewModel: CreateDialogImportContacts, model: itemId })
+      .then(response => {});
   }
 
 }

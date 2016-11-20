@@ -222,16 +222,6 @@
             <div id="right-panel" class="vertical grid-block grid-block-vertical-shadow" >
                 <!-- Header -->
                 <compose view-model="comms/commsHeader"></compose>
-                <compose view-model="contacts/contactsHeader" style="overflow:hidden; min-height:36px; margin-top: 1rem;"></compose>
-                <compose view-model="contacts/contactsList" style="overflow-x:hidden;"></compose>
-                <!-- white lip at bottom of scroll region -->
-                <div class="grid-content shrink scrolling-fat-lip">
-                </div>
-                <!-- BUTTONS -->
-                <div class="grid-block align-center shrink">
-                    <a class="hollow button" href="#" click.delegate="createDialogNewContact(1)">New Contact...</a>
-                    <a class="button" href="#" click.delegate="CreateDialogImportContacts(1)">Import Contacts...</a>
-                </div>
             </div>
         </div>
         <!-- spacer -->
