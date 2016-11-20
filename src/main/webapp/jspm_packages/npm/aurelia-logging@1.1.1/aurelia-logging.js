@@ -20,10 +20,10 @@ define(['exports'], function (exports) {
   };
 
   var loggers = {};
-  var currentLevel = logLevel.none;
   var appenders = [];
   var slice = Array.prototype.slice;
   var loggerConstructionKey = {};
+  var globalDefaultLevel = logLevel.none;
 
   function log(logger, level, args) {
     var i = appenders.length;
@@ -39,7 +39,7 @@ define(['exports'], function (exports) {
   }
 
   function debug() {
-    if (currentLevel < 4) {
+    if (this.level < 4) {
       return;
     }
 
@@ -47,7 +47,7 @@ define(['exports'], function (exports) {
   }
 
   function info() {
-    if (currentLevel < 3) {
+    if (this.level < 3) {
       return;
     }
 
@@ -55,7 +55,7 @@ define(['exports'], function (exports) {
   }
 
   function warn() {
-    if (currentLevel < 2) {
+    if (this.level < 2) {
       return;
     }
 
@@ -63,7 +63,7 @@ define(['exports'], function (exports) {
   }
 
   function error() {
-    if (currentLevel < 1) {
+    if (this.level < 1) {
       return;
     }
 
@@ -79,6 +79,7 @@ define(['exports'], function (exports) {
 
   function createLogger(id) {
     var logger = new Logger(id, loggerConstructionKey);
+    logger.setLevel(globalDefaultLevel);
 
     if (appenders.length) {
       connectLogger(logger);
@@ -102,12 +103,17 @@ define(['exports'], function (exports) {
   }
 
   function setLevel(level) {
-    currentLevel = level;
+    globalDefaultLevel = level;
+    for (var key in loggers) {
+      loggers[key].setLevel(level);
+    }
   }
 
   var Logger = exports.Logger = function () {
     function Logger(id, key) {
       
+
+      this.level = logLevel.none;
 
       if (key !== loggerConstructionKey) {
         throw new Error('Cannot instantiate "Logger". Use "getLogger" instead.');
@@ -123,6 +129,10 @@ define(['exports'], function (exports) {
     Logger.prototype.warn = function warn(message) {};
 
     Logger.prototype.error = function error(message) {};
+
+    Logger.prototype.setLevel = function setLevel(level) {
+      this.level = level;
+    };
 
     return Logger;
   }();

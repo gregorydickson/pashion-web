@@ -6,38 +6,34 @@ import 'fetch';
 export class SampleRequestService{
 
 
-	constructor(http) {
-	    http.configure(config => {
-	      config
-	        .useStandardConfiguration();
-	    });
-	    
-	    this.http = http;
-  	}
+  	constructor(http) {
+  	    http.configure(config => {
+  	      config
+  	        .useStandardConfiguration();
+  	    });
+  	    this.http = http;
+    }
 
-  	activate() {
-
-  	}
-  	
+    	
   	getSampleRequest(id){
   		var promise = new Promise((resolve, reject) => {
-			this.http.fetch('/sampleRequest/show/'+id+'.json')
-	  			.then(response => response.json())
-	  			.then(sampleRequest => {
-	  				
+  		this.http.fetch('/sampleRequest/show/'+id+'.json')
+    			.then(response => response.json())
+    			.then(sampleRequest => {
+    				
             sampleRequest.searchableItems.forEach(function(item1) {
               item1.status = sampleRequest.searchableItemsStatus.find(function (item2) {
                 return item2.itemId === item1.id;
               });
             });
             this.sampleRequest = sampleRequest;
-	  				resolve( this.sampleRequest);
-	  			}).catch(err=>reject(err));
-	  		});
+    				resolve( this.sampleRequest);
+    			}).catch(err=>reject(err));
+    		});
 
-	  	return promise;
-	      	
-		
+    	return promise;
+        	
+  	
   	}
 
   	getSampleRequests(searchText, status){
@@ -67,9 +63,7 @@ export class SampleRequestService{
           });
     }
 
-
   	saveSampleRequest(sr){
-
   		this.http.fetch('/sampleRequest/savejson', {
             method: 'post',
             body: json(sr)
@@ -79,6 +73,60 @@ export class SampleRequestService{
               resolve(result);
           });
   	}
+
+    // START BRAND ACTIONS
+    denySampleRequest(id){
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/sampleRequest/deny/'+id, {method: 'post'}).then(response => response.json())
+          .then(result => resolve(result));
+      });
+      return promise;
+    }
+    shipSampleRequest(id){
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/sampleRequest/ship/'+id, {method: 'post'}).then(response => response.json())
+          .then(result => resolve(result));
+      });
+      return promise;
+    }
+
+    sendSampleRequest(id){
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/sampleRequest/send/'+id, {method: 'post'}).then(response => response.json())
+          .then(result => resolve(result));
+      });
+      return promise;
+    }
+    markPickedUpSampleRequest(id){
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/sampleRequest/markPickedUp/'+id, {method: 'post'}).then(response => response.json())
+          .then(result => resolve(result));
+      });
+      return promise;
+    }
+    markReturnedSampleRequest(id){
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/sampleRequest/markReturned/'+id, {method: 'post'}).then(response => response.json())
+          .then(result => resolve(result));
+      });
+      return promise;
+    }
+    restockedSampleRequest(id){
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/sampleRequest/restocked/'+id, {method: 'post'}).then(response => response.json())
+          .then(result => resolve(result));
+      });
+      return promise;
+    }
+    deleteSampleRequest(id){
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/sampleRequest/markDeleted/'+id, {method: 'post'}).then(response => response.json())
+          .then(result => resolve(result));
+      });
+      return promise;
+    }
+    
+    
 
     
 

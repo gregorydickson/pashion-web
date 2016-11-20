@@ -76,7 +76,7 @@ class SearchableItem {
 	 	lookSeason nullable: true
 	 	decade nullable: true
 
-	 	attributes nullable:true
+	 	attributes nullable:true, maxSize: 1000
 
 	 	path nullable:true
 
@@ -201,12 +201,14 @@ class SearchableItem {
 
 	static hasMany = [ permissions:Permission, sampleRequests:SampleRequest, samples:SearchableItem]
 
+
 	static mapping = {
 		type index: 'type_idx'
 		theme index: 'theme_idx'
 		fromDate index: 'fromDate_idx'
 		toDate index: 'toDate_idx'
 		color index: 'color_idx'
+		attributes index: 'attributes_idx'
 
 		sampleRequests lazy: false
 		samples lazy:false
@@ -216,7 +218,7 @@ class SearchableItem {
 		description type: 'text'
 
 		cache true
-		attributes length: 60000
+		
 
 	}
 
