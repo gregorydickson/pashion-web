@@ -20,32 +20,34 @@ export class CommsHeader {
     });
     this.http = http;
 
-    this.comms.status = this.statusValues.contacts;
+    this.comms.status = this.statusValues.messages;
     console.log("Init comms status to " + this.comms.status);
 
-    // this.myTabs = [
-   //   { id: 'tab1', label: 'Tab 1', selected: true },
-   //   { id: 'tab2', label: 'Tab 2' },
-   //   { id: 'tab3', label: 'Tab 3' }
-   // ];
-   // this.myModel = { target: 'World' };
+//this.myTabs = [
+  //    { id: 'tab1', label: 'Contacts', active: true },
+    //  { id: 'tab2', label: 'Messages' },
+      //{ id: 'tab3', label: 'News' }
+    //];
+ 
   }
 
   activate(){
     
   }
 
-  setStatusToMessages () {
-  	this.comms.status = this.statusValues.messages;
-    console.log("Setting comms status to message");
-  }
-
-   setStatusToContacts () {
-  	this.comms.status = this.statusValues.contacts;
-    console.log("Setting comms status to contacts");
+  setStatusTab (id) {
+    var menu = document.getElementById("tab-"+ this.comms.status);
+    menu.classList.toggle("look-menu-hide");
+    menu.classList.toggle("look-menu-show");
+  	this.comms.status = id;
+    console.log("Setting comms status to " + id);
+    menu = document.getElementById("tab-"+id);
+    menu.classList.toggle("look-menu-show");
+    menu.classList.toggle("look-menu-hide");
   }
 
   submit(){
     
   }
+
 }
