@@ -37,7 +37,6 @@ export class Index {
   numberImages = 0;
   
   
-
   filterChange(event){
     console.log("changing");
     console.log(this.selectedBrand);
@@ -119,7 +118,7 @@ export class Index {
     }
   }
  
-  /* RM accordion expansion button */
+  /* RM Sample Request - accordion expansion button */
   closeExpand(buttonNumber) {
     var buttonChoice = document.getElementById("button" + buttonNumber);
     var panelChoice = document.getElementById("panel" + buttonNumber);
@@ -132,10 +131,7 @@ export class Index {
     menu.classList.toggle("look-menu-show");
   }
 
-  closeMenu(id){
-    var menu = document.getElementById("look-"+id);
-    menu.classList.toggle("look-menu-show");
-  }
+  
 
   createSampleRequest(itemId) {
     this.lookMenu(itemId);
@@ -163,20 +159,48 @@ export class Index {
       .then(response => {});
   }
 
-  // RM additional stuff for request edit -- needs to be abstracted //
-
-  lookEditMenu(id){
+  sampleRequestMenu(id){
     var menu = document.getElementById("requestTest"+id);
     menu.classList.toggle("look-menu-show");
   }
 
-  editSampleRequest(itemId) {
-    var menu = document.getElementById("requestTest"+itemId);
+  closeSampleRequestMenu(id){
+    var menu = document.getElementById("requestTest"+id);
     menu.classList.toggle("look-menu-show");
-    this.dialogService.open({viewModel: EditSampleRequest, model: itemId })
-      .then(response => {});
   }
 
+  editSampleRequest(id) {
+    this.closeSampleRequestMenu(id);
+    this.dialogService.open({viewModel: EditSampleRequest, model: id }).then(response => {});
+  }
+  denySampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.denySampleRequest(id).then(message =>{alert(message.message);});
+  }
+  shipSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.shipSampleRequest(id).then(message =>{alert(message.message);});
+  }
+  sendSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.sendSampleRequest(id).then(message =>{alert(message.message);});
+  }
+  markPickedUpSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.markPickedUpSampleRequest(id).then(message =>{alert(message.message);});
+  }
+  markReturnedSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.markReturnedSampleRequest(id).then(message =>{alert(message.message);});
+  }
+  restockedSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.restockedSampleRequest(id).then(message =>{alert(message.message);});
+  }
+  deleteSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.deleteSampleRequest(id).then(message =>{alert(message.message);});
+  }
 
   // Zoom image
   createZoomDialog(itemId) {
@@ -188,7 +212,6 @@ export class Index {
       });
   }
 
-
   // Add files (Add images) dialog
   createAddfilesDialog() {
     this.dialogService.open({viewModel: AddFilesDialog, model: "no-op" })
@@ -199,27 +222,27 @@ export class Index {
   createErrorDialogSample() {
       this.dialogService.open({viewModel: ErrorDialogSample, model: "no-op" })
         .then(response => {});
-    } 
-// 
-connectToRealtime()
-{
-  connectToRealtime2();
-}
+  } 
 
-onChatMessage(ortc, channel, message)
-{
-  onChatMessage2(ortc, channel, message);
-}
+  connectToRealtime()
+  {
+    connectToRealtime2();
+  }
 
-sendMessage()
-{
-  sendMessage2();
-}
+  onChatMessage(ortc, channel, message)
+  {
+    onChatMessage2(ortc, channel, message);
+  }
 
-Log(text)
-{
-  Log2(text);
-}
+  sendMessage()
+  {
+    sendMessage2();
+  }
+
+  Log(text)
+  {
+    Log2(text);
+  }
 
 
 }

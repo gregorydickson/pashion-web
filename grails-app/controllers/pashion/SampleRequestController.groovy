@@ -5,17 +5,66 @@ import grails.transaction.Transactional
 import java.text.SimpleDateFormat
 import grails.converters.JSON
 
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 class SampleRequestController {
 
     def sampleRequestService
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
-
     String dateFormatString = "yyyy-M-d"
     SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
+
+    // The not exactly RESTful verbs for updating a Sample Request:
+    def deny(){
+        def sampleRequest = SampleRequest.get(params.id.toInteger())
+        sampleRequest.requestStatus = "Denied"
+        sampleRequest.save(flush:true)
+        def sent = [message:'Sample Request Denied']
+        render sent as JSON
+    }
+    def ship(){
+        def sampleRequest = SampleRequest.get(params.id.toInteger())
+        sampleRequest.requestStatus = "Approved"
+        sampleRequest.save(flush:true)
+        def sent = [message:'Sample Request Marked Ready to Ship']
+        render sent as JSON
+    }
+    def send(){
+        def sampleRequest = SampleRequest.get(params.id.toInteger())
+        sampleRequest.requestStatus = "Waiting to be Picked Up"
+        sampleRequest.save(flush:true)
+        def sent = [message:'Sample Request Waiting to be Picked Up']
+        render sent as JSON
+    }
+    def markPickedUp(){
+        def sampleRequest = SampleRequest.get(params.id.toInteger())
+        sampleRequest.requestStatus = "Picked Up"
+        sampleRequest.save(flush:true)
+        def sent = [message:'Sample Request Marked Picked Up']
+        render sent as JSON
+    }
+    def markReturned(){
+        def sampleRequest = SampleRequest.get(params.id.toInteger())
+        sampleRequest.requestStatus = "Mark Returned"
+        sampleRequest.save(flush:true)
+        def sent = [message:'Sample Request Marked Returned']
+        render sent as JSON
+    }
+    def restocked(){
+        def sampleRequest = SampleRequest.get(params.id.toInteger())
+        sampleRequest.requestStatus = "Closed"
+        sampleRequest.save(flush:true)
+        def sent = [message:'Sample Request Marked ReStocked']
+        render sent as JSON
+    }
+    def markDeleted(){
+        def sampleRequest = SampleRequest.get(params.id.toInteger())
+        sampleRequest.requestStatus = "Deleted"
+        sampleRequest.save(flush:true)
+        def sent = [message:'Sample Request Deleted']
+        render sent as JSON
+    }
     
-    @Transactional
+    
     def savejson(){
         def jsonObject = request.JSON
         log.info "json:"+jsonObject
@@ -63,7 +112,6 @@ class SampleRequestController {
 
     }
 
-    @Transactional
     def updatejson(){
         def jsonObject = request.JSON
         log.info "json:"+jsonObject
@@ -123,7 +171,6 @@ class SampleRequestController {
         respond new SampleRequest(params)
     }
 
-    @Transactional
     def save(SampleRequest sampleRequest) {
         if (sampleRequest == null) {
             transactionStatus.setRollbackOnly()
@@ -152,7 +199,6 @@ class SampleRequestController {
         respond sampleRequest
     }
 
-    @Transactional
     def update(SampleRequest sampleRequest) {
         if (sampleRequest == null) {
             transactionStatus.setRollbackOnly()
@@ -177,7 +223,6 @@ class SampleRequestController {
         }
     }
 
-    @Transactional
     def delete(SampleRequest sampleRequest) {
 
         if (sampleRequest == null) {
