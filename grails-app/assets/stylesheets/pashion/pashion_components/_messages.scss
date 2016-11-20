@@ -1,0 +1,181 @@
+$message-box-width: 215px;
+
+.message-wrap {
+  width: $message-box-width;
+}
+
+.message-wrap td {
+  vertical-align: top;
+}
+
+.message-box {
+  width: $message-box-width;
+  height: auto;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  font-size: $font-size-mid;
+  color: $black;
+  padding: 9px;
+  margin-top: 0.5rem;
+  display: inline-block;
+}
+
+.message-me-box {
+  background-color: $white;
+  text-align: right;
+  border: 0.5px solid $white-three;
+  position: relative;
+  margin-right: 4px;
+}
+
+.message-me-box:after,
+.message-me-box:before {
+  left: 100%;
+  top: 1rem;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.message-me-box:after {
+  border-color: transparent;
+  border-left-color: $white;
+  border-width: 4px;
+  margin-top: -4px;
+}
+
+.message-me-box:before {
+  border-color: transparent;
+  border-left-color: $white-three;
+  border-width: 5px;
+  margin-top: -5px;
+}
+
+.message-not-me-box {
+  background-color: $white-two;
+  border: 1px $white-three solid;
+  text-align: left;
+  position: relative;
+  margin-left: 4px;
+}
+
+.message-not-me-box:after,
+.message-not-me-box:before {
+  right: 100%;
+  top: 1rem;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.message-not-me-box:after {
+  border-color: transparent;
+  border-right-color: $white-two;
+  border-width: 4px;
+  margin-top: -4px;
+}
+
+.message-not-me-box:before {
+  border-color: transparent;
+  border-right-color: $white-three;
+  border-width: 5px;
+  margin-top: -5px;
+}
+
+.message-text {
+  font-size: $font-size-small;
+  line-height: 2.0;
+  color: $warm-grey;
+}
+
+.message-left-text {
+  text-align: left;
+}
+
+.align-left .message-left-text {
+  padding-left: 4px;
+}
+
+.message-right-text {
+  text-align: right;
+}
+
+.align-right .message-right-text {
+  padding-right: 4px;
+}
+
+.message-date {
+  white-space: nowrap;
+}
+
+.message-left-text.message-date {
+  padding-right: 5px;
+}
+
+.message-right-text.message-date {
+  padding-left: 5px;
+}
+
+.inter-message-gap {
+  margin-top: 1.5rem;
+}
+
+.message-new-message-box {
+  //RM need to properly create a text entry method for this type of box //
+  text-align: right;
+  width: calc(100% - 38px) !important;
+}
+
+/*
+.message-box-pip-r {
+  background: $pinkish-grey;
+  -webkit-clip-path: polygon(0 0, 94% 0, 94% 15%, 100% 29%, 95% 42%, 95% 100%, 0 100%);
+clip-path: polygon(0 0, 94% 0, 94% 15%, 100% 29%, 95% 42%, 95% 100%, 0 100%);
+}
+
+.message-box-pip-l {
+  background: $pinkish-grey;
+  -webkit-clip-path: polygon(0 0, 92% 0, 92% 22%, 100% 33%, 92% 40%, 92% 66%, 0 66%);
+clip-path: polygon(0 0, 92% 0, 92% 22%, 100% 33%, 92% 40%, 92% 66%, 0 66%);
+}
+*/
+.new-message-block .button {
+  width: 100%;
+}
+
+.message-userpic > img {
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  padding: 2px;
+  border: 1px $pinkish-grey solid;
+  float: left;
+  margin-right: 10px;
+}
+
+.message-not-me-box .message-img {
+  float: left;
+  margin: 0 9px 5px 0;
+}
+
+.message-me-box .message-img {
+  float: right;
+  margin: 0 0 9px 5px;
+}
+
+.message-not-me-box .message-img:last-child,
+.message-me-box .message-img:last-child {
+  margin-bottom: 0;
+}
+
+.message-img img {
+  max-width: 8rem;
+  max-height: 8rem;
+}

@@ -385,9 +385,12 @@
                 </div>
                 <!-- New message -->
                 <div class="grid-content align-right shrink">
-                    <input type="text"  id="msgInput" class="message-new-message-box" placeholder="New Message">
+                    <div class="new-message-block">
+                        <div class="message-userpic"><img src="/assets/lauren.png"></div>
+                        <input type="text" id="msgInput" class="message-new-message-box" placeholder="New Message">
+                        <a class="hollow button"  click.delegate="sendMessage()">Send Message</a>
+                    </div>
                 </div>
-                <a class="hollow button"  click.delegate="sendMessage()">Send Message</a>
             </div>
         </div>
         <!-- spacer -->
