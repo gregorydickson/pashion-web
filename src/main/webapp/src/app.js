@@ -29,7 +29,7 @@ export class App {
 	    return Promise.all([
 	      this.user = this.userService.getUser().then(user => {
 	        this.user = user;
-	        if (this.user.type ==="guest") window.location.href = '/user/login';
+	        
 	      })
 
 	    ]);
