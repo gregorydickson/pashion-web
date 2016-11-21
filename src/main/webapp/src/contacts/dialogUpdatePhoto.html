@@ -1,0 +1,25 @@
+<template>
+
+   <ai-dialog>
+        <ai-dialog-header>
+            <!-- header -->
+            <div class="grid-block align-center tool-header shrink">
+              UPDATE YOUR PHOTO
+            </div>
+        </ai-dialog-header>
+      <ai-dialog-body>
+
+          <div class="add-drag-and-drop">
+          <span class="text-circled">+</span>
+            <span class="label">Drag and Drop an image</span>
+          </div>
+
+          <div class="add-choose-file">          
+            <input type="file" name="file-1" id="file-img" class="input-file" data-multiple-caption="{count} files selected" multiple />
+            <label for="file-1"><span>Choose a File...</span></label>
+          </div>
+
+      </ai-dialog-body>
+
+   </ai-dialog>
+</template>
