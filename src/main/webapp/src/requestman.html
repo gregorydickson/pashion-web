@@ -3,13 +3,13 @@
     <require from="./common/viewDateFormatter"></require>
     <require from="./calendars/datepicker"></require>
     <!-- Main building block -->
-    <div class="vertical grid-block spa-background">
+   <!-- <div class="vertical grid-block spa-background">
 
-        <!-- header -->
+        
         <compose view-model="header"></compose> 
-        <!-- spacer -->
+        
         <div class="grid-block shrink spa-v-spacer ">
-        </div>
+        </div> -->
         <div class="grid-block" style="overflow:visible;">
             <!-- -->
             <!-- Request Panel -->
@@ -137,7 +137,8 @@
                                             <td class="accordion-grey w14">${booking.pressHouse.name}</td>
                                             <td class="accordion-grey w13">${booking.requestingUser.name} ${booking.requestingUser.surname}</td>
                                             <td class="accordion-grey w5">${booking.searchableItems.length}</td>
-                                            <td class="accordion-grey w14">${booking.requestStatus}</td>
+                                            <td if.bind="user.type === 'press'" class="accordion-grey w14">${booking.requestStatusPress}</td>
+                                            <td if.bind="user.type === 'brand'" class="accordion-grey w14">${booking.requestStatusBrand}</td>
                                             <td class="accordion-grey w5">
                                                 <div class="look-menu-absolute-wrap">
                                                     <span class="edit-box" ><a href="#" click.delegate="lookEditMenu(booking.id)">...</a></span>
@@ -153,6 +154,14 @@
                                                             <li class="look-menu-item"><a click.delegate="markReturnedSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Returned</a></li>
                                                             <li class="look-menu-item"><a click.delegate="restockedSampleRequest(booking.id)" href="#" class="look-menu-link">Restocked</a></li>
                                                             <li class="look-menu-item"><a click.delegate="deleteSampleRequest(booking.id)" href="#" class="look-menu-link">Delete Request</a></li>
+                                                        </ul>
+
+                                                        <ul if.bind="user.type === 'press'" class="look-menu-list">
+                                                            <li class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id)" class="look-menu-link">Edit</a></li>
+                                                            <li class="look-menu-item"><a href="#" click.delegate="pressMarkReceivedSampleRequest(booking.id)" class="look-menu-link">Mark Received</a></li>
+                                                            <li class="look-menu-item"><a href="#" click.delegate="pressShipSampleRequest(booking.id)"  class="look-menu-link">Ship</a></li>
+                                                            <li class="look-menu-item"><a href="#" click.delegate="pressMarkPickedUpSampleRequest(booking.id)"  class="look-menu-link">Mark Picked Up</a></li>
+                                                            <li class="look-menu-item"><a href="#" click.delegate="pressDeleteSampleRequest(booking.id)"  class="look-menu-link">Delete Request</a></li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -214,29 +223,19 @@
                 <div class="grid-content shrink scrolling-lip">
                 </div>
             </div>
-            <!-- spacer -->
+            <!-- spacer 
             <div class="grid-block shrink spa-h-spacer">
             </div>
-            <!-- -->
-            <!-- Communications Panel  -->
-            <!-- -->
+            <!-- 
+            <!-- Communications Panel  
+            <!-- 
             <div id="right-panel" class="vertical grid-block grid-block-vertical-shadow" >
-                <!-- Header -->
+                <!-- Header 
                 <compose view-model="comms/commsHeader"></compose>
-                <compose view-model="contacts/contactsHeader" style="overflow:hidden; min-height:36px; margin-top: 1rem;"></compose>
-                <compose view-model="contacts/contactsList" style="overflow-x:hidden;"></compose>
-                <!-- white lip at bottom of scroll region -->
-                <div class="grid-content shrink scrolling-fat-lip">
-                </div>
-                <!-- BUTTONS -->
-                <div class="grid-block align-center shrink">
-                    <a class="hollow button" href="#" click.delegate="createDialogNewContact(1)">New Contact...</a>
-                    <a class="button" href="#" click.delegate="CreateDialogImportContacts(1)">Import Contacts...</a>
-                </div>
             </div>
         </div>
-        <!-- spacer -->
+        <!-- spacer 
         <div class="grid-content shrink spa-v-spacer">
         </div>
-    </div>
+    </div>-->
 </template>

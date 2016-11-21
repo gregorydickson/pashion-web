@@ -26,8 +26,10 @@ class DashboardController {
         def type
         if(user.brand){
             type = 'brand'
-        }else{
+        } else if (user.press) {
             type = 'press'
+        } else {
+            type = 'guest'
         }
         //creating a map is more simple than a bunch of marshalling code
         def userInfo = [email:user.email,type:type,name:user.name,surname:user.surname ] as JSON

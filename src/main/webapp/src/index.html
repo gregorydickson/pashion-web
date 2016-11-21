@@ -2,16 +2,8 @@
 <template>
     <require from="./calendars/datepicker"></require>
     <require from="./common/viewDateFormatter"></require>
-    <!-- Main building block -->
-    <div class="vertical grid-block spa-background">
 
-        <!-- header -->
-        <compose view-model="header" style="min-height:55px;"></compose> 
-
-        <!-- spacer -->
-        <div class="grid-block shrink spa-v-spacer ">
-        </div>
-        <div class="grid-block" style="overflow:visible;">
+        <div class="grid-block spa-background" style="overflow:visible;">
             <!-- -->
             <!-- Calendar + Request  Panel -->
             <!-- -->
@@ -28,10 +20,10 @@
                     </span>
                     </div>
                 </div>
-                <!-- Calendar -->
+                <!-- Calendar // Remove for beta release
                 <div class="grid-block shrink">
                     <compose view-model="calendar"></compose>
-                </div>
+                </div> -->
                 <!-- search and filter requests -->
                 <div class="vertical grid-block shrink" style="margin-left: 1rem; margin-right: 1rem;">
                     <form style="margin-top:20px;">
@@ -145,10 +137,10 @@
                                             <span class="look-menu-heading">REQUEST #${booking.id}</span>
                                             <ul class="look-menu-list">
                                                 <li class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id)" class="look-menu-link">Edit</a></li>
-                                                <li class="look-menu-item"><a href="#" class="look-menu-link">Mark Received</a></li>
-                                                <li class="look-menu-item"><a href="#" class="look-menu-link">Ship</a></li>
-                                                <li class="look-menu-item"><a href="#" class="look-menu-link">Mark Picked Up</a></li>
-                                                <li class="look-menu-item"><a href="#" class="look-menu-link">Delete Request</a></li>
+                                                <li class="look-menu-item"><a href="#" click.delegate="pressMarkReceivedSampleRequest(booking.id)" class="look-menu-link">Mark Received</a></li>
+                                                <li class="look-menu-item"><a href="#" click.delegate="pressShipSampleRequest(booking.id)"  class="look-menu-link">Ship</a></li>
+                                                <li class="look-menu-item"><a href="#" click.delegate="pressMarkPickedUpSampleRequest(booking.id)"  class="look-menu-link">Mark Picked Up</a></li>
+                                                <li class="look-menu-item"><a href="#" click.delegate="pressDeleteSampleRequest(booking.id)"  class="look-menu-link">Delete Request</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -369,23 +361,18 @@
                 <div class="grid-content shrink scrolling-lip">
                 </div>
             </div>
-            <!-- spacer -->
-            <div class="grid-block shrink spa-h-spacer">
-            </div>
-            <!-- -->
-            <!-- Communications Panel  -->
-            <!-- -->
 
-            <div id="right-panel" class="vertical grid-block grid-block-vertical-shadow" style="overflow:auto;">
-                <!-- Header -->
+<!-- Right panel -->
+<!--            <div id="right-panel" class="vertical grid-block grid-block-vertical-shadow" style="overflow:auto;">
                 <compose view-model="comms/commsHeader"></compose>
                 <compose view-model="messages/messagesHeader" style="min-height:90px; margin-top: 1rem; margin-right:1rem;margin-left: 1rem;"></compose>
                 <compose id="message-container-dad"  view-model="messages/messages" style="overflow-x:hidden;"></compose>
+-->
                 <!-- white lip at bottom of scroll region -->
-                <div class="grid-content shrink scrolling-fat-lip">
+<!--                <div class="grid-content shrink scrolling-fat-lip">
                 </div>
-                <!-- New message -->
-                <div class="grid-content align-right shrink">
+-->                <!-- New message -->
+<!--                <div class="grid-content align-right shrink">
                     <div class="new-message-block">
                         <div class="message-userpic"><img src="/assets/lauren.png"></div>
                         <input type="text" id="msgInput" class="message-new-message-box" placeholder="New Message">
@@ -394,8 +381,8 @@
                 </div>
             </div>
         </div>
-        <!-- spacer -->
-        <div class="grid-content shrink spa-v-spacer">
+-->        <!-- spacer -->
+
         </div>
-    </div>
+
 </template>

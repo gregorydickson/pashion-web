@@ -102,7 +102,7 @@ export class Index {
     ]);
   }
 
-  deactivate() {
+  detached() {
    window.removeEventListener('keypress', this.boundHandler);
   }
 
@@ -111,10 +111,6 @@ export class Index {
     if(event.which == 13 && event.srcElement.id === 'search-images') {
       console.log("user hit enter");
       this.filterChange(event);
-    }
-    if(event.which == 13 && event.srcElement.id === 'msgInput') {
-      console.log("user hit enter");
-      sendMessage2();
     }
   }
  
@@ -173,6 +169,8 @@ export class Index {
     this.closeSampleRequestMenu(id);
     this.dialogService.open({viewModel: EditSampleRequest, model: id }).then(response => {});
   }
+
+  //Brand Functions
   denySampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.denySampleRequest(id).then(message =>{alert(message.message);});
@@ -202,6 +200,26 @@ export class Index {
     this.sampleRequestService.deleteSampleRequest(id).then(message =>{alert(message.message);});
   }
 
+  //Press Functions
+  pressMarkReceivedSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.markReceivedSampleRequest(id).then(message =>{alert(message.message);});
+  }
+  pressShipSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.pressShipSampleRequest(id).then(message =>{alert(message.message);});
+  }
+  pressMarkPickedUpSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.pressMarkPickedUpSampleRequest(id).then(message =>{alert(message.message);});
+  }
+  pressDeleteSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.pressDeleteSampleRequest(id).then(message =>{alert(message.message);});
+  }
+
+
+
   // Zoom image
   createZoomDialog(itemId) {
     var menu = document.getElementById("card-"+itemId);
@@ -221,7 +239,7 @@ export class Index {
   // Create error dialog sample
   createErrorDialogSample() {
       this.dialogService.open({viewModel: ErrorDialogSample, model: "no-op" })
-        .then(response => {});
+        .then(response => {}); 
   } 
 
   connectToRealtime()
@@ -248,83 +266,8 @@ export class Index {
 }
 
 
-// The Realtime client connection
-var ortcClient;
 
-// The Realtime channel
-var chatChannel = "chat";
 
-// The current user id (random between 1 and 1000)
-var myId = "ID_" + Math.floor((Math.random() * 1000) + 1);
-
-// We start here ...
-$(function() {
-  connectToRealtime2();
-});
-
-// Connect to the Realtime cluster
-function connectToRealtime2() {
-  loadOrtcFactory(IbtRealTimeSJType, function(factory, error) {
-    ortcClient = factory.createClient();
-    ortcClient.setClusterUrl('https://ortc-developers.realtime.co/server/ssl/2.1/');
-    
-    console.log("Connecting to Realtime ...");
-    ortcClient.connect('2Ze1dz', 'anonymousToken');
-
-    // we need to wait for the connection to complete
-    // before we subscribe the channel
-    ortcClient.onConnected = function(ortc) {
-      $("#log").html("Connected");
-      
-      // subscribe the chat channel
-      // the onChatMessage callback function will handle new messages
-      ortcClient.subscribe(chatChannel, true, onChatMessage2);
-    }
-  });
-}
-
-// Handle a received chat message
-function onChatMessage2(ortc, channel, message) {
-  var receivedMessage = JSON.parse(message);
-  var msgAlign = (receivedMessage.id == myId ? "right" : "left");
-  
-  // format message to show on log
-  var msgLog = "<div style='text-align:" + msgAlign + "' class='grid-block inter-message-gap align-" + msgAlign + "'>";
-  msgLog += "<span>"+ receivedMessage.text + "<br><span>";
-  msgLog += "<span class='time'>" + receivedMessage.sentAt + "</span></div>"
-  
-  // add the message to the chat log
-  Log2(msgLog);
-}
-
-// Send a new chat message
-function sendMessage2() {
-  var message = {
-    id: myId,
-    text: $("#msgInput").val(),
-    sentAt: new Date().toLocaleTimeString()
-  };
-  
-  ortcClient.send(chatChannel, JSON.stringify(message));
-  
-  // clear the input field
-  $('#msgInput').val("");
-}
-
-// Adds text to the chat log
-function Log2(text) {
- // $("#message-container").html($("#message-container").html() + text);
-  $("#message-container").append(text);
-  $("#message-container-dad").animate({scrollTop: $("#message-container-dad").prop("scrollHeight")}, 500);
-  console.log(text);
-}
-
-// Bind keypress to send message on enter key press
-$("#msgInput").bind("keypress", function(e) {
-  if(e.keyCode == 13) {
-    sendMessage2();
-  }
-});
 
 
 

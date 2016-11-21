@@ -56,7 +56,7 @@ export class Requestman{
       .then(response => {});
   }
 
-   denySampleRequest(id){
+  denySampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.denySampleRequest(id).then(message =>{alert(message.message);});
   }
@@ -84,25 +84,29 @@ export class Requestman{
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.deleteSampleRequest(id).then(message =>{alert(message.message);});
   }
-    
-  // Create dialog edit contact 
 
-  createDialogNewContact(itemId) {
-    this.dialogService.open({viewModel: CreateDialogNewContact, model: itemId })
-      .then(response => {});
+
+  pressMarkReceivedSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.markReceivedSampleRequest(id).then(message =>{alert(message.message);});
   }
+  pressShipSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.pressShipSampleRequest(id).then(message =>{alert(message.message);});
+  }
+  pressMarkPickedUpSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.pressMarkPickedUpSampleRequest(id).then(message =>{alert(message.message);});
+  }
+  pressDeleteSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.pressDeleteSampleRequest(id).then(message =>{alert(message.message);});
+  }
+    
 
     lookEditMenu(id){
     var menu = document.getElementById("requestManTest"+id);
     menu.classList.toggle("look-menu-show");
-  }
-
-
-  // Create dialog import contacts 
-
-  CreateDialogImportContacts(itemId) {
-    this.dialogService.open({viewModel: CreateDialogImportContacts, model: itemId })
-      .then(response => {});
   }
 
 

@@ -50,6 +50,7 @@ class UserController {
 
     def guest(){
         session.user = 'guest'
+        log.info "logging in as guest"
         redirect (uri:'/dashboard/#guestpage' )
     }
 

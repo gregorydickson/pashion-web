@@ -36,6 +36,7 @@
 #right-panel {
   min-width: 280px;
   max-width: 280px;
+  overflow:visible;
 }
 
 #looks {
@@ -52,6 +53,7 @@
 .tool-header {
   background-color: $white-two;
   min-height: 3rem;
+  max-height: 3rem;
   line-height: 3rem;
 }
 
