@@ -1,0 +1,31 @@
+
+.contact-entry {
+  height: 44px;
+  width: 44px;
+  display: block;
+  margin-right: 10px;
+position:relative;
+}
+
+.contact-entry > img{
+	border-radius: 50%;
+	-webkit-border-radius: 50%;
+  height: 44px;
+  width: 44px;
+  display: block;
+	
+}
+.clip-circle {
+  clip-path: circle(20px at center);
+  -webkit-clip-path: circle(20px at center);	
+}
+.contact-mark {
+position: absolute;
+bottom: 0;
+left: 0; 
+display: block; 
+
+}
+.contact-mark img {
+	display: block; 
+}

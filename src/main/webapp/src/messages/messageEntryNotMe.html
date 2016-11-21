@@ -1,13 +1,20 @@
 <template>
         <div class="grid-block vertical align-left inter-message-gap">
         <!--  <div class="message-text message-left-text">Me</div> -->
-        <table class="" style="table-layout:fixed;">
+        <table class="message-wrap">
             <tr>
-                <td colspan="2" class="message-box message-not-me-box">Message from contact, long messages goes over two lines</td> <!-- message-box-pip-l -->
+                <td colspan="2">
+                    <div class="message-box message-not-me-box">
+                        <div class="message-img">
+                            <img src="/assets/looks/2.jpg" alt="">
+                        </div>                                            
+                        Message from contact, long messages goes over two lines
+                    </div>
+                </td> <!-- message-box-pip-l -->
             </tr>
             <tr>
-                <td class="message-text message-left-text" style="">Lauren</td>
-                <td class="message-text message-right-text">14 Sept, 15:58</td>
+                <td class="message-text message-left-text" style="">Lauren Maria del van Verylongname</td>
+                <td class="message-text message-right-text message-date">14 Sept, 15:58</td>
             </tr>
         </table>
     </div>

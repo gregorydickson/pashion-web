@@ -37,8 +37,35 @@ export class Zoom {
  
 
     // Fit image to screen height
-    var h = window.innerHeight;
-    document.getElementById('imageZoom').style.height= h*0.8 +'px';     
+
+    function zoomSize() {
+        var windowHeight = window.innerHeight;
+        var windowWidth = window.innerWidth;                
+        var imageHeight = document.getElementById('imageZoom').clientHeight;
+        var imageWidth = document.getElementById('imageZoom').clientWidth;
+        
+        document.getElementById('imageZoom').style.maxHeight= 'none';     
+
+        if ( imageHeight < windowHeight*0.7 ) {
+          document.getElementById('imageZoom').style.maxHeight= windowHeight*0.75 +'px';     
+          document.getElementById('imageZoom').style.height= 'auto';  
+        } 
+        else {
+          document.getElementById('imageZoom').style.height= windowHeight*0.75 +'px';     
+         
+        }   
+
+        if ( imageWidth > windowWidth*0.7) {
+          document.getElementById('imageZoom').style.maxHeight= windowHeight*0.75 +'px';     
+          document.getElementById('imageZoom').style.height= 'auto';  
+        }       
+    }
+
+    zoomSize();
+
+    window.addEventListener("resize", function(){
+      zoomSize ();
+    }, true);
 
     // Close dialog when click outside
     var controller = this.controller;
