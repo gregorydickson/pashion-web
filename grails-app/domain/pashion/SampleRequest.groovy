@@ -11,7 +11,8 @@ class SampleRequest {
 
 	Date bookingStartDate
 	Date bookingEndDate
-	String requestStatus //Pending ->Approved->Shipped -> Delivered -> Due Back ->Overdue ->Closed
+	String requestStatusBrand //Pending ->Approved->Shipped -> Delivered -> Due Back ->Overdue ->Closed
+	String requestStatusPress
 	Long userCreatedId
 	
 	Brand brand
@@ -63,7 +64,8 @@ class SampleRequest {
 
 		bookingStartDate nullable: true
 	    bookingEndDate nullable: true
-		requestStatus nullable: true
+		requestStatusBrand nullable: true 
+		requestStatusPress nullable: true
 		userCreatedId nullable: true
 		brand nullable:true
 		returnToAddress nullable: true

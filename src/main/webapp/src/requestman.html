@@ -137,7 +137,8 @@
                                             <td class="accordion-grey w14">${booking.pressHouse.name}</td>
                                             <td class="accordion-grey w13">${booking.requestingUser.name} ${booking.requestingUser.surname}</td>
                                             <td class="accordion-grey w5">${booking.searchableItems.length}</td>
-                                            <td class="accordion-grey w14">${booking.requestStatus}</td>
+                                            <td if.bind="user.type === 'press'" class="accordion-grey w14">${booking.requestStatusPress}</td>
+                                            <td if.bind="user.type === 'brand'" class="accordion-grey w14">${booking.requestStatusBrand}</td>
                                             <td class="accordion-grey w5">
                                                 <div class="look-menu-absolute-wrap">
                                                     <span class="edit-box" ><a href="#" click.delegate="lookEditMenu(booking.id)">...</a></span>
@@ -153,6 +154,14 @@
                                                             <li class="look-menu-item"><a click.delegate="markReturnedSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Returned</a></li>
                                                             <li class="look-menu-item"><a click.delegate="restockedSampleRequest(booking.id)" href="#" class="look-menu-link">Restocked</a></li>
                                                             <li class="look-menu-item"><a click.delegate="deleteSampleRequest(booking.id)" href="#" class="look-menu-link">Delete Request</a></li>
+                                                        </ul>
+
+                                                        <ul if.bind="user.type === 'press'" class="look-menu-list">
+                                                            <li class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id)" class="look-menu-link">Edit</a></li>
+                                                            <li class="look-menu-item"><a href="#" click.delegate="pressMarkReceivedSampleRequest(booking.id)" class="look-menu-link">Mark Received</a></li>
+                                                            <li class="look-menu-item"><a href="#" click.delegate="pressShipSampleRequest(booking.id)"  class="look-menu-link">Ship</a></li>
+                                                            <li class="look-menu-item"><a href="#" click.delegate="pressMarkPickedUpSampleRequest(booking.id)"  class="look-menu-link">Mark Picked Up</a></li>
+                                                            <li class="look-menu-item"><a href="#" click.delegate="pressDeleteSampleRequest(booking.id)"  class="look-menu-link">Delete Request</a></li>
                                                         </ul>
                                                     </div>
                                                 </div>

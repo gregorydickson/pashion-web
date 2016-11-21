@@ -14,55 +14,87 @@ class SampleRequestController {
     SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
 
     // The not exactly RESTful verbs for updating a Sample Request:
+
+    // Brand methods:
     def deny(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
-        sampleRequest.requestStatus = "Denied"
+        sampleRequest.requestStatusBrand = "Closed"
+        sampleRequest.requestStatusPress = "Refused"
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Denied']
         render sent as JSON
     }
     def ship(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
-        sampleRequest.requestStatus = "Approved"
+        sampleRequest.requestStatusBrand = "Waiting to be Shipped"
+        sampleRequest.requestStatusPress = "Approved"
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Marked Ready to Ship']
         render sent as JSON
     }
     def send(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
-        sampleRequest.requestStatus = "Waiting to be Picked Up"
+        sampleRequest.requestStatusBrand = "Waiting to be Picked Up"
+        sampleRequest.requestStatusPress = "Waiting to be Delivered"
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Waiting to be Picked Up']
         render sent as JSON
     }
     def markPickedUp(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
-        sampleRequest.requestStatus = "Picked Up"
+        sampleRequest.requestStatusBrand = "Picked Up"
+        sampleRequest.requestStatusPress = "In House"
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Marked Picked Up']
         render sent as JSON
     }
     def markReturned(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
-        sampleRequest.requestStatus = "Mark Returned"
+        sampleRequest.requestStatusBrand = "Returned"
+        sampleRequest.requestStatusPress = "Picked Up"
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Marked Returned']
         render sent as JSON
     }
     def restocked(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
-        sampleRequest.requestStatus = "Closed"
+        sampleRequest.requestStatusBrand = "Closed"
+        sampleRequest.requestStatusPress = "Returned"
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Marked ReStocked']
         render sent as JSON
     }
     def markDeleted(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
-        sampleRequest.requestStatus = "Deleted"
+        sampleRequest.requestStatusBrand = "Deleted"
+        sampleRequest.requestStatusPress = "Deleted"
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Deleted']
         render sent as JSON
     }
+    //Press only methods
+
+    def pressMarkReceived(){
+        def sampleRequest = SampleRequest.get(params.id.toInteger())
+        sampleRequest.requestStatusBrand = "Deleted"
+        sampleRequest.requestStatusPress = "Deleted"
+        sampleRequest.save(flush:true)
+        def sent = [message:'Sample Request Deleted']
+        render sent as JSON
+    }
+    /*
+  pressShipSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.pressShipSampleRequest(id).then(message =>{alert(message.message);});
+  }
+  pressMarkPickedUpSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.pressMarkPickedUpSampleRequest(id).then(message =>{alert(message.message);});
+  }
+  pressDeleteSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.pressDeleteSampleRequest(id).then(message =>{alert(message.message);});
+  }*/
     
     
     def savejson(){
@@ -80,7 +112,8 @@ class SampleRequestController {
         sr.deliverTo = aUser
         sr.returnBy = jsonObject.returnBy
 
-        sr.requestStatus = "Pending"
+        sr.requestStatusBrand = "Pending"
+        sr.requestStatusPress = "Pending"
         sr.itemsGot = 0
         sr.itemsOut = 0
         sr.itemsIn = 0
@@ -127,9 +160,7 @@ class SampleRequestController {
         sr.returnBy = jsonObject.returnBy
 
         sr.requestStatus = "Pending"
-        sr.itemsGot = 
-        sr.itemsOut = 0
-        sr.itemsIn = 0
+
         SearchableItem item
 
         jsonObject.searchableItems.each{

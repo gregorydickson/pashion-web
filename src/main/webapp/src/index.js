@@ -173,6 +173,8 @@ export class Index {
     this.closeSampleRequestMenu(id);
     this.dialogService.open({viewModel: EditSampleRequest, model: id }).then(response => {});
   }
+
+  //Brand Functions
   denySampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.denySampleRequest(id).then(message =>{alert(message.message);});
@@ -201,6 +203,26 @@ export class Index {
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.deleteSampleRequest(id).then(message =>{alert(message.message);});
   }
+
+  //Press Functions
+  pressMarkReceivedSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.markReceivedSampleRequest(id).then(message =>{alert(message.message);});
+  }
+  pressShipSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.pressShipSampleRequest(id).then(message =>{alert(message.message);});
+  }
+  pressMarkPickedUpSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.pressMarkPickedUpSampleRequest(id).then(message =>{alert(message.message);});
+  }
+  pressDeleteSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.pressDeleteSampleRequest(id).then(message =>{alert(message.message);});
+  }
+
+
 
   // Zoom image
   createZoomDialog(itemId) {

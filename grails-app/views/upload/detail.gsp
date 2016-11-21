@@ -52,7 +52,7 @@
         </g:if>
     <form enctype="multipart/form-data" action="${createLink(action: 'uploaddetail')}"
           class="dropzone" id="my-awesome-dropzone" method="post">
-          <h1> For uploading Look CSV Files
+          <h1> For uploading Detail CSV Files</h1>
         <div class="fallback">
             <input name="file" type="file" required="true"/>
             <g:actionSubmit value="Upload" />
