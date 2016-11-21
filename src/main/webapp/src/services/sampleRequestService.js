@@ -125,8 +125,39 @@ export class SampleRequestService{
       });
       return promise;
     }
-    
-    
+
+    //Start PRESS ACTIONS
+    //Press Functions
+    pressMarkReceivedSampleRequest(id){
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/sampleRequest/pressMarkReceived/'+id, {method: 'post'}).then(response => response.json())
+          .then(result => resolve(result));
+      });
+      return promise;
+    }
+    pressShipSampleRequest(id){
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/sampleRequest/pressShip/'+id, {method: 'post'}).then(response => response.json())
+          .then(result => resolve(result));
+      });
+      return promise;
+    }
+    pressMarkPickedUpSampleRequest(id){
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/sampleRequest/pressMarkPickedUp/'+id, {method: 'post'}).then(response => response.json())
+          .then(result => resolve(result));
+      });
+      return promise;
+    }
+    pressDeleteSampleRequest(id){
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/sampleRequest/pressDelete/'+id, {method: 'post'}).then(response => response.json())
+          .then(result => resolve(result));
+      });
+      return promise;
+    }
+
+  
 
     
 
