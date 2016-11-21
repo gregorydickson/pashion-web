@@ -52,6 +52,13 @@ export class CommsHeader {
     menu.classList.toggle("look-menu-hide");
   }
 
+  closeExpand(buttonNumber) {
+    var buttonChoice = document.getElementById("button" + buttonNumber);
+    var panelChoice = document.getElementById("panel" + buttonNumber);
+    buttonChoice.classList.toggle("active");
+    panelChoice.classList.toggle("show");  
+  }
+
   submit(){
     
   }

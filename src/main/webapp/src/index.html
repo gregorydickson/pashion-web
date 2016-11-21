@@ -2,16 +2,8 @@
 <template>
     <require from="./calendars/datepicker"></require>
     <require from="./common/viewDateFormatter"></require>
-    <!-- Main building block -->
-    <div class="vertical grid-block spa-background">
 
-        <!-- header -->
-        <compose view-model="header" style="min-height:55px;"></compose> 
-
-        <!-- spacer -->
-        <div class="grid-block shrink spa-v-spacer ">
-        </div>
-        <div class="grid-block" style="overflow:visible;">
+        <div class="grid-block spa-background" style="overflow:visible;">
             <!-- -->
             <!-- Calendar + Request  Panel -->
             <!-- -->
@@ -28,10 +20,10 @@
                     </span>
                     </div>
                 </div>
-                <!-- Calendar -->
+                <!-- Calendar // Remove for beta release
                 <div class="grid-block shrink">
                     <compose view-model="calendar"></compose>
-                </div>
+                </div> -->
                 <!-- search and filter requests -->
                 <div class="vertical grid-block shrink" style="margin-left: 1rem; margin-right: 1rem;">
                     <form style="margin-top:20px;">
@@ -368,18 +360,7 @@
                 <div class="grid-content shrink scrolling-lip">
                 </div>
             </div>
-            <!-- spacer -->
-            <div class="grid-block shrink spa-h-spacer">
-            </div>
-            <!-- -->
-            <!-- Communications Panel  -->
-            <!-- -->
-            <div id="right-panel" class="vertical grid-block grid-block-vertical-shadow" style="overflow:auto;">
-                <compose view-model="comms/commsHeader"></compose>
-            </div>
+
         </div>
-        <!-- spacer -->
-        <div class="grid-content shrink spa-v-spacer">
-        </div>
-    </div>
+
 </template>

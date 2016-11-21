@@ -1,10 +1,29 @@
 <template>
     <!-- page frame -->
-    <div class="grid-frame vertical">
-
-        <!-- Main Body -->
-        <router-view class="grid-block"></router-view>
+    <div class="vertical grid-frame spa-background">
+        <!-- header -->
+       <compose if.bind="user.type === 'brand'" view-model="header" style="min-height:55px;"></compose>      
+        <compose if.bind="user.type === 'press'"  view-model="header" style="min-height:55px;"></compose>
+        <compose if.bind="user.type === 'guest'" view-model="guestheader" style="min-height:79px;"></compose>
+        <!-- spacer -->
+        <div class="grid-block shrink spa-v-spacer ">
+        </div>
+        <!-- main body block -->
+        <div class="grid-block" style="overflow:visible;">
+	        <!-- Main Body -->
+	        <router-view class="grid-block" style="overflow:visible;"></router-view>
+	        <!-- spacer -->
+	        <div class="grid-block shrink spa-h-spacer">
+	        </div>
+	        <!-- Communications Panel  -->
+	        <!-- -->
+	        <compose if.bind="user.type === 'brand'" id="right-panel"  class="grid-block" view-model="comms/commsHeader"></compose>      
+	        <compose if.bind="user.type === 'press'" id="right-panel"  class="grid-block" view-model="comms/commsHeader"></compose>
+        </div>
+        	        <!-- spacer -->
+	        <div class="grid-content shrink spa-v-spacer">
+	        </div>
         <!-- footer -->
-        <compose view-model="footer"></compose> 
+        <compose view-model="footer"></compose>
     </div>
 </template>
