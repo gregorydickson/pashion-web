@@ -88,7 +88,7 @@
                             <div class="grid-content">
                                 <input style="margin-top: 0.5rem;" class="button" type="submit" value="Log Me In"></input>
                             </div>
-                </g:form>
+                </g:form >
                             <a href="#" style="margin-top: 0.5rem;">Request Access</a>
                             <a href="#" style="margin-top: 0.5rem;">Help Getting Started</a>
                             <form style="margin-top: 0.5rem;" action="/user/guest" method="post" id="2">
