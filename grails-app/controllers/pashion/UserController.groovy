@@ -59,12 +59,13 @@ class UserController {
         log.info "do Login params:"+params
         def account = null
         def user = User.findWhere(email:params['email'])
+        log.info user
         if(user){
             account = userService.login(params.email,params.password)
-
+            session.user = user                   
             if(account instanceof Account){
                 user.account = account
-                session.user = user
+                
                 if(params.remember){
                     response.setCookie('remember', user.email)
                     log.info "set cookie"

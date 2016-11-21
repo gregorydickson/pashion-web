@@ -23,10 +23,11 @@ class DashboardController {
         }
 
         def user = session.user
+        log.info "user:"+user
         def type
         if(user.brand){
             type = 'brand'
-        } else if (user.press) {
+        } else if (user.pressHouse) {
             type = 'press'
         } else {
             type = 'guest'
