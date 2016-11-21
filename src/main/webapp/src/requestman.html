@@ -144,14 +144,15 @@
                                                     <!-- edit request modal popup -->
                                                      <div class="look-menu-absolute" id="requestManTest${booking.id}">
                                                         <span class="look-menu-heading">REQUEST #${booking.id}</span>
-                                                        <ul class="look-menu-list">
+                                                        <ul if.bind="user.type === 'brand'"  class="look-menu-list">
                                                             <li class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id)" class="look-menu-link">Edit</a></li>
-                                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Ship</a></li>
-                                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Send</a></li>
-                                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Mark Picked Up</a></li>
-                                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Mark Returned</a></li>
-                                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Restocked</a></li>
-                                                            <li class="look-menu-item"><a href="#" class="look-menu-link">Delete Request</a></li>
+                                                            <li class="look-menu-item"><a href="#" click.delegate="denySampleRequest(booking.id)" class="look-menu-link">Deny</a></li>                                            
+                                                            <li class="look-menu-item"><a href="#" click.delegate="shipSampleRequest(booking.id)" class="look-menu-link">Ship</a></li>
+                                                            <li class="look-menu-item"><a click.delegate="sendSampleRequest(booking.id)" href="#" class="look-menu-link">Send</a></li>
+                                                            <li class="look-menu-item"><a click.delegate="markPickedUpSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Picked Up</a></li>
+                                                            <li class="look-menu-item"><a click.delegate="markReturnedSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Returned</a></li>
+                                                            <li class="look-menu-item"><a click.delegate="restockedSampleRequest(booking.id)" href="#" class="look-menu-link">Restocked</a></li>
+                                                            <li class="look-menu-item"><a click.delegate="deleteSampleRequest(booking.id)" href="#" class="look-menu-link">Delete Request</a></li>
                                                         </ul>
                                                     </div>
                                                 </div>

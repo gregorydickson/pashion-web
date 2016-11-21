@@ -55,6 +55,35 @@ export class Requestman{
     this.dialogService.open({viewModel: EditSampleRequest, model: itemId })
       .then(response => {});
   }
+
+   denySampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.denySampleRequest(id).then(message =>{alert(message.message);});
+  }
+  shipSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.shipSampleRequest(id).then(message =>{alert(message.message);});
+  }
+  sendSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.sendSampleRequest(id).then(message =>{alert(message.message);});
+  }
+  markPickedUpSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.markPickedUpSampleRequest(id).then(message =>{alert(message.message);});
+  }
+  markReturnedSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.markReturnedSampleRequest(id).then(message =>{alert(message.message);});
+  }
+  restockedSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.restockedSampleRequest(id).then(message =>{alert(message.message);});
+  }
+  deleteSampleRequest(id){
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.deleteSampleRequest(id).then(message =>{alert(message.message);});
+  }
     
 
     lookEditMenu(id){
