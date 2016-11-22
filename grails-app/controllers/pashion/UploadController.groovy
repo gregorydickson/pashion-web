@@ -35,7 +35,7 @@ class UploadController {
                     def count = 0
                     for (row in data) {
                         ++count
-                        if(count > 3 ){ 
+                        if(count > 2 ){ 
                         
                             SearchableItem item = new SearchableItem(type:type)
                             Brand brand = Brand.findOrSaveWhere(name:row.values[0].toString().trim()).save()
