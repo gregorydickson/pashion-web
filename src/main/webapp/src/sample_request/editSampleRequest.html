@@ -188,14 +188,11 @@
                             <td class="accordion w3">${$index}</td>
                             <td class="accordion w12">${sample.id}</td>
                             <td class="accordion w54">${sample.name}</td>
-                            <td class="accordion w15">                              
-                                <span value.bind="sample.status.brandStatus" style="margin-bottom:0px;">{STATUS}</span>
+                            <td class="accordion w15">                            
+                                <span  style="margin-bottom:0px;">${sample.status.brandStatus}</span>
                             </td>
-                                <td style="text-align:right;" class="accordion w16">
-                                    <select style="margin-bottom:0px;">
-                                        <option value="">Approve</option>
-                                        <option value="Not Arrived">Deny</option>
-                                    </select>
+                            <td style="text-align:right;" class="accordion w16">
+                                    <a click.delegate="cancelSample(sample.id)" style="padding:7px 6px 5px 6px; margin-right:0; margin-bottom:0px; font-size: 1rem;" class="hollow button" href="#">Cancel</a>
                             </td>
                         </tr>
                     </table>            
@@ -210,10 +207,10 @@
                             <td class="accordion w12">${sample.id}</td>
                             <td class="accordion w54">${sample.name}</td>
                             <td class="accordion w18">
-                                <span value.bind="sample.status.brandStatus" style="margin-bottom:0px;">{STATUS}</span>
+                                <span style="margin-bottom:0px;">${sample.status.pressStatus}</span>
                             </td>
                             <td style="text-align:right;" class="accordion w13">
-                                <a style="padding:7px 6px 5px 6px; margin-right:0; margin-bottom:0px; font-size: 1rem;" class="hollow button" href="javascript:;">Remove</a>
+                                <a click.delegate="cancelSample(sample.id)" style="padding:7px 6px 5px 6px; margin-right:0; margin-bottom:0px; font-size: 1rem;" class="hollow button" href="#">Remove</a>
                             </td> 
                         </tr>
                     </table>            
