@@ -26,11 +26,13 @@ export class CommsHeader {
 
     this.comms.status = this.statusValues.messages;
     console.log("Init comms status to " + this.comms.status);
+
+    this.connectToRealtime();
  
   }
 
   activate(){
-    window.addEventListener('keypress', this.boundHandlerComms, false);  
+    window.addEventListener('keypress', this.boundHandlerComms, false); 
   }
 
   detached() {
@@ -39,6 +41,8 @@ export class CommsHeader {
 
   attached(){
     // this.dialogService.open({viewModel: Introduction, model: "no-op" }).then(response => {});
+
+    
   }
 
   setStatusTab (id) {
@@ -67,7 +71,7 @@ handleKeyInput(event) {
     console.log(event);
     if(event.which == 13 && event.srcElement.id === 'msgInput') {
       console.log("user hit enter in comms");
-      sendMessage2();
+      this.sendMessage();
     }
   }
 
@@ -86,96 +90,78 @@ handleKeyInput(event) {
       .then(response => {});
   }
 
-  connectToRealtime()
-{
-  connectToRealtime2();
-}
+  //ORTC
 
-onChatMessage(ortc, channel, message)
-{
-  onChatMessage2(ortc, channel, message);
-}
-
-sendMessage()
-{
-  sendMessage2();
-}
-
-Log(text)
-{
-  Log2(text);
-}
-
-}
-
-// The Realtime client connection
-var ortcClient;
-
-// The Realtime channel
-var chatChannel = "chat";
-
-// The current user id (random between 1 and 1000)
-var myId = "ID_" + Math.floor((Math.random() * 1000) + 1);
-
-// We start here ...
-$(function() {
-  connectToRealtime2();
-});
-
-// Connect to the Realtime cluster
-function connectToRealtime2() {
-  loadOrtcFactory(IbtRealTimeSJType, function(factory, error) {
-    ortcClient = factory.createClient();
-    ortcClient.setClusterUrl('https://ortc-developers.realtime.co/server/ssl/2.1/');
-    
-    console.log("Connecting to Realtime ...");
-    ortcClient.connect('dUI5Hv', 'anonymousToken');
-
-    // we need to wait for the connection to complete
-    // before we subscribe the channel
-    ortcClient.onConnected = function(ortc) {
-      $("#log").html("Connected");
+  connectToRealtime() {
+    var onMessage = this.onChatMessage;
+    loadOrtcFactory(IbtRealTimeSJType, function(factory, error) {
+      ortcClient = factory.createClient();
+      ortcClient.setClusterUrl('https://ortc-developers.realtime.co/server/ssl/2.1/');
       
-      // subscribe the chat channel
-      // the onChatMessage callback function will handle new messages
-      ortcClient.subscribe(chatChannel, true, onChatMessage2);
-    }
-  });
+      console.log("Connecting to Realtime ...");
+      ortcClient.connect('dUI5Hv', 'anonymousToken');
+
+      // we need to wait for the connection to complete
+      // before we subscribe the channel
+      ortcClient.onConnected = function(ortc) {
+        $("#log").html("Connected");
+        
+        // subscribe the chat channel
+        // the onChatMessage callback function will handle new messages
+        ortcClient.subscribe(chatChannel, true, onMessage);
+      }
+    });
+  }
+
+  onChatMessage(ortc, channel, message) {
+    var receivedMessage = JSON.parse(message);
+    var msgAlign = (receivedMessage.id == myId ? "right" : "left");
+  
+    // format message to show on log
+    var msgLog = "<div style='text-align:" + msgAlign + "' class='grid-block inter-message-gap align-" + msgAlign + "'>";
+    msgLog += "<span>"+ receivedMessage.text + "<br><span>";
+    msgLog += "<span class='time'>" + receivedMessage.sentAt + "</span></div>"
+    
+    // add the message to the chat log
+        // $("#message-container").html($("#message-container").html() + text);
+    $("#message-container").append(msgLog);
+    $("#message-container-dad").animate({scrollTop: $("#message-container-dad").prop("scrollHeight")}, 500);
+    console.log(msgLog);  
+  }
+
+  sendMessage() {
+    var message = {
+      id: myId,
+      text: $("#msgInput").val(),
+      sentAt: new Date().toLocaleTimeString()
+    };
+    
+    ortcClient.send(chatChannel, JSON.stringify(message));
+    
+    // clear the input field
+    $('#msgInput').val("");
+  }
+
+/*   Log(text) {
+    // $("#message-container").html($("#message-container").html() + text);
+    $("#message-container").append(text);
+    $("#message-container-dad").animate({scrollTop: $("#message-container-dad").prop("scrollHeight")}, 500);
+    console.log(text);
+  } 
+*/
+
 }
 
-// Handle a received chat message
-function onChatMessage2(ortc, channel, message) {
-  var receivedMessage = JSON.parse(message);
-  var msgAlign = (receivedMessage.id == myId ? "right" : "left");
-  
-  // format message to show on log
-  var msgLog = "<div style='text-align:" + msgAlign + "' class='grid-block inter-message-gap align-" + msgAlign + "'>";
-  msgLog += "<span>"+ receivedMessage.text + "<br><span>";
-  msgLog += "<span class='time'>" + receivedMessage.sentAt + "</span></div>"
-  
-  // add the message to the chat log
-  Log2(msgLog);
-}
+  // The Realtime client connection ////
+  var ortcClient;
 
-// Send a new chat message
-function sendMessage2() {
-  var message = {
-    id: myId,
-    text: $("#msgInput").val(),
-    sentAt: new Date().toLocaleTimeString()
-  };
-  
-  ortcClient.send(chatChannel, JSON.stringify(message));
-  
-  // clear the input field
-  $('#msgInput').val("");
-}
+  // The Realtime channel
+  var chatChannel = "chat";
 
-// Adds text to the chat log
-function Log2(text) {
- // $("#message-container").html($("#message-container").html() + text);
-  $("#message-container").append(text);
-  $("#message-container-dad").animate({scrollTop: $("#message-container-dad").prop("scrollHeight")}, 500);
-  console.log(text);
-}
+    // The current user id (random between 1 and 1000)
+  var myId = "ID_" + Math.floor((Math.random() * 1000) + 1);
+
+
+
+
 
