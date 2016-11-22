@@ -69,7 +69,8 @@
 
                             <!-- Status-->  
                             <div class="grid-block vertical">    
-                                <span class="inline-label slim-text-box-label" style="margin-left: 2rem;">Status: [TBD] </span>
+                                <span if.bind="user.type === 'brand'" class="inline-label slim-text-box-label" style="margin-left: 2rem;">Status: ${sampleRequest.requestStatusBrand} </span>
+                                <span if.bind="user.type === 'press'" class="inline-label slim-text-box-label" style="margin-left: 2rem;">Status: ${sampleRequest.requestStatusPress} </span>
                             </div>
                         </div> 
 
