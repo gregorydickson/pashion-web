@@ -35,7 +35,10 @@ export class Header {
 
     admin(){
       console.log("admin: " + this.selectval);
-      this.theRouter.navigate("adminpage");
+      var currentRoute = this.theRouter.currentInstruction.config.name;
+      if (currentRoute == 'index') this.theRouter.navigate("adminpage");
+      if (currentRoute == 'requestman') this.theRouter.navigate("adminpage");
+      if (currentRoute == 'adminpage') this.theRouter.navigate("/");
   }
     
 }
