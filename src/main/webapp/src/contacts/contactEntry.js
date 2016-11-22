@@ -25,27 +25,27 @@ export class ContactEntry {
 
   // Three dots contact edit menu
 
-  lookEditContact(id){
-    var menu = document.getElementById("lookEditContact"+id);
+  lookEditContact(){
+    var menu = this.lookEditContactRef; //$( this ).find( '.lookEditContact' ) // $(".lookEditContact", this); //document.getElementById("lookEditContact"+id);
     menu.classList.toggle("look-menu-show");
   }
 
   // Create dialog edit contact 
 
-  createDialogEditContact(itemId) {
-    var menu = document.getElementById("lookEditContact"+itemId);
+  createDialogEditContact() {
+    var menu = this.lookEditContactRef; //document.getElementById("lookEditContact"+itemId);
     menu.classList.toggle("look-menu-show");
-    this.dialogService.open({viewModel: CreateDialogEditContact, model: itemId })
+    this.dialogService.open({viewModel: CreateDialogEditContact, model: 0 })
       .then(response => {});
   }
 
 
   // Create dialog update photo
 
-  CreateDialogUpdatePhoto(itemId) {
-    var menu = document.getElementById("lookEditContact"+itemId);
+  CreateDialogUpdatePhoto() {
+    var menu = this.lookEditContactRef; //document.getElementById("lookEditContact"+itemId);
     menu.classList.toggle("look-menu-show");
-    this.dialogService.open({viewModel: CreateDialogUpdatePhoto, model: itemId })
+    this.dialogService.open({viewModel: CreateDialogUpdatePhoto, model: 0 })
       .then(response => {});
   }
 
