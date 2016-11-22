@@ -129,7 +129,7 @@ function connectToRealtime2() {
     ortcClient.setClusterUrl('https://ortc-developers.realtime.co/server/ssl/2.1/');
     
     console.log("Connecting to Realtime ...");
-    ortcClient.connect('2Ze1dz', 'anonymousToken');
+    ortcClient.connect('dUI5Hv', 'anonymousToken');
 
     // we need to wait for the connection to complete
     // before we subscribe the channel
