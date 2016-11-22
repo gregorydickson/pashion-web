@@ -16,7 +16,7 @@ class SampleRequestController {
     // The not exactly RESTful verbs for updating a Sample Request:
 
     // Brand methods:
-    def deny(){
+    def brandDeny(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
         sampleRequest.requestStatusBrand = "Closed"
         sampleRequest.requestStatusPress = "Refused"
@@ -24,50 +24,50 @@ class SampleRequestController {
         def sent = [message:'Sample Request Denied']
         render sent as JSON
     }
-    def ship(){
+    def brandShip(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
-        sampleRequest.requestStatusBrand = "Waiting to be Shipped"
+        sampleRequest.requestStatusBrand = "Shipping"
         sampleRequest.requestStatusPress = "Approved"
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Marked Ready to Ship']
         render sent as JSON
     }
-    def send(){
+    def brandSend(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
-        sampleRequest.requestStatusBrand = "Waiting to be Picked Up"
-        sampleRequest.requestStatusPress = "Waiting to be Delivered"
+        sampleRequest.requestStatusBrand = "Picking Up"
+        sampleRequest.requestStatusPress = "stet"
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Waiting to be Picked Up']
         render sent as JSON
     }
-    def markPickedUp(){
+    def brandMarkPickedUp(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
         sampleRequest.requestStatusBrand = "Picked Up"
-        sampleRequest.requestStatusPress = "In House"
+        sampleRequest.requestStatusPress = "Delivering"
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Marked Picked Up']
         render sent as JSON
     }
-    def markReturned(){
+    def brandMarkReturned(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
         sampleRequest.requestStatusBrand = "Returned"
-        sampleRequest.requestStatusPress = "Picked Up"
+        sampleRequest.requestStatusPress = "Returned"
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Marked Returned']
         render sent as JSON
     }
-    def restocked(){
+    def brandRestocked(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
-        sampleRequest.requestStatusBrand = "Closed"
-        sampleRequest.requestStatusPress = "Returned"
+        sampleRequest.requestStatusBrand = "Restocked"
+        sampleRequest.requestStatusPress = "stet"
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Marked ReStocked']
         render sent as JSON
     }
-    def markDeleted(){
+    def brandMarkDeleted(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
-        sampleRequest.requestStatusBrand = "Deleted"
-        sampleRequest.requestStatusPress = "Deleted"
+        sampleRequest.requestStatusBrand = "Closed"
+        sampleRequest.requestStatusPress = "Refused"
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Deleted']
         render sent as JSON
@@ -76,25 +76,39 @@ class SampleRequestController {
 
     def pressMarkReceived(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
-        sampleRequest.requestStatusBrand = "Deleted"
-        sampleRequest.requestStatusPress = "Deleted"
+        sampleRequest.requestStatusBrand = "Out"
+        sampleRequest.requestStatusPress = "In House"
         sampleRequest.save(flush:true)
-        def sent = [message:'Sample Request Deleted']
+        def sent = [message:'Sample Request In House']
         render sent as JSON
     }
-    /*
-  pressShipSampleRequest(id){
-    this.closeSampleRequestMenu(id);
-    this.sampleRequestService.pressShipSampleRequest(id).then(message =>{alert(message.message);});
-  }
-  pressMarkPickedUpSampleRequest(id){
-    this.closeSampleRequestMenu(id);
-    this.sampleRequestService.pressMarkPickedUpSampleRequest(id).then(message =>{alert(message.message);});
-  }
-  pressDeleteSampleRequest(id){
-    this.closeSampleRequestMenu(id);
-    this.sampleRequestService.pressDeleteSampleRequest(id).then(message =>{alert(message.message);});
-  }*/
+    def pressDelete(){
+        def sampleRequest = SampleRequest.get(params.id.toInteger())
+        sampleRequest.requestStatusBrand = "Closed"
+        sampleRequest.requestStatusPress = "Closed"
+        sampleRequest.save(flush:true)
+        def sent = [message:'Sample Request Closed']
+        render sent as JSON
+    }
+    def pressShip(){
+        def sampleRequest = SampleRequest.get(params.id.toInteger())
+        sampleRequest.requestStatusBrand = "stet"
+        sampleRequest.requestStatusPress = "Picking Up"
+        sampleRequest.save(flush:true)
+        def sent = [message:'Sample Request Picking Up']
+        render sent as JSON
+    }
+    
+    def pressMarkPickedUp(){
+        def sampleRequest = SampleRequest.get(params.id.toInteger())
+        sampleRequest.requestStatusBrand = "Returning"
+        sampleRequest.requestStatusPress = "Picked Up"
+        sampleRequest.save(flush:true)
+        def sent = [message:'Sample Request Picking Up']
+        render sent as JSON
+    }
+
+
     
     
     def savejson(){

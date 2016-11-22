@@ -170,52 +170,89 @@ export class Index {
     this.dialogService.open({viewModel: EditSampleRequest, model: id }).then(response => {});
   }
 
-  //Brand Functions
+  //Brand Workflow Functions
   denySampleRequest(id){
     this.closeSampleRequestMenu(id);
-    this.sampleRequestService.denySampleRequest(id).then(message =>{alert(message.message);});
+    this.sampleRequestService.denySampleRequest(id).then(message =>{
+      alert(message.message);
+      this.reloadBookings();
+    });
   }
   shipSampleRequest(id){
     this.closeSampleRequestMenu(id);
-    this.sampleRequestService.shipSampleRequest(id).then(message =>{alert(message.message);});
+    this.sampleRequestService.shipSampleRequest(id).then(message =>{
+      alert(message.message);
+      this.reloadBookings();
+    });
   }
   sendSampleRequest(id){
     this.closeSampleRequestMenu(id);
-    this.sampleRequestService.sendSampleRequest(id).then(message =>{alert(message.message);});
+    this.sampleRequestService.sendSampleRequest(id).then(message =>{
+      alert(message.message);
+      this.reloadBookings();
+    });
   }
   markPickedUpSampleRequest(id){
     this.closeSampleRequestMenu(id);
-    this.sampleRequestService.markPickedUpSampleRequest(id).then(message =>{alert(message.message);});
+    this.sampleRequestService.markPickedUpSampleRequest(id).then(message =>{
+      alert(message.message);
+      this.reloadBookings();
+    });
   }
   markReturnedSampleRequest(id){
     this.closeSampleRequestMenu(id);
-    this.sampleRequestService.markReturnedSampleRequest(id).then(message =>{alert(message.message);});
+    this.sampleRequestService.markReturnedSampleRequest(id).then(message =>{
+      alert(message.message);
+      this.reloadBookings();
+    });
   }
   restockedSampleRequest(id){
     this.closeSampleRequestMenu(id);
-    this.sampleRequestService.restockedSampleRequest(id).then(message =>{alert(message.message);});
+    this.sampleRequestService.restockedSampleRequest(id).then(message =>{
+      alert(message.message);
+      this.reloadBookings();
+    });
   }
   deleteSampleRequest(id){
     this.closeSampleRequestMenu(id);
-    this.sampleRequestService.deleteSampleRequest(id).then(message =>{alert(message.message);});
+    this.sampleRequestService.deleteSampleRequest(id).then(message =>{
+      alert(message.message);
+      this.reloadBookings();
+    });
   }
 
-  //Press Functions
+  reloadBookings(){
+    this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
+  }
+
+  //Press Workflow Functions
   pressMarkReceivedSampleRequest(id){
     this.closeSampleRequestMenu(id);
-    this.sampleRequestService.markReceivedSampleRequest(id).then(message =>{alert(message.message);});
+    this.sampleRequestService.pressMarkReceivedSampleRequest(id).then(message =>{
+      alert(message.message);
+      this.reloadBookings();
+    });
   }
   pressShipSampleRequest(id){
     this.closeSampleRequestMenu(id);
-    this.sampleRequestService.pressShipSampleRequest(id).then(message =>{alert(message.message);});
+    this.sampleRequestService.pressShipSampleRequest(id).then(message =>{
+      alert(message.message);
+      this.reloadBookings();
+    });
   }
   pressMarkPickedUpSampleRequest(id){
     this.closeSampleRequestMenu(id);
-    this.sampleRequestService.pressMarkPickedUpSampleRequest(id).then(message =>{alert(message.message);});
+    this.sampleRequestService.pressMarkPickedUpSampleRequest(id).then(message =>{
+      alert(message.message);
+      this.reloadBookings();
+    });
   }
   pressDeleteSampleRequest(id){
     this.closeSampleRequestMenu(id);
-    this.sampleRequestService.pressDeleteSampleRequest(id).then(message =>{alert(message.message);});
+    this.sampleRequestService.pressDeleteSampleRequest(id).then(message =>{
+      alert(message.message);
+      this.reloadBookings();
+    });
   }
 
 

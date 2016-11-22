@@ -12,7 +12,7 @@ import java.time.ZoneId
 class SearchableItem {
 
 	Long id
-	String name //string for ID set by user
+	String name //string for ID set by user For Look this is the Look ID which matches Vogue
 	String description
 	Brand brand
 	String sex
@@ -20,11 +20,13 @@ class SearchableItem {
 	String image
 	
 	SearchableItemType type //Look or Sample or Runway
+	Boolean isBookable = false
 	
 	// Start of searchable attributes
 	String color
 	String material
 	String itemsInLook // type in Look data entry sheet
+	String sampleType //if it is a sample, what is it
 	String shape
 	String accessories
 	String occasion
@@ -66,6 +68,7 @@ class SearchableItem {
 		color nullable: true
 		material nullable: true
 		itemsInLook nullable: true
+		sampleType nullable:true
 		shape nullable: true
 	 	accessories nullable: true
 	 	occasion nullable: true
@@ -218,6 +221,7 @@ class SearchableItem {
 		description type: 'text'
 
 		cache true
+		isBookable  defaultValue: false
 		
 
 	}

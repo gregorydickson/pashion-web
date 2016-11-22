@@ -77,14 +77,14 @@ export class SampleRequestService{
     // START BRAND ACTIONS
     denySampleRequest(id){
       var promise = new Promise((resolve, reject) => {
-        this.http.fetch('/sampleRequest/deny/'+id, {method: 'post'}).then(response => response.json())
+        this.http.fetch('/sampleRequest/brandDeny/'+id, {method: 'post'}).then(response => response.json())
           .then(result => resolve(result));
       });
       return promise;
     }
     shipSampleRequest(id){
       var promise = new Promise((resolve, reject) => {
-        this.http.fetch('/sampleRequest/ship/'+id, {method: 'post'}).then(response => response.json())
+        this.http.fetch('/sampleRequest/brandShip/'+id, {method: 'post'}).then(response => response.json())
           .then(result => resolve(result));
       });
       return promise;
@@ -92,35 +92,35 @@ export class SampleRequestService{
 
     sendSampleRequest(id){
       var promise = new Promise((resolve, reject) => {
-        this.http.fetch('/sampleRequest/send/'+id, {method: 'post'}).then(response => response.json())
+        this.http.fetch('/sampleRequest/brandSend/'+id, {method: 'post'}).then(response => response.json())
           .then(result => resolve(result));
       });
       return promise;
     }
     markPickedUpSampleRequest(id){
       var promise = new Promise((resolve, reject) => {
-        this.http.fetch('/sampleRequest/markPickedUp/'+id, {method: 'post'}).then(response => response.json())
+        this.http.fetch('/sampleRequest/brandMarkPickedUp/'+id, {method: 'post'}).then(response => response.json())
           .then(result => resolve(result));
       });
       return promise;
     }
     markReturnedSampleRequest(id){
       var promise = new Promise((resolve, reject) => {
-        this.http.fetch('/sampleRequest/markReturned/'+id, {method: 'post'}).then(response => response.json())
+        this.http.fetch('/sampleRequest/brandMarkReturned/'+id, {method: 'post'}).then(response => response.json())
           .then(result => resolve(result));
       });
       return promise;
     }
     restockedSampleRequest(id){
       var promise = new Promise((resolve, reject) => {
-        this.http.fetch('/sampleRequest/restocked/'+id, {method: 'post'}).then(response => response.json())
+        this.http.fetch('/sampleRequest/brandRestocked/'+id, {method: 'post'}).then(response => response.json())
           .then(result => resolve(result));
       });
       return promise;
     }
     deleteSampleRequest(id){
       var promise = new Promise((resolve, reject) => {
-        this.http.fetch('/sampleRequest/markDeleted/'+id, {method: 'post'}).then(response => response.json())
+        this.http.fetch('/sampleRequest/brandMarkDeleted/'+id, {method: 'post'}).then(response => response.json())
           .then(result => resolve(result));
       });
       return promise;
