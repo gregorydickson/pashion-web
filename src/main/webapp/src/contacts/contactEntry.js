@@ -49,5 +49,9 @@ export class ContactEntry {
       .then(response => {});
   }
 
+  initiateMessage () {
+    
+  }
+
 
 }
