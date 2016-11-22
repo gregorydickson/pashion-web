@@ -6,15 +6,15 @@
                 <td colspan="2">
                     <div class="message-box message-not-me-box">
                         <div class="message-img">
-                            <img src="/assets/looks/2.jpg" alt="">
+                            <img src=${messageImage} alt="">
                         </div>                                            
-                        Message from contact, long messages goes over two lines
+                        ${messageMessage}
                     </div>
                 </td> <!-- message-box-pip-l -->
             </tr>
             <tr>
-                <td class="message-text message-left-text" style="">Lauren Maria del van Verylongname</td>
-                <td class="message-text message-right-text message-date">14 Sept, 15:58</td>
+                <td class="message-text message-left-text" style="">${messageFrom}</td>
+                <td class="message-text message-right-text message-date">${messageTime}</td>
             </tr>
         </table>
     </div>
