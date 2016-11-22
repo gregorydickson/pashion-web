@@ -40,6 +40,11 @@ export class Requestman{
 	    console.log("changing");
 	}
 
+  closeSampleRequestMenu(id){
+    var menu = document.getElementById("requestManTest"+id);
+    menu.classList.toggle("look-menu-show");
+  }
+
   
   /* RM accordion expansion button */
   closeExpand(buttonNumber) {
@@ -88,7 +93,7 @@ export class Requestman{
 
   pressMarkReceivedSampleRequest(id){
     this.closeSampleRequestMenu(id);
-    this.sampleRequestService.markReceivedSampleRequest(id).then(message =>{alert(message.message);});
+    this.sampleRequestService.pressMarkReceivedSampleRequest(id).then(message =>{alert(message.message);});
   }
   pressShipSampleRequest(id){
     this.closeSampleRequestMenu(id);

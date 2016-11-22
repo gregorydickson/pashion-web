@@ -170,7 +170,7 @@ export class Index {
     this.dialogService.open({viewModel: EditSampleRequest, model: id }).then(response => {});
   }
 
-  //Brand Functions
+  //Brand Workflow Functions
   denySampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.denySampleRequest(id).then(message =>{alert(message.message);});
@@ -200,10 +200,10 @@ export class Index {
     this.sampleRequestService.deleteSampleRequest(id).then(message =>{alert(message.message);});
   }
 
-  //Press Functions
+  //Press Workflow Functions
   pressMarkReceivedSampleRequest(id){
     this.closeSampleRequestMenu(id);
-    this.sampleRequestService.markReceivedSampleRequest(id).then(message =>{alert(message.message);});
+    this.sampleRequestService.pressMarkReceivedSampleRequest(id).then(message =>{alert(message.message);});
   }
   pressShipSampleRequest(id){
     this.closeSampleRequestMenu(id);
