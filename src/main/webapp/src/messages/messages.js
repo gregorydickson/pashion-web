@@ -32,6 +32,7 @@ activate () {
 
   connectToRealtime() {
     var onMessage = this.onChatMessage;
+    var parent = this;
     loadOrtcFactory(IbtRealTimeSJType, function(factory, error) {
       ortcClient = factory.createClient();
       ortcClient.setClusterUrl('https://ortc-developers.realtime.co/server/ssl/2.1/');
@@ -41,17 +42,18 @@ activate () {
 
       // we need to wait for the connection to complete
       // before we subscribe the channel
+
+       
       ortcClient.onConnected = function(ortc) {
         $("#log").html("Connected");
         
         // subscribe the chat channel
         // the onChatMessage callback function will handle new messages
-        ortcClient.subscribe(chatChannel, true, onMessage);
-      }.bind(this)
-    });
-  }
+        ortcClient.subscribe(chatChannel, true, 
 
-  onChatMessage(ortc, channel, message) {
+
+        	 function (ortc, channel, message) {
+
     var receivedMessage = JSON.parse(message);
     var msgAlign = (receivedMessage.id == myId ? "right" : "left");
   
@@ -60,7 +62,7 @@ activate () {
     msgLog += "<span>"+ receivedMessage.text + "<br><span>";
     msgLog += "<span class='time'>" + receivedMessage.sentAt + "</span></div>"
 
-    this.messages.push ( 	{text: receivedMessage.text,
+    parent.messages.push ( 	{text: receivedMessage.text,
     					time: receivedMessage.sentAt,
     					image: '/assets/looks/2.jpg',
     					fromName: 'testname',
@@ -70,8 +72,17 @@ activate () {
     // $("#message-container").html($("#message-container").html() + text);
     $("#message-container").append(msgLog);
     $("#message-container-dad").animate({scrollTop: $("#message-container-dad").prop("scrollHeight")}, 500);
-    console.log(msgLog);  
-  };
+    console.log(msgLog); 
+
+
+
+
+
+        	}
+       ); 
+      }
+    });
+  }
 
   sendMessage() {
     var message = {
