@@ -20,6 +20,13 @@ class BrandController {
         render addresses
     }
 
+    def users(){
+        Brand brand = Brand.get(params.id)
+        def users = User.findAllByBrand(brand) as JSON
+        render users
+
+    }
+
     def show(Brand brand) {
         respond brand
     }

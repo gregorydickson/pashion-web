@@ -87,7 +87,7 @@
                         <div class="grid-block shrink">                       
                             <span class="inline-label slim-text-box-label">ID</span>
                             <div class="">
-                                <input type="text" value="" class="slim-text-box">
+                                ${sampleRequest.shippingOut.tracking}
                             </div>
                         </div>
 
@@ -96,7 +96,7 @@
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Arrives</span>
                             <div class="">
-                                <input type="text" class="slim-text-box">
+                                ${sampleRequest.shippingOut.endDate}
                             </div>
                         </div>
 
@@ -118,14 +118,14 @@
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">ID</span>
                             <div class="" >
-                                <input type="text" class="slim-text-box">
+                                ${sampleRequest.shippingReturn.tracking}
                             </div>
                         </div>
                         <!-- Pickup -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Pickup</span>
                             <div class="" >
-                                <input type="text" class="slim-text-box">
+                                ${sampleRequest.shippingReturn.startDate}
                             </div>
                         </div>
 
@@ -143,7 +143,9 @@
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Addressee</span>
                             <div class="" >
-                                <input type="text" class="slim-text-box">
+                                <select name="" id="" value.bind="sampleRequest.deliverTo">
+                                    <option repeat.for="person of brandUsers" model.bind="person.id">${person.name} ${person.surname}</option>
+                    </select>
                             </div>
                         </div>
 
@@ -171,7 +173,7 @@
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">When</span>
                             <div class="" >
-                                <input type="text" value.bind="sampleRequest.editorialWhen" class="slim-text-box">
+                                <input type="text" datepicker value.bind="sampleRequest.editorialWhen | viewDateFormat" class="slim-text-box">
                             </div>
                         </div>
                     </div>                    
@@ -193,7 +195,10 @@
                                 <span  style="margin-bottom:0px;">${sample.status.brandStatus}</span>
                             </td>
                             <td style="text-align:right;" class="accordion w16">
-                                    <a click.delegate="cancelSample(sample.id)" style="padding:7px 6px 5px 6px; margin-right:0; margin-bottom:0px; font-size: 1rem;" class="hollow button" href="#">Cancel</a>
+                                <select value.bind="sample.status.brandStatus">
+                                    <option value="approved">Approve</option>
+                                    <option value="denied">Deny</option>
+                                </select>
                             </td>
                         </tr>
                     </table>            
@@ -211,7 +216,7 @@
                                 <span style="margin-bottom:0px;">${sample.status.pressStatus}</span>
                             </td>
                             <td style="text-align:right;" class="accordion w13">
-                                <a click.delegate="cancelSample(sample.id)" style="padding:7px 6px 5px 6px; margin-right:0; margin-bottom:0px; font-size: 1rem;" class="hollow button" href="#">Remove</a>
+                                <a click.delegate="removeSample(sample.id,$index)" style="padding:7px 6px 5px 6px; margin-right:0; margin-bottom:0px; font-size: 1rem;" class="hollow button" href="#">Remove</a>
                             </td> 
                         </tr>
                     </table>            

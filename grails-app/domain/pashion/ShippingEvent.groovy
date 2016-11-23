@@ -6,6 +6,7 @@ class ShippingEvent {
 	Date startDate
 	Date endDate
 	String courier
+	String tracking
 	
 
 	//auto fields
@@ -18,6 +19,8 @@ class ShippingEvent {
         startDate nullable: true
         endDate nullable: true
         courier nullable: true
+        tracking nullable: true
+        sampleRequest nullable: true
     }
 
 

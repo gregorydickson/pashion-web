@@ -26,7 +26,10 @@ export class Requestman{
   }
 
 	activate() {
-      this.user = this.userService.getUser().then(user => this.user = user);
+      this.user = this.userService.getUser().then(user => {
+        this.user = user;
+        if (this.user.type ==="guest") window.location.href = '/user/login';
+      });
       return this.bookings = this.sampleRequestService.getSampleRequests()
         .then(bookings => {
           this.bookings = bookings;
@@ -55,10 +58,13 @@ export class Requestman{
   }
 
   editSampleRequest(itemId) {
-    var menu = document.getElementById("requestManTest"+itemId);
+    let menu = document.getElementById("requestManTest"+itemId);
+    
     menu.classList.toggle("look-menu-show");
     this.dialogService.open({viewModel: EditSampleRequest, model: itemId })
-      .then(response => {});
+      .then(response => {
+        this.reloadBookings();
+      });
   }
   reloadBookings(){
     this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);

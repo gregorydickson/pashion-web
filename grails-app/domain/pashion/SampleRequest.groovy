@@ -103,6 +103,8 @@ class SampleRequest {
 	static mapping = {
         cache true
         searchableItems lazy:false
+        shippingOut lazy:false
+        shippingReturn lazy:false
         searchableItemsStatus lazy:false
     }
 

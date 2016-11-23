@@ -1,5 +1,5 @@
 import {inject} from 'aurelia-framework';
-import {HttpClient} from 'aurelia-fetch-client';
+import {HttpClient,json} from 'aurelia-fetch-client';
 import 'fetch';
 
 @inject(HttpClient)
@@ -17,7 +17,7 @@ export class SampleRequestService{
     	
   	getSampleRequest(id){
   		var promise = new Promise((resolve, reject) => {
-  		this.http.fetch('/sampleRequest/show/'+id+'.json')
+  		  this.http.fetch('/sampleRequest/show/'+id+'.json')
     			.then(response => response.json())
     			.then(sampleRequest => {
     				
@@ -53,14 +53,15 @@ export class SampleRequestService{
   	}
 
     updateSampleRequest(sr){
-      this.http.fetch('/sampleRequest/updatejson', {
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/sampleRequest/updatejson', {
             method: 'post',
             body: json(sr)
-          })
+        })
           .then(response => response.json())
-          .then(result => {
-              resolve(result);
-          });
+          .then(result => resolve(result));
+      });
+      return promise;
     }
 
   	saveSampleRequest(sr){

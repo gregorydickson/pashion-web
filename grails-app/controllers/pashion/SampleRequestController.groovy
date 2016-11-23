@@ -11,7 +11,7 @@ class SampleRequestController {
     def sampleRequestService
 
     String dateFormatString = "yyyy-M-d"
-    SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
+    
 
     // The not exactly RESTful verbs for updating a Sample Request:
 
@@ -108,10 +108,13 @@ class SampleRequestController {
         render sent as JSON
     }
 
+    
+
 
     
     
     def savejson(){
+        SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
         def jsonObject = request.JSON
         log.info "json:"+jsonObject
         def sr = new SampleRequest()
@@ -139,12 +142,12 @@ class SampleRequestController {
             sr.addToSearchableItems(item)
             def status = new BookingStatus()
             status.itemId = item.id
-            status.brandStatus = "Not Arrived"
-            status.pressStatus = "Not Shot"
+            status.brandStatus = "Requested"
+            status.pressStatus = "Requested"
             sr.addToSearchableItemsStatus(status)
         } 
-        sr.shippingOut = new ShippingEvent(courier:jsonObject.courier).save()
-        sr.shippingReturn = new ShippingEvent().save()
+        sr.shippingOut = new ShippingEvent(courier:jsonObject.courier).save(failOnError:true)
+        sr.shippingReturn = new ShippingEvent().save(failOnError:true)
         sr.paymentOut = jsonObject.paymentOut
         sr.paymentReturn = jsonObject.paymentReturn
         sr.courierOut = jsonObject.courierOut
@@ -160,33 +163,29 @@ class SampleRequestController {
     }
 
     def updatejson(){
+        SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
         def jsonObject = request.JSON
         log.info "json:"+jsonObject
         def sr = SampleRequest.get(jsonObject.id)
-        
-        
-        
-        
-        sr.returnToAddress = Address.get(jsonObject.returnToAddress.toInteger())
-        def aUser = User.get(jsonObject.deliverTo)
-        
-        sr.deliverTo = aUser
-        sr.returnBy = jsonObject.returnBy
+        sr.editorialName = jsonObject.editorialName
+        sr.editorialWho = jsonObject.editorialWho
+        sr.editorialWhen = dateFormat.parse(jsonObject.editorialWhen)
+        sr.deliverTo = User.get(jsonObject.deliverTo)
 
-        sr.requestStatus = "Pending"
+        sr.shippingOut.tracking = jsonObject.shippingOut.tracking
+        sr.shippingReturn.tracking = jsonObject.shippingReturn.tracking
 
-        SearchableItem item
+        jsonObject?.samplesRemoved?.each{ removed ->
+            log.info "removing:"+removed
+            def item = sr.searchableItems.find { it.id == removed }
+            sr.removeFromSearchableItems(item)
+        }
+        sr.save(failOnError: true, flush:true)
 
-        jsonObject.searchableItems.each{
-            
-        } 
-        sr.shippingOut = new ShippingEvent(courier:jsonObject.courier).save()
-        sr.shippingReturn = new ShippingEvent().save()
+        sr.searchableItems.each{
+            log.info "item:"+it.name
+        }
         
-        
-        
-        
-        sr.save(failOnError : true, flush: true)
         def sent = [message:'Sample Request Updated']
         render sent as JSON
         

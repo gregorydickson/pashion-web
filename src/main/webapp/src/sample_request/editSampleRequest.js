@@ -13,6 +13,7 @@ export class EditSampleRequest {
   sampleRequest = {};
   brandAddresses = [];
   user = {};
+  brandUsers = [];
 
   constructor(sampleRequestService,controller,userService,http){
     http.configure(config => {
@@ -34,27 +35,34 @@ export class EditSampleRequest {
           console.log("sampleRequest"+sampleRequest);
           this.http.fetch('/brand/addresses/'+sampleRequest.brand.id)
               .then(response => response.json())
-              .then(addresses => this.brandAddresses = addresses)
-          }),
-        ]);
+              .then(addresses => this.brandAddresses = addresses);
+          this.http.fetch('/brand/users/'+sampleRequest.brand.id)
+              .then(response => response.json())
+              .then(brandUsers => this.brandUsers = brandUsers);
+        })
+    ]);
     
     
   }
 
+  removeSample(id,index){
+    let sr = this.sampleRequest;
+    if(!sr.samplesRemoved) sr.samplesRemoved = [];
+    sr.samplesRemoved.push(id);
+    sr.searchableItems.splice(index,1);
+  }
+
   submit(){
     console.log("submitting Sample Request");
-    var sr = this.sampleRequest;
-    sr.startDate = this.startDate;
-    sr.endDate = this.endDate;
-    sr.selectedRequired = this.selectedRequired;
-    sr.deliverToSelected = this.deliverToSelected;
-    sr.returnBySelected = this.returnBySelected;
-    sr.returnToSelected = this.returnToSelected;
-    sr.selectedProductIds = this.selectedProductIds;
+    let sr = this.sampleRequest;
     
-    this.currentItem.id = this.result;
-    alert('Request Sent');
-    this.controller.close();
+
+    this.sampleRequestService.updateSampleRequest(sr).then(message => {
+      alert(message.message);
+      this.controller.close();
+    });
+    
+    
     
   }
 
