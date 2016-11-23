@@ -4,7 +4,7 @@ import {DialogService} from 'aurelia-dialog';
 import 'fetch';
 
 @inject(HttpClient, DialogService)
-export class Contacts {
+export class ContactList {
 
   // Three dots contact edit menu
 
