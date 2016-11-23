@@ -279,26 +279,6 @@ export class Index {
         .then(response => {}); 
   } 
 
-  connectToRealtime()
-  {
-    connectToRealtime2();
-  }
-
-  onChatMessage(ortc, channel, message)
-  {
-    onChatMessage2(ortc, channel, message);
-  }
-
-  sendMessage()
-  {
-    sendMessage2();
-  }
-
-  Log(text)
-  {
-    Log2(text);
-  }
-
 
 }
 

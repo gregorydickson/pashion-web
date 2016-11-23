@@ -123,7 +123,7 @@ handleKeyInput(event) {
     msgLog += "<span class='time'>" + receivedMessage.sentAt + "</span></div>"
     
     // add the message to the chat log
-        // $("#message-container").html($("#message-container").html() + text);
+    // $("#message-container").html($("#message-container").html() + text);
     $("#message-container").append(msgLog);
     $("#message-container-dad").animate({scrollTop: $("#message-container-dad").prop("scrollHeight")}, 500);
     console.log(msgLog);  
@@ -142,13 +142,6 @@ handleKeyInput(event) {
     $('#msgInput').val("");
   }
 
-/*   Log(text) {
-    // $("#message-container").html($("#message-container").html() + text);
-    $("#message-container").append(text);
-    $("#message-container-dad").animate({scrollTop: $("#message-container-dad").prop("scrollHeight")}, 500);
-    console.log(text);
-  } 
-*/
 
 }
 
