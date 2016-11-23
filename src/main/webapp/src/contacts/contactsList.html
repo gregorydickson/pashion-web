@@ -1,7 +1,4 @@
 <template>
-
-
-
             <!-- category -->
             <div class="grid-block vertical" style="margin-left:1rem; margin-right:1rem;" >
 
@@ -16,10 +13,6 @@
                     </table>
                     <div id="panel11" class="panel grid-block vertical" style="margin-top:0.5rem;">
                         <div>
-                            <compose view-model="./contactEntry"></compose>
-                            <compose view-model="./contactEntry"></compose>
-                            <compose view-model="./contactEntry"></compose>
-                            <compose view-model="./contactEntry"></compose>
                         </div>
                     </div>
 
@@ -35,15 +28,56 @@
                         </tr>
                     </table>
                     <div id="panel12" class="panel grid-block vertical" style="margin-top:0.5rem;">
-                        <div>
-                            <compose view-model="./contactEntry"></compose>
-                            <compose view-model="./contactEntry"></compose>
-                            <compose view-model="./contactEntry"></compose>
-                            <compose view-model="./contactEntry"></compose>
+
+
+                        <div repeat.for="contact of contacts" class="grid-block grid-block-overflow-visible" style="margin-bottom:1rem;">
+                                <table class="width100">
+                                    <tr>
+                                        <td>
+                                            <div class="contact-entry">
+                                                <img src=${contact.image} class="clip-circle" />
+                                               <!--  <div class="contact-mark">
+                                                    <img src="/assets/CheckMark.png" alt="">
+                                                    <!-- <img src="/assets/QuestionMark.png" alt=""> 
+                                                </div> -->
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="ui-text-label-l-left paragraph-5">${contact.firstName} ${contact.lastName}</div>
+                                            <div class="ui-text-label-s-left paragraph-5">${contact.company}</div>    
+                                        </td>
+                                        <td class="align-top"><span class="alert-box">8</span></td>
+                                        <td class="align-top">
+                                            <div class="look-menu-absolute-wrap">
+                                                <span class="edit-box" ><a href="#" click.delegate="lookEditContact(contact.id)">...</a>
+                                                </span>
+                                            
+                                            <!-- edit contact modal popup -->
+                                                     <div id="${contact.id}" class="look-menu-absolute lookEditContactClass">
+                                                        <span class="look-menu-heading">CONTACT</span>
+                                                        <ul class="look-menu-list">
+                                                            <li class="look-menu-item">
+                                                                <a href="#" click.delegate="initiateMessage(contact.id)" class="look-menu-link">Message</a>
+                                                            </li>
+                                                             <li class="look-menu-item">
+                                                                <a href="#" click.delegate="createDialogEditContact(contact.id)" class="look-menu-link">Edit</a>
+                                                            </li>                                       
+                                                            <li class="look-menu-item">
+                                                                <a href="#" click.delegate="CreateDialogUpdatePhoto(contact.id)" class="look-menu-link">Update Photo</a>
+                                                            </li>                                   
+                                                        </ul>
+                                                    </div>                            
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
                         </div>
+
+
+
+
+
+                     
                     </div>
-
             </div>
-
-
 </template>

@@ -107,7 +107,7 @@ export class Index {
   }
 
   handleKeyInput(event) {
-    console.log(event);
+    // console.log(event);
     if(event.which == 13 && event.srcElement.id === 'search-images') {
       console.log("user hit enter");
       this.filterChange(event);
