@@ -88,8 +88,7 @@ td.sample-padding {
 
 
 table.accordion {
-	width: 255px; // not sure why 100% does not work here
-	table-layout:fixed;
+	width: 100%;
 }
 
 table.big-accordion {

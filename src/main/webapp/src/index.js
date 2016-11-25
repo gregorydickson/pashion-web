@@ -83,6 +83,15 @@ export class Index {
             
     });
     this.dialogService.open({viewModel: Introduction, model: "no-op" }).then(response => {});
+
+
+    // Three dots Menu dropdown close when click outside
+    $('body').click(function() {      
+      $(".look-menu-absolute").each(function () {
+        $(this).removeClass("look-menu-show");
+      });
+    });
+
   }
 
   activate() {
@@ -107,7 +116,7 @@ export class Index {
   }
 
   handleKeyInput(event) {
-    console.log(event);
+    // console.log(event);
     if(event.which == 13 && event.srcElement.id === 'search-images') {
       console.log("user hit enter");
       this.filterChange(event);
@@ -158,6 +167,7 @@ export class Index {
   sampleRequestMenu(id){
     var menu = document.getElementById("requestTest"+id);
     menu.classList.toggle("look-menu-show");
+
   }
 
   closeSampleRequestMenu(id){

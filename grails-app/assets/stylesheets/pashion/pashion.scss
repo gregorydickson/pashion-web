@@ -36,7 +36,7 @@
 #right-panel {
   min-width: 280px;
   max-width: 280px;
-  overflow:visible;
+  overflow: visible;
 }
 
 #looks {
@@ -65,6 +65,7 @@
 .tool-header-spacer {
   padding-left: 1rem;
   padding-right: 1rem;
+  overflow: hidden;
 }
 
 .expando {
@@ -114,7 +115,7 @@ input.search-box,
 input.search-box:hover,
 input.search-box:focus {
   padding-left: 28px;
-  padding-top: 9px;
+  padding-top: 8px;
   // height: 24px;
   // border: 0.5px solid var(--white-three);
   // ui-text-label-m-light 
@@ -123,7 +124,7 @@ input.search-box:focus {
   // color: var(--warm-grey);
   background-image: url('/assets/nav/MagGlass.png');
   background-repeat: no-repeat;
-  background-position: 6px 3px;
+  background-position: 6px 4px;
 }
 
 span.slim-text-box-label {
@@ -171,12 +172,13 @@ input.slim-text-box-narrow {
   font-weight: 700;
   line-height: $font-size-extra-large;
   color: $white;
-  padding: 0.3rem 0.4rem 0 0.4rem;
+  padding: 0.2rem 0.4rem 0 0.4rem;
   margin-left: 0.5rem;
   margin-top: 0.5rem;
   text-align: center;
   display: inline-block;
 }
+
 .edit-box {
   width: 17px;
   height: 17px;
@@ -317,4 +319,49 @@ ai-dialog-body .grid-block-row {
 .grid-block-row .inline-label > input,
 .grid-block-row .inline-label > select {
   flex: none;
+}
+
+.grid-content-column {
+  padding: 0;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
+  margin-right: 1rem;
+  display: block;
+}
+
+.grid-content-block {
+  padding: 0;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  display: block;
+  margin-right: 1rem;
+}
+
+.grid-row-one,
+.grid-row-two {
+  width: 100%;
+}
+
+.grid-row-one {
+  margin-top: 1rem;
+}
+
+.grid-row-two {
+  margin-top: -1rem;
+}
+
+.grid-row-one .grid-content:first-child,
+.grid-row-two .grid-content:first-child {
+  width: 26%;
+}
+
+.grid-row-one .grid-content:last-child,
+.grid-row-two .grid-content:last-child {
+  min-width: 22%;
+  margin-left: auto;
+
+  select {
+    min-width: 100px;
+  }
+
 }
