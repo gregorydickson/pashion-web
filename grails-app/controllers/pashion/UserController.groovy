@@ -85,8 +85,18 @@ class UserController {
     }
 
     @Transactional
-    def save(User user) {
-        
+    def save() {
+        def owner 
+        User user
+        if(params.pressHouse){
+            PressHouse.get(params.pressHouse.toInteger())
+        } else {
+            Brand.get(params.brand.toInteger())
+        }
+
+        user = userService.createUser(params.email, params.name,params.surname, 
+                      owner,  params.password ))
+        respond user
     }
 
     def edit(User user) {

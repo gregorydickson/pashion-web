@@ -165,11 +165,12 @@ class SampleRequestController {
     def updatejson(){
         SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
         def jsonObject = request.JSON
-        log.info "json:"+jsonObject
+        log.info "update json:"+jsonObject
         def sr = SampleRequest.get(jsonObject.id)
         sr.editorialName = jsonObject.editorialName
         sr.editorialWho = jsonObject.editorialWho
-        sr.editorialWhen = dateFormat.parse(jsonObject.editorialWhen)
+        if(jsonObject.editorialWhen) 
+            sr.editorialWhen = dateFormat.parse(jsonObject.editorialWhen)
         sr.deliverTo = User.get(jsonObject.deliverTo)
 
         sr.shippingOut.tracking = jsonObject.shippingOut.tracking
@@ -180,11 +181,19 @@ class SampleRequestController {
             def item = sr.searchableItems.find { it.id == removed }
             sr.removeFromSearchableItems(item)
         }
+        jsonObject.searchableItems.each{ sample ->
+
+            def status = sr.searchableItemsStatus.find { it.itemId == sample.id }
+            log.info "status:"+status
+            if(sample.status.brandStatus) {
+                status.brandStatus = sample.status.brandStatus
+                log.info "brand status:"+status.brandStatus
+                status.save(failOnError:true)
+            }
+
+        }
         sr.save(failOnError: true, flush:true)
 
-        sr.searchableItems.each{
-            log.info "item:"+it.name
-        }
         
         def sent = [message:'Sample Request Updated']
         render sent as JSON
