@@ -2,6 +2,8 @@ export class Messages {
 
 	messages = [];
 
+	currentContact = '';
+
 	// The Realtime client connection ////
 	ortcClient;
 
@@ -98,6 +100,9 @@ export class Messages {
     $('#msgInput').val("");
   }
 
+  setCurrentContact (id) {
+  	this.currentContact = id;
+  }
 
 }
 
