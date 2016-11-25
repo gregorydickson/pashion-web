@@ -85,13 +85,14 @@ class UserController {
     }
 
     @Transactional
-    def save() {
+    def save(User user) {
         def owner 
-        User user
+        
         if(params.pressHouse.id != "null"){
-            PressHouse.get(params.pressHouse.id.toInteger())
+            owner = PressHouse.get(params.pressHouse.id.toInteger())
+
         } else {
-            Brand.get(params.brand.id.toInteger())
+            owner = Brand.get(params.brand.id.toInteger())
         }
         log.info "params:"+params
         Boolean inNetwork = false
@@ -99,9 +100,22 @@ class UserController {
             inNetwork = true
         }
 
+        if (user.hasErrors()) {
+            respond user.errors, view:'create'
+            return
+        }
+
         user = userService.createUser(params.email, params.name,params.surname, 
                      owner,  params.password, inNetwork)
-        respond user
+        
+        
+        request.withFormat {
+            form multipartForm {
+                flash.message = message(code: 'default.created.message', args: [message(code: 'user.label', default: 'user'), user.id])
+                redirect user
+            }
+            '*' { respond user, [status: CREATED] }
+        }
     }
 
     def edit(User user) {

@@ -97,9 +97,11 @@ class UserService {
     	def role
     	User user
     	if(owner instanceof Brand){
+            log.info "creating Brand user"
     		role = "brand-users"
     		user = new User(name:name,surname:surname, email:email,brand:owner).save(failOnError : true)
     	} else if(owner instanceof PressHouse){
+            log.info "creating Brand user"
     		role = "press-users"
     		user = new User(name:name,surname:surname, email:email,pressHouse:owner).save(failOnError : true)
     	}
