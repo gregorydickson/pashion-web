@@ -88,14 +88,19 @@ class UserController {
     def save() {
         def owner 
         User user
-        if(params.pressHouse){
-            PressHouse.get(params.pressHouse.toInteger())
+        if(params.pressHouse.id != "null"){
+            PressHouse.get(params.pressHouse.id.toInteger())
         } else {
-            Brand.get(params.brand.toInteger())
+            Brand.get(params.brand.id.toInteger())
+        }
+        log.info "params:"+params
+        Boolean inNetwork = false
+        if(params.isInPashionNetwork) {
+            inNetwork = true
         }
 
         user = userService.createUser(params.email, params.name,params.surname, 
-                      owner,  params.password)
+                     owner,  params.password, inNetwork)
         respond user
     }
 

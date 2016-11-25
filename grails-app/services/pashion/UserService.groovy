@@ -93,7 +93,7 @@ class UserService {
     }
 
     def createUser(String email,String name,String surname, 
-    				 def owner, String rawpassword ){
+    				 def owner, String rawpassword, Boolean isInPashionNetwork ){
     	def role
     	User user
     	if(owner instanceof Brand){
@@ -103,15 +103,24 @@ class UserService {
     		role = "press-users"
     		user = new User(name:name,surname:surname, email:email,pressHouse:owner).save(failOnError : true)
     	}
-    	Directory directory = client.getResource(owner.stormpathDirectory, Directory.class)
-    
-    	Account account = client.instantiate(Account.class)
-    						.setEmail(email)
-    						.setGivenName(name)
-    						.setSurname(surname)
-    						.setPassword(rawpassword)
+        Directory directory
+        try{
+            directory = client.getResource(owner.stormpathDirectory, Directory.class)
+            Account account = client.instantiate(Account.class)
+                            .setEmail(email)
+                            .setGivenName(name)
+                            .setSurname(surname)
+                            .setPassword(rawpassword)
 
-		directory.createAccount(account)
+            directory.createAccount(account)
+        } catch(Exception e){
+
+                //TODO: create stormpath directory????
+                log.error "No Stormpath Directory for user"
+        }
+    	 
+    
+    	
 		user
     }
 

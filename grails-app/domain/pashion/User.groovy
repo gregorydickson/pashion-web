@@ -11,7 +11,7 @@ class User {
 	String name
 	String surname
 	String email
-
+	Boolean isInPashionNetwork = false
 	String stormpathString
 
 	Long userCreatedId
