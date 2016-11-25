@@ -44,9 +44,9 @@
                 
                 <!-- row button + content -->
                
-                <div if.bind="user.type === 'brand'" class="vertical grid-content accordion" style="overflow-x:hidden;">
+                <div if.bind="user.type === 'brand'" class="vertical grid-content grid-content-column accordion">
                     <!--header -->
-                    <div class="vertical grid-content shrink" style="padding:0; margin-left: 1rem; margin-right: 1rem; margin-top: 0.5rem;">
+                    <div>
                         <table class="accordion">
                             <tr>
                                 <th class="accordion w10"></th>
@@ -106,9 +106,9 @@
                      
                 </div>
                
-                <div if.bind="user.type === 'press'"  class="vertical grid-content accordion" style="overflow-x:hidden;">
+                <div if.bind="user.type === 'press'"  class="vertical grid-content grid-content-column accordion">
                     <!--header -->
-                    <div class="vertical grid-content shrink" style="padding:0; margin-left: 1rem; margin-right: 1rem; margin-top: 0.5rem;">
+                    <div>
                         <table class="accordion">
                             <tr>
                                 <th class="accordion w10"></th>
@@ -204,7 +204,7 @@
                 </div>
                 <!-- search / filter area -->
                 <!-- top row -->
-                <div class="medium-up-1  grid-block shrink" style="margin-top: 1rem;">
+                <div class="medium-up-1  grid-block shrink grid-row-one">
                     <!-- <div class="grid-content shrink" style="margin-top: 0.5rem;">
                         <input id="checkbox-search" type="checkbox" checked>
                     </div> -->
@@ -252,7 +252,7 @@
                     </div>
                 </div>
                 <!-- 2nd row -->
-                <div class="medium-up-1  grid-block shrink" style="margin-top: -1rem;">
+                <div class="medium-up-1  grid-block shrink grid-row-two">
                     <!-- <div class="grid-content shrink" style="margin-top: 0.5rem;">
                             <input id="checkbox-brand" type="checkbox">
                     </div> -->

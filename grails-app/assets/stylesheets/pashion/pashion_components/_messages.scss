@@ -1,5 +1,9 @@
 $message-box-width: 215px;
 
+#message-container {
+  overflow: visible;
+}
+
 .message-wrap {
   width: $message-box-width;
 }
@@ -123,13 +127,13 @@ $message-box-width: 215px;
 }
 
 .inter-message-gap {
-  margin-top: 1.5rem;
+  margin: 1.5rem -5px 0 -5px;
 }
 
 .message-new-message-box {
   //RM need to properly create a text entry method for this type of box //
   text-align: right;
-  width: calc(100% - 38px) !important;
+  width: 100%;
 }
 
 /*
@@ -167,7 +171,7 @@ clip-path: polygon(0 0, 92% 0, 92% 22%, 100% 33%, 92% 40%, 92% 66%, 0 66%);
 
 .message-me-box .message-img {
   float: right;
-  margin: 0 0 9px 5px;
+  margin: 0 0 5px 9px;
 }
 
 .message-not-me-box .message-img:last-child,
@@ -178,4 +182,10 @@ clip-path: polygon(0 0, 92% 0, 92% 22%, 100% 33%, 92% 40%, 92% 66%, 0 66%);
 .message-img img {
   max-width: 8rem;
   max-height: 8rem;
+}
+
+#tab-messages .button {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  width: calc(100% - 2rem);
 }
