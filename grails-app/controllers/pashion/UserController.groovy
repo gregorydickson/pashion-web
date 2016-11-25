@@ -94,10 +94,10 @@ class UserController {
         
         if(params.pressHouse.id != "null"){
             owner = PressHouse.get(params.pressHouse.id.toInteger())
-
-        } else {
+        } else if (params.brand.id != "null"){
             owner = Brand.get(params.brand.id.toInteger())
         }
+
         log.info "params:"+params
         Boolean inNetwork = false
         if(params.isInPashionNetwork) {
@@ -110,7 +110,7 @@ class UserController {
         }
 
         user = userService.createUser(params.email, params.name,params.surname, 
-                     owner,  params.password, inNetwork)
+                     owner, params.password, inNetwork)
         
         
         request.withFormat {
