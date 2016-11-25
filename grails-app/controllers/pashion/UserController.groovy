@@ -95,7 +95,7 @@ class UserController {
         }
 
         user = userService.createUser(params.email, params.name,params.surname, 
-                      owner,  params.password ))
+                      owner,  params.password)
         respond user
     }
 
