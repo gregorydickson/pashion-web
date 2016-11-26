@@ -1,7 +1,14 @@
+import {HttpClient} from 'aurelia-fetch-client';
+import 'fetch';
+import {inject} from 'aurelia-framework';
+import {DateFormat} from 'common/dateFormat';
+import {UserService} from 'services/userService';
+
+@inject(HttpClient, UserService)
 export class Messages {
 
 	messages = [];
-
+	user = {};
 	currentContact = '';
 
 	// The Realtime client connection ////
@@ -10,12 +17,20 @@ export class Messages {
   	// The Realtime channel
   	chatChannel = "chat";
 
-	constructor () {
+	constructor (http, userService) {
 
-	    this.connectToRealtime();
+	    this.connectToRealtime();	  
+	    http.configure(config => {
+	      config
+	        .useStandardConfiguration();
+	    });
+	    this.http = http;
+    	this.userService = userService;
+
 	}
 
 	activate () {
+		/*
 		this.messages.push ( 
 		{
 		text:"Hello this is a message from binding 1",
@@ -35,6 +50,10 @@ export class Messages {
 		fromId:"ID_02",
 		fromMe: false
 		});
+*/
+		return Promise.all([
+      		this.user = this.userService.getUser().then(user => this.user = user)
+    ]);
 
 	}
 
@@ -74,7 +93,7 @@ export class Messages {
 				    					image: '',
 				    					fromName: 'testname',
 				    					fromId: receivedMessage.id,
-				    					fromMe: (receivedMessage.id == myId)});
+				    					fromMe: (receivedMessage.id == parent.user.id)});
 				    
 				    // add the message to the chat log
 				    // $("#message-container").html($("#message-container").html() + text);
@@ -88,9 +107,10 @@ export class Messages {
   }
 
   sendMessage() {
+  	console.log("sendmessage myId: " + this.user.id);
     var message = {
-      id: myId,
-      text: $("#msgInput").val(),
+      id: this.user.id,
+      text: $("#msgInput").val() + "to >>" + this.currentContact,
       sentAt: new Date().toLocaleTimeString()
     };
     
@@ -106,7 +126,5 @@ export class Messages {
 
 }
 
-   // The current user id (random between 1 and 1000)
-	var myId = "ID_" + Math.floor((Math.random() * 1000) + 1);
 
 

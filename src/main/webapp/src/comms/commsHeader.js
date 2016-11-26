@@ -71,7 +71,7 @@ handleKeyInput(event) {
     // console.log(event);
     if(event.which == 13 && event.srcElement.id === 'msgInput') {
       //console.log("user hit enter in comms");
-      this.messages.sendMessage();
+      this.sendMessage();
     }
   }
 
@@ -90,6 +90,9 @@ handleKeyInput(event) {
       .then(response => {});
   }
 
+  sendMessage () {
+    this.messages.sendMessage();
+  }
 
 }
 
