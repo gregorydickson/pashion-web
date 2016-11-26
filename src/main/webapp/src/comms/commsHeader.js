@@ -70,7 +70,7 @@ export class CommsHeader {
 handleKeyInput(event) {
     // console.log(event);
     if(event.which == 13 && event.srcElement.id === 'msgInput') {
-      console.log("user hit enter in comms");
+      //console.log("user hit enter in comms");
       this.messages.sendMessage();
     }
   }

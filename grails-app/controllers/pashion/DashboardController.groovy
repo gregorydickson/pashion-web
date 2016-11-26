@@ -37,6 +37,12 @@ class DashboardController {
         render userInfo
     }
 
+    def users(){
+        
+        def users = user.list() as JSON
+        render users
+    }
+
 
     def required(){
     	def list = ['9:00','9:30','10:00','10:30','11:00','11:30',

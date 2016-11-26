@@ -16,6 +16,7 @@ export class ContactsList {
 
 	contacts = [];
   	user = {};
+  	users = [];
 
 
   constructor(http, controller, dialogService, userService, messages, commsHeader){
@@ -53,7 +54,8 @@ export class ContactsList {
 
 
 	return Promise.all([
-      this.user = this.userService.getUser().then(user => this.user = user)
+      this.user = this.userService.getUser().then(user => this.user = user),
+      this.users = this.userService.getUsers("",status).then(users => this.users = users)
     ]);
 
 
