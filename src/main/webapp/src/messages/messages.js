@@ -26,6 +26,7 @@ export class Messages {
 	    });
 	    this.http = http;
     	this.userService = userService;
+    	this.user = this.userService.getUser().then(user => this.user = user);
 
 	}
 
@@ -51,9 +52,9 @@ export class Messages {
 		fromMe: false
 		});
 */
-		return Promise.all([
-      		this.user = this.userService.getUser().then(user => this.user = user)
-    ]);
+	//	return Promise.all([
+      		
+   // ]);
 
 	}
 
@@ -91,9 +92,10 @@ export class Messages {
 				    					{text: receivedMessage.text,
 				    					time: receivedMessage.sentAt,
 				    					image: '',
-				    					fromName: 'testname',
+				    					fromName: parent.user.name,
+				    					fromSurname: parent.user.surname,
 				    					fromId: receivedMessage.id,
-				    					fromMe: (receivedMessage.id == parent.user.id)});
+				    					fromMe: (receivedMessage.id == parent.user.email)});
 				    
 				    // add the message to the chat log
 				    // $("#message-container").html($("#message-container").html() + text);
@@ -107,9 +109,10 @@ export class Messages {
   }
 
   sendMessage() {
-  	console.log("sendmessage myId: " + this.user.id);
+  	console.log("sendmessage myId: " + this.user.email);
     var message = {
-      id: this.user.id,
+      id: this.user.email,
+      name: this.user.name,
       text: $("#msgInput").val() + "to >>" + this.currentContact,
       sentAt: new Date().toLocaleTimeString()
     };
