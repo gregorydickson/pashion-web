@@ -23,13 +23,18 @@ class BootStrap {
         returnArray['name'] =  it.name
         return returnArray
       }
-
+// RM don't remove this section, used by comms
       JSON.registerObjectMarshaller(User) {
         def returnArray = [:]
         returnArray['name'] = it.name
         returnArray['id'] =  it.id
+        returnArray['email'] = it.email
+        returnArray['surname'] = it.surname
+        returnArray['brand'] = it.brand
+        returnArray['pressHouse'] = it.pressHouse
         return returnArray
       }
+// 
 
       if (Environment.current == Environment.DEVELOPMENT) {
         def dateFormatString = "yyyy-MM-dd"
