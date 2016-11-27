@@ -120,9 +120,6 @@ class UserService {
                 //TODO: create stormpath directory????
                 log.error "No Stormpath Directory for user"
         }
-    	 
-    
-    	
 		user
     }
 

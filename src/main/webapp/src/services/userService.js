@@ -18,46 +18,22 @@ export class UserService {
     }
 
     activate() {
-
-
         }
         
-          	getUsers(searchText, status){
-          		console.log("getting users");
-          		var promise = new Promise((resolve, reject) => {
-        		
-        			this.http.fetch('/user/index.json')
-              			.then(response => response.json())
-              			.then(users => {
-              				this.users = users;
-              				resolve(this.users);
-              			}).catch(err=>reject(err));
-        	      	
-        		  });
-        		  return promise;
-          	}
-    /*
-    getUsers(searchText, status) {
-        console.log("getting users");
-        var promise = new Promise((resolve, reject) => {
-
-            this.http.fetch('/user/index.json')
-                .then(function(response) {
-                    if (response.status !== 200) {
-                        console.log('Looks like there was a problem. Status Code: ' +
-                            response.status);
-                        return;
-                    }
-
-                    // Examine the text in the response  
-                    response.json().then(function(data) {
-                        console.log(data);
-                    });
-                })
-
-        });
-        return promise;
-    } */
+  	getUsers(searchText, status){
+  		console.log("getting users");
+  		var promise = new Promise((resolve, reject) => {
+		
+			this.http.fetch('/user/index.json')
+      			.then(response => response.json())
+      			.then(users => {
+      				this.users = users;
+      				resolve(this.users);
+      			}).catch(err=>reject(err));
+	      	
+		  });
+		  return promise;
+  	}
 
 
     getUser() {

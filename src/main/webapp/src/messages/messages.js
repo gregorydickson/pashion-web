@@ -31,30 +31,6 @@ export class Messages {
 	}
 
 	activate () {
-		/*
-		this.messages.push ( 
-		{
-		text:"Hello this is a message from binding 1",
-		time:"15 Sept, 15:58",
-		image:"/assets/looks/1.jpg",
-		fromName:"Sender1",
-		fromId: myId,
-		fromMe: true
-		});
-
-		this.messages.push(
-		{
-		text:"Hello this is a message from binding 2",
-		time:"16 Sept, 15:58",
-		image:"/assets/looks/2.jpg",
-		fromName:"Sender2",
-		fromId:"ID_02",
-		fromMe: false
-		});
-*/
-	//	return Promise.all([
-      		
-   // ]);
 
 	}
 

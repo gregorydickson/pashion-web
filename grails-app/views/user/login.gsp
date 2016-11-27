@@ -91,9 +91,9 @@
                 </g:form >
                             <a href="#" style="margin-top: 0.5rem;">Request Access</a>
                             <a href="#" style="margin-top: 0.5rem;">Help Getting Started</a>
-                            <form style="margin-top: 0.5rem;" action="/user/guest" method="post" id="2">
+                          <!--  <form style="margin-top: 0.5rem;" action="/user/guest" method="post" id="2">
                                 <a  onclick="document.getElementById('2').submit();">Continue as Guest</a>
-                            </form>
+                            </form> -->
                         </div>
                     </div> <!-- ai-dialog-footer> -->
                 

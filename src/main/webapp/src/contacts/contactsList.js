@@ -14,10 +14,8 @@ import {CommsHeader} from 'comms/commsHeader';
 export class ContactsList {
 	static inject = [DialogController];
 
-	contacts = [];
-  	user = {};
-  	users = [];
-
+  user = {};
+  users = [];
 
   constructor(http, controller, dialogService, userService, messages, commsHeader){
 	    this.controller = controller;
@@ -34,43 +32,21 @@ export class ContactsList {
 
 	activate () {
 
-		this.contacts.push ( 
-		{
-		firstName:"Lauren",
-		lastName:"McDonald",
-		company:"Ralph Lauren",
-		image:"/assets/lauren.png",
-		id: 'ID_99'
-		});
-
-		this.contacts.push ( 
-		{
-		firstName:"Shep",
-		lastName:"Peterson",
-		company:"Ralph Lauren",
-		image:"/assets/shep.png",
-		id: 'ID_109'
-		});
-
-
 	return Promise.all([
       this.user = this.userService.getUser().then(user => this.user = user),
       this.users = this.userService.getUsers("",status).then(users => this.users = users)
     ]);
-
-
-
 	}
 
   lookEditContact(id){
-    var menu = document.getElementById(id); //$( this ).find( '.lookEditContact' ) // $(".lookEditContact", this); //document.getElementById("lookEditContact"+id);
+    var menu = document.getElementById(id); 
     menu.classList.toggle("look-menu-show");
   }
 
   // Create dialog edit contact 
 
   createDialogEditContact(id) {
-    var menu = document.getElementById(id); //document.getElementById("lookEditContact"+itemId);
+    var menu = document.getElementById(id); 
     menu.classList.toggle("look-menu-show");
     this.dialogService.open({viewModel: CreateDialogEditContact, model: 0 })
       .then(response => {});
@@ -78,9 +54,8 @@ export class ContactsList {
 
 
   // Create dialog update photo
-
   CreateDialogUpdatePhoto(id) {
-    var menu = document.getElementById(id); //document.getElementById("lookEditContact"+itemId);
+    var menu = document.getElementById(id); 
     menu.classList.toggle("look-menu-show");
     this.dialogService.open({viewModel: CreateDialogUpdatePhoto, model: 0 })
       .then(response => {});
