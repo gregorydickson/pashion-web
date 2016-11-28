@@ -12,10 +12,14 @@ class UserController {
     def userService
     def cookieService
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE",doLogin:"POST", login:"GET"]
-
+    
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
+        if(params.email && params.email != ""){
+            def email = URLDecoder.decode(params.email)
+            respond User.findByEmail(email)
+            return
+        }
         respond User.list(params), model:[userCount: User.count()]
     }
 

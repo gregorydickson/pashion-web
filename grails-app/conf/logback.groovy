@@ -9,12 +9,12 @@ appender('STDOUT', ConsoleAppender) {
 }
 
 root(ERROR, ['STDOUT'])
-logger("org.quartz", DEBUG, ['STDOUT'], false)
-logger("grails.app.services", DEBUG, ['STDOUT'], false)
+logger("org.quartz", INFO, ['STDOUT'], false)
+logger("grails.app.services", INFO, ['STDOUT'], false)
 logger("grails.app.controllers", DEBUG, ['STDOUT'], false)
 logger("grails.app.domain", DEBUG, ['STDOUT'], false)
-logger("asset.pipeline.jsass", DEBUG, ['STDOUT'], false)
-logger("asset.pipeline", DEBUG, ['STDOUT'], false)
+logger("asset.pipeline.jsass", INFO, ['STDOUT'], false)
+logger("asset.pipeline", INFO, ['STDOUT'], false)
 
 def targetDir = BuildSettings.TARGET_DIR
 if (Environment.isDevelopmentMode() && targetDir) {

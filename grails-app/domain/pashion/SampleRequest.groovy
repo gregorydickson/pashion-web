@@ -53,13 +53,17 @@ class SampleRequest {
 	Date dateCreated
 	Date lastUpdated
 
-	Collection searchableItems
+	Collection searchableItems  //approved Items
+	Collection	 searchableItemsProposed // proposed Items
 	Collection<BookingStatus> searchableItemsStatus
 
 	ShippingEvent shippingOut
 	ShippingEvent shippingReturn
 
 	static constraints = {
+		
+		searchableItems nullable:true
+		searchableItemsProposed nullable: true
 		idString nullable: true
 		dateRequested nullable: true
 
@@ -111,7 +115,7 @@ class SampleRequest {
 
 	static belongsTo = SearchableItem 
 
-	static hasMany = [ searchableItems:SearchableItem ]
+	static hasMany = [ searchableItems:SearchableItem, searchableItemsProposed:SearchableItem ]
 
 	PashionCalendar checkMonthForEvents(LocalDate localDate,
 										PashionCalendar pashionCalendar){

@@ -139,7 +139,7 @@ class SampleRequestController {
         jsonObject.samples.each{
             item = SearchableItem.get(it)
             if(!sr.brand) sr.brand = item.brand
-            sr.addToSearchableItems(item)
+            sr.addToSearchableItemsProposed(item)
             def status = new BookingStatus()
             status.itemId = item.id
             status.brandStatus = "Requested"
@@ -182,11 +182,12 @@ class SampleRequestController {
             sr.removeFromSearchableItems(item)
         }
         jsonObject.searchableItems.each{ sample ->
-
-            def status = sr.searchableItemsStatus.find { it.itemId == sample.id }
-            log.info "status:"+status
-            if(sample.status.brandStatus) {
-                status.brandStatus = sample.status.brandStatus
+            if(sample.status?.brandStatus == 'Approved'){
+                def status = sr.searchableItemsStatus.find { it.itemId == sample.id }
+                log.info "status:"+status
+                //add to approved samples
+                sr.addToSearchableItems(sample)
+                status.brandStatus = "Approved"
                 log.info "brand status:"+status.brandStatus
                 status.save(failOnError:true)
             }

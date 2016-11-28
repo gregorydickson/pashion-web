@@ -57,7 +57,7 @@ class UserService {
 
 		stormpathApp = applications.iterator().next();
 
-		log.info "stormpath app:"+stormpathApp
+		log.debug "stormpath app:"+stormpathApp
     
     }
 
