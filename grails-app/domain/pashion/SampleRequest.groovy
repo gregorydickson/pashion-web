@@ -13,6 +13,7 @@ class SampleRequest {
 	Date bookingEndDate
 	String requestStatusBrand //Pending ->Approved->Shipped -> Delivered -> Due Back ->Overdue ->Closed
 	String requestStatusPress
+	Boolean overdue = false
 	Long userCreatedId
 	
 	Brand brand

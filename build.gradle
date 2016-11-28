@@ -1,4 +1,4 @@
-buildscript {
+    buildscript {
     ext {
         grailsVersion = project.grailsVersion
     }
@@ -11,6 +11,7 @@ buildscript {
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.11.5"
         classpath "org.grails.plugins:hibernate4:5.0.10"
         classpath "org.grails.plugins:views-gradle:1.1.2"
+        classpath 'com.agileorbit:schwartz:1.0.0'
     }
 }
 
@@ -84,6 +85,8 @@ dependencies {
     compile 'com.xlson.groovycsv:groovycsv:1.1'
 
     compile "org.grails.plugins:jasypt-encryption:2.0.1"
+
+    compile 'com.agileorbit:schwartz:1.0.0'
 
 }
 

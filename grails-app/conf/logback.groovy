@@ -9,6 +9,7 @@ appender('STDOUT', ConsoleAppender) {
 }
 
 root(ERROR, ['STDOUT'])
+logger("org.quartz", DEBUG, ['STDOUT'], false)
 logger("grails.app.services", DEBUG, ['STDOUT'], false)
 logger("grails.app.controllers", DEBUG, ['STDOUT'], false)
 logger("grails.app.domain", DEBUG, ['STDOUT'], false)
