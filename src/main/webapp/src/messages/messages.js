@@ -3,9 +3,9 @@ import 'fetch';
 import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import {UserService} from 'services/userService';
-// import {ContactEntryMessage} from 'contacts/contactEntryMessage';
+import {ContactEntryMessage} from 'contacts/contactEntryMessage';
 
-@inject(HttpClient, UserService)
+@inject(HttpClient, UserService, ContactEntryMessage)
 export class Messages {
 
 	messages = [];
@@ -17,7 +17,7 @@ export class Messages {
   	// The Realtime channel
   	chatChannel = "chat";
 
-	constructor (http, userService) {
+	constructor (http, userService, contactEntryMessage) {
 
 	    this.connectToRealtime();	  
 	    http.configure(config => {
@@ -27,7 +27,7 @@ export class Messages {
 	    this.http = http;
     	this.userService = userService;
     	this.user = this.userService.getUser().then(user => this.user = user);
-    	// this.contactEntryMessage = contactEntryMessage;
+    	this.contactEntryMessage = contactEntryMessage;
 
 	}
 
@@ -90,7 +90,7 @@ export class Messages {
     var message = {
       id: this.user.email,
       name: this.user.name,
-      text: $("#msgInput").val() + "to >>" + this.currentContact.email,
+      text: $("#msgInput").val() + "to >>" + this.contactEntryMessage.currentContact.email,
       sentAt: new Date().toLocaleTimeString()
     };
     
