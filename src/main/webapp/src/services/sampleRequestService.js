@@ -20,8 +20,7 @@ export class SampleRequestService{
   		  this.http.fetch('/sampleRequest/show/'+id+'.json')
     			.then(response => response.json())
     			.then(sampleRequest => {
-    				
-            sampleRequest.searchableItems.forEach(function(item1) {
+            sampleRequest.searchableItemsProposed.forEach(function(item1) {
               item1.status = sampleRequest.searchableItemsStatus.find(function (item2) {
                 return item2.itemId === item1.id;
               });
@@ -83,14 +82,25 @@ export class SampleRequestService{
       });
       return promise;
     }
-    shipSampleRequest(id){
+    approveSampleRequest(id){
       var promise = new Promise((resolve, reject) => {
-        this.http.fetch('/sampleRequest/brandShip/'+id, {method: 'post'}).then(response => response.json())
+        this.http.fetch('/sampleRequest/brandApprove/'+id, {method: 'post'}).then(response => response.json())
           .then(result => resolve(result));
       });
       return promise;
     }
-
+    approveAndUpdateSampleRequest(sr){
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/sampleRequest/brandApprove', {
+            method: 'post',
+            body: json(sr)
+        })
+          .then(response => response.json())
+          .then(result => resolve(result));
+      });
+      return promise;
+    }
+    
     sendSampleRequest(id){
       var promise = new Promise((resolve, reject) => {
         this.http.fetch('/sampleRequest/brandSend/'+id, {method: 'post'}).then(response => response.json())

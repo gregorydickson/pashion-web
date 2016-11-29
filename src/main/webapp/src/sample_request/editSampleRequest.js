@@ -49,20 +49,28 @@ export class EditSampleRequest {
     let sr = this.sampleRequest;
     if(!sr.samplesRemoved) sr.samplesRemoved = [];
     sr.samplesRemoved.push(id);
-    sr.searchableItems.splice(index,1);
+    sr.searchableItemsProposed.splice(index,1);
   }
 
-  submit(){
+  approve(){
     console.log("submitting Sample Request");
     let sr = this.sampleRequest;
+
+    this.sampleRequestService.approveAndUpdateSampleRequest(sr).then(message => {
+      alert(message.message);
+      this.controller.close();
+    });
     
+  }
+
+  update(){
+    console.log("submitting Sample Request");
+    let sr = this.sampleRequest;
 
     this.sampleRequestService.updateSampleRequest(sr).then(message => {
       alert(message.message);
       this.controller.close();
     });
-    
-    
     
   }
 

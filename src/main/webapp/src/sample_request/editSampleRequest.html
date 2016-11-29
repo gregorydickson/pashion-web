@@ -186,15 +186,15 @@
                 <!-- brand -->
                 <div if.bind="user.type === 'brand'" class="vertical grid-content accordion" style="overflow-x:hidden; max-height:10rem;"> <!-- scroll after n items -->                    
                     <!-- row -->
-                    <table repeat.for="sample of sampleRequest.searchableItems" class="big-accordion" style="margin-bottom:7px;">
+                    <table repeat.for="sample of sampleRequest.searchableItemsProposed" class="big-accordion" style="margin-bottom:7px;">
                         <tr>
                             <td class="accordion w3">${$index}</td>
                             <td class="accordion w12">${sample.id}</td>
                             <td class="accordion w54">${sample.name}</td>
                             <td class="accordion w15">                            
-                                <span  style="margin-bottom:0px;">${sample.status.brandStatus}</span>
+                                <span  style="margin-bottom:0px;">${sample.status.status}</span>
                             </td>
-                            <td style="text-align:right;" class="accordion w16">
+                            <td if.bind="sampleRequest.brandStatus === 'Pending'" style="text-align:right;" class="accordion w16">
                                 <select value.bind="sample.status.brandStatus">
                                     <option value="approved">Approve</option>
                                     <option value="denied">Deny</option>
@@ -207,15 +207,15 @@
                 <!-- press -->
                 <div if.bind="user.type === 'press'" class="vertical grid-content accordion" style="overflow-x:hidden; max-height:10rem;"> <!-- scroll after n items -->                    
                     <!-- row -->
-                    <table repeat.for="sample of sampleRequest.searchableItems" class="big-accordion" style="margin-bottom:7px;">
+                    <table repeat.for="sample of sampleRequest.searchableItemsProposed" class="big-accordion" style="margin-bottom:7px;">
                         <tr>
                             <td class="accordion w3">${$index}</td>
                             <td class="accordion w12">${sample.id}</td>
                             <td class="accordion w54">${sample.name}</td>
                             <td class="accordion w18">
-                                <span style="margin-bottom:0px;">${sample.status.pressStatus}</span>
+                                <span style="margin-bottom:0px;">${sample.status.status}</span>
                             </td>
-                            <td style="text-align:right;" class="accordion w13">
+                            <td if.bind="sampleRequest.requestStatusBrand === 'Pending'" style="text-align:right;" class="accordion w13">
                                 <a click.delegate="removeSample(sample.id,$index)" style="padding:7px 6px 5px 6px; margin-right:0; margin-bottom:0px; font-size: 1rem;" class="hollow button" href="#">Remove</a>
                             </td> 
                         </tr>
@@ -230,13 +230,13 @@
             <div if.bind="user.type === 'brand'">
                 <a class="hollow button"  click.delegate="deleteRequest()">Delete Request</a>
                 <a class="hollow button"  click.delegate="cancel()">Cancel</a>
-                <a class="hollow button" click.delegate="submit()">Save Changes</a>
-                <a class="button" click.delegate="submit()">Ship</a>
+                <a class="hollow button" click.delegate="update()">Save Changes</a>
+                <a if.bind="sampleRequest.brandStatus === 'Pending'" class="button" click.delegate="approve()">Approve</a>
             </div>
             <div if.bind="user.type === 'press'">
                 <a class="hollow button"  click.delegate="deleteRequest()">Delete Request</a>
                 <a class="hollow button"  click.delegate="cancel()">Cancel</a>
-                <a class="button" click.delegate="submit()">Save Changes</a>
+                <a class="button" click.delegate="update()">Save Changes</a>
             </div>
         </ai-dialog-footer>
     </ai-dialog>

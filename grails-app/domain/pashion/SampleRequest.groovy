@@ -54,7 +54,8 @@ class SampleRequest {
 	Date lastUpdated
 
 	Collection searchableItems  //approved Items
-	Collection	 searchableItemsProposed // proposed Items
+	Collection searchableItemsProposed // proposed Items
+	Collection searchableItemsDenied
 	Collection<BookingStatus> searchableItemsStatus
 
 	ShippingEvent shippingOut
@@ -115,7 +116,9 @@ class SampleRequest {
 
 	static belongsTo = SearchableItem 
 
-	static hasMany = [ searchableItems:SearchableItem, searchableItemsProposed:SearchableItem ]
+	static hasMany = [ searchableItems:SearchableItem,
+					   searchableItemsProposed:SearchableItem,
+					   searchableItemsDenied:SearchableItem ]
 
 	PashionCalendar checkMonthForEvents(LocalDate localDate,
 										PashionCalendar pashionCalendar){

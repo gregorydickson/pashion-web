@@ -5,6 +5,7 @@ import grails.transaction.Transactional
 import java.text.SimpleDateFormat
 import grails.converters.JSON
 
+
 @Transactional(readOnly = false)
 class SampleRequestController {
 
@@ -24,22 +25,45 @@ class SampleRequestController {
         def sent = [message:'Sample Request Denied']
         render sent as JSON
     }
-    def brandShip(){
-        def sampleRequest = SampleRequest.get(params.id.toInteger())
-        sampleRequest.requestStatusBrand = "Shipping"
-        sampleRequest.requestStatusPress = "Approved"
-        sampleRequest.save(flush:true)
+
+    
+    def brandApprove(){
+        SampleRequest sr = SampleRequest.get(params?.id?.toInteger())
+        if(!sr){
+            sr = sampleRequestService.updateSampleRequest(request.JSON)
+        }
+
+        sr.searchableItemsProposed.each{ sample ->
+                
+                def status = sr.searchableItemsStatus.find { it.itemId == sample.id }
+                log.info "status:"+status
+                
+                status.status = "Approved"
+                log.info "item status:"+status.status
+                status.save(failOnError:true)
+                sr.addToSearchableItems(sample)
+        }
+
+        sr.requestStatusBrand = "Approved"
+        sr.requestStatusPress = "Approved"
+        sr.save(flush:true)
         def sent = [message:'Sample Request Marked Ready to Ship']
         render sent as JSON
     }
     def brandSend(){
+        //Create/Update a shipping event
+        //TODO:API call to Stuart to create a pickup
+        //TODO:save tracking info to Sample Request
         def sampleRequest = SampleRequest.get(params.id.toInteger())
+                
         sampleRequest.requestStatusBrand = "Picking Up"
         sampleRequest.requestStatusPress = "stet"
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Waiting to be Picked Up']
         render sent as JSON
     }
+
+    
     def brandMarkPickedUp(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
         sampleRequest.requestStatusBrand = "Picked Up"
@@ -112,7 +136,7 @@ class SampleRequestController {
 
 
     
-    
+    //Create a Sample Request - for a Press User
     def savejson(){
         SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
         def jsonObject = request.JSON
@@ -130,7 +154,7 @@ class SampleRequestController {
         sr.returnBy = jsonObject.returnBy
 
         sr.requestStatusBrand = "Pending"
-        sr.requestStatusPress = "Pending"
+        sr.requestStatusPress = ""
         sr.itemsGot = 0
         sr.itemsOut = 0
         sr.itemsIn = 0
@@ -142,8 +166,8 @@ class SampleRequestController {
             sr.addToSearchableItemsProposed(item)
             def status = new BookingStatus()
             status.itemId = item.id
-            status.brandStatus = "Requested"
-            status.pressStatus = "Requested"
+            status.status = "Requested"
+            
             sr.addToSearchableItemsStatus(status)
         } 
         sr.shippingOut = new ShippingEvent(courier:jsonObject.courier).save(failOnError:true)
@@ -163,43 +187,11 @@ class SampleRequestController {
     }
 
     def updatejson(){
-        SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
-        def jsonObject = request.JSON
-        log.info "update json:"+jsonObject
-        def sr = SampleRequest.get(jsonObject.id)
-        sr.editorialName = jsonObject.editorialName
-        sr.editorialWho = jsonObject.editorialWho
-        if(jsonObject.editorialWhen) 
-            sr.editorialWhen = dateFormat.parse(jsonObject.editorialWhen)
-        sr.deliverTo = User.get(jsonObject.deliverTo)
-
-        sr.shippingOut.tracking = jsonObject.shippingOut.tracking
-        sr.shippingReturn.tracking = jsonObject.shippingReturn.tracking
-
-        jsonObject?.samplesRemoved?.each{ removed ->
-            log.info "removing:"+removed
-            def item = sr.searchableItems.find { it.id == removed }
-            sr.removeFromSearchableItems(item)
-        }
-        jsonObject.searchableItems.each{ sample ->
-            if(sample.status?.brandStatus == 'Approved'){
-                def status = sr.searchableItemsStatus.find { it.itemId == sample.id }
-                log.info "status:"+status
-                //add to approved samples
-                sr.addToSearchableItems(sample)
-                status.brandStatus = "Approved"
-                log.info "brand status:"+status.brandStatus
-                status.save(failOnError:true)
-            }
-
-        }
-        sr.save(failOnError: true, flush:true)
-
+        
+        sampleRequestService.updateSampleRequest(request.JSON,false)
         
         def sent = [message:'Sample Request Updated']
         render sent as JSON
-        
-
     }
 
 
