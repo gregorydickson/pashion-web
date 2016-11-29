@@ -11,13 +11,15 @@ export class ContactEntryMessage {
   }
 
   activate () {
+    this.currentContact.name = 'Test name';
+    console.log("activate");
   }
 
   attached () {
   }
 
   setCurrentContact (id) {
-    this.currentContact = this.userService.getUserDetails (id).then(currentContact => this.currentContact = currentContact);
+    this.currentContact = this.userService.getUserDetails(id).then(currentContact => this.currentContact = currentContact);
   }
 
 }

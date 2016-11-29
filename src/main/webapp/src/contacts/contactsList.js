@@ -65,9 +65,8 @@ export class ContactsList {
 
   initiateMessage (id) {    
     console.log("contactlist setting current contact: " + id);
-  	this.contactEntryMessage.setCurrentContact (id);
   	this.commsHeader.setStatusTab(this.commsHeader.statusValues.messages);
-    
+    this.contactEntryMessage.setCurrentContact (id);   
   }
 
 
