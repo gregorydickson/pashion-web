@@ -12,6 +12,7 @@ export class UserService {
         });
 
         this.http = http;
+        console.log("Construct UserServices");
     }
 
     activate() {

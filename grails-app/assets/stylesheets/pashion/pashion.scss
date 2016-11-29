@@ -355,6 +355,10 @@ ai-dialog-body .grid-block-row {
   width: 26%;
 }
 
+.contact-box{
+    width: 150px;
+  }
+
 .grid-row-one .grid-content:last-child,
 .grid-row-two .grid-content:last-child {
   min-width: 22%;
@@ -363,5 +367,7 @@ ai-dialog-body .grid-block-row {
   select {
     min-width: 100px;
   }
+
+
 
 }

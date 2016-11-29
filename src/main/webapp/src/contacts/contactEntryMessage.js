@@ -11,8 +11,7 @@ export class ContactEntryMessage {
   }
 
   activate () {
-    this.currentContact.name = 'Test name';
-    console.log("activate");
+    this.currentContact.name = 'This is a long Test name';
   }
 
   attached () {
