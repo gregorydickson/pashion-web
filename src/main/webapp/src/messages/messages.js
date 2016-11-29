@@ -3,13 +3,13 @@ import 'fetch';
 import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import {UserService} from 'services/userService';
+// import {ContactEntryMessage} from 'contacts/contactEntryMessage';
 
 @inject(HttpClient, UserService)
 export class Messages {
 
 	messages = [];
 	user = {};
-	currentContact = '';
 
 	// The Realtime client connection ////
 	ortcClient;
@@ -27,6 +27,7 @@ export class Messages {
 	    this.http = http;
     	this.userService = userService;
     	this.user = this.userService.getUser().then(user => this.user = user);
+    	// this.contactEntryMessage = contactEntryMessage;
 
 	}
 
@@ -89,7 +90,7 @@ export class Messages {
     var message = {
       id: this.user.email,
       name: this.user.name,
-      text: $("#msgInput").val() + "to >>" + this.currentContact,
+      text: $("#msgInput").val() + "to >>" + this.currentContact.email,
       sentAt: new Date().toLocaleTimeString()
     };
     
@@ -99,9 +100,7 @@ export class Messages {
     $('#msgInput').val("");
   }
 
-  setCurrentContact (id) {
-  	this.currentContact = id;
-  }
+
 
 }
 
