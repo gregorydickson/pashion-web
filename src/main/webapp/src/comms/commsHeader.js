@@ -43,6 +43,8 @@ export class CommsHeader {
 
 
   setStatusTab (id) {
+    if (this.comms.status != this.statusValues.messages)
+      this.rememberScroll = $("#right-panel-body").scrollTop();
     var menuHeads = document.getElementById("tab-"+ this.comms.status);  
     var menuBodies = document.getElementById("tab-"+ this.comms.status + "-body");
     menuHeads.classList.toggle("look-menu-hide");
@@ -56,6 +58,12 @@ export class CommsHeader {
     menuHeads.classList.toggle("look-menu-hide");
     menuBodies.classList.toggle("look-menu-show");
     menuBodies.classList.toggle("look-menu-hide");
+    // Scroll messages to the end
+    if (this.comms.status == this.statusValues.messages)
+      $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
+    // Restore others
+    if (this.comms.status != this.statusValues.messages)
+      $("#right-panel-body").scrollTop(this.rememberScroll);
   }
 
 handleKeyInput(event) {
