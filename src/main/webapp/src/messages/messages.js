@@ -3,15 +3,16 @@ import 'fetch';
 import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import {UserService} from 'services/userService';
-import {ContactEntryMessage} from 'contacts/contactEntryMessage';
 import {singleton} from 'aurelia-framework'
+import {EventAggregator} from 'aurelia-event-aggregator';
 
-@inject(HttpClient, UserService, ContactEntryMessage)
+@inject(HttpClient, UserService, EventAggregator)
 @singleton()
 export class Messages {
 
 	messages = [];
 	user = {};
+	currentContact = {};
 
 	// The Realtime client connection ////
 	ortcClient;
@@ -19,7 +20,7 @@ export class Messages {
   	// The Realtime channel
   	chatChannel = "PashionChat";
 
-	constructor (http, userService, contactEntryMessage) {
+	constructor (http, userService, eventAggregator) {
 
 	    if (typeof ortcClient === "undefined") this.connectToRealtime();	  
 	    http.configure(config => {
@@ -29,10 +30,21 @@ export class Messages {
 	    this.http = http;
     	this.userService = userService;
     	this.user = this.userService.getUser().then(user => this.user = user);
-    	this.contactEntryMessage = contactEntryMessage;
+    	this.ea = eventAggregator;
 	}
 
-	activate () {
+	attached () {
+		this.subscriber = this.ea.subscribe('setCurrentContact', response => {
+            
+            this.userService.getUserDetails(response.userId).then(contact => {
+              this.currentContact = contact;
+              console.log("got the Contact:"+response.userId);
+              console.log("name:"+this.currentContact.name);
+              console.log("got the Contact brand:"+this.currentContact.brand);
+
+            });
+            
+    });
 
 	}
 
@@ -97,14 +109,14 @@ export class Messages {
 
   sendMessage() {
   	console.log("Sendmessage from my id:" + this.user.id + " email:" + this.user.email + 
-  		" TO id:" + this.contactEntryMessage.currentContact.id + " email:" + this.contactEntryMessage.currentContact.email);
+  		" TO id:" + this.currentContact.id + " email:" + this.currentContact.email);
     var message = {
       fromId: this.user.email,
       fromName: this.user.name,
       fromSurname: this.user.surname,
-      toId: this.contactEntryMessage.currentContact.email,
-      toName: this.contactEntryMessage.currentContact.name,
-      toSurname:  this.contactEntryMessage.currentContact.surname,
+      toId: this.currentContact.email,
+      toName: this.currentContact.name,
+      toSurname:  this.currentContact.surname,
       text: $("#msgInput").val(),
       sentAt: new Date().toLocaleString()
     };
