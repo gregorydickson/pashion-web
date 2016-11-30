@@ -5,7 +5,8 @@
                 <tr>
                     <td>
                         <div class="contact-entry">
-                            <img src="/assets/lauren.png" class="clip-circle" />
+                            <img if.bind="(userVar.image)" src=${userVar.image} class="clip-circle" />
+                            <img if.bind="(!userVar.image)" src="/assets/andro.png" class="clip-circle" />
                            <!--  <div class="contact-mark">
                                 <img src="/assets/CheckMark.png" alt="">
                                 <!-- <img src="/assets/QuestionMark.png" alt=""> 
