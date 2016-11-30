@@ -3,7 +3,7 @@
     <!-- -->
     <!-- Communications Panel  -->
     <!-- -->
-    <div id="message-container-mum" class="vertical grid-block grid-block-vertical-shadow" style="overflow:auto;">
+
 
         <!-- messages tab -->
         <div id="tab-messages" class="look-menu-hide">
@@ -24,16 +24,7 @@
             </div>
             <!-- messages header -->
             <compose view-model="messages/messagesHeader" class="grid-content-block" style="min-height:90px;"></compose>
-            <!-- messages body -->
-            <compose id="message-container-dad" view-model="messages/messages" style="overflow-x:hidden;"></compose>
-            <!-- white lip at bottom of scroll region -->
-            <div class="grid-content shrink scrolling-fat-lip">
-            </div>
-            <!-- New message -->
-            <div class="grid-content align-right shrink">
-                <input type="text" id="msgInput" class="message-new-message-box" placeholder="New Message">
-            </div>
-            <a class="button" click.delegate="sendMessage()">Send Message</a>
+            
         </div>
 
         <!-- contacts tab -->
@@ -55,17 +46,7 @@
             </div>
             <!-- contacts header -->
             <compose view-model="contacts/contactsHeader" style="overflow:hidden; min-height:36px; margin-top: 1rem;"></compose>
-            <!-- contacts body -->
-            <compose view-model="contacts/contactsList" style="overflow-x:hidden;"></compose>
-            <!-- white lip at bottom of scroll region -->
-            <div class="grid-content shrink scrolling-fat-lip">
-            </div>
-            <!-- BUTTONS -->
-            <div class="grid-block align-center shrink">
-                <a class="hollow button" href="#" click.delegate="createDialogNewContact(1)">New Contact...</a>
-                <a class="button" href="#" click.delegate="CreateDialogImportContacts(1)">Import Contacts...</a>
-            </div>
+            
         </div>
-    </div>
 
 </template>

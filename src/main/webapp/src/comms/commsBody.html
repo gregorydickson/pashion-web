@@ -1,0 +1,34 @@
+<template>
+
+
+
+        <!-- messages tab -->
+        <div id="tab-messages-body" class="look-menu-hide">
+            <!-- messages body -->
+            <compose id="message-container-dad" view-model="messages/messages" style="overflow-x:hidden;"></compose>
+            <!-- white lip at bottom of scroll region -->
+            <div class="grid-content shrink scrolling-fat-lip">
+            </div>
+            <!-- New message -->
+            <div class="grid-content align-right shrink">
+                <input type="text" id="msgInput" class="message-new-message-box" placeholder="New Message">
+            </div>
+            <a class="button" click.delegate="sendMessage()">Send Message</a>
+        </div>
+
+        <!-- contacts tab -->
+        <div id="tab-contacts-body" class="look-menu-show">
+
+            <!-- contacts body -->
+            <compose view-model="contacts/contactsList" style="overflow-x:hidden;"></compose>
+            <!-- white lip at bottom of scroll region -->
+            <div class="grid-content shrink scrolling-fat-lip">
+            </div>
+            <!-- BUTTONS -->
+            <div class="grid-block align-center shrink">
+                <a class="hollow button" href="#" click.delegate="createDialogNewContact(1)">New Contact...</a>
+                <a class="button" href="#" click.delegate="CreateDialogImportContacts(1)">Import Contacts...</a>
+            </div>
+        </div>
+
+</template>
