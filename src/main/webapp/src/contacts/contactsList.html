@@ -27,7 +27,7 @@
                             </td>
                         </tr>
                     </table>
-                    <div id="panel12" class="panel grid-block vertical" style="margin-top:0.5rem;">
+                    <div id="panel12" class="panel grid-block vertical show" style="margin-top:0.5rem;">
 
 
                         <div repeat.for="userVar of users" class="grid-block grid-block-overflow-visible" style="margin-bottom:1rem;">
@@ -35,7 +35,8 @@
                                     <tr>
                                         <td>
                                             <div class="contact-entry">
-                                                <img src=${userVar.image} class="clip-circle" />
+                                                <img if.bind="(userVar.image)" src=${userVar.image} class="clip-circle" />
+                                                <img if.bind="(!userVar.image)" src="/assets/andro.png" class="clip-circle" />
                                                <!--  <div class="contact-mark">
                                                     <img src="/assets/CheckMark.png" alt="">
                                                     <!-- <img src="/assets/QuestionMark.png" alt=""> 
@@ -43,8 +44,8 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div class="ui-text-label-l-left paragraph-5">${userVar.name} ${userVar.surname}  ${userVar.email} ${userVar.id}</div>
-                                            <div class="ui-text-label-s-left paragraph-5">${userVar.brand} ${userVar.pressHouse}</div>    
+                                            <div class="ui-text-label-l-left paragraph-5 contact-box">${userVar.name} ${userVar.surname}</div>
+                                            <div class="ui-text-label-s-left paragraph-5 contact-box">${userVar.brand.name} ${userVar.pressHouse.name}</div>    
                                         </td>
                                         <td class="align-top"><span class="alert-box">8</span></td>
                                         <td class="align-top">
@@ -56,8 +57,8 @@
                                                      <div id="${userVar.id}" class="look-menu-absolute lookEditContactClass">
                                                         <span class="look-menu-heading">CONTACT</span>
                                                         <ul class="look-menu-list">
-                                                            <li class="look-menu-item">
-                                                                <a href="#" click.delegate="initiateMessage(userVar.email)" class="look-menu-link">Message</a>
+                                                            <li if.bind="(userVar.email != user.email)" class="look-menu-item">
+                                                                <a href="#" click.delegate="initiateMessage(userVar.id)" class="look-menu-link">Send Message</a>
                                                             </li>
                                                              <li class="look-menu-item">
                                                                 <a href="#" click.delegate="createDialogEditContact(userVar.id)" class="look-menu-link">Edit</a>

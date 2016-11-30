@@ -14,7 +14,7 @@ class UserController {
 
     
     def index(Integer max) {
-        params.max = Math.min(max ?: 10, 100)
+        params.max = 5000 // Math.min(max ?: 10, 100)
         if(params.email && params.email != ""){
             def email = URLDecoder.decode(params.email)
             respond User.findByEmail(email)

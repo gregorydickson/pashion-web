@@ -50,7 +50,7 @@ export class CommsHeader {
     menu.classList.toggle("look-menu-hide");
     menu.classList.toggle("look-menu-show");
   	this.comms.status = id;
-    console.log("Setting comms status to " + id);
+    // console.log("Setting comms status to " + id);
     menu = document.getElementById("tab-"+id);
     menu.classList.toggle("look-menu-show");
     menu.classList.toggle("look-menu-hide");

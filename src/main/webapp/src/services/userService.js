@@ -12,6 +12,7 @@ export class UserService {
         });
 
         this.http = http;
+        console.log("Construct UserServices");
     }
 
     activate() {
@@ -31,23 +32,30 @@ export class UserService {
 		  });
 		  return promise;
   	}
-/*
-   	getUserDetails (id) {
+
+
+  	/*
+getUserDetails (id)
+ {
+ 	return userController.index(1,id)
+ }
+ */
+
+  	getUserDetails (id) {
 		console.log("getting user details for: " + id);
-		var searchText = id;
-		var localCurrentContact = {};
-
-		this.http.fetch('/user/index.json') // ?' + searchText + '&status=' + status)
+		var promise = new Promise((resolve, reject) => {
+		this.http.fetch('/user/show/' + id + ".json")
   			.then(response => response.json())
-  			.then(localCurrentContact => {
-  				this.localCurrentContact = localCurrentContact;
-  			});
-
-  			console.log("details: " + localCurrentContact);
-  			return localCurrentContact;
-  	} */
-
-
+  			.then(currentContact => {
+  				this.currentContact = currentContact;
+  				resolve(this.currentContact);
+  			})
+  			.catch(err=>reject(err));
+      	
+	  	});
+	  	return promise;
+  	}
+ /* 	
   	getUserDetails (id) {
 		console.log("getting user details for: " + id);
 		var promise = new Promise((resolve, reject) => {
@@ -62,22 +70,7 @@ export class UserService {
 	  	});
 	  	return promise;
   	}
-  	
-/*
-  	getUserDetails (id) {
-		console.log("getting user details for: " + id);
-		var promise = new Promise((resolve, reject) => {
-		this.http.fetch('/user/index/filterSearch?email=' + encodeURI(id) + '&status=' + status)
-  			.then(response => response.json())
-  			.then(currentContact => {
-  				this.currentContact = currentContact;
-  				resolve(this.currentContact);
-  			})
-  			.catch(err=>reject(err));
-      	
-	  	});
-	  	return promise;
-  	} */
+ */ 	
 
 
     getUser() {
