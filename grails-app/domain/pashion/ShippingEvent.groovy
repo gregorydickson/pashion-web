@@ -3,6 +3,7 @@ package pashion
 
 class ShippingEvent {
 
+	String status
 	Date startDate
 	Date endDate
 	String courier
@@ -16,6 +17,7 @@ class ShippingEvent {
 	static belongsTo = [sampleRequest:SampleRequest]
 
 	static constraints = {
+		status nullable: true
         startDate nullable: true
         endDate nullable: true
         courier nullable: true

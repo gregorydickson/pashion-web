@@ -176,21 +176,21 @@
                                             <span>OVERVIEW</span>
                                         </div>
                                         <div class="grid-content">
-                                            <span>Shoot by Simon Photog styled by Josh Hartnet at High Barnet studios 19-20 June for June ‘16 issue</span>
+                                            <span>${booking.editorialName} by ${booking.editorialWho} </span>
                                         </div>
                                         <div class="grid-content" style="margin-top:0.5rem;">
-                                            <span>SHIPPING OUT:</span><span style="margin-left:0.5rem;">s346x</span>
+                                            <span>SHIPPING OUT:</span><span style="margin-left:0.5rem;"></span>
                                         </div>
                                         <div class="grid-content">
-                                            <span class="ui-text-label-m-blue">Occured</span>
-                                            <span>on 12 July 2016 by CourierCo (we paid) going to Elle Magazine, 234 St. James Street, London SE1 1RL picked up at 15:33 by Tim. Insured for £2,134 </span>
+                                            <span class="ui-text-label-m-blue">${booking.shippingOut.status}</span>
+                                            <span>on ${booking.editorialWhen | viewDateFormat} by ${booking.shippingOut.courier} () going to  ${booking.pressHouse.name}, ${booking.addressDestination.address1}, ${booking.addressDestination.address2} picked up at   </span>
                                         </div>
                                         <div class="grid-content" style="margin-top:0.5rem;">
-                                            <span>RETURN:</span><span style="margin-left:0.5rem;">s346y</span>
+                                            <span>RETURN:</span><span style="margin-left:0.5rem;">${booking.shippingReturn.tracking}</span>
                                         </div>
                                         <div class="grid-content">
-                                            <span class="ui-text-label-m-blue">Scheduled</span>
-                                            <span>for ${booking.bookingEndDate | viewDateFormat} by  (we pay) coming back to RL London at 09:00 addressed to Shep Sheppard. Insured for £2,134</span>
+                                            <span class="ui-text-label-m-blue">${booking.shippingReturn.status}</span>
+                                            <span>for ${booking.bookingEndDate | viewDateFormat} by  () coming back to ${booking.returnToAddress.name} by ${booking.returnBy} addressed to ${booking.deliverTo.name} ${booking.deliverTo.surname}. </span>
                                         </div>
                                         <div class="grid-content" style="margin-top:0.5rem;">
                                             <span>SAMPLES:</span><span style="margin-left:0.5rem;">${booking.searchableItems.length}</span>

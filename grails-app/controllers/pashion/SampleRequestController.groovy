@@ -170,8 +170,8 @@ class SampleRequestController {
             
             sr.addToSearchableItemsStatus(status)
         } 
-        sr.shippingOut = new ShippingEvent(courier:jsonObject.courier).save(failOnError:true)
-        sr.shippingReturn = new ShippingEvent().save(failOnError:true)
+        sr.shippingOut = new ShippingEvent(courier:jsonObject.courier,status:'Proposed').save(failOnError:true)
+        sr.shippingReturn = new ShippingEvent(status:'Proposed').save(failOnError:true)
         sr.paymentOut = jsonObject.paymentOut
         sr.paymentReturn = jsonObject.paymentReturn
         sr.courierOut = jsonObject.courierOut

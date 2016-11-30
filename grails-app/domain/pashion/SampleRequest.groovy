@@ -43,7 +43,7 @@ class SampleRequest {
 	String editorialWho
 	Date editorialWhen
 
-	String comments
+	
 
 	Integer itemsGot
 	Integer itemsOut
@@ -92,7 +92,7 @@ class SampleRequest {
 		editorialName nullable: true 
 		editorialWho nullable: true 
 		editorialWhen nullable: true 
-		comments nullable: true 
+		
 
 		itemsGot nullable: true
 		itemsOut nullable: true 
