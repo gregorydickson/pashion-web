@@ -38,10 +38,6 @@ export class Messages {
             
             this.userService.getUserDetails(response.userId).then(contact => {
               this.currentContact = contact;
-              console.log("got the Contact:"+response.userId);
-              console.log("name:"+this.currentContact.name);
-              console.log("got the Contact brand:"+this.currentContact.brand);
-
             });
             
     });

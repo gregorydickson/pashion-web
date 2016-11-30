@@ -65,8 +65,8 @@ export class ContactsList {
 
   initiateMessage (id) {    
     console.log("contactlist setting current contact: " + id);
-  	this.commsHeader.setStatusTab(this.commsHeader.statusValues.messages);
     this.ea.publish('setCurrentContact', {userId: id});
+  	this.commsHeader.setStatusTab(this.commsHeader.statusValues.messages);
       
   }
 
