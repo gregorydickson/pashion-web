@@ -27,7 +27,7 @@ $message-box-width: 215px;
 .message-me-box {
   background-color: $white;
   text-align: right;
-  border: 0.5px solid $white-three;
+  border: 1px solid $pinkish-grey;
   position: relative;
   margin-right: 4px;
 }
@@ -53,14 +53,14 @@ $message-box-width: 215px;
 
 .message-me-box:before {
   border-color: transparent;
-  border-left-color: $white-three;
+  border-left-color: $pinkish-grey;
   border-width: 5px;
   margin-top: -5px;
 }
 
 .message-not-me-box {
   background-color: $white-two;
-  border: 1px $white-three solid;
+  border: 1px $pinkish-grey solid;
   text-align: left;
   position: relative;
   margin-left: 4px;
@@ -87,7 +87,7 @@ $message-box-width: 215px;
 
 .message-not-me-box:before {
   border-color: transparent;
-  border-right-color: $white-three;
+  border-right-color: $pinkish-grey;
   border-width: 5px;
   margin-top: -5px;
 }
