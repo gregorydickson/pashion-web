@@ -57,16 +57,19 @@ export class ContactEntryMessage {
   }
 
   subChange(newvalue,oldvalue){
-    console.log("Change New value: Old value:"+oldvalue.name);
-     
+    console.log("Change New value: Old value:"+oldvalue.name);  
     
   }
   
 
   setCurrentContact (id) {
     this.userService.getUserDetails(id).then(currentContact => {
-      this.name = currentContact.name;
-      this.brand = currentContact.brand;
+      this.currentContact.name = currentContact.name;
+      this.currentContact.surname = currentContact.surname;
+      this.currentContact.brand = currentContact.brand;
+      this.currentContact.email = currentContact.email;
+      this.currentContact.id = currentContact.id;
+
       console.log("contact:"+this.name);
     });
   }
