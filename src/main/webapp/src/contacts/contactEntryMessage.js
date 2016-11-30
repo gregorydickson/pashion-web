@@ -1,24 +1,74 @@
-import {inject} from 'aurelia-framework';
+import {HttpClient} from 'aurelia-fetch-client';
+import {DialogController} from 'aurelia-dialog';
+import {DialogService} from 'aurelia-dialog';
+import 'fetch';
+import {BindingEngine,inject} from 'aurelia-framework';
+import {DateFormat} from 'common/dateFormat';
+import {CreateDialogEditContact} from './dialogEditContact';
+import {CreateDialogUpdatePhoto} from './dialogUpdatePhoto';
+import {Messages} from 'messages/messages';
 import {UserService} from 'services/userService';
+import {EventAggregator} from 'aurelia-event-aggregator';
 
-@inject(UserService)
+
+@inject(HttpClient, DialogController, DialogService, UserService,EventAggregator)
 export class ContactEntryMessage {
+  static inject = [DialogController];
 
   currentContact = {};
 
-  constructor(userService){
+
+  
+
+  constructor(http, controller, dialogService, userService,eventAggregator){
+    this.controller = controller;
+    http.configure(config => {
+      config
+        .useStandardConfiguration();
+    });
+    this.http = http;
+    this.dialogService = dialogService;
+    //this.messages = messages;
     this.userService = userService;
+    
+    this.ea = eventAggregator;
+
   }
 
   activate () {
-    this.currentContact.name = 'This is a long Test name';
+
   }
 
   attached () {
+    //this.userService.getUserdetails (headerContactId);
+    // console.log ("Contact details: " + headerContactDetails);
+    let contact = this.currentContact
+    this.subscriber = this.ea.subscribe('setCurrentContact', response => {
+            
+            this.userService.getUserDetails(response.userId).then(contact => {
+              this.currentContact = contact;
+              console.log("got the Contact:"+response.userId);
+              console.log("name:"+this.currentContact.name);
+              console.log("got the Contact brand:"+this.currentContact.brand);
+
+            });
+            
+    });
   }
 
+  subChange(newvalue,oldvalue){
+    console.log("Change New value: Old value:"+oldvalue.name);
+     
+    
+  }
+  
+
   setCurrentContact (id) {
-    this.currentContact = this.userService.getUserDetails(id).then(currentContact => this.currentContact = currentContact);
+    this.userService.getUserDetails(id).then(currentContact => {
+      this.name = currentContact.name;
+      this.brand = currentContact.brand;
+      console.log("contact:"+this.name);
+    });
   }
 
 }
