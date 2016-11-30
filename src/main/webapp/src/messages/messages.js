@@ -17,7 +17,7 @@ export class Messages {
 	ortcClient;
 
   	// The Realtime channel
-  	chatChannel = "chat";
+  	chatChannel = "PashionChat";
 
 	constructor (http, userService, contactEntryMessage) {
 
@@ -51,10 +51,10 @@ export class Messages {
 	      console.log("Connecting to Realtime ...");
 	      parent.ortcClient.connect('dUI5Hv', 'anonymousToken');
 
-	      // we need to wait for the connection to complete
-	      // before we subscribe the channel
   		}	
-       
+ 
+	  // we need to wait for the connection to complete
+	  // before we subscribe the channel      
       parent.ortcClient.onConnected = function(ortc) {
         console.log("Connected to:" + parent.chatChannel);
         
@@ -67,16 +67,20 @@ export class Messages {
 				    // var msgAlign = (receivedMessage.id == parent.myId ? "right" : "left");
 				  
 				    // format message to show on log;
-				    var msgLog = receivedMessage.text + " " + receivedMessage.sentAt + " from:" + receivedMessage.id;
+				    var msgLog = receivedMessage.text + " " + receivedMessage.sentAt + " from:" + receivedMessage.fromId + " to:" + receivedMessage.toId;
 
 				    parent.messages.push ( 	
 				    					{text: receivedMessage.text,
 				    					time: receivedMessage.sentAt,
 				    					image: '',
-				    					fromName: receivedMessage.name,
-				    					fromSurname: receivedMessage.surname,
-				    					fromId: receivedMessage.id,
-				    					fromMe: (receivedMessage.id == parent.user.email)});
+				    					fromName: receivedMessage.fromName,
+				    					fromSurname: receivedMessage.fromSurname,
+				    					fromId: receivedMessage.fromId,
+				    					toName: receivedMessage.toName,
+				    					toSurname: receivedMessage.toSurname,
+				    					toId: receivedMessage.toId,
+				    					toMe: (receivedMessage.toId == parent.user.email),
+				    					fromMe: (receivedMessage.fromId == parent.user.email)});
 				    
 				    // add the message to the chat log
 				    // $("#message-container").html($("#message-container").html() + text);
@@ -86,6 +90,8 @@ export class Messages {
         	}
        ); 
       }
+
+
     });
   }
 
@@ -93,13 +99,16 @@ export class Messages {
   	console.log("Sendmessage from my id:" + this.user.id + " email:" + this.user.email + 
   		" TO id:" + this.contactEntryMessage.currentContact.id + " email:" + this.contactEntryMessage.currentContact.email);
     var message = {
-      id: this.user.email,
-      name: this.user.name,
-      surname: this.user.surname,
+      fromId: this.user.email,
+      fromName: this.user.name,
+      fromSurname: this.user.surname,
+      toId: this.contactEntryMessage.currentContact.email,
+      toName: this.contactEntryMessage.currentContact.name,
+      toSurname:  this.contactEntryMessage.currentContact.surname,
       text: $("#msgInput").val(),
       sentAt: new Date().toLocaleTimeString()
     };
-    
+
     this.ortcClient.send(this.chatChannel, JSON.stringify(message));
     
     // clear the input field

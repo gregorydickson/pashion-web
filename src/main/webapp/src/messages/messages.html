@@ -5,7 +5,7 @@
         <!-- <compose view-model="messages/messageEntryNotMe"></compose> -->
 
         <!-- from me -->
-	    <div show.bind="(message.fromMe)" class="grid-block align-right inter-message-gap">
+	    <div show.bind="(message.fromMe && (message.toId == contactEntryMessage.currentContact.email))" class="grid-block align-right inter-message-gap">
 	        <table class="" style="table-layout:fixed;">
 	            <tr>
 	                <td colspan="2">
@@ -24,7 +24,7 @@
 	        </table>
 	    </div>
 	    <!-- not from me -->
-        <div show.bind="!(message.fromMe)" class="grid-block vertical align-left inter-message-gap">
+        <div show.bind="(message.toMe && (message.fromId == contactEntryMessage.currentContact.email))" class="grid-block vertical align-left inter-message-gap">
 	        <table class="message-wrap">
 	            <tr>
 	                <td colspan="2">
