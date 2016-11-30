@@ -20,12 +20,10 @@
         <div id="tab-contacts-body" class="look-menu-show">
 
             <!-- contacts body -->
-            <compose view-model="contacts/contactsList" style="overflow-x:hidden;"></compose>
-            <!-- white lip at bottom of scroll region -->
-            <div class="grid-content shrink scrolling-fat-lip">
-            </div>
+            <compose view-model="contacts/contactsList" style="overflow-x:hidden; "></compose>
+
             <!-- BUTTONS -->
-            <div class="grid-block align-center shrink">
+            <div class="grid-block align-center shrink" style="margin-top:1rem;">
                 <a class="hollow button" href="#" click.delegate="createDialogNewContact(1)">New Contact...</a>
                 <a class="button" href="#" click.delegate="CreateDialogImportContacts(1)">Import Contacts...</a>
             </div>

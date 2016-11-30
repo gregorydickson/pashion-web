@@ -45,12 +45,6 @@ export class CommsHeader {
   setStatusTab (id) {
     var menuHeads = document.getElementById("tab-"+ this.comms.status);  
     var menuBodies = document.getElementById("tab-"+ this.comms.status + "-body");
-    // all off
-    // one on
-
-
-
-
     menuHeads.classList.toggle("look-menu-hide");
     menuHeads.classList.toggle("look-menu-show");
     menuBodies.classList.toggle("look-menu-hide");
@@ -62,12 +56,6 @@ export class CommsHeader {
     menuHeads.classList.toggle("look-menu-hide");
     menuBodies.classList.toggle("look-menu-show");
     menuBodies.classList.toggle("look-menu-hide");
-  }
-
-
-
-  submit(){
-    
   }
 
 handleKeyInput(event) {
