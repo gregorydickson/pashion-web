@@ -34,7 +34,7 @@ class SampleRequestService {
             SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
             
             log.info "update json:"+jsonObject
-            def sr = SampleRequest.get(jsonObject.id)
+            SampleRequest sr = SampleRequest.get(jsonObject.id)
             sr.editorialName = jsonObject.editorialName
             sr.editorialWho = jsonObject.editorialWho
             if(jsonObject.editorialWhen) 
@@ -60,9 +60,10 @@ class SampleRequestService {
                     log.info "item status:"+status.status
                     status.save(failOnError:true)
                     def item = sr.searchableItems.find{it.id == sample.id}
-                    if(!item)
+                    if(!item){
                         sr.addToSearchableItems(sample)
-                } else if(status == "Denied")
+                    }
+                } else if(status == "Denied"){
                     status.status = "Denied"
                     log.info "item status:"+status.status
                     status.save(failOnError:true)

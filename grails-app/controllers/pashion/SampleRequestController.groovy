@@ -188,7 +188,7 @@ class SampleRequestController {
 
     def updatejson(){
         
-        sampleRequestService.updateSampleRequest(request.JSON,false)
+        def sr = sampleRequestService.updateSampleRequest(request.JSON)
         
         def sent = [message:'Sample Request Updated']
         render sent as JSON
