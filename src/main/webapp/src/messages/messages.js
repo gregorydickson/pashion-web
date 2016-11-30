@@ -94,7 +94,8 @@ export class Messages {
 				    					toMe: (receivedMessage.toId == parent.user.email),
 				    					fromMe: (receivedMessage.fromId == parent.user.email)});
 				    
-				    $("#right-panel-body").animate({scrollTop: $("#right-panel-body").prop("scrollHeight")}, 500);
+            $("#right-panel-body").animate({scrollTop: $("#right-panel-body").prop("scrollHeight")}, 500);
+           // $("#tab-messages-body").animate({scrollTop: $("#tabs-messages-body").prop("scrollHeight")}, 500);
 				    console.log(msgLog); 
         	}
        ); 

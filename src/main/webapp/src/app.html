@@ -20,11 +20,11 @@
             <!-- -->
             <!-- Communications Panel  -->
             <!-- -->
-            <div id="message-container-mum" class="vertical grid-block grid-block-vertical-shadow" style="overflow:hidden;">
-                <compose if.bind="user.type === 'brand'" id="right-panel-header" class="grid-block shrink" view-model="comms/commsHeader" ></compose>
-                <compose if.bind="user.type === 'press'" id="right-panel-header" class="grid-block shrink" view-model="comms/commsHeader"></compose>
-                <compose if.bind="user.type === 'brand'" id="right-panel-body" class="grid-block" view-model="comms/commsBody" style="overflow-y:scroll"></compose>
-                <compose if.bind="user.type === 'press'" id="right-panel-body" class="grid-block" view-model="comms/commsBody" style="overflow-y:scroll"></compose>
+            <div id="message-container-mum" class="vertical grid-block grid-block-vertical-shadow right-panel" style="overflow:hidden;">
+                <compose if.bind="user.type === 'brand'" id="right-panel-header" class="grid-block shrink right-panel" view-model="comms/commsHeader" ></compose>
+                <compose if.bind="user.type === 'press'" id="right-panel-header" class="grid-block shrink right-panel" view-model="comms/commsHeader"></compose>
+                <compose if.bind="user.type === 'brand'" id="right-panel-body" class="right-panel" view-model="comms/commsBody" style="overflow-y:auto;"></compose>
+                <compose if.bind="user.type === 'press'" id="right-panel-body" class="right-panel" view-model="comms/commsBody" style="overflow-y:auto;"></compose>
 
                 <!-- white lip at bottom of scroll region -->
                 <div class="grid-content shrink scrolling-lip">
