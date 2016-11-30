@@ -94,10 +94,7 @@ export class Messages {
 				    					toMe: (receivedMessage.toId == parent.user.email),
 				    					fromMe: (receivedMessage.fromId == parent.user.email)});
 				    
-				    // add the message to the chat log
-				    // $("#message-container").html($("#message-container").html() + text);
-				    // $("#message-container").append(msgLog);
-				    // $("#message-container-dad").animate({scrollTop: $("#message-container-dad").prop("scrollHeight")}, 500);
+				    $("#message-container-mum").animate({scrollTop: $("#message-container-mum").prop("scrollHeight")}, 500);
 				    console.log(msgLog); 
         	}
        ); 
