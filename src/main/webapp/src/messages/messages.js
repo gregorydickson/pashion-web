@@ -106,7 +106,7 @@ export class Messages {
       toName: this.contactEntryMessage.currentContact.name,
       toSurname:  this.contactEntryMessage.currentContact.surname,
       text: $("#msgInput").val(),
-      sentAt: new Date().toLocaleTimeString()
+      sentAt: new Date().toLocaleString()
     };
 
     this.ortcClient.send(this.chatChannel, JSON.stringify(message));
