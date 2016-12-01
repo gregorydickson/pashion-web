@@ -33,6 +33,11 @@ export class CommsHeader {
     this.comms.status = this.statusValues.contacts;
     console.log("Init comms status to " + this.comms.status);
     this.ea = eventAggregator;
+
+    var parent = this;
+    this.subscriber = this.ea.subscribe('setCurrentContact', response => { 
+      this.currentContact = response.userId;             
+    });
  
   }
 
@@ -41,14 +46,7 @@ export class CommsHeader {
   }
 
   attached () {
-    var parent = this;
-    this.subscriber = this.ea.subscribe('setCurrentContact', response => { 
-
-      this.currentContact = response.userId;      
-
-            
-    });
-
+   $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
   }
 
   detached() {
@@ -76,12 +74,15 @@ export class CommsHeader {
       menuHeads.classList.toggle("look-menu-hide");
       menuBodies.classList.toggle("look-menu-show");
       menuBodies.classList.toggle("look-menu-hide");
-      // Scroll messages to the end
-      if (this.comms.status == this.statusValues.messages)
-        $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
       // Restore others
       if (this.comms.status != this.statusValues.messages)
-        $("#right-panel-body").scrollTop(this.rememberScroll);
+        $(document).ready(function() { $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight")); });
+      // Scroll messages to the end
+      if (this.comms.status == this.statusValues.messages)
+        window.setTimeout(function () {
+              $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
+            },1000); // major kludge to scroll messages
+
     }
   }
 

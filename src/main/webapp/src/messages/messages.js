@@ -64,7 +64,7 @@ export class Messages {
                     fromMe: (receivedMessage.fromId == parent.user.email)
                 });
 
-                $("#right-panel-body").animate({ scrollTop: $("#right-panel-body").prop("scrollHeight") }, 500);
+                $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
             },
             presence: function(p) {
                 // handle presence
@@ -119,8 +119,7 @@ export class Messages {
             }
         }
       );
-
-      $("#right-panel-body").animate({ scrollTop: $("#right-panel-body").prop("scrollHeight") });
+      
     }
 
     sendMessage() {
