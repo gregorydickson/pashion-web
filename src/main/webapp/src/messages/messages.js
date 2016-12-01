@@ -22,11 +22,7 @@ export class Messages {
 
 	constructor (http, userService, eventAggregator) {
 
-	    if (typeof ortcClient === "undefined") this.connectToRealtime();	  
-	    http.configure(config => {
-	      config
-	        .useStandardConfiguration();
-	    });
+	    
 	    this.http = http;
     	this.userService = userService;
     	this.user = this.userService.getUser().then(user => this.user = user);
@@ -42,6 +38,12 @@ export class Messages {
             
     });
 
+    if (typeof ortcClient === "undefined") this.connectToRealtime();    
+      this.http.configure(config => {
+        config
+          .useStandardConfiguration();
+      });
+
 	}
 
   //ORTC
@@ -49,6 +51,7 @@ export class Messages {
   connectToRealtime() {
     //var onMessage = this.onChatMessage;
     var parent = this;
+    var filter = "message.fromId = '" + this.user.email + "' or message.toId = '" + this.user.email +"'";
     loadOrtcFactory(IbtRealTimeSJType, function(factory, error) {
     	if (error !== null) {
      		console.log("ORTC factory error: " + error.message);
@@ -68,8 +71,8 @@ export class Messages {
         
         // subscribe the chat channel
         // the onChatMessage callback function will handle new messages
-        parent.ortcClient.subscribe(parent.chatChannel, true, 
-        	 function (ortc, channel, message) {
+        parent.ortcClient.subscribeWithFilter(parent.chatChannel, true, filter,
+        	 function (ortc, channel, filtered, message) {
 
 				    var receivedMessage = JSON.parse(message);
 				    // var msgAlign = (receivedMessage.id == parent.myId ? "right" : "left");
