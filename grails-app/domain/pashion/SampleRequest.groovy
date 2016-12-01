@@ -131,7 +131,7 @@ class SampleRequest {
 		   	log.info "check month for events - same month"
 			pashionCalendar = inSameMonth(pashionCalendar, start, end)
 		} else if (pashionCalendar.calendarMonths[0].sameMonth(start)){
-			pashionCalendar = startInSameMonth()
+			pashionCalendar = startInSameMonth(pashionCalendar,start)
 		} else if(pashionCalendar.calendarMonths[0].sameMonth(end)){
 			pashionCalendar = endInSameMonth(pashionCalendar, end)
 		}
