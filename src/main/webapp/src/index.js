@@ -93,7 +93,7 @@ export class Index {
     });
 
   }
-
+  //activate() is called before attached()
   activate() {
     window.addEventListener('keypress', this.boundHandler, false);
     

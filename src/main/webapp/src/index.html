@@ -1,6 +1,7 @@
 <!-- index.html -->
 <template>
     <require from="./calendars/datepicker"></require>
+    <require from="./common/customSelect"></require>
     <require from="./common/viewDateFormatter"></require>
 
         <div class="grid-block spa-background" style="overflow:visible;">
@@ -260,10 +261,8 @@
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Designer</span>
-                        <select name="" id="" value.bind="selectedBrand" change.delegate="filterChange($event.target)">
-                            <option value="">All</option>
-                            <option repeat.for="brand of brands" model.bind="brand.id">${brand.name}</option>
-                        </select>
+                        <select2 name="brandSelect" options.bind="brands" selected.bind="selectedBrand" change.delegate="filterChange($event.target)">
+                        </select2>
                         </span>
                     </div>
                     <!-- Seasons -->

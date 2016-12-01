@@ -1,6 +1,6 @@
 import {EventAggregator} from 'aurelia-event-aggregator';
 import {inject, customAttribute} from 'aurelia-framework';
-import 'jquery';
+import $ from 'jquery';
 import { datepicker } from 'jquery-ui';
 
 

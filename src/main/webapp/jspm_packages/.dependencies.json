@@ -95,7 +95,6 @@
   "npm:aurelia-route-recognizer@1.0.0": {
     "aurelia-path": "npm:aurelia-path@^1.0.0"
   },
-  "github:systemjs/plugin-css@0.1.25": {},
   "github:jspm/nodelibs-process@0.1.2": {
     "process": "npm:process@^0.11.0"
   },
@@ -242,5 +241,10 @@
     "aurelia-pal": "npm:aurelia-pal@^1.0.0",
     "aurelia-path": "npm:aurelia-path@^1.0.0",
     "aurelia-task-queue": "npm:aurelia-task-queue@^1.1.0"
-  }
+  },
+  "github:select2/select2@3.5.4": {
+    "jquery": "jspm:jquery",
+    "css": "jspm:css"
+  },
+  "github:systemjs/plugin-css@0.1.32": {}
 }
