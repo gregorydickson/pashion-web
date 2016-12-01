@@ -88,6 +88,39 @@ export class Messages {
             withPresence: true // also subscribe to presence instances.
         });
 
+        //get the history callback for this channel
+        this.pubnub.history(
+        {
+            channel: this.user.email,
+            reverse: true, // Setting to true will traverse the time line in reverse starting with the oldest message first.
+            count: 1000, // how many items to fetch
+            stringifiedTimeToken: true //, // false is the default
+            //start: '123123123123', // start time token to fetch
+            //end: '123123123133' // end timetoken to fetch
+        },
+        function (status, response) {
+            console.log("pubhub history error?" + status.error + " response.length(messages):" + response.messages.length);
+            var i;
+            for (i = 0; i < response.messages.length; i++) { 
+              parent.messages.push({
+                    text: response.messages[i].entry.text,
+                    time: response.messages[i].entry.sentAt,
+                    image: '',
+                    fromName: response.messages[i].entry.fromName,
+                    fromSurname: response.messages[i].entry.fromSurname,
+                    fromId: response.messages[i].entry.fromId,
+                    toName: response.messages[i].entry.toName,
+                    toSurname: response.messages[i].entry.toSurname,
+                    toId: response.messages[i].entry.toId,
+                    toMe: (response.messages[i].entry.toId == parent.user.email),
+                    fromMe: (response.messages[i].entry.fromId == parent.user.email)
+              });
+
+            }
+        }
+      );
+
+      $("#right-panel-body").animate({ scrollTop: $("#right-panel-body").prop("scrollHeight") });
     }
 
     sendMessage() {
@@ -101,7 +134,9 @@ export class Messages {
             toName: this.currentContact.name,
             toSurname: this.currentContact.surname,
             text: $("#msgInput").val(),
-            sentAt: new Date().toLocaleString()
+            sentAt: new Date().toLocaleString(),
+            toMe: false,
+            fromMe: false
         };
 
         // clear the input field
@@ -119,7 +154,6 @@ export class Messages {
                 console.log("pubhub error?" + status.error + " timestamp:" + response.timetoken);
             }
         );
-
         this.pubnub.publish({
                 message: message,
                 channel: this.currentContact.email,
@@ -128,7 +162,7 @@ export class Messages {
                 meta: { "cool": "meta" } // publish extra meta with the request
             },
             function(status, response) {
-                console.log("pubhub error?" + status.error + " timestamp:" + response.timetoken);
+                console.log("pubhub publish error?" + status.error + " timestamp:" + response.timetoken);
             }
         );
     }
