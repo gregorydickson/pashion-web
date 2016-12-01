@@ -38,7 +38,7 @@ export class Messages {
             });
         });
 
-        //pubnub
+        //pubnub listener
         var parent = this;
         this.pubnub.addListener({
 
@@ -82,8 +82,9 @@ export class Messages {
             }
         });
 
+        // pubnub subscribe to channels
         this.pubnub.subscribe({
-            channels: ['my_channel'],
+            channels: [ this.user.email ], // ['my_channel'],
             withPresence: true // also subscribe to presence instances.
         });
 
@@ -106,10 +107,22 @@ export class Messages {
         // clear the input field
         $('#msgInput').val("");
 
-        //pubnub
+        //pubnub to user and contact channels
         this.pubnub.publish({
                 message: message,
-                channel: 'my_channel',
+                channel: this.user.email,
+                sendByPost: false, // true to send via post
+                storeInHistory: true, //override default storage options
+                meta: { "cool": "meta" } // publish extra meta with the request
+            },
+            function(status, response) {
+                console.log("pubhub error?" + status.error + " timestamp:" + response.timetoken);
+            }
+        );
+
+        this.pubnub.publish({
+                message: message,
+                channel: this.currentContact.email,
                 sendByPost: false, // true to send via post
                 storeInHistory: true, //override default storage options
                 meta: { "cool": "meta" } // publish extra meta with the request
