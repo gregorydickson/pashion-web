@@ -54,7 +54,8 @@ export class CreateSampleRequest {
           this.http.fetch('/brand/addresses/'+item.brand.id)
               .then(response => response.json())
               .then(addresses => this.brandAddresses = addresses);
-          var ids = this.selectedProductIds;
+          this.sampleRequest.samples = [];
+          var ids = this.sampleRequest.samples;
           item.samples.forEach(function(item){
             ids.push(item.id);
           })
@@ -162,6 +163,22 @@ export class CreateSampleRequest {
           .then(calendar => {
               this.endCalendar = calendar;
           });
+  }
+
+  allsamples(event){
+
+    if(this.checked) {
+     
+    }else{
+      for (var i = 0, len = this.currentItem.samples.length; i < len; i++) {
+        if(!(this.sampleRequest.samples.includes(this.currentItem.samples[i].id))){
+          this.sampleRequest.samples.push(this.currentItem.samples[i].id);
+        }
+      }
+      this.updateAvailability();
+    }
+    
+    
   }
 
 

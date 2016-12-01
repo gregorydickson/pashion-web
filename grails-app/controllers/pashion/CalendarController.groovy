@@ -91,4 +91,28 @@ class CalendarController {
         aCalendar = calendarService.availableDaysForSamples(samples,localDate,aCalendar)
         render aCalendar as JSON
     }
+
+    def showAvailabilitySamples(){
+        def jsonObject = request.JSON
+        log.info "json:"+jsonObject
+        List samples = []
+        jsonObject.each{
+            samples << SearchableItem.get(it)
+        }
+        
+        def localDate = LocalDate.of(params.year.toInteger(),
+                                     params.month.toInteger(),
+                                     params.day.toInteger())
+
+        def aCalendar = new PashionCalendar( null,
+                                             params.month.toInteger(),
+                                             params.day.toInteger(),
+                                             params.year.toInteger(),
+                                             request.locale.toString(),
+                                             params.offset.toInteger(),
+                                             params.months.toInteger())
+        log.debug "showing availability for Samples"
+        aCalendar = calendarService.availableDaysForSamples(samples,localDate,aCalendar)
+        render aCalendar as JSON
+    }
 }

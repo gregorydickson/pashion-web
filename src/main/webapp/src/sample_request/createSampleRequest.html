@@ -188,7 +188,7 @@
                                 <td class="accordion w24">SELECT SAMPLES</td>
                                 <td class="accordion w73" style="text-align:right; padding-right: 0.5rem;" >Select All</td>
                                 <td class="accordion w3">
-                                    <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="selectAll">
+                                    <input type="checkbox"  change.delegate="allsamples($event)">
                                 </td>
                             </tr>
                     </table>
@@ -201,7 +201,7 @@
                             <td class="accordion w19">${sample.id}</td>
                             <td class="accordion w73">${sample.name}</td>
                             <td class="accordion w3">
-                               <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="selectedProductIds">
+                               <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="sampleRequest.samples">
                             </td>
                         </tr>
                     </table>
