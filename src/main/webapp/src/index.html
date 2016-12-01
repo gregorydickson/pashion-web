@@ -261,8 +261,10 @@
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Designer</span>
-                        <select2 name="brandSelect" options.bind="brands" selected.bind="selectedBrand" change.delegate="filterChange($event.target)">
-                        </select2>
+                        <select name="" id="" value.bind="selectedBrand" change.delegate="filterChange($event.target)">
+                            <option value="">All</option>
+                            <option repeat.for="brand of brands" model.bind="brand.id">${brand.name}</option>
+                        </select>
                         </span>
                     </div>
                     <!-- Seasons -->
