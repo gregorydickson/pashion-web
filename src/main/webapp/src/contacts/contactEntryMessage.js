@@ -47,10 +47,6 @@ export class ContactEntryMessage {
             
             this.userService.getUserDetails(response.userId).then(contact => {
               this.currentContact = contact;
-              console.log("got the Contact:"+response.userId);
-              console.log("name:"+this.currentContact.name);
-              console.log("got the Contact brand:"+this.currentContact.brand);
-
             });
             
     });
@@ -61,7 +57,6 @@ export class ContactEntryMessage {
     
   }
   
-
   setCurrentContact (id) {
     this.userService.getUserDetails(id).then(currentContact => {
       this.currentContact.name = currentContact.name;
@@ -70,7 +65,7 @@ export class ContactEntryMessage {
       this.currentContact.email = currentContact.email;
       this.currentContact.id = currentContact.id;
 
-      console.log("contact:"+this.name);
+      console.log("New set contact:"+this.name);
     });
   }
 

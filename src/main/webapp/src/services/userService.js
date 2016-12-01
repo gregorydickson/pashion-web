@@ -42,7 +42,7 @@ getUserDetails (id)
  */
 
   	getUserDetails (id) {
-		console.log("getting user details for: " + id);
+		// console.log("getting user details for: " + id);
 		var promise = new Promise((resolve, reject) => {
 		this.http.fetch('/user/show/' + id + ".json")
   			.then(response => response.json())

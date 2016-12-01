@@ -1,132 +1,125 @@
-import {HttpClient} from 'aurelia-fetch-client';
+import { HttpClient } from 'aurelia-fetch-client';
 import 'fetch';
-import {inject} from 'aurelia-framework';
-import {DateFormat} from 'common/dateFormat';
-import {UserService} from 'services/userService';
-import {singleton} from 'aurelia-framework'
-import {EventAggregator} from 'aurelia-event-aggregator';
+import { inject } from 'aurelia-framework';
+import { DateFormat } from 'common/dateFormat';
+import { UserService } from 'services/userService';
+import { singleton } from 'aurelia-framework'
+import { EventAggregator } from 'aurelia-event-aggregator';
 
 @inject(HttpClient, UserService, EventAggregator)
 @singleton()
 export class Messages {
 
-	messages = [];
-	user = {};
-	currentContact = {};
+    messages = [];
+    user = {};
+    currentContact = {};
 
-	// The Realtime client connection ////
-	ortcClient;
+    //pubnub
+    pubnub;
 
-  	// The Realtime channel
-  	chatChannel = "PashionChat";
+    constructor(http, userService, eventAggregator) {
+      this.http = http;
+      this.userService = userService;
+      this.user = this.userService.getUser().then(user => this.user = user);
+      this.ea = eventAggregator;
 
-	constructor (http, userService, eventAggregator) {
-
-	    
-	    this.http = http;
-    	this.userService = userService;
-    	this.user = this.userService.getUser().then(user => this.user = user);
-    	this.ea = eventAggregator;
-	}
-
-	attached () {
-		this.subscriber = this.ea.subscribe('setCurrentContact', response => {
-            
-            this.userService.getUserDetails(response.userId).then(contact => {
-              this.currentContact = contact;
-            });
-            
-    });
-
-    if (typeof ortcClient === "undefined") this.connectToRealtime();    
-      this.http.configure(config => {
-        config
-          .useStandardConfiguration();
+      // oubnub
+      this.pubnub = new PubNub({
+          subscribeKey: "sub-c-dd158aea-b76b-11e6-b38f-02ee2ddab7fe",
+          publishKey: "pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73",
+          ssl: true
       });
+    }
 
-	}
+    attached() {
+        this.subscriber = this.ea.subscribe('setCurrentContact', response => {
+            this.userService.getUserDetails(response.userId).then(contact => {
+                this.currentContact = contact;
+            });
+        });
 
-  //ORTC
+        //pubnub
+        var parent = this;
+        this.pubnub.addListener({
 
-  connectToRealtime() {
-    //var onMessage = this.onChatMessage;
-    var parent = this;
-    var filter = "message.fromId = '" + this.user.email + "' or message.toId = '" + this.user.email +"'";
-    loadOrtcFactory(IbtRealTimeSJType, function(factory, error) {
-    	if (error !== null) {
-     		console.log("ORTC factory error: " + error.message);
-    	} else {
-	      parent.ortcClient = factory.createClient();
-	      parent.ortcClient.setClusterUrl('https://ortc-developers.realtime.co/server/ssl/2.1/');
-	      
-	      console.log("Connecting to Realtime ...");
-	      parent.ortcClient.connect('dUI5Hv', 'anonymousToken');
+            message: function(m) {
+                // handle message
+                var channelName = m.channel; // The channel for which the message belongs
+                var channelGroup = m.subscription; // The channel group or wildcard subscription match (if exists)
+                var pubTT = m.timetoken; // Publish timetoken
+                var receivedMessage = m.message; // The Payload
+                console.log("pubnub new nessage:", receivedMessage);
 
-  		}	
- 
-	  // we need to wait for the connection to complete
-	  // before we subscribe the channel      
-      parent.ortcClient.onConnected = function(ortc) {
-        console.log("Connected to:" + parent.chatChannel);
-        
-        // subscribe the chat channel
-        // the onChatMessage callback function will handle new messages
-        parent.ortcClient.subscribeWithFilter(parent.chatChannel, true, filter,
-        	 function (ortc, channel, filtered, message) {
+                parent.messages.push({
+                    text: receivedMessage.text,
+                    time: receivedMessage.sentAt,
+                    image: '',
+                    fromName: receivedMessage.fromName,
+                    fromSurname: receivedMessage.fromSurname,
+                    fromId: receivedMessage.fromId,
+                    toName: receivedMessage.toName,
+                    toSurname: receivedMessage.toSurname,
+                    toId: receivedMessage.toId,
+                    toMe: (receivedMessage.toId == parent.user.email),
+                    fromMe: (receivedMessage.fromId == parent.user.email)
+                });
 
-				    var receivedMessage = JSON.parse(message);
-				    // var msgAlign = (receivedMessage.id == parent.myId ? "right" : "left");
-				  
-				    // format message to show on log;
-				    var msgLog = receivedMessage.text + " " + receivedMessage.sentAt + " from:" + receivedMessage.fromId + " to:" + receivedMessage.toId;
+                $("#right-panel-body").animate({ scrollTop: $("#right-panel-body").prop("scrollHeight") }, 500);
+            },
+            presence: function(p) {
+                // handle presence
+                var action = p.action; // Can be join, leave, state-change or timeout
+                var channelName = p.channel; // The channel for which the message belongs
+                var occupancy = p.occupancy; // No. of users connected with the channel
+                var state = p.state; // User State
+                var channelGroup = p.subscription; //  The channel group or wildcard subscription match (if exists)
+                var publishTime = p.timestamp; // Publish timetoken
+                var timetoken = p.timetoken; // Current timetoken
+                var uuid = p.uuid; // UUIDs of users who are connected with the channel
+            },
+            status: function(s) {
+                console.log("pubnub callback status:", s);
+            }
+        });
 
-				    parent.messages.push ( 	
-				    					{text: receivedMessage.text,
-				    					time: receivedMessage.sentAt,
-				    					image: '',
-				    					fromName: receivedMessage.fromName,
-				    					fromSurname: receivedMessage.fromSurname,
-				    					fromId: receivedMessage.fromId,
-				    					toName: receivedMessage.toName,
-				    					toSurname: receivedMessage.toSurname,
-				    					toId: receivedMessage.toId,
-				    					toMe: (receivedMessage.toId == parent.user.email),
-				    					fromMe: (receivedMessage.fromId == parent.user.email)});
-				    
-            $("#right-panel-body").animate({scrollTop: $("#right-panel-body").prop("scrollHeight")}, 500);
-           // $("#tab-messages-body").animate({scrollTop: $("#tabs-messages-body").prop("scrollHeight")}, 500);
-				    console.log(msgLog); 
-        	}
-       ); 
-      }
+        this.pubnub.subscribe({
+            channels: ['my_channel'],
+            withPresence: true // also subscribe to presence instances.
+        });
 
+    }
 
-    });
-  }
+    sendMessage() {
+        //console.log("Sendmessage from my id:" + this.user.id + " email:" + this.user.email +
+          //  " TO id:" + this.currentContact.id + " email:" + this.currentContact.email);
+        var message = {
+            fromId: this.user.email,
+            fromName: this.user.name,
+            fromSurname: this.user.surname,
+            toId: this.currentContact.email,
+            toName: this.currentContact.name,
+            toSurname: this.currentContact.surname,
+            text: $("#msgInput").val(),
+            sentAt: new Date().toLocaleString()
+        };
 
-  sendMessage() {
-  	console.log("Sendmessage from my id:" + this.user.id + " email:" + this.user.email + 
-  		" TO id:" + this.currentContact.id + " email:" + this.currentContact.email);
-    var message = {
-      fromId: this.user.email,
-      fromName: this.user.name,
-      fromSurname: this.user.surname,
-      toId: this.currentContact.email,
-      toName: this.currentContact.name,
-      toSurname:  this.currentContact.surname,
-      text: $("#msgInput").val(),
-      sentAt: new Date().toLocaleString()
-    };
+        // clear the input field
+        $('#msgInput').val("");
 
-    this.ortcClient.send(this.chatChannel, JSON.stringify(message));
-    
-    // clear the input field
-    $('#msgInput').val("");
-  }
+        //pubnub
+        this.pubnub.publish({
+                message: message,
+                channel: 'my_channel',
+                sendByPost: false, // true to send via post
+                storeInHistory: true, //override default storage options
+                meta: { "cool": "meta" } // publish extra meta with the request
+            },
+            function(status, response) {
+                console.log("pubhub error?" + status.error + " timestamp:" + response.timetoken);
+            }
+        );
+    }
 
 
 
 }
-
-
-
