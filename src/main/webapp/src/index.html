@@ -261,7 +261,7 @@
                     <div class="grid-content shrink">
                         
                             <span class="form-label">Designer</span>
-                        <select2 name="brandSelect" options.bind="brands" selected.bind="selectedBrand"  >
+                        <select2 name="brandSelect" options.bind="brands" selected.bind="selectedBrand" change.delegate="filterChange($event.target)" style="min-width:50%;">
                         </select2>
                        
                     </div>
