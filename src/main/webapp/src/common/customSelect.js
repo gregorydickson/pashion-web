@@ -1,4 +1,4 @@
-import {inject, customElement} from 'aurelia-framework';
+import {bindable, inject, customElement} from 'aurelia-framework';
 
 // Import JSPM modules we installed earlier
 import $ from 'jquery';
@@ -8,9 +8,9 @@ import 'select2';
 @customElement('select2') // Define the name of our custom element
 @inject(Element) // Inject the instance of this element
 export class CustomSelect {
-    name = null; // The name of our custom select
-    selected = false; // The default selected value
-    options = []; // The label/option values
+    @bindable name = null; // The name of our custom select
+
+    @bindable options = []; // The label/option values
 
     constructor(element) {
         this.element = element;
