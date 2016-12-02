@@ -154,7 +154,7 @@ class SampleRequestController {
         sr.returnBy = jsonObject.returnBy
 
         sr.requestStatusBrand = "Pending"
-        sr.requestStatusPress = ""
+        sr.requestStatusPress = "Pending"
         sr.itemsGot = 0
         sr.itemsOut = 0
         sr.itemsIn = 0
