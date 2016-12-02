@@ -25,6 +25,9 @@ export class CreateSampleRequest {
   startOffset = 0;
   endOffset = 0;
 
+  startDay = '';
+  endDay = '';
+
 
 
   constructor(http, controller){
@@ -78,6 +81,7 @@ export class CreateSampleRequest {
   setStartDate(event,day){
   	console.log("start date"+event);
   	console.log("day"+day);
+    this.startDay = day;
   	var element = event.srcElement.parentElement;
   	var document = element.ownerDocument;
   	var elems = document.querySelectorAll(".start-selected");
@@ -90,19 +94,24 @@ export class CreateSampleRequest {
 
   }
   setEndDate(event, day){
-
-
-  	console.log("end date"+event);
+    this.endDay = day;
+    let enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber,day)
+  	let startdate = new Date(this.startCalendar.calendarMonths[0].year,this.startCalendar.calendarMonths[0].monthNumber,this.startDay)
+    if(this.startDay === '' || enddate < startdate ){
+      return
+    }
+    console.log("end date"+event);
   	console.log("day"+day);
-  	var element = event.srcElement.parentElement;
-  	var document = element.ownerDocument;
-  	var elems = document.querySelectorAll(".end-selected");
+  	let element = event.srcElement.parentElement;
+  	let document = element.ownerDocument;
+  	let elems = document.querySelectorAll(".end-selected");
   	[].forEach.call(elems, function(el) {
     	el.classList.remove("end-selected");
 	  });
   	element.className += " end-selected";
   	this.redraw(element);
     this.sampleRequest.endDate = this.endCalendar.calendarMonths[0].year+"-"+this.endCalendar.calendarMonths[0].monthNumber+"-"+day;
+    
     if(this.sampleRequest.startDate !== '' && this.sampleRequest.endDate !== ''){
       document.getElementById("CreateSampleRequestButton").disabled = false; 
     }

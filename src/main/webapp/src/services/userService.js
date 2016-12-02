@@ -5,6 +5,8 @@ import 'fetch';
 @inject(HttpClient)
 export class UserService {
 
+    showIntro = true;
+
     constructor(http) {
         http.configure(config => {
             config
@@ -86,6 +88,13 @@ getUserDetails (id)
                 resolve(this.user);
         });
         return promise;
+    }
+
+    introShown(){
+      this.showIntro = false;
+    }
+    show(){
+      return this.showIntro;
     }
 
 
