@@ -38,14 +38,14 @@ export class CommsFooter {
     this.dialogService.open({viewModel: CreateDialogImportContacts, model: itemId })
       .then(response => {});
   }
-
+/*
   closeExpand(buttonNumber) {
     var buttonChoice = document.getElementById("button" + buttonNumber);
     var panelChoice = document.getElementById("panel" + buttonNumber);
     buttonChoice.classList.toggle("active");
     panelChoice.classList.toggle("show");  
   }
-
+*/
     sendMessage () {
     this.messages.sendMessage();
   }
