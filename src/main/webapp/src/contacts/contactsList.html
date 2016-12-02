@@ -63,7 +63,7 @@
                                             
                                             <!-- edit contact modal popup -->
                                                      <div id="${userVar.id}" class="look-menu-absolute lookEditContactClass">
-                                                        <span class="look-menu-heading">CONTACT</span>
+                                                        <span class="look-menu-heading">${userVar.name}</span>
                                                         <ul class="look-menu-list">
                                                             <li if.bind="(userVar.email != user.email)" class="look-menu-item">
                                                                 <a href="#" click.delegate="initiateMessage(userVar.id)" class="look-menu-link">Send Message</a>
