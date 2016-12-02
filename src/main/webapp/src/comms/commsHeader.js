@@ -63,17 +63,23 @@ export class CommsHeader {
       //switch the HTML
       var menuHeads = document.getElementById("tab-"+ this.comms.status);  
       var menuBodies = document.getElementById("tab-"+ this.comms.status + "-body");
+      var menuFooters = document.getElementById("tab-"+ this.comms.status + "-footer");
       menuHeads.classList.toggle("look-menu-hide");
       menuHeads.classList.toggle("look-menu-show");
       menuBodies.classList.toggle("look-menu-hide");
       menuBodies.classList.toggle("look-menu-show");
+      menuFooters.classList.toggle("look-menu-hide");
+      menuFooters.classList.toggle("look-menu-show");
     	this.comms.status = id;
       menuHeads = document.getElementById("tab-"+id);
       menuBodies = document.getElementById("tab-"+id+ "-body");
+      menuFooters = document.getElementById("tab-"+id+ "-footer");
       menuHeads.classList.toggle("look-menu-show");
       menuHeads.classList.toggle("look-menu-hide");
       menuBodies.classList.toggle("look-menu-show");
       menuBodies.classList.toggle("look-menu-hide");
+      menuFooters.classList.toggle("look-menu-show");
+      menuFooters.classList.toggle("look-menu-hide");
       // Restore others
       if (this.comms.status != this.statusValues.messages)
         $(document).ready(function() { $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight")); });
