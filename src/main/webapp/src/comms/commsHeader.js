@@ -82,7 +82,7 @@ export class CommsHeader {
       menuFooters.classList.toggle("look-menu-hide");
       // Restore others
       if (this.comms.status != this.statusValues.messages)
-        $(document).ready(function() { $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight")); });
+         $("#right-panel-body").scrollTop(this.rememberScroll);
       // Scroll messages to the end
       if (this.comms.status == this.statusValues.messages)
         window.setTimeout(function () {

@@ -164,6 +164,9 @@ export class Messages {
                 console.log("pubhub publish error?" + status.error + " timestamp:" + response.timetoken);
             }
         );
+        window.setTimeout(function () {
+              $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
+            },500); // major kludge to scroll messages
     }
 
 
