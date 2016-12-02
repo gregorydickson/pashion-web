@@ -155,9 +155,8 @@ class SampleRequestController {
 
         sr.requestStatusBrand = "Pending"
         sr.requestStatusPress = "Pending"
-        sr.itemsGot = 0
-        sr.itemsOut = 0
-        sr.itemsIn = 0
+     
+
         SearchableItem item
 
         jsonObject.samples.each{
