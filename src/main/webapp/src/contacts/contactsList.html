@@ -39,9 +39,9 @@
                                 <table class="width100">
                                     <tr>
                                         <td>
-                                            <div class="contact-entry">
-                                                <img if.bind="(userVar.image)" src=${userVar.image} class="clip-circle" />
-                                                <img if.bind="(!userVar.image)" src="/assets/andro.png" class="clip-circle" />
+                                            <div>
+                                                <img if.bind="(userVar.image)" src=${userVar.image} class="clip-circle contact-entry" />
+                                                <div if.bind="(!userVar.image)" style="margin-right: 1rem;" class="avatar-circle">${userVar.name.charAt(0)}</div>
                                                <!--  <div class="contact-mark">
                                                     <img src="/assets/CheckMark.png" alt="">
                                                     <!-- <img src="/assets/QuestionMark.png" alt=""> 

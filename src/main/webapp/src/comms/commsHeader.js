@@ -86,6 +86,8 @@ export class CommsHeader {
       // Scroll messages to the end
       if (this.comms.status == this.statusValues.messages)
         window.setTimeout(function () {
+
+              $("#right-panel-body").height($("#right-panel-body").height()+500); // RM kludge to redraw flex box with new elements
               $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
             },1000); // major kludge to scroll messages
 
