@@ -71,6 +71,10 @@ export class CreateSampleRequest {
     this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => this.payment = payment);
   }
 
+  attached(){
+    document.getElementById("CreateSampleRequestButton").disabled = true;
+  }
+
   setStartDate(event,day){
   	console.log("start date"+event);
   	console.log("day"+day);
@@ -86,6 +90,8 @@ export class CreateSampleRequest {
 
   }
   setEndDate(event, day){
+
+
   	console.log("end date"+event);
   	console.log("day"+day);
   	var element = event.srcElement.parentElement;
@@ -97,6 +103,9 @@ export class CreateSampleRequest {
   	element.className += " end-selected";
   	this.redraw(element);
     this.sampleRequest.endDate = this.endCalendar.calendarMonths[0].year+"-"+this.endCalendar.calendarMonths[0].monthNumber+"-"+day;
+    if(this.sampleRequest.startDate !== '' && this.sampleRequest.endDate !== ''){
+      document.getElementById("CreateSampleRequestButton").disabled = false; 
+    }
   }
 
   redraw(element){
