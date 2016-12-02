@@ -47,7 +47,7 @@ class SampleRequestController {
         sr.requestStatusBrand = "Approved"
         sr.requestStatusPress = "Approved"
         sr.save(flush:true)
-        def sent = [message:'Sample Request Marked Ready to Ship']
+        def sent = [message:'Sample Request Approved']
         render sent as JSON
     }
     def brandSend(){
