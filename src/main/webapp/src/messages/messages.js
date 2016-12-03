@@ -13,6 +13,7 @@ export class Messages {
     messages = [];
     user = {};
     currentContact = {};
+    searchTerm = ''; // hard wired search goes here
 
     //pubnub
     pubnub;
@@ -162,6 +163,15 @@ export class Messages {
               $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
             },500); // major kludge to scroll messages
     }
+
+    filterFunc(searchExpression, value){
+     
+     let itemValue = value.text;
+     if(!searchExpression || !itemValue) return false;
+     
+     return itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;
+     
+  }
 
 
 
