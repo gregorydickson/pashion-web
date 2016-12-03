@@ -16,6 +16,7 @@ export class ContactsList {
 
   user = {};
   users = [];
+  searchTerm = ''; // hard wired search goes here
   
 
   constructor(http, controller, dialogService, userService, commsHeader, eventAggregator){
@@ -71,6 +72,17 @@ export class ContactsList {
   	this.commsHeader.setStatusTab(this.commsHeader.statusValues.messages);
     $("#right-panel-body").animate({scrollTop: $("#right-panel-body").prop("scrollHeight")}, 500);
       
+  }
+
+    filterFunc(searchExpression, value){
+     
+     let itemValue = value.name + value.surname
+     if (value.brand != null) itemValue += value.brand.name; 
+     if (value.presshouse !=null) itemValue += value.pressHouse.name;
+     if(!searchExpression || !itemValue) return false;
+     
+     return itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;
+     
   }
 
 

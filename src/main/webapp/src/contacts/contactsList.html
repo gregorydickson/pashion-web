@@ -1,6 +1,7 @@
 <template>
 
   <require from="./sort"></require>
+  <require from="./filter"></require>
  <!-- <require from="./take"></require> -->
             <!-- category -->
           <!--   <div class="grid-block shrink vertical" style="margin-left:1rem; margin-right:1rem;" > -->
@@ -35,7 +36,7 @@
                   <!--   <div id="panel12" class="panel grid-block vertical  noscroll show" style="display: block; margin-top:0.5rem;"> -->
 
 
-                        <div  repeat.for="userVar of users | sort:'name':'ascending'"  class="grid-block vertical " style="width:255px; overflow: visible;margin-left: 1rem; margin-bottom:1.5rem;">
+                        <div  repeat.for="userVar of users | sort:'name':'ascending' | filter:searchTerm:filterFunc"  class="grid-block vertical " style="width:255px; overflow: visible;margin-left: 1rem; margin-bottom:1.5rem;">
                                 <table class="width100">
                                     <tr>
                                         <td>
