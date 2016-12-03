@@ -2,12 +2,17 @@
 
   <require from="./filter"></require>
 
+  	<!-- Search messages -->
+ 	<div class="grid-block noscroll">
+	    <input type="search" value.two-way="searchTerm" class="search-box" id="search-requests" placeholder="Search Messages" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Messages'">
+	</div>
+
     <div repeat.for="message of messages | filter:searchTerm:filterFunc" id="message-container" class="grid-block vertical" style="margin-left:1rem; margin-right:1rem;">
        <!--  <compose view-model="messages/messageEntry"></compose> -->
         <!-- <compose view-model="messages/messageEntryNotMe"></compose> -->
 
         <!-- from me -->
-	    <div show.bind="(message.fromMe && (message.toId == currentContact.email))" class="grid-block align-right inter-message-gap">
+	    <div show.bind="(message.fromMe && (message.toId == currentContact.email))" class="grid-block scroll align-right inter-message-gap">
 	        <table class="" style="table-layout:fixed;">
 	            <tr>
 	                <td colspan="2">
