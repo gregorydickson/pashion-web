@@ -1,13 +1,13 @@
 <template >
 
   <require from="./filter"></require>
-<div class="grid-block vertical shrink" style="height: 100%; width:100%">
+<div  class="grid-block vertical shrink" style="height: 100%; width:100%">
   	<!-- Search messages -->
  	<div class="grid-block noscroll" style="margin-left:1rem; width:255px;">
 	    <input type="search" value.two-way="searchTerm" class="search-box" id="search-requests" placeholder="Search Messages" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Messages'">
 	</div>
 
-	<div class="grid-block vertical scroll" style="margin-top:32px; width:278px;">
+	<div id="messages-inside-top" class="grid-block vertical scroll" style="margin-top:32px; width:278px;">
 	    <div repeat.for="message of messages | filter:searchTerm:filterFunc" id="message-container"  style="margin-left:1rem; margin-right:1rem;">
 	       <!--  <compose view-model="messages/messageEntry"></compose> -->
 	        <!-- <compose view-model="messages/messageEntryNotMe"></compose> -->

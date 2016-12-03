@@ -160,7 +160,7 @@ export class Messages {
             }
         );
         window.setTimeout(function () {
-              $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
+              $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight"));
             },500); // major kludge to scroll messages
     }
 
