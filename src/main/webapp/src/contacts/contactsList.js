@@ -76,7 +76,7 @@ export class ContactsList {
 
     filterFunc(searchExpression, value){
      
-     let itemValue = value.name + value.surname
+     let itemValue = value.name + value.surname;
      if (value.brand != null) itemValue += value.brand.name; 
      if (value.presshouse !=null) itemValue += value.pressHouse.name;
      if(!searchExpression || !itemValue) return false;
