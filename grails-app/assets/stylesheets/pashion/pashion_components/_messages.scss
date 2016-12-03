@@ -20,7 +20,7 @@ $message-box-width: 215px;
   font-size: $font-size-mid;
   color: $black;
   padding: 9px;
-  margin-top: 0.5rem;
+  //margin-top: 0.5rem;
   display: inline-block;
 }
 
@@ -127,7 +127,7 @@ $message-box-width: 215px;
 }
 
 .inter-message-gap {
-  margin: 1.5rem -5px 0 -5px;
+  margin: 1rem -5px 0 -5px;
 }
 
 .message-new-message-box {
