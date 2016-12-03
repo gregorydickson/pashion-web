@@ -43,7 +43,7 @@ export class ContactsList {
   lookEditContact(id){
     var menu = document.getElementById(id); 
     menu.classList.toggle("look-menu-show");
-    $("#right-panel-body").height($("#right-panel-body").height()+165); // kludge to grow container to get menu, should worklike request list in index, seems to trigger a re-calc
+    $("#right-panel-body").height($("#right-panel-body").height()+160); // kludge to grow container to get menu, should worklike request list in index, seems to trigger a re-calc
 
   }
 

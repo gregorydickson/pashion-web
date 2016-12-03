@@ -1,26 +1,27 @@
 <template>
-        <!-- white lip at bottom of scroll region -->
-        <div class="grid-content shrink scrolling-fat-lip"></div>
+        <!-- white lip at bottom of scroll region  -->
+        <div class="grid-block vertical">
+            <div class="grid-block  scrolling-fat-lip" ></div> 
 
-        <!-- messages tab -->
-        <div id="tab-messages-footer" class="grid-block look-menu-hide">
-            <!-- New message -->
-            <div class="grid-content align-right shrink">
-                <input type="text" id="msgInput" class="message-new-message-box" placeholder="New Message">
+            <!-- messages tab -->
+            <div id="tab-messages-footer" class="grid-block look-menu-hide">
+                <!-- New message -->
+                <div class="grid-content align-right shrink">
+                    <input type="text" id="msgInput" class="message-new-message-box" placeholder="New Message">
+                </div>
+                <!--  <div class="grid-block align-right shrink">
+                    <a class="button" click.delegate="sendMessage()">Send Message</a>
+                </div> -->
             </div>
-            <!--  <div class="grid-block align-right shrink">
-                <a class="button" click.delegate="sendMessage()">Send Message</a>
-            </div> -->
+
+            <!-- contacts tab -->    
+            <div id="tab-contacts-footer" class="grid-block shrink look-menu-show">
+                <!-- BUTTONS -->
+                <div class="grid-block align-center shrink">
+                    <a class="hollow button" href="#" click.delegate="createDialogNewContact(1)">New Contact...</a>
+                    <a class="button" href="#" click.delegate="CreateDialogImportContacts(1)">Import Contacts...</a>
+                </div>
+           </div>
         </div>
-
-        <!-- contacts tab -->    
-        <div id="tab-contacts-footer" class="grid-block shrink look-menu-show">
-            <!-- BUTTONS -->
-            <div class="grid-block align-center shrink">
-                <a class="hollow button" href="#" click.delegate="createDialogNewContact(1)">New Contact...</a>
-                <a class="button" href="#" click.delegate="CreateDialogImportContacts(1)">Import Contacts...</a>
-            </div>
-
-       </div>
 
 </template>
