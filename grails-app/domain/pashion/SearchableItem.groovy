@@ -12,7 +12,7 @@ import java.time.ZoneId
 class SearchableItem {
 
 	Long id
-	String name //string for ID set by user For Look this is the Look ID which matches Vogue
+	String name //string for ID set by user For Look this is the Look ID which matches Vogue Runway
 	String description
 	Brand brand
 	String sex
@@ -45,7 +45,6 @@ class SearchableItem {
 	Season season
 
 	Date fromDate
-	Date toDate
 
 	Long userCreatedId
 	Long lastModifiedUserId
@@ -87,7 +86,6 @@ class SearchableItem {
 		theme nullable:true
 
 		fromDate nullable:true
-		toDate nullable:true
 		
 		look nullable: true 
 		owner nullable:true
@@ -144,45 +142,43 @@ class SearchableItem {
 	 * using the fromDate and ToDate on the Look (Samples don't use fromDate and ToDate).
 	 * Used to mark available Days in a calendar month
 	 *
-	 * @param monthToCheck the month to use for finding any booked days
+	 * 
 	 * @param pashionCalendar calendar to be mutated with any booked days for the monthToCheck
 	 */
 	PashionCalendar availableDaysInMonth(PashionCalendar pashionCalendar){
 		LocalDate start = fromDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-		LocalDate end = toDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
 		log.info "Searchable Item - available days in month"
-		if(pashionCalendar.calendarMonths[0].sameMonth(start)
-		   && pashionCalendar.calendarMonths[0].sameMonth(end)) {
+		switch(start){
+		
+			case {pashionCalendar.calendarMonths[0].sameMonth(start)}:
+				log.info "available Days in month - same month"
+				pashionCalendar = startInThisMonth(pashionCalendar, start)
+				break
+			
+			case {pashionCalendar.calendarMonths[0].beforeThisMonth(start)}:
+			log.info "Before this month"
+				pashionCalendar = monthNotAvailable(pashionCalendar)
+				break
 
-			pashionCalendar = inSameMonth(pashionCalendar, start, end)
-		
-		} else if (pashionCalendar.calendarMonths[0].sameMonth(start)){
-			
-			pashionCalendar = startInSameMonth()
-		
-		} else if(pashionCalendar.calendarMonths[0].sameMonth(end)){
-			
-			pashionCalendar = endInSameMonth(pashionCalendar, end)
-		
+			case {pashionCalendar.calendarMonths[0].afterThisMonth(start)}:
+				pashionCalendar = monthAvailable(pashionCalendar)
+				break
 		}
 		pashionCalendar
-
 	}
 
-	PashionCalendar inSameMonth(PashionCalendar pashionCalendar, LocalDate start,
-									LocalDate end){
-		log.info "Sample Request - start and end In Same Month"
-		IntRange range = start.getDayOfMonth()..end.getDayOfMonth()
+	PashionCalendar monthNotAvailable(PashionCalendar pashionCalendar){
+		IntRange range = 1..pashionCalendar.calendarMonths[0].numberOfDays
 		range.each{
 			pashionCalendar.calendarMonths[0].days[it].event = 
-					pashionCalendar.calendarMonths[0].days[it].event + " available"
+						pashionCalendar.calendarMonths[0].days[it].event + " not-available"
 		}
 		pashionCalendar
-
 	}
 
-	PashionCalendar startInSameMonth(PashionCalendar pashionCalendar, LocalDate start){
-		IntRange range = start.getDayOfMonth()..pashionCalendar.calendarMonths[0].numberOfDays
+	PashionCalendar monthAvailable(PashionCalendar pashionCalendar){
+		log.info "Month Available"
+		IntRange range = 1..pashionCalendar.calendarMonths[0].numberOfDays
 		range.each{
 			pashionCalendar.calendarMonths[0].days[it].event = 
 						pashionCalendar.calendarMonths[0].days[it].event + " available"
@@ -190,14 +186,22 @@ class SearchableItem {
 		pashionCalendar
 	}
 
-	PashionCalendar endInSameMonth(PashionCalendar pashionCalendar, LocalDate end){
-		IntRange range = 1..end.getDayOfMonth()
+	PashionCalendar startInThisMonth(PashionCalendar pashionCalendar, LocalDate start){
+		IntRange range = 1..(start.getDayOfMonth()-1)
+		range.each{
+			log.info "not available:"+it
+			pashionCalendar.calendarMonths[0].days[it].event = 
+						pashionCalendar.calendarMonths[0].days[it].event + " not-available"
+		}
+		range = start.getDayOfMonth()..pashionCalendar.calendarMonths[0].numberOfDays
 		range.each{
 			pashionCalendar.calendarMonths[0].days[it].event = 
 						pashionCalendar.calendarMonths[0].days[it].event + " available"
 		}
 		pashionCalendar
 	}
+
+	
 	
 	static belongsTo = [brandCollection: BrandCollection]
 	
