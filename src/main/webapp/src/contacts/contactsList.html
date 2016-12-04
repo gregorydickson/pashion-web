@@ -3,16 +3,16 @@
   <require from="./sort"></require>
   <require from="./filter"></require>
 
-<div  class="grid-block vertical shrink" style="max-height: 100%; width:100%; margin-top:1.5rem;">
+<div  class="grid-block vertical shrink" style="width:100%; margin-top:1.5rem;">
   <!-- Search contacts -->
-    <div class="grid-block noscroll" style="margin-left:1rem; width:255px;">
+    <div class="grid-block shrink" style="margin-left:1rem; width:255px;">
         <input type="search" value.two-way="searchTerm" class="search-box" id="search-contacts" placeholder="Search Contacts" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Contacts'">
     </div>
  <!-- <require from="./take"></require> -->
             <!-- category -->
           <!--   <div class="grid-block shrink vertical" style="margin-left:1rem; margin-right:1rem;" > -->
-
-                  <!--   <table class="big-accordion">
+          <div class="grid-block shrink" style="margin-left:1rem; margin-bottom:1rem;">
+                    <table class="big-accordion">
                         <tr>
                             <td class="accordion-grey" style="width:20px;">
                                 <button id="button11" class="accordion" click.delegate="closeExpand(11)"></button>
@@ -21,14 +21,12 @@
                             </td>
                         </tr>
                     </table>
-                    <div id="panel11" class="panel grid-block vertical" style="margin-top:0.5rem;">
-                        <div>
-                        </div>
-                    </div> -->
+                    <div id="panel11" class="panel grid-block vertical" style="margin-top:0.5rem;"></div>
+                </div>
 
                 <!-- category -->
-
-                 <!--   <table class="big-accordion">
+<div class="grid-block shrink" style="margin-left:1rem; margin-bottom:1rem;"">
+                   <table class="big-accordion">
                         <tr>
                             <td class="accordion-grey" style="width:20px;">
                                 <button id="button12" class="accordion active" click.delegate="closeExpand(12)"></button>
@@ -36,12 +34,12 @@
                             <td class="accordion-grey"> <span>Alphabetical</span>
                             </td>
                         </tr>
-                    </table> -->
-
+                    </table> 
+</div>
 
                   <!--   <div id="panel12" class="panel grid-block vertical  noscroll show" style="display: block; margin-top:0.5rem;"> -->
 
-                <div id="contacts-inside-top" class="grid-block vertical scroll " style="margin-top:32px;">
+                <div id="panel12" class="panel grid-block vertical scroll show" style="">
                         <div id="contacts-inside-top" repeat.for="userVar of users | sort:'name':'ascending' | filter:searchTerm:filterFunc"  class="" style="width:255px; overflow: visible;margin-left: 1rem; margin-bottom:1.5rem;">
                                 <table class="width100">
                                     <tr>

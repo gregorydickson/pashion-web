@@ -48,6 +48,13 @@ export class ContactsList {
 
   }
 
+  closeExpand(buttonNumber) {
+    var buttonChoice = document.getElementById("button" + buttonNumber);
+    var panelChoice = document.getElementById("panel" + buttonNumber);
+    buttonChoice.classList.toggle("active");
+    panelChoice.classList.toggle("show");  
+  }
+
   // Create dialog edit contact 
 
   createDialogEditContact(id) {
