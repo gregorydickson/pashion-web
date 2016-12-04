@@ -8,6 +8,7 @@ import {DateFormat} from 'common/dateFormat';
 export class CreateDialogNewContact {
   static inject = [DialogController];
 
+  newUser = {};
 
   constructor(http, controller){
     this.controller = controller;
