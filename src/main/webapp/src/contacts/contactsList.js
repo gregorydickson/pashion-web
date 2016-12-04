@@ -18,6 +18,7 @@ export class ContactsList {
   users = [];
   searchTerm = ''; // hard wired search goes here
   
+  
 
   constructor(http, controller, dialogService, userService, commsHeader, eventAggregator){
 	    this.controller = controller;
