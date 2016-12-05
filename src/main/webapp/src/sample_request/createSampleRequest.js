@@ -111,8 +111,9 @@ export class CreateSampleRequest {
   	element.className += " start-selected";
   	this.redraw(element);
   	this.sampleRequest.startDate = this.startCalendar.calendarMonths[0].year+"-"+this.startCalendar.calendarMonths[0].monthNumber+"-"+day;
-
+    this.enableCheck();
   }
+
   setEndDate(event, day){
     this.endDay = day;
     let enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber,day)
@@ -131,11 +132,26 @@ export class CreateSampleRequest {
   	element.className += " end-selected";
   	this.redraw(element);
     this.sampleRequest.endDate = this.endCalendar.calendarMonths[0].year+"-"+this.endCalendar.calendarMonths[0].monthNumber+"-"+day;
+    this.enableCheck();
     
-    if(this.sampleRequest.startDate !== '' && this.sampleRequest.endDate !== ''){
+  }
+
+  enableCheck(){
+    
+    if((this.sampleRequest.samples === undefined) ||
+       (this.sampleRequest.samples.length == 0) ||
+       (this.sampleRequest.startDate === undefined) ||
+       (this.sampleRequest.startDate == '') ||
+       (this.sampleRequest.endDate === undefined) ||
+       (this.sampleRequest.endDate == '')){
+          document.getElementById("CreateSampleRequestButton").disabled = true;
+          console.log("button DIS abled");
+    } else{
       document.getElementById("CreateSampleRequestButton").disabled = false; 
+      console.log("button ENabled");
     }
   }
+  
 
   redraw(element){
     element.style.display='none';
@@ -243,6 +259,7 @@ export class CreateSampleRequest {
           .then(calendar => {
               this.startCalendar = calendar;
           });
+    this.enableCheck();
   }
 
   allSamplesSelected() {
@@ -256,6 +273,7 @@ export class CreateSampleRequest {
     } else {
       this.selectAll = true;
     }
+    this.enableCheck();
   }
 
   submit(){
