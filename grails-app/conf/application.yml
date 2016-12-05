@@ -39,13 +39,13 @@ environments:
             username: pashionweb
             password: ETWxa634WwxGaW6v
            
-    test:
+    production:
         dataSource:
             dbCreate: update
             url: jdbc:mysql://pashionweb.c7nidmmcu7kv.us-east-1.rds.amazonaws.com:3306/pashionweb
             username: pashionweb
             password: ETWxa634WwxGaW6v
-    production:
+    test:
         dataSource:
             dbCreate: update
             url: jdbc:mysql://pashion-prod.cdtseeb9vmzk.eu-central-1.rds.amazonaws.com:3306/pashionprod
