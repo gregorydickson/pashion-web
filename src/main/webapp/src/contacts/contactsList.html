@@ -1,91 +1,88 @@
 <template>
-
-  <require from="./sort"></require>
-  <require from="./filter"></require>
-
-<div  class="grid-block vertical shrink" style="max-height: 100%; width:100%; margin-top:1.5rem;">
-  <!-- Search contacts -->
-    <div class="grid-block noscroll" style="margin-left:1rem; width:255px;">
-        <input type="search" value.two-way="searchTerm" class="search-box" id="search-contacts" placeholder="Search Contacts" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Contacts'">
-    </div>
- <!-- <require from="./take"></require> -->
-            <!-- category -->
-          <!--   <div class="grid-block shrink vertical" style="margin-left:1rem; margin-right:1rem;" > -->
-
-                  <!--   <table class="big-accordion">
+    <require from="./sort"></require>
+    <require from="./filter"></require>
+    <div class="grid-block vertical shrink" style="width:100%; margin-top:1.5rem;">
+        <!-- Search contacts -->
+        <div class="grid-block shrink" style="margin-left:1rem; width:255px;">
+            <input type="search" value.two-way="searchTerm" class="search-box" id="search-contacts" placeholder="Search Contacts" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Contacts'">
+        </div>
+        <!-- <require from="./take"></require> -->
+        <!-- category -->
+        <!--   <div class="grid-block shrink vertical" style="margin-left:1rem; margin-right:1rem;" > -->
+        <div class="grid-block shrink" style="margin-left:1rem; margin-bottom:1rem;">
+            <table class="big-accordion">
+                <tr>
+                    <td class="accordion-grey" style="width:20px;">
+                        <button id="button11" class="accordion" click.delegate="closeExpand(11)"></button>
+                    </td>
+                    <td class="accordion-grey"> 
+                        <span>Recent Activity</span>
+                        <span if.bind="(contactActivity==true)" class="alert-box-small"></span>
+                    </td>
+                </tr>
+            </table>
+            <div id="panel11" class="panel grid-block vertical" style="margin-top:0.5rem;"></div>
+        </div>
+        <!-- category -->
+        <div class="grid-block shrink" style="margin-left:1rem; margin-bottom:1rem;">
+                   <table class="big-accordion ">
                         <tr>
-                            <td class="accordion-grey" style="width:20px;">
-                                <button id="button11" class="accordion" click.delegate="closeExpand(11)"></button>
+                            <td class="accordion-grey " style="width:20px; ">
+                                <button id="button12 " class="accordion active " click.delegate="closeExpand(12) "></button>
                             </td>
-                            <td class="accordion-grey"> <span>Recent Activity</span>
+                            <td class="accordion-grey "> <span>Alphabetical</span>
                             </td>
                         </tr>
-                    </table>
-                    <div id="panel11" class="panel grid-block vertical" style="margin-top:0.5rem;">
-                        <div>
-                        </div>
-                    </div> -->
+                    </table> 
+        </div>
 
-                <!-- category -->
+                  <!--   <div id="panel12 " class="panel grid-block vertical noscroll show " style="display: block; margin-top:0.5rem; "> -->
 
-                 <!--   <table class="big-accordion">
-                        <tr>
-                            <td class="accordion-grey" style="width:20px;">
-                                <button id="button12" class="accordion active" click.delegate="closeExpand(12)"></button>
-                            </td>
-                            <td class="accordion-grey"> <span>Alphabetical</span>
-                            </td>
-                        </tr>
-                    </table> -->
-
-
-                  <!--   <div id="panel12" class="panel grid-block vertical  noscroll show" style="display: block; margin-top:0.5rem;"> -->
-
-                <div id="contacts-inside-top" class="grid-block vertical scroll " style="margin-top:32px;">
-                        <div id="contacts-inside-top" repeat.for="userVar of users | sort:'name':'ascending' | filter:searchTerm:filterFunc"  class="" style="width:255px; overflow: visible;margin-left: 1rem; margin-bottom:1.5rem;">
-                                <table class="width100">
+                <div id="panel12 " class="panel grid-block vertical scroll show " style=" ">
+                        <div id="contacts-inside-top " repeat.for="userVar of users | sort: 'name': 'ascending' | filter:searchTerm:filterFunc "  class=" " style="width:255px; overflow: visible;margin-left: 1rem; margin-bottom:1.5rem; ">
+                                <table class="width100 ">
                                     <tr>
                                         <td>
                                             <div>
-                                                <img if.bind="(userVar.image)" src=${userVar.image} class="clip-circle contact-entry" />
-                                                <div if.bind="(!userVar.image)" style="margin-right: 1rem;" class="avatar-circle">${userVar.name.charAt(0)}</div>
-                                               <!--  <div class="contact-mark">
-                                                    <img src="/assets/CheckMark.png" alt="">
-                                                    <!-- <img src="/assets/QuestionMark.png" alt=""> 
+                                                <img if.bind="(userVar.image) " src=${userVar.image} class="clip-circle contact-entry " />
+                                                <div if.bind="(!userVar.image) " style="margin-right: 1rem; " class="avatar-circle ">${userVar.name.charAt(0)}</div>
+                                               <!--  <div class="contact-mark ">
+                                                    <img src="/assets/CheckMark.png " alt=" ">
+                                                    <!-- <img src="/assets/QuestionMark.png " alt=" "> 
                                                 </div> -->
                                             </div>
                                         </td>
                                         <td>
-                                            <div if.bind="(userVar.email != user.email)">
-                                                <div class="ui-text-label-me-left paragraph-5 contact-box">${userVar.name} ${userVar.surname}</div>
-                                                <div class="ui-text-label-s-left paragraph-5 contact-box">${userVar.brand.name} ${userVar.pressHouse.name}</div> 
+                                            <div if.bind="(userVar.email !=u ser.email) ">
+                                                <div class="ui-text-label-me-left paragraph-5 contact-box ">${userVar.name} ${userVar.surname}</div>
+                                                <div class="ui-text-label-s-left paragraph-5 contact-box ">${userVar.brand.name} ${userVar.pressHouse.name}</div> 
                                             </div>  
-                                            <div if.bind="(userVar.email == user.email)">
-                                                <div class="ui-text-label-me-left paragraph-5 contact-box">${userVar.name} ${userVar.surname} (Me)</div>
-                                                <div class="ui-text-label-s-left paragraph-5 contact-box">${userVar.brand.name} ${userVar.pressHouse.name}</div> 
+                                            <div if.bind="(userVar.email==u ser.email) ">
+                                                <div class="ui-text-label-me-left paragraph-5 contact-box ">${userVar.name} ${userVar.surname} (Me)</div>
+                                                <div class="ui-text-label-s-left paragraph-5 contact-box ">${userVar.brand.name} ${userVar.pressHouse.name}</div> 
                                             </div> 
                                         </td>
-                                        <td class="align-top"><span class="alert-box">8</span></td>
-                                        <td class="align-top">
-                                            <div class="look-menu-absolute-wrap">
-                                                <span class="edit-box" ><a href="#" click.delegate="lookEditContact(userVar.id)">...</a>
+                                        <td class="align-top "><span class="alert-box ">8</span></td>
+                                        <td class="align-top ">
+                                            <div class="look-menu-absolute-wrap ">
+                                                <span class="edit-box " ><a href="# " click.delegate="lookEditContact(userVar.id) ">...</a>
                                                 </span>
                                             
                                             <!-- edit contact modal popup -->
-                                                     <div id="${userVar.id}" class="look-menu-absolute lookEditContactClass" style="margin-bottom:5px;">
-                                                        <span class="look-menu-heading">${userVar.name}</span>
-                                                        <ul class="look-menu-list">
-                                                            <li if.bind="(userVar.email != user.email)" class="look-menu-item">
-                                                                <a href="#" click.delegate="initiateMessage(userVar.id)" class="look-menu-link">Send Message</a>
+                                                     <div id="${userVar.id} " class="look-menu-absolute lookEditContactClass " style="margin-bottom:5px; ">
+                                                        <span class="look-menu-heading ">${userVar.name}</span>
+                                                        <ul class="look-menu-list ">
+                                                            <li if.bind="(userVar.email !=u ser.email) " class="look-menu-item ">
+                                                                <a href="# " click.delegate="initiateMessage(userVar.id) " class="look-menu-link ">Send Message</a>
                                                             </li>
-                                                             <li if.bind="(userVar.email == user.email)"class="look-menu-item">
-                                                                <a href="#" click.delegate="createDialogEditContact(userVar.id)" class="look-menu-link">Edit</a>
+                                                             <li if.bind="(userVar.email==u ser.email) "class="look-menu-item ">
+                                                                <a href="# " click.delegate="createDialogEditContact(userVar.id) " class="look-menu-link ">Edit</a>
                                                             </li>                                       
-                                                            <li  if.bind="(userVar.email == user.email)" class="look-menu-item">
-                                                                <a href="#" click.delegate="CreateDialogUpdatePhoto(userVar.id)" class="look-menu-link">Update Photo</a>
+                                                            <li  if.bind="(userVar.email==u ser.email) " class="look-menu-item ">
+                                                                <a href="# " click.delegate="CreateDialogUpdatePhoto(userVar.id) " class="look-menu-link ">Update Photo</a>
                                                             </li> 
-                                                             <li  if.bind="(userVar.email != user.email)" class="look-menu-item">
-                                                                <a href="#" click.delegate="CreateDialogDeleteContact(userVar.id)" class="look-menu-link">Delete Contact</a>
+                                                             <li  if.bind="(userVar.email !=u ser.email) " class="look-menu-item ">
+                                                                <a href="# " click.delegate="CreateDialogDeleteContact(userVar.id) " class="look-menu-link ">Delete Contact</a>
                                                             </li>                                  
                                                         </ul>
                                                     </div>                            

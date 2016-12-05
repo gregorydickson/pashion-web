@@ -180,6 +180,15 @@ input.slim-text-box-narrow {
   display: inline-block;
 }
 
+.alert-box-small {
+  min-width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: $flat-blue;
+  margin-top: 5px;
+  margin-left: 2px;
+}
+
 .avatar-circle {
   width: 32px;
   height: 32px;

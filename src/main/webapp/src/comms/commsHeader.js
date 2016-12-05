@@ -18,6 +18,7 @@ export class CommsHeader {
  statusValues = {messages : "messages", contacts: "contacts", news : "news"};
   comms = {};
   currentContact = null;
+  contactActivity = true;
   
   constructor(http, controller, dialogService, messages, eventAggregator){
     this.dialogService = dialogService;
