@@ -68,6 +68,17 @@ class ConnectionController {
 
     @Transactional 
     def addContactRequest(){
+        def jsonObject = request.JSON
+        log.info "json:"+jsonObject
+        def con = new Connection()
+        con.connectedUserId = jsonObject.id
+        con.email = jsonObject.email
+        con.name 
+        con.surname = jsonObject.
+
+        con.connectingStatus = "Accepted"
+        con.save(flush:true, failOnError:true)
+
     //// id: user
     //// connectedId : connectedUserId
     /// email: email
