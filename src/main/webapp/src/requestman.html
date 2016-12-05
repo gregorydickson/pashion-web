@@ -198,7 +198,7 @@
                                         <div class="grid-content" style="margin-top:0.5rem; margin-bottom: 1rem;">
                                             <table class="" style="table-layout:fixed;">
                                                 <tr  style="height:1rem;">
-                                                    <td repeat.for="item of booking.searchableItems" class="accordion"><img src="${item.image}" width="60px;" /></td> <!-- src="${item.image}" -->
+                                                    <td repeat.for="item of booking.searchableItems" class="accordion"><img if.bind="item.image !== undefined"  src="${item.image}" width="60px;" /></td> <!-- src="${item.image}" -->
                                                 </tr>
                                                 <tr style="height:1rem;">
                                                     <td repeat.for="item of booking.searchableItems"  class="accordion sample-padding">${item.id}</td>
