@@ -205,42 +205,42 @@
                 </div>
                 <!-- search / filter area -->
                 <!-- top row -->
-                <div class="medium-up-1  grid-block shrink grid-row-one">
-                    <!-- <div class="grid-content shrink" style="margin-top: 0.5rem;">
+                <div class="grid-row" style="margin-bottom: 0;">
+                    <!-- <div class="grid-row-col" style="margin-top: 0.5rem;">
                         <input id="checkbox-search" type="checkbox" checked>
                     </div> -->
                     <!-- change to UI, use "All" for each filter instead -->
                     <!-- Search -->
-                    <div class="grid-content shrink">
+                    <div class="grid-row-col">
                         <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search Text">
                     </div>
                     <!-- Trending -->
-                    <!--<div class="grid-content shrink" style="margin-top: 0.5rem;">
+                    <!--<div class="grid-row-col" >
                         <input id="checkbox-trending" type="checkbox"><label for="checkbox-trending">Trending</label>
                     </div> -->
                     <!-- Trending postponed until later release -->
                     <!-- Latest -->
-                    <!-- <div class="grid-content shrink" style="margin-top: 0.5rem;">
+                    <!-- <div class="grid-row-col" >
                        <input id="checkbox-latest" type="checkbox"><label for="checkbox-latest">Latest</label>
                     </div> -->
                     <!-- Latest postponed until later release -->
                     <!-- Available -->
                     <!-- end date -->
-                    <div class="grid-content shrink" style="padding-left:0; padding-right:0;">
+                    <div class="grid-row-col grid-row-date-start" style="margin-right:0;">
                         <span class="inline-label">
                             <span class="form-label">Available</span>
                              <input type="text" datepicker placeholder="Start Date" class="datepickerfrom" id=datepickerfrom>
                         </span>
                     </div>
                     <!-- end date -->
-                    <div class="grid-content shrink" style="padding-left:0; padding-right:0;">
+                    <div class="grid-row-col grid-row-date-end">
                         <span class="inline-label">
                             <span class="form-label">to</span>
                             <input type="text" datepicker id="datepickerto" placeholder="End Date" class="datepickerto">
                         </span>
                     </div>
                     <!-- theme -->
-                    <div class="grid-content shrink">
+                    <div class="grid-row-col">
                         <span class="inline-label">
                             <span class="form-label">Theme</span>
                         <select name="" id="">
@@ -253,20 +253,20 @@
                     </div>
                 </div>
                 <!-- 2nd row -->
-                <div class="medium-up-1  grid-block shrink grid-row-two">
+                <div class="grid-row">
                     <!-- <div class="grid-content shrink" style="margin-top: 0.5rem;">
                             <input id="checkbox-brand" type="checkbox">
                     </div> -->
                     <!-- Brand -->
-                    <div class="grid-content shrink">
+                    <div class="grid-row-col">
                         
-                            <span class="form-label">Designer</span>
-                        <select2 name="brandSelect" options.bind="brands" selected.bind="selectedBrand" change.delegate="filterChange($event.target)" style="min-width:50%;">
+                        <span class="form-label" style="padding-right: 0.5rem">Designer</span>
+                        <select2 name="brandSelect" options.bind="brands" selected.bind="selectedBrand" change.delegate="filterChange($event.target)" >
                         </select2>
                        
                     </div>
                     <!-- Seasons -->
-                    <div class="grid-content shrink">
+                    <div class="grid-row-col">
                         <span class="inline-label">
                             <span class="form-label">Season</span>
                         <select name="" id="" value.bind="selectedSeason" change.delegate="filterChange($event.target)">
@@ -276,7 +276,7 @@
                         </span>
                     </div>
                     <!-- Type -->
-                    <div class="grid-content shrink">
+                    <div class="grid-row-col">
                         <span class="inline-label">
                             <span class="form-label">Type</span>
                         <select name="" id="" value.bind="selectedItemType" change.delegate="filterChange($event.target)">
@@ -286,7 +286,7 @@
                         </span>
                     </div>
                     <!--- Color -->
-                    <div class="grid-content shrink">
+                    <div class="grid-row-col">
                         <span class="inline-label">
                             <span class="form-label">Color</span>
                         <select name="" id="" value.bind="selectedColor" change.delegate="filterChange($event.target)">
@@ -300,7 +300,7 @@
 
                 <!-- Add images for brand -->
                 <!-- 3nd row -->
-                <div if.bind="user.type === 'brand'"  class="medium-up-1 grid-block shrink" style="margin-top: -1rem;">
+                <div if.bind="user.type === 'brand'"  class="medium-up-1 grid-block shrink">
                       <div class="grid-content shrink">
                         <button id="btn-add-files" class="small button hollow" click.delegate="createAddfilesDialog()">Add Images</button>
                         <button class="small button hollow">Delete Season</button>
