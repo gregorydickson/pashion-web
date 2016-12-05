@@ -74,6 +74,28 @@ export class EditSampleRequest {
 
   }
 
+  deleteRequestBrand(){
+    console.log("submitting Sample Request");
+    let sr = this.sampleRequest;
+
+    this.sampleRequestService.deleteSampleRequest(sr.id).then(message => {
+      alert(message.message);
+      this.controller.close();
+    });
+
+  }
+  
+  deleteRequestPress(){
+    console.log("submitting Sample Request");
+    let sr = this.sampleRequest;
+
+    this.sampleRequestService.pressDeleteSampleRequest(sr.id).then(message => {
+      alert(message.message);
+      this.controller.close();
+    });
+
+  }
+
   update(){
     console.log("submitting Sample Request");
     let sr = this.sampleRequest;

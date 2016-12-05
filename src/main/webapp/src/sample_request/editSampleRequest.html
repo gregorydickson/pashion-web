@@ -228,14 +228,14 @@
         <!-- Footer buttons -->
         <ai-dialog-footer>
             <div if.bind="user.type === 'brand'">
-                <a class="hollow button"  click.delegate="deleteRequest()">Delete Request</a>
+                <a class="hollow button"  click.delegate="deleteRequestBrand()">Delete Request</a>
                 <a class="hollow button"  click.delegate="cancel()">Cancel</a>
                 <a class="hollow button" click.delegate="update()">Save Changes</a>
                 <a if.bind="sampleRequest.requestStatusBrand === 'Pending'" class="button" click.delegate="approve()">Approve</a>
                 <a if.bind="sampleRequest.requestStatusBrand === 'Pending'" class="button" click.delegate="deny()">Deny</a>
             </div>
             <div if.bind="user.type === 'press'">
-                <a class="hollow button"  click.delegate="deleteRequest()">Delete Request</a>
+                <a class="hollow button"  click.delegate="deleteRequestPress()">Delete Request</a>
                 <a class="hollow button"  click.delegate="cancel()">Cancel</a>
                 <a class="button" click.delegate="update()">Save Changes</a>
             </div>
