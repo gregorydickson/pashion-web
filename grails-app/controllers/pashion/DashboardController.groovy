@@ -33,7 +33,7 @@ class DashboardController {
             type = 'guest'
         }
         //creating a map is more simple than a bunch of marshalling code
-        def userInfo = [email:user.email,type:type,name:user.name,surname:user.surname ] as JSON
+        def userInfo = [email:user.email,id:user.id, type:type,name:user.name,surname:user.surname ] as JSON
         render userInfo
     }
 

@@ -17,8 +17,9 @@ export class ContactsList {
   user = {};
   users = [];
   searchTerm = ''; // hard wired search goes here
-  
-  
+  contactActivity = "19";
+  connectString ="connect";
+  connections = [];
 
   constructor(http, controller, dialogService, userService, commsHeader, eventAggregator){
 	    this.controller = controller;
@@ -38,6 +39,7 @@ export class ContactsList {
 
 	return Promise.all([
       this.user = this.userService.getUser().then(user => this.user = user),
+      this.connections = this.userService.getConnections().then(connections => this.connections = connections),
       this.users = this.userService.getUsers("",status).then(users => this.users = users)
     ]);
 	}
@@ -46,8 +48,13 @@ export class ContactsList {
     var menu = document.getElementById(id); 
     menu.classList.toggle("look-menu-show");
     $("#right-panel-body").height($("#right-panel-body").height()+160); // kludge to grow container to get menu, should worklike request list in index, seems to trigger a re-calc
-
   }
+
+  contactMenu(id){
+    var menu = document.getElementById('connect'+id); 
+    menu.classList.toggle("look-menu-show");
+     $("#right-panel-body").height($("#right-panel-body").height()+160);
+     }
 
   closeExpand(buttonNumber) {
     var buttonChoice = document.getElementById("button" + buttonNumber);
