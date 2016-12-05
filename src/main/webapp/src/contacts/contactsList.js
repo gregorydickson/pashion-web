@@ -53,14 +53,19 @@ export class ContactsList {
   acceptContact(id) {
     var menu = document.getElementById('connect'+id); 
     // menu.classList.toggle("look-menu-show"); // RM not necessary?
-    this.userService.acceptContact(id);
-    //this.connections[id].connectingStatus = "Accepted";
+    this.userService.acceptContact(id)
+      .then(response => {
+        this.connections = this.userService.getConnections().then(connections => this.connections = connections);
+      });
   }
 
   declineContact(id) {
     var menu = document.getElementById('connect'+id); 
     // menu.classList.toggle("look-menu-show"); // RM not necessary?
-    this.userService.denyContact(id);
+    this.userService.denyContact(id)
+      .then(response => {
+        this.connections = this.userService.getConnections().then(connections => this.connections = connections);
+      });
   }
 
 

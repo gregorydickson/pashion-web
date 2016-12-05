@@ -52,6 +52,20 @@ class ConnectionController {
         render sent as JSON
     }
 
+    @Transactional 
+    def acceptContact(){
+        def connection = Connection.get(params.id.toInteger())
+        
+        def jsonObject = request.JSON
+        log.info "json:"+jsonObject
+        connection.connectingStatus = "Accepted"
+        
+        connection.save(failOnError : true, flush: true)
+        def connectionString  = 'connection denied'
+        def sent = [message:connectionString]
+        render sent as JSON
+    }
+
     @Transactional
     def save(Connection connection) {
         if (connection == null) {

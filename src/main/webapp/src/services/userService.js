@@ -86,6 +86,15 @@ getUserDetails (id)
       return promise;
     }
 
+    acceptContact (id) {
+      
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/connection/acceptContact/'+id, {method: 'post'}).then(response => response.json())
+          .then(result => resolve(result));
+      });
+      return promise;
+    }
+
     getUser() {
         var promise = new Promise((resolve, reject) => {
             if (!this.user) {
