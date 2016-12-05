@@ -1,11 +1,12 @@
 import { inject } from 'aurelia-framework';
-import { HttpClient } from 'aurelia-fetch-client';
+import { HttpClient, json } from 'aurelia-fetch-client';
 import 'fetch';
 
 @inject(HttpClient)
 export class UserService {
 
     showIntro = true;
+    localIdIn = 0;
 
     constructor(http) {
         http.configure(config => {
@@ -42,7 +43,7 @@ export class UserService {
           .then(users => {
             users.forEach(function(item1) {
               //console.log("inner users: " + item1.email + " to match: " + email);
-                if (item1.email == email) resolve(item1.email);
+                if (item1.email == email) resolve(item1.id); //return the id of the requested, valid email
             });
             resolve(-1);
           }).catch(err=>reject(err));
@@ -89,12 +90,24 @@ getUserDetails (id)
       return promise;
     } 
 
-    addContactRequest (id) {
-       var promise = new Promise((resolve, reject) => {
-        this.http.fetch('/connection/addContactRequest/'+id, {method: 'post'}).then(response => response.json())
-          .then(result => resolve(result));
-      });
-      return promise;     
+    // Build new connection
+    addContactRequest (idIn) {
+       var parent = this;
+       this.localIdIn = idIn;
+       // var conn;  
+       console.log ("incoming contact request: " + idIn); // + conn.id + " " + conn.connectedUserId);
+       var userPromise = this.getUser();
+       userPromise.then(function (result){
+          var conn = {user: {id:4}, connectedUserId:result.id, surname:'a',name:'b',numberNewMessages:0,connectingStatus:'Accepted',email:'a'};
+          // parent = this;
+          var promise = new Promise((resolve, reject) => {
+            parent.http.fetch('/connection/addContactRequest/', {
+              method: 'post',
+              body: json(conn)}).then(response => response.json())
+              .then(result => resolve(result));
+          });
+      return promise; 
+      });    
     }
 
 
@@ -107,6 +120,7 @@ getUserDetails (id)
       return promise;
     }
 
+    // exiting connection
     acceptContact (id) {
       
       var promise = new Promise((resolve, reject) => {

@@ -71,23 +71,24 @@ class ConnectionController {
         def jsonObject = request.JSON
         log.info "json:"+jsonObject
         def con = new Connection()
-        con.connectedUserId = jsonObject.id
-        con.email = jsonObject.email
-        con.name 
-        con.surname = jsonObject.
-
+        //con.user = jsonObject.user
+        con.connectedUserId = jsonObject.connectedUserId
+        con.email = ''
+        con.name = ''
+        con.surname =  ''
         con.connectingStatus = "Accepted"
+        con.numberNewMessages = 0
         con.save(flush:true, failOnError:true)
-
-    //// id: user
-    //// connectedId : connectedUserId
-    /// email: email
-    //// numberOfNewMessages : 0
-    //// connectingStatus: 'Accepted'
-    //// name: name
-    //// surname: surname
     //// need to create an entry for both sides, as a connection is a two-way relationship.
-   
+        def con2 = new Connection()
+        //con2.user = jsonObject.connectedUserId
+        con2.connectedUserId = jsonObject.user
+        con2.email = ''
+        con2.name = ''
+        con2.surname =  ''
+        con2.connectingStatus = "Accepted"
+        con2.numberNewMessages = 0
+        con2.save(flush:true, failOnError:true)
     }
 
     @Transactional
