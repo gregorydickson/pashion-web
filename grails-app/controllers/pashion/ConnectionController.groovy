@@ -2,6 +2,7 @@ package pashion
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.converters.JSON
 
 @Transactional(readOnly = true)
 class ConnectionController {
@@ -19,6 +20,36 @@ class ConnectionController {
 
     def create() {
         respond new Connection(params)
+    }
+
+    @Transactional 
+    def savejson(){
+        
+        def jsonObject = request.JSON
+        log.info "json:"+jsonObject
+        def connection = new Connection()
+        
+       connection.thing = jsonObject.thing
+        
+        
+        
+        connection.save(failOnError : true, flush: true)
+        def sent = [message:'Connection Made']
+        render sent as JSON
+    }
+    // /connection/updatejson/23
+    @Transactional 
+    def denyContact(){
+        def connection = Connection.get(params.id.toInteger())
+        
+        def jsonObject = request.JSON
+        log.info "json:"+jsonObject
+        connection.connectingStatus = "Denied"
+        
+        connection.save(failOnError : true, flush: true)
+        def connectionString  = 'connection denied'
+        def sent = [message:connectionString]
+        render sent as JSON
     }
 
     @Transactional
@@ -75,14 +106,6 @@ class ConnectionController {
         }
     }
 
-    @Transactional
-    def denyContact(){
-        def contact = contact.get(params.id.toInteger())
-        contact.connectingStatus = "Denied"
-        contact.save(flush:true)
-        def sent = [message:'Contact denied']
-        render sent as JSON
-    }
 
     @Transactional
     def delete(Connection connection) {
