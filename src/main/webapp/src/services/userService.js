@@ -6,7 +6,6 @@ import 'fetch';
 export class UserService {
 
     showIntro = true;
-    localIdIn = 0;
 
     constructor(http) {
         http.configure(config => {
@@ -92,22 +91,20 @@ getUserDetails (id)
 
     // Build new connection
     addContactRequest (idIn) {
-       var parent = this;
-       this.localIdIn = idIn;
-       // var conn;  
-       console.log ("incoming contact request: " + idIn); // + conn.id + " " + conn.connectedUserId);
-       var userPromise = this.getUser();
-       userPromise.then(function (result){
-          var conn = {user: {id:4}, connectedUserId:result.id, surname:'a',name:'b',numberNewMessages:0,connectingStatus:'Accepted',email:'a'};
-          // parent = this;
-          var promise = new Promise((resolve, reject) => {
-            parent.http.fetch('/connection/addContactRequest/', {
+
+      console.log ("incoming contact request: " + idIn); // + conn.id + " " + conn.connectedUserId);
+
+      var conn = {user: {id:idIn}, connectedUserId:this.user.id, surname:'a',name:'b',numberNewMessages:0,connectingStatus:'Accepted',email:'a'};
+
+      this.http.fetch('/connection/addContactRequest/', {
               method: 'post',
-              body: json(conn)}).then(response => response.json())
-              .then(result => resolve(result));
-          });
-      return promise; 
-      });    
+              body: json(conn)
+            })
+            .then(response => response.json())
+            .then(result => {
+              console.log("addContactRequest:"+result);
+            });
+          
     }
 
 
