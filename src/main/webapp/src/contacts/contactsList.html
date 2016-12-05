@@ -90,7 +90,7 @@
                     <tr>
                         <td>
                             <div>
-                                <img if.bind="(connection.image)" src=${userVar.image} class="clip-circle contact-entry" />
+                                <img if.bind="(connection.image)" src=${connection.image} class="clip-circle contact-entry" />
                                 <div if.bind="(!connection.image)" style="margin-right: 1rem; " class="avatar-circle ">${connection.name.charAt(0)}</div>
                                 <!--  <div class="contact-mark ">
                                                     <img src="/assets/CheckMark.png " alt=" ">
@@ -116,7 +116,7 @@
                                                 </span>
                                 <!-- edit contact modal popup -->
                                 <div id="${connection.id}" class="look-menu-absolute lookEditContactClass" style="margin-bottom:5px;">
-                                    <span class="look-menu-heading">${userVar.name}</span>
+                                    <span class="look-menu-heading">${connection.name}</span>
                                     <ul class="look-menu-list">
                                         <li if.bind="(connection.email !=user.email)" class="look-menu-item">
                                             <a href="#" click.delegate="initiateMessage(connection.id) " class="look-menu-link">Send Message</a>
