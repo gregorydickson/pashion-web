@@ -1,0 +1,40 @@
+
+<template>
+    <ai-dialog style="width: auto;">
+        
+        <!-- header -->
+        <ai-dialog-header>
+            <div class="grid-block align-center tool-header shrink ">
+                <div id="" class="grid-block tool-header shrink">
+                    <span class="ui-text-label-m-broad">NEW CONNECTION</span> <!-- fudge to take account of the X -->
+                </div>
+            </div>
+        </ai-dialog-header>
+
+        <!-- body-->
+        <ai-dialog-body>
+            <div class="grid-block vertical">
+                <div class="grid-block">
+
+
+                        <!-- Email -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Email</span>
+                            <input value.bind="newEmail" type="text" class="slim-text-box">
+                        </div>
+                      
+                   
+                    </div>
+
+                </div>
+              
+            </div>
+        </ai-dialog-body>
+
+        <!-- Footer buttons -->
+        <ai-dialog-footer>
+                    <a class="hollow button"  click.delegate="close()">Cancel</a>
+                    <a class="button" href="#" click.delegate="requestConnection() ">Request Connection</a>
+        </ai-dialog-footer>
+    </ai-dialog>
+</template>

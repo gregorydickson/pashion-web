@@ -3,7 +3,7 @@ import {HttpClient,json} from 'aurelia-fetch-client';
 import {DialogService} from 'aurelia-dialog';
 import 'fetch';
 import {inject} from 'aurelia-framework';
-import {CreateDialogNewContact} from 'contacts/dialogNewContact';
+import {DialogRequestContact} from 'contacts/dialogRequestContact';
 import {CreateDialogImportContacts} from 'contacts/dialogImportContacts';
 import {Messages} from 'messages/messages';
 
@@ -27,7 +27,7 @@ export class CommsFooter {
     // Create dialog edit contact 
 
   createDialogNewContact(itemId) {
-    this.dialogService.open({viewModel: CreateDialogNewContact, model: itemId })
+    this.dialogService.open({viewModel: DialogRequestContact, model: itemId })
       .then(response => {});
   }
 
