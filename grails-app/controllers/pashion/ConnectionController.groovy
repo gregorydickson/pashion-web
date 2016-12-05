@@ -66,6 +66,19 @@ class ConnectionController {
         render sent as JSON
     }
 
+    @Transactional 
+    def addContactRequest(){
+    //// id: user
+    //// connectedId : connectedUserId
+    /// email: email
+    //// numberOfNewMessages : 0
+    //// connectingStatus: 'Accepted'
+    //// name: name
+    //// surname: surname
+    //// need to create an entry for both sides, as a connection is a two-way relationship.
+   
+    }
+
     @Transactional
     def save(Connection connection) {
         if (connection == null) {
