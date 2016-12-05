@@ -94,7 +94,7 @@ getUserDetails (id)
 
       console.log ("incoming contact request: " + idIn); // + conn.id + " " + conn.connectedUserId);
 
-      var conn = {user: {id:idIn}, connectedUserId:this.user.id, surname:'a',name:'b',numberNewMessages:0,connectingStatus:'Accepted',email:'a'};
+      var conn = {user: {id:this.user.id}, connectedUserId:idIn, surname:'',name:'',numberNewMessages:0,connectingStatus:'Accepted',email:'a'};
 
       this.http.fetch('/connection/addContactRequest/', {
               method: 'post',
