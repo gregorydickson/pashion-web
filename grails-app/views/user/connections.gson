@@ -1,0 +1,7 @@
+import pashion.User
+
+model {  
+  List<User> userList
+}
+
+json tmpl.user(userList)

@@ -12,6 +12,10 @@ class UserController {
     def userService
     def cookieService
 
+    def connections(){
+        respond User.list()
+    }
+
     
     def index(Integer max) {
         params.max = 5000 // Math.min(max ?: 10, 100)
