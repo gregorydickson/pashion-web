@@ -82,6 +82,26 @@ export class CreateSampleRequest {
   	console.log("start date"+event);
   	console.log("day"+day);
     this.startDay = day;
+    let enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber,this.endDay)
+    let startdate = new Date(this.startCalendar.calendarMonths[0].year,this.startCalendar.calendarMonths[0].monthNumber,day)
+    
+    if(this.endDay != ''){
+      console.log("setting start date END DATE not empty");
+      if( enddate < startdate ){
+        console.log("setting start date AND it is after end date");
+        this.endDay = ''
+        let element = event.srcElement.parentElement;
+        let document = element.ownerDocument;
+        let elems = document.querySelectorAll(".end-selected");
+        var redraw = this.redraw;
+        [].forEach.call(elems, function(el) {
+          if(el.classList.contains("end-selected")){
+            el.classList.remove("end-selected");
+            redraw(el);
+          }
+        });
+      }
+    }
   	var element = event.srcElement.parentElement;
   	var document = element.ownerDocument;
   	var elems = document.querySelectorAll(".start-selected");
@@ -97,7 +117,7 @@ export class CreateSampleRequest {
     this.endDay = day;
     let enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber,day)
   	let startdate = new Date(this.startCalendar.calendarMonths[0].year,this.startCalendar.calendarMonths[0].monthNumber,this.startDay)
-    if(this.startDay === '' || enddate < startdate ){
+    if(this.startDay === '' || enddate < startdate || enddate.getTime() == startdate.getTime()){
       return
     }
     console.log("end date"+event);
