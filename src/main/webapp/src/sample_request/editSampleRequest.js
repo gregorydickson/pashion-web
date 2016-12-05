@@ -63,12 +63,22 @@ export class EditSampleRequest {
     
   }
 
+  deny(){
+    console.log("submitting Sample Request");
+    let sr = this.sampleRequest;
+
+    this.sampleRequestService.denySampleRequest(sr.id).then(message => {
+      alert(message.message);
+      this.controller.close();
+    });
+
+  }
+
   update(){
     console.log("submitting Sample Request");
     let sr = this.sampleRequest;
 
     this.sampleRequestService.updateSampleRequest(sr).then(message => {
-      alert(message.message);
       this.controller.close();
     });
     
