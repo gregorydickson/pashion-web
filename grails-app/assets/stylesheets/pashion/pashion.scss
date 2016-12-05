@@ -338,22 +338,31 @@ ai-dialog-body .grid-block-row {
   margin-right: 1rem;
 }
 
-.grid-row-one,
-.grid-row-two {
+.grid-row {
   width: 100%;
+display: flex;  
+margin: 1rem 0;
 }
 
-.grid-row-one {
-  margin-top: 1rem;
+.grid-row-col {
+  flex: 1;
+   margin: 0 1rem 0 0 ;
 }
-
-.grid-row-two {
-  margin-top: -1rem;
+.grid-row-col input{
+ margin: 0; 
 }
-
-.grid-row-one .grid-content:first-child,
-.grid-row-two .grid-content:first-child {
+.grid-row .grid-row-col:first-child {
   width: 26%;
+  margin-left: 1rem;
+}
+
+.grid-row .grid-row-col:last-child{
+  min-width: 22%;
+
+
+}
+.grid-row .inline-label {
+  margin: 0; 
 }
 
 .contact-box{
@@ -362,15 +371,15 @@ ai-dialog-body .grid-block-row {
     white-space: nowrap;
   }
 
-.grid-row-one .grid-content:last-child,
-.grid-row-two .grid-content:last-child {
-  min-width: 22%;
-  margin-left: auto;
 
-  select {
-    min-width: 100px;
+.grid-row .datepickerfrom, .grid-row .datepickerto {
+  min-width: 100px; 
+}
+@media (max-width: 1300px) {
+    .grid-row .grid-row-date-start {
+    max-width: 15rem; 
   }
-
-
-
+  .grid-row .grid-row-date-end {
+    max-width: 11rem; 
+  }
 }
