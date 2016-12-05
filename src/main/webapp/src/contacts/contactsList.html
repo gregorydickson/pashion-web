@@ -34,16 +34,16 @@
 
                             <td>
                                 <div>
-                                    <img if.bind="(connection.image)" src=${connection.image} class="clip-circle contact-entry" />
-                                    <div if.bind="(!connection.image)" style="margin-right: 1rem;" class="avatar-circle ">${connection.name.charAt(0)}</div>
+                                    <img if.bind="(users[connection.user.id].image)" src=${users[connection.user.id].image} class="clip-circle contact-entry" />
+                                    <div if.bind="(!users[connection.user.id].image)" style="margin-right: 1rem;" class="avatar-circle ">${users[connection.user.id].name.charAt(0)}</div>
                                 </div>
                             </td>
                             <td>
                                 
                                     
-                                    <div class="ui-text-label-me-left paragraph-5 contact-box">${connection.name} ${connection.surname}</div>
+                                    <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connection.user.id].name} ${users[connection.user.id].surname}</div>
                                 <!--     <div class="ui-text-label-s-left paragraph-5 contact-box">${connection.brand.name} ${connection.pressHouse.name}</div> -->
-                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${connection.email}</div>
+                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connection.user.id].email}</div>
                                
                             </td>
 
@@ -71,7 +71,7 @@
                 </div>
             </div>
         </div>
-        <!-- category -->
+        <!-- category Contact lists-->
         <div class="grid-block shrink" style="margin-left:1rem; margin-bottom:1rem;">
             <table class="big-accordion ">
                 <tr>
@@ -84,58 +84,69 @@
             </table>
         </div>
         <!--   <div id="panel12 " class="panel grid-block vertical noscroll show " style="display: block; margin-top:0.5rem; "> -->
+
+
+        <!-- insert special (ME) entry! 
+
+                                
+                                    <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connection.user.id].name} ${users[connection.user.id].surname} (Me)</div>
+                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connection.user.id].brand.name} ${users[connection.user.id].pressHouse.name}</div>
+                         
+
+
+        -->
+
         <div id="panel12" class="panel grid-block vertical scroll show" style="overflow-y:scroll;">
-            <div id="contacts-inside-top " repeat.for="connection of connections | sort: 'name': 'ascending' | filter:searchTerm:filterFunc " class="" style="width:255px; overflow: visible;margin-left: 1rem; margin-bottom:1.5rem;">
-                <table if.bind="(connection.user.id == user.id) && (connection.connectingStatus=='Accepted')" class="width100">
-                    <tr>
-                        <td>
-                            <div>
-                                <img if.bind="(connection.image)" src=${connection.image} class="clip-circle contact-entry" />
-                                <div if.bind="(!connection.image)" style="margin-right: 1rem; " class="avatar-circle ">${connection.name.charAt(0)}</div>
-                                <!--  <div class="contact-mark ">
-                                                    <img src="/assets/CheckMark.png " alt=" ">
-                                                    <!-- <img src="/assets/QuestionMark.png " alt=" "> 
-                                                </div> -->
-                            </div>
-                        </td>
-                        <td>
-                            <div if.bind="(connection.email !=user.email)">
-                                <div class="ui-text-label-me-left paragraph-5 contact-box">${connection.name} ${connection.surname}</div>
-                                <div class="ui-text-label-s-left paragraph-5 contact-box">${connection.brand.name} ${connection.pressHouse.name}</div>
-                            </div>
-                            <div if.bind="(connection.email==user.email)">
-                                <div class="ui-text-label-me-left paragraph-5 contact-box">${connection.name} ${connection.surname} (Me)</div>
-                                <div class="ui-text-label-s-left paragraph-5 contact-box">${connection.brand.name} ${connection.pressHouse.name}</div>
-                            </div>
-                        </td>
-                        <td class="align-top"><span class="alert-box">8</span></td>
-                        <!-- men -->
-                        <td class="align-top">
-                            <div class="look-menu-absolute-wrap">
-                                <span class="edit-box"><a href="#" click.delegate="lookEditContact(connection.id)">...</a>
-                                                </span>
-                                <!-- edit contact modal popup -->
-                                <div id="${connection.id}" class="look-menu-absolute lookEditContactClass" style="margin-bottom:5px;">
-                                    <span class="look-menu-heading">${connection.name}</span>
-                                    <ul class="look-menu-list">
-                                        <li if.bind="(connection.email !=user.email)" class="look-menu-item">
-                                            <a href="#" click.delegate="initiateMessage(connection.id) " class="look-menu-link">Send Message</a>
-                                        </li>
-                                        <li if.bind="(connection.email==user.email)" class="look-menu-item">
-                                            <a href="#" click.delegate="createDialogEditContact(connection.id) " class="look-menu-link">Edit</a>
-                                        </li>
-                                        <li if.bind="(connection.email==user.email)" class="look-menu-item">
-                                            <a href="#" click.delegate="CreateDialogUpdatePhoto(connection.id) " class="look-menu-link">Update Photo</a>
-                                        </li>
-                                        <li if.bind="(connection.email !=user.email)" class="look-menu-item">
-                                            <a href="#" click.delegate="declineContact(connection.id) " class="look-menu-link">Delete Contact</a>
-                                        </li>
-                                    </ul>
+            <div id="contacts-inside-top " repeat.for="userLoop of users | sort: 'name': 'ascending' | filter:searchTerm:filterFunc " class="" style="width:255px; overflow: visible;margin-left: 1rem; margin-bottom:1.5rem;">
+                <div if.bind="(userLoop.connections!=null)" repeat.for="connection of userLoop.connections">
+                    <table if.bind="(user.id == connection.userCreatedId && connection.connectingStatus=='Accepted')" class="width100">
+                        <tr>
+                            <td>
+                                <div>
+                                    <img if.bind="(userLoop.image)" src=${userLoop.image} class="clip-circle contact-entry" />
+                                    <div if.bind="(!userLoop.image)" style="margin-right: 1rem; " class="avatar-circle ">${userLoop.name.charAt(0)}</div>
+                                    <!--  <div class="contact-mark ">
+                                                        <img src="/assets/CheckMark.png " alt=" ">
+                                                        <!-- <img src="/assets/QuestionMark.png " alt=" "> 
+                                                    </div> -->
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
+                            </td>
+                            <td>
+                                <div if.bind="(userLoop.id !=user.id)"> <!-- not me -->
+                                    <div class="ui-text-label-me-left paragraph-5 contact-box">${userLoop.name} ${userLoop.surname}</div>
+                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${userLoop.brand.name} ${userLoop.pressHouse.name}</div>
+                                </div>
+
+                            </td>
+                            <td class="align-top"><span class="alert-box">8</span></td>
+                            <!-- men -->
+                            <td class="align-top">
+                                <div class="look-menu-absolute-wrap">
+                                    <span class="edit-box"><a href="#" click.delegate="lookEditContact(userLoop.id)">...</a>
+                                                    </span>
+                                    <!-- edit contact modal popup -->
+                                    <div id="${userLoop.id}" class="look-menu-absolute lookEditContactClass" style="margin-bottom:5px;">
+                                        <span class="look-menu-heading">${userLoop.name}</span>
+                                        <ul class="look-menu-list">
+                                            <li if.bind="(userLoop.email !=user.email)" class="look-menu-item">
+                                                <a href="#" click.delegate="initiateMessage(userLoop.id) " class="look-menu-link">Send Message</a>
+                                            </li>
+                                            <li if.bind="(userLoop.email==user.email)" class="look-menu-item">
+                                                <a href="#" click.delegate="createDialogEditContact(userLoop.id) " class="look-menu-link">Edit</a>
+                                            </li>
+                                            <li if.bind="(userLoop.email==user.email)" class="look-menu-item">
+                                                <a href="#" click.delegate="CreateDialogUpdatePhoto(userLoop.id) " class="look-menu-link">Update Photo</a>
+                                            </li>
+                                            <li if.bind="(userLoop.email !=user.email)" class="look-menu-item">
+                                                <a href="#" click.delegate="declineContact(userLoop.id) " class="look-menu-link">Delete Contact</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

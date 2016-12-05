@@ -31,9 +31,9 @@ export class DialogRequestContact {
   requestConnection () {
     this.flashMessage = '';
     var parent = this;
-    //console.log("new connection: " + this.newEmail);
+
+
     //test to see if valid user
-    // call user service
     var returned = this.userService.checkValidUser(this.newEmail);
     returned.then(function(result) {
       console.log ("=> " + result); 
@@ -41,6 +41,9 @@ export class DialogRequestContact {
         parent.flashMessage = "Not a valid user";
       }
       if (result!=-1) {
+        // test to see if connection already exists
+        //...
+        // call user service to create
         parent.userService.addContactRequest(result);
         parent.close();
       }

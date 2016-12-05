@@ -73,19 +73,13 @@ class ConnectionController {
         def con = new Connection()
         con.user = session.user
         con.connectedUserId = jsonObject.connectedUserId
-        con.email = ''
-        con.name = ''
-        con.surname =  ''
-        con.connectingStatus = "Accepted"
+        con.connectingStatus = "Pending"
         con.numberNewMessages = 0
         con.save(flush:true, failOnError:true)
     //// need to create an entry for both sides, as a connection is a two-way relationship.
         def con2 = new Connection()
         con2.user = User.get(jsonObject.connectedUserId.toInteger())
         con2.connectedUserId = session.user.id
-        con2.email = ''
-        con2.name = ''
-        con2.surname =  ''
         con2.connectingStatus = "Accepted"
         con2.numberNewMessages = 0
         con2.save(flush:true, failOnError:true)
