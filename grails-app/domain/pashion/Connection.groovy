@@ -4,9 +4,7 @@ class Connection {
 
 
 	Long connectedUserId
-	String email
-	String name 
-	String surname
+
 
 	String connectingStatus
 	// Date lastModifiedDate
