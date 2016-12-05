@@ -10,7 +10,7 @@ export class CreateSampleRequest {
   currentItem = {};
   startCalendar = {};
   endCalendar = {};
-  selectedProductIds = [];
+
   selectAll = true;
   required = [];
   deliverTo = [];
@@ -184,16 +184,18 @@ export class CreateSampleRequest {
   }
 
   allsamples(event){
-
-    if(this.checked) {
-     
-    }else{
+    console.log("all samples"+event.srcElement.checked);
+    if(event.srcElement.checked) {
       for (var i = 0, len = this.currentItem.samples.length; i < len; i++) {
         if(!(this.sampleRequest.samples.includes(this.currentItem.samples[i].id))){
           this.sampleRequest.samples.push(this.currentItem.samples[i].id);
         }
       }
-      this.updateAvailability();
+      
+    }else{
+      this.sampleRequest.samples = [];
+      
+      
     }
     
     
@@ -201,7 +203,7 @@ export class CreateSampleRequest {
 
 
   updateAvailability(){
-
+    this.allSamplesSelected();
     var queryString = DateFormat.urlString(this.endOffset,1);
     this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
             method: 'post',
@@ -223,8 +225,17 @@ export class CreateSampleRequest {
           });
   }
 
-  address(){
+  allSamplesSelected() {
+    let samplesSelected = this.sampleRequest.samples;
+    let samples = this.currentItem.samples;
 
+    if (samples.length != samplesSelected.length) {
+      this.selectAll = false;
+      console.log("length not equal");
+      return;
+    } else {
+      this.selectAll = true;
+    }
   }
 
   submit(){

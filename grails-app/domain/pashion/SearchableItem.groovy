@@ -147,16 +147,13 @@ class SearchableItem {
 	 */
 	PashionCalendar availableDaysInMonth(PashionCalendar pashionCalendar){
 		LocalDate start = fromDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-		log.info "Searchable Item - available days in month"
 		switch(start){
 		
 			case {pashionCalendar.calendarMonths[0].sameMonth(start)}:
-				log.info "available Days in month - same month"
 				pashionCalendar = startInThisMonth(pashionCalendar, start)
 				break
 			
 			case {pashionCalendar.calendarMonths[0].beforeThisMonth(start)}:
-			log.info "Before this month"
 				pashionCalendar = monthNotAvailable(pashionCalendar)
 				break
 
@@ -177,7 +174,7 @@ class SearchableItem {
 	}
 
 	PashionCalendar monthAvailable(PashionCalendar pashionCalendar){
-		log.info "Month Available"
+		
 		IntRange range = 1..pashionCalendar.calendarMonths[0].numberOfDays
 		range.each{
 			pashionCalendar.calendarMonths[0].days[it].event = 
@@ -187,11 +184,14 @@ class SearchableItem {
 	}
 
 	PashionCalendar startInThisMonth(PashionCalendar pashionCalendar, LocalDate start){
-		IntRange range = 1..(start.getDayOfMonth()-1)
-		range.each{
-			log.info "not available:"+it
-			pashionCalendar.calendarMonths[0].days[it].event = 
-						pashionCalendar.calendarMonths[0].days[it].event + " not-available"
+		IntRange range
+		if(start.getDayOfMonth() > 1){
+			range = 1..(start.getDayOfMonth()-1)
+			range.each{
+				
+				pashionCalendar.calendarMonths[0].days[it].event = 
+							pashionCalendar.calendarMonths[0].days[it].event + " not-available"
+			}
 		}
 		range = start.getDayOfMonth()..pashionCalendar.calendarMonths[0].numberOfDays
 		range.each{

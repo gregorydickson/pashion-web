@@ -188,7 +188,7 @@
                                 <td class="accordion w24">SELECT SAMPLES</td>
                                 <td class="accordion w73" style="text-align:right; padding-right: 0.5rem;" >Select All</td>
                                 <td class="accordion w3">
-                                    <input type="checkbox"  change.delegate="allsamples($event)">
+                                    <input type="checkbox" checked.bind="selectAll" change.delegate="allsamples($event)">
                                 </td>
                             </tr>
                     </table>
