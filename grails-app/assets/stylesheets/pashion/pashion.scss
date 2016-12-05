@@ -21,7 +21,7 @@
 @import
 "components/action-sheet", "components/block-list", "components/button", "components/button-group", "components/card", "components/extras", "components/forms", "components/grid", "components/title-bar", "components/icon", "components/label", "components/list", "components/loader", "components/menu-bar", "components/modal", "components/motion", "components/notification", "components/off-canvas", "components/popup", "components/switch", "components/tabs", "components/accordion", "components/typography", "components/utilities";
 @import
-"pashion_components/accordion", "pashion_components/font_styles", "pashion_components/spinner", "pashion_components/calendar", "pashion_components/datepicker", "pashion_components/dots_menu", "pashion_components/image_zoom", "pashion_components/date_range_picker", "pashion_components/dialog", "pashion_components/forms", "pashion_components/card", "pashion_components/utilities", "pashion_components/add_files", "pashion_components/contacts", "pashion_components/messages","pashion_components/select";
+"pashion_components/accordion", "pashion_components/font_styles", "pashion_components/spinner", "pashion_components/calendar", "pashion_components/datepicker", "pashion_components/dots_menu", "pashion_components/image_zoom", "pashion_components/date_range_picker", "pashion_components/dialog", "pashion_components/forms", "pashion_components/card", "pashion_components/utilities", "pashion_components/add_files", "pashion_components/contacts", "pashion_components/messages", "pashion_components/select";
 
 .footer {
 }
@@ -133,6 +133,7 @@ span.slim-text-box-label {
   padding: 0.5rem;
   display: inline-block;
   text-align: right;
+  white-space: nowrap;
 }
 
 span.slim-text-box-label-narrow {
@@ -140,6 +141,7 @@ span.slim-text-box-label-narrow {
   padding: 0.5rem;
   display: inline-block;
   text-align: right;
+  white-space: nowrap;
 }
 
 input.slim-text-box,
@@ -368,46 +370,56 @@ ai-dialog-body .grid-block-row {
 
 .grid-row {
   width: 100%;
-display: flex;  
-margin: 1rem 0;
+  display: flex;
+  margin: 1rem 0;
+  height: 28px; 
 }
 
 .grid-row-col {
+  display: flex; 
   flex: 1;
-   margin: 0 1rem 0 0 ;
+  margin: 0 1rem 2rem 0;
+  height: 28px; 
 }
-.grid-row-col input{
- margin: 0; 
+
+.grid-row-col input {
+  margin: 0;
 }
+
 .grid-row .grid-row-col:first-child {
   width: 26%;
   margin-left: 1rem;
 }
 
-.grid-row .grid-row-col:last-child{
+.grid-row .grid-row-col:last-child {
   min-width: 22%;
-
-
 }
+
 .grid-row .inline-label {
-  margin: 0; 
+  margin: 0;
+  width: 100%;
 }
 
-.contact-box{
-    width: 150px;
-    overflow:hidden;
-    white-space: nowrap;
-  }
-
-
-.grid-row .datepickerfrom, .grid-row .datepickerto {
-  min-width: 100px; 
+.contact-box {
+  width: 150px;
+  overflow: hidden;
+  white-space: nowrap;
 }
-@media (max-width: 1300px) {
-    .grid-row .grid-row-date-start {
-    max-width: 15rem; 
+
+.grid-row .datepickerfrom,
+.grid-row .datepickerto {
+  min-width: 100px;
+}
+.grid-row .form-label  {
+  align-self: center; 
+}
+@media (max-width:1300px) {
+  .grid-row .grid-row-date-start {
+    max-width: 15rem;
   }
+
   .grid-row .grid-row-date-end {
-    max-width: 11rem; 
+    max-width: 11rem;
   }
+
 }
