@@ -76,6 +76,15 @@ class ConnectionController {
     }
 
     @Transactional
+    def denyContact(){
+        def contact = contact.get(params.id.toInteger())
+        contact.connectingStatus = "Denied"
+        contact.save(flush:true)
+        def sent = [message:'Contact denied']
+        render sent as JSON
+    }
+
+    @Transactional
     def delete(Connection connection) {
 
         if (connection == null) {

@@ -44,17 +44,32 @@ export class ContactsList {
     ]);
 	}
 
+// contact workflow
+  contactMenu(id){
+    var menu = document.getElementById('connect'+id); 
+    menu.classList.toggle("look-menu-show");
+     }
+
+  acceptContact(id) {
+    var menu = document.getElementById('connect'+id); 
+    // menu.classList.toggle("look-menu-show"); // RM not necessary?
+    this.userService.acceptContact(id);
+    //this.connections[id].connectingStatus = "Accepted";
+  }
+
+  declineContact(id) {
+    var menu = document.getElementById('connect'+id); 
+    // menu.classList.toggle("look-menu-show"); // RM not necessary?
+    this.userService.denyContact(id);
+  }
+
+
+// contact lists
   lookEditContact(id){
     var menu = document.getElementById(id); 
     menu.classList.toggle("look-menu-show");
     $("#right-panel-body").height($("#right-panel-body").height()+160); // kludge to grow container to get menu, should worklike request list in index, seems to trigger a re-calc
   }
-
-  contactMenu(id){
-    var menu = document.getElementById('connect'+id); 
-    menu.classList.toggle("look-menu-show");
-     $("#right-panel-body").height($("#right-panel-body").height()+160);
-     }
 
   closeExpand(buttonNumber) {
     var buttonChoice = document.getElementById("button" + buttonNumber);
