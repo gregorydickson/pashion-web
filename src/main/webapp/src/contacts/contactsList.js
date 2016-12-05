@@ -16,7 +16,10 @@ export class ContactsList {
 
   user = {};
   users = [];
-  
+  searchTerm = ''; // hard wired search goes here
+  contactActivity = "19";
+  connectString ="connect";
+  connections = [];
 
   constructor(http, controller, dialogService, userService, commsHeader, eventAggregator){
 	    this.controller = controller;
@@ -36,13 +39,43 @@ export class ContactsList {
 
 	return Promise.all([
       this.user = this.userService.getUser().then(user => this.user = user),
+      this.connections = this.userService.getConnections().then(connections => this.connections = connections),
       this.users = this.userService.getUsers("",status).then(users => this.users = users)
     ]);
 	}
 
+// contact workflow
+  contactMenu(id){
+    var menu = document.getElementById('connect'+id); 
+    menu.classList.toggle("look-menu-show");
+     }
+
+  acceptContact(id) {
+    var menu = document.getElementById('connect'+id); 
+    // menu.classList.toggle("look-menu-show"); // RM not necessary?
+    this.userService.acceptContact(id);
+    //this.connections[id].connectingStatus = "Accepted";
+  }
+
+  declineContact(id) {
+    var menu = document.getElementById('connect'+id); 
+    // menu.classList.toggle("look-menu-show"); // RM not necessary?
+    this.userService.denyContact(id);
+  }
+
+
+// contact lists
   lookEditContact(id){
     var menu = document.getElementById(id); 
     menu.classList.toggle("look-menu-show");
+    $("#right-panel-body").height($("#right-panel-body").height()+160); // kludge to grow container to get menu, should worklike request list in index, seems to trigger a re-calc
+  }
+
+  closeExpand(buttonNumber) {
+    var buttonChoice = document.getElementById("button" + buttonNumber);
+    var panelChoice = document.getElementById("panel" + buttonNumber);
+    buttonChoice.classList.toggle("active");
+    panelChoice.classList.toggle("show");  
   }
 
   // Create dialog edit contact 
@@ -69,6 +102,17 @@ export class ContactsList {
   	this.commsHeader.setStatusTab(this.commsHeader.statusValues.messages);
     $("#right-panel-body").animate({scrollTop: $("#right-panel-body").prop("scrollHeight")}, 500);
       
+  }
+
+    filterFunc(searchExpression, value){
+     
+     let itemValue = value.name + value.surname;
+     if (value.brand != null) itemValue += value.brand.name; 
+     if (value.presshouse !=null) itemValue += value.pressHouse.name;
+     if(!searchExpression || !itemValue) return false;
+     
+     return itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;
+     
   }
 
 

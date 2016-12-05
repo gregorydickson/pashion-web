@@ -77,9 +77,9 @@ export class Requestman{
       this.reloadBookings();
     });
   }
-  shipSampleRequest(id){
+  approveSampleRequest(id){
     this.closeSampleRequestMenu(id);
-    this.sampleRequestService.shipSampleRequest(id).then(message =>{
+    this.sampleRequestService.approveSampleRequest(id).then(message =>{
       alert(message.message);
       this.reloadBookings();
     });

@@ -82,7 +82,12 @@ export class Index {
             this.filterChange();
             
     });
-    this.dialogService.open({viewModel: Introduction, model: "no-op" }).then(response => {});
+    let show = this.userService.show();
+    if(show){
+      this.dialogService.open({viewModel: Introduction, model: "no-op" }).then(response => {
+        this.userService.introShown();
+      });
+    }
 
 
     // Three dots Menu dropdown close when click outside

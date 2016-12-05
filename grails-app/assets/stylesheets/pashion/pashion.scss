@@ -169,13 +169,41 @@ input.slim-text-box-narrow {
   height: 17px;
   border-radius: 3px;
   background-color: $flat-blue;
+  font-size: $font-size-large;
+  font-weight: 700;
+  line-height: $font-size-large;
+  color: $white;
+  padding: 0.3rem 0.4rem 0 0.4rem;
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+  text-align: center;
+  display: inline-block;
+}
+
+.alert-box-small {
+  min-width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: $flat-blue;
+  margin-top: 5px;
+  margin-left: 2px;
+}
+
+.avatar-circle {
+  width: 32px;
+  height: 32px;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  background: $white-three;
   font-size: $font-size-extra-large;
   font-weight: 700;
   line-height: $font-size-extra-large;
-  color: $white;
-  padding: 0.2rem 0.4rem 0 0.4rem;
-  margin-left: 0.5rem;
-  margin-top: 0.5rem;
+  color: $warm-grey;
+  padding: 1rem 1rem 0 1rem;
+  //margin-left: 0.5rem;
+  //margin-top: 1rem;
+  // margin-right: 1rem;
   text-align: center;
   display: inline-block;
 }
@@ -238,7 +266,7 @@ select.top-menu-modifier:hover {
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
-  min-height: 75px;
+  //min-height: 75px;
   min-width: 125px;
   margin-top: 1rem;
   margin-left: 1rem;

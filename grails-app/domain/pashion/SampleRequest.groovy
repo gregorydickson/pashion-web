@@ -43,12 +43,6 @@ class SampleRequest {
 	String editorialWho
 	Date editorialWhen
 
-	
-
-	Integer itemsGot
-	Integer itemsOut
-	Integer itemsIn
-
 	//auto fields
 	Date dateCreated
 	Date lastUpdated
@@ -92,11 +86,6 @@ class SampleRequest {
 		editorialName nullable: true 
 		editorialWho nullable: true 
 		editorialWhen nullable: true 
-		
-
-		itemsGot nullable: true
-		itemsOut nullable: true 
-		itemsIn nullable: true
 
 		shippingOut nullable: true 
 		shippingReturn nullable: true

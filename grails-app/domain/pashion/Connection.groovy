@@ -4,19 +4,27 @@ class Connection {
 
 
 	Long connectedUserId
-	Integer connectionStatus
-	Date lastModifiedDate
-	Long lastModifiedUserId
-	Long userCreatedId
+	String email
+	String name 
+	String surname
+
+	String connectingStatus
+	// Date lastModifiedDate
+	// Long lastModifiedUserId
+	// Long userCreatedId
+	Integer numberNewMessages
+
 
 	//auto fields
-	Date dateCreated
-	Date lastUpdated
+	//Date dateCreated
+	//Date lastUpdated
 
 	static belongsTo = [user:User]
 
 	static constraints = {
-		userCreatedId(nullable:true)
-		lastModifiedUserId(nullable:true)
+		numberNewMessages(nullable:true)
+		//userCreatedId(nullable:true)
+		//lastModifiedUserId(nullable:true)
+		//lastModifiedUserId(nullable:true)
 	}
 }

@@ -47,7 +47,7 @@ class SampleRequestController {
         sr.requestStatusBrand = "Approved"
         sr.requestStatusPress = "Approved"
         sr.save(flush:true)
-        def sent = [message:'Sample Request Marked Ready to Ship']
+        def sent = [message:'Sample Request Approved']
         render sent as JSON
     }
     def brandSend(){
@@ -154,10 +154,9 @@ class SampleRequestController {
         sr.returnBy = jsonObject.returnBy
 
         sr.requestStatusBrand = "Pending"
-        sr.requestStatusPress = ""
-        sr.itemsGot = 0
-        sr.itemsOut = 0
-        sr.itemsIn = 0
+        sr.requestStatusPress = "Pending"
+     
+
         SearchableItem item
 
         jsonObject.samples.each{

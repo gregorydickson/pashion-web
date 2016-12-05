@@ -5,6 +5,8 @@ import 'fetch';
 @inject(HttpClient)
 export class UserService {
 
+    showIntro = true;
+
     constructor(http) {
         http.configure(config => {
             config
@@ -54,24 +56,35 @@ getUserDetails (id)
       	
 	  	});
 	  	return promise;
-  	}
- /* 	
-  	getUserDetails (id) {
-		console.log("getting user details for: " + id);
-		var promise = new Promise((resolve, reject) => {
-		this.http.fetch('/user/index.json?email=' + id + '&status=' + status)
-  			.then(response => response.json())
-  			.then(currentContact => {
-  				this.currentContact = currentContact;
-  				resolve(this.currentContact);
-  			})
-  			.catch(err=>reject(err));
-      	
-	  	});
-	  	return promise;
-  	}
- */ 	
+  	} 	
 
+    getConnections () {
+    // console.log("getting user details for: " + id);
+    var promise = new Promise((resolve, reject) => {
+    this.http.fetch('/connection/index.json')
+        .then(response => response.json())
+        .then(connections => {
+          this.connections = connections;
+          resolve(this.connections);
+        })
+        .catch(err=>reject(err));
+        
+      });
+      return promise;
+    } 
+
+    acceptContact () {
+
+    }
+
+    denyContact (id) {
+      
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/connection/denyContact/'+id, {method: 'post'}).then(response => response.json())
+          .then(result => resolve(result));
+      });
+      return promise;
+    }
 
     getUser() {
         var promise = new Promise((resolve, reject) => {
@@ -86,6 +99,13 @@ getUserDetails (id)
                 resolve(this.user);
         });
         return promise;
+    }
+
+    introShown(){
+      this.showIntro = false;
+    }
+    show(){
+      return this.showIntro;
     }
 
 

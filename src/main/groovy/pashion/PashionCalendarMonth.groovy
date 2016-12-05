@@ -19,13 +19,35 @@ class PashionCalendarMonth{
 
 
 	Boolean sameMonth(LocalDate theDate ){
-		
+		Boolean same = false
 		if(localDate.getMonthValue() == theDate.getMonthValue() &&
 			      localDate.getYear() == theDate.getYear()) {
-			return true
-		} else{
-			return false
+			same = true
+		} 
+		same
+	}
+	//The month provided is before this PashionCalendarMonth
+	Boolean beforeThisMonth(LocalDate startDate){
+		Boolean before = false
+		if(localDate.getYear() < startDate.getYear()) {
+			before = true
+		} else if(localDate.getYear() == startDate.getYear() &&
+				 startDate.getMonthValue() > localDate.getMonthValue()){
+			before = true
 		}
+		before
+	}
+	//The month provided is after this PashionCalendarMonth
+	Boolean afterThisMonth(LocalDate startDate){
+
+		Boolean after = false
+		if(localDate.getYear() > startDate.getYear()) {
+			after = true
+		} else if(localDate.getYear() == startDate.getYear() &&
+				localDate.getMonthValue() > startDate.getMonthValue()){
+			after = true
+		}
+		after
 	}
 
 

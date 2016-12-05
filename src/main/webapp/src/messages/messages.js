@@ -13,6 +13,7 @@ export class Messages {
     messages = [];
     user = {};
     currentContact = {};
+    searchTerm = ''; // hard wired search goes here
 
     //pubnub
     pubnub;
@@ -23,7 +24,7 @@ export class Messages {
       this.user = this.userService.getUser().then(user => this.user = user);
       this.ea = eventAggregator;
 
-      // oubnub
+      // pubnub
       this.pubnub = new PubNub({
           subscribeKey: "sub-c-dd158aea-b76b-11e6-b38f-02ee2ddab7fe",
           publishKey: "pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73",
@@ -50,7 +51,7 @@ export class Messages {
                 var receivedMessage = m.message; // The Payload
                 console.log("pubnub new nessage:", receivedMessage);
 
-                parent.messages.push({
+                parent.messages.push({ // unshift?
                     text: receivedMessage.text,
                     time: receivedMessage.sentAt,
                     image: '',
@@ -66,17 +67,6 @@ export class Messages {
 
                 $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
             },
-            presence: function(p) {
-                // handle presence
-                var action = p.action; // Can be join, leave, state-change or timeout
-                var channelName = p.channel; // The channel for which the message belongs
-                var occupancy = p.occupancy; // No. of users connected with the channel
-                var state = p.state; // User State
-                var channelGroup = p.subscription; //  The channel group or wildcard subscription match (if exists)
-                var publishTime = p.timestamp; // Publish timetoken
-                var timetoken = p.timetoken; // Current timetoken
-                var uuid = p.uuid; // UUIDs of users who are connected with the channel
-            },
             status: function(s) {
                 console.log("pubnub callback status:", s);
             }
@@ -89,37 +79,42 @@ export class Messages {
         });
 
         //get the history callback for this channel
-        this.pubnub.history(
-        {
-            channel: this.user.email,
-            reverse: true, // Setting to true will traverse the time line in reverse starting with the oldest message first.
-            count: 1000, // how many items to fetch
-            stringifiedTimeToken: true //, // false is the default
-            //start: '123123123123', // start time token to fetch
-            //end: '123123123133' // end timetoken to fetch
-        },
-        function (status, response) {
-            console.log("pubhub history error?" + status.error + " response.length(messages):" + response.messages.length);
-            var i;
-            for (i = 0; i < response.messages.length; i++) { 
-              parent.messages.push({
-                    text: response.messages[i].entry.text,
-                    time: response.messages[i].entry.sentAt,
-                    image: '',
-                    fromName: response.messages[i].entry.fromName,
-                    fromSurname: response.messages[i].entry.fromSurname,
-                    fromId: response.messages[i].entry.fromId,
-                    toName: response.messages[i].entry.toName,
-                    toSurname: response.messages[i].entry.toSurname,
-                    toId: response.messages[i].entry.toId,
-                    toMe: (response.messages[i].entry.toId == parent.user.email),
-                    fromMe: (response.messages[i].entry.fromId == parent.user.email)
-              });
+        var getAllMessages = function (timetoken) {
 
+            parent.pubnub.history(
+            {
+                channel: parent.user.email,
+                reverse: true, // Setting to true will traverse the time line in reverse starting with the oldest message first.
+                count: 100, // how many items to fetch max is 100
+                stringifiedTimeToken: true, //, // false is the default
+                start: timetoken // start time token to fetch
+                //end: '123123123133' // end timetoken to fetch
+            },
+            function (status, response) {
+                console.log("pubhub history error?" + status.error + " response.length(messages):" + response.messages.length);
+                var i;
+                for (i = 0; i < response.messages.length; i++) { 
+                  parent.messages.push({
+                        text: response.messages[i].entry.text,
+                        time: response.messages[i].entry.sentAt,
+                        image: '',
+                        fromName: response.messages[i].entry.fromName,
+                        fromSurname: response.messages[i].entry.fromSurname,
+                        fromId: response.messages[i].entry.fromId,
+                        toName: response.messages[i].entry.toName,
+                        toSurname: response.messages[i].entry.toSurname,
+                        toId: response.messages[i].entry.toId,
+                        toMe: (response.messages[i].entry.toId == parent.user.email),
+                        fromMe: (response.messages[i].entry.fromId == parent.user.email)
+                  });
+
+                }
+                // recursive call of anon function until all messages retrieved
+                if (response.messages.length==100) getAllMessages(response.endTimeToken);
             }
+          );
         }
-      );
-      
+        getAllMessages(0);   
     }
 
     sendMessage() {
@@ -164,7 +159,19 @@ export class Messages {
                 console.log("pubhub publish error?" + status.error + " timestamp:" + response.timetoken);
             }
         );
+        window.setTimeout(function () {
+              $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight"));
+            },500); // major kludge to scroll messages
     }
+
+    filterFunc(searchExpression, value){
+     
+     let itemValue = value.text;
+     if(!searchExpression || !itemValue) return false;
+     
+     return itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;
+     
+  }
 
 
 

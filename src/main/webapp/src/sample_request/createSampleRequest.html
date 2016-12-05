@@ -188,7 +188,7 @@
                                 <td class="accordion w24">SELECT SAMPLES</td>
                                 <td class="accordion w73" style="text-align:right; padding-right: 0.5rem;" >Select All</td>
                                 <td class="accordion w3">
-                                    <input type="checkbox"  change.delegate="allsamples($event)">
+                                    <input type="checkbox" checked.bind="selectAll" change.delegate="allsamples($event)">
                                 </td>
                             </tr>
                     </table>
@@ -212,7 +212,7 @@
       </ai-dialog-body>
       <ai-dialog-footer>
          <a class="hollow button"  click.delegate="close()">Cancel</a>
-         <a class="button" click.delegate="submit()">Book Selected</a>
+         <button id="CreateSampleRequestButton" class="button" click.delegate="submit()">Book Selected</button>
       </ai-dialog-footer>
    </ai-dialog>
 </template>

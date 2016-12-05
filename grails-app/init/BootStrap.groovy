@@ -34,32 +34,29 @@ class BootStrap {
         returnArray['pressHouse'] = it.pressHouse
         return returnArray
       }
-// 
 
-      if (Environment.current == Environment.DEVELOPMENT) {
-        def dateFormatString = "yyyy-MM-dd"
-        SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
+      def dateFormatString = "yyyy-MM-dd"
+      SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
+      def itemtype1 = SearchableItemType.findOrSaveWhere(display:'Looks',searchCode:'look').save(failOnError : true)
+      def itemtype2 = SearchableItemType.findOrSaveWhere(display:'Samples',searchCode:'sample').save(failOnError : true)
+      def itemtype3 = SearchableItemType.findOrSaveWhere(display:'Runway',searchCode:'runway').save(failOnError : true)
 
+      def s2 =  Season.findOrSaveWhere(name:'Spring 2016 Couture').save(failOnError : true)
+      def s1 =  Season.findOrSaveWhere(name:'Fall 2016 Couture').save(failOnError : true)
+      def s9 =  Season.findOrSaveWhere(name:'Fall 2016 Menswear').save(failOnError : true)
+      def s3 =  Season.findOrSaveWhere(name:'Fall 2016 Ready-to-Wear').save(failOnError : true)
       
+      def s4 =  Season.findOrSaveWhere(name:'Resort 2017').save(failOnError : true)
+      def s5 =  Season.findOrSaveWhere(name:'Spring 2017 Couture').save(failOnError : true)
+      def s10 = Season.findOrSaveWhere(name:'Spring 2017 Ready-to-Wear').save(failOnError : true)
+      def s7 =  Season.findOrSaveWhere(name:'Spring 2017 Menswear').save(failOnError : true)
+      def s8 =  Season.findOrSaveWhere(name:'Winter 2017 Menswear').save(failOnError : true)
+
+      if ("Old" == "Test Data") {
+    
         if (Brand.count() == 0) {
           log.info "Creating Base Test Data"
-          def itemtype1 = new SearchableItemType(display:'Looks',searchCode:'look').save(failOnError : true)
-          def itemtype2 = new SearchableItemType(display:'Samples',searchCode:'sample').save(failOnError : true)
-          def itemtype3 = new SearchableItemType(display:'Runway',searchCode:'runway').save(failOnError : true)
-
-          def s2 = new Season(name:'Spring 2016 Couture').save(failOnError : true)
-          def s1 = new Season(name:'Fall 2016 Couture').save(failOnError : true)
-          def s9 = new Season(name:'Fall 2016 Menswear').save(failOnError : true)
-          def s3 = new Season(name:'Fall 2016 Ready-to-Wear').save(failOnError : true)
           
-          def s4 = new Season(name:'Resort 2017').save(failOnError : true)
-          def s5 = new Season(name:'Spring 2017 Couture').save(failOnError : true)
-          def s10 = new Season(name:'Spring 2017 Ready-to-Wear').save(failOnError : true)
-          def s7 = new Season(name:'Spring 2017 Menswear').save(failOnError : true)
-          def s8 = new Season(name:'Winter 2017 Menswear').save(failOnError : true)
-
-          
-
           
           Date availableFrom = dateFormat.parse("2016-12-01")
           Date availableTo = dateFormat.parse("2016-12-15")
@@ -388,7 +385,7 @@ class BootStrap {
           def brand1 = new Brand(name:'Chanel', city:'Paris' ).save(failOnError : true)
           def sea =  Season.findByName('Spring 2017 Ready-to-Wear')
           def collection1 = new BrandCollection(season: sea, brand:brand1).save(failOnError : true)
-          def itemtype1 =  SearchableItemType.findBySearchCode('look')
+           itemtype1 =  SearchableItemType.findBySearchCode('look')
           def available = dateFormat.parse("2017-01-15")
           def range = 1..369
           range.each{
@@ -404,7 +401,7 @@ class BootStrap {
           def brand1 = new Brand(name:'Miu Miu', city:'Paris' ).save(failOnError : true)
           def sea =  Season.findByName('Spring 2017 Ready-to-Wear')
           def collection1 = new BrandCollection(season: sea, brand:brand1).save(failOnError : true)
-          def itemtype1 =  SearchableItemType.findBySearchCode('look')
+           itemtype1 =  SearchableItemType.findBySearchCode('look')
           def range = 1..277
           range.each{
             String imageNumber = it.toString().padLeft(4,'0')
@@ -419,7 +416,7 @@ class BootStrap {
           def brand1 = new Brand(name:'Alberta Ferretti', city:'Milan' ).save(failOnError : true)
           def sea =  Season.findByName('Fall 2016 Ready-to-Wear')
           def collection1 = new BrandCollection(season: sea, brand:brand1).save(failOnError : true)
-          def itemtype1 =  SearchableItemType.findBySearchCode('look')
+           itemtype1 =  SearchableItemType.findBySearchCode('look')
           def range = 1..281
           range.each{
             String imageNumber = it.toString().padLeft(4,'0')
@@ -435,7 +432,7 @@ class BootStrap {
           def brand1 =  Brand.findByName('Ralph Lauren')
           def sea =  Season.findByName('Spring 2017 Ready-to-Wear')
           def collection1 = new BrandCollection(season: sea, brand:brand1).save(failOnError : true)
-          def itemtype1 =  SearchableItemType.findBySearchCode('look')
+           itemtype1 =  SearchableItemType.findBySearchCode('look')
           def available = dateFormat.parse("2017-01-15")
           def range = 1..206
           range.each{
@@ -452,7 +449,7 @@ class BootStrap {
           def brand1 = new Brand(name:'Christopher Kane', city:'London' ).save(failOnError : true)
           def sea =  Season.findByName('Spring 2017 Ready-to-Wear')
           def collection1 = new BrandCollection(season: sea, brand:brand1).save(failOnError : true)
-          def itemtype1 =  SearchableItemType.findBySearchCode('look')
+           itemtype1 =  SearchableItemType.findBySearchCode('look')
           def available = dateFormat.parse("2017-01-15")
           def range = 1..38
           range.each{
