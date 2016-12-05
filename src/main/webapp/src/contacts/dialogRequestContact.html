@@ -14,8 +14,10 @@
         <!-- body-->
         <ai-dialog-body>
             <div class="grid-block vertical">
-                <div class="grid-block">
+               
 
+                <!-- error messages -->
+                        <div if.bind="(flashMessage != '')" class="message" style="color:red; text-align: center;" role="status">${flashMessage}</div>
 
                         <!-- Email -->
                         <div class="grid-block shrink">
@@ -23,8 +25,7 @@
                             <input value.bind="newEmail" type="text" class="slim-text-box">
                         </div>
                       
-                   
-                    </div>
+                  
 
                 </div>
               

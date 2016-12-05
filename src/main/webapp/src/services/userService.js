@@ -14,7 +14,7 @@ export class UserService {
         });
 
         this.http = http;
-        console.log("Construct UserServices");
+        //console.log("Construct UserServices");
     }
 
     activate() {
@@ -34,6 +34,22 @@ export class UserService {
 		  });
 		  return promise;
   	}
+
+    checkValidUser (email) {
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/user/index.json')
+          .then(response => response.json())
+          .then(users => {
+            users.forEach(function(item1) {
+              //console.log("inner users: " + item1.email + " to match: " + email);
+                if (item1.email == email) resolve(item1.email);
+            });
+            resolve(-1);
+          }).catch(err=>reject(err));
+        });
+
+      return promise;
+    }
 
 
   	/*
@@ -73,9 +89,14 @@ getUserDetails (id)
       return promise;
     } 
 
-    acceptContact () {
-
+    addContactRequest (id) {
+       var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/connection/addContactRequest/'+id, {method: 'post'}).then(response => response.json())
+          .then(result => resolve(result));
+      });
+      return promise;     
     }
+
 
     denyContact (id) {
       
