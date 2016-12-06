@@ -143,7 +143,7 @@
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Addressee</span>
                             <div class="" >
-                                <select name="" id="" value.bind="sampleRequest.deliverTo">
+                                <select name="" id="" value.two-way="sampleRequest.deliverTo.id">
                                     <option repeat.for="person of brandUsers" model.bind="person.id">${person.name} ${person.surname}</option>
                                 </select>
                             </div>
