@@ -77,6 +77,8 @@ class ConnectionController {
         con.connectingStatus = "Pending"
         con.numberNewMessages = 0
         con.save(flush:true, failOnError:true)
+        def sent = [message:'contact request sent']
+        render sent as JSON
     }
 
     @Transactional
