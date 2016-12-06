@@ -13,7 +13,7 @@
             <table class="big-accordion">
                 <tr>
                     <td class="accordion-grey" style="width:20px;">
-                        <button id="button11" class="accordion active" click.delegate="closeExpand(11)"></button>
+                        <button id="button11" class="accordion" click.delegate="closeExpand(11)"></button>
                     </td>
                     <td class="accordion-grey">
                         <span>Recent Activity</span>
@@ -22,10 +22,10 @@
                 </tr>
             </table>
         </div>
-        <div id="panel11" class="panel grid-block vertical show" style="overflow-y:scroll;">
+        <div id="panel11" class="panel grid-block vertical" style="overflow-y:scroll;">
             <div id="contacts-inside-top2" repeat.for="connection of connections" class="" style="width:255px; overflow: visible;margin-left: 1rem;">
                 <div if.bind="(connection.connectedUserId == user.id) && (connection.connectingStatus=='Pending')" style="">
-                    <span class="ui-text-label-me-left paragraph-5 contact-box">Incoming Connection Request</span>
+                    <span class="look-menu-heading paragraph-5" style="outline: 1px solid lightgray; width: 250px; background: white;">Connection Request</span>
                     <table class="width100">
                         <tr>
                             <td>
@@ -39,12 +39,17 @@
                                 <!--     <div class="ui-text-label-s-left paragraph-5 contact-box">${connection.brand.name} ${connection.pressHouse.name}</div> -->
                                 <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connection.user.id -1].email}</div>
                             </td>
-                            <!-- menu -->
-                            <td class="align-top">
+                        </tr>
+                    </table>
+                    <div class="grid-block align-center shrink">
+                        <a class="hollow button" click.delegate="declineContact(connection.id) ">Decline</a>
+                        <a class="button" href="#" click.delegate="acceptContact(connection.id)">Accept</a>
+                    </div>
+                    <!--
                                 <div class="look-menu-absolute-wrap">
                                     <span class="edit-box"><a href="#" click.delegate="contactMenu(connection.id)">...</a>
                                                     </span>
-                                    <!-- edit contact modal popup -->
+                                    
                                     <div id="${connectString}${connection.id}" class="look-menu-absolute lookEditContactClass" style="margin-bottom:5px;">
                                         <span class="look-menu-heading">ACTION</span>
                                         <ul class="look-menu-list">
@@ -57,14 +62,12 @@
                                         </ul>
                                     </div>
                                 </div>
-                            </td>
-                        </tr>
-                    </table>
+-->
                 </div>
             </div>
         </div>
         <!-- category Contact lists-->
-        <div class="grid-block shrink" style="margin-left:1rem; margin-bottom:1rem;">
+        <div class="grid-block shrink" style="margin-left:1rem; margin-bottom:1rem; margin-top:1rem;">
             <table class="big-accordion ">
                 <tr>
                     <td class="accordion-grey" style="width:20px;">
@@ -86,8 +89,7 @@
 
         -->
         <div id="panel12" class="panel grid-block vertical scroll show" style="overflow-y:scroll;">
-            
-                <div id="contacts-inside-top " repeat.for="userLoop of users | sort: 'name': 'ascending' | filter:searchTerm:filterFunc " class="" style="width:255px; overflow: visible;margin-left: 1rem;">
+            <div id="contacts-inside-top " repeat.for="userLoop of users | sort: 'name': 'ascending' | filter:searchTerm:filterFunc " class="" style="width:255px; overflow: visible;margin-left: 1rem;">
                 <a href="#" click.delegate="initiateMessage(userLoop.id)">
                     <!-- Not initiated by me -->
                     <div if.bind="((userLoop.connections!=null) && (userLoop.id != user.id))" repeat.for="connection of userLoop.connections">
@@ -180,9 +182,8 @@
                                                 <a href="#" click.delegate="CreateDialogUpdatePhoto(userLoop.id) " class="look-menu-link">Update Photo</a>
  
                                              </li> -->
-  </a>
-                </div>
-           
+                </a>
+            </div>
         </div>
     </div>
 </template>
