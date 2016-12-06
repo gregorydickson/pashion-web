@@ -61,7 +61,7 @@ class ConnectionController {
         connection.connectingStatus = "Accepted"
         
         connection.save(failOnError : true, flush: true)
-        def connectionString  = 'connection denied'
+        def connectionString  = 'connection accepted'
         def sent = [message:connectionString]
         render sent as JSON
     }
@@ -69,9 +69,10 @@ class ConnectionController {
     @Transactional 
     def addContactRequest(){
         def jsonObject = request.JSON
-        log.info "json:"+jsonObject
+        log.info "addContactRequest json: "+jsonObject
+        log.info "addContactRequest session.user: " + session.user
         def con = new Connection()
-        con.user = session.user
+        con.user = session.user //{id: jsonObject.user.id.toInteger()}
         con.connectedUserId = jsonObject.connectedUserId
         con.connectingStatus = "Pending"
         con.numberNewMessages = 0

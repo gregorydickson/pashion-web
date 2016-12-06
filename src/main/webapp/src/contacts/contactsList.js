@@ -56,6 +56,7 @@ export class ContactsList {
     this.userService.acceptContact(id)
       .then(response => {
         this.connections = this.userService.getConnections().then(connections => this.connections = connections);
+        this.users = this.userService.getUsers("",status).then(users => this.users = users);
       });
   }
 
@@ -65,6 +66,7 @@ export class ContactsList {
     this.userService.denyContact(id)
       .then(response => {
         this.connections = this.userService.getConnections().then(connections => this.connections = connections);
+        this.users = this.userService.getUsers("",status).then(users => this.users = users);
       });
   }
 
