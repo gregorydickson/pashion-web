@@ -3,7 +3,7 @@ import 'fetch';
 import { inject } from 'aurelia-framework';
 import { DateFormat } from 'common/dateFormat';
 import { UserService } from 'services/userService';
-import { singleton } from 'aurelia-framework'
+import { singleton } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 
 @inject(HttpClient, UserService, EventAggregator)

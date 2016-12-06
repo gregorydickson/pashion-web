@@ -54,12 +54,13 @@ export class ContactsList {
     var menu = document.getElementById('connect'+id); 
     // menu.classList.toggle("look-menu-show"); // RM not necessary?
     this.userService.acceptContact(id)
-      .then(response => {
-        this.connections = this.userService.getConnections().then(connections => this.connections = connections);
-        this.users = this.userService.getUsers("",status).then(users => this.users = users);
-      });
-      $("#panel11").animate({scrollTop: $("#panel11").prop("scrollHeight")}, 50);
-      $("#panel12").animate({scrollTop: $("#panel12").prop("scrollHeight")}, 50);
+     // .then(response => {
+      //  this.connections = this.userService.getConnections().then(connections => this.connections = connections);
+      //  this.users = this.userService.getUsers("",status).then(users => this.users = users);
+      //})
+      ;
+      //$("#panel11").animate({scrollTop: $("#panel11").prop("scrollHeight")}, 50);
+      //$("#panel12").animate({scrollTop: $("#panel12").prop("scrollHeight")}, 50);
   }
 
   declineContact(id) {
@@ -70,8 +71,8 @@ export class ContactsList {
         this.connections = this.userService.getConnections().then(connections => this.connections = connections);
         this.users = this.userService.getUsers("",status).then(users => this.users = users);
       });
-      $("#panel11").animate({scrollTop: $("#panel11").prop("scrollHeight")}, 50);
-      $("#panel12").animate({scrollTop: $("#panel12").prop("scrollHeight")}, 50);
+      //$("#panel11").animate({scrollTop: $("#panel11").prop("scrollHeight")}, 50);
+      //$("#panel12").animate({scrollTop: $("#panel12").prop("scrollHeight")}, 50);
   }
 
     deleteContact(id) {
@@ -82,8 +83,11 @@ export class ContactsList {
         this.connections = this.userService.getConnections().then(connections => this.connections = connections);
         this.users = this.userService.getUsers("",status).then(users => this.users = users);
       });
-      $("#panel11").animate({scrollTop: $("#panel11").prop("scrollHeight")}, 50);
-      $("#panel12").animate({scrollTop: $("#panel12").prop("scrollHeight")}, 50);
+      //$("#panel11").animate({scrollTop: $("#panel11").prop("scrollHeight")}, 50);
+      //$("#panel12").animate({scrollTop: $("#panel12").prop("scrollHeight")}, 50);
+      //this.redraw(document.getElementById("right-panel-body"));
+      //this.redraw(document.getElementById("panel11"));
+      //this.redraw(document.getElementById("panel12"));
   }
 
 
@@ -91,7 +95,7 @@ export class ContactsList {
   lookEditContact(id){
     var menu = document.getElementById(id); 
     menu.classList.toggle("look-menu-show");
-    $("#right-panel-body").height($("#right-panel-body").height()+160); // kludge to grow container to get menu, should worklike request list in index, seems to trigger a re-calc
+    //$("#right-panel-body").height($("#right-panel-body").height()+160); // kludge to grow container to get menu, should worklike request list in index, seems to trigger a re-calc
   }
 
   closeExpand(buttonNumber) {
@@ -124,7 +128,7 @@ export class ContactsList {
     this.ea.publish('setCurrentContact', {userId: id});
   	this.commsHeader.setStatusTab(this.commsHeader.statusValues.messages);
     // dirty updates
-    $("#right-panel-body").animate({scrollTop: $("#right-panel-body").prop("scrollHeight")}, 500);
+    //$("#right-panel-body").animate({scrollTop: $("#right-panel-body").prop("scrollHeight")}, 500);
     this.connections = this.userService.getConnections().then(connections => this.connections = connections);
     this.users = this.userService.getUsers("",status).then(users => this.users = users);
       
@@ -139,6 +143,12 @@ export class ContactsList {
      
      return itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;
      
+  }
+  redraw(element){
+    element.style.display='none';
+    element.offsetHeight; 
+    element.style.display='';
+    element.animate({scrollTop: element.scrollHeight}, 50)
   }
 
 

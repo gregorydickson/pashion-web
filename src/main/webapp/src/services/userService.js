@@ -1,8 +1,10 @@
 import { inject } from 'aurelia-framework';
 import { HttpClient, json } from 'aurelia-fetch-client';
+import { singleton } from 'aurelia-framework';
 import 'fetch';
 
 @inject(HttpClient)
+@singleton()
 export class UserService {
 
     showIntro = true;
@@ -58,7 +60,7 @@ export class UserService {
         this.users.forEach(function(item1) {
             var level1 = false;
             item1.connections.forEach(function(item2) {
-                console.log("userId: " + userId + " item2.connectedUserId: " + item2.connectedUserId + " item2.user.id: " + item2.user.id + " parent.user.id: " + parent.user.id);
+               // console.log("userId: " + userId + " item2.connectedUserId: " + item2.connectedUserId + " item2.user.id: " + item2.user.id + " parent.user.id: " + parent.user.id);
                 if ((item2.connectedUserId == parent.user.id) && (item2.user.id == userId)) level1 = true;
                 if ((item2.connectedUserId == userId) && (item2.user.id == parent.user.id)) level1 = true;
             } );
