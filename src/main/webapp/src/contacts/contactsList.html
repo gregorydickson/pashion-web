@@ -13,7 +13,7 @@
             <table class="big-accordion">
                 <tr>
                     <td class="accordion-grey" style="width:20px;">
-                        <button id="button11" class="accordion" click.delegate="closeExpand(11)"></button>
+                        <button id="button1111" class="accordion" click.delegate="closeExpand(1111)"></button>
                     </td>
                     <td class="accordion-grey">
                         <span>Recent Activity</span>
@@ -22,7 +22,7 @@
                 </tr>
             </table>
         </div>
-        <div id="panel11" class="panel grid-block vertical" style="overflow-y:scroll;">
+        <div id="panel1111" class="panel grid-block vertical" style="overflow-y:scroll;">
             <div id="contacts-inside-top2" if.bind="(connections!=null)" repeat.for="connection of connections" class="" style="width:255px; overflow: visible;margin-left: 1rem;">
                 <div if.bind="(connection.connectedUserId == user.id) && (connection.connectingStatus=='Pending')" style="">
                     <span class="look-menu-heading paragraph-5" style="outline: 1px solid lightgray; width: 250px; background: white;">Connection Request</span>
@@ -72,7 +72,7 @@
             <table class="big-accordion ">
                 <tr>
                     <td class="accordion-grey" style="width:20px;">
-                        <button id="button12" class="accordion active" click.delegate="closeExpand(12)"></button>
+                        <button id="button1212" class="accordion active" click.delegate="closeExpand(1212)"></button>
                     </td>
                     <td class="accordion-grey"> <span>Alphabetical</span>
                     </td>
@@ -89,7 +89,7 @@
 
 
         -->
-        <div id="panel12" class="panel grid-block vertical scroll show" style="overflow-y:scroll;">
+        <div id="panel1212" class="panel grid-block vertical scroll show" style="overflow-y:scroll;">
             <div id="contacts-inside-top " repeat.for="userLoop of users | sort: 'name': 'ascending' | filter:searchTerm:filterFunc " class="" style="width:255px; overflow: visible;margin-left: 1rem;">
                 <!-- Not initiated by me -->
                 <!--      <span>${userLoopconnections}</span> -->

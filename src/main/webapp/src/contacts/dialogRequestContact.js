@@ -57,8 +57,6 @@ export class DialogRequestContact {
                             parent.userService.getUsers("", status);
                             parent.userService.getConnections();
                             parent.close();
-                            $("#panel11").animate({ scrollTop: $("#panel11").prop("scrollHeight") }, 50);
-                            $("#panel12").animate({ scrollTop: $("#panel12").prop("scrollHeight") }, 50);
 
                         }
                     };

@@ -139,8 +139,6 @@ getUserDetails (id)
     }
 
     deleteContact(id) {
-        //delete not working
-        //change status to deniedisntead
         console.log("delete contact: " + id);
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/delete/' + id, { method: 'post' }).then(response => response.json())
