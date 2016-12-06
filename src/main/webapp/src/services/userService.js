@@ -24,7 +24,7 @@ export class UserService {
   		console.log("getting users");
   		var promise = new Promise((resolve, reject) => {
 		
-			this.http.fetch('/user/index.json')
+			this.http.fetch('/user/connections.json')
       			.then(response => response.json())
       			.then(users => {
       				this.users = users;
@@ -92,7 +92,7 @@ getUserDetails (id)
     // Build new connection
     addContactRequest (idIn) {
 
-      console.log ("incoming contact request: " + idIn); // + conn.id + " " + conn.connectedUserId);
+      console.log ("incoming contact request: " + idIn); 
 
       var conn = {user: {id:this.user.id}, connectedUserId:idIn,numberNewMessages:0,connectingStatus:'Pending'};
 
