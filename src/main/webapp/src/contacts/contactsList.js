@@ -54,11 +54,10 @@ export class ContactsList {
     var menu = document.getElementById('connect'+id); 
     // menu.classList.toggle("look-menu-show"); // RM not necessary?
     this.userService.acceptContact(id)
-     // .then(response => {
-      //  this.connections = this.userService.getConnections().then(connections => this.connections = connections);
-      //  this.users = this.userService.getUsers("",status).then(users => this.users = users);
-      //})
-      ;
+      .then(response => {
+        this.connections = this.userService.getConnections().then(connections => this.connections = connections);
+        this.users = this.userService.getUsers("",status).then(users => this.users = users);
+      });
       //$("#panel11").animate({scrollTop: $("#panel11").prop("scrollHeight")}, 50);
       //$("#panel12").animate({scrollTop: $("#panel12").prop("scrollHeight")}, 50);
   }
