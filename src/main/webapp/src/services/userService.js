@@ -139,7 +139,7 @@ getUserDetails (id)
         //change status to deniedisntead
         console.log("delete contact: " + id);
         var promise = new Promise((resolve, reject) => {
-            this.http.fetch('/connection/denyContact/' + id, { method: 'post' }).then(response => response.json())
+            this.http.fetch('/connection/delete/' + id, { method: 'post' }).then(response => response.json())
                 .then(result => resolve(result));
         });
         return promise;
