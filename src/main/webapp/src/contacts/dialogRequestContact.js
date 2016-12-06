@@ -37,7 +37,7 @@ export class DialogRequestContact {
         returned.then(function(result) {
                 console.log("=> " + result);
                 if (result == -1) {
-                    parent.flashMessage = "Not a valid user";
+                    parent.flashMessage = "That email is not registered";
                 }
                 if (result == -2) {
                     parent.flashMessage = "Can't connect with yourself";
@@ -48,11 +48,14 @@ export class DialogRequestContact {
                    // r2.then(function(result) {
                         console.log("check dupe result => " + r2);
                         if (r2) {
-                            parent.flashMessage = "You are already connected";
+                            parent.flashMessage = "You've already sent a request";
                         }
                         if (!r2) {
                             // call user service to create
                             parent.userService.addContactRequest(result);
+                            // refresh at least in user service
+                            parent.userService.getUsers("", status);
+                            parent.userService.getConnections();
                             parent.close();
                             $("#panel11").animate({ scrollTop: $("#panel11").prop("scrollHeight") }, 50);
                             $("#panel12").animate({ scrollTop: $("#panel12").prop("scrollHeight") }, 50);

@@ -43,7 +43,7 @@ export class UserService {
                 .then(users => {
                     users.forEach(function(item1) {
                         //console.log("inner users: " + item1.email + " to match: " + email);
-                        if (item1.email == email) resolve(item1.id); //return the id of the requested, valid email
+                        if (item1.email.toUpperCase() == email.toUpperCase()) resolve(item1.id); //return the id of the requested, valid email
                     });
                     resolve(-1);
                 }).catch(err => reject(err));
@@ -112,15 +112,17 @@ getUserDetails (id)
         console.log("incoming contact request: " + idIn);
 
         var conn = { user: { id: this.user.id }, connectedUserId: idIn, numberNewMessages: 0, connectingStatus: 'Pending' };
-
-        this.http.fetch('/connection/addContactRequest/', {
-                method: 'post',
-                body: json(conn)
-            })
-            .then(response => response.json())
-            .then(result => {
-                console.log("addContactRequest:" + result);
+        var promise = new Promise((resolve, reject) => {
+          this.http.fetch('/connection/addContactRequest/', {
+                  method: 'post',
+                  body: json(conn)
+              })
+              .then(response => response.json())
+              .then(result => {
+                  console.log("addContactRequest:" + result);
+              });
             });
+        return promise;
 
     }
 
