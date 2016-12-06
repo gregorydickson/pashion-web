@@ -19,8 +19,9 @@ class BootStrap {
         def returnArray = [:]
         returnArray['image'] = it.image
         returnArray['id'] =  it.id
-        returnArray['fromDate'] =  it.fromDate
         returnArray['name'] =  it.name
+        returnArray['season'] = it.season.name
+        returnArray['brand'] = it.brand.name
         return returnArray
       }
 // RM don't remove this section, used by comms
