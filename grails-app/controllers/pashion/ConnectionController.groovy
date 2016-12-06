@@ -61,7 +61,7 @@ class ConnectionController {
         connection.connectingStatus = "Accepted"
         
         connection.save(failOnError : true, flush: true)
-        def connectionString  = 'connection denied'
+        def connectionString  = 'connection accepted'
         def sent = [message:connectionString]
         render sent as JSON
     }
@@ -69,20 +69,14 @@ class ConnectionController {
     @Transactional 
     def addContactRequest(){
         def jsonObject = request.JSON
-        log.info "json:"+jsonObject
+        log.info "addContactRequest json: "+jsonObject
+        log.info "addContactRequest session.user: " + session.user
         def con = new Connection()
-        con.user = session.user
+        con.user = session.user //{id: jsonObject.user.id.toInteger()}
         con.connectedUserId = jsonObject.connectedUserId
         con.connectingStatus = "Pending"
         con.numberNewMessages = 0
         con.save(flush:true, failOnError:true)
-    //// need to create an entry for both sides, as a connection is a two-way relationship.
-        def con2 = new Connection()
-        con2.user = User.get(jsonObject.connectedUserId.toInteger())
-        con2.connectedUserId = session.user.id
-        con2.connectingStatus = "Accepted"
-        con2.numberNewMessages = 0
-        con2.save(flush:true, failOnError:true)
     }
 
     @Transactional
@@ -142,7 +136,7 @@ class ConnectionController {
 
     @Transactional
     def delete(Connection connection) {
-
+        log.info "delete " + connection
         if (connection == null) {
             transactionStatus.setRollbackOnly()
             notFound()

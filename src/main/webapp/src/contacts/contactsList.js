@@ -56,7 +56,10 @@ export class ContactsList {
     this.userService.acceptContact(id)
       .then(response => {
         this.connections = this.userService.getConnections().then(connections => this.connections = connections);
+        this.users = this.userService.getUsers("",status).then(users => this.users = users);
       });
+      $("#panel11").animate({scrollTop: $("#panel11").prop("scrollHeight")}, 50);
+      $("#panel12").animate({scrollTop: $("#panel12").prop("scrollHeight")}, 50);
   }
 
   declineContact(id) {
@@ -65,7 +68,22 @@ export class ContactsList {
     this.userService.denyContact(id)
       .then(response => {
         this.connections = this.userService.getConnections().then(connections => this.connections = connections);
+        this.users = this.userService.getUsers("",status).then(users => this.users = users);
       });
+      $("#panel11").animate({scrollTop: $("#panel11").prop("scrollHeight")}, 50);
+      $("#panel12").animate({scrollTop: $("#panel12").prop("scrollHeight")}, 50);
+  }
+
+    deleteContact(id) {
+    var menu = document.getElementById('connect'+id); 
+    // menu.classList.toggle("look-menu-show"); // RM not necessary?
+    this.userService.deleteContact(id)
+      .then(response => {
+        this.connections = this.userService.getConnections().then(connections => this.connections = connections);
+        this.users = this.userService.getUsers("",status).then(users => this.users = users);
+      });
+      $("#panel11").animate({scrollTop: $("#panel11").prop("scrollHeight")}, 50);
+      $("#panel12").animate({scrollTop: $("#panel12").prop("scrollHeight")}, 50);
   }
 
 
@@ -105,7 +123,10 @@ export class ContactsList {
     // console.log("contactlist setting current contact: " + id);
     this.ea.publish('setCurrentContact', {userId: id});
   	this.commsHeader.setStatusTab(this.commsHeader.statusValues.messages);
+    // dirty updates
     $("#right-panel-body").animate({scrollTop: $("#right-panel-body").prop("scrollHeight")}, 500);
+    this.connections = this.userService.getConnections().then(connections => this.connections = connections);
+    this.users = this.userService.getUsers("",status).then(users => this.users = users);
       
   }
 
