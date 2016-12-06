@@ -36,10 +36,14 @@ export class Index {
 
   numberImages = 0;
   
-  
+  setBrand(event){
+    this.selectedBrand = event.detail.value
+    console.log(event.detail.value);
+    this.filterChange();
+  }
   filterChange(event){
     console.log("changing");
-    console.log(this.selectedBrand);
+    console.log("brand:"+this.selectedBrand);
     console.log(this.selectedSeason);
     console.log(this.selectedItemType);
     console.log(this.searchText);

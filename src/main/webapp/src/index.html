@@ -261,7 +261,7 @@
                     <div class="grid-row-col">
                         
                         <span class="form-label" style="padding-right: 0.5rem">Designer</span>
-                        <select2 name="brandSelect" options.bind="brands" selected.bind="selectedBrand" change.delegate="filterChange($event.target)" >
+                        <select2 name="brandSelect" options.bind="brands" selected.bind="selectedBrand" change.delegate="setBrand($event)" >
                         </select2>
                        
                     </div>
