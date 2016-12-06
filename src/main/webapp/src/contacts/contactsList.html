@@ -23,7 +23,7 @@
             </table>
         </div>
         <div id="panel11" class="panel grid-block vertical" style="overflow-y:scroll;">
-            <div id="contacts-inside-top2" repeat.for="connection of connections" class="" style="width:255px; overflow: visible;margin-left: 1rem;">
+            <div id="contacts-inside-top2" if.bind="(connections!=null)" repeat.for="connection of connections" class="" style="width:255px; overflow: visible;margin-left: 1rem;">
                 <div if.bind="(connection.connectedUserId == user.id) && (connection.connectingStatus=='Pending')" style="">
                     <span class="look-menu-heading paragraph-5" style="outline: 1px solid lightgray; width: 250px; background: white;">Connection Request</span>
                     <table class="width100">
@@ -62,6 +62,7 @@
                                         </ul>
                                     </div>
                                 </div>
+        }
 -->
                 </div>
             </div>
@@ -90,9 +91,10 @@
         -->
         <div id="panel12" class="panel grid-block vertical scroll show" style="overflow-y:scroll;">
             <div id="contacts-inside-top " repeat.for="userLoop of users | sort: 'name': 'ascending' | filter:searchTerm:filterFunc " class="" style="width:255px; overflow: visible;margin-left: 1rem;">
-                <a href="#" click.delegate="initiateMessage(userLoop.id)">
-                    <!-- Not initiated by me -->
-                    <div if.bind="((userLoop.connections!=null) && (userLoop.id != user.id))" repeat.for="connection of userLoop.connections">
+                <!-- Not initiated by me -->
+                <!--      <span>${userLoopconnections}</span> -->
+                <div if.bind="((userLoop.connections!=null) && (userLoop.id != user.id))" repeat.for="connection of userLoop.connections">
+                    <a href="#" click.delegate="initiateMessage(userLoop.id)">
                         <!--  -->
                         <table if.bind="((user.id == connection.connectedUserId) && (connection.connectingStatus=='Accepted'))" class="width100">
                             <tr>
@@ -109,7 +111,7 @@
                                     </div>
                                 </td>
                                 <td class="align-top"><span class="alert-box">8</span></td>
-                                <!-- men -->
+                                <!-- NO MENU FOR NOW. Place holder -->
                                 <td class="align-top">
                                     <div class="look-menu-absolute-wrap">
                                         <span class="edit-box"><a href="#" click.delegate="lookEditContact(userLoop.id)"></a> <!-- ... -->
@@ -128,12 +130,16 @@
                                         </div>
                                     </div>
                                 </td>
+                                <!-- NO MENU FOR NOW. Place holder -->
                             </tr>
                         </table>
-                    </div>
-                    <!-- end not initiated by me -->
-                    <!-- my initiated connections -->
-                    <div if.bind="((userLoop.connections!=null) && (userLoop.id == user.id))" repeat.for="connection2 of userLoop.connections">
+                    </a>
+                </div>
+                <!-- end not initiated by me -->
+                <!-- my initiated connections -->
+                <!-- <span>${userLoop.connections}</span>-->
+                <div if.bind="((userLoop.connections!=null) && (userLoop.id == user.id))" repeat.for="connection2 of userLoop.connections">
+                    <a href="#" click.delegate="initiateMessage(users[connection2.connectedUserId-1].id)">
                         <table if.bind="((connection2.connectedUserId != user.id) && (connection2.connectingStatus=='Accepted'))" class="width100">
                             <tr>
                                 <td>
@@ -149,7 +155,7 @@
                                     </div>
                                 </td>
                                 <td class="align-top"><span class="alert-box">8</span></td>
-                                <!-- men -->
+                                <!-- NO MENU FOR NOW. Place holder -->
                                 <td class="align-top">
                                     <div class="look-menu-absolute-wrap">
                                         <span class="edit-box"><a href="#" click.delegate="lookEditContact(userLoop.id)"></a> <!-- ... -->
@@ -160,7 +166,7 @@
                                             <ul class="look-menu-list">
                                                 <li>
                                                     <!-- if.bind="(userLoop.id !=user.id)" class="look-menu-item"> -->
-                                                    <a href="#" click.delegate="initiateMessage(userLoop.id) " class="look-menu-link">Send Message</a>
+                                                    <a href="#" click.delegate="initiateMessage(users[connection2.connectedUserId-1].id) " class="look-menu-link">Send Message</a>
                                                 </li>
                                                 <li>
                                                     <!-- if.bind="(userLoop.id !=user.id)" class="look-menu-item"> -->
@@ -170,19 +176,20 @@
                                         </div>
                                     </div>
                                 </td>
+                                <!-- NO MENU FOR NOW. Place holder -->
                             </tr>
                         </table>
-                    </div>
-                    <!-- end my initiated connections -->
-                    <!-- add me -->
-                    <!-- <li> 
+                    </a>
+                </div>
+                <!-- end my initiated connections -->
+                <!-- add me -->
+                <!-- <li> 
                                                 <a href="#" click.delegate="createDialogEditContact(userLoop.id) " class="look-menu-link">Edit</a>
                                             </li>
                                             <li> 
                                                 <a href="#" click.delegate="CreateDialogUpdatePhoto(userLoop.id) " class="look-menu-link">Update Photo</a>
  
                                              </li> -->
-                </a>
             </div>
         </div>
     </div>
