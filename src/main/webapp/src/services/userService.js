@@ -122,7 +122,10 @@ getUserDetails (id)
               .then(response => response.json())
               .then(result => {
                   console.log("addContactRequest:" + result);
-              });
+                  this.getUsers("",status);})
+              .then(result => {
+                this.getConnections()
+              }).catch(err => reject(err));
             });
         return promise;
 

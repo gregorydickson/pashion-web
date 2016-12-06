@@ -52,10 +52,13 @@ export class DialogRequestContact {
                         }
                         if (!r2) {
                             // call user service to create
-                            parent.userService.addContactRequest(result);
-                            // refresh at least in user service
-                            parent.userService.getUsers("", status);
-                            parent.userService.getConnections();
+                            parent.userService.addContactRequest(result)
+                              .then(response => {
+                                // refresh at least in user service
+                                //parent.userService.getUsers("", status);
+                                parent.userService.getConnections();
+                              });
+                            
                             parent.close();
 
                         }
