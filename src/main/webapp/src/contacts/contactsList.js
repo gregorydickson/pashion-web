@@ -128,8 +128,8 @@ export class ContactsList {
   	this.commsHeader.setStatusTab(this.commsHeader.statusValues.messages);
     // dirty updates
     //$("#right-panel-body").animate({scrollTop: $("#right-panel-body").prop("scrollHeight")}, 500);
-    this.connections = this.userService.getConnections().then(connections => this.connections = connections);
-    this.users = this.userService.getUsers("",status).then(users => this.users = users);
+    //this.connections = this.userService.getConnections().then(connections => this.connections = connections);
+    //this.users = this.userService.getUsers("",status).then(users => this.users = users);
       
   }
 
@@ -143,12 +143,12 @@ export class ContactsList {
      return itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;
      
   }
-  redraw(element){
+  /* redraw(element){
     element.style.display='none';
     element.offsetHeight; 
     element.style.display='';
     element.animate({scrollTop: element.scrollHeight}, 50)
-  }
+  } */
 
 
 }
