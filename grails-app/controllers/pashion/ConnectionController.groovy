@@ -136,7 +136,7 @@ class ConnectionController {
 
     @Transactional
     def delete(Connection connection) {
-
+        log.info "delete " + connection
         if (connection == null) {
             transactionStatus.setRollbackOnly()
             notFound()

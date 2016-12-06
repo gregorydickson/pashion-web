@@ -22,7 +22,7 @@
                 </tr>
             </table>
         </div>
-        <div id="panel11" class="panel grid-block vertical scroll show" style="overflow-y:scroll;">
+        <div id="panel11" class="panel grid-block vertical show" style="overflow-y:scroll;">
             <div id="contacts-inside-top2" repeat.for="connection of connections" class="" style="width:255px; overflow: visible;margin-left: 1rem;">
 
                 <div  if.bind="(connection.connectedUserId == user.id) && (connection.connectingStatus=='Pending')" style="">
@@ -34,14 +34,14 @@
 
                             <td>
                                 <div>
-                                    <img if.bind="(users[connection.user.id -1].image)" src=${users[connection.user.id -1].image} class="clip-circle contact-entry" />
+                                    <img if.bind="(users[connection.user.id -1].image)" src=${users[connection.user.id-1].image} class="clip-circle contact-entry" />
                                     <div if.bind="(!users[connection.user.id -1].image)" style="margin-right: 1rem;" class="avatar-circle "> ${users[connection.user.id -1].name.charAt(0)}</div>
                                 </div>
                             </td>
                             <td>
                                 
                                     
-                                    <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connection.user.id - '1'].name} ${users[connection.user.id -1].surname}</div>
+                                    <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connection.user.id -1].name} ${users[connection.user.id -1].surname}</div>
                                 <!--     <div class="ui-text-label-s-left paragraph-5 contact-box">${connection.brand.name} ${connection.pressHouse.name}</div> -->
                                     <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connection.user.id -1].email}</div>
                                
@@ -129,7 +129,7 @@
                                                 <a href="#" click.delegate="initiateMessage(userLoop.id) " class="look-menu-link">Send Message</a>
                                             </li>
                                             <li if.bind="(userLoop.id !=user.id)" class="look-menu-item">
-                                                <a href="#" click.delegate="declineContact(userLoop.id) " class="look-menu-link">Delete Contact</a>
+                                                <a href="#" click.delegate="deleteContact(connection.id) " class="look-menu-link">Delete Contact</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -171,7 +171,7 @@
                                                 <a href="#" click.delegate="initiateMessage(userLoop.id) " class="look-menu-link">Send Message</a>
                                             </li>
                                             <li> <!-- if.bind="(userLoop.id !=user.id)" class="look-menu-item"> -->
-                                                <a href="#" click.delegate="declineContact(userLoop.id) " class="look-menu-link">Delete Contact</a>
+                                                <a href="#" click.delegate="deleteContact(connection2.id) " class="look-menu-link">Delete Contact</a>
                                             </li> 
    
 
