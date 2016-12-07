@@ -328,7 +328,7 @@
                                             </div>
 
                                             <ul class="look-menu-list">
-                                                <li class="look-menu-item"><a href="#" click.delegate="createSampleRequest(row.items[i].id)" class="look-menu-link">Book Look/Sample &nbsp;</a></li>
+                                                <li class="look-menu-item"><a href="#" click.delegate="createSampleRequest(row.items[i].id)" class="look-menu-link">Book Look/Samples &nbsp;</a></li>
                                                 <li class="look-menu-item"><a href="#" class="look-menu-link">Details</a></li>
                                                 
                                                 <li if.bind="!row.items[i].fromDate" class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Set Initial Availability</a></li>
@@ -343,7 +343,7 @@
 
                                 <!-- Main image -->
                                 <div id="card-${row.items[i].id}" class="card-image">
-                                    <div class="card-image-name">Look: ${row.items[i].name}</div>
+                                    <div class="card-image-name">Look: ${row.items[i].id}</div>
 
                                     <img src.bind="row.items[i].image" ref="image"  click.delegate="createZoomDialog(row.items[i])"/>
                                 </div>
