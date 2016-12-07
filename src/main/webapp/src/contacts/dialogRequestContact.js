@@ -55,8 +55,8 @@ export class DialogRequestContact {
                             parent.userService.addContactRequest(result)
                               .then(response => {
                                 // refresh at least in user service
-                                //parent.userService.getUsers("", status);
-                                parent.userService.getConnections();
+                                parent.userService.getUsers("", status);
+                                // parent.userService.getConnections();
                               });
                             
                             parent.close();

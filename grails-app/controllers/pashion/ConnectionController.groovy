@@ -154,6 +154,9 @@ class ConnectionController {
             }
             '*'{ render status: NO_CONTENT }
         }
+
+        def sent = [message:'contact request deleted']
+        render sent as JSON
     }
 
     protected void notFound() {

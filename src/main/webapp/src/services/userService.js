@@ -92,7 +92,7 @@ getUserDetails (id)
         });
         return promise;
     }
-
+/*
     getConnections() {
         console.log("getting connections");
         var promise = new Promise((resolve, reject) => {
@@ -107,7 +107,7 @@ getUserDetails (id)
         });
         return promise;
     }
-
+*/
     // Build new connection
     addContactRequest(idIn) {
 
@@ -122,9 +122,9 @@ getUserDetails (id)
               .then(response => response.json())
               .then(result => {
                   console.log("addContactRequest:" + result);
-                  this.getUsers("",status);})
-              .then(result => {
-                this.getConnections()
+                  this.getUsers("",status);
+             // .then(result => {
+             //   this.getConnections()
               }).catch(err => reject(err));
             });
         return promise;
@@ -132,8 +132,8 @@ getUserDetails (id)
     }
 
 
-    denyContact(id) {
-        console.log("deny contact: " + id);
+    denyContact(user,id) {
+        console.log("deny contact: " + id + " from user " + user);
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/denyContact/' + id, { method: 'post' }).then(response => response.json())
                 .then(result => resolve(result));
@@ -141,8 +141,8 @@ getUserDetails (id)
         return promise;
     }
 
-    deleteContact(id) {
-        console.log("delete contact: " + id);
+    deleteContact(user, id) {
+        console.log("delete contact: " + id +  " from user " + user);
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/delete/' + id, { method: 'post' }).then(response => response.json())
                 .then(result => resolve(result));
@@ -151,8 +151,8 @@ getUserDetails (id)
     }
 
     // exiting connection
-    acceptContact(id) {
-        console.log("accept contact: " + id);
+    acceptContact(user, id) {
+        console.log("accept contact: " + id +  " from user " + user);
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/acceptContact/' + id, { method: 'post' }).then(response => response.json())
                 .then(result => resolve(result));

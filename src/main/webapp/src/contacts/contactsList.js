@@ -19,7 +19,7 @@ export class ContactsList {
   searchTerm = ''; // hard wired search goes here
   contactActivity = "19";
   connectString ="connect";
-  connections = [];
+  //connections = [];
 
   constructor(http, controller, dialogService, userService, commsHeader, eventAggregator){
 	    this.controller = controller;
@@ -39,7 +39,7 @@ export class ContactsList {
 
 	return Promise.all([
       this.user = this.userService.getUser().then(user => this.user = user),
-      this.connections = this.userService.getConnections().then(connections => this.connections = connections),
+      //this.connections = this.userService.getConnections().then(connections => this.connections = connections),
       this.users = this.userService.getUsers("",status).then(users => this.users = users)
     ]);
 	}
@@ -50,36 +50,36 @@ export class ContactsList {
     menu.classList.toggle("look-menu-show");
      }
 
-  acceptContact(id) {
+  acceptContact(user,id) {
     var menu = document.getElementById('connect'+id); 
     // menu.classList.toggle("look-menu-show"); // RM not necessary?
-    this.userService.acceptContact(id)
+    this.userService.acceptContact(user,id)
       .then(response => {
-        this.connections = this.userService.getConnections().then(connections => this.connections = connections);
+        //this.connections = this.userService.getConnections().then(connections => this.connections = connections);
         this.users = this.userService.getUsers("",status).then(users => this.users = users);
       });
       //$("#panel11").animate({scrollTop: $("#panel11").prop("scrollHeight")}, 50);
       //$("#panel12").animate({scrollTop: $("#panel12").prop("scrollHeight")}, 50);
   }
 
-  declineContact(id) {
+  declineContact(user,id) {
     var menu = document.getElementById('connect'+id); 
     // menu.classList.toggle("look-menu-show"); // RM not necessary?
-    this.userService.denyContact(id)
+    this.userService.denyContact(user,id)
       .then(response => {
-        this.connections = this.userService.getConnections().then(connections => this.connections = connections);
+        //this.connections = this.userService.getConnections().then(connections => this.connections = connections);
         this.users = this.userService.getUsers("",status).then(users => this.users = users);
       });
       //$("#panel11").animate({scrollTop: $("#panel11").prop("scrollHeight")}, 50);
       //$("#panel12").animate({scrollTop: $("#panel12").prop("scrollHeight")}, 50);
   }
 
-    deleteContact(id) {
-    var menu = document.getElementById('connect'+id); 
+    deleteContact(user,id) {
+    //var menu = document.getElementById('connect'+id); 
     // menu.classList.toggle("look-menu-show"); // RM not necessary?
-    this.userService.deleteContact(id)
+    this.userService.deleteContact(user,id)
       .then(response => {
-        this.connections = this.userService.getConnections().then(connections => this.connections = connections);
+        //this.connections = this.userService.getConnections().then(connections => this.connections = connections);
         this.users = this.userService.getUsers("",status).then(users => this.users = users);
       });
       //$("#panel11").animate({scrollTop: $("#panel11").prop("scrollHeight")}, 50);
@@ -101,7 +101,8 @@ export class ContactsList {
     var buttonChoice = document.getElementById("button" + buttonNumber);
     var panelChoice = document.getElementById("panel" + buttonNumber);
     buttonChoice.classList.toggle("active");
-    panelChoice.classList.toggle("show");  
+    panelChoice.classList.toggle("show"); 
+    this.users = this.userService.getUsers("",status).then(users => this.users = users); 
   }
 
   // Create dialog edit contact 

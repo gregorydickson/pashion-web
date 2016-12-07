@@ -23,47 +23,56 @@
             </table>
         </div>
         <div id="panel1111" class="panel grid-block vertical" style="overflow-y:scroll;">
-            <div id="contacts-inside-top2" if.bind="(connections!=null)" repeat.for="connection of connections" class="" style="width:255px; overflow: visible;margin-left: 1rem;">
-                <div if.bind="(connection.connectedUserId == user.id) && (connection.connectingStatus=='Pending')" style="">
-                    <span class="look-menu-heading paragraph-5" style="outline: 1px solid lightgray; width: 250px; background: white;">Connection Request</span>
-                    <table class="width100">
-                        <tr>
-                            <td>
-                                <div>
-                                    <img if.bind="(users[connection.user.id -1].image)" src=${users[connection.user.id-1].image} class="clip-circle contact-entry" />
-                                    <div if.bind="(!users[connection.user.id -1].image)" style="margin-right: 1rem;" class="avatar-circle "> ${users[connection.user.id -1].name.charAt(0)}</div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connection.user.id -1].name} ${users[connection.user.id -1].surname}</div>
-                                <!--     <div class="ui-text-label-s-left paragraph-5 contact-box">${connection.brand.name} ${connection.pressHouse.name}</div> -->
-                                <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connection.user.id -1].email}</div>
-                            </td>
-                        </tr>
-                    </table>
-                    <div class="grid-block align-center shrink">
-                        <a class="hollow button" click.delegate="declineContact(connection.id) ">Decline</a>
-                        <a class="button" href="#" click.delegate="acceptContact(connection.id)">Accept</a>
-                    </div>
-                    <!--
-                                <div class="look-menu-absolute-wrap">
-                                    <span class="edit-box"><a href="#" click.delegate="contactMenu(connection.id)">...</a>
-                                                    </span>
-                                    
-                                    <div id="${connectString}${connection.id}" class="look-menu-absolute lookEditContactClass" style="margin-bottom:5px;">
-                                        <span class="look-menu-heading">ACTION</span>
-                                        <ul class="look-menu-list">
-                                            <li if.bind="true" class="look-menu-item">
-                                                <a href="#" click.delegate="acceptContact(connection.id) " class="look-menu-link">Accept</a>
-                                            </li>
-                                            <li if.bind="true" class="look-menu-item">
-                                                <a href="#" click.delegate="declineContact(connection.id) " class="look-menu-link">Decline</a>
-                                            </li>
-                                        </ul>
+            <div id="contacts-inside-top2" repeat.for="userLoopC of users" class="" style="width:255px; overflow: visible;margin-left: 1rem;">
+                <div if.bind="(userLoopC.connections!=null)" repeat.for="connectionC of userLoopC.connections">
+
+                    <!-- in coming -->
+                    <div if.bind="(connectionC.connectedUserId == user.id) && (connectionC.connectingStatus=='Pending')" style="">
+                        <span class="look-menu-heading paragraph-5" style="outline: 1px solid lightgray; width: 250px; background: white;">Incoming Connection Request</span>
+                        <table class="width100">
+                            <tr>
+                                <td>
+                                    <div>
+                                        <img if.bind="(users[connectionC.user.id -1].image)" src=${users[connectionC.user.id-1].image} class="clip-circle contact-entry" />
+                                        <div if.bind="(!users[connectionC.user.id -1].image)" style="margin-right: 1rem;" class="avatar-circle "> ${users[connectionC.user.id -1].name.charAt(0)}</div>
                                     </div>
-                                </div>
-        }
--->
+                                </td>
+                                <td>
+                                    <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connectionC.user.id -1].name} ${users[connectionC.user.id -1].surname}</div>
+                                    <!--     <div class="ui-text-label-s-left paragraph-5 contact-box">${connection.brand.name} ${connection.pressHouse.name}</div> -->
+                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connectionC.user.id -1].email}</div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="grid-block align-center shrink">
+                            <a class="hollow button" click.delegate="declineContact(connectionC.user.id,connectionC.id) ">Decline</a>
+                            <a class="button" href="#" click.delegate="acceptContact(connectionC.user.id,connectionC.id)">Accept</a>
+                        </div>
+                    </div>
+
+                    <!-- out going -->
+                    <div if.bind="(connectionC.user.id == user.id) && (connectionC.connectingStatus=='Pending')" style="">
+                        <span class="look-menu-heading paragraph-5" style="outline: 1px solid lightgray; width: 250px; background: white;">Outgoing Connection Request</span>
+                        <table class="width100">
+                            <tr>
+                                <td>
+                                    <div>
+                                        <img if.bind="(users[connectionC.connectedUserId -1].image)" src=${users[connectionC.connectedUserId-1].image} class="clip-circle contact-entry" />
+                                        <div if.bind="(!users[connectionC.connectedUserId -1].image)" style="margin-right: 1rem;" class="avatar-circle "> ${users[connectionC.connectedUserId -1].name.charAt(0)}</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connectionC.connectedUserId -1].name} ${users[connectionC.connectedUserId -1].surname}</div>
+                                    <!--     <div class="ui-text-label-s-left paragraph-5 contact-box">${connection.brand.name} ${connection.pressHouse.name}</div> -->
+                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connectionC.connectedUserId -1].email}</div>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="grid-block align-center shrink">
+                            <a class="hollow button" click.delegate="deleteContact(user.id,connectionC.id) ">Delete</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -90,7 +99,12 @@
 
         -->
         <div id="panel1212" class="panel grid-block vertical scroll show" style="overflow-y:scroll;">
-            <div id="contacts-inside-top " repeat.for="userLoop of users | sort: 'name': 'ascending' | filter:searchTerm:filterFunc " class="" style="width:255px; overflow: visible;margin-left: 1rem;">
+            <div id="contacts-inside-top " repeat.for="userLoop of users  
+            
+| sort: 'name': 'ascending' | filter:searchTerm:filterFunc
+
+
+            " class="" style="width:255px; overflow: visible;margin-left: 1rem;">
                 <!-- Not initiated by me -->
                 <!--      <span>${userLoopconnections}</span> -->
                 <div if.bind="((userLoop.connections!=null) && (userLoop.id != user.id))" repeat.for="connection of userLoop.connections">
