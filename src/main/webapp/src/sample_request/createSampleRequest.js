@@ -278,7 +278,6 @@ export class CreateSampleRequest {
 
   submit(){
     console.log("submitting Sample Request");
-    this.sampleRequest.samples = this.selectedProductIds;
     this.http.fetch('/sampleRequest/savejson', {
             method: 'post',
             body: json(this.sampleRequest)
