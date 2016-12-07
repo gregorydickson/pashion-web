@@ -149,7 +149,11 @@ class SampleRequestController {
         
         sr.returnToAddress = Address.get(jsonObject.returnToAddress.toInteger())
         def aUser = User.get(jsonObject.deliverTo)
-        if(aUser.pressHouse) sr.pressHouse = aUser.pressHouse
+        if(aUser.pressHouse) {
+            sr.pressHouse = aUser.pressHouse
+            sr.addressDestination = Address.findByPressHouseAndDefaultAddress(sr.pressHouse, true)
+        }
+
         sr.deliverTo = aUser
         sr.returnBy = jsonObject.returnBy
 
