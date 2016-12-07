@@ -13,16 +13,16 @@
             <table class="big-accordion">
                 <tr>
                     <td class="accordion-grey" style="width:20px;">
-                        <button id="button1111" class="accordion" click.delegate="closeExpand(1111)"></button>
+                        <button id="button1111" class="accordion active" click.delegate="closeExpand(1111)"></button>
                     </td>
                     <td class="accordion-grey">
                         <span>Recent Activity</span>
-                        <span if.bind="(contactActivity)" class="alert-box">${contactActivity}</span>
+                       <!-- <span if.bind="(contactActivity)" class="alert-box">${contactActivity}</span> -->
                     </td>
                 </tr>
             </table>
         </div>
-        <div id="panel1111" class="panel grid-block vertical" style="overflow-y:scroll;">
+        <div id="panel1111" class="panel grid-block vertical show" style="overflow-y:scroll;">
             <div id="contacts-inside-top2" repeat.for="userLoopC of users" class="" style="width:255px; overflow: visible;margin-left: 1rem;">
                 <div if.bind="(userLoopC.connections!=null)" repeat.for="connectionC of userLoopC.connections">
 
@@ -97,14 +97,9 @@
                          
 
 
-        -->
+        --> <!-- | sort: 'name': 'ascending' | filter:searchTerm:filterFunc -->
         <div id="panel1212" class="panel grid-block vertical scroll show" style="overflow-y:scroll;">
-            <div id="contacts-inside-top " repeat.for="userLoop of users  
-            
-| sort: 'name': 'ascending' | filter:searchTerm:filterFunc
-
-
-            " class="" style="width:255px; overflow: visible;margin-left: 1rem;">
+            <div id="contacts-inside-top " repeat.for="userLoop of users" class="" style="width:255px; overflow: visible;margin-left: 1rem;">
                 <!-- Not initiated by me -->
                 <!--      <span>${userLoopconnections}</span> -->
                 <div if.bind="((userLoop.connections!=null) && (userLoop.id != user.id))" repeat.for="connection of userLoop.connections">
