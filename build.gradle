@@ -8,7 +8,7 @@
     }
     dependencies {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
-        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.11.5"
+        classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.11.6"
         classpath "org.grails.plugins:hibernate4:5.0.10"
         classpath "org.grails.plugins:views-gradle:1.1.2"
         classpath 'com.agileorbit:schwartz:1.0.0'
@@ -58,10 +58,10 @@ dependencies {
     profile "org.grails.profiles:web"
 
     //updated to 2.11.1
-    runtime ('com.bertramlabs.plugins:asset-pipeline-grails:2.11.5'){
+    runtime ('com.bertramlabs.plugins:asset-pipeline-grails:2.11.6'){
         exclude group: 'com.google.guava', module: 'guava'
     }
-    assets 'com.bertramlabs.plugins:sass-asset-pipeline:2.11.5'
+    assets 'com.bertramlabs.plugins:sass-asset-pipeline:2.11.6'
     //testing
     testCompile "org.grails:grails-plugin-testing"
     testCompile "org.grails.plugins:geb"
