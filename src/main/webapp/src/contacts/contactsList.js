@@ -8,9 +8,10 @@ import {CreateDialogEditContact} from './dialogEditContact';
 import {CreateDialogUpdatePhoto} from './dialogUpdatePhoto';
 import {UserService} from 'services/userService';import {CommsHeader} from 'comms/commsHeader';
 import {EventAggregator} from 'aurelia-event-aggregator';
+import {Messages} from 'messages/messages';
 
 
-@inject(HttpClient, DialogController, DialogService, UserService, CommsHeader,EventAggregator)
+@inject(HttpClient, DialogController, DialogService, UserService, CommsHeader,EventAggregator, Messages)
 export class ContactsList {
 	static inject = [DialogController];
 
@@ -21,7 +22,7 @@ export class ContactsList {
   connectString ="connect";
   //connections = [];
 
-  constructor(http, controller, dialogService, userService, commsHeader, eventAggregator){
+  constructor(http, controller, dialogService, userService, commsHeader, eventAggregator, messages){
 	    this.controller = controller;
 	    http.configure(config => {
 	      config
@@ -32,6 +33,7 @@ export class ContactsList {
     	this.userService = userService;
     	this.commsHeader = commsHeader;
       this.ea = eventAggregator;
+      this.messages = messages;
       
 	}
 

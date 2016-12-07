@@ -24,16 +24,18 @@ export class UserService {
     getUsers(searchText, status) {
         console.log("getting users");
         var promise = new Promise((resolve, reject) => {
-
+            if (!this.users) {
             this.http.fetch('/user/connections.json')
                 .then(response => response.json())
                 .then(users => {
                     this.users = users;
                     resolve(this.users);
                 }).catch(err => reject(err));
-
+            } else 
+              resolve (this.users);
         });
         return promise;
+  
     }
 
     checkValidUser(email) {
@@ -131,6 +133,22 @@ getUserDetails (id)
 
     }
 
+
+    addMessage (fromEmail) {
+      // local for now
+      // get id for email
+      this.checkValidUser(fromEmail) 
+        //.then (response =>  response.json ())
+        .then (fromUserId => {
+      
+
+      var i;
+      for (i=0; i < this.users[this.user.id-1].connections.length; i++){
+        if (this.users[this.user.id-1].connections[i].connectedUserId = fromUserId)
+          this.users[this.user.id-1].connections[i].numberNewMessages++;
+      }
+    });
+    }
 
     denyContact(user,id) {
         console.log("deny contact: " + id + " from user " + user);
