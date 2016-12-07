@@ -38,20 +38,17 @@
                         </div> -->
                         <!-- Image holder -->
                         <div class="grid-content request-image-fix" style="
-                              background-image: url('/assets/looks/10.jpg');
+                              background-image: url('${image}');
                               background-position: left top;">
                         </div>
                         <!-- Image information holder -->
                         <div class="grid-content ui-text-label-m request-image-info-fix">
-                            <span>Look 3456BL</span>
+                            <span>${look}</span>
                             <br>
-                            <span>Ralph Lauren</span>
+                            <span>${brand}</span>
                             <br>
-                            <span>Black smock with black pants</span>
+                            <span>${season}</span>
                             <br>
-                            <span>Star necklace</span>
-                            <br>
-                            <span>Black boots</span>
                         </div>
                     </div>
                     <!-- spacers -->
@@ -129,7 +126,7 @@
                                     <table  class="big-accordion">
                                         <tr>
                                             <td class="accordion-grey w3">
-                                                <button id="button${$index}" class="accordion" click.delegate="closeExpand($index)"></button>
+                                                <button id="button${$index}" class="accordion" click.delegate="closeExpand($index,booking)"></button>
                                             </td>
                                             <td class="accordion-grey w4">${booking.id}</td>
                                             <td class="accordion-grey w11">${booking.bookingStartDate | viewDateFormat}</td>

@@ -7,6 +7,9 @@ class SampleRequest {
 
 	
 	String idString
+	String season
+	String image
+	String look
 	Date dateRequested
 
 	Date bookingStartDate
@@ -57,6 +60,9 @@ class SampleRequest {
 
 	static constraints = {
 		
+		season nullable:true
+		image nullable: true
+		look nullable:true
 		searchableItems nullable:true
 		searchableItemsProposed nullable: true
 		idString nullable: true

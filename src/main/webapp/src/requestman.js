@@ -15,6 +15,13 @@ export class Requestman{
   selectedStatus = "";
   user = {};
 
+  look = '';
+  brand = '';
+  samples = [];
+  image = '';
+  season = '';
+  closed = true;
+
 
 
   constructor(dialogService,userService,sampleRequestService) {
@@ -50,7 +57,21 @@ export class Requestman{
 
   
   /* RM accordion expansion button */
-  closeExpand(buttonNumber) {
+  closeExpand(buttonNumber, sampleRequest) {
+    if(this.closed){
+      this.brand = sampleRequest.brand.name;
+      this.image = sampleRequest.image;
+      this.season = sampleRequest.season;
+      this.look = sampleRequest.look;
+      this.closed = false;
+    } else{
+      this.brand = '';
+      this.image = '';
+      this.season = '';
+      this.look = '';
+      this.closed = true;
+    }
+    console.log("Close Expand");
     var buttonChoice = document.getElementById("button" + buttonNumber);
     var panelChoice = document.getElementById("panel" + buttonNumber);
     buttonChoice.classList.toggle("active");

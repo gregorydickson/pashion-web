@@ -161,7 +161,11 @@ class SampleRequestController {
 
         jsonObject.samples.each{
             item = SearchableItem.get(it)
+            log.info "sample request item:"+item
             if(!sr.brand) sr.brand = item.brand
+            if(!sr.image) sr.image = item.look.image
+            if(!sr.season) sr.season = item.season.name
+            if(!sr.look) sr.look = item.look.name
             sr.addToSearchableItemsProposed(item)
             def status = new BookingStatus()
             status.itemId = item.id

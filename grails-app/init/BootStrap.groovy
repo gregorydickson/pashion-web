@@ -53,7 +53,7 @@ class BootStrap {
       def s7 =  Season.findOrSaveWhere(name:'Spring 2017 Menswear').save(failOnError : true)
       def s8 =  Season.findOrSaveWhere(name:'Winter 2017 Menswear').save(failOnError : true)
 
-      if ("Old" == "Test Data") {
+      if (false) {
     
         if (Brand.count() == 0) {
           log.info "Creating Base Test Data"
