@@ -15,6 +15,7 @@ class SearchableItem {
 	String name //string for ID set by user For Look this is the Look ID which matches Vogue Runway
 	String description
 	Brand brand
+	City city
 	String sex
 
 	String image
@@ -36,7 +37,9 @@ class SearchableItem {
 	String culture
 	String lookSeason //season in Look data etnry
 	String decade
-	String attributes  //all attributes space separated (tag cloud)
+	String attributes  //all attributes space separated (tags)
+					   // Used for full text searching
+					   // e.g. red dress silk
 
 	String path
 
@@ -58,6 +61,7 @@ class SearchableItem {
 
 	static constraints = {
 		name nullable:true
+		city nullable:true
 		description nullable:true
 		brand nullable: true
 		sex nullable:true
@@ -98,6 +102,7 @@ class SearchableItem {
 		sampleRequests nullable:true
 		samples nullable:true
 	}
+
 
 
 
@@ -221,14 +226,12 @@ class SearchableItem {
 		samples lazy:false
 		type lazy:false
 		brandCollection lazy:false
+		city lazy:false
 
 		description type: 'text'
 
 		cache true
 		isBookable  defaultValue: false
-		
-
 	}
 
-	
 }

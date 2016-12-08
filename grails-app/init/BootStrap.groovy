@@ -483,8 +483,8 @@ class BootStrap {
         }
       }
 
-      if (Environment.current == Environment.PRODUCTION) {
-
+      //if (Environment.current == Environment.PRODUCTION) {
+      if (false) {
         if(Brand.findByName("Christopher Kane") ==  null){
           
           def brand1 = new Brand(name:'Christopher Kane', city:'London' ).save(failOnError : true)

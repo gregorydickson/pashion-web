@@ -10,6 +10,7 @@ import grails.converters.JSON
 class SampleRequestController {
 
     def sampleRequestService
+    def cacheInvalidationService
 
     String dateFormatString = "yyyy-M-d"
     
@@ -188,6 +189,7 @@ class SampleRequestController {
         
         sr.dateRequested = new Date()
         sr.save(failOnError : true, flush: true)
+        cacheInvalidationService.sampleRequests()
         def sent = [message:'Sample Request Sent']
         render sent as JSON
 
