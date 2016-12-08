@@ -73,10 +73,10 @@ export class Guestpage {
    
   }
 
-  createZoomDialog(itemId) {
-    var menu = document.getElementById("card-"+itemId);
+  createZoomDialog(item) {
+    var menu = document.getElementById("card-"+item.id);
     menu.classList.toggle("blue-image");
-    this.dialogService.open({viewModel: Zoom, model: itemId })
+    this.dialogService.open({viewModel: Zoom, model: item })
       .then(response => {
         menu.classList.toggle("blue-image");
       });
