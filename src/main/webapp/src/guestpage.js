@@ -73,10 +73,18 @@ export class Guestpage {
    
   }
 
-  createZoomDialog(item) {
-    var menu = document.getElementById("card-"+item.id);
+  createZoomDialog(item,rowNumber,itemNumber) {
+    console.log("item number :"+itemNumber);
+    console.log("item  :"+item);
+    let menu = document.getElementById("card-"+item.id);
+    
     menu.classList.toggle("blue-image");
-    this.dialogService.open({viewModel: Zoom, model: item })
+    let zoomModel = {};
+    zoomModel.item = item;
+    zoomModel.rows = this.rows;
+    zoomModel.itemNumber = itemNumber;
+    zoomModel.rowNumber = rowNumber;
+    this.dialogService.open({viewModel: Zoom, model: zoomModel })
       .then(response => {
         menu.classList.toggle("blue-image");
       });

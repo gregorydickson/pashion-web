@@ -5,9 +5,9 @@
             <!-- header -->
             <div class="align-center tool-header">
 
-                    <a href="#0" class="controls-arrow controls-arrow-prev"><img id="prev" src="/assets/calendar/prev.png" /></a>
-                    <span class="ui-text-label-m-broad">${currentItem.id}</span> 
-                    <a href="#0" class="controls-arrow controls-arrow-next"><img id="next" src="/assets/calendar/next.png"/></a>
+                    <a click.delegate="previousImage()" class="controls-arrow controls-arrow-prev"><img id="prev" src="/assets/calendar/prev.png" /></a>
+                    <span class="ui-text-label-m-broad">${name}</span> 
+                    <a click.delegate="nextImage()" class="controls-arrow controls-arrow-next"><img id="next" src="/assets/calendar/next.png"/></a>
                     
             </div>
             <div class="align-center tool-header">
@@ -19,7 +19,7 @@
         </ai-dialog-header>
       <ai-dialog-body>
           <div id="imageZoomWrapper" class="card-image-zoom-wrap">
-                    <img id="imageZoom" src.bind="currentItem.image" ref="image" />
+                    <img id="imageZoom" src.bind="image"  />
 
                     <img src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align-wide"/> 
 
