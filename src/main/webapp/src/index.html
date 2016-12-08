@@ -345,7 +345,7 @@
                                 <div id="card-${row.items[i].id}" class="card-image">
                                     
 
-                                    <img src.bind="row.items[i].image" ref="image"  click.delegate="createZoomDialog(row.items[i])"/>
+                                    <img src.bind="row.items[i].image" ref="image"  click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"/>
                                 </div>
 
                                 <div style="position:relative; margin-top:-55px;margin-left:2px;">Look &nbsp;${row.items[i].id}</div>
