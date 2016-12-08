@@ -45,7 +45,8 @@
                             </tr>
                         </table>
                         <div class="grid-block align-center shrink">
-                            <a class="hollow button" click.delegate="declineContact(connectionC.user.id,connectionC.id) ">Decline</a>
+                          <!--  <a class="hollow button" click.delegate="declineContact(connectionC.user.id,connectionC.id) ">Decline</a> //RM no deny, just delete, more permissive -->
+                            <a class="hollow button" click.delegate="deleteContact(connectionC.user.id,connectionC.id) ">Decline</a>
                             <a class="button" href="#" click.delegate="acceptContact(connectionC.user.id,connectionC.id)">Accept</a>
                         </div>
                     </div>
@@ -99,7 +100,7 @@
 
         --> <!-- | sort: 'name': 'ascending' | filter:searchTerm:filterFunc -->
         <div id="panel1212" class="panel grid-block vertical scroll show" style="overflow-y:scroll;">
-            <div id="contacts-inside-top " repeat.for="userLoop of users" class="" style="width:255px; overflow: visible;margin-left: 1rem;">
+            <div id="contacts-inside-top " repeat.for="userLoop of users | filter:searchTerm:filterFunc" class="" style="width:255px; overflow: visible;margin-left: 1rem;">
                 <!-- Not initiated by me -->
                 <!--      <span>${userLoopconnections}</span> -->
                 <div if.bind="((userLoop.connections!=null) && (userLoop.id != user.id))" repeat.for="connection of userLoop.connections">
@@ -133,7 +134,7 @@
                                                     <a href="#" click.delegate="initiateMessage(userLoop.id) " class="look-menu-link">Send Message</a>
                                                 </li>
                                                 <li if.bind="(userLoop.id !=user.id)" class="look-menu-item">
-                                                    <a href="#" click.delegate="deleteContact(connection.id) " class="look-menu-link">Delete Contact</a>
+                                                    <a href="#" click.delegate="deleteContact(user.id,connection.id) " class="look-menu-link">Delete Contact</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -179,7 +180,7 @@
                                                 </li>
                                                 <li>
                                                     <!-- if.bind="(userLoop.id !=user.id)" class="look-menu-item"> -->
-                                                    <a href="#" click.delegate="deleteContact(connection2.id) " class="look-menu-link">Delete Contact</a>
+                                                    <a href="#" click.delegate="deleteContact(user.id,connection2.id) " class="look-menu-link">Delete Contact</a>
                                                 </li>
                                             </ul>
                                         </div>

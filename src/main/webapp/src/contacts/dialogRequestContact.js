@@ -33,37 +33,29 @@ export class DialogRequestContact {
         var parent = this;
 
         //test to see if valid user
-        var returned = this.userService.checkValidUser(this.newEmail);
-        returned.then(function(result) {
-                console.log("=> " + result);
-                if (result == -1) {
-                    parent.flashMessage = "That email is not registered";
-                }
-                if (result == -2) {
-                    parent.flashMessage = "Can't connect with yourself";
-                }
-                if ((result != -1) && (result != -2)) {
-                    // test to see if connection already exists
-                    var r2 = parent.userService.checkDuplicateConnection(result);
-                   // r2.then(function(result) {
-                        console.log("check dupe result => " + r2);
-                        if (r2) {
-                            parent.flashMessage = "You've already sent a request";
-                        }
-                        if (!r2) {
-                            // call user service to create
-                            parent.userService.addContactRequest(result)
-                              .then(response => {
-                                // refresh at least in user service
-                                parent.userService.getUsers("", status);
-                                // parent.userService.getConnections();
-                              });
-                            
-                            parent.close();
-
-                        }
-                    };
-            });
+        var result = this.userService.checkValidUser(this.newEmail);
+        //returned.then(function(result) {
+            //console.log("=> " + result);
+            if (result == -1) {
+                this.flashMessage = "That email isn't registered";
+            }
+            if (result == -2) {
+                this.flashMessage = "You can't connect with yourself";
+            }
+            if ((result != -1) && (result != -2)) {
+                // test to see if connection already exists
+                var dupe = this.userService.checkDuplicateConnection(result);
+                    //console.log("check dupe result => " + dupe);
+                    if (dupe==-2) { parent.flashMessage = "There's already a pending connection request";
+                    } else if (dupe==-1) { parent.flashMessage = "You're already connected";
+                    } else {
+                        // call user service to create
+                        parent.userService.addContactRequest(result)
+                            .then(response => {});
+                        parent.close();
+                    }
+                };
+            //});
         }
 
 
