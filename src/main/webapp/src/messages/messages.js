@@ -65,6 +65,9 @@ export class Messages {
                     fromMe: (receivedMessage.fromId == parent.user.email)
                 });
 
+                // get messages in real time 
+                if (receivedMessage.toId == parent.user.email) parent.userService.addMessageCount(receivedMessage.fromId);
+
                 $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
             },
             status: function(s) {
@@ -107,6 +110,10 @@ export class Messages {
                         toMe: (response.messages[i].entry.toId == parent.user.email),
                         fromMe: (response.messages[i].entry.fromId == parent.user.email)
                   });
+
+                  // get messages count on history 
+                  // RM but filter on date/time stamp of last view
+                  if (response.messages[i].entry.toId == parent.user.email) parent.userService.addMessageCount(response.messages[i].entry.fromId);
 
                 }
                 // recursive call of anon function until all messages retrieved

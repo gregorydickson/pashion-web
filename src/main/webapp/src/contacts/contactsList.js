@@ -8,9 +8,10 @@ import {CreateDialogEditContact} from './dialogEditContact';
 import {CreateDialogUpdatePhoto} from './dialogUpdatePhoto';
 import {UserService} from 'services/userService';import {CommsHeader} from 'comms/commsHeader';
 import {EventAggregator} from 'aurelia-event-aggregator';
+import {Messages} from 'messages/messages';
 
 
-@inject(HttpClient, DialogController, DialogService, UserService, CommsHeader,EventAggregator)
+@inject(HttpClient, DialogController, DialogService, UserService, CommsHeader,EventAggregator, Messages)
 export class ContactsList {
 	static inject = [DialogController];
 
@@ -19,9 +20,9 @@ export class ContactsList {
   searchTerm = ''; // hard wired search goes here
   contactActivity = "19";
   connectString ="connect";
-  connections = [];
+  //connections = [];
 
-  constructor(http, controller, dialogService, userService, commsHeader, eventAggregator){
+  constructor(http, controller, dialogService, userService, commsHeader, eventAggregator, messages){
 	    this.controller = controller;
 	    http.configure(config => {
 	      config
@@ -32,6 +33,7 @@ export class ContactsList {
     	this.userService = userService;
     	this.commsHeader = commsHeader;
       this.ea = eventAggregator;
+      this.messages = messages;
       
 	}
 
@@ -39,8 +41,8 @@ export class ContactsList {
 
 	return Promise.all([
       this.user = this.userService.getUser().then(user => this.user = user),
-      this.connections = this.userService.getConnections().then(connections => this.connections = connections),
-      this.users = this.userService.getUsers("",status).then(users => this.users = users)
+      //this.connections = this.userService.getConnections().then(connections => this.connections = connections),
+      this.users = this.userService.getUsers().then(users => this.users = users)
     ]);
 	}
 
@@ -50,43 +52,26 @@ export class ContactsList {
     menu.classList.toggle("look-menu-show");
      }
 
-  acceptContact(id) {
+  acceptContact(user,id) {
     var menu = document.getElementById('connect'+id); 
     // menu.classList.toggle("look-menu-show"); // RM not necessary?
-    this.userService.acceptContact(id)
+    this.userService.acceptContact(user,id)
       .then(response => {
-        this.connections = this.userService.getConnections().then(connections => this.connections = connections);
-        this.users = this.userService.getUsers("",status).then(users => this.users = users);
       });
-      //$("#panel11").animate({scrollTop: $("#panel11").prop("scrollHeight")}, 50);
-      //$("#panel12").animate({scrollTop: $("#panel12").prop("scrollHeight")}, 50);
   }
 
-  declineContact(id) {
+  declineContact(user,id) {
     var menu = document.getElementById('connect'+id); 
-    // menu.classList.toggle("look-menu-show"); // RM not necessary?
-    this.userService.denyContact(id)
+    // menu.classList.toggle("look-menu-show"); // RM not necessary, not sure why
+    this.userService.denyContact(user,id)
       .then(response => {
-        this.connections = this.userService.getConnections().then(connections => this.connections = connections);
-        this.users = this.userService.getUsers("",status).then(users => this.users = users);
       });
-      //$("#panel11").animate({scrollTop: $("#panel11").prop("scrollHeight")}, 50);
-      //$("#panel12").animate({scrollTop: $("#panel12").prop("scrollHeight")}, 50);
   }
 
-    deleteContact(id) {
-    var menu = document.getElementById('connect'+id); 
-    // menu.classList.toggle("look-menu-show"); // RM not necessary?
-    this.userService.deleteContact(id)
+  deleteContact(user,id) {
+    this.userService.deleteContact(user,id)
       .then(response => {
-        this.connections = this.userService.getConnections().then(connections => this.connections = connections);
-        this.users = this.userService.getUsers("",status).then(users => this.users = users);
       });
-      //$("#panel11").animate({scrollTop: $("#panel11").prop("scrollHeight")}, 50);
-      //$("#panel12").animate({scrollTop: $("#panel12").prop("scrollHeight")}, 50);
-      //this.redraw(document.getElementById("right-panel-body"));
-      //this.redraw(document.getElementById("panel11"));
-      //this.redraw(document.getElementById("panel12"));
   }
 
 
@@ -94,18 +79,16 @@ export class ContactsList {
   lookEditContact(id){
     var menu = document.getElementById(id); 
     menu.classList.toggle("look-menu-show");
-    //$("#right-panel-body").height($("#right-panel-body").height()+160); // kludge to grow container to get menu, should worklike request list in index, seems to trigger a re-calc
   }
 
   closeExpand(buttonNumber) {
     var buttonChoice = document.getElementById("button" + buttonNumber);
     var panelChoice = document.getElementById("panel" + buttonNumber);
     buttonChoice.classList.toggle("active");
-    panelChoice.classList.toggle("show");  
+    panelChoice.classList.toggle("show"); 
   }
 
   // Create dialog edit contact 
-
   createDialogEditContact(id) {
     var menu = document.getElementById(id); 
     menu.classList.toggle("look-menu-show");
@@ -124,12 +107,10 @@ export class ContactsList {
 
   initiateMessage (id) {    
     // console.log("contactlist setting current contact: " + id);
+    // clear unread messages
+    this.userService.clearUnreadMessages (id); // still done locally change to .then if add server
     this.ea.publish('setCurrentContact', {userId: id});
   	this.commsHeader.setStatusTab(this.commsHeader.statusValues.messages);
-    // dirty updates
-    //$("#right-panel-body").animate({scrollTop: $("#right-panel-body").prop("scrollHeight")}, 500);
-    //this.connections = this.userService.getConnections().then(connections => this.connections = connections);
-    //this.users = this.userService.getUsers("",status).then(users => this.users = users);
       
   }
 
@@ -143,12 +124,6 @@ export class ContactsList {
      return itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;
      
   }
-  /* redraw(element){
-    element.style.display='none';
-    element.offsetHeight; 
-    element.style.display='';
-    element.animate({scrollTop: element.scrollHeight}, 50)
-  } */
 
 
 }
