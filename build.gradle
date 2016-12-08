@@ -88,6 +88,8 @@ dependencies {
 
     compile 'com.agileorbit:schwartz:1.0.0'
 
+    compile 'com.pubnub:pubnub:3.7.10'
+
 }
 
 assets {

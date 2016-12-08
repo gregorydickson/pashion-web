@@ -65,8 +65,8 @@ class SearchableItemController {
                 isNotNull('image')
                 if(brand) eq('brand', brand)
                 if(theme) eq('theme', theme)
-                if(keywords) or {
-                    keywords.each {  ilike('name', '%'+it+'%') }
+                if(keywords) and {
+                    keywords.each {  ilike('attributes', '%'+it+'%') }
                 }
                 if(season) eq('season',season)
                 if(type) eq('type',type)
