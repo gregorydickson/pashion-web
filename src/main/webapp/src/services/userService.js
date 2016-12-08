@@ -27,10 +27,10 @@ export class UserService {
     // there are no calls to this function in this file. 
     // All access to users is via the implicit variable created at #37
     // All access to users from outside userService should go through this call
-    getUsers() {
-        console.log("getting users locally");
+    getUsers(forceGetFromServer) {
+        console.log("getting users: forceGetFromServer: " + forceGetFromServer);
         var promise = new Promise((resolve, reject) => {
-            if (!this.users) { // local storage if already loaded
+            if ((!this.users) || forceGetFromServer) { // local storage if already loaded
                 console.log("getting users from JSON");
                 this.http.fetch('/user/connections.json')
                     .then(response => response.json())
@@ -38,8 +38,10 @@ export class UserService {
                         this.users = users;
                         resolve(this.users);
                     }).catch(err => reject(err));
-            } else
+            } else {
+                console.log("getting users lcoally");
                 resolve(this.users);
+          }
         });
         return promise;
 

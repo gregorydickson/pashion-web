@@ -39,12 +39,18 @@ export class ContactsList {
 
 	activate () {
 
+  var forceGetFromServer = false;
 	return Promise.all([
       this.user = this.userService.getUser().then(user => this.user = user),
       //this.connections = this.userService.getConnections().then(connections => this.connections = connections),
-      this.users = this.userService.getUsers().then(users => this.users = users)
+      this.users = this.userService.getUsers(forceGetFromServer).then(users => this.users = users)
     ]);
 	}
+
+//RM test button
+fetchGetUserFromServer () {
+  this.userService.getUsers(true).then(users => this.users = users);
+}
 
 // contact workflow
   contactMenu(id){
