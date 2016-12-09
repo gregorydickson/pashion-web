@@ -22,6 +22,7 @@ class Connection {
 
 	static constraints = {
 		numberNewMessages(nullable:true)
+		mostRecentRead size:17..25
 		//userCreatedId(nullable:true)
 		//lastModifiedUserId(nullable:true)
 		//lastModifiedUserId(nullable:true)
