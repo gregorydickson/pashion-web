@@ -1,0 +1,11 @@
+<template>
+	
+    <require from="../common/customSelect"></require>
+
+	<span class="inline-label">
+		<span class="form-label" style="padding-right: 0.5rem">Designer</span>
+		
+	    <select2 name="brandSelect" options.bind="brands" selected.bind="selectedBrand" change.delegate="setBrand($event)" ></select2>
+	</span>
+
+</template>

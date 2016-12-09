@@ -101,6 +101,23 @@ export class Index {
       });
     });
 
+    //Select functionality for brand and agency users to toggle/show "search images"/"manage images" blocks
+    // Show/hide on document ready
+      $('.blockSearchImages').show();
+      $('.blockManageImages').hide();
+    
+    //Show/hide on select  
+      $('#imagesFunctionality').change(function(){
+        if($(this).val() == 'optionSearchImages'){ 
+          $('.blockSearchImages').show();
+          $('.blockManageImages').hide();
+        }
+        else if ($(this).val() == 'optionManageImages'){ 
+          $('.blockSearchImages').hide();
+          $('.blockManageImages').show();
+        }
+      });
+
   }
   //activate() is called before attached()
   activate() {

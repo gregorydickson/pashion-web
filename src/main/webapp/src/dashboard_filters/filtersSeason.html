@@ -1,0 +1,14 @@
+<template>
+
+
+
+    <span class="inline-label">
+		<span class="form-label">Season</span>
+		<select name="" id="" value.bind="selectedSeason" change.delegate="filterChange($event.target)">
+		    <option value="">All</option>
+		    <option repeat.for="season of seasons" model.bind="season">${season}</option>
+		</select>
+	</span>
+
+
+</template>
