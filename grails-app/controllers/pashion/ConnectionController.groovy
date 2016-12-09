@@ -101,9 +101,9 @@ class ConnectionController {
         def connection = Connection.get(params.id.toInteger())
         
         def jsonObject = request.JSON
-        log.info "saveMostRecentRead for: " + params.id.toInteger() + " json:"+jsonObject
+        //log.info "saveMostRecentRead for: " + params.id.toInteger() + " json:"+jsonObject
         connection.mostRecentRead = jsonObject.mostRecentRead
-        log.info "saveMostRecentRead input as: " + connection.mostRecentRead
+        //log.info "saveMostRecentRead input as: " + connection.mostRecentRead
         connection.save(failOnError : true, flush: true)
         def connectionString  = 'most recent read updated'
         def sent = [message:connectionString]
@@ -115,7 +115,7 @@ class ConnectionController {
         def connection = Connection.get(params.id.toInteger())
         
         def jsonObject = request.JSON
-        log.info "server side: zeroMessage count for: " + params.id.toInteger() + " json:"+jsonObject
+        //log.info "server side: zeroMessage count for: " + params.id.toInteger() + " json:"+jsonObject
         connection.numberNewMessages = 0
         
         connection.save(failOnError : true, flush: true)

@@ -41,7 +41,7 @@ class UserController {
             render error as JSON
             return
         }
-        log.info "update connections OK"
+        // log.info "update connections OK"
         def sent = [message:'Connection Data Updated']
         render sent as JSON
     }
