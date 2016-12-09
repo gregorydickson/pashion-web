@@ -20,10 +20,10 @@
                         <div if.bind="(flashMessage != '')" class="message" style="color:red; text-align: center;" role="status">${flashMessage}</div>
 
                         <!-- Email -->
-                        <div class="grid-block shrink">
+                        <form class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Email</span>
-                            <input value.bind="newEmail" type="text" class="slim-text-box" autofocus>
-                        </div>
+                            <input id="emailInputReq" value.bind="newEmail" type="text" class="slim-text-box" autofocus>
+                        </form>
                       
                   
 

@@ -11,6 +11,7 @@ class Connection {
 	// Long lastModifiedUserId
 	// Long userCreatedId
 	Integer numberNewMessages
+	String mostRecentRead
 
 
 	//auto fields

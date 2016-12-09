@@ -76,6 +76,7 @@ class ConnectionController {
         con.connectedUserId = jsonObject.connectedUserId
         con.connectingStatus = "Pending"
         con.numberNewMessages = 0
+        con.mostRecentRead = 0
         con.save(flush:true, failOnError:true)
         def sent = [message:'contact request sent']
         render sent as JSON
@@ -86,11 +87,39 @@ class ConnectionController {
         def connection = Connection.get(params.id.toInteger())
         
         def jsonObject = request.JSON
-        log.info "json:"+jsonObject
+        log.info "addMessageCount for: " + params.id.toInteger() + " json:"+jsonObject
         connection.numberNewMessages = connection.numberNewMessages + 1
         
         connection.save(failOnError : true, flush: true)
-        def connectionString  = 'numbers count updated.'
+        def connectionString  = 'numbers count updated'
+        def sent = [message:connectionString]
+        render sent as JSON
+    }
+
+    @Transactional 
+    def saveMostRecentRead(){
+        def connection = Connection.get(params.id.toInteger())
+        
+        def jsonObject = request.JSON
+        log.info "saveMostRecentRead for: " + params.id.toInteger() + " json:"+jsonObject
+        connection.mostRecentRead = jsonObject.mostRecentRead
+        log.info "saveMostRecentRead input as: " + connection.mostRecentRead
+        connection.save(failOnError : true, flush: true)
+        def connectionString  = 'most recent read updated'
+        def sent = [message:connectionString]
+        render sent as JSON
+    }
+
+    @Transactional 
+    def clearUnreadMessages(){
+        def connection = Connection.get(params.id.toInteger())
+        
+        def jsonObject = request.JSON
+        log.info "zeroMessage count for: " + params.id.toInteger() + " json:"+jsonObject
+        connection.numberNewMessages = 0
+        
+        connection.save(failOnError : true, flush: true)
+        def connectionString  = 'numbers count zeroed'
         def sent = [message:connectionString]
         render sent as JSON
     }

@@ -22,11 +22,19 @@ export class DialogRequestContact {
         this.http = http;
 
         this.userService = userService;
+        this.boundHandlerComms = this.handleKeyInput.bind(this);
+    }
+
+    attached() {
+        document.getElementById("emailInputReq").addEventListener('keypress', this.boundHandlerComms, false);
     }
 
     close() {
         this.controller.close();
     }
+      detached() {
+  window.removeEventListener('keypress', this.boundHandlerComms);
+  }
 
     requestConnection() {
         this.flashMessage = '';
@@ -57,6 +65,14 @@ export class DialogRequestContact {
                 };
             //});
         }
+
+handleKeyInput(event) {
+    //console.log(event);
+    if(event.which == 13 && event.srcElement.id === 'emailInputReq') {
+      console.log("user hit enter in comms");
+      this.requestConnection();
+    }
+  }
 
 
     }

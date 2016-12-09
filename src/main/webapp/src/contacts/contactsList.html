@@ -100,7 +100,7 @@
 
         --> <!-- | sort: 'name': 'ascending' | filter:searchTerm:filterFunc -->
         <div id="panel1212" class="panel grid-block vertical scroll show" style="overflow-y:scroll;">
-            <div id="contacts-inside-top " repeat.for="userLoop of users | filter:searchTerm:filterFunc" class="" style="width:255px; overflow: visible;margin-left: 1rem;">
+            <div id="contacts-inside-top " repeat.for="userLoop of users | filter:searchTerm:filterFunc | sort: 'name': 'ascending'" class="" style="width:255px; overflow: visible;margin-left: 1rem;">
                 <!-- Not initiated by me -->
                 <!--      <span>${userLoopconnections}</span> -->
                 <div if.bind="((userLoop.connections!=null) && (userLoop.id != user.id))" repeat.for="connection of userLoop.connections">

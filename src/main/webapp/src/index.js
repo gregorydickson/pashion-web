@@ -104,7 +104,7 @@ export class Index {
   }
   //activate() is called before attached()
   activate() {
-    window.addEventListener('keypress', this.boundHandler, false);
+    
     
     return Promise.all([
       this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
@@ -119,7 +119,9 @@ export class Index {
 
     ]);
   }
-
+  attached () {
+    document.getElementById('search-images').addEventListener('keypress', this.boundHandler, false);
+  }
   detached() {
    window.removeEventListener('keypress', this.boundHandler);
   }

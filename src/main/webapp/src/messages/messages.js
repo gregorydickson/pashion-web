@@ -14,6 +14,7 @@ export class Messages {
     user = {};
     currentContact = {};
     searchTerm = ''; // hard wired search goes here
+    currentPNTime;
 
     //pubnub
     pubnub;
@@ -23,6 +24,7 @@ export class Messages {
       this.userService = userService;
       this.user = this.userService.getUser().then(user => this.user = user);
       this.ea = eventAggregator;
+      this.boundHandlerComms = this.handleKeyInput.bind(this);
 
       // pubnub
       this.pubnub = new PubNub({
@@ -32,15 +34,37 @@ export class Messages {
       });
     }
 
+    activate () {
+
+    }
+
+      detached() {
+  window.removeEventListener('keypress', this.boundHandlerComms);
+  }
+
     attached() {
+        document.getElementById("msgInput").addEventListener('keypress', this.boundHandlerComms, false);
+
         this.subscriber = this.ea.subscribe('setCurrentContact', response => {
             this.userService.getUserDetails(response.userId).then(contact => {
                 this.currentContact = contact;
             });
         });
+        
 
         //pubnub listener
         var parent = this;
+
+        this.pubnub.time(function(status, response) {
+            if (status.error) {
+                console.log("pubnub time error")
+                // handle error if something went wrong based on the status object
+            } else {
+                console.log(response.timetoken);
+                parent.currentPNTime = response.timetoken;
+            }
+        });
+
         this.pubnub.addListener({
 
             message: function(m) {
@@ -66,6 +90,8 @@ export class Messages {
                 });
 
                 // get messages in real time 
+                // RM but filter on date/time stamp of last view
+                // only counting messages from others
                 if (receivedMessage.toId == parent.user.email) parent.userService.addMessageCount(receivedMessage.fromId);
 
                 $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
@@ -113,8 +139,11 @@ export class Messages {
 
                   // get messages count on history 
                   // RM but filter on date/time stamp of last view
-                  if (response.messages[i].entry.toId == parent.user.email) parent.userService.addMessageCount(response.messages[i].entry.fromId);
-
+                  if (response.messages[i].entry.toId == parent.user.email) {
+                    //console.log("getMostRecentRead: " + parent.userService.getMostRecentRead (response.messages[i].entry.fromId));
+                      if (response.messages[i].timetoken > parent.userService.getMostRecentRead (response.messages[i].entry.fromId))
+                            parent.userService.addMessageCount(response.messages[i].entry.fromId);
+                    }
                 }
                 // recursive call of anon function until all messages retrieved
                 if (response.messages.length==100) getAllMessages(response.endTimeToken);
@@ -123,6 +152,14 @@ export class Messages {
         }
         getAllMessages(0);   
     }
+
+handleKeyInput(event) {
+    //console.log(event);
+    if(event.which == 13 && event.srcElement.id === 'msgInput') {
+      console.log("user hit enter in comms");
+      this.sendMessage();
+    }
+  }
 
     sendMessage() {
         //console.log("Sendmessage from my id:" + this.user.id + " email:" + this.user.email +

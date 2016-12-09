@@ -23,7 +23,7 @@ export class CommsHeader {
   constructor(http, controller, dialogService, messages, eventAggregator){
     this.dialogService = dialogService;
     this.controller = controller;  
-    this.boundHandlerComms = this.handleKeyInput.bind(this);  
+    
     http.configure(config => {
       config
         .useStandardConfiguration();
@@ -43,7 +43,6 @@ export class CommsHeader {
   }
 
   activate(){
-    window.addEventListener('keypress', this.boundHandlerComms, false); 
   }
 
   attached () {
@@ -51,7 +50,6 @@ export class CommsHeader {
   }
 
   detached() {
-   window.removeEventListener('keypress', this.boundHandlerComms);
   }
 
 
@@ -89,22 +87,14 @@ export class CommsHeader {
         window.setTimeout(function () {
             // $("#messages-inside-top").height($("#messages-inside-top").height()+500); // RM kludge to redraw flex box with new elements
             $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight"));
-          },1000); // major kludge to scroll messages
+          },250); // major kludge to scroll messages
 
     }
   }
 
-handleKeyInput(event) {
-    // console.log(event);
-    if(event.which == 13 && event.srcElement.id === 'msgInput') {
-      //console.log("user hit enter in comms");
-      this.sendMessage();
-    }
-  }
-
-  sendMessage () {
+ /* sendMessage () {
     this.messages.sendMessage();
-  }
+  } */
 
 }
 
