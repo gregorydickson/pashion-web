@@ -26,11 +26,6 @@ export class UserService {
 
     activate() {}
 
-    dataIsDirty() {
-        // reload from server
-        // PERHAPS one record at a time to trigger aurelia?
-    }
-
     // there are no calls to this function in this file. 
     // All access to users is via the implicit variable created at #37
     // All access to users from outside userService should go through this call
@@ -48,6 +43,23 @@ export class UserService {
             } else {
                 console.log("getting users lcoally");
                 resolve(this.users);
+            }
+        });
+        return promise;
+
+    }
+
+    flushUsers() {
+        var parent = this;
+        var promise = new Promise((resolve, reject) => {
+            if (this.users) { // local storage if already loaded
+                console.log("flushing users to JSON");
+                this.http.fetch('/user/connections.json', {
+                    method: 'post',
+                    body: json(parent.users)
+                });
+            } else {
+                console.log("no users defined");
             }
         });
         return promise;
@@ -227,7 +239,7 @@ export class UserService {
         Not sure if we have to save new messages to the server or not, as it is a transient value used in a local session and filterd on date. 
         if we do then make sure all users of clearUnreadMessages (message.js) have .then pattern
         */
-        /* Need to switch to a date?
+        
         // save out
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/clearUnreadMessages/' + connectionId1, {
@@ -238,7 +250,7 @@ export class UserService {
                     console.log("zeroMessageCount:" + result.message);
                 }).catch(err => reject(err));
         });
-        return promise; */
+        return promise; 
 
     }
 

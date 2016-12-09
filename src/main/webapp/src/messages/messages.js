@@ -107,8 +107,10 @@ export class Messages {
             withPresence: true // also subscribe to presence instances.
         });
 
+        var historyCount = 0;
         //get the history callback for this channel
         var getAllMessages = function (timetoken) {
+
 
             parent.pubnub.history(
             {
@@ -138,19 +140,21 @@ export class Messages {
                   });
 
                   // get messages count on history 
-                  // RM but filter on date/time stamp of last view
                   if (response.messages[i].entry.toId == parent.user.email) {
                     //console.log("getMostRecentRead: " + parent.userService.getMostRecentRead (response.messages[i].entry.fromId));
                       if (response.messages[i].timetoken > parent.userService.getMostRecentRead (response.messages[i].entry.fromId))
                             parent.userService.addMessageCount(response.messages[i].entry.fromId);
                     }
                 }
+                // do separate server update of message count to prevent overload fetch posts
+                parent.userService.flushUsers(); 
                 // recursive call of anon function until all messages retrieved
                 if (response.messages.length==100) getAllMessages(response.endTimeToken);
             }
           );
         }
-        getAllMessages(0);   
+        getAllMessages(0); 
+ 
     }
 
 handleKeyInput(event) {
