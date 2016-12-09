@@ -2,6 +2,7 @@ package pashion
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.converters.JSON
 
 import com.stormpath.sdk.account.Account
 
@@ -14,6 +15,30 @@ class UserController {
 
     def connections(){
         respond User.list()
+    }
+    //   /user/updateConnections
+    @Transactional
+    def updateConnections(){
+        def jsonObject = request.JSON
+        try{
+            jsonObject.users.each{ user ->
+                
+                user.connections.each{ connection ->
+                    Connection con = Connection.get(connection.id.toInteger())
+                    con.connectedUserId = connection.connectedUserId
+                    con.connectingStatus = connection.connectingStatus
+                    con.numberNewMessages = connection.numberNewMessages
+                    con.mostRecentRead = connection.mostRecentRead
+                    con.save(flush:true,failOnError:true)
+                }
+            }
+        } catch(Exception e){
+            def error = [message:'Connection Data Save ERROR']
+            render error as JSON
+            return
+        }
+        def sent = [message:'Connection Data Updated']
+        render sent as JSON
     }
 
     
