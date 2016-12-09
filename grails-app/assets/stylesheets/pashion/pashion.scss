@@ -373,6 +373,7 @@ ai-dialog-body .grid-block-row {
   display: flex;
   margin: 1rem 0;
   height: 28px; 
+  min-height: 28px; 
 }
 
 .grid-row-col {
@@ -380,6 +381,7 @@ ai-dialog-body .grid-block-row {
   flex: 1;
   margin: 0 1rem 2rem 0;
   height: 28px; 
+  min-height: 28px; 
 }
 
 .grid-row-col input {
