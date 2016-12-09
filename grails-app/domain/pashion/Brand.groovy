@@ -20,6 +20,7 @@ class Brand {
 
 	static mapping = {
         cache true
+        sort "name"
     }
 
 	static constraints = {
