@@ -19,6 +19,7 @@ class UserController {
     //   /user/updateConnections
     @Transactional
     def updateConnections(){
+        log.info 'updateConnections called'
         def jsonObject = request.JSON
         try{
             jsonObject.users.each{ user ->

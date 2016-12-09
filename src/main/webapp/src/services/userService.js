@@ -49,12 +49,14 @@ export class UserService {
 
     }
 
-    flushUsers() {
-        var parent = this;
+    // used to update the server when finished updating the connections with history from pubnub
+    flushConnectionsData() {
+       var parent = this;
+       this.users[1].connections[0].numberNewMessages = 12345;
         var promise = new Promise((resolve, reject) => {
-            if (this.users) { // local storage if already loaded
-                console.log("flushing users to JSON");
-                this.http.fetch('/user/connections.json', {
+            if (parent.users) { 
+                console.log("flushing connections to the server");
+                this.http.fetch('/user/updateConnections', {
                     method: 'post',
                     body: json(parent.users)
                 });
@@ -63,7 +65,7 @@ export class UserService {
             }
         });
         return promise;
-
+      
     }
 
     checkValidUser(email) {
@@ -279,7 +281,7 @@ export class UserService {
                     }
                 }
             }
-
+      console.log("getMostRecentRead from: " + withUserId + " on id: " +  " stamp: not found");
       return (0);
     }
 

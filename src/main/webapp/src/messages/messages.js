@@ -142,12 +142,15 @@ export class Messages {
                   // get messages count on history 
                   if (response.messages[i].entry.toId == parent.user.email) {
                     //console.log("getMostRecentRead: " + parent.userService.getMostRecentRead (response.messages[i].entry.fromId));
-                      if (response.messages[i].timetoken > parent.userService.getMostRecentRead (response.messages[i].entry.fromId))
+                      console.log("response timestamp: "+ parseInt(response.messages[i].timetoken));
+                      if (parseInt(response.messages[i].timetoken) > parseInt(parent.userService.getMostRecentRead (response.messages[i].entry.fromId))) {
+                            console.log("response timestamp > mostrecent read stamp");
                             parent.userService.addMessageCount(response.messages[i].entry.fromId);
+                      }
                     }
                 }
                 // do separate server update of message count to prevent overload fetch posts
-                parent.userService.flushUsers(); 
+                parent.userService.flushConnectionsData(); 
                 // recursive call of anon function until all messages retrieved
                 if (response.messages.length==100) getAllMessages(response.endTimeToken);
             }
