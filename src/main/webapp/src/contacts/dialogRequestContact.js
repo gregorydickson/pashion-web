@@ -33,8 +33,8 @@ export class DialogRequestContact {
         this.controller.close();
     }
       detached() {
-  window.removeEventListener('keypress', this.boundHandlerComms);
-  }
+          window.removeEventListener('keypress', this.boundHandlerComms);
+      }
 
     requestConnection() {
         this.flashMessage = '';

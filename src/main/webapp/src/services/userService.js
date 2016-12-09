@@ -38,6 +38,8 @@ export class UserService {
                     .then(response => response.json())
                     .then(users => {
                         this.users = users;
+                        // need to zero saved message count as about to re create it from pubnub
+                        // do it in getAllMessages in messages
                         resolve(this.users);
                     }).catch(err => reject(err));
             } else {
@@ -49,10 +51,14 @@ export class UserService {
 
     }
 
+    // Updates the server with the current copies of all the connections 
+    // ideally should only update for this user, but brute force should be ok IFF all users' 
+    // data is kept flushed and updated. 
+    // Has potential for lots of flush/uploading that is irrelevant
     // used to update the server when finished updating the connections with history from pubnub
+    // only in case users gets reloaded while we are in session. IE keep the server matched to the internal strucutre
     flushConnectionsData() {
        var parent = this;
-       this.users[1].connections[0].numberNewMessages = 12345;
         var promise = new Promise((resolve, reject) => {
             if (parent.users) { 
                 console.log("flushing connections to the server");
@@ -60,8 +66,10 @@ export class UserService {
                     method: 'post',
                     body: json(parent.users)
                 });
+                resolve(true);
             } else {
                 console.log("no users defined");
+                return(false);
             }
         });
         return promise;
@@ -149,6 +157,7 @@ export class UserService {
 
     // from pubnub real-time and history
     // only messages to or from this email user are sent.
+    // server is updated in bulk one time when finished
     addMessageCount(fromEmail) {
         // get id for email;
         var fromUserId = this.checkValidUser(fromEmail);
@@ -204,10 +213,27 @@ export class UserService {
           }  */ 
     }
 
+    clearAllUnreadMessagesForTheCurrentUser (){
+      var i;
+      // my connections
+      for (i =0; i < this.users[this.user.id-1].connections.length; i++) {
+        this.clearUnreadMessages(this.users[this.user.id - 1].connections[i].connectedUserId);
+      }
+      // connections not setup by me
+      var item1;
+      var item2;
+      var j;
+      for (i = 0; i < this.users.length; i++) {
+          item1 = this.users[i];
+          for (j = 0; j < item1.connections.length; j++) {
+              item2 = item1.connections[j];
+               if (item2.connectedUserId == this.user.id) this.clearUnreadMessages (item2.user.id);
+            }
+      }
+    }
 
     clearUnreadMessages(withUserId) {
         // assume for the logged in user
-        //need to add date stamp here
         var connectionId1 = -1;
         var i;
         for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
@@ -249,7 +275,8 @@ export class UserService {
                 })
                 .then(response => response.json())
                 .then(result => {
-                    console.log("zeroMessageCount:" + result.message);
+                    console.log("zeroMessageCount success from server with message: " + result.message);
+                    resolve(true);
                 }).catch(err => reject(err));
         });
         return promise; 
@@ -276,7 +303,7 @@ export class UserService {
                     item2 = item1.connections[j];
                     //console.log("incoming userId: " + userId + " item2.connectedUserId: " + item2.connectedUserId + " item2.user.id: " + item2.user.id + " this.user.id: " + this.user.id);
                     if ((item2.connectedUserId == this.user.id) && (item2.user.id == withUserId)) {
-                        console.log("getMostRecentRead from: " + withUserId + " on id: " +  " stamp: " + item2.mostRecentRead);
+                        // console.log("getMostRecentRead from: " + withUserId + " on id: " +  " stamp: " + item2.mostRecentRead);
                         return(item2.mostRecentRead);
                     }
                 }

@@ -112,22 +112,23 @@ fetchGetUserFromServer () {
   }
 
   initiateMessage (userId) { // id not email
-    // console.log("contactlist setting current contact: " + id);
+    console.log("initiate message for current contact: " + userId);
     // clear unread messages
-    var parent = this;
-    this.userService.clearUnreadMessages (userId); // still done locally change to .then if add server
-
-    this.messages.pubnub.time(function(status, response) {
-            if (status.error) {
-                console.log("pubnub time error")
-                // handle error if something went wrong based on the status object
-            } else {
-                console.log(response.timetoken);
-                parent.userService.saveMostRecentRead (userId, response.timetoken); // save now
-            }
-        });
+    var parent = this;  
     this.ea.publish('setCurrentContact', {userId: userId});
-  	this.commsHeader.setStatusTab(this.commsHeader.statusValues.messages);
+    this.commsHeader.setStatusTab(this.commsHeader.statusValues.messages);
+    this.userService.clearUnreadMessages(userId).then (response => {
+
+        this.messages.pubnub.time(function(status, response) {
+                if (status.error) {
+                    console.log("pubnub time error")
+                    // handle error if something went wrong based on the status object
+                } else {
+                    console.log(response.timetoken);
+                    parent.userService.saveMostRecentRead (userId, response.timetoken); // save now
+                }
+            });
+    });
       
   }
 

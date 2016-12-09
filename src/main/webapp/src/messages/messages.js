@@ -39,8 +39,8 @@ export class Messages {
     }
 
       detached() {
-  window.removeEventListener('keypress', this.boundHandlerComms);
-  }
+        window.removeEventListener('keypress', this.boundHandlerComms);
+      }
 
     attached() {
         document.getElementById("msgInput").addEventListener('keypress', this.boundHandlerComms, false);
@@ -92,8 +92,16 @@ export class Messages {
                 // get messages in real time 
                 // RM but filter on date/time stamp of last view
                 // only counting messages from others
-                if (receivedMessage.toId == parent.user.email) parent.userService.addMessageCount(receivedMessage.fromId);
-
+                // but need to not add to count if the user is viewing this message stream
+                // kludge with combination of combination of HTML + current user
+                // if the message tab is open and fromId == current user then don't add up the messages.
+                if (receivedMessage.toId == parent.user.email) {
+                    //var tabShowing = document.getElementById('tab-messages');
+                    var tabShowing = $('#tab-messages');
+                    var hasTabShowing = tabShowing.hasClass('look-menu-show');
+                    if (hasTabShowing && (parent.currentContact.email == receivedMessage.fromId)) {}//nothing
+                    else parent.userService.addMessageCount(receivedMessage.fromId);
+                    }
                 $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
             },
             status: function(s) {
@@ -107,10 +115,8 @@ export class Messages {
             withPresence: true // also subscribe to presence instances.
         });
 
-        var historyCount = 0;
         //get the history callback for this channel
         var getAllMessages = function (timetoken) {
-
 
             parent.pubnub.history(
             {
@@ -142,7 +148,7 @@ export class Messages {
                   // get messages count on history 
                   if (response.messages[i].entry.toId == parent.user.email) {
                     //console.log("getMostRecentRead: " + parent.userService.getMostRecentRead (response.messages[i].entry.fromId));
-                      console.log("response timestamp: "+ parseInt(response.messages[i].timetoken));
+                      // console.log("response timestamp: "+ parseInt(response.messages[i].timetoken));
                       if (parseInt(response.messages[i].timetoken) > parseInt(parent.userService.getMostRecentRead (response.messages[i].entry.fromId))) {
                             console.log("response timestamp > mostrecent read stamp");
                             parent.userService.addMessageCount(response.messages[i].entry.fromId);
@@ -150,23 +156,27 @@ export class Messages {
                     }
                 }
                 // do separate server update of message count to prevent overload fetch posts
-                parent.userService.flushConnectionsData(); 
+                parent.userService.flushConnectionsData().then( returnedBoolean  => { 
                 // recursive call of anon function until all messages retrieved
-                if (response.messages.length==100) getAllMessages(response.endTimeToken);
+                    if (response.messages.length==100) getAllMessages(response.endTimeToken);
+                });
             }
           );
         }
+        // clear out the previous values 
+        this.userService.clearAllUnreadMessagesForTheCurrentUser();
+        // recursive call to get all messages for the current user
         getAllMessages(0); 
  
     }
 
-handleKeyInput(event) {
-    //console.log(event);
-    if(event.which == 13 && event.srcElement.id === 'msgInput') {
-      console.log("user hit enter in comms");
-      this.sendMessage();
-    }
-  }
+    handleKeyInput(event) {
+        //console.log(event);
+        if(event.which == 13 && event.srcElement.id === 'msgInput') {
+          console.log("user hit enter in comms");
+          this.sendMessage();
+        }
+      }
 
     sendMessage() {
         //console.log("Sendmessage from my id:" + this.user.id + " email:" + this.user.email +

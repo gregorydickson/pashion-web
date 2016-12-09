@@ -19,14 +19,14 @@ class UserController {
     //   /user/updateConnections
     @Transactional
     def updateConnections(){
-        log.info 'updateConnections called'
-        log.info "json:"+request.JSON
+        //log.info 'updateConnections called'
+        //log.info "json:"+request.JSON
         def jsonObject = request.JSON
         try{
             jsonObject.each{ user ->
                 
                 user.connections.each{ connection ->
-                    log.info "connection:"+connection
+                    //log.info "connection:"+connection
                     Connection con = Connection.get(connection.id.toInteger())
                     con.connectedUserId = connection.connectedUserId
                     con.connectingStatus = connection.connectingStatus
