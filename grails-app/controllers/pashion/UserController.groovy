@@ -20,11 +20,13 @@ class UserController {
     @Transactional
     def updateConnections(){
         log.info 'updateConnections called'
+        log.info "json:"+request.JSON
         def jsonObject = request.JSON
         try{
-            jsonObject.users.each{ user ->
+            jsonObject.each{ user ->
                 
                 user.connections.each{ connection ->
+                    log.info "connection:"+connection
                     Connection con = Connection.get(connection.id.toInteger())
                     con.connectedUserId = connection.connectedUserId
                     con.connectingStatus = connection.connectingStatus
@@ -34,10 +36,12 @@ class UserController {
                 }
             }
         } catch(Exception e){
-            def error = [message:'Connection Data Save ERROR']
+            log.error "update Connections Error"+e.message
+            def error = [message:e.message]
             render error as JSON
             return
         }
+        log.info "update connections OK"
         def sent = [message:'Connection Data Updated']
         render sent as JSON
     }
