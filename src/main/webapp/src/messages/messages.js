@@ -189,7 +189,7 @@ export class Messages {
             toName: this.currentContact.name,
             toSurname: this.currentContact.surname,
             text: $("#msgInput").val(),
-            sentAt: new Date().toLocaleString(),
+            sentAt: new Date(),
             toMe: false,
             fromMe: false
         };
