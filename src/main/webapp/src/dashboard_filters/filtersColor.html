@@ -1,0 +1,13 @@
+<template>
+
+
+	<span class="inline-label">
+        <span class="form-label">Color</span>
+	    <select name="" id="" value.bind="selectedColor" change.delegate="filterChange($event.target)">
+	        <option value="">All</option>
+	        <option repeat.for="color of colors" model.bind="color">${color}</option>
+	    </select>
+    </span>   
+
+
+</template>

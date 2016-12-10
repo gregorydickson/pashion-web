@@ -76,6 +76,7 @@
       "aurelia-history-browser": "npm:aurelia-history-browser@^1.0.0-rc.1.0.0",
       "aurelia-loader-default": "npm:aurelia-loader-default@^1.0.0-rc.1.0.0",
       "aurelia-logging-console": "npm:aurelia-logging-console@^1.0.0-rc.1.0.0",
+      "aurelia-pal": "npm:aurelia-pal@^1.1.1",
       "aurelia-pal-browser": "npm:aurelia-pal-browser@^1.0.0-rc.1.0.0",
       "aurelia-plugins-tabs": "npm:aurelia-plugins-tabs@^1.2.0",
       "aurelia-polyfills": "npm:aurelia-polyfills@^1.0.0-rc.1.0.0",

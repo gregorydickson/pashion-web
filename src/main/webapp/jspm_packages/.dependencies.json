@@ -83,7 +83,6 @@
   "github:twbs/bootstrap@3.3.7": {
     "jquery": "jspm:jquery"
   },
-  "npm:aurelia-pal@1.0.0": {},
   "npm:aurelia-history@1.0.0": {},
   "npm:aurelia-loader@1.0.0": {
     "aurelia-metadata": "npm:aurelia-metadata@^1.0.0",
@@ -246,5 +245,6 @@
     "jquery": "jspm:jquery",
     "css": "jspm:css"
   },
-  "github:systemjs/plugin-css@0.1.32": {}
+  "github:systemjs/plugin-css@0.1.32": {},
+  "npm:aurelia-pal@1.1.1": {}
 }

@@ -36,13 +36,11 @@ export class Index {
 
   numberImages = 0;
   
-  setBrand(event){
-    this.selectedBrand = event.detail.value
-    console.log(event.detail.value);
-    this.filterChange();
-  }
+  
   filterChange(event){
-    console.log("changing");
+    console.log("Filter Change changing");
+    console.log("event.detail.value:"+event.detail.value);
+    if(event.detail.value) this.selectedBrand = event.detail.value;
     console.log("brand:"+this.selectedBrand);
     console.log(this.selectedSeason);
     console.log(this.selectedItemType);
@@ -100,6 +98,23 @@ export class Index {
         $(this).removeClass("look-menu-show");
       });
     });
+
+    //Select functionality for brand and agency users to toggle/show "search images"/"manage images" blocks
+    // Show/hide on document ready
+      $('.blockSearchImages').show();
+      $('.blockManageImages').hide();
+    
+    //Show/hide on select  
+      $('#imagesFunctionality').change(function(){
+        if($(this).val() == 'optionSearchImages'){ 
+          $('.blockSearchImages').show();
+          $('.blockManageImages').hide();
+        }
+        else if ($(this).val() == 'optionManageImages'){ 
+          $('.blockSearchImages').hide();
+          $('.blockManageImages').show();
+        }
+      });
 
   }
   //activate() is called before attached()
