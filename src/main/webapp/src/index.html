@@ -10,7 +10,7 @@
     <require from="./dashboard_filters/filtersColor"></require>
     <require from="./dashboard_filters/filtersTheme"></require>
     <require from="./dashboard_filters/filtersDesigner"></require>
-    <require from="./dashboard_filters/filtersSeason"></require>
+    <require from="./dashboard_filters/filters-season"></require>
     <require from="./dashboard_filters/filtersType"></require>
     <require from="./dashboard_filters/filtersCity"></require>
 
@@ -269,11 +269,11 @@
                                     </div> -->
                                     <!-- Brand -->
                                     <div class="grid-row-col">
-                                        <filters-designer change.delegate="filterChange($event)" selectedBrand.bind="selectedBrand"></filters-designer>
+                                        <filters-designer change.delegate="filterChange($event)" ></filters-designer>
                                     </div>
                                     <!-- Seasons -->
                                     <div class="grid-row-col">
-                                        <filters-season></filters-season>
+                                        <filters-season season.bind="season" change.delegate="filterChange($event)"></filters-season>
                                     </div>
                                     <!-- Type -->
                                     <div class="grid-row-col">

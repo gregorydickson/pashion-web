@@ -27,7 +27,7 @@ export class Index {
   colors = [];
   
   selectedBrand = '';
-  selectedSeason = '';
+  season = '';
   selectedItemType = '';
   selectedColor = '';
   searchText = '';
@@ -39,10 +39,15 @@ export class Index {
   
   filterChange(event){
     console.log("Filter Change changing");
-    console.log("event.detail.value:"+event.detail.value);
-    if(event.detail.value) this.selectedBrand = event.detail.value;
+    if(event)
+      if(event.detail)
+        if(event.detail.value){
+          this.selectedBrand = event.detail.value;
+          console.log("value:"+event.detail.value)
+        }
+     
     console.log("brand:"+this.selectedBrand);
-    console.log(this.selectedSeason);
+    console.log("season:"+this.season);
     console.log(this.selectedItemType);
     console.log(this.searchText);
     console.log(this.availableFrom);
@@ -50,7 +55,7 @@ export class Index {
 
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
-                                      '&season=' + encodeURI(this.selectedSeason) + 
+                                      '&season=' + encodeURI(this.season) + 
                                       '&itemType=' + this.selectedItemType + 
                                       '&availableFrom=' + this.availableFrom + 
                                       '&availableTo=' + this.availableTo)
