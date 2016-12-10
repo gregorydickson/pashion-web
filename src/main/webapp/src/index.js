@@ -36,12 +36,7 @@ export class Index {
 
   numberImages = 0;
   
-  setBrand(event){
-    log.console("set Brand on index.js");
-    this.selectedBrand = event.detail.value
-    console.log(event.detail.value);
-    this.filterChange();
-  }
+  
   filterChange(event){
     console.log("Filter Change changing");
     console.log("event.detail.value:"+event.detail.value);
