@@ -7,6 +7,7 @@ import com.bloomhealthco.jasypt.*
 
 class User {
 	Account account
+	String password
 
 	String name
 	String surname
@@ -41,7 +42,7 @@ class User {
         prAgency lazy:false
         
     }
-   	static transients = ['account']
+   	static transients = ['account','password']
 	static constraints = {
 		account nullable: true
 

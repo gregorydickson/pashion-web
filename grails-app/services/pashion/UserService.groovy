@@ -31,8 +31,7 @@ class UserService {
 	def grailsApplication
 
 	def APPLICATION_NAME = "pashiontool"
-	def elle_directory = "https://api.stormpath.com/v1/directories/jVKqqTZOmOFXPWO53PgoY"
-	def ralph_lauren = "https://api.stormpath.com/v1/directories/Z14nWfywLDah6jS8NByk2"
+
 	Application stormpathApp
 	Client client
 	
@@ -59,6 +58,10 @@ class UserService {
 
 		log.debug "stormpath app:"+stormpathApp
     
+    }
+
+    def changePassword(def userId, def newPassword){
+
     }
 
 
@@ -91,19 +94,19 @@ class UserService {
         }
         account
     }
-
-    def createUser(String email,String name,String surname, Integer id,
+    
+    def createUser(String email,String name,String surname,
     				 def owner, String rawpassword, Boolean isInPashionNetwork ){
     	def role
     	User user
     	if(owner instanceof Brand){
             log.info "creating Brand user"
     		role = "brand-users"
-    		user = new User(name:name,id:id,surname:surname, email:email,brand:owner).save(failOnError : true)
+    		user = new User(name:name,surname:surname, email:email,brand:owner,isInPashionNetwork:true).save(failOnError : true)
     	} else if(owner instanceof PressHouse){
             log.info "creating Press user"
     		role = "press-users"
-    		user = new User(name:name,id:id,surname:surname, email:email,pressHouse:owner).save(failOnError : true)
+    		user = new User(name:name,surname:surname, email:email,pressHouse:owner,isInPashionNetwork:true).save(failOnError : true)
     	}
         Directory directory
         try{

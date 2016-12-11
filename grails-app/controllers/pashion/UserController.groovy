@@ -126,7 +126,7 @@ class UserController {
     @Transactional
     def save(User user) {
         def owner 
-        
+        log.info "params:"+ params
         if(params.pressHouse.id != "null"){
             owner = PressHouse.get(params.pressHouse.id.toInteger())
         } else if (params.brand.id != "null"){
