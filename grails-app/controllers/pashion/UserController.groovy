@@ -32,6 +32,7 @@ class UserController {
                     con.connectingStatus = connection.connectingStatus
                     con.numberNewMessages = connection.numberNewMessages
                     con.mostRecentRead = connection.mostRecentRead
+                    con.name = connection.name
                     con.save(flush:true,failOnError:true)
                 }
             }

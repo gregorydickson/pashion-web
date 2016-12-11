@@ -23,38 +23,39 @@
             </table>
         </div>
         <div id="panel1111" class="panel grid-block vertical show" style="overflow-y:scroll;">
-            <div id="contacts-inside-top2" repeat.for="userLoopC of users" class="" style="width:255px; overflow: visible;margin-left: 1rem;">
-                <div if.bind="(userLoopC.connections!=null)" repeat.for="connectionC of userLoopC.connections">
-
+            <div    id="contacts-inside-top2" 
+                    if.bind="(users[user.id -1].connections!=null)" 
+                    repeat.for="connectionC of users[user.id -1].connections"
+                    class="" style="width:255px; overflow: visible;margin-left: 1rem;">
                     <!-- in coming -->
-                    <div if.bind="(connectionC.connectedUserId == user.id) && (connectionC.connectingStatus=='Pending')" style="">
+                    <div if.bind="(connectionC.connectingStatus=='PendingIn')" style="">
                         <span class="look-menu-heading paragraph-5" style="outline: 1px solid lightgray; width: 250px; background: white;">Incoming Connection Request</span>
                         <table class="width100">
                             <tr>
                                 <td>
                                     <div>
-                                        <img if.bind="(users[connectionC.user.id -1].image)" src=${users[connectionC.user.id-1].image} class="clip-circle contact-entry" />
-                                        <div if.bind="(!users[connectionC.user.id -1].image)" style="margin-right: 1rem;" class="avatar-circle "> ${users[connectionC.user.id -1].name.charAt(0)}</div>
+                                        <img if.bind="(users[connectionC.connectedUserId -1].image)" src=${users[connectionC.connectedUserId-1].image} class="clip-circle contact-entry" />
+                                        <div if.bind="(!users[connectionC.connectedUserId -1].image)" style="margin-right: 1rem;" class="avatar-circle "> ${users[connectionC.connectedUserId -1].name.charAt(0)}</div>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connectionC.user.id -1].name} ${users[connectionC.user.id -1].surname}</div>
+                                    <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connectionC.connectedUserId -1].name} ${users[connectionC.connectedUserId -1].surname}</div>
                                     <!--     <div class="ui-text-label-s-left paragraph-5 contact-box">${connection.brand.name} ${connection.pressHouse.name}</div> -->
-                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connectionC.user.id -1].email}</div>
+                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connectionC.connectedUserId -1].email}</div>
                                 </td>
                             </tr>
                         </table>
                         <div class="grid-block align-center shrink">
                           <!--  <a class="hollow button" click.delegate="declineContact(connectionC.user.id,connectionC.id) ">Decline</a> //RM no deny, just delete, more permissive -->
-                            <a class="hollow button" click.delegate="deleteContact(connectionC.user.id,connectionC.id) ">Decline</a>
-                            <a class="button" href="#" click.delegate="acceptContact(connectionC.user.id,connectionC.id)">Accept</a>
+                            <a class="hollow button" click.delegate="deleteContact(user.id,connectionC.id) ">Decline</a>
+                            <a class="button" href="#" click.delegate="acceptContact(user.id,connectionC.id)">Accept</a>
                         </div>
                     </div>
 
                     <!-- out going -->
-                    <div if.bind="(connectionC.user.id == user.id) && (connectionC.connectingStatus=='Pending')" style="">
+                    <div if.bind="(connectionC.connectingStatus=='PendingOut')" style="">
                         <span class="look-menu-heading paragraph-5" style="outline: 1px solid lightgray; width: 250px; background: white;">Outgoing Connection Request</span>
-                        <table class="width100">
+                             <table class="width100">
                             <tr>
                                 <td>
                                     <div>
@@ -73,8 +74,6 @@
                             <a class="hollow button" click.delegate="deleteContact(user.id,connectionC.id) ">Delete</a>
                         </div>
                     </div>
-
-                </div>
             </div>
         </div>
         <!-- category Contact lists-->
@@ -89,117 +88,56 @@
                 </tr>
             </table>
         </div>
-        <!--   <div id="panel12 " class="panel grid-block vertical noscroll show " style="display: block; margin-top:0.5rem; "> -->
-        <!-- insert special (ME) entry! at top
 
-                                
-    <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connection.user.id].name} ${users[connection.user.id].surname} (Me)</div>
-    <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connection.user.id].brand.name} ${users[connection.user.id].pressHouse.name}</div>
-                         
-
-
-        --> <!-- | sort: 'name': 'ascending' | filter:searchTerm:filterFunc -->
         <div id="panel1212" class="panel grid-block vertical scroll show" style="overflow-y:scroll;">
-            <div id="contacts-inside-top " repeat.for="userLoop of users | filter:searchTerm:filterFunc | sort: 'name': 'ascending'" class="" style="width:255px; overflow: visible;margin-left: 1rem;">
-                <!-- Not initiated by me -->
-                <!--      <span>${userLoopconnections}</span> -->
-                <div if.bind="((userLoop.connections!=null) && (userLoop.id != user.id))" repeat.for="connection of userLoop.connections">
-                    <a href="#" click.delegate="initiateMessage(userLoop.id)">
+            <div id="contacts-inside-top"
+                 if.bind="(users[user.id -1].connections!=null)" 
+                 repeat.for="connection of users[user.id -1].connections | sort: 'name': 'ascending' | filter:searchTerm:filterFunc "
+                 class="" style="width:255px; overflow: visible;margin-left: 1rem;">
+
+
+                    <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
                         <!--  -->
-                        <table if.bind="((user.id == connection.connectedUserId) && (connection.connectingStatus=='Accepted'))" class="width100">
+                        <table if.bind="(connection.connectingStatus=='Accepted')" class="width100">
                             <tr>
                                 <td>
                                     <div>
-                                        <img if.bind="(userLoop.image)" src=${userLoop.image} class="clip-circle contact-entry" />
-                                        <div if.bind="(!userLoop.image)" style="margin-right: 1rem; " class="avatar-circle ">${userLoop.name.charAt(0)}</div>
+                                        <img if.bind="(users[connection.connectedUserId -1].image)" src=${users[connection.connectedUserId-1].image} class="clip-circle contact-entry" />
+                                        <div if.bind="(!users[connection.connectedUserId -1].image)" style="margin-right: 1rem; " class="avatar-circle ">${users[connection.connectedUserId -1].name.charAt(0)}</div>
                                     </div>
                                 </td>
                                 <td>
                                     <div>
-                                        <div class="ui-text-label-me-left paragraph-5 contact-box">${userLoop.name} ${userLoop.surname}</div>
-                                        <div class="ui-text-label-s-left paragraph-5 contact-box">${userLoop.brand.name} ${userLoop.pressHouse.name}</div>
+                                        <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connection.connectedUserId -1].name} ${users[connection.connectedUserId -1].surname}</div>
+                                        <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connection.connectedUserId -1].brand.name} ${users[connection.connectedUserId -1].pressHouse.name}</div>
                                     </div>
                                 </td>
+
                                 <td class="align-top"><span class="alert-box">${connection.numberNewMessages}</span></td>
-                                <!-- NO MENU FOR NOW. Place holder -->
-                                <td class="align-top">
+                                <!-- NO MENU FOR NOW. Place holder 
+ <!--                               <td class="align-top">
                                     <div class="look-menu-absolute-wrap">
-                                        <span class="edit-box"><a href="#" click.delegate="lookEditContact(userLoop.id)"></a> <!-- ... -->
+                                        <span class="edit-box"><a href="#" click.delegate="lookEditContact(connectedUserId)"></a> <!-- ... -->
                                                     </span>
-                                        <!-- edit contact modal popup -->
+                                        <!-- edit contact modal popup 
                                         <div id="${userLoop.id}" class="look-menu-absolute lookEditContactClass" style="margin-bottom:5px;">
-                                            <span class="look-menu-heading">${userLoop.name}</span>
+                                            <span class="look-menu-heading">${users[connection.connectedUserId -1].name}</span>
                                             <ul class="look-menu-list">
                                                 <li if.bind="(userLoop.id !=user.id)" class="look-menu-item">
-                                                    <a href="#" click.delegate="initiateMessage(userLoop.id) " class="look-menu-link">Send Message</a>
+                                                    <a href="#" click.delegate="initiateMessage(connectedUserId) " class="look-menu-link">Send Message</a>
                                                 </li>
                                                 <li if.bind="(userLoop.id !=user.id)" class="look-menu-item">
-                                                    <a href="#" click.delegate="deleteContact(user.id,connection.id) " class="look-menu-link">Delete Contact</a>
+                                                    <a href="#" click.delegate="deleteContact(connectedUserId,connection.id) " class="look-menu-link">Delete Contact</a>
                                                 </li>
                                             </ul>
                                         </div>
                                     </div>
-                                </td>
+                                </td> -->
                                 <!-- NO MENU FOR NOW. Place holder -->
                             </tr>
                         </table>
                     </a>
-                </div>
-                <!-- end not initiated by me -->
-                <!-- my initiated connections -->
-                <!-- <span>${userLoop.connections}</span>-->
-                <div if.bind="((userLoop.connections!=null) && (userLoop.id == user.id))" repeat.for="connection2 of userLoop.connections">
-                    <a href="#" click.delegate="initiateMessage(users[connection2.connectedUserId-1].id)">
-                        <table if.bind="((connection2.connectedUserId != user.id) && (connection2.connectingStatus=='Accepted'))" class="width100">
-                            <tr>
-                                <td>
-                                    <div>
-                                        <img if.bind="(users[connection2.connectedUserId-1].image)" src=${users[connection2.connectedUserId-1].image} class="clip-circle contact-entry" />
-                                        <div if.bind="(!users[connection2.connectedUserId-1].image)" style="margin-right: 1rem; " class="avatar-circle ">${users[connection2.connectedUserId-1].name.charAt(0)}</div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div>
-                                        <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connection2.connectedUserId-1].name} ${users[connection2.connectedUserId-1].surname}</div>
-                                        <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connection2.connectedUserId-1].brand.name} ${users[connection2.connectedUserId-1].pressHouse.name}</div>
-                                    </div>
-                                </td>
-                                <td class="align-top"><span class="alert-box">${connection2.numberNewMessages}</span></td>
-                                <!-- NO MENU FOR NOW. Place holder -->
-                                <td class="align-top">
-                                    <div class="look-menu-absolute-wrap">
-                                        <span class="edit-box"><a href="#" click.delegate="lookEditContact(userLoop.id)"></a> <!-- ... -->
-                                                    </span>
-                                        <!-- edit contact modal popup -->
-                                        <div id="${userLoop.id}" class="look-menu-absolute lookEditContactClass" style="margin-bottom:5px;">
-                                            <span class="look-menu-heading">${users[connection2.connectedUserId-1].name}</span>
-                                            <ul class="look-menu-list">
-                                                <li>
-                                                    <!-- if.bind="(userLoop.id !=user.id)" class="look-menu-item"> -->
-                                                    <a href="#" click.delegate="initiateMessage(users[connection2.connectedUserId-1].id) " class="look-menu-link">Send Message</a>
-                                                </li>
-                                                <li>
-                                                    <!-- if.bind="(userLoop.id !=user.id)" class="look-menu-item"> -->
-                                                    <a href="#" click.delegate="deleteContact(user.id,connection2.id) " class="look-menu-link">Delete Contact</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </td>
-                                <!-- NO MENU FOR NOW. Place holder -->
-                            </tr>
-                        </table>
-                    </a>
-                </div>
-                <!-- end my initiated connections -->
-                <!-- add me -->
-                <!-- <li> 
-                                                <a href="#" click.delegate="createDialogEditContact(userLoop.id) " class="look-menu-link">Edit</a>
-                                            </li>
-                                            <li> 
-                                                <a href="#" click.delegate="CreateDialogUpdatePhoto(userLoop.id) " class="look-menu-link">Update Photo</a>
- 
-                                             </li> -->
+
             </div>
         </div>
         <!-- category Testing -->

@@ -44,6 +44,9 @@ export class ContactsList {
       this.user = this.userService.getUser().then(user => this.user = user),
       //this.connections = this.userService.getConnections().then(connections => this.connections = connections),
       this.users = this.userService.getUsers(forceGetFromServer).then(users => this.users = users)
+      // This version now creates two entries for each conneciton, one each with user as the id.
+      // But no access to these data structures should be done here
+      // All manipulations should happen in userServices.
     ]);
 	}
 
@@ -66,13 +69,6 @@ fetchGetUserFromServer () {
       });
   }
 
-  declineContact(user,id) {
-    var menu = document.getElementById('connect'+id); 
-    // menu.classList.toggle("look-menu-show"); // RM not necessary, not sure why
-    this.userService.denyContact(user,id)
-      .then(response => {
-      });
-  }
 
   deleteContact(user,id) {
     this.userService.deleteContact(user,id)
@@ -133,10 +129,8 @@ fetchGetUserFromServer () {
   }
 
     filterFunc(searchExpression, value){
-     
-     let itemValue = value.name + value.surname;
-     if (value.brand != null) itemValue += value.brand.name; 
-     if (value.presshouse !=null) itemValue += value.pressHouse.name;
+
+     let itemValue = value.name;
      if(!searchExpression || !itemValue) return false;
      
      return itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;

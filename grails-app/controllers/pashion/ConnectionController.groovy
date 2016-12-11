@@ -37,30 +37,20 @@ class ConnectionController {
         def sent = [message:'Connection Made']
         render sent as JSON
     }
-    // /connection/updatejson/23
-    @Transactional 
-    def denyContact(){
-        def connection = Connection.get(params.id.toInteger())
-        
-        def jsonObject = request.JSON
-        log.info "json:"+jsonObject
-        connection.connectingStatus = "Denied"
-        
-        connection.save(failOnError : true, flush: true)
-        def connectionString  = 'connection denied'
-        def sent = [message:connectionString]
-        render sent as JSON
-    }
 
     @Transactional 
     def acceptContact(){
-        def connection = Connection.get(params.id.toInteger())
+        def connection1 = Connection.get(params.id.toInteger())
         
         def jsonObject = request.JSON
-        log.info "json:"+jsonObject
-        connection.connectingStatus = "Accepted"
-        
-        connection.save(failOnError : true, flush: true)
+        log.info "acceptContact json:"+jsonObject
+        connection1.connectingStatus = "Accepted"
+        connection1.save(failOnError : true, flush: true)
+
+        def connection2 = Connection.get(jsonObject.connectedConnId.toInteger())
+        connection2.connectingStatus = "Accepted"
+        connection2.save(failOnError : true, flush: true)
+
         def connectionString  = 'connection accepted'
         def sent = [message:connectionString]
         render sent as JSON
@@ -70,15 +60,26 @@ class ConnectionController {
     def addContactRequest(){
         def jsonObject = request.JSON
         log.info "addContactRequest json: "+jsonObject
-        log.info "addContactRequest session.user: " + session.user
-        def con = new Connection()
-        con.user = session.user //{id: jsonObject.user.id.toInteger()}
-        con.connectedUserId = jsonObject.connectedUserId
-        con.connectingStatus = "Pending"
-        con.numberNewMessages = 0
-        con.mostRecentRead = 0
-        con.save(flush:true, failOnError:true)
-        def sent = [message:'contact request sent']
+        log.info "addContactRequest: session.user: " + session.user
+        def con1 = new Connection()
+        con1.user = session.user 
+        con1.connectedUserId = jsonObject.user1.connectedUserId
+        con1.connectingStatus = 'PendingOut'
+        con1.numberNewMessages = jsonObject.user1.numberNewMessages
+        con1.mostRecentRead = jsonObject.user1.mostRecentRead
+        con1.name = jsonObject.user1.name
+        con1.save(flush:true, failOnError:true)
+
+        def con2 = new Connection()
+        con2.user = User.findById(jsonObject.user1.connectedUserId) 
+        con2.connectedUserId = session.user.id
+        con2.connectingStatus = 'PendingIn'
+        con2.numberNewMessages = jsonObject.user2.numberNewMessages
+        con2.mostRecentRead = jsonObject.user2.mostRecentRead
+        con2.name = jsonObject.user2.name
+        con2.save(flush:true, failOnError:true)
+
+        def sent = [message:'contact request sent'] 
         render sent as JSON
     }
 

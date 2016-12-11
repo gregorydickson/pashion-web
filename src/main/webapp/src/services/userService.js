@@ -14,6 +14,9 @@ import 'fetch';
 @singleton()
 export class UserService {
 
+  // THis version implements two records ("connectins") for each user to user connection,
+  // one each with a user set to each participant, with the other user set in connectedIUserd
+
     showIntro = true;
 
     constructor(http) {
@@ -77,6 +80,7 @@ export class UserService {
     }
 
     checkValidUser(email) {
+        // return user id or an error code: -1 or -2
         if (email.toUpperCase() == this.user.email.toUpperCase()) return (-2); // its yourself you fool
         //this.users.forEach(function(item1) {
         var i;
@@ -85,33 +89,31 @@ export class UserService {
             //console.log("inner users: " + item1.email + " to match: " + email);
             if (item1.email.toUpperCase() == email.toUpperCase()) {
                 //console.log("matched emails");
-                return (item1.id); //return the id of the requested, valid email
+                return (item1.id); //return the id of the requested, valid email. Note not "i" as index != id
             }
         };
         return (-1); // no match, sorry, you have no friends
     }
 
-    checkDuplicateConnection(userId) {
-        var i;
-        var item1;
-        for (i = 0; i < this.users.length; i++) {
-            item1 = this.users[i];
-            var j;
-            var item2;
-            for (j = 0; j < item1.connections.length; j++) {
-                item2 = item1.connections[j];
-                console.log("incoming userId: " + userId + " item2.connectedUserId: " + item2.connectedUserId + " item2.user.id: " + item2.user.id + " this.user.id: " + this.user.id);
-                if ((item2.connectedUserId == this.user.id) && (item2.user.id == userId) && (item2.connectingStatus == 'Accepted')) return (-1);
-                if ((item2.connectedUserId == this.user.id) && (item2.user.id == userId) && (item2.connectingStatus == 'Pending')) return (-2);
-                if ((item2.connectedUserId == userId) && (item2.user.id == this.user.id) && (item2.connectingStatus == 'Accepted')) return (-1);
-                if ((item2.connectedUserId == userId) && (item2.user.id == this.user.id) && (item2.connectingStatus == 'Pending')) return (-2);
-            }
+    checkDuplicateConnection(userId) { 
+      // Note id not email
+      // errors for wrong status: -1 = already connected and -2 = pending request
+      // Assume current user as one side of the match
+
+        var j;
+        var item2;
+        for (j = 0; j < this.users[this.user.id - 1].connections.length; j++) {
+            item2 = this.users[this.user.id -1].connections[j];
+            console.log("incoming userId: " + userId + " item2.connectedUserId: " + item2.connectedUserId + " item2.user.id: " + item2.user.id + " this.user.id: " + this.user.id);
+            if ((item2.connectedUserId == userId) && (item2.connectingStatus == 'Accepted')) return (-1);
+            if ((item2.connectedUserId == userId) && (item2.connectingStatus == 'PendingIn')) return (-2);
+            if ((item2.connectedUserId == userId) && (item2.connectingStatus == 'PendingOut')) return (-2);
         }
-        return (0);
+        return (0); // no duplicate
     }
 
     getUserDetails(id) {
-        // could replace this with users database I guess. RM for later
+        // could replace this with users database I guess. RM for later...
         // console.log("getting user details for: " + id);
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/user/show/' + id + ".json")
@@ -129,26 +131,50 @@ export class UserService {
     // Build new connection
     addContactRequest(idIn) {
 
-        console.log("incoming contact request: " + idIn);
-        var conn = {
+        console.log("contact request: " + idIn);
+        // first connection record
+        var nameString1 = this.users[this.user.id -1].name + this.users[this.user.id -1].surname + this.users[this.user.id-1].email; // spaces to match name display and prvent run on match for the other fields
+        if (this.users[this.user.id-1].brand.id!=null) nameString1 += this.users[this.user.id-1].brand.name;
+        if (this.users[this.user.id-1].pressHouse.id!=null) nameString1 += this.users[this.user.id-1].pressHouse.name;
+        if (this.users[this.user.id-1].agency) nameString1 += this.users[this.user.id-1].agency.name;
+
+        var nameString2 = this.users[idIn-1].name + this.users[idIn-1].surname + this.users[idIn-1].email;
+        if (this.users[idIn-1].brand.id!=null) nameString2 += this.users[idIn-1].brand.name;
+        if (this.users[idIn-1].pressHouse.id!=null) nameString2 += this.users[idIn-1].pressHouse.name;
+        if (this.users[idIn-1].agency) nameString2 += this.users[idIn-1].agency.name;
+        var conn1 = {
             user: {
                 id: this.user.id
             },
             connectedUserId: idIn,
             numberNewMessages: 0,
-            connectingStatus: 'Pending'
+            mostRecentRead: 0,
+            name: nameString2, // for search and filter // add name of connecting to item not 'host' item
+            connectingStatus: 'PendingOut'
+        };
+        // second connection record
+        var conn2 = {
+            user: {
+                id: idIn
+            },
+            connectedUserId: this.user.id,
+            numberNewMessages: 0,
+            mostRecentRead: 0,
+            name: nameString1,
+            connectingStatus: 'PendingIn'
         };
         // locally
-        this.users[this.user.id - 1].connections.push(conn);
+        this.users[this.user.id - 1].connections.push(conn1);
+        this.users[idIn - 1].connections.push(conn2);
         // save out
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/addContactRequest/', {
                     method: 'post',
-                    body: json(conn)
+                    body: json({user1: conn1, user2:conn2}) // 
                 })
                 .then(response => response.json())
                 .then(result => {
-                    console.log("fetch addContactRequest:" + result.message);
+                    console.log("json addContactRequest1:" + result.message);
                 }).catch(err => reject(err));
         });
         return promise;
@@ -158,39 +184,17 @@ export class UserService {
     // from pubnub real-time and history
     // only messages to or from this email user are sent.
     // server is updated in bulk one time when finished
-    addMessageCount(fromEmail) {
+    addMessageCount(fromEmail) { // add 1 to the count
         // get id for email;
         var fromUserId = this.checkValidUser(fromEmail);
         console.log("Update message count from: " + fromEmail + " id: " + fromUserId);
-        //.then (response =>  response.json ())
-        //.then(fromUserId => {
-        var connectionId = -1;
+
         var i;
         for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
             if (this.users[this.user.id - 1].connections[i].connectedUserId == fromUserId) {
-                connectionId = this.users[this.user.id - 1].connections[i].id;
                 console.log("addMessageCount actually added to users from: " + fromUserId + " to: " + this.user.id);
                 this.users[this.user.id - 1].connections[i].numberNewMessages++;
                 break;
-            }
-        }
-        // RM add in counts when contact initiated not by me
-        if (connectionId == -1) {
-            var item1;
-            var item2;
-            var j;
-            for (i = 0; i < this.users.length; i++) {
-                item1 = this.users[i];
-                for (j = 0; j < item1.connections.length; j++) {
-                    item2 = item1.connections[j];
-                    //console.log("incoming userId: " + userId + " item2.connectedUserId: " + item2.connectedUserId + " item2.user.id: " + item2.user.id + " this.user.id: " + this.user.id);
-                    if ((item2.connectedUserId == this.user.id) && (item2.user.id == fromUserId)) {
-                        connectionId = this.users[item1.id - 1].connections[j].id;
-                        console.log("addMessageCount actually added to users to: " + fromUserId + " to: " + this.user.id);
-                        this.users[item1.id - 1].connections[j].numberNewMessages++;
-                        break;
-                    }
-                }
             }
         }
 
@@ -219,17 +223,6 @@ export class UserService {
       for (i =0; i < this.users[this.user.id-1].connections.length; i++) {
         this.clearUnreadMessages(this.users[this.user.id - 1].connections[i].connectedUserId);
       }
-      // connections not setup by me
-      var item1;
-      var item2;
-      var j;
-      for (i = 0; i < this.users.length; i++) {
-          item1 = this.users[i];
-          for (j = 0; j < item1.connections.length; j++) {
-              item2 = item1.connections[j];
-               if (item2.connectedUserId == this.user.id) this.clearUnreadMessages (item2.user.id);
-            }
-      }
     }
 
     clearUnreadMessages(withUserId) {
@@ -242,24 +235,6 @@ export class UserService {
                 connectionId1 = this.users[this.user.id - 1].connections[i].id;
                 console.log("clearUnreadMessages from: " + withUserId + " on id: " + connectionId1);
                 break;
-            }
-        }
-        if (connectionId1 == -1) { // must be in connection not setup by me
-            var item1;
-            var item2;
-            var j;
-            for (i = 0; i < this.users.length; i++) {
-                item1 = this.users[i];
-                for (j = 0; j < item1.connections.length; j++) {
-                    item2 = item1.connections[j];
-                    //console.log("incoming userId: " + userId + " item2.connectedUserId: " + item2.connectedUserId + " item2.user.id: " + item2.user.id + " this.user.id: " + this.user.id);
-                    if ((item2.connectedUserId == this.user.id) && (item2.user.id == withUserId)) {
-                        this.users[i].connections[j].numberNewMessages = 0;
-                        connectionId1 = this.users[i].connections[j].id;
-                        console.log("clearUnreadMessages to: " + withUserId + " on id: " + connectionId1);
-                        break;
-                    }
-                }
             }
         }
 
@@ -284,9 +259,11 @@ export class UserService {
     }
 
     getMostRecentRead (fromEmail) {
-    // store locally
         var withUserId = this.checkValidUser(fromEmail);
-        if (withUserId == -1) return (0);
+        if (withUserId == -1) {
+          console.log("getMostRecentRead from: " + fromEmail + " invalid email");
+          return (0);
+        }
         var i;
         for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
             if (this.users[this.user.id - 1].connections[i].connectedUserId == withUserId) {
@@ -294,20 +271,6 @@ export class UserService {
                 return(this.users[this.user.id - 1].connections[i].mostRecentRead);
             }
         }
-            var item1;
-            var item2;
-            var j;
-            for (i = 0; i < this.users.length; i++) {
-                item1 = this.users[i];
-                for (j = 0; j < item1.connections.length; j++) {
-                    item2 = item1.connections[j];
-                    //console.log("incoming userId: " + userId + " item2.connectedUserId: " + item2.connectedUserId + " item2.user.id: " + item2.user.id + " this.user.id: " + this.user.id);
-                    if ((item2.connectedUserId == this.user.id) && (item2.user.id == withUserId)) {
-                        // console.log("getMostRecentRead from: " + withUserId + " on id: " +  " stamp: " + item2.mostRecentRead);
-                        return(item2.mostRecentRead);
-                    }
-                }
-            }
       console.log("getMostRecentRead from: " + withUserId + " on id: " +  " stamp: not found");
       return (0);
     }
@@ -325,24 +288,7 @@ export class UserService {
                 break;
             }
         }
-        if (connectionId1 == -1) { // must be in connection not setup by me
-            var item1;
-            var item2;
-            var j;
-            for (i = 0; i < this.users.length; i++) {
-                item1 = this.users[i];
-                for (j = 0; j < item1.connections.length; j++) {
-                    item2 = item1.connections[j];
-                    //console.log("incoming userId: " + userId + " item2.connectedUserId: " + item2.connectedUserId + " item2.user.id: " + item2.user.id + " this.user.id: " + this.user.id);
-                    if ((item2.connectedUserId == this.user.id) && (item2.user.id == withUserId)) {
-                        this.users[i].connections[j].mostRecentRead = mostRecentDateStamp;
-                        connectionId1 = this.users[i].connections[j].id;
-                        console.log("saveMostRecentRead to: " + withUserId + " on id: " + connectionId1 + " with: " + mostRecentDateStamp);
-                        break;
-                    }
-                }
-            }
-        }    
+   
         // save out using connection id
         if (connectionId1 != -1) {
             var payload = {mostRecentRead: JSON.stringify(mostRecentDateStamp)};
@@ -357,47 +303,55 @@ export class UserService {
                     }).catch(err => reject(err));
             });
             return promise;
-          }  
-
-    }
-
-
-    denyContact(user, id) {
-        // change staus to "Denied"
-        console.log("deny contact: " + id + " from user " + user);
-        //local
-        var i;
-        for (i = 0; i < this.users[user - 1].connections.length; i++) {
-            if (this.users[user - 1].connections[i].id == id) {
-                this.users[user - 1].connections[i].connectingStatus = "Denied";
+          }
+          else {
+              console.log("saveMostRecentRead: ERROR");
+              return (false);
             }
-        }
-        // write out
-        var promise = new Promise((resolve, reject) => {
-            this.http.fetch('/connection/denyContact/' + id, {
-                    method: 'post'
-                }).then(response => response.json())
-                .then(result => resolve(result));
-        });
-        return promise;
+
     }
 
-    deleteContact(user, id) {
+
+    deleteContact(user, id) { // id=contact id 
         console.log("delete contact: " + id + " from user " + user);
         // local
+        var connectedUserId;
         var i;
         for (i = 0; i < this.users[user - 1].connections.length; i++) {
             if (this.users[user - 1].connections[i].id == id) {
+              connectedUserId = this.users[user - 1].connections[i].connectedUserId;
                 this.users[user - 1].connections.splice(i, 1);
+                break;
             }
         }
+
         //write out
+        // make 2 calls because not sureif the standard delete should be used or not.
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/delete/' + id, {
                     method: 'post'
                 }).then(response => response.json())
                 .then(result => resolve(result));
         });
+        // 2nd fllipped 
+        var id2;
+        for (i = 0; i < this.users[connectedUserId - 1].connections.length; i++) {
+            if (this.users[connectedUserId - 1].connections[i].user.id == user) {
+                this.users[connectedUserId - 1].connections.splice(i, 1);
+                id2 = this.users[connectedUserId - 1].connections[i].id;
+                break;
+            }
+        }
+        //write out
+        // make 2 calls because not sureif the standard delete should be used or not.
+        promise = new Promise((resolve, reject) => {
+            this.http.fetch('/connection/delete/' + id2, {
+                    method: 'post'
+                }).then(response => response.json())
+                .then(result => resolve(result));
+        }); 
+
+        // not sure if I should serilize the deletes, lest's assue not for now.
         return promise;
     }
 
@@ -406,15 +360,27 @@ export class UserService {
         console.log("accept contact: " + id + " from user " + user);
         // local
         var i;
+        var connectedUserId;
+        var connectedConnId;
         for (i = 0; i < this.users[user - 1].connections.length; i++) {
             if (this.users[user - 1].connections[i].id == id) {
                 this.users[user - 1].connections[i].connectingStatus = "Accepted";
+                connectedUserId = this.users[user - 1].connections[i].connectedUserId;
+                break;
+            }
+        }
+        for (i = 0; i < this.users[connectedUserId -1].connections.length; i++) {
+            if (this.users[connectedUserId -1].connections[i].connectedUserId == user) {
+                this.users[connectedUserId -1].connections[i].connectingStatus = "Accepted";
+                connectedConnId = this.users[connectedUserId -1].connections[i].id;
+                break;
             }
         }
         //write out
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/acceptContact/' + id, {
-                    method: 'post'
+                    method: 'post',
+                    body: json({connectedConnId: connectedConnId})
                 }).then(response => response.json())
                 .then(result => resolve(result));
         });
