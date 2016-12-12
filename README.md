@@ -43,6 +43,32 @@ To setup the Development Environment:
 - from the src/main/webapp/ directory `jspm install <package>` if the package is not found, try with npm prefix `jspm install npm:<package>`
 
 
+
+# To Build and Deploy browse.pashiontool.com
+
+* Go into app.js and change:
+```
+ { route: ['', '/'],       name: 'index',       moduleId: 'index' },
+```
+  to
+```
+ { route: ['', '/'],       name: 'guestpage',       moduleId: 'guestpage' },
+```
+* from your gulp terminal run `gulp bundle`
+* from your grails terminal run `test war`
+* login to Amazon Web Services
+* Under Services (in header, left side), choose Elastic Beanstalk
+* Ensure that you are in the US East (North Virginia), (in header, right side)
+* Under the pashion-dev application, choose the pashion environment (the only green box on the screen, it should not say 'prod' anywhere)
+* In the center of the screen, under where it says 'Running Version', click on Upload and Deploy. Note the existing version number of the application.
+* Input a new version number by incrementing the last version number. Put this number into the Version Label.
+* Click on 'Choose File' and navigate to your pashion-web/build/libs directory.
+* Choose the 'pashion-web-0.1.war' file to upload.
+* wait for the upload and allow about two to five minutes on the deployment and then check the site from a browser.
+* The first time you access it, it might say 'Proxy Error'. Try again after two minutes.
+* Revert the app.js to its previous state (Ctrl-Z in Sublime)
+
+
 dev database on aws:
 user: pashionweb
 pass: ETWxa634WwxGaW6v
