@@ -91,6 +91,9 @@ dependencies {
     compile 'com.pubnub:pubnub:3.7.10'
 
 }
+war{
+    zip64 true
+}
 
 assets {
     minifyJs = true
