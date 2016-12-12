@@ -47,25 +47,9 @@ export class Zoom {
   }
 
   attached() {
- 
-
-    // Fit image to screen height
-
-    
-
     zoomSize();
+    $(window).on("resize",zoomSize);
 
-    window.addEventListener("resize", zoomSize, true);
-
-    // Close dialog when click outside
-    var controller = this.controller;
-
-    document.getElementsByTagName('ai-dialog-container')[0].onclick = function(e) {
-
-     if(e.target.id != 'imageZoom' & e.target.id != 'prev' & e.target.id != 'next') {
-      controller.close();
-     }
-    }
   }
 
 
@@ -141,6 +125,7 @@ export class Zoom {
 
 var zoomSize = function() {
       try{
+        console.log("resizing");
         var windowHeight = window.innerHeight;
         var windowWidth = window.innerWidth;                
         var imageHeight = document.getElementById('imageZoom').clientHeight;
