@@ -57,7 +57,7 @@ To setup the Development Environment:
  { route: ['', '/'],       name: 'guestpage',       moduleId: 'guestpage' },
 ```
 * from your gulp terminal run `gulp bundle`
-* from your grails terminal run `test war`
+* from your grails terminal run `war`
 * login to Amazon Web Services
 * Under Services (in header, left side), choose Elastic Beanstalk
 * Ensure that you are in the US East (North Virginia), (in header, right side)

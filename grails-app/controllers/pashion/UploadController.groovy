@@ -55,7 +55,7 @@ class UploadController {
                                     String color1       = row.values[5].toString().trim()
                                     String color2       = row.values[6].toString().trim()
                                     String color3       = row.values[7].toString().trim()
-                                    item.color          = color1 + " " + color2 + " "+ color3
+                                    item.color          = color1 + "," + color2 + ","+ color3
                                 
                                     item.material       = row.values[8].toString().trim()
                                     String type1         = row.values[9].toString().trim()
@@ -67,16 +67,16 @@ class UploadController {
                                     
                                     String style1       = row.values[12].toString().trim()
                                     String style2       = row.values[13].toString().trim()
-                                    item.style = style1 + " " + style2
+                                    item.style = style1 + "," + style2
                                     
                                     String motif1       = row.values[14].toString().trim()
                                     String motif2       = row.values[15].toString().trim()
                                     String motif3       = row.values[16].toString().trim()
-                                    item.motif = motif1 + " " + motif2 + " " + motif3
+                                    item.motif = motif1 + "," + motif2 + "," + motif3
 
                                     String theme1       = row.values[17].toString().trim()
                                     String theme2       = row.values[18].toString().trim()
-                                    item.theme = theme1 + " " + theme2 
+                                    item.theme = theme1 + "," + theme2 
 
                                     item.culture        = row.values[19].toString().trim()
                                     item.lookSeason     = row.values[20].toString().trim()
