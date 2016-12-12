@@ -43,13 +43,11 @@ export class Zoom {
   detached(){
     console.log("detached");
     $(window).off("resize", zoomSize);
-     //window.removeEventListener("resize", zoomSize(), true);
   }
 
   attached() {
     zoomSize();
     $(window).on("resize",zoomSize);
-
   }
 
 
@@ -71,7 +69,12 @@ export class Zoom {
     } else{
       console.log("else");
       this.itemNumber = 0;
-      this.rowNumber = this.rowNumber + 1;
+      if(this.rowNumber < this.rows.length-1){
+        this.rowNumber = this.rowNumber + 1;
+      } else {
+        this.rowNumber = 0
+      }
+
       let arow = this.rows[this.rowNumber];
       if(arow){
         
@@ -103,8 +106,12 @@ export class Zoom {
       console.log("image:"+this.image);
     } else{
       console.log("else");
-      
-      this.rowNumber = this.rowNumber - 1;
+      if(this.rowNumber > 0){
+        this.rowNumber = this.rowNumber - 1;
+      } else {
+        this.rowNumber = this.rows.length -1;
+      }
+
       let arow = this.rows[this.rowNumber];
       if(arow){
         
@@ -124,29 +131,29 @@ export class Zoom {
 }
 
 var zoomSize = function() {
-      try{
-        console.log("resizing");
-        var windowHeight = window.innerHeight;
-        var windowWidth = window.innerWidth;                
-        var imageHeight = document.getElementById('imageZoom').clientHeight;
-        var imageWidth = document.getElementById('imageZoom').clientWidth;
-        
-        document.getElementById('imageZoom').style.maxHeight= 'none';     
+    try{
+      console.log("resizing");
+      var windowHeight = window.innerHeight;
+      var windowWidth = window.innerWidth;                
+      var imageHeight = document.getElementById('imageZoom').clientHeight;
+      var imageWidth = document.getElementById('imageZoom').clientWidth;
+      
+      document.getElementById('imageZoom').style.maxHeight= 'none';     
 
-        if ( imageHeight < windowHeight*0.7 ) {
-          document.getElementById('imageZoom').style.maxHeight= windowHeight*0.75 +'px';     
-          document.getElementById('imageZoom').style.height= 'auto';  
-        } 
-        else {
-          document.getElementById('imageZoom').style.height= windowHeight*0.75 +'px';     
-         
-        }   
+      if ( imageHeight < windowHeight*0.7 ) {
+        document.getElementById('imageZoom').style.maxHeight= windowHeight*0.75 +'px';     
+        document.getElementById('imageZoom').style.height= 'auto';  
+      } 
+      else {
+        document.getElementById('imageZoom').style.height= windowHeight*0.75 +'px';     
+       
+      }   
 
-        if ( imageWidth > windowWidth*0.7) {
-          document.getElementById('imageZoom').style.maxHeight= windowHeight*0.75 +'px';     
-          document.getElementById('imageZoom').style.height= 'auto';  
-        } 
-      } catch(e){
-        console.error("Error in Zoom resize");
-      }    
-    }
+      if ( imageWidth > windowWidth*0.7) {
+        document.getElementById('imageZoom').style.maxHeight= windowHeight*0.75 +'px';     
+        document.getElementById('imageZoom').style.height= 'auto';  
+      } 
+    } catch(e){
+      console.error("Error in Zoom resize");
+    }    
+}
