@@ -42,7 +42,9 @@ To setup the Development Environment:
 
 - from the src/main/webapp/ directory `jspm install <package>` if the package is not found, try with npm prefix `jspm install npm:<package>`
 
-
+# Notes on app deployment
+* The aurelia app can be bundled for a faster application load.
+* The Stormpath library requires the Oracle JDK to support encryption. However, the default AMIs used in Elastic Beanstalk come with Open JDK. I have created a custom ami with Java 8 and an Elastic Beanstalk extention for setting the alternative JDK to support loading of the Stormpath library. The ami is name: java8_102_2nd_try, id: ami-600c5277.
 
 # To Build and Deploy browse.pashiontool.com
 
@@ -67,6 +69,7 @@ To setup the Development Environment:
 * wait for the upload and allow about two to five minutes on the deployment and then check the site from a browser.
 * The first time you access it, it might say 'Proxy Error'. Try again after two minutes.
 * Revert the app.js to its previous state (Ctrl-Z in Sublime)
+* run `gulp unbundle` in your gulp terminal to return to development mode. (then run `gulp watch`)
 
 
 dev database on aws:
