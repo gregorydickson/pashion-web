@@ -49,12 +49,21 @@ export class Guestpage {
     this.http = http;
     this.dialogService = dialogService;
     this.busy = busy;
+
+    this.boundHandler = this.handleKeyInput.bind(this);
   }
 
 
   attached(){
     this.filterChange();
+    document.getElementById('search-images').addEventListener('keypress', this.boundHandler, false);
   }
+
+  detached() {
+   window.removeEventListener('keypress', this.boundHandler);
+  }
+
+
 
   activate() {
     return Promise.all([
@@ -70,9 +79,6 @@ export class Guestpage {
     ]);
   }
 
-  deactivate() {
-   
-  }
 
   createZoomDialog(item,rowNumber,itemNumber) {
     console.log("item number :"+itemNumber);
@@ -89,6 +95,14 @@ export class Guestpage {
       .then(response => {
         menu.classList.toggle("blue-image");
       });
+  }
+
+    handleKeyInput(event) {
+   console.log(event);
+    if(event.which == 13 && event.srcElement.id === 'search-images') {
+      console.log("user hit enter");
+      this.filterChange(event);
+    }
   }
 
 
