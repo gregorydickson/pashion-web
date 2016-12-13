@@ -2,15 +2,16 @@
 <!--header.html-->
         <div class="">
             <ul class="menu-bar dark">
-                <li>
+                <li style="display:flex;">
                     <!-- <img  src="/assets/lauren.png" style="margin-right: 1rem;"/> -->
                     <img if.bind="(user.image)" src=${user.image} class="clip-circle contact-entry" />
                     <div if.bind="(!user.image)" style="margin-right: 1rem; margin-left:1rem; margin-top:1rem; " class="avatar-circle ">${user.name.charAt(0)}</div>
-                    <select value.bind="selectval" change.trigger="logout()" name="LAUREN" id="headerModeSelect" class="nav-label-header top-menu-modifier">
+                    <select value.bind="selectval" change.trigger="logout()" name="LAUREN" id="headerModeSelect" class="nav-label-header top-menu-modifier" style="max-width:150px;">
                         <option value="no">${user.name}</option>
                        <!-- <option value="guest">GUEST</option> -->
                         <option value= "logout">LOGOUT</option>
                     </select>
+                </li>
                     <li></li>
                     <li></li>
                     <li>
@@ -19,13 +20,13 @@
                     <li></li>
                     <li></li>
                     <li>
-                        <select value.bind="selectval" change.trigger="admin()" id="headerAdminSelect" class="nav-label-header top-menu-modifier">
+                        <select value.bind="selectval" change.trigger="admin()" id="headerAdminSelect" class="nav-label-header top-menu-modifier" style="max-width:175px; padding-right:0">
                             <option>DASHBOARD</option>
                             <option>ADMIN</option>
                            <!--  <option>TREND ANALYSIS</option> -->
                         </select>
                     </li>
-                </li>
+                
             </ul>
         </div>
 </template>
