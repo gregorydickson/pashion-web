@@ -73,9 +73,9 @@
 }
 
 .indigital-and-align {
-  position: relative;
-  // margin-top: -24px;
-  margin-left: 2px;
+  position: absolute;
+  bottom: 2px;
+  left: 2px; 
   width: 91px !important;
   height: auto;
 }

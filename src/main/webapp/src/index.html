@@ -426,12 +426,16 @@
                                 <!-- Main image -->
                                 <div id="card-${row.items[i].id}" class="card-image">
                                     
+                                    <img src.bind="row.items[i].image" ref="image" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"/>
 
-                                    <img src.bind="row.items[i].image" ref="image"  click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"/>
+                                    <div class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].id}</div>
+                                    <img src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align"/> 
+
+                                    <div class="card-hover-overlay" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"></div>
+
                                 </div>
 
-                                <div style="position:relative; margin-top:-55px;margin-left:2px;">Look &nbsp;${row.items[i].id}</div>
-                                <img src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align"/> 
+                                
                         </div>
 
                   
