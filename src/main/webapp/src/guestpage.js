@@ -27,6 +27,7 @@ export class Guestpage {
   
 
   filterChange(){
+    console.log("Filter change called: " + this.searchText);
     this.busy.on();
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 

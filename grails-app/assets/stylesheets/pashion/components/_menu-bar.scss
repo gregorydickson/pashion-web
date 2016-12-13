@@ -49,11 +49,11 @@ $menubar-icon-spacing: $menubar-item-padding !default;
   // Menu item
   > li {
     // This flex setting makes each item an equal width
-    flex: 1 0 0;
+    flex: 1 1 auto;
     align-items: center;
 
     // The list item itself is also a flex container, to center links in case they have different height
-    display: flex;
+    // display: flex;
     align-items: stretch;
 
     // Link inside menu item

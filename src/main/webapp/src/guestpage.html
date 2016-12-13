@@ -18,7 +18,7 @@
 
         <div class="grid-block" style="overflow:visible;">
 
-            <div id="" style="min-width: 100px; max-width: 100px;" class="vertical grid-block">
+            <div id="" style="min-width: 50px; max-width: 50px;" class="vertical grid-block">
             </div>
 
             <div class="grid-block shrink spa-v-spacer ">
@@ -30,17 +30,17 @@
             <div id="looks" class="vertical grid-block grid-block-vertical-shadow" style="overflow:hidden;">
                 <!-- search / filter area -->
                 <!-- top row -->
-                <div class="medium-up-1 align-center grid-block shrink" style="margin-top: 2.5rem;">
+                <div class="medium-up-1 align-center grid-block" style="margin-top: 2.5rem;">
                     <!-- Search -->
                     <div class="grid-content shrink">
-                        <input type="search" search.delegate="filterChange()" value.bind="searchText" class="search-box" id="search-images" placeholder="Enter keyword">
+                        <input style="min-width: 150px;" type="search" search.delegate="filterChange()" value.bind="searchText" class="search-box" id="search-images" placeholder="Enter keyword">
                     </div>
 
                     <!-- Brand -->
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Designer</span>
-                        <select name="" id="" value.two-way="selectedBrand" change.delegate="filterChange()">
+                        <select style="min-width: 150px;" name="" id="" value.two-way="selectedBrand" change.delegate="filterChange()">
                             <option value="">Choose</option>
                             <option value="All">All</option>
                             <option repeat.for="brandVar of brands" model.bind="brandVar.id">${brandVar.name}</option>
@@ -52,7 +52,7 @@
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Season</span>
-                        <select name="" id="" value.bind="selectedSeason" change.delegate="filterChange()">
+                        <select style="min-width: 150px;" name="" id="" value.bind="selectedSeason" change.delegate="filterChange()">
                             <option value="">Choose</option>
                             <option value="All">All</option>
                             <option repeat.for="season of seasons" model.bind="season">${season}</option>
@@ -60,17 +60,17 @@
                         </span>
                     </div>
 
-                    <!-- theme -->
+                    <!-- theme 
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Theme</span>
-                        <select value.bind="selectedTheme" change.delegate="filterChange()">
+                        <select style="min-width: 150px;" value.bind="selectedTheme" change.delegate="filterChange()">
                             <option value="">Choose</option>
                             <option value="All">All</option>
                             <option repeat.for="theme of themes" model.bind="theme">${theme}</option>
                         </select>
                         </span>
-                    </div>
+                    </div> -->
                 </div>                
                 
                 <!-- Images/Looks -->
@@ -95,7 +95,7 @@
                 </div>
             </div>
 
-            <div id="" style="min-width: 100px; max-width: 100px;" class="vertical grid-block">
+            <div id="" style="min-width: 50px; max-width: 50px;" class="vertical grid-block">
             </div>
 
             <div class="grid-block shrink spa-v-spacer ">

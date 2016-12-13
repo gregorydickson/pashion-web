@@ -294,7 +294,8 @@ $meter-radius: 0 !default;
     padding-top: 5px;
 
     @if $select-arrow {
-      background: $select-background url(image-triangle($select-arrow-color)) right 10px center no-repeat;
+      // background: $select-background url(image-triangle($select-arrow-color)) right 10px center no-repeat;
+      background: $select-background url('/assets/nav/downArrow.png') right 10px center no-repeat;
       background-size: 8px 8px;
       padding-right: rem-calc(18px) + $form-padding;
     }
