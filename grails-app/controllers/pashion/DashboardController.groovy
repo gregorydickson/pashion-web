@@ -4,7 +4,9 @@ import grails.converters.JSON
 import java.util.concurrent.ThreadLocalRandom
 
 class DashboardController {
-    static scope = "singleton"
+    static scope = "session"
+
+    def cachingService
 
     def index() {
     }
@@ -66,16 +68,7 @@ class DashboardController {
     }
 
     def themes(){
-        def list = ['ALIEN','ALPINA','ANDROGYNE','ANDROGYNOUS','ANIMAL','ARCHITECTURE',
-                    'ARMY','ART','AVIATION','AVIATOR','BABY','BALLET','BARBIE','BAROQUE',
-                    'BOARD','BOMBER','BOUDOIR','BRIDAL','CABLE','CIRCUS','CLEAVAGE',
-                    'CLUELESS','COWBOY','DISCO','DOLL','DOMINATRIX','FAIRY','FAIRYTALE',
-                    'FISHNET','FLORAL','FLOWER','FUTURIST','FUTURISTIC','GRAPHIC','HUNT',
-                    'JAMES BOND','JUNGLE','MANGA','MUSIC','NATURE','NAUTICAL','NAVY',
-                    'OLYMPIC','OPULENT','POP','POWER','PRINCESS','PSYCHEDELIC','PURE',
-                    'RETRO','ROBOT','ROYAL','S&M','SAFARI','SALSA','SCHOOL','SEA','SEXY',
-                    'SPACE','STAR','STUDIO 54','TEXTURE','TRANSPARENT','TROPICAL','TUDOR',
-                    'UTILITY','VICTORIAN','VINYL','WARRIOR','WESTERN','ZIGGY'] as JSON
+        def list = cachingService.themes() 
         render list
     }
 

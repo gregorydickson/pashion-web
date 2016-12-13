@@ -55,6 +55,7 @@ class SearchableItemController {
         log.info "keywords:"+keywords
         log.info "season:"+season
         log.info "type:"+type
+        log.info "theme:"+theme
         log.info "availableFrom:"+availableFrom
         log.info "availableTo:"+ availableTo
         def criteria = SearchableItem.createCriteria()
@@ -64,7 +65,7 @@ class SearchableItemController {
                 log.info "image:"+'image'
                 isNotNull('image')
                 if(brand) eq('brand', brand)
-                if(theme) eq('theme', theme)
+                if(theme) ilike('theme', '%'+theme+'%')
                 if(keywords) and {
                     keywords.each {  ilike('attributes', '%'+it+'%') }
                 }
