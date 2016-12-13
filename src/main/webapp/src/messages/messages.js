@@ -96,11 +96,12 @@ export class Messages {
                 // kludge with combination of combination of HTML + current user
                 // if the message tab is open and fromId == current user then don't add up the messages.
                 if (receivedMessage.toId == parent.user.email) {
-                    //var tabShowing = document.getElementById('tab-messages');
+                    //check to see if we are in a conversation with this user and if so do not update the count
                     var tabShowing = $('#tab-messages');
                     var hasTabShowing = tabShowing.hasClass('look-menu-show');
                     if (hasTabShowing && (parent.currentContact.email == receivedMessage.fromId)) {}//nothing
-                    else parent.userService.addMessageCount(receivedMessage.fromId);
+                        // push message count to server
+                    else parent.userService.addMessageCount(receivedMessage.fromId, true);
                     }
                 $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
             },
@@ -151,7 +152,8 @@ export class Messages {
                       // console.log("response timestamp: "+ parseInt(response.messages[i].timetoken));
                       if (parseInt(response.messages[i].timetoken) > parseInt(parent.userService.getMostRecentRead (response.messages[i].entry.fromId))) {
                             console.log("response timestamp > mostrecent read stamp");
-                            parent.userService.addMessageCount(response.messages[i].entry.fromId);
+                            // do not push to server, use flushConnectionsData instead
+                            parent.userService.addMessageCount(response.messages[i].entry.fromId, false);
                       }
                     }
                 }

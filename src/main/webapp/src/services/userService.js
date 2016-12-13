@@ -55,8 +55,6 @@ export class UserService {
     }
 
     // Updates the server with the current copies of all the connections 
-    // ideally should only update for this user, but brute force should be ok IFF all users' 
-    // data is kept flushed and updated. 
     // Has potential for lots of flush/uploading that is irrelevant
     // used to update the server when finished updating the connections with history from pubnub
     // only in case users gets reloaded while we are in session. IE keep the server matched to the internal strucutre
@@ -181,40 +179,43 @@ export class UserService {
 
     }
 
-    // from pubnub real-time and history
+    // from pubnub real-time only and not history
+    // history sets pushToServer as false and uses flushConnectionsData
     // only messages to or from this email user are sent.
-    // server is updated in bulk one time when finished
-    addMessageCount(fromEmail) { // add 1 to the count
+    addMessageCount(fromEmail, pushToServer) { // add 1 to the count
         // get id for email;
         var fromUserId = this.checkValidUser(fromEmail);
-        console.log("Update message count from: " + fromEmail + " id: " + fromUserId);
+        var connectionId=-1;
+        console.log("Update message count from:" + fromEmail + " id:" + fromUserId);
 
         var i;
         for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
             if (this.users[this.user.id - 1].connections[i].connectedUserId == fromUserId) {
                 console.log("addMessageCount actually added to users from: " + fromUserId + " to: " + this.user.id);
                 this.users[this.user.id - 1].connections[i].numberNewMessages++;
+                connectionId = this.users[this.user.id - 1].connections[i].id;
                 break;
             }
         }
 
-        /*
-        Not sure if we have to save new messages to the server or not, as it is a transient value used in a local session and filterd on date.
-        if we do then make sure all users of addMessageCount (message.js) have .then pattern
+        
+       /* Not sure if we have to save new messages to the server or not, as it is a transient value used in a local session and filterd on date.
+        if we do, then make sure all users of addMessageCount (message.js) have .then pattern */
         
         // save out using connection id
-        if (connectionId != -1) {
+        if (pushToServer && (connectionId != -1)) {
+            console.log("pushing message count to server for: " + fromEmail + " user id: " + fromUserId + " in connections id: " + connectionId);
             var promise = new Promise((resolve, reject) => {
                 this.http.fetch('/connection/addMessageCount/' + connectionId, {
                         method: 'post'
                     })
                     .then(response => response.json())
                     .then(result => {
-                        console.log("addMessageCount:" + result.message);
+                        console.log("fetch addMessageCount:" + result.message);
                     }).catch(err => reject(err));
             });
             return promise;
-          }  */ 
+          }   
     }
 
     clearAllUnreadMessagesForTheCurrentUser (){
