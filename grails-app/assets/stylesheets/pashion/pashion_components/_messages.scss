@@ -29,13 +29,13 @@ $message-box-width: 215px;
   text-align: right;
   border: 1px solid $white-three;
   position: relative;
-  margin-right: 4px;
+  margin-right: 10px;
 }
 
 .message-me-box:after,
 .message-me-box:before {
   left: 100%;
-  top: 1rem;
+  top: 1.5rem;
   border: solid transparent;
   content: " ";
   height: 0;
@@ -47,15 +47,15 @@ $message-box-width: 215px;
 .message-me-box:after {
   border-color: transparent;
   border-left-color: $white-three;
-  border-width: 4px;
-  margin-top: -4px;
+  border-width: 7px;
+  margin-top: -7px;
 }
 
 .message-me-box:before {
   border-color: transparent;
   border-left-color: $white-three;
-  border-width: 5px;
-  margin-top: -5px;
+  border-width: 8px;
+  margin-top: -8px;
 }
 
 .message-not-me-box {
@@ -63,13 +63,13 @@ $message-box-width: 215px;
   border: 1px $white-two solid;
   text-align: left;
   position: relative;
-  margin-left: 4px;
+  margin-left: 10px;
 }
 
 .message-not-me-box:after,
 .message-not-me-box:before {
   right: 100%;
-  top: 1rem;
+  top: 1.5rem;
   border: solid transparent;
   content: " ";
   height: 0;
@@ -81,15 +81,15 @@ $message-box-width: 215px;
 .message-not-me-box:after {
   border-color: transparent;
   border-right-color: $white-two;
-  border-width: 4px;
-  margin-top: -4px;
+  border-width: 7px;
+  margin-top: -7px;
 }
 
 .message-not-me-box:before {
   border-color: transparent;
   border-right-color: $white-two;
-  border-width: 5px;
-  margin-top: -5px;
+  border-width: 8px;
+  margin-top: -8px;
 }
 
 .message-text {
