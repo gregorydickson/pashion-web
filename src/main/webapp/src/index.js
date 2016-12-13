@@ -79,8 +79,24 @@ export class Index {
 
   }
 
+  //activate() is called before attached()
+  activate() {
+    
+    
+    return Promise.all([
+      this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
+      this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes),
+      this.http.fetch('/brand/index.json').then(response => response.json()).then(brands => this.brands = brands),
+      this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors),
+      this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings),
+      this.user = this.userService.getUser().then(user => {
+        this.user = user;
+        if (this.user.type ==="guest") window.location.href = '/user/login';
+      })
 
-  attached(){
+    ]);
+  }
+  attached () {
     this.subscriber = this.ea.subscribe('datepicker', response => {
             if(response.elementId === 'datepickerto')
               this.availableTo = response.elementValue;
@@ -121,25 +137,6 @@ export class Index {
         }
       });
 
-  }
-  //activate() is called before attached()
-  activate() {
-    
-    
-    return Promise.all([
-      this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
-      this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes),
-      this.http.fetch('/brand/index.json').then(response => response.json()).then(brands => this.brands = brands),
-      this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors),
-      this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings),
-      this.user = this.userService.getUser().then(user => {
-        this.user = user;
-        if (this.user.type ==="guest") window.location.href = '/user/login';
-      })
-
-    ]);
-  }
-  attached () {
     document.getElementById('search-images').addEventListener('keypress', this.boundHandler, false);
   }
   detached() {
