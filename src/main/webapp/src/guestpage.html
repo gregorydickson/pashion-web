@@ -54,7 +54,7 @@
                             <span class="form-label">Season</span>
                         <select style="min-width: 150px;" name="" id="" value.bind="selectedSeason" change.delegate="filterChange()">
                             <option value="">Choose</option>
-                            <option value="All">All</option>
+                            <option value="">All</option>
                             <option repeat.for="season of seasons" model.bind="season">${season}</option>
                         </select>
                         </span>
@@ -66,7 +66,7 @@
                             <span class="form-label">Theme</span>
                         <select style="min-width: 150px;" value.bind="selectedTheme" change.delegate="filterChange()">
                             <option value="">Choose</option>
-                            <option value="All">All</option>
+                            <option value="">All</option>
                             <option repeat.for="theme of themes" model.bind="theme">${theme}</option>
                         </select>
                         </span>

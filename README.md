@@ -34,7 +34,7 @@ To setup the Development Environment:
 
 * The application uses a development database on Amazon AWS which will require internet connectivity. If this is too slow then you can setup MySQL locally.
 
-# Install a javascript package
+## Install a javascript package
 
 * We are using jspm and System.js to install and load javascript modules
 
@@ -42,11 +42,11 @@ To setup the Development Environment:
 
 - from the src/main/webapp/ directory `jspm install <package>` if the package is not found, try with npm prefix `jspm install npm:<package>`
 
-# Notes on app deployment
+## Notes on app deployment
 * The aurelia app can be bundled for a faster application load.
 * The Stormpath library requires the Oracle JDK to support encryption. However, the default AMIs used in Elastic Beanstalk come with Open JDK. I have created a custom ami with Java 8 and an Elastic Beanstalk extention for setting the alternative JDK to support loading of the Stormpath library. The ami is name: java8_102_2nd_try, id: ami-600c5277.
 
-# To Build and Deploy browse.pashiontool.com
+## To Build and Deploy browse.pashiontool.com
 
 * Go into app.js and change:
 ```
@@ -71,7 +71,33 @@ To setup the Development Environment:
 * Revert the app.js to its previous state (Ctrl-Z in Sublime)
 * run `gulp unbundle` in your gulp terminal to return to development mode. (then run `gulp watch`)
 
+## Deployment of the application
 
-dev database on aws:
+### Notes 
+* A custom Amazon Machine Image is required to run the application. This is because the default AMIs come with Open JDK. The StormPath JDK requires Oracle JDK: 
+https://github.com/stormpath/stormpath-sdk-java/issues/17
+* One custom AMI has been created and is in the US East and London regions. FYI, you can copy AMIs from region to region. And you have to in order to use them in other regions. http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/CopyingAMIs.html
+* Instructions on using the Custom AMI in Elasti Beanstalk: http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.managing.ec2.html
+* AMI ID: ami-06d1db62 (java8_102_2nd_try)
+* An elastic beanstalk extension is in src/main/webapp/.ebextensions that sets the Oracle JDK as the primary JDK in the machine image.
+* The curent AMI is one that requires a certain type of virtualization. An ec2 m1-small works but the m1 types are only available in certain regions.
+
+### To deploy the application
+* from your gulp terminal run `gulp bundle` (This is optional)
+* from your grails terminal run `war`
+* login to Amazon Web Services
+* Under Services (in header, left side), choose Elastic Beanstalk
+* Ensure that you are in London region, (in header, right side)
+* Under the pashion-spa application, choose the pashion-spa environment (the only green box on the screen, it should not say 'prod' anywhere)
+* In the center of the screen, under where it says 'Running Version', click on Upload and Deploy. Note the existing version number of the application.
+* Input a new version number by incrementing the last version number. Put this number into the Version Label.
+* Click on 'Choose File' and navigate to your pashion-web/build/libs directory.
+* Choose the 'pashion-web-0.1.war' file to upload.
+* wait for the upload and allow about two to five minutes on the deployment and then check the site from a browser.
+* The first time you access it, it might say 'Proxy Error'. Try again after two minutes.
+* If you bundled the application in the first step, run `gulp unbundle` in your gulp terminal to return to development mode. (then run `gulp watch`)
+
+
+## dev database on aws
 user: pashionweb
 pass: ETWxa634WwxGaW6v
