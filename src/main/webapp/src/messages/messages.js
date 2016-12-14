@@ -166,7 +166,13 @@ export class Messages {
           console.log("user hit enter in comms");
           this.sendMessage();
         }
-      }
+    }
+
+    isDateToday(dateIn) {
+        var timeNow = new Date();
+        var dateDateIn = new Date (dateIn);
+        return (dateDateIn.getDate() == timeNow.getDate());
+    }
 
     sendMessage() {
         //console.log("Sendmessage from my id:" + this.user.id + " email:" + this.user.email +
