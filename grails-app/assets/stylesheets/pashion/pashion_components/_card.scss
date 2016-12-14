@@ -13,18 +13,19 @@
 
 .cards-list {
 	.card {
-		// width: 20%;
 		margin-bottom: 0;
 		position: relative;
+		overflow: visible; 
 	}
+
 	.card-image-name {
 		position: absolute;
 		top: 5px;
 		left: 10px;
 		z-index: 1;
 		width: calc(100% - 53px);
-		text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-		text-transform: capitalize; 
+		text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+		text-transform: capitalize;
 		font-size: $font-size-large;
 		font-weight: 500;
 	}
@@ -37,14 +38,53 @@
 		bottom: 0;
 	}
 
-	
-
 	.card-image {
 		position: relative;
+		cursor: pointer; 
 	}
 
-	.card-image:hover {
-		cursor: pointer;
-	}
 
+}
+
+.card-hover-overlay {
+	display: none;
+	background: rgba(0, 0, 0, 0.5);
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	cursor: pointer;
+}
+
+.card-image:hover .card-hover-overlay {
+	display: block;
+}
+
+.card-look-number {
+	position: absolute;
+	right: 5px;
+	bottom: 1px;
+	color: $pinkish-grey;
+	
+	cursor: pointer;
+}
+
+.card-image:hover .card-look-number {
+	color: $white-two;
+	font-size: $font-size-e-extra-large;
+	line-height: $font-size-e-extra-large;
+	width: 100%;
+	text-align: center;
+	top: calc(50% - 0.86rem);
+	z-index: 2;
+	right: auto;
+	bottom: auto; 
+}
+.card-image:hover .indigital-and-align{
+	display: none; 
+}
+.card .look-menu-click {
+	z-index: 3; 
 }

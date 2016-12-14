@@ -1,10 +1,9 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-fetch-client';
-import {EventAggregator} from 'aurelia-event-aggregator';
 import 'fetch';
 
 
-@inject(HttpClient, EventAggregator)
+@inject(HttpClient)
 @customElement('filters-available-to')
 
 export class filtersAvailableTo {
