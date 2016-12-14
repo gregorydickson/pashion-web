@@ -71,7 +71,7 @@ To setup the Development Environment:
 * Revert the app.js to its previous state (Ctrl-Z in Sublime)
 * run `gulp unbundle` in your gulp terminal to return to development mode. (then run `gulp watch`)
 
-## Deployment of the application
+## Deployment of the Single Page Application on http://pashion-spa.eu-west-1.elasticbeanstalk.com/
 
 ### Notes 
 * A custom Amazon Machine Image is required to run the application. This is because the default AMIs come with Open JDK. The StormPath JDK requires Oracle JDK: 
@@ -84,11 +84,11 @@ https://github.com/stormpath/stormpath-sdk-java/issues/17
 
 ### To deploy the application
 * from your gulp terminal run `gulp bundle` (This is optional)
-* from your grails terminal run `war`
+* from your grails terminal run `test war`
 * login to Amazon Web Services
 * Under Services (in header, left side), choose Elastic Beanstalk
-* Ensure that you are in London region, (in header, right side)
-* Under the pashion-spa application, choose the pashion-spa environment (the only green box on the screen, it should not say 'prod' anywhere)
+* Ensure that you are in Ireland region, (in header, right side)
+* Under the pashion-spa application, choose the pashion-spa environment
 * In the center of the screen, under where it says 'Running Version', click on Upload and Deploy. Note the existing version number of the application.
 * Input a new version number by incrementing the last version number. Put this number into the Version Label.
 * Click on 'Choose File' and navigate to your pashion-web/build/libs directory.
