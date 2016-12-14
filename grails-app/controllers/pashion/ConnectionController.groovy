@@ -4,10 +4,14 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.converters.JSON
 
+import com.pubnub.api.*
+
 @Transactional(readOnly = true)
 class ConnectionController {
 
     // static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
+    Pubnub pubnub = new Pubnub("pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73", "sub-c-dd158aea-b76b-11e6-b38f-02ee2ddab7fe")
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -53,6 +57,47 @@ class ConnectionController {
 
         def connectionString  = 'connection accepted'
         def sent = [message:connectionString]
+        // invalidate cache here
+        
+        Callback callback=new Callback() {
+        /*
+            connectCallback(String channel, Object message) {
+ 
+                log.info "pubnub call back success from acceptContact"
+             
+            }
+ 
+            def disconnectCallback(String channel, Object message) {
+ 
+                log.info "pubnub call back success from acceptContact"
+             
+            }
+             
+            def reconnectCallback(String channel, Object message) {
+             
+                log.info "pubnub call back success from acceptContact"
+             
+            }
+             
+            def successCallback(String channel, Object message) {
+             
+                log.info "pubnub call back success from acceptContact"
+             
+            }
+             
+            def errorCallback(String channel, PubnubError error) {
+             
+                log.info "pubnub call back success from acceptContact"
+             
+            }  
+        */
+        }
+        //
+        def channel = jsonObject.fromEmail + '_cacheInvalidate'
+        log.info "send invalidate on:" + channel
+        pubnub.publish(channel, "refresh the cache please" , callback)
+
+
         render sent as JSON
     }
 
@@ -80,6 +125,7 @@ class ConnectionController {
         con2.save(flush:true, failOnError:true)
 
         def sent = [message:'contact request sent'] 
+        // invalidate cache here
         render sent as JSON
     }
 
@@ -138,7 +184,7 @@ class ConnectionController {
             respond connection.errors, view:'create'
             return
         }
-
+        // invalidate cache here
         connection.save flush:true
 
         request.withFormat {
@@ -167,7 +213,7 @@ class ConnectionController {
             respond connection.errors, view:'edit'
             return
         }
-
+        // invalidate cache here
         connection.save flush:true
 
         request.withFormat {
@@ -198,7 +244,7 @@ class ConnectionController {
             }
             '*'{ render status: NO_CONTENT }
         }
-
+        // invalidate cache here
         def sent = [message:'contact request deleted']
         render sent as JSON
     }

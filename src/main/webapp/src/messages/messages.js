@@ -52,7 +52,6 @@ export class Messages {
         });
         
 
-        //pubnub listener
         var parent = this;
 
         this.pubnub.time(function(status, response) {
@@ -65,6 +64,7 @@ export class Messages {
             }
         });
 
+        //pubnub messages listener
         this.pubnub.addListener({
 
             message: function(m) {
@@ -75,46 +75,61 @@ export class Messages {
                 var receivedMessage = m.message; // The Payload
                 console.log("pubnub new nessage:", receivedMessage);
 
-                parent.messages.push({ // unshift?
-                    text: receivedMessage.text,
-                    time: receivedMessage.sentAt,
-                    image: '',
-                    fromName: receivedMessage.fromName,
-                    fromSurname: receivedMessage.fromSurname,
-                    fromId: receivedMessage.fromId,
-                    toName: receivedMessage.toName,
-                    toSurname: receivedMessage.toSurname,
-                    toId: receivedMessage.toId,
-                    toMe: (receivedMessage.toId == parent.user.email),
-                    fromMe: (receivedMessage.fromId == parent.user.email)
-                });
+                if (channelName == parent.user.email) {
+                    parent.messages.push({ // unshift?
+                        text: receivedMessage.text,
+                        time: receivedMessage.sentAt,
+                        image: '',
+                        fromName: receivedMessage.fromName,
+                        fromSurname: receivedMessage.fromSurname,
+                        fromId: receivedMessage.fromId,
+                        toName: receivedMessage.toName,
+                        toSurname: receivedMessage.toSurname,
+                        toId: receivedMessage.toId,
+                        toMe: (receivedMessage.toId == parent.user.email),
+                        fromMe: (receivedMessage.fromId == parent.user.email)
+                    });
 
-                // get messages in real time 
-                // RM but filter on date/time stamp of last view
-                // only counting messages from others
-                // but need to not add to count if the user is viewing this message stream
-                // kludge with combination of combination of HTML + current user
-                // if the message tab is open and fromId == current user then don't add up the messages.
-                if (receivedMessage.toId == parent.user.email) {
-                    //check to see if we are in a conversation with this user and if so do not update the count
-                    var tabShowing = $('#tab-messages');
-                    var hasTabShowing = tabShowing.hasClass('look-menu-show');
-                    if (hasTabShowing && (parent.currentContact.email == receivedMessage.fromId)) {}//nothing
-                        // push message count to server
-                    else parent.userService.addMessageCount(receivedMessage.fromId, true);
-                    }
-                $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
+                    // get messages in real time 
+                    // but need to not add to count if the user is viewing this message stream
+                    // kludge with combination of combination of HTML + current user
+                    // if the message tab is open and fromId == current user then don't add up the messages.
+                    if (receivedMessage.toId == parent.user.email) {
+                        //check to see if we are in a conversation with this user and if so do not update the count
+                        var tabShowing = $('#tab-messages');
+                        var hasTabShowing = tabShowing.hasClass('look-menu-show');
+                        if (hasTabShowing && (parent.currentContact.email == receivedMessage.fromId)) {}//nothing
+                            // push message count to server
+                        else parent.userService.addMessageCount(receivedMessage.fromId, true);
+                        }
+                    $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
+                }
+                 else if (channelName == parent.user.email + "_cacheInvalidate") {
+                    console.log ("cache invalidate for user:"+ parent.user.email);
+                    parent.userService.getUsers(true); //update data structure 
+                 }
             },
             status: function(s) {
                 console.log("pubnub callback status:", s);
             }
         });
 
-        // pubnub subscribe to channels
+        // pubnub subscribe to messages channel for this email
         this.pubnub.subscribe({
             channels: [ this.user.email ], // ['my_channel'],
             withPresence: true // also subscribe to presence instances.
         });
+
+        // pubnub subscribe to cache channel for this email
+        // strictly perhaps should not be in this model, as only affects users, but seemed
+        // convenietnt to put it here with the other listeners.
+        this.pubnub.subscribe({
+            channels: [ this.user.email + "_cacheInvalidate" ], 
+            withPresence: true // also subscribe to presence instances.
+        });
+
+
+
 
         //get the history callback for this channel
         var getAllMessages = function (timetoken) {
@@ -165,7 +180,7 @@ export class Messages {
             }
           );
         }
-        // clear out the previous values 
+        // clear out the previous values, since we are reading them from history on pubnub server 
         this.userService.clearAllUnreadMessagesForTheCurrentUser();
         // recursive call to get all messages for the current user
         getAllMessages(0); 
@@ -199,7 +214,7 @@ export class Messages {
         // clear the input field
         $('#msgInput').val("");
 
-        //pubnub to user and contact channels
+        //pubnub to user and contact user's channels
         this.pubnub.publish({
                 message: message,
                 channel: this.user.email,

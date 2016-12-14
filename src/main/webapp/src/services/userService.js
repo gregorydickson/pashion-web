@@ -363,10 +363,12 @@ export class UserService {
         var i;
         var connectedUserId;
         var connectedConnId;
+        var connectedEmail;
         for (i = 0; i < this.users[user - 1].connections.length; i++) {
             if (this.users[user - 1].connections[i].id == id) {
                 this.users[user - 1].connections[i].connectingStatus = "Accepted";
                 connectedUserId = this.users[user - 1].connections[i].connectedUserId;
+                connectedEmail=this.users[connectedUserId -1].email;
                 break;
             }
         }
@@ -378,10 +380,11 @@ export class UserService {
             }
         }
         //write out
+        var parent = this;
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/acceptContact/' + id, {
                     method: 'post',
-                    body: json({connectedConnId: connectedConnId})
+                    body: json({connectedConnId: connectedConnId, fromEmail: connectedEmail})
                 }).then(response => response.json())
                 .then(result => resolve(result));
         });
