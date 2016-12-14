@@ -7,7 +7,7 @@
         </div>
     </div>
     <!-- Main building block -->
-    <div class="vertical grid-block spa-background">
+    <div id="visNeeded2" class="vertical grid-block spa-background IEVisibility" >
 
         <!-- guest header 
         <compose view-model="guestheader" style="min-height:79px;"></compose> 
@@ -33,7 +33,7 @@
                 <div class="medium-up-1 align-center grid-block" style="margin-top: 2.5rem;">
                     <!-- Search -->
                     <div class="grid-content shrink">
-                        <input style="min-width: 150px;" type="search" search.delegate="filterChange()" value.bind="searchText" class="search-box" id="search-images" placeholder="Enter keyword">
+                        <input style="min-width: 150px;" type="search"  value.bind="searchText" class="search-box" id="search-images" placeholder="Enter keyword">
                     </div>
 
                     <!-- Brand -->
@@ -60,7 +60,7 @@
                         </span>
                     </div>
 
-                    <!-- theme 
+                    <!-- theme -->
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Theme</span>
@@ -70,7 +70,7 @@
                             <option repeat.for="theme of themes" model.bind="theme">${theme}</option>
                         </select>
                         </span>
-                    </div> -->
+                    </div>
                 </div>                
                 
                 <!-- Images/Looks -->

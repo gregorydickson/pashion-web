@@ -439,3 +439,19 @@ filters-type,
 filters-city {
   width: 100%;
 }
+
+// IE 11 hack for wrong detection of page hiegh and grid
+//RM
+// Affect appearance of shadow on main page load 
+
+.IEVisibility {
+  // this is for non IE 
+  overflow: visible;
+}
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  // for IE
+   div#visNeeded {overflow:hidden;}
+   div#visNeeded2 {overflow:hidden;}
+   div#looks {max-height:85vh;}
+}

@@ -9,9 +9,14 @@
         <div class="grid-block shrink spa-v-spacer ">
         </div>
         <!-- main body block -->
-        <div class="grid-block" style="overflow:visible;">
+        <div id="visNeeded" class="grid-block IEVisibility"> <!-- RM changed from visible to hidden to get guest page to work -->
+        <!-- RM hack for IE not constraining grid frame -->
             <!-- Main Body -->
-            <router-view class="grid-block" style="overflow:visible;"></router-view>
+            
+
+            <router-view class="grid-block " style="overflow:visible;"></router-view> 
+
+
             <!-- spacer -->
             <div class="grid-block shrink spa-h-spacer">
             </div>
