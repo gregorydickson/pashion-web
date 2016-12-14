@@ -107,7 +107,11 @@ class DashboardController {
     }
     def seasons(){
         
-        def seasons = Season.list().collect{it.name} as JSON
+        def seasons = cachingService.seasons()
+
+        if(!seasons)
+            seasons = Season.list().collect{it.name} as JSON
+
         render seasons
     }
 

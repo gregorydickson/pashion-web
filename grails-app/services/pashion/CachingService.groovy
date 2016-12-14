@@ -32,26 +32,41 @@ class CachingService {
         }
         themes
     }
+    def seasons(){
+        if(!seasons){
+            def result = loadSeasons()
+            seasons = result
+            return result
+        }
+        seasons
+    }
 
     def loadThemes(){
         
-            def items = SearchableItem.list().collect{it.theme}
-            def result = []
-            items.each{
-                if(it){
-                    if(it.contains(",")){
-                        it.split(",").each{result << it.trim().toUpperCase()}
-                    } else{
-                        result << it.trim().toUpperCase()
-                    }
+        def items = SearchableItem.list().collect{it.theme}
+        def result = []
+        items.each{
+            if(it){
+                if(it.contains(",")){
+                    it.split(",").each{result << it.trim().toUpperCase()}
+                } else{
+                    result << it.trim().toUpperCase()
                 }
             }
-            result = result.unique()
-            result.removeAll([""])
-            return result as JSON
-
+        }
+        result = result.unique()
+        result.removeAll([""])
+        return result as JSON
     }
 
+    def loadSeasons(){
+        List items = SearchableItem.list().collect{it.season.name}
+
+        items.unique()
+        log.info"seasons"+items
+        return items as JSON
+
+    }
 
     
 
