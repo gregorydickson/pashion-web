@@ -165,10 +165,11 @@ export class UserService {
         this.users[this.user.id - 1].connections.push(conn1);
         this.users[idIn - 1].connections.push(conn2);
         // save out
+        var connectedEmail=this.users[idIn -1].email;
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/addContactRequest/', {
                     method: 'post',
-                    body: json({user1: conn1, user2:conn2}) // 
+                    body: json({user1: conn1, user2:conn2, fromEmail: connectedEmail}) // 
                 })
                 .then(response => response.json())
                 .then(result => {
@@ -313,6 +314,8 @@ export class UserService {
     }
 
 
+
+    //RM need to check this code carefully as not kept up to date
     deleteContact(user, id) { // id=contact id 
         console.log("delete contact: " + id + " from user " + user);
         // local

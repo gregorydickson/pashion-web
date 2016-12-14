@@ -6,7 +6,7 @@ import { UserService } from 'services/userService';
 import { singleton } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 
-@inject(HttpClient, UserService, EventAggregator)
+@inject(HttpClient, UserService, EventAggregator) 
 @singleton()
 export class Messages {
 
@@ -14,12 +14,11 @@ export class Messages {
     user = {};
     currentContact = {};
     searchTerm = ''; // hard wired search goes here
-    currentPNTime;
 
     //pubnub
     pubnub;
 
-    constructor(http, userService, eventAggregator) {
+    constructor(http, userService, eventAggregator) {  
       this.http = http;
       this.userService = userService;
       this.user = this.userService.getUser().then(user => this.user = user);
@@ -54,16 +53,6 @@ export class Messages {
 
         var parent = this;
 
-        this.pubnub.time(function(status, response) {
-            if (status.error) {
-                console.log("pubnub time error")
-                // handle error if something went wrong based on the status object
-            } else {
-                console.log(response.timetoken);
-                parent.currentPNTime = response.timetoken;
-            }
-        });
-
         //pubnub messages listener
         this.pubnub.addListener({
 
@@ -73,9 +62,8 @@ export class Messages {
                 var channelGroup = m.subscription; // The channel group or wildcard subscription match (if exists)
                 var pubTT = m.timetoken; // Publish timetoken
                 var receivedMessage = m.message; // The Payload
-                console.log("pubnub new nessage:", receivedMessage);
+                console.log("pubnub new nessage in messages:", receivedMessage);
 
-                if (channelName == parent.user.email) {
                     parent.messages.push({ // unshift?
                         text: receivedMessage.text,
                         time: receivedMessage.sentAt,
@@ -103,14 +91,10 @@ export class Messages {
                         else parent.userService.addMessageCount(receivedMessage.fromId, true);
                         }
                     $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
-                }
-                 else if (channelName == parent.user.email + "_cacheInvalidate") {
-                    console.log ("cache invalidate for user:"+ parent.user.email);
-                    parent.userService.getUsers(true); //update data structure 
-                 }
+
             },
             status: function(s) {
-                console.log("pubnub callback status:", s);
+                console.log("pubnub callback status in messages:", s);
             }
         });
 
@@ -119,17 +103,6 @@ export class Messages {
             channels: [ this.user.email ], // ['my_channel'],
             withPresence: true // also subscribe to presence instances.
         });
-
-        // pubnub subscribe to cache channel for this email
-        // strictly perhaps should not be in this model, as only affects users, but seemed
-        // convenietnt to put it here with the other listeners.
-        this.pubnub.subscribe({
-            channels: [ this.user.email + "_cacheInvalidate" ], 
-            withPresence: true // also subscribe to presence instances.
-        });
-
-
-
 
         //get the history callback for this channel
         var getAllMessages = function (timetoken) {
