@@ -44,55 +44,32 @@ class ConnectionController {
 
     @Transactional 
     def acceptContact(){
-        def connection1 = Connection.get(params.id.toInteger())
+        //def connection1 = Connection.get(params.id.toInteger())
         
         def jsonObject = request.JSON
         log.info "acceptContact json:"+jsonObject
-        connection1.connectingStatus = "Accepted"
-        connection1.save(failOnError : true, flush: true)
 
-        def connection2 = Connection.get(jsonObject.connectedConnId.toInteger())
-        connection2.connectingStatus = "Accepted"
-        connection2.save(failOnError : true, flush: true)
 
-        def connectionString  = 'connection accepted'
-        def sent = [message:connectionString]
-        // invalidate cache here
+        def connectionString
+        def sent
+        Connection.withTransaction { status ->
+            
         
-        Callback callback=new Callback() {
-        /*
-            connectCallback(String channel, Object message) {
- 
-                log.info "pubnub call back success from acceptContact"
-             
-            }
- 
-            def disconnectCallback(String channel, Object message) {
- 
-                log.info "pubnub call back success from acceptContact"
-             
-            }
-             
-            def reconnectCallback(String channel, Object message) {
-             
-                log.info "pubnub call back success from acceptContact"
-             
-            }
-             
-            def successCallback(String channel, Object message) {
-             
-                log.info "pubnub call back success from acceptContact"
-             
-            }
-             
-            def errorCallback(String channel, PubnubError error) {
-             
-                log.info "pubnub call back success from acceptContact"
-             
-            }  
-        */
+            def connection1 = Connection.get(params.id.toInteger())    
+            log.info "acceptContact json:"+jsonObject
+            connection1.connectingStatus = "Accepted"
+            connection1.save(failOnError : true, flush: true)
+
+            def connection2 = Connection.get(jsonObject.connectedConnId.toInteger())
+            connection2.connectingStatus = "Accepted"
+            connection2.save(failOnError : true, flush: true)
+
+            connectionString  = 'connection accepted'
+            sent = [message:connectionString]
         }
-        //
+
+        // invalidate cache here for connected or connecting user     
+        Callback callback=new Callback() {}
         def channel = jsonObject.fromEmail + '_cacheInvalidate'
         log.info "send invalidate on:" + channel
         pubnub.publish(channel, "refresh the cache please" , callback)
@@ -124,8 +101,13 @@ class ConnectionController {
         con2.name = jsonObject.user2.name
         con2.save(flush:true, failOnError:true)
 
+        // invalidate cache here for connected or connecting user     
+        Callback callback=new Callback() {}
+        def channel = jsonObject.fromEmail + '_cacheInvalidate'
+        log.info "send invalidate on:" + channel
+        pubnub.publish(channel, "refresh the cache please" , callback)
+
         def sent = [message:'contact request sent'] 
-        // invalidate cache here
         render sent as JSON
     }
 
@@ -184,7 +166,7 @@ class ConnectionController {
             respond connection.errors, view:'create'
             return
         }
-        // invalidate cache here
+        // invalidate cache here????
         connection.save flush:true
 
         request.withFormat {
@@ -213,7 +195,7 @@ class ConnectionController {
             respond connection.errors, view:'edit'
             return
         }
-        // invalidate cache here
+        // invalidate cache here????
         connection.save flush:true
 
         request.withFormat {
@@ -244,7 +226,7 @@ class ConnectionController {
             }
             '*'{ render status: NO_CONTENT }
         }
-        // invalidate cache here
+        // invalidate cache here????
         def sent = [message:'contact request deleted']
         render sent as JSON
     }

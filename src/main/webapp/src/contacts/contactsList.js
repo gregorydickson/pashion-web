@@ -6,12 +6,13 @@ import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import {CreateDialogEditContact} from './dialogEditContact';
 import {CreateDialogUpdatePhoto} from './dialogUpdatePhoto';
-import {UserService} from 'services/userService';import {CommsHeader} from 'comms/commsHeader';
+import {UserService} from 'services/userService';
+import {CommsHeader} from 'comms/commsHeader';
 import {EventAggregator} from 'aurelia-event-aggregator';
-import {Messages} from 'messages/messages';
+// import {Messages} from 'messages/messages';
 
 
-@inject(HttpClient, DialogController, DialogService, UserService, CommsHeader,EventAggregator, Messages)
+@inject(HttpClient, DialogController, DialogService, UserService, CommsHeader,EventAggregator) //, Messages)
 export class ContactsList {
 	static inject = [DialogController];
 
@@ -20,9 +21,12 @@ export class ContactsList {
   searchTerm = ''; // hard wired search goes here
   contactActivity = "19";
   connectString ="connect";
-  //connections = [];
+  currentPNTime;
+  
+  //pubnub
+    pubnub;
 
-  constructor(http, controller, dialogService, userService, commsHeader, eventAggregator, messages){
+  constructor(http, controller, dialogService, userService, commsHeader, eventAggregator){ //} messages){
 	    this.controller = controller;
 	    http.configure(config => {
 	      config
@@ -33,9 +37,61 @@ export class ContactsList {
     	this.userService = userService;
     	this.commsHeader = commsHeader;
       this.ea = eventAggregator;
-      this.messages = messages;
+     // this.messages = messages;
+
+          // pubnub
+      this.pubnub = new PubNub({
+          subscribeKey: "sub-c-dd158aea-b76b-11e6-b38f-02ee2ddab7fe",
+          publishKey: "pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73",
+          ssl: true
+      });
       
 	}
+
+  attached() {
+
+        var parent = this;
+        this.pubnub.time(function(status, response) {
+            if (status.error) {
+                console.log("pubnub time error")
+                // handle error if something went wrong based on the status object
+            } else {
+                console.log(response.timetoken);
+                parent.currentPNTime = response.timetoken;
+            }
+        });
+
+        this.pubnub.addListener({
+
+            message: function(m) {
+                // handle message
+                var channelName = m.channel; // The channel for which the message belongs
+                var channelGroup = m.subscription; // The channel group or wildcard subscription match (if exists)
+                var pubTT = m.timetoken; // Publish timetoken
+                var receivedMessage = m.message; // The Payload
+                console.log("pubnub new nessage in contactList:", receivedMessage);
+
+               if (channelName == parent.user.email + "_cacheInvalidate") {
+                    console.log ("cache invalidate for user:"+ parent.user.email);
+                    parent.fetchGetUserFromServer(); //update data structure from JSON in contact list
+                 }
+            },
+            status: function(s) {
+                console.log("pubnub callback status in contactList:", s);
+            }
+        });
+
+
+        // pubnub subscribe to cache channel for this email
+        // strictly perhaps should not be in this model, as only affects users, but seemed
+        // convenietnt to put it here with the other listeners.
+        this.pubnub.subscribe({
+            channels: [ this.user.email + "_cacheInvalidate" ], 
+            withPresence: true // also subscribe to presence instances.
+        });
+
+
+  }
 
 	activate () {
 
@@ -50,7 +106,7 @@ export class ContactsList {
     ]);
 	}
 
-//RM test button
+//RM test button & pubnub message cache invalidate response target
 fetchGetUserFromServer () {
   this.userService.getUsers(true).then(users => this.users = users);
 }
@@ -115,7 +171,7 @@ fetchGetUserFromServer () {
     this.commsHeader.setStatusTab(this.commsHeader.statusValues.messages);
     this.userService.clearUnreadMessages(userId).then (response => {
 
-        this.messages.pubnub.time(function(status, response) {
+        this.pubnub.time(function(status, response) {
                 if (status.error) {
                     console.log("pubnub time error")
                     // handle error if something went wrong based on the status object

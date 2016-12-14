@@ -1,6 +1,7 @@
 <template >
 
   <require from="common/viewDateFullFormatter"></require>
+  <require from="common/viewDateTimeFormatter"></require>
   <require from="./filter"></require>
 <div  class="grid-block vertical shrink" style="max-height: 100%; width:100%">
   	<!-- Search messages -->
@@ -28,7 +29,9 @@
 		            </tr>
 		            <tr>
 		                <td class="message-text message-left-text" style="">Me</td>
-		                <td class="message-text message-right-text message-date">${message.time | viewDateFullFormat}</td>
+		               <!-- <td class="message-text message-right-text message-date">${message.time | viewDateFullFormat}</td> -->
+		                <td if.bind="(!isDateToday(message.time))" class="message-text message-right-text message-date">${message.time | viewDateFullFormat} </td>
+		                <td if.bind="(isDateToday(message.time))" class="message-text message-right-text message-date">${message.time | viewDateTimeFormat} </td>
 		            </tr>
 		        </table>
 		    </div>
@@ -47,7 +50,8 @@
 		            </tr>
 		            <tr>
 		                <td class="message-text message-left-text" style="">${message.fromName}</td>
-		                <td class="message-text message-right-text message-date">${message.time | viewDateFullFormat} </td>
+		                <td if.bind="(!isDateToday(message.time))" class="message-text message-right-text message-date">${message.time | viewDateFullFormat} </td>
+		                <td if.bind="(isDateToday(message.time))" class="message-text message-right-text message-date">${message.time | viewDateTimeFormat} </td>
 		            </tr>
 		        </table>
 	    	</div>
