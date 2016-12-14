@@ -44,21 +44,27 @@ class ConnectionController {
 
     @Transactional 
     def acceptContact(){
-        def connection1 = Connection.get(params.id.toInteger())
-        
         def jsonObject = request.JSON
-        log.info "acceptContact json:"+jsonObject
-        connection1.connectingStatus = "Accepted"
-        connection1.save(failOnError : true, flush: true)
-
-        def connection2 = Connection.get(jsonObject.connectedConnId.toInteger())
-        connection2.connectingStatus = "Accepted"
-        connection2.save(failOnError : true, flush: true)
-
-        def connectionString  = 'connection accepted'
-        def sent = [message:connectionString]
-        // invalidate cache here
+        def connectionString
+        def sent
+        Connection.withTransaction { status ->
+            
         
+            def connection1 = Connection.get(params.id.toInteger())
+            
+            
+            log.info "acceptContact json:"+jsonObject
+            connection1.connectingStatus = "Accepted"
+            connection1.save(failOnError : true, flush: true)
+
+            def connection2 = Connection.get(jsonObject.connectedConnId.toInteger())
+            connection2.connectingStatus = "Accepted"
+            connection2.save(failOnError : true, flush: true)
+
+            connectionString  = 'connection accepted'
+            sent = [message:connectionString]
+            // invalidate cache here
+        }
         Callback callback=new Callback() {
         /*
             connectCallback(String channel, Object message) {
