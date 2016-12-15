@@ -48,13 +48,13 @@ class CachingService {
         items.each{
             if(it){
                 if(it.contains(",")){
-                    it.split(",").each{result << it.trim().toUpperCase()}
+                    it.split(",").each{result << it.trim().toLowerCase().capitalize()}
                 } else{
-                    result << it.trim().toUpperCase()
+                    result << it.trim().toLowerCase().capitalize()
                 }
             }
         }
-        result = result.unique()
+        result = result.unique().sort()
         result.removeAll([""])
         return result as JSON
     }

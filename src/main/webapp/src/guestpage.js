@@ -17,7 +17,7 @@ export class Guestpage {
   colors = [];
   themes = [];
   
-  selectedBrand = 8;
+  selectedBrand = '';
   selectedSeason = '';
 
   selectedColor = '';
@@ -27,8 +27,14 @@ export class Guestpage {
   
 
   filterChange(){
-    console.log("Filter change called: " + this.searchText);
-    this.busy.on();
+    console.log("Filter Change changing");
+    if(event)
+      if(event.detail)
+        if(event.detail.value){
+          this.selectedBrand = event.detail.value;
+          console.log("value:"+event.detail.value)
+        }
+    console.log("Filter change called,Brand: " + this.selectedBrand);
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                       '&season=' + encodeURI(this.selectedSeason) + 
@@ -36,7 +42,6 @@ export class Guestpage {
           .then(response => response.json())
           .then(rows => {
             this.rows = rows;
-            this.busy.off();
           });
   }
 
