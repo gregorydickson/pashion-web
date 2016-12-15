@@ -65,9 +65,9 @@ class SearchableItemController {
                 log.info "image:"+'image'
                 isNotNull('image')
                 if(brand) eq('brand', brand)
-                if(theme) ilike('theme', '%'+theme+'%')
+                if(theme) ilike('theme', "%${theme}%")
                 if(keywords) and {
-                    keywords.each {  ilike('attributes', '%'+it+'%') }
+                    keywords.each {  ilike('attributes', "%${it}%") }
                 }
                 if(season) eq('season',season)
                 if(type) eq('type',type)
