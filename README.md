@@ -70,6 +70,7 @@ To setup the Development Environment:
 * The first time you access it, it might say 'Proxy Error'. Try again after two minutes.
 * Revert the app.js to its previous state (Ctrl-Z in Sublime)
 * run `gulp unbundle` in your gulp terminal to return to development mode. (then run `gulp watch`)
+* to reboot and update the cache of themes and seasons use the Elastic beanstalk 'Restart Instances'
 
 ## Deployment of the Single Page Application on http://pashion-spa.eu-west-1.elasticbeanstalk.com/
 

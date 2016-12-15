@@ -31,16 +31,12 @@
                 <!-- search / filter area -->
                 <!-- top row -->
                 <div class="medium-up-1 align-center grid-block" style="margin-top: 2.5rem;">
-                    <!-- Search -->
-                    <div class="grid-content shrink">
-                        <input style="min-width: 150px;" type="search"  value.bind="searchText" class="search-box" id="search-images" placeholder="Enter keyword">
-                    </div>
 
                     <!-- Brand -->
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Designer</span>
-                        <select style="min-width: 150px;" name="" id="" value.two-way="selectedBrand" change.delegate="filterChange()">
+                        <select style="min-width: 120px;" name="" id="" value.two-way="selectedBrand" change.delegate="filterChange()">
                             <option value="">Choose</option>
                             <option value="All">All</option>
                             <option repeat.for="brandVar of brands" model.bind="brandVar.id">${brandVar.name}</option>
@@ -52,7 +48,7 @@
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Season</span>
-                        <select style="min-width: 150px;" name="" id="" value.bind="selectedSeason" change.delegate="filterChange()">
+                        <select style="min-width: 120px;" name="" id="" value.bind="selectedSeason" change.delegate="filterChange()">
                             <option value="">Choose</option>
                             <option value="">All</option>
                             <option repeat.for="season of seasons" model.bind="season">${season}</option>
@@ -64,13 +60,19 @@
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label">Theme</span>
-                        <select style="min-width: 150px;" value.bind="selectedTheme" change.delegate="filterChange()">
+                        <select style="min-width: 120px;" value.bind="selectedTheme" change.delegate="filterChange()">
                             <option value="">Choose</option>
                             <option value="">All</option>
                             <option repeat.for="theme of themes" model.bind="theme">${theme}</option>
                         </select>
                         </span>
                     </div>
+
+                    <!-- Search -->
+                    <div class="grid-content shrink">
+                        <input style="min-width: 170px;" type="search"  value.bind="searchText" class="search-box" id="search-images" placeholder="Enter keyword">
+                    </div>
+
                 </div>                
                 
                 <!-- Images/Looks -->
