@@ -11,6 +11,19 @@ ai-dialog.card-image-zoom  .tool-header {
 	text-transform: uppercase;
 	font-weight: 500;
 }
+
+ai-dialog.card-image-zoom .brand-font {
+	font-size: $font-size-medium;
+	font-weight: 500;
+
+}
+
+ai-dialog.card-image-zoom .season-font {
+	font-size: $font-size-small;
+	font-weight: 300;
+
+}
+
 .card-image-zoom-wrap img {
 	display: block; 	
  }
