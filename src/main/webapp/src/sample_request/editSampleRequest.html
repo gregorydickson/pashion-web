@@ -21,51 +21,53 @@
                 <div class="grid-block">
 
                     <!-- Column One -->
-                    <div class="grid-block vertical medium-6 align-left" style="padding-right:16px;">  
+                    <div class="grid-block vertical medium-6 align-left slim-form-wrap">  
 
-                        <!-- OVERVIEW -->                 
-                        <span style="margin-bottom: 1rem;">OVERVIEW</span>
+                        <!-- OVERVIEW -->                
+                        <div class="grid-block vertical"> 
+                          <span class="title-form">OVERVIEW</span>
+                        </div>
 
                         <!-- Requested -->
                         <div class="grid-block shrink">                       
                             <span class="inline-label slim-text-box-label">Requested:</span>
-                            <div class="">
+                            <span class="slim-text-box">
                                 ${sampleRequest.dateRequested | viewDateFormat}
-                            </div>
+                            </span>
                         </div>
 
 
                         <!-- Due -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Due:</span>
-                            <div class="">
+                            <span class="slim-text-box">
                                  ${sampleRequest.bookingStartDate | viewDateFormat}
-                            </div>
+                            </span>
                         </div>
 
                         <!-- Company -->
                         <div class="grid-block shrink">        
                                 <span class="inline-label">
                                         <span class="slim-text-box-label">Company:</span>
-                                        ${sampleRequest.brand.name}
+                                        <span class="slim-text-box">${sampleRequest.brand.name}</span>
                                 </span>
                         </div>
 
                         <!-- Owner -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Owner:</span>
-                            <div class=""> 
+                            <span class="slim-text-box">
                                 ${sampleRequest.requestingUser.name} ${sampleRequest.requestingUser.surname}
 
-                            </div>
+                            </span>
                         </div>
 
                         <!-- Items -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Samples:</span>
-                            <div class="" >
+                            <span class="slim-text-box">
                                 ${sampleRequest.searchableItems.length}
-                            </div>
+                            </span>
 
                             <!-- Status-->  
                             <div class="grid-block vertical">    
@@ -77,81 +79,79 @@
 
                         <!-- Press: DELIVERY DETAILS, Brand: RETURN DETAILS -->
                         <div if.bind="user.type === 'press'" class="grid-block vertical">
-                            <span style="margin-bottom: 1rem;">DELIVERY DETAILS</span>
+                            <span class="title-form">DELIVERY DETAILS</span>
                         </div>
                         <div if.bind="user.type === 'brand'" class="grid-block vertical">           
-                            <span style="margin-bottom: 1rem;">RETURN DETAILS</span>
+                            <span class="title-form">RETURN DETAILS</span>
                         </div>
 
                         <!-- ID -->
                         <div class="grid-block shrink">                       
                             <span class="inline-label slim-text-box-label">ID</span>
-                            <div class="">
+                            <span class="slim-text-box">
                                 ${sampleRequest.shippingOut.tracking}
-                            </div>
+                            </span>
                         </div>
 
 
                         <!-- Arrives -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Arrives</span>
-                            <div class="">
+                            <span class="slim-text-box">
                                 ${sampleRequest.shippingOut.endDate}
-                            </div>
+                            </span>
                         </div>
 
                     </div>
 
                     <!-- Column Two -->
-                    <div class="grid-block vertical medium-6 align-right" style="padding-left:16px; padding-right: 10px;">
+                    <div class="grid-block vertical medium-6 align-right slim-form-wrap">
                      <!-- to make it LOOK balanced -->
 
                         <!-- Press: RETURN DETAILS, Brand: DELIVERY DETAILS -->
                         <div if.bind="user.type === 'press'" class="grid-block vertical">
-                            <span style="margin-bottom: 1rem;">RETURN DETAILS</span>
+                            <span class="title-form">RETURN DETAILS</span>
                         </div>
                         <div if.bind="user.type === 'brand'" class="grid-block vertical">           
-                            <span style="margin-bottom: 1rem;">DELIVERY DETAILS</span>
+                            <span class="title-form">DELIVERY DETAILS</span>
                         </div>
 
                         <!-- ID -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">ID</span>
-                            <div class="" >
+                            <span class="slim-text-box">
                                 ${sampleRequest.shippingReturn.tracking}
-                            </div>
+                            </span>
                         </div>
                         <!-- Pickup -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Pickup</span>
-                            <div class="" >
+                            <span class="slim-text-box">
                                 ${sampleRequest.shippingReturn.startDate}
-                            </div>
+                            </span>
                         </div>
 
                         <!-- Destination -->
-                        <div class="grid-block shrink" >       
-                                <span class="inline-label">
-                                    <span class="slim-text-box-label">Destination</span>
-                                    <select name="" id="" value.bind="sampleRequest.returnToAddress.id">
-                                    <option repeat.for="address of brandAddresses" model.bind="address.id">${address.name}</option>
-                                    </select>
-                                </span>
+                        <div class="grid-block shrink" >                                   
+                            <span class="inline-label slim-text-box-label">Destination</span>
+                            <select class="slim-text-box" name="" id="" value.bind="sampleRequest.returnToAddress.id">
+                            <option repeat.for="address of brandAddresses" model.bind="address.id">${address.name}</option>
+                            </select>
                         </div>
 
                         <!-- Addressee -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Addressee</span>
-                            <div class="" >
-                                <select name="" id="" value.two-way="sampleRequest.deliverTo.id">
-                                    <option repeat.for="person of brandUsers" model.bind="person.id">${person.name} ${person.surname}</option>
-                                </select>
-                            </div>
+                            <select class="slim-text-box" name="" id="" value.two-way="sampleRequest.deliverTo.id">
+                                <option repeat.for="person of brandUsers" model.bind="person.id">${person.name} ${person.surname}</option>
+                            </select>
                         </div>
 
 
                         <!-- Editorial -->
-                        <span style="margin-bottom: 1rem;">EDITORIAL</span>
+                        <div class="grid-block vertical">
+                            <span class="title-form">EDITORIAL</span>
+                        </div>
 
                         <!-- Name -->
                         <div class="grid-block shrink">
@@ -180,7 +180,7 @@
                 </div>
                 <!-- Bottom Row -->
                 <div class="grid-block">
-                    <span style="margin-bottom: 8px;">SAMPLES</span>
+                    <span class="title-form">SAMPLES</span>
                 </div>  
 
                 <!-- brand -->
@@ -192,7 +192,7 @@
                             <td class="accordion w12">${sample.id}</td>
                             <td class="accordion w54">${sample.name}</td>
                             <td class="accordion w15">                            
-                                <span  style="margin-bottom:0px;">${sample.status.status}</span>
+                                <span style="margin-bottom:0px;">${sample.status.status}</span>
                             </td>
                             <td if.bind="sampleRequest.brandStatus === 'Pending'" style="text-align:right;" class="accordion w16">
                                 <select value.bind="sample.status.brandStatus">
