@@ -1,5 +1,5 @@
 <template>
-
+<!--
 <span class="inline-label">
         <span class="form-label">City</span>
 	    <select name="" id="" >
@@ -7,15 +7,15 @@
 	        <option>City</option>
 	    </select>
     </span>   
+-->
 
-<!--
 	<span class="inline-label">
         <span class="form-label">City</span>
-	    <select name="" id="" value.bind="selectedCity" change.delegate="filterChange($event.target)">
-	        <option value="">All</option>
-	        <option repeat.for="city of cities" model.bind="city">${city}</option>
-	    </select>
+		<select name="" id="" value.bind="city">
+		    <option value="">All</option>
+		    <option repeat.for="city of cities" model.bind="city">${city}</option>
+		</select>
     </span>   
- -->   
+    
 
 </template>

@@ -16,7 +16,7 @@
 }
 
 .look-menu-absolute-wrap .look-menu-absolute {
-  top: 24px;
+  top: 30px;
   right: 0;
   margin-right: 9px;
 }
@@ -131,7 +131,10 @@ body.ai-dialog-open .blue-image {
   width: 5px;
 }
 
-.cards-list .card .look-menu-absolute-wrap .look-menu-absolute {
-  top: 30px;
-  right: 13px;
+.cards-list .card .look-menu-absolute{
+  
+
+}
+.cards-list .card .look-menu-absolute-wrap .look-menu-link {
+white-space: normal;   
 }

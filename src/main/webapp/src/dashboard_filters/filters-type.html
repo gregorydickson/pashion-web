@@ -2,7 +2,7 @@
 
 	<span class="inline-label">
 		<span class="form-label">Type</span>
-		<select name="" id="" value.bind="selectedItemType" change.delegate="filterChange($event.target)">
+		<select name="" id="" value.bind="type">
 		    <option value="">All</option>
 		    <option repeat.for="type of itemTypes" model.bind="type.searchCode">${type.display}</option>
 		</select>
