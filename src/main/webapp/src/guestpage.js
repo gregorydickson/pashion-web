@@ -34,8 +34,7 @@ export class Guestpage {
           this.selectedBrand = event.detail.value;
           console.log("value:"+event.detail.value)
         }
-    console.log("Filter change called: " + this.searchText);
-    this.busy.on();
+    console.log("Filter change called,Brand: " + this.selectedBrand);
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                       '&season=' + encodeURI(this.selectedSeason) + 
@@ -43,7 +42,6 @@ export class Guestpage {
           .then(response => response.json())
           .then(rows => {
             this.rows = rows;
-            this.busy.off();
           });
   }
 
