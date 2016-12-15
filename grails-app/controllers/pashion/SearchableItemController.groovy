@@ -30,7 +30,7 @@ class SearchableItemController {
             theme = params.theme
 
         log.info "params brand:"+params.brand
-        if(params.brand != "")
+        if(params.brand != "" || params.brand != "All")
             brand = Brand.get(params.brand)
         
         log.info "params season:"+params.season
