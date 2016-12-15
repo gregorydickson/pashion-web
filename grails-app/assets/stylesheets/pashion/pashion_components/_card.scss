@@ -71,17 +71,28 @@
 	cursor: pointer;
 }
 
-.card-image:hover .card-look-number {
+.card-image:hover .card-look-number2 {
+	display: block;
 	color: $white-two;
-	font-size: $font-size-e-extra-large;
-	line-height: $font-size-e-extra-large;
+	font-size: $font-size-medium;
+	line-height: $font-size-e-e-extra-large;
+	font-weight: 500;
 	width: 100%;
 	text-align: center;
-	top: calc(50% - 0.86rem);
+	top: calc(40% - 0.86rem);
 	z-index: 2;
 	right: auto;
 	bottom: auto; 
 }
+.card-image:hover .card-look-number {
+	display: none;
+}
+
+.card-look-number2 { 
+	position: absolute;
+	display : none;
+}
+
 .card-image:hover .indigital-and-align{
 	display: none; 
 }
