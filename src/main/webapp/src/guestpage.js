@@ -27,6 +27,13 @@ export class Guestpage {
   
 
   filterChange(){
+    console.log("Filter Change changing");
+    if(event)
+      if(event.detail)
+        if(event.detail.value){
+          this.selectedBrand = event.detail.value;
+          console.log("value:"+event.detail.value)
+        }
     console.log("Filter change called: " + this.searchText);
     this.busy.on();
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 

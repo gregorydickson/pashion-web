@@ -1,5 +1,6 @@
 <!-- guestpage.html -->
 <template>
+    <require from="./dashboard_filters/filters-designer"></require>
     <div show.bind="busy.active">
         <div class="spinner">
         </div>
@@ -37,16 +38,8 @@
                     </div>
 
                     <!-- Brand -->
-                    <div class="grid-content shrink">
-                        <span class="inline-label">
-                            <span class="form-label">Designer</span>
-                        <select style="min-width: 150px;" name="" id="" value.two-way="selectedBrand" change.delegate="filterChange()">
-                            <option value="">Choose</option>
-                            <option value="All">All</option>
-                            <option repeat.for="brandVar of brands" model.bind="brandVar.id">${brandVar.name}</option>
-
-                        </select>
-                        </span>
+                    <div class="grid-content shrink" style="min-width: 250px;">
+                        <filters-designer change.delegate="filterChange($event)" ></filters-designer>
                     </div>
                     <!-- Seasons -->
                     <div class="grid-content shrink">
