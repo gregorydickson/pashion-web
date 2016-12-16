@@ -137,6 +137,7 @@ pass: ETWxa634WwxGaW6v
 * You can verify the collection by viewing browse.pashiontool.com and selecting the designer (and Collection if neccessary). Verify that there are no broken images. In case of discrepancies, you may view the collection in Vogue Runway for comparison. Occasionally, the 'make public' portion in S3 has to be reapplied if you see errors in the javascript console 503 permission errors. 
 * Broken images may indicate that there was a missing look image and the images, when renamed, are now out of sync with the Looks.
 * I have noticed that even when there are missing images, we have data for the Look in the CSV
+* In these instances of missing images. I have deleted the record in the Searchable_Items table so that errors do not appear in the Javascript console and broken images do not show in the user interface.
 
 ## www.pashiontool.com development environment and deployment
 
