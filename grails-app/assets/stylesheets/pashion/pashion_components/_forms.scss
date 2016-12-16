@@ -3,50 +3,6 @@
 }
 
 
-.checkbox-styled {
-  width: 14px;
-  height: 14px;
-  position: relative;
-
-  input[type="checkbox"] {
-  	width: 14px;
-  	height: 14px;
-    position: absolute; opacity: 0; z-index: -1; 
-    &:checked + label:after {
-      opacity: 1;
-    }  	
-  }
-
-  input[type="checkbox"] + label {
-  	margin: 0; 
-  }
-  input[type="checkbox"]:checked + label:after {
-      content: '';
-      width: 7px;
-      height: 4px;
-      position: absolute;
-      top: 2px;
-      left: 2px;
-      border: 1px solid #3971b1;
-      border-top: none;
-      border-right: none;
-      background: transparent;
-      opacity: 0;
-      transform: rotate(-45deg);
-  }
-  label {
-  	margin: 0;
-  	padding: 0;
-    width: 12px;
-    height: 12px;
-    cursor: pointer;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: #fff;
-    border: 1px #ebebeb solid; 
-  }
-}
 select {
   cursor: pointer;
 }
@@ -67,4 +23,72 @@ select {
     letter-spacing: 1px;
     min-height: 3rem;
     line-height: 1rem;
+}
+
+
+input.search-box,
+input.search-box:hover,
+input.search-box:focus {
+  padding-left: 28px;
+  padding-top: 8px;
+  // height: 24px;
+  // border: 0.5px solid var(--white-three);
+  // ui-text-label-m-light 
+  // font-family: Avenir, Lato;
+  // line-height: 1.5;
+  // color: var(--warm-grey);
+  background-image: url('/assets/nav/MagGlass.png');
+  background-repeat: no-repeat;
+  background-position: 6px 4px;
+}
+
+span.slim-text-box-label {
+  width: 78px;
+  padding: 0.5rem;
+  display: inline-block;
+  text-align: right;
+  white-space: nowrap;
+}
+
+span.slim-text-box {
+  padding: 0.5rem;
+  display: inline-block;
+  white-space: nowrap;
+}
+.slim-form-wrap {
+  width: 270px; 
+  padding-left: 10px; 
+  padding-right: 10px; 
+}
+
+.title-form {
+  display: block; 
+  margin-top: 1rem;
+  margin-bottom: 0;
+}
+.slim-form-wrap .grid-block:first-child .title-form {
+  margin-top: 0; 
+}
+.slim-form-wrap .inline-label, .slim-form-wrap select {
+  margin-bottom: 0.5rem; 
+}
+span.slim-text-box-label-narrow {
+  width: 35px;
+  padding: 0.5rem;
+  display: inline-block;
+  text-align: right;
+  white-space: nowrap;
+}
+
+input.slim-text-box,
+select.slim-text-box {
+  width: 169px;
+}
+
+input.slim-text-box-mid {
+  width: 58px;
+}
+
+input.slim-text-box-narrow {
+  width: 33px;
 }
