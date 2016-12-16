@@ -98,7 +98,47 @@ https://github.com/stormpath/stormpath-sdk-java/issues/17
 * The first time you access it, it might say 'Proxy Error'. Try again after two minutes.
 * If you bundled the application in the first step, run `gulp unbundle` in your gulp terminal to return to development mode. (then run `gulp watch`)
 
-
 ## dev database on aws
 user: pashionweb
 pass: ETWxa634WwxGaW6v
+
+## Image Upload
+
+### Image to S3 Process
+1. Download all images in a Collection.
+	1. In Google Drive, select all the images, right click > download.
+	2. Expand the downloaded .zip file.
+2. Resize images to 25%:
+  1. (Mac workflow) Select all images in a finder window.
+  2. right click (two finger tap) and choose open. The images should display in Preview.
+  3. Click inside the left pane and then Cmd-A to select all images.
+  4. Go to Tools > Adjust Size.
+  5. Type 25 in Width input box (it will change Height to 25 also)
+  6. Click OK, then close the window which will start the save process.
+3. Copy rename.sh into the directory with the files and run it via the command line. Note: this can only be run on Collections that are not missing a Look (are sequentially numbered 1 to the final Look).
+  1. If the Looks are not sequentially number, I have used the finder to rename them in the following process. In your open finder window, select all the files in the Collection then: File > Rename
+  2. Example: SoniaRykiel_028_ss17.jpg. I take the initial string to remove, SoniaRykiel_ and replace it with 0, then I take the trailing part of the name that I want to remove, '_ss17' and replace it with nothing in the Replace With input box. The final files will be in the form of 0028.jpg.
+4. In AWS, navigate to S3 (no region), enter the pashion-tool directory.
+5. If the designer does not exist, create the folder structure: /sonia-rykiel/2017/spring/ready-to-wear/
+6. In the appropriate directory (ready-to-wear) Choose: Actions > Upload, then drag files into the Drag and Drop area, select 'Start Uploading'
+7. After uploading, select all the uploaded files in S3, then Choose: Actions > Make Public.
+
+
+### CSV to Upload Process
+1. Open Google Sheet.
+2. Verify Path (Column AJ) is in the correct form: /sonia-rykiel/2017/spring/ready-to-wear/ and exists for all looks.
+3. File > Download As > Comma Separated Values (.csv current sheet)
+4. In a running instance of the application. (run with `grails>prod run` or at browse.pashiontool.com) go to /upload/ (http://browse.pashiontool.com/upload/ or http://localhost:8080/upload/)
+5. Choose the City for the collection, then drag the CSV file to the 'Drop files here to Upload' area. The file will upload. You can view the command line to view debugging information on the upload. The code for this upload is in UploadController.groovy index() method.
+6. You may verify the data by connecting to the database with Sequel Pro.
+7. To prepare for the next upload, refresh the /upload/ screen in the browser.
+
+### Verification
+* You can verify the collection by viewing browse.pashiontool.com and selecting the designer (and Collection if neccessary). Verify that there are no broken images. In case of discrepancies, you may view the collection in Vogue Runway for comparison. Occasionally, the 'make public' portion in S3 has to be reapplied if you see errors in the javascript console 503 permission errors. 
+* Broken images may indicate that there was a missing look image and the images, when renamed, are now out of sync with the Looks.
+* I have noticed that even when there are missing images, we have data for the Look in the CSV
+
+## www.pashiontool.com development environment and deployment
+
+
+
