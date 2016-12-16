@@ -15,7 +15,7 @@
     <router-view class="grid-block">
       <div class="splash">
         <div class="message">Loading using Indigital Images</div>
-        <div class="spinner">
+       <!-- <div class="spinner"> -->
         </div>
       </div>
 
