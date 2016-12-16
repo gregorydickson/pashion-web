@@ -71,7 +71,7 @@
 	cursor: pointer;
 }
 
-.card-image:hover .card-look-number2 {
+.card-image:hover .card-look-number-brand-season {
 	display: block;
 	color: $white-two;
 	font-size: $font-size-medium;
@@ -84,11 +84,29 @@
 	right: auto;
 	bottom: auto; 
 }
+.card-image:hover .card-look-number-name {
+	display: block;
+	color: $white-two;
+	font-size: $font-size-e-extra-large;
+	line-height: $font-size-e-e-extra-large;
+	font-weight: 500;
+	width: 100%;
+	text-align: center;
+	top: calc(30% - 0.86rem);
+	z-index: 2;
+	right: auto;
+	bottom: auto; 
+}
+
 .card-image:hover .card-look-number {
 	display: none;
 }
 
-.card-look-number2 { 
+.card-look-number-brand-season { 
+	position: absolute;
+	display : none;
+}
+.card-look-number-name { 
 	position: absolute;
 	display : none;
 }
