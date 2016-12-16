@@ -3,9 +3,11 @@
 <html>
   <head>
     <meta name="layout" content="header-and-footer" /> <!-- nee pashion -->
-    <asset:stylesheet src="pashion/pashion.css"/>
+    <asset:stylesheet src="pashion/pashion.css"/>    
+    <asset:stylesheet src="pashion/splash.css"/>    
 
-    <title>PASHION Loading</title>
+
+    <title>Loading Pashion Browser</title>
     
   </head>
 
@@ -13,7 +15,8 @@
     <router-view class="grid-block">
       <div class="splash">
         <div class="message">Loading using Indigital Images</div>
-        <i class="fa fa-spinner fa-spin"></i>
+        <div class="spinner">
+        </div>
       </div>
 
 
