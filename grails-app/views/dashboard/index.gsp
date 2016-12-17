@@ -12,12 +12,12 @@
   </head>
 
   <body>
-    <router-view class="grid-block">
+    <router-view class="grid-block vertical">
       <div class="splash">
         <div class="message">Loading using Indigital Images</div>
-       <!-- <div class="spinner"> -->
-        </div>
+       <!-- <div class="spinner"> </div> -->
       </div>
+      
 
 
       <script src="//messaging-public.realtime.co/js/2.1.0/ortc.js"></script>  
