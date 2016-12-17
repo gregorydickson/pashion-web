@@ -2,7 +2,7 @@
 <!-- index.gsp -->
 <html>
   <head>
-    <meta name="layout" content="header-and-footer" /> <!-- nee pashion -->
+    <meta name="layout" content="header-and-footer-guestpage" /> <!-- nee pashion -->
     <asset:stylesheet src="pashion/pashion.css"/>    
     <asset:stylesheet src="pashion/splash.css"/>    
 
