@@ -12,7 +12,7 @@
   </head>
 
   <body>
-    <router-view class="grid-block vertical">
+    <router-view class="grid-block">
       <div class="splash">
         <div class="message">Loading using Indigital Images</div>
        <!-- <div class="spinner"> </div> -->
