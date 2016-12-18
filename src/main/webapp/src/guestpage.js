@@ -12,7 +12,7 @@ export class Guestpage {
  
   rows = [];
   seasons = [];
-  brands = [];
+//  brands = [];
 
   colors = [];
   themes = [];
@@ -73,7 +73,7 @@ export class Guestpage {
   activate() {
     return Promise.all([
       this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
-      this.http.fetch('/brand/index.json').then(response => response.json()).then(brands => this.brands = brands),
+     // this.http.fetch('/brand/index.json').then(response => response.json()).then(brands => this.brands = brands),
       this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors),
       this.http.fetch('/dashboard/themes').then(response => response.json()).then(themes => this.themes = themes),
       this.http.fetch('/dashboard/keywords').then(response => response.json())
