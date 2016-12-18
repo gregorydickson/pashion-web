@@ -17,7 +17,7 @@ export class Guestpage {
   colors = [];
   themes = [];
   
-  selectedBrand = '';
+  selectedBrand = 37;
   selectedSeason = '';
 
   selectedColor = '';
