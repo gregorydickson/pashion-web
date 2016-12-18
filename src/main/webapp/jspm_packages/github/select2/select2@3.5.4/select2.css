@@ -320,7 +320,7 @@ html[dir="rtl"] .select2-dropdown-open .select2-choice .select2-arrow b {
 
 /* results */
 .select2-results {
-    max-height: 200px;
+    max-height: 350px;
     padding: 0 0 0 4px;
     margin: 4px 4px 4px 0;
     position: relative;
