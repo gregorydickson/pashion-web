@@ -135,8 +135,8 @@ $menubar-icon-spacing: $menubar-item-padding !default;
     color: $color;
 
     &:hover {
-      background: $background-hover;
-      color: $color-hover;
+      // background: $background-hover; //RM
+      color: $warm-grey;//  $color-hover;
     }
   }
   .is-active > a {
