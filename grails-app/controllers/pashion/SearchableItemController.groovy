@@ -22,35 +22,35 @@ class SearchableItemController {
         def keywords = null
         def theme = null
 
-        log.info "params itemType:"+params.itemType
+
         if(params.itemType != null && params.itemType != "")
             type = SearchableItemType.findByDisplay(params.itemType)
 
         if(params.theme != null && params.theme != "")
             theme = params.theme
 
-        log.info "params brand:"+params.brand
+
         if(params.brand != "" || params.brand != "All")
             brand = Brand.get(params.brand)
         
-        log.info "params season:"+params.season
+
         if(params.season != "")
             season = Season.findByName(URLDecoder.decode(params.season))
         
-        log.info "params availableFrom:"+params.availableFrom
+
         if(params.availableFrom != null && params.availableFrom != "" )
             availableFrom = dateFormat.parse(params.availableFrom)
 
-        log.info "params availableTo:"+params.availableTo
+
         if(params.availableTo != null && params.availableTo != "")   
             availableTo = dateFormat.parse(params.availableTo)
         
-        log.info "params keywords:"+params.keywords
+
         if(params.searchtext != null && params.searchtext != "" && params.searchtext != "undefined"){
             keywords = URLDecoder.decode(params.searchtext)
             keywords = keywords.split(" ")
         }
-        
+        log.info "*****************************  A SEARCH **********************"
         log.info "Brand:"+brand
         log.info "keywords:"+keywords
         log.info "season:"+season
@@ -87,14 +87,14 @@ class SearchableItemController {
         long endTime = System.currentTimeMillis()
         long duration = (endTime - startTime)
         log.info "search duration:"+duration
-        
+        startTime = System.currentTimeMillis()
 
         def fixImagesPerRow = 5 
         if(fixImagesPerRow > 5) fixImagesPerRow = 5
         if(fixImagesPerRow < 3) fixImagesPerRow = 3
-        log.info "Images per row: "+fixImagesPerRow
+        
         Integer resultsSize = results.size()
-        log.info "result size:"+resultsSize 
+        
         Integer rows = resultsSize/fixImagesPerRow  
         
         if(resultsSize % fixImagesPerRow > 0)
@@ -138,11 +138,16 @@ class SearchableItemController {
             arow.items = item
             resultList << arow
         }
+        endTime = System.currentTimeMillis()
+        duration = (endTime - startTime)
+        log.info "collect results duration:"+duration
+        
         startTime = System.currentTimeMillis()
         render resultList as JSON
         endTime = System.currentTimeMillis()
         duration = (endTime - startTime)
         log.info "JSON render duration:"+duration
+        log.info "**************************************************************"
         
         
     }
