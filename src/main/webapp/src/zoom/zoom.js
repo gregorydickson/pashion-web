@@ -31,7 +31,7 @@ export class Zoom {
     this.name = zoomModel.item.name;
     console.log("row number :"+zoomModel.rowNumber);
     console.log("item number :"+zoomModel.itemNumber);
-    console.log("rows  :"+zoomModel.rows);
+    //console.log("rows  :"+zoomModel.rows);
     console.log("item  :"+zoomModel.item);
     console.log("image:"+zoomModel.item.image);
   }
