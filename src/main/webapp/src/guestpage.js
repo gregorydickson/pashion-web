@@ -44,7 +44,8 @@ export class Guestpage {
             this.rows = rows;
           })
 
-         .then (result => $("img.lazy").unveil())
+         .then (result => $("img.lazy").unveil()) // initial unveil of first images on load
+         .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow'))
           ;
   }
 
