@@ -42,7 +42,10 @@ export class Guestpage {
           .then(response => response.json())
           .then(rows => {
             this.rows = rows;
-          });
+          })
+
+         .then (result => $("img.lazy").unveil())
+          ;
   }
 
 
@@ -67,7 +70,6 @@ export class Guestpage {
   detached() {
    window.removeEventListener('keypress', this.boundHandler);
   }
-
 
 
   activate() {
