@@ -71,8 +71,8 @@ grails.cache.config = {
     cache {
     	name 'mycache'
         eternal false
-      	timeToIdleSeconds 120
-      	timeToLiveSeconds 1000000
+      	timeToIdleSeconds 86400
+      	timeToLiveSeconds 86400
       	overflowToDisk true
       	maxElementsOnDisk 10000000
       	diskPersistent false
