@@ -16,6 +16,7 @@ class BrandController {
     def fastList(){
         def list = Brand.createCriteria().list {
             cache true
+            order "name"
         }
         render list as JSON
     }
