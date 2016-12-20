@@ -94,6 +94,7 @@ class SearchableItemController {
         if(fixImagesPerRow < 3) fixImagesPerRow = 3
         
         Integer resultsSize = results.size()
+        log.info "results:"+resultSize
         
         Integer rows = resultsSize/fixImagesPerRow  
         
