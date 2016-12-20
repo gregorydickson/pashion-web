@@ -81,8 +81,14 @@ class SearchableItemController {
                         }
                     }
                 }
+                cache true
             } 
-        
+
+        long endTime = System.currentTimeMillis()
+        long duration = (endTime - startTime)
+        log.info "search duration:"+duration
+        startTime = System.currentTimeMillis()
+
         def fixImagesPerRow = 5 
         if(fixImagesPerRow > 5) fixImagesPerRow = 5
         if(fixImagesPerRow < 3) fixImagesPerRow = 3
@@ -134,11 +140,11 @@ class SearchableItemController {
         }
         
         render resultList as JSON
+        endTime = System.currentTimeMillis()
+        duration = (endTime - startTime)
+        log.info "collect and JSON render duration:"+duration
         
         
-        long endTime = System.currentTimeMillis()
-        long duration = (endTime - startTime)
-        log.info "search duration:"+duration
     }
 
     def index(Integer max) {

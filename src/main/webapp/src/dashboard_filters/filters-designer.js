@@ -22,7 +22,7 @@ export class FiltersDesignerCustomElement {
   
   attached(){
     return Promise.all([
-      this.http.fetch('/brand/index.json').then(response => response.json()).then(brands => this.brands = brands),
+      this.http.fetch('/brand/fastList').then(response => response.json()).then(brands => this.brands = brands),
     ]);
   }
 
