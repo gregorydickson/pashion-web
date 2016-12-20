@@ -13,27 +13,37 @@
     <!-- page frame -->
     <div class="grid-frame vertical">
         <!-- Header -->
-        <div class="">
-            <ul class="menu-bar dark">
-                <li>
-                    <select name="LAUREN" id="headerModeSelect" class="nav-label-header top-menu-modifier" style="margin-left:64px;">
-                        <option>LOGIN</option>
-                    </select>
-                    <li></li>
+        
+            <ul class="menu-bar" style="background: #ebebeb">
+              
+                           
+                   <!--  <select value.bind="selectval" change.trigger="logout()" name="LAUREN" id="headerModeSelect" class="nav-label-header top-menu-modifier">
+                        <option value="no">GUEST</option>
+                        <option value= "logout">LOGOUT</option>
+                    </select> -->
                     <li></li>
                     <li>
-                        <a href="#"><img src="/assets/PashionRMPlainWhite.png" width="127px" /></a>
+                        <a href="http://www.pashiontool.com/beta" target="_blank" style="padding-top:25px; align-items: flex-start;">JOIN PASHION</a>
+                    </li>
+                <li></li>
+                   
+                    <li>
+                        <a href="http://www.pashiontool.com" target="_blank"><img src="/assets/PashionRMPlainBlackTag.png" style="max-width:312px; " /></a>
+                    </li>
+                  <li></li> 
+                  
+                    <li>
+                        <a href="http://www.pashiontool.com" target="_blank" style="padding-top:25px; align-items: flex-end;">HOMEPAGE</a>
                     </li>
                     <li></li>
-                    <li></li>
-                    <li></li>
-                </li>
+                               
+               
             </ul>
-        </div>
+        
         <!-- body -->
         <g:layoutBody/>
         <!-- footer -->
-        <div class="footer dark title-bar">
+        <div class="footer title-bar">
             <div class="center nav-label-footer">      
                 <span class="copyright">&copy;2016 PASHION Ltd. All Rights Reserved.</span>
             </div>

@@ -7,7 +7,7 @@
     <asset:stylesheet src="pashion/splash.css"/>    
 
 
-    <title>Loading Pashion Browser</title>
+    <title>Loading Pashion</title>
     
   </head>
 

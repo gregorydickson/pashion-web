@@ -14,7 +14,7 @@
     <div class="grid-frame vertical">
         <!-- Header -->
         <div class="">
-            <ul class="menu-bar dark">
+            <ul class="menu-bar">
                 <li>
                     <select name="LAUREN" id="headerModeSelect" class="nav-label-header top-menu-modifier" style="margin-left:64px;">
                         <option>LOGIN</option>
@@ -33,7 +33,7 @@
         <!-- body -->
         <g:layoutBody/>
         <!-- footer -->
-        <div class="footer dark title-bar">
+        <div class="footer title-bar">
             <div class="left nav-label-footer">
                 <span style="margin-right: 1rem;"><a class="inactiveLink" href="#">HELP</a></span>
                 <span style="margin-right: 1rem;"><a class="inactiveLink" href="#">ABOUT</a></span>
