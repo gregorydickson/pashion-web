@@ -65,6 +65,12 @@ export class Guestpage {
   attached(){
     this.filterChange();
     document.getElementById('search-images').addEventListener('keypress', this.boundHandler, false);
+
+    var parent = this;
+    $('input[type=search]').on('search', function () {
+    // search logic here
+    // this function will be executed on click of X (clear button)
+      parent.filterChange(event)});
   }
 
   detached() {
