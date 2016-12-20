@@ -87,7 +87,7 @@ class SearchableItemController {
         long endTime = System.currentTimeMillis()
         long duration = (endTime - startTime)
         log.info "search duration:"+duration
-        startTime = System.currentTimeMillis()
+        
 
         def fixImagesPerRow = 5 
         if(fixImagesPerRow > 5) fixImagesPerRow = 5
@@ -138,11 +138,11 @@ class SearchableItemController {
             arow.items = item
             resultList << arow
         }
-        
+        startTime = System.currentTimeMillis()
         render resultList as JSON
         endTime = System.currentTimeMillis()
         duration = (endTime - startTime)
-        log.info "collect and JSON render duration:"+duration
+        log.info "JSON render duration:"+duration
         
         
     }
