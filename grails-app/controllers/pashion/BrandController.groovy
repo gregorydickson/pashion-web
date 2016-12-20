@@ -10,11 +10,7 @@ class BrandController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
-        long startTime = System.currentTimeMillis()
         respond Brand.list(), model:[brandCount: Brand.count()]
-        long endTime = System.currentTimeMillis()
-        long duration = (endTime - startTime)
-        log.info "brand controller:"+duration
     }
 
     def fastList(){
