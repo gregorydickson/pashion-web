@@ -1,18 +1,13 @@
-jasypt:
-    algorithm: "PBEWITHSHAAND128BITAES-CBC-BC"
-    providerName: "BC"
-    password: "pashion"
-    keyObtentionIterations: 1000
 server:
    sessionTimeout: 3600
 ---
 hibernate:
     cache:
-        queries: false
+        queries: true
         use_second_level_cache: true
         use_query_cache: true
         region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
-
+        cache.provider_class: org.hibernate.cache.EhCacheProvider
 dataSource:
     pooled: true
     jmxExport: true

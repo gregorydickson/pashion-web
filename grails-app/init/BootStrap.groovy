@@ -36,6 +36,13 @@ class BootStrap {
         return returnArray
       }
 
+      JSON.registerObjectMarshaller(Brand) {
+        def returnArray = [:]
+        returnArray['name'] = it.name
+        returnArray['id'] =  it.id
+        return returnArray
+      }
+
       def dateFormatString = "yyyy-MM-dd"
       SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
       def itemtype1 = SearchableItemType.findOrSaveWhere(display:'Looks',searchCode:'look').save(failOnError : true)
