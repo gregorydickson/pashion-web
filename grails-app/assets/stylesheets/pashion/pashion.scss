@@ -367,8 +367,8 @@ ai-dialog-body .grid-block-row {
 .grid-row .datepickerto {
   min-width: 100px;
 }
-.grid-row .form-label  {
-  align-self: center; 
+.grid-row-col .inline-label > .form-label {
+  align-items: flex-start; 
 }
 @media (max-width:1300px) {
   .grid-row .grid-row-date-start {

@@ -302,7 +302,7 @@
                                 <filters-search></filters-search>
                             </div>
                             <div class="grid-row-col">
-                                <filters-season></filters-season>
+                                <filters-season season.bind="season" change.delegate="filterChange($event)"></filters-season>
                             </div>
                             <div class="grid-row-col">
                                 <filters-color></filters-color>
@@ -318,7 +318,7 @@
                                 <filters-search></filters-search>
                             </div>
                             <div class="grid-row-col">
-                                <filters-season></filters-season>
+                                <filters-season season.bind="season" change.delegate="filterChange($event)"></filters-season>
                             </div>                    
                             <div class="grid-row-col"></div>
                             <div class="grid-row-col"></div>
@@ -356,7 +356,7 @@
                                 <filters-designer></filters-designer>
                             </div>
                             <div class="grid-row-col">
-                                <filters-season></filters-season>
+                                <filters-season season.bind="season" change.delegate="filterChange($event)"></filters-season>
                             </div>
                             <div class="grid-row-col">
                                 <filters-color></filters-color>
