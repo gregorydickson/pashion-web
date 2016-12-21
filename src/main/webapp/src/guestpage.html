@@ -42,37 +42,14 @@
                         <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>
                     </div>
                     <!-- Seasons -->
-                    <div class="grid-content shrink" style="min-width: 225px;">
+                    <div class="grid-content shrink" style="min-width: 288px;">
                         <filters-season change.delegate="filterChangeSeason($event)" ></filters-season>
                     </div>
-
-                <!--     <div class="grid-content shrink">
-                        <span class="inline-label">
-                            <span class="form-label" style="font-weight: 500">SEASON</span>
-                        <select style="min-width: 120px;" name="" id="" value.bind="selectedSeason" change.delegate="filterChange()">
-                            <option value="">Choose</option>
-                            <option value="">All</option>
-                            <option repeat.for="season of seasons" model.bind="season">${season}</option>
-                        </select>
-                        </span>
-                    </div> -->
-
 
                     <!-- Theme -->
                     <div class="grid-content shrink" style="min-width: 225px;">
                         <filters-theme change.delegate="filterChangeTheme($event)" ></filters-theme>
                     </div>
-                    <!-- theme 
-                    <div class="grid-content shrink">
-                        <span class="inline-label">
-                            <span class="form-label" style="font-weight: 500">THEME</span>
-                        <select style="min-width: 120px;" value.bind="selectedTheme" change.delegate="filterChange()">
-                            <option value="">Choose</option>
-                            <option value="">All</option>
-                            <option repeat.for="theme of themes" model.bind="theme">${theme}</option>
-                        </select>
-                        </span>
-                    </div> -->
 
                     <!-- Search -->
                     <div class="grid-content shrink">
