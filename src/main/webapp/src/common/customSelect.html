@@ -2,6 +2,8 @@
     <select name.bind="name" value.bind="selected" id.bind="name">
         <option value="">Select</option>
         <option value="All">All</option>
-        <option repeat.for="option of options" value.bind="option.id">${option.name}</option>
+
+        <option if.bind="options[0].name" repeat.for="option of options" value.bind="option.id">${option.name}</option>
+      	<option if.bind="!options[0].name" repeat.for="option of options" value.bind="option">${option}</option> 
     </select>
 </template>

@@ -1,14 +1,12 @@
 <template>
 
-         <span class="inline-label">
-            <span class="form-label">Theme</span>
-	        <select name="" id="">
-	            <option>All</option>
-	            <option>Military</option>
-	            <option>Punk</option>
-	            <option>Evening</option>
-	        </select>
-        </span>
+<require from="../common/customSelect"></require>
+
+
+    <span class="inline-label">
+		<span class="form-label" style="padding-right: 0.5rem; font-weight:500">THEME</span>
+		<select2 name="themeSelect" options.bind="themes" selected.bind="themeo" change.delegate="setTheme($event)" ></select2>
+	</span>
 
 
 </template>

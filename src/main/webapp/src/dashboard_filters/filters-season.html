@@ -1,13 +1,11 @@
 <template>
 
+<require from="../common/customSelect"></require>
 
 
     <span class="inline-label">
-		<span class="form-label">Season</span>
-		<select name="" id="" value.bind="season">
-		    <option value="">All</option>
-		    <option repeat.for="season of seasons" model.bind="season">${season}</option>
-		</select>
+		<span class="form-label" style="padding-right: 0.5rem; font-weight:500">SEASON</span>
+		<select2 name="seasonSelect" options.bind="seasons" selected.bind="seasono" change.delegate="setSeason($event)" ></select2>
 	</span>
 
 

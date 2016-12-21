@@ -1,14 +1,30 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-fetch-client';
-import {EventAggregator} from 'aurelia-event-aggregator';
 import 'fetch';
 
 
-@inject(HttpClient, EventAggregator)
+@inject(HttpClient, Element)
 @customElement('filters-theme')
 
-export class filtersTheme {
+export class FiltersThemeCustomElement {
+  themes = [];
   
+  @bindable themeo = '';
 
+  constructor(http,element){
+    this.http = http;
+    this.element = element;
+  }
+  
+setTheme(event){
+	this.themeo = event.detail.value;
 }
 
+attached() {
+    return Promise.all([
+      this.http.fetch('/dashboard/themes').then(response => response.json()).then(themes => this.themes = themes)
+    ]);
+}
+
+
+}

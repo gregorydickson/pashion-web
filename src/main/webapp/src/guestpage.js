@@ -11,32 +11,33 @@ import {busy} from './services/busy';
 export class Guestpage {
  
   rows = [];
-  seasons = [];
+ // seasons = [];
 
-  colors = [];
-  themes = [];
+ // colors = [];
+ // themes = [];
   
   selectedBrand = 37;
   selectedSeason = '';
 
-  selectedColor = '';
+ // selectedColor = '';
   selectedTheme = '';
   searchText = '';
   
   
 
-  filterChange(){
-    console.log("Filter Change changing");
+  filterChangeBrand(){
+    console.log("Filter Change changing Brand");
     if(event)
       if(event.detail)
         if(event.detail.value){
           this.selectedBrand = event.detail.value;
           console.log("value:"+event.detail.value)
         }
-    console.log("Filter change called,Brand: " + this.selectedBrand);
+    console.log("Filter change called, Brand: " + this.selectedBrand);
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
-                                      '&season=' + encodeURI(this.selectedSeason) + 
+                                     '&season=' + encodeURI(this.selectedSeason) + 
+                                     // '&season=' + this.selectedSeason + 
                                       '&theme='+ this.selectedTheme)
           .then(response => response.json())
           .then(rows => {
@@ -44,7 +45,60 @@ export class Guestpage {
           })
 
          .then (result => $("img.lazy").unveil()) // initial unveil of first images on load
-         .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow'))
+         .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow')) // scroll to top
+          ;
+  }
+
+  filterChangeSeason(){
+    console.log("Filter Change changing Season");
+    this.selectedSeason = '';
+    if(event)
+      if(event.detail)
+        if(event.detail.value){
+          this.selectedSeason = event.detail.value;
+          console.log("value:"+event.detail.value)
+        }
+    console.log("Filter change called, Season: " + this.selectedSeason);
+    this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
+                                      '&brand=' + this.selectedBrand + 
+                                     '&season=' + encodeURI(this.selectedSeason) + 
+                                     // '&season=' + this.selectedSeason + 
+                                      '&theme='+ this.selectedTheme)
+          .then(response => response.json())
+          .then(rows => {
+            this.rows = rows;
+          })
+
+         .then (result => $("img.lazy").unveil()) // initial unveil of first images on load
+         .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow')) // scroll to top
+          ;
+  }
+
+    filterChangeTheme(){
+    console.log("Filter Change changing Theme");
+    this.selectedTheme = '';
+    if(event)
+      if(event.detail)
+        if(event.detail.value){
+          if(event.detail.value=='All') event.detail.value = '';
+          if(event.detail.value=='Select') event.detail.value = '';
+
+          this.selectedTheme = event.detail.value;
+          console.log("value:"+event.detail.value)
+        }
+    console.log("Filter change called, Theme: " + this.selectedTheme);
+    this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
+                                      '&brand=' + this.selectedBrand + 
+                                     '&season=' + encodeURI(this.selectedSeason) + 
+                                     // '&season=' + this.selectedSeason + 
+                                      '&theme='+ this.selectedTheme)
+          .then(response => response.json())
+          .then(rows => {
+            this.rows = rows;
+          })
+
+         .then (result => $("img.lazy").unveil()) // initial unveil of first images on load
+         .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow')) // scroll to top
           ;
   }
 
@@ -63,7 +117,7 @@ export class Guestpage {
 
 
   attached(){
-    this.filterChange();
+    this.filterChangeBrand();
     document.getElementById('search-images').addEventListener('keypress', this.boundHandler, false);
 
     var parent = this;
@@ -79,11 +133,11 @@ export class Guestpage {
 
 
   activate() {
-    return Promise.all([
-      this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
-      this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors),
-      this.http.fetch('/dashboard/themes').then(response => response.json()).then(themes => this.themes = themes)
-    ]);
+   // return Promise.all([
+     // this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
+      //this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors),
+     // this.http.fetch('/dashboard/themes').then(response => response.json()).then(themes => this.themes = themes)
+  //  ]);
   }
 
 

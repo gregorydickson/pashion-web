@@ -1,6 +1,8 @@
 <!-- guestpage.html -->
 <template>
     <require from="./dashboard_filters/filters-designer"></require>
+    <require from="./dashboard_filters/filters-season"></require>
+    <require from="./dashboard_filters/filters-theme"></require>
     <require from="./common/jquery.unveil"></require>
 
     <div show.bind="busy.active">
@@ -36,12 +38,15 @@
                 <div class="medium-up-1 align-center grid-block" style="margin-top: 5rem; margin-bottom: 1.5rem;">
 
                     <!-- Brand -->
-
                     <div class="grid-content shrink" style="min-width: 225px;">
-                        <filters-designer change.delegate="filterChange($event)" ></filters-designer>
+                        <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>
                     </div>
                     <!-- Seasons -->
-                    <div class="grid-content shrink">
+                    <div class="grid-content shrink" style="min-width: 225px;">
+                        <filters-season change.delegate="filterChangeSeason($event)" ></filters-season>
+                    </div>
+
+                <!--     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label" style="font-weight: 500">SEASON</span>
                         <select style="min-width: 120px;" name="" id="" value.bind="selectedSeason" change.delegate="filterChange()">
@@ -50,9 +55,14 @@
                             <option repeat.for="season of seasons" model.bind="season">${season}</option>
                         </select>
                         </span>
-                    </div>
+                    </div> -->
 
-                    <!-- theme -->
+
+                    <!-- Theme -->
+                    <div class="grid-content shrink" style="min-width: 225px;">
+                        <filters-theme change.delegate="filterChangeTheme($event)" ></filters-theme>
+                    </div>
+                    <!-- theme 
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="form-label" style="font-weight: 500">THEME</span>
@@ -62,7 +72,7 @@
                             <option repeat.for="theme of themes" model.bind="theme">${theme}</option>
                         </select>
                         </span>
-                    </div>
+                    </div> -->
 
                     <!-- Search -->
                     <div class="grid-content shrink">

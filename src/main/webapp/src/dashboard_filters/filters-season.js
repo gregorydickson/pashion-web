@@ -1,26 +1,30 @@
-import {customElement, bindable, inject,bindingMode} from 'aurelia-framework';
+import {customElement, bindable, inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-fetch-client';
 import 'fetch';
 
 
-@inject(HttpClient)
+@inject(HttpClient, Element)
 @customElement('filters-season')
 
-export class FiltersSeason {
+export class FiltersSeasonCustomElement {
   seasons = [];
   
-  @bindable({ defaultBindingMode: bindingMode.twoWay }) season;
+  @bindable seasono = '';
 
-  constructor(http){
+  constructor(http,element){
     this.http = http;
+    this.element = element;
   }
   
+setSeason(event){
+	this.seasono = event.detail.value;
+}
 
-	attached() {
-	    return Promise.all([
-	      this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons)
-	    ]);
-	}
+attached() {
+    return Promise.all([
+      this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons)
+    ]);
+}
 
 
 }
