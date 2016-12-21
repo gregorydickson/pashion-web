@@ -410,3 +410,7 @@ filters-city {
    div#visNeeded2 {overflow:hidden;}
    div#looks {max-height:85vh;}
 }
+.modal-table-wrap {overflow-x:hidden; max-height:10rem; margin-top: 10px; }
+.modal-table-wrap table {
+  margin-bottom:7px;
+}

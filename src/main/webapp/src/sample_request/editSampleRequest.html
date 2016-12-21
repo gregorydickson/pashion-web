@@ -179,14 +179,14 @@
                     </div>                    
                 </div>
                 <!-- Bottom Row -->
-                <div class="grid-block">
-                    <span class="title-form">SAMPLES</span>
+                <div class="grid-block slim-form-wrap">
+                    <span class="title-form">ITEMS</span>
                 </div>  
 
                 <!-- brand -->
-                <div if.bind="user.type === 'brand'" class="vertical grid-content accordion" style="overflow-x:hidden; max-height:10rem;"> <!-- scroll after n items -->                    
+                <div if.bind="user.type === 'brand'" class="vertical grid-content accordion modal-table-wrap"> <!-- scroll after n items -->                    
                     <!-- row -->
-                    <table repeat.for="sample of sampleRequest.searchableItemsProposed" class="big-accordion" style="margin-bottom:7px;">
+                    <table repeat.for="sample of sampleRequest.searchableItemsProposed" class="big-accordion">
                         <tr>
                             <td class="accordion w3">${$index+1}</td>
                             <td class="accordion w12">${sample.id}</td>

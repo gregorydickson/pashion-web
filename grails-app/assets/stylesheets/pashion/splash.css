@@ -12,10 +12,6 @@
 	width: 100%;
 }
 
-#headerModeSelect {
-	display: none;
-}
-
 .splash .spinner {
 	position: relative;
 	top: auto;
