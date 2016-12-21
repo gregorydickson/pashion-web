@@ -36,6 +36,7 @@ class SearchableItemController {
 
         if(params.season != "")
             season = Season.findByName(URLDecoder.decode(params.season))
+            
         
 
         if(params.availableFrom != null && params.availableFrom != "" )
@@ -94,7 +95,7 @@ class SearchableItemController {
         if(fixImagesPerRow < 3) fixImagesPerRow = 3
         
         Integer resultsSize = results.size()
-        log.info "results:"+resultSize
+        log.info "results:"+resultsSize
         
         Integer rows = resultsSize/fixImagesPerRow  
         
