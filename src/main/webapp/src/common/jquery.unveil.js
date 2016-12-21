@@ -47,7 +47,8 @@
 
     $w.on("scroll.unveil resize.unveil lookup.unveil", unveil);
 
-    $("div.cards-list-wrap").scroll(function(){unveil();});
+    //$("div.cards-list-wrap").scroll(function(){unveil();});
+    $("#mainScrollWindow").scroll(function(){unveil();});
 
     unveil();
 

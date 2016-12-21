@@ -119,6 +119,9 @@ export class Guestpage {
     // search logic here
     // this function will be executed on click of X (clear button)
       parent.filterChangeBrand(event)});
+
+    // scroll handler to fire unveil
+    $("#mainScrollWindow").on('scroll',function(){$("img.lazy").unveil();});
   }
 
   detached() {
