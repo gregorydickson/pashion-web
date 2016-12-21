@@ -33,6 +33,11 @@ export class Index {
   searchText = '';
   availableFrom = '';
   availableTo = '';
+  selectedSeason = '';
+  selectedTheme = '';
+  
+  
+
 
   numberImages = 0;
   
@@ -53,9 +58,7 @@ export class Index {
     console.log(this.availableFrom);
     console.log(this.availableTo);
 
-    this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
-                                      '&brand=' + this.selectedBrand + 
-                                      '&season=' + encodeURI(this.season) + 
+    this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) +                                      
                                       '&itemType=' + this.selectedItemType + 
                                       '&availableFrom=' + this.availableFrom + 
                                       '&availableTo=' + this.availableTo)
@@ -64,6 +67,71 @@ export class Index {
           .then(rows => {this.numberImages = this.rows[0].numberImages});
   }
 
+  filterChangeBrand(){
+    console.log("Filter Change changing Brand");
+    if(event)
+      if(event.detail)
+        if(event.detail.value){
+          this.selectedBrand = event.detail.value;
+          console.log("value:"+event.detail.value)
+        }
+    console.log("Filter change called, Brand: " + this.selectedBrand);
+    this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
+                                      '&brand=' + this.selectedBrand + 
+                                     '&season=' + encodeURI(this.selectedSeason) + 
+                                      '&theme='+ this.selectedTheme)
+          .then(response => response.json())
+          .then(rows => {
+            this.rows = rows;
+          });
+
+  }
+
+  filterChangeSeason(){
+    console.log("Filter Change changing Season");
+    this.selectedSeason = '';
+    if(event)
+      if(event.detail)
+        if(event.detail.value){
+          this.selectedSeason = event.detail.value;
+          console.log("value:"+event.detail.value)
+        }
+    console.log("Filter change called, Season: " + this.selectedSeason);
+    this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
+                                      '&brand=' + this.selectedBrand + 
+                                     '&season=' + encodeURI(this.selectedSeason) + 
+                                      '&theme='+ this.selectedTheme)
+          .then(response => response.json())
+          .then(rows => {
+            this.rows = rows;
+          })
+
+  }
+
+    filterChangeTheme(){
+    console.log("Filter Change changing Theme");
+    this.selectedTheme = '';
+    if(event)
+      if(event.detail)
+        if(event.detail.value){
+          if(event.detail.value=='All') event.detail.value = '';
+          if(event.detail.value=='Select') event.detail.value = '';
+
+          this.selectedTheme = event.detail.value;
+          console.log("value:"+event.detail.value)
+        }
+    console.log("Filter change called, Theme: " + this.selectedTheme);
+    this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
+                                      '&brand=' + this.selectedBrand + 
+                                     '&season=' + encodeURI(this.selectedSeason) + 
+                                     // '&season=' + this.selectedSeason + 
+                                      '&theme='+ this.selectedTheme)
+          .then(response => response.json())
+          .then(rows => {
+            this.rows = rows;
+          })
+
+  }
 
   constructor(http, eventAggregator,dialogService,sampleRequestService,userService) {
     http.configure(config => {
@@ -112,6 +180,13 @@ export class Index {
       });
     }
 
+    this.filterChangeBrand();
+
+    var parent = this;
+    $('input[type=search]').on('search', function () {
+    // search logic here
+    // this function will be executed on click of X (clear button)
+      parent.filterChangeBrand(event)});
 
     // Three dots Menu dropdown close when click outside
     $('body').click(function() {      

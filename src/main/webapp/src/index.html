@@ -273,11 +273,11 @@
                                     </div> -->
                                     <!-- Brand -->
                                     <div class="grid-row-col">
-                                        <filters-designer change.delegate="filterChange($event)" ></filters-designer>
+                                        <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>
                                     </div>
                                     <!-- Seasons -->
                                     <div class="grid-row-col">
-                                        <filters-season season.bind="season" change.delegate="filterChange($event)"></filters-season>
+                                        <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
                                     </div>
                                     <!-- Type -->
                                     <div class="grid-row-col">
@@ -302,7 +302,7 @@
                                 <filters-search></filters-search>
                             </div>
                             <div class="grid-row-col">
-                                <filters-season season.bind="season" change.delegate="filterChange($event)"></filters-season>
+                                <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
                             </div>
                             <div class="grid-row-col">
                                 <filters-color></filters-color>
@@ -353,10 +353,10 @@
                         </div>
                         <div class="grid-row">
                             <div class="grid-row-col">
-                                <filters-designer></filters-designer>
+                                <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>
                             </div>
                             <div class="grid-row-col">
-                                <filters-season season.bind="season" change.delegate="filterChange($event)"></filters-season>
+                                <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
                             </div>
                             <div class="grid-row-col">
                                 <filters-color></filters-color>
@@ -370,10 +370,10 @@
                                 <filters-search></filters-search>
                             </div>
                             <div class="grid-row-col">
-                                <filters-designer></filters-designer>
+                                <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>
                             </div>
                             <div class="grid-row-col">
-                                <filters-season></filters-season>
+                                <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
                             </div>                    
                             <div class="grid-row-col"></div>            
                         </div>
