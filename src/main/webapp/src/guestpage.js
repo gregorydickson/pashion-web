@@ -11,20 +11,16 @@ import {busy} from './services/busy';
 export class Guestpage {
  
   rows = [];
- // seasons = [];
-
- // colors = [];
- // themes = [];
   
   selectedBrand = 37;
   selectedSeason = '';
-
- // selectedColor = '';
   selectedTheme = '';
   searchText = '';
   
   
 
+// kinda the master filter change, as the others theme and season require different semantics
+// on all and selected
   filterChangeBrand(){
     console.log("Filter Change changing Brand");
     if(event)
@@ -112,32 +108,24 @@ export class Guestpage {
     this.dialogService = dialogService;
     this.busy = busy;
 
-    this.boundHandler = this.handleKeyInput.bind(this);
   }
 
 
   attached(){
     this.filterChangeBrand();
-    document.getElementById('search-images').addEventListener('keypress', this.boundHandler, false);
 
     var parent = this;
     $('input[type=search]').on('search', function () {
     // search logic here
     // this function will be executed on click of X (clear button)
-      parent.filterChange(event)});
+      parent.filterChangeBrand(event)});
   }
 
   detached() {
-   window.removeEventListener('keypress', this.boundHandler);
   }
 
 
   activate() {
-   // return Promise.all([
-     // this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
-      //this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors),
-     // this.http.fetch('/dashboard/themes').then(response => response.json()).then(themes => this.themes = themes)
-  //  ]);
   }
 
 
@@ -157,16 +145,6 @@ export class Guestpage {
         menu.classList.toggle("blue-image");
       });
   }
-
-    handleKeyInput(event) {
-   console.log(event);
-    if(event.which == 13 && event.srcElement.id === 'search-images') {
-      console.log("user hit enter");
-      this.filterChange(event);
-    }
-  }
-
-
 
 }
 
