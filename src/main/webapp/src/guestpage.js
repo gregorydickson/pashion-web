@@ -40,7 +40,7 @@ export class Guestpage {
             this.rows = rows;
           })
 
-         .then (result => $("img.lazy").unveil()) // initial unveil of first images on load
+         .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
          .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow')) // scroll to top
           ;
   }
@@ -65,7 +65,7 @@ export class Guestpage {
             this.rows = rows;
           })
 
-         .then (result => $("img.lazy").unveil()) // initial unveil of first images on load
+         .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
          .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow')) // scroll to top
           ;
   }
@@ -93,7 +93,7 @@ export class Guestpage {
             this.rows = rows;
           })
 
-         .then (result => $("img.lazy").unveil()) // initial unveil of first images on load
+         .then (result => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
          .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow')) // scroll to top
           ;
   }
@@ -112,7 +112,7 @@ export class Guestpage {
 
 
   attached(){
-    this.filterChangeBrand();
+    this.filterChangeBrand(); // .then($("img.lazy").unveil());
 
     var parent = this;
     $('input[type=search]').on('search', function () {
@@ -121,15 +121,15 @@ export class Guestpage {
       parent.filterChangeBrand(event)});
 
     // scroll handler to fire unveil
-    $("#mainScrollWindow").on('scroll',function(){$("img.lazy").unveil();});
+    //$("#mainScrollWindow").on('scroll',function(){$("img.lazy").unveil();});
+    //
+    // kludge for IE to get started
+    //setTimeout (function () {$("img.lazy").unveil();}, 3000);
   }
 
   detached() {
   }
 
-
-  activate() {
-  }
 
 
   createZoomDialog(item,rowNumber,itemNumber) {
