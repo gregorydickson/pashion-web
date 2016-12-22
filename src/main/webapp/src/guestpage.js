@@ -11,17 +11,20 @@ import {busy} from './services/busy';
 export class Guestpage {
  
   rows = [];
+  results = 0;
   
   selectedBrand = 37;
   selectedSeason = '';
   selectedTheme = '';
   searchText = '';
+  busy;
   
   
 
 // kinda the master filter change, as the others theme and season require different semantics
 // on all and selected
   filterChangeBrand(){
+    this.busy.on();
     console.log("Filter Change changing Brand");
     if(event)
       if(event.detail)
@@ -30,6 +33,7 @@ export class Guestpage {
           console.log("value:"+event.detail.value)
         }
     console.log("Filter change called, Brand: " + this.selectedBrand);
+    this.results = 0;
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                      '&season=' + encodeURI(this.selectedSeason) + 
@@ -38,6 +42,11 @@ export class Guestpage {
           .then(response => response.json())
           .then(rows => {
             this.rows = rows;
+            this.busy.off();
+            if (rows.length >0) {
+              this.results = (rows.length -1) * rows[0].numberImagesThisRow;
+              this.results += rows[rows.length-1].numberImagesThisRow;
+            }
           })
 
          .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
@@ -46,6 +55,7 @@ export class Guestpage {
   }
 
   filterChangeSeason(){
+    this.busy.on();
     console.log("Filter Change changing Season");
     this.selectedSeason = '';
     if(event)
@@ -55,6 +65,8 @@ export class Guestpage {
           console.log("value:"+event.detail.value)
         }
     console.log("Filter change called, Season: " + this.selectedSeason);
+
+    this.results = 0;
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                      '&season=' + encodeURI(this.selectedSeason) + 
@@ -63,6 +75,11 @@ export class Guestpage {
           .then(response => response.json())
           .then(rows => {
             this.rows = rows;
+            this.busy.off();
+            if (rows.length >0) {
+              this.results = (rows.length -1) * rows[0].numberImagesThisRow;
+              this.results += rows[rows.length-1].numberImagesThisRow;
+            }
           })
 
          .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
@@ -71,6 +88,7 @@ export class Guestpage {
   }
 
     filterChangeTheme(){
+    this.busy.on();
     console.log("Filter Change changing Theme");
     this.selectedTheme = '';
     if(event)
@@ -83,6 +101,7 @@ export class Guestpage {
           console.log("value:"+event.detail.value)
         }
     console.log("Filter change called, Theme: " + this.selectedTheme);
+    this.results = 0;
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                      '&season=' + encodeURI(this.selectedSeason) + 
@@ -91,6 +110,11 @@ export class Guestpage {
           .then(response => response.json())
           .then(rows => {
             this.rows = rows;
+            this.busy.off();
+            if (rows.length >0) {
+              this.results = (rows.length -1) * rows[0].numberImagesThisRow;
+              this.results += rows[rows.length-1].numberImagesThisRow;
+            }
           })
 
          .then (result => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
