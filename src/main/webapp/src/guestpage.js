@@ -13,7 +13,7 @@ export class Guestpage {
   rows = [];
   results = 0;
   
-  selectedBrand = 37;
+  selectedBrand = 'All';
   selectedSeason = '';
   selectedTheme = '';
   searchText = '';
@@ -24,6 +24,7 @@ export class Guestpage {
 // kinda the master filter change, as the others theme and season require different semantics
 // on all and selected
   filterChangeBrand(){
+    if (event)if (event.detail)if(event.detail.value)if(event.detail.value==this.selectedBrand)return
     this.busy.on();
     console.log("Filter Change changing Brand");
     if(event)
@@ -55,6 +56,7 @@ export class Guestpage {
   }
 
   filterChangeSeason(){
+    if (event)if (event.detail)if(event.detail.value)if(event.detail.value==this.selectedSeason)return
     this.busy.on();
     console.log("Filter Change changing Season");
     this.selectedSeason = '';
@@ -65,7 +67,6 @@ export class Guestpage {
           console.log("value:"+event.detail.value)
         }
     console.log("Filter change called, Season: " + this.selectedSeason);
-
     this.results = 0;
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
@@ -88,6 +89,7 @@ export class Guestpage {
   }
 
     filterChangeTheme(){
+    if (event)if (event.detail)if(event.detail.value)if(event.detail.value==this.selectedTheme)return
     this.busy.on();
     console.log("Filter Change changing Theme");
     this.selectedTheme = '';
@@ -154,7 +156,10 @@ export class Guestpage {
   detached() {
   }
 
-
+  submitSearch () {
+    //console.log("submitSearch");
+    this.filterChangeBrand(event);
+  }
 
   createZoomDialog(item,rowNumber,itemNumber) {
     console.log("item number :"+itemNumber);

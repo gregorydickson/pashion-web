@@ -70,6 +70,11 @@
                     <div class="grid-content shrink">
                         <input style="min-width: 150px; margin-left:1rem;" type="search"  value.two-way="searchText" class="search-box" id="search-images" placeholder="Enter keywords" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Keywwords'">
                     </div>
+                    <!-- Search Button -->
+                    <div class="grid-content shrink">
+                        <a class="hollow button" click.delegate="submitSearch()" style="height:26px; font-size:1rem; line-height: 0.8rem; margin-left:-12px;">Search</a>
+                    </div>
+
                     <div class="medium-up-1 align-center grid-block" style="margin-top: 10px; margin-bottom:30px; overflow:hidden;">
                         <span> ${results} &nbsp; RESULTS </span>
                     </div>

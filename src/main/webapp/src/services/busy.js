@@ -1,5 +1,5 @@
 export class busy {
   active:number = 0;
-  on() { this.active++; }
-  off() { this.active--; }
+  on() { this.active = -1; }
+  off() { this.active = 0; }
 }
