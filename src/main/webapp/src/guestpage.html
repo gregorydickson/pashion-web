@@ -5,12 +5,27 @@
     <require from="./dashboard_filters/filters-theme"></require>
     <require from="./common/jquery.unveil"></require>
 
-    <div show.bind="busy.active">
+
+ <!--   <div show.bind="busy.active">
         <div class="spinner">
         </div>
         <div class="spinner-blocker">
         </div>
-    </div>
+    </div> -->
+
+        <!-- start preloader -->
+        <div class="preloader" show.bind="busy.active">
+            <div class="sk-spinner sk-spinner-wave">
+                <div class="sk-rect1"></div>
+                <div class="sk-rect2"></div>
+                <div class="sk-rect3"></div>
+                <div class="sk-rect4"></div>
+                <div class="sk-rect5"></div>
+            </div>
+        </div>
+        <!-- end preloader -->
+
+
     <!-- Main building block -->
     <div id="visNeeded2" class="vertical grid-block spa-background IEVisibility" >
 
@@ -35,7 +50,7 @@
             <div id="looks" class="vertical grid-block grid-block-vertical-shadow" style="overflow:hidden;">
                 <!-- search / filter area -->
                 <!-- top row -->
-                <div class="medium-up-1 align-center grid-block" style="margin-top: 5rem; margin-bottom: 1.5rem;">
+                <div class="medium-up-1 align-center grid-block" style="margin-top: 3rem; padding-bottom: 1rem; overflow:hidden;">
 
                     <!-- Brand -->
                     <div class="grid-content shrink" style="min-width: 225px;">
@@ -46,47 +61,32 @@
                         <filters-season change.delegate="filterChangeSeason($event)" ></filters-season>
                     </div>
 
-                <!--     <div class="grid-content shrink">
-                        <span class="inline-label">
-                            <span class="form-label" style="font-weight: 500">SEASON</span>
-                        <select style="min-width: 120px;" name="" id="" value.bind="selectedSeason" change.delegate="filterChange()">
-                            <option value="">Choose</option>
-                            <option value="">All</option>
-                            <option repeat.for="season of seasons" model.bind="season">${season}</option>
-                        </select>
-                        </span>
-                    </div> -->
-
-
                     <!-- Theme -->
                     <div class="grid-content shrink" style="min-width: 225px;">
                         <filters-theme change.delegate="filterChangeTheme($event)" ></filters-theme>
                     </div>
-                    <!-- theme 
-                    <div class="grid-content shrink">
-                        <span class="inline-label">
-                            <span class="form-label" style="font-weight: 500">THEME</span>
-                        <select style="min-width: 120px;" value.bind="selectedTheme" change.delegate="filterChange()">
-                            <option value="">Choose</option>
-                            <option value="">All</option>
-                            <option repeat.for="theme of themes" model.bind="theme">${theme}</option>
-                        </select>
-                        </span>
-                    </div> -->
 
                     <!-- Search -->
                     <div class="grid-content shrink">
-                        <input style="min-width: 170px; margin-left:1rem;" type="search"  value.two-way="searchText" class="search-box" id="search-images" placeholder="Enter keywords" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Keywwords'">
+                        <input style="min-width: 150px; margin-left:1rem;" type="search"  value.two-way="searchText" class="search-box" id="search-images" placeholder="Enter keywords" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Keywwords'">
+                    </div>
+                    <!-- Search Button -->
+                    <div class="grid-content shrink">
+                        <a class="hollow button" click.delegate="submitSearch()" style="height:26px; font-size:1rem; line-height: 0.8rem; margin-left:-12px;">Search</a>
+                    </div>
+
+                    <div class="medium-up-1 align-center grid-block" style="margin-top: 10px; margin-bottom:30px; overflow:hidden;">
+                        <span> ${results} &nbsp; RESULTS </span>
                     </div>
 
                 </div>                
                 
                 <!-- Images/Looks -->
-                <div class="cards-list-wrap">
+                <div id="mainScrollWindow" class="cards-list-wrap">
                 
                     <div class="cards-list" repeat.for="row of rows" >
 
-                        <div class="card" repeat.for="i of row.numberImagesThisRow" css="width: ${row.numberImagesThisRowPC}%;">
+                        <div class="card" style="min-height: 158px" repeat.for="i of row.numberImagesThisRow" css="width: ${row.numberImagesThisRowPC}%;">
 
                             <!-- Main image 
                             <div id="card-${row.items[i].id}" class="card-image">
