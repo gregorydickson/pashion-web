@@ -21,6 +21,7 @@ class SearchableItemController {
         Season season = null
         def keywords = null
         def theme = null
+        int maxRInt = params.maxR.toInteger()
 
 
         if(params.itemType != null && params.itemType != "")
@@ -36,8 +37,7 @@ class SearchableItemController {
 
         if(params.season != "")
             season = Season.findByName(URLDecoder.decode(params.season))
-            
-        
+                   
 
         if(params.availableFrom != null && params.availableFrom != "" )
             availableFrom = dateFormat.parse(params.availableFrom)
@@ -59,6 +59,7 @@ class SearchableItemController {
         log.info "theme:"+theme
         log.info "availableFrom:"+availableFrom
         log.info "availableTo:"+ availableTo
+        log.info "max Results:"+ maxRInt
         def criteria = SearchableItem.createCriteria()
         
         List results = criteria.listDistinct () {
@@ -82,6 +83,7 @@ class SearchableItemController {
                         }
                     }
                 }
+                maxResults(maxRInt)
                 cache true
             } 
 
