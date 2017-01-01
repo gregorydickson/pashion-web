@@ -17,6 +17,7 @@ export class Guestpage {
   selectedSeason = '';
   selectedTheme = '';
   searchText = '';
+  maxR = 250;
   busy;
   
   
@@ -39,7 +40,8 @@ export class Guestpage {
                                       '&brand=' + this.selectedBrand + 
                                      '&season=' + encodeURI(this.selectedSeason) + 
                                      // '&season=' + this.selectedSeason + 
-                                      '&theme='+ this.selectedTheme)
+                                      '&theme='+ this.selectedTheme +
+                                      '&maxR=' + this.maxR)
           .then(response => response.json())
           .then(rows => {
             this.rows = rows;
@@ -72,7 +74,8 @@ export class Guestpage {
                                       '&brand=' + this.selectedBrand + 
                                      '&season=' + encodeURI(this.selectedSeason) + 
                                      // '&season=' + this.selectedSeason + 
-                                      '&theme='+ this.selectedTheme)
+                                      '&theme='+ this.selectedTheme + 
+                                      '&maxR=' + this.maxR)
           .then(response => response.json())
           .then(rows => {
             this.rows = rows;
@@ -108,7 +111,8 @@ export class Guestpage {
                                       '&brand=' + this.selectedBrand + 
                                      '&season=' + encodeURI(this.selectedSeason) + 
                                      // '&season=' + this.selectedSeason + 
-                                      '&theme='+ this.selectedTheme)
+                                      '&theme='+ this.selectedTheme +
+                                      '&maxR=' + this.maxR)
           .then(response => response.json())
           .then(rows => {
             this.rows = rows;
