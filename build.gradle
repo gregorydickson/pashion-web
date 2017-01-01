@@ -97,6 +97,6 @@ war{
 
 assets {
     minifyJs = true
-    minifyCss = false
+    minifyCss = true
     developmentRuntime = true
 }

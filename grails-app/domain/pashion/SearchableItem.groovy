@@ -215,15 +215,17 @@ class SearchableItem {
 
 
 	static mapping = {
-		type index: 'type_idx'
+
+		brand index: 'brand_idx'
 		theme index: 'theme_idx'
 		fromDate index: 'fromDate_idx'
 		toDate index: 'toDate_idx'
-		color index: 'color_idx'
-		attributes index: 'attributes_idx'
 
-		sampleRequests lazy: false
-		samples lazy:false
+		attributes index: 'attributes_idx'
+		season index: 'season_idx'
+
+		sampleRequests lazy: true
+		samples lazy:true
 		type lazy:false
 		brandCollection lazy:false
 		city lazy:false

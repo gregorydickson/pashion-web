@@ -35,10 +35,9 @@ export class Guestpage {
         }
     console.log("Filter change called, Brand: " + this.selectedBrand);
     this.results = 0;
-    this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
+    this.http.fetch('/searchableItem/browseSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                      '&season=' + encodeURI(this.selectedSeason) + 
-                                     // '&season=' + this.selectedSeason + 
                                       '&theme='+ this.selectedTheme)
           .then(response => response.json())
           .then(rows => {
@@ -68,7 +67,7 @@ export class Guestpage {
         }
     console.log("Filter change called, Season: " + this.selectedSeason);
     this.results = 0;
-    this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
+    this.http.fetch('/searchableItem/browseSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                      '&season=' + encodeURI(this.selectedSeason) + 
                                      // '&season=' + this.selectedSeason + 
@@ -104,7 +103,7 @@ export class Guestpage {
         }
     console.log("Filter change called, Theme: " + this.selectedTheme);
     this.results = 0;
-    this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
+    this.http.fetch('/searchableItem/browseSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                      '&season=' + encodeURI(this.selectedSeason) + 
                                      // '&season=' + this.selectedSeason + 
