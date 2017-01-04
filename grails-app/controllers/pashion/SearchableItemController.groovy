@@ -159,6 +159,7 @@ class SearchableItemController {
 
     def browseSearch(){
         long startTime = System.currentTimeMillis()
+        int maxRInt = params.maxR.toInteger()
         SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
         
         Brand brand = null
@@ -198,7 +199,7 @@ class SearchableItemController {
                     keywords.each {  ilike('attributes', "%${it}%") }
                 }
                 if(season) eq('season',season)
-
+                maxResults(maxRInt)
                 cache true
             } 
 

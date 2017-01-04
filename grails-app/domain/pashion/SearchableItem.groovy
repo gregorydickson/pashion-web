@@ -213,7 +213,7 @@ class SearchableItem {
 
 	static hasMany = [ permissions:Permission, sampleRequests:SampleRequest, samples:SearchableItem]
 
-
+	
 	static mapping = {
 
 		brand index: 'brand_idx'

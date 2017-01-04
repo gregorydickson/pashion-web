@@ -22,7 +22,6 @@ class BrandCollection {
 	Date dateCreated
 	Date lastUpdated
 
-	static searchable = true
 
 	static belongsTo = [brand:Brand]
 

@@ -25,6 +25,13 @@ jasypt:
     password: Bkf227dkAet9HVztUhKS55f3SbBrey
     keyObtentionIterations: 1000
 
+elasticSearch:
+    datastoreImpl: hibernateDatastore
+    client:
+        mode: local
+    index:
+        store:
+            type: simplefs
 
 environments:
     development:
@@ -33,12 +40,11 @@ environments:
             url: jdbc:mysql://pashionweb.c7nidmmcu7kv.us-east-1.rds.amazonaws.com:3306/pashionweb
             username: pashionweb
             password: ETWxa634WwxGaW6v
-           
     test:
         dataSource:
             dbCreate: update
-            url: jdbc:mysql://pashionweb.c7nidmmcu7kv.us-east-1.rds.amazonaws.com:3306/pashionweb
-            username: pashionweb
+            url: jdbc:mysql://pashion-web.c7nidmmcu7kv.us-east-1.rds.amazonaws.com:3306/pashionweb
+            username: pashionbrowse
             password: ETWxa634WwxGaW6v
     production:
         dataSource:
