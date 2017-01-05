@@ -89,6 +89,8 @@ dependencies {
 
     compile 'com.pubnub:pubnub:3.7.10'
 
+    compile 'com.logentries:logentries-appender:1.1.36'
+
 
 }
 war{
