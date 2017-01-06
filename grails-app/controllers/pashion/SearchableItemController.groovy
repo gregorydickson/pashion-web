@@ -21,8 +21,6 @@ class SearchableItemController {
         Season season = null
         def keywords = null
         def theme = null
-        int maxRInt = params.maxR.toInteger()
-
 
         if(params.itemType != null && params.itemType != "")
             type = SearchableItemType.findByDisplay(params.itemType)
@@ -59,7 +57,7 @@ class SearchableItemController {
         log.info "theme:"+theme
         log.info "availableFrom:"+availableFrom
         log.info "availableTo:"+ availableTo
-        log.info "max Results:"+ maxRInt
+
         def criteria = SearchableItem.createCriteria()
         
         List results = criteria.listDistinct () {
@@ -83,7 +81,6 @@ class SearchableItemController {
                         }
                     }
                 }
-                maxResults(maxRInt)
                 cache true
             } 
 

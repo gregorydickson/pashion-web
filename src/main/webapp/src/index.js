@@ -160,6 +160,7 @@ export class Index {
       this.user = this.userService.getUser().then(user => {
         this.user = user;
         if (this.user.type ==="guest") window.location.href = '/user/login';
+        if (this.user.type === "brand") this.selectedBrand = user.companyId;
       })
 
     ]);
