@@ -171,7 +171,8 @@ export class Index {
               this.availableTo = response.elementValue;
             if(response.elementId === 'datepickerfrom') 
               this.availableFrom = response.elementValue;
-            this.filterChange();
+            if((this.availableTo && this.availableFrom) || (this.availableFrom) )
+              this.filterChange();
             
     });
     let show = this.userService.show();

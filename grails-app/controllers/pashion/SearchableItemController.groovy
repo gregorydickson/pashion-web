@@ -33,7 +33,7 @@ class SearchableItemController {
             brand = Brand.get(params.brand)
         
 
-        if(params.season != "")
+        if(params.season != "" && params.season != null)
             season = Season.findByName(URLDecoder.decode(params.season))
                    
 
