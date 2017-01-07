@@ -55,7 +55,7 @@
         <!-- footer -->
         <div class="footer title-bar">
             <div class="center nav-label-footer">      
-                <span class="copyright">&copy;2016 PASHION Ltd. All Rights Reserved.</span>
+                <span class="copyright">&copy;2017 PASHION Ltd. All Rights Reserved.</span>
             </div>
             <div class="left nav-label-footer">       
                 <!-- <span style="margin-right: 0.5rem;"><a href="http://www.pashiontool.com" target="_blank">ABOUT</a></span> -->

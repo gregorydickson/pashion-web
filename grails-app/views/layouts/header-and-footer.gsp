@@ -51,7 +51,7 @@
                 <a href="#"><img src="/assets/indigitalimages_logo.png" style="width:120px; height:auto;" /></a>
             </div>
             <!-- <span class="left nav-label-footer"><a href="#">CONTACT</a></span> -->
-            <span class="right copyright">&copy;2016 PASHION Ltd. All Rights Reserved.</span>
+            <span class="right copyright">&copy;2017 PASHION Ltd. All Rights Reserved.</span>
         </div>
     <div>
 </body>

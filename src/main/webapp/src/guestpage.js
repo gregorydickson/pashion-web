@@ -5,9 +5,11 @@ import 'fetch';
 import {Zoom} from './zoom/zoom';
 import {UserService} from './services/userService';
 import {busy} from './services/busy';
+import {IntroductionGuest} from './hello/introductionGuest';
+import {NagGuest} from './hello/nagGuest';
 
 
-@inject(HttpClient,  DialogService, busy)
+@inject(HttpClient,  DialogService, busy, UserService)
 export class Guestpage {
  
   rows = [];
@@ -128,7 +130,7 @@ export class Guestpage {
   }
 
 
-  constructor(http,dialogService,busy) {
+  constructor(http,dialogService,busy, userService) {
     http.configure(config => {
       config
         .useStandardConfiguration();
@@ -136,24 +138,30 @@ export class Guestpage {
     this.http = http;
     this.dialogService = dialogService;
     this.busy = busy;
+    this.userService = userService;
 
   }
 
 
   attached(){
-    this.filterChangeBrand(); // .then($("img.lazy").unveil());
+    this.filterChangeBrand();
 
     var parent = this;
     $('input[type=search]').on('search', function () {
     // search logic here
     // this function will be executed on click of X (clear button)
-      parent.filterChangeBrand(event)});
+      parent.filterChangeBrand(event)
+    });
 
-    // scroll handler to fire unveil
-    //$("#mainScrollWindow").on('scroll',function(){$("img.lazy").unveil();});
-    //
-    // kludge for IE to get started
-    //setTimeout (function () {$("img.lazy").unveil();}, 3000);
+
+    let show = this.userService.show();
+    if(show){
+      // this.dialogService.open({viewModel: IntroductionGuest, model: "no-op" }).then(response => {
+      this.dialogService.open({viewModel: IntroductionGuest, model: "no-op" }).then(response => {
+        this.userService.introShown();
+      });
+    }
+
   }
 
   detached() {

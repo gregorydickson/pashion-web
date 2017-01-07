@@ -1,0 +1,35 @@
+<template>
+    
+   <ai-dialog style="width: auto;">
+        <ai-dialog-header>
+            <!-- header -->
+            <div class="grid-block align-center tool-header shrink ">
+                <div id="comms_panel" class="grid-block tool-header shrink">
+                    <span class="welcome-header">Welcome to PASHION Browse</span> 
+                    
+                </div>
+            </div>
+        </ai-dialog-header>
+      <ai-dialog-body style="width:400px;">
+
+        <span class="welcome-text">
+        Ways to browse:</span>
+
+        <ul style="margin-bottom: 0px;">
+            <li class="welcome-text">Choose one or 'All' designers ('All' are shown)</li>
+            <li class="welcome-text">Restrict to a season if you want</li>
+            <li class="welcome-text">Filter for a particular 'theme'</li>
+            <li class="welcome-text">Or simply search Google style </li>
+        </ul>
+
+        <span class="welcome-text">
+        <br>
+        Use PASHION browse for free, but join PASHION to get access to the full sample management platform.</span>
+
+
+      </ai-dialog-body>
+      <ai-dialog-footer>
+         <button click.delegate="close()">Start Browsing</button>
+      </ai-dialog-footer>
+   </ai-dialog>
+</template>
