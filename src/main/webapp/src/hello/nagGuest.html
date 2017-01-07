@@ -12,7 +12,7 @@
         </ai-dialog-header>
       <ai-dialog-body style="width:400px;">
 
-        <span class="welcome-text">
+       <!--<span class="welcome-text">
        Browse is just a small part of what PASHION can do. With the full platform you can:</span>
 
         <ul style="margin-bottom: 0px;">
@@ -20,7 +20,11 @@
             <li class="welcome-text">Communicate with your colleagues and others on the platform using the built in IM tool. </li>
             <li class="welcome-text">Automatically schedule courier pickups and drop-offs</li>
             <li class="welcome-text">Discuss looks and samples using the full visual interface</li>
-        </ul>
+        </ul> -->
+
+        <span class="welcome-text">
+       <br>Browse is just a tiny part of what the full PASHION platform can do...</span>
+
 
         <!-- <span class="welcome-text">
         <br>
@@ -29,7 +33,8 @@
 
       </ai-dialog-body>
       <ai-dialog-footer>
-         <button click.delegate="signUp()">Get More Information</button>
+         <button click.delegate="close()" style="background: white;">Close</button>
+         <button click.delegate="signUp()">Find Out More</button>
       </ai-dialog-footer>
    </ai-dialog>
 </template>

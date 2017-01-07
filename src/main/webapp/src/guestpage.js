@@ -157,7 +157,7 @@ export class Guestpage {
     let show = this.userService.show();
     if(show){
       // this.dialogService.open({viewModel: IntroductionGuest, model: "no-op" }).then(response => {
-      this.dialogService.open({viewModel: IntroductionGuest, model: "no-op" }).then(response => {
+      this.dialogService.open({viewModel: NagGuest, model: "no-op" }).then(response => {
         this.userService.introShown();
       });
     }

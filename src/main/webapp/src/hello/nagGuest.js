@@ -25,5 +25,11 @@ export class NagGuest {
     
   }
 
+  signUp () {
+
+    window.open("http://www.pashiontool.com/beta",'_blank');
+    this.controller.close();
+
+  }
 
 }
