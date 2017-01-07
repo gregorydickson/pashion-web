@@ -1,3 +1,20 @@
+# Databases
+
+## Development Database - contains bookable samples:
+* pashionweb.c7nidmmcu7kv.us-east-1.rds.amazonaws.com:3306/pashionweb
+* username: pashionweb
+* password: ETWxa634WwxGaW6v
+
+## Browse Database - listed as test in application.yml
+* pashion-web.c7nidmmcu7kv.us-east-1.rds.amazonaws.com:3306/pashionweb
+* username: pashionbrowse
+* password: ETWxa634WwxGaW6v
+
+## SPA database - marked as Production in application.yml
+* pashion-prod.cdtseeb9vmzk.eu-central-1.rds.amazonaws.com:3306/pashionprod
+* username: pashionprod
+* password: 2Mc9Nf17gBzyGs*a4$WS
+
 # Pashion 
 
 To setup the Development Environment:
