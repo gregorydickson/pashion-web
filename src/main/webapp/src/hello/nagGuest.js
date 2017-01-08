@@ -8,7 +8,7 @@ import {DateFormat} from 'common/dateFormat';
 @inject(DialogController)
 export class NagGuest {
   
-  user = {};
+
 
   constructor(controller){
     this.controller = controller;
@@ -21,14 +21,18 @@ export class NagGuest {
   
   close(){
 
-    this.controller.close();
+    this.controller.close(false);
     
+  }
+
+  attached () {
+
   }
 
   signUp () {
 
     window.open("http://www.pashiontool.com/beta",'_blank');
-    this.controller.close();
+    this.controller.close(true);
 
   }
 

@@ -21,6 +21,11 @@ export class Guestpage {
   searchText = '';
   maxR = 250;
   busy;
+
+  nagTimeout = 45000;
+  nagMultiplier = 2;
+  nagMaxTimeout = 600000;
+  nagVisted = false;
   
   
 
@@ -154,15 +159,41 @@ export class Guestpage {
     });
 
 
+    // welcome banner
     let show = this.userService.show();
     if(show){
-      // this.dialogService.open({viewModel: IntroductionGuest, model: "no-op" }).then(response => {
-      this.dialogService.open({viewModel: NagGuest, model: "no-op" }).then(response => {
+      this.dialogService.open({viewModel: IntroductionGuest, model: "no-op" }).then(
+        response => {
         this.userService.introShown();
+        // nag banner
+        this.nagTimer();
       });
     }
 
+
+  
   }
+
+  nagTimer() {
+    console.log ("nagTimer started with timeout at secs: " + this.nagTimeout/1000);
+    if (!this.nagVisted) {
+      var parent = this;
+      setTimeout (function () 
+        {
+          parent.dialogService.open({viewModel: NagGuest, model: "no-op" })
+          .then(response => {
+                             // console.log("nag dialog was cancelled: " + response.wasCancelled);
+                             if (response.wasCancelled) {
+                                parent.nagTimeout = parent.nagTimeout * parent.nagMultiplier;
+                                if(parent.nagTimeout >= parent.nagMaxTimeout) parent.nagTimeout = parent.nagMaxTimeout;
+                                parent.nagTimer();}
+                            else {
+                              this.nagVisted = true;
+                            }})}, 
+        this.nagTimeout);
+    }
+  }
+
 
   detached() {
   }

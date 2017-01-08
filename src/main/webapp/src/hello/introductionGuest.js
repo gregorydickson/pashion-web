@@ -8,7 +8,7 @@ import {DateFormat} from 'common/dateFormat';
 @inject(DialogController)
 export class IntroductionGuest {
   
-  user = {};
+
 
   constructor(controller,userService){
     this.controller = controller;
