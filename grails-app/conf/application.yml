@@ -43,17 +43,17 @@ environments:
     test:
         dataSource:
             dbCreate: update
-            url: jdbc:mysql://pashion-web.c7nidmmcu7kv.us-east-1.rds.amazonaws.com:3306/pashionweb
-            username: pashionbrowse
-            password: ETWxa634WwxGaW6v
+            url: 
+            username: 
+            password: 
     production:
         dataSource:
             dbCreate: update
-            url: jdbc:mysql://pashion-prod.cdtseeb9vmzk.eu-central-1.rds.amazonaws.com:3306/pashionprod
+            url: jdbc:mysql://pashion-prod.cnjmlfc6tctw.eu-west-1.rds.amazonaws.com:3306/pashionprod
             username: pashionprod
             password: 2Mc9Nf17gBzyGs*a4$WS
-            # vpc: vpc-633c2e0a
-            # security group: rds-launch-wizard-1 (sg-9e134ff6)
+            # vpc: vpc-0b88176e
+            # security group: rds-launch-wizard-1 (sg-47b6f321)
 
 ---
 ---
