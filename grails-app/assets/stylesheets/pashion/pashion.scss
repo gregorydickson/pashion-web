@@ -51,6 +51,17 @@
   height: 36px;
 }
 
+.info-header {
+  background-color: white;
+  min-height: 5rem;
+  max-height: 4rem;
+  line-height: 7rem;
+}
+.info-header span {
+  vertical-align: middle;
+  display: inline-block;
+}
+
 .tool-header {
   background-color: $white-two;
   min-height: 3rem;

@@ -22,9 +22,9 @@ export class Guestpage {
   maxR = 250;
   busy;
 
-  nagTimeout = 45000;
+  nagTimeout = 120000;
   nagMultiplier = 2;
-  nagMaxTimeout = 600000;
+  nagMaxTimeout = 480000;
   nagVisted = false;
   
   
