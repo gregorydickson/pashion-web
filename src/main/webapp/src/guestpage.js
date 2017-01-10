@@ -31,7 +31,7 @@ export class Guestpage {
 
 // kinda the master filter change, as the others theme and season require different semantics
 // on all and selected
-  filterChangeBrand(){
+  filterChangeBrand(event){
     if (event)if (event.detail)if(event.detail.value)if(event.detail.value==this.selectedBrand)return
     this.busy.on();
     console.log("Filter Change changing Brand");
@@ -63,7 +63,7 @@ export class Guestpage {
           ;
   }
 
-  filterChangeSeason(){
+  filterChangeSeason(event){
     if (event)if (event.detail)if(event.detail.value)if(event.detail.value==this.selectedSeason)return
     this.busy.on();
     console.log("Filter Change changing Season");
@@ -97,7 +97,7 @@ export class Guestpage {
           ;
   }
 
-    filterChangeTheme(){
+    filterChangeTheme(event){
     if (event)if (event.detail)if(event.detail.value)if(event.detail.value==this.selectedTheme)return
     this.busy.on();
     console.log("Filter Change changing Theme");
@@ -198,7 +198,7 @@ export class Guestpage {
   detached() {
   }
 
-  submitSearch () {
+  submitSearch (event) {
     //console.log("submitSearch");
     this.filterChangeBrand(event);
   }
