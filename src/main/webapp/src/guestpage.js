@@ -22,7 +22,8 @@ export class Guestpage {
   maxR = 250;
   busy;
 
-  nagTimeout = 120000;
+  nagTimeout = 120000; // production
+  // nagTimeout = 5000; // test
   nagMultiplier = 2;
   nagMaxTimeout = 480000;
   nagVisted = false;
