@@ -1,6 +1,11 @@
+#cards-list {
+  display: flex; 
+  flex: 100 1 0;
+  overflow: hidden; 
+}
 .cards-list-wrap {
 	overflow-y: scroll;
-	height: 100vh;
+	overflow-x: hidden;
 }
 
 .cards-list {
@@ -125,3 +130,4 @@
 	border-bottom-width: 1rem; 
 	border-left-width: 1rem; 
 }
+
