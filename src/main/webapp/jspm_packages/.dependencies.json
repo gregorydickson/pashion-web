@@ -246,5 +246,6 @@
     "css": "jspm:css"
   },
   "github:systemjs/plugin-css@0.1.32": {},
-  "npm:aurelia-pal@1.1.1": {}
+  "npm:aurelia-pal@1.1.1": {},
+  "npm:aurelia-plugins-cookies@1.3.0": {}
 }

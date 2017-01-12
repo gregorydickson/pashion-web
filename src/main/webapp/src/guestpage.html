@@ -76,7 +76,8 @@
                     </div>
 
                     <div class="medium-up-1 align-center grid-block" style="margin-top: 10px; margin-bottom:30px; overflow:hidden;">
-                        <span> ${results} &nbsp; RESULTS </span>
+                        <span> ${results} &nbsp; RESULT </span>
+                        <span if.bind="((results>1) || (results==0))"> S </span>
                     </div>
 
                 </div>                
@@ -113,6 +114,11 @@
 
                         </div>                 
                     </div>
+
+                    <div class="medium-up-1 align-center grid-block" style="margin-top:3rem; margin-bottom:3rem;">
+                        <a href="http://www.pashiontool.com/beta" target="_blank" style="">Join Pashion to get more than ${maxR} results</a>
+                    </div>
+
                 </div>
                 <!-- white lip at bottom of scroll region -->
                 <div class="grid-content shrink scrolling-lip">

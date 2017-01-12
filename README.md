@@ -1,3 +1,16 @@
+# Databases
+
+## Development Database - contains bookable samples for testing and development:
+* pashionweb.c7nidmmcu7kv.us-east-1.rds.amazonaws.com:3306/pashionweb
+* username: pashionweb
+* password: ETWxa634WwxGaW6v
+
+
+## browse.pashiontool.com and Production Single Page Application(SPA) DB, marked as Production in application.yml
+* pashion-prod.cnjmlfc6tctw.eu-west-1.rds.amazonaws.com:3306/pashionprod
+* username: pashionprod
+* password: 2Mc9Nf17gBzyGs*a4$WS
+
 # Pashion 
 
 To setup the Development Environment:
@@ -44,7 +57,7 @@ To setup the Development Environment:
 
 ## Notes on app deployment
 * The aurelia app can be bundled for a faster application load.
-* The Stormpath library requires the Oracle JDK to support encryption. However, the default AMIs used in Elastic Beanstalk come with Open JDK. I have created a custom ami with Java 8 and an Elastic Beanstalk extention for setting the alternative JDK to support loading of the Stormpath library. The ami is name: java8_102_2nd_try, id: ami-600c5277.
+* The Stormpath library requires the Oracle JDK to support encryption. However, the default AMIs used in Elastic Beanstalk come with Open JDK. I have created a custom ami with Java 8 and an Elastic Beanstalk extention for setting the alternative JDK to support loading of the Stormpath library. The ami is name: java8_102_2nd_try, id: ami-600c5277 (in US East amazon).
 
 ## To Build and Deploy browse.pashiontool.com
 
@@ -60,8 +73,8 @@ To setup the Development Environment:
 * from your grails terminal run `war`
 * login to Amazon Web Services
 * Under Services (in header, left side), choose Elastic Beanstalk
-* Ensure that you are in the US East (North Virginia), (in header, right side)
-* Under the pashion-dev application, choose the pashion environment (the only green box on the screen, it should not say 'prod' anywhere)
+* Ensure that you are in the EU (Ireland) data center, (in header, right side)
+* Under the pashion-spa application, choose the browse-pashion environment.
 * In the center of the screen, under where it says 'Running Version', click on Upload and Deploy. Note the existing version number of the application.
 * Input a new version number by incrementing the last version number. Put this number into the Version Label.
 * Click on 'Choose File' and navigate to your pashion-web/build/libs directory.
@@ -72,24 +85,24 @@ To setup the Development Environment:
 * run `gulp unbundle` in your gulp terminal to return to development mode. (then run `gulp watch`)
 * to reboot and update the cache of themes and seasons use the Elastic beanstalk 'Restart Instances'
 
-## Deployment of the Single Page Application on http://pashion-spa.eu-west-1.elasticbeanstalk.com/
+## Deployment of the Single Page Application 
 
 ### Notes 
 * A custom Amazon Machine Image is required to run the application. This is because the default AMIs come with Open JDK. The StormPath JDK requires Oracle JDK: 
 https://github.com/stormpath/stormpath-sdk-java/issues/17
 * One custom AMI has been created and is in the US East and London regions. FYI, you can copy AMIs from region to region. And you have to in order to use them in other regions. http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/CopyingAMIs.html
-* Instructions on using the Custom AMI in Elasti Beanstalk: http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.managing.ec2.html
-* AMI ID: ami-06d1db62 (java8_102_2nd_try)
+* Instructions on using the Custom AMI in Elastic Beanstalk: http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.managing.ec2.html
+* AMI Name: (java8_102_2nd_try)
 * An elastic beanstalk extension is in src/main/webapp/.ebextensions that sets the Oracle JDK as the primary JDK in the machine image.
-* The curent AMI is one that requires a certain type of virtualization. An ec2 m1-small works but the m1 types are only available in certain regions.
+* The curent AMI is one that requires a certain type of virtualization and an m1 generation EC2 instance. An ec2 m1-small works but the m1 types are only available in certain regions.
 
 ### To deploy the application
 * from your gulp terminal run `gulp bundle` (This is optional)
-* from your grails terminal run `test war`
+* from your grails terminal run `war`
 * login to Amazon Web Services
 * Under Services (in header, left side), choose Elastic Beanstalk
 * Ensure that you are in Ireland region, (in header, right side)
-* Under the pashion-spa application, choose the pashion-spa environment
+* Under the pashion-spa application, choose the pashion-SpA environment
 * In the center of the screen, under where it says 'Running Version', click on Upload and Deploy. Note the existing version number of the application.
 * Input a new version number by incrementing the last version number. Put this number into the Version Label.
 * Click on 'Choose File' and navigate to your pashion-web/build/libs directory.
@@ -98,9 +111,6 @@ https://github.com/stormpath/stormpath-sdk-java/issues/17
 * The first time you access it, it might say 'Proxy Error'. Try again after two minutes.
 * If you bundled the application in the first step, run `gulp unbundle` in your gulp terminal to return to development mode. (then run `gulp watch`)
 
-## dev database on aws
-user: pashionweb
-pass: ETWxa634WwxGaW6v
 
 ## Image Upload
 

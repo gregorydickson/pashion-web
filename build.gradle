@@ -10,7 +10,7 @@
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.11.6"
         classpath "org.grails.plugins:hibernate4:5.0.10"
-        classpath "org.grails.plugins:views-gradle:1.1.2"
+        classpath "org.grails.plugins:views-gradle:1.1.3"
         classpath 'com.agileorbit:schwartz:1.0.0'
     }
 }
@@ -42,6 +42,8 @@ dependencyManagement {
     }
     applyMavenExclusions false
 }
+def elasticsearchVersion = '2.3.3'
+ext['elasticsearch.version'] = elasticsearchVersion
 
 dependencies {
     compile "org.springframework.boot:spring-boot-starter-logging"
@@ -72,10 +74,7 @@ dependencies {
     runtime 'mysql:mysql-connector-java:5.1.36'
     //for hashing passwords
     
-   
-    compile "org.grails.plugins:views-json:1.1.2"
-
-    runtime 'org.grails.plugins:grails-console:2.0.8'
+    compile "org.grails.plugins:views-json:1.1.3"
 
     compile "com.stormpath.sdk:stormpath-sdk-api:1.1.1"
     runtime "com.stormpath.sdk:stormpath-sdk-httpclient:1.1.1"
@@ -90,6 +89,9 @@ dependencies {
 
     compile 'com.pubnub:pubnub:3.7.10'
 
+    compile 'com.logentries:logentries-appender:1.1.36'
+
+
 }
 war{
     zip64 true
@@ -97,6 +99,6 @@ war{
 
 assets {
     minifyJs = true
-    minifyCss = false
+    minifyCss = true
     developmentRuntime = true
 }

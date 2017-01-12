@@ -8,11 +8,25 @@ appender('STDOUT', ConsoleAppender) {
     }
 }
 
-root(ERROR, ['STDOUT'])
-logger("org.quartz", INFO, ['STDOUT'], false)
-logger("grails.app.services", INFO, ['STDOUT'], false)
-logger("grails.app.controllers", DEBUG, ['STDOUT'], false)
-logger("grails.app.domain", DEBUG, ['STDOUT'], false)
+
+
+appender( 'LE', com.logentries.logback.LogentriesAppender){
+   Token = "1267ef7c-b2d9-4314-9613-f38ef48ee7dd"
+   Ssl = "false"
+   facility = "USER"
+   encoder(PatternLayoutEncoder) {
+            pattern = "%d{EEE MMM dd HH:mm:ss ZZZ yyyy}:%msg%n"
+        }
+}
+
+root(ERROR, ['STDOUT', 'LE'])
+
+
+
+logger("org.quartz", INFO, ['STDOUT','LE'], false)
+logger("grails.app.services", INFO, ['STDOUT','LE'], false)
+logger("grails.app.controllers", DEBUG, ['STDOUT','LE'], false)
+logger("grails.app.domain", DEBUG, ['STDOUT','LE'], false)
 logger("asset.pipeline.jsass", INFO, ['STDOUT'], false)
 logger("asset.pipeline", INFO, ['STDOUT'], false)
 

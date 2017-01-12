@@ -5,9 +5,11 @@ import 'fetch';
 import {Zoom} from './zoom/zoom';
 import {UserService} from './services/userService';
 import {busy} from './services/busy';
+import {IntroductionGuest} from './hello/introductionGuest';
+import {NagGuest} from './hello/nagGuest';
 
 
-@inject(HttpClient,  DialogService, busy)
+@inject(HttpClient,  DialogService, busy, UserService)
 export class Guestpage {
  
   rows = [];
@@ -17,13 +19,20 @@ export class Guestpage {
   selectedSeason = '';
   selectedTheme = '';
   searchText = '';
+  maxR = 250;
   busy;
+
+  nagTimeout = 120000; // production
+  // nagTimeout = 5000; // test
+  nagMultiplier = 2;
+  nagMaxTimeout = 480000;
+  nagVisted = false;
   
   
 
 // kinda the master filter change, as the others theme and season require different semantics
 // on all and selected
-  filterChangeBrand(){
+  filterChangeBrand(event){
     if (event)if (event.detail)if(event.detail.value)if(event.detail.value==this.selectedBrand)return
     this.busy.on();
     console.log("Filter Change changing Brand");
@@ -35,11 +44,11 @@ export class Guestpage {
         }
     console.log("Filter change called, Brand: " + this.selectedBrand);
     this.results = 0;
-    this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
+    this.http.fetch('/searchableItem/browseSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
-                                     '&season=' + encodeURI(this.selectedSeason) + 
-                                     // '&season=' + this.selectedSeason + 
-                                      '&theme='+ this.selectedTheme)
+                                      '&season=' + encodeURI(this.selectedSeason) + 
+                                      '&theme='+ this.selectedTheme +
+                                      '&maxR=' + this.maxR)
           .then(response => response.json())
           .then(rows => {
             this.rows = rows;
@@ -55,7 +64,7 @@ export class Guestpage {
           ;
   }
 
-  filterChangeSeason(){
+  filterChangeSeason(event){
     if (event)if (event.detail)if(event.detail.value)if(event.detail.value==this.selectedSeason)return
     this.busy.on();
     console.log("Filter Change changing Season");
@@ -68,11 +77,12 @@ export class Guestpage {
         }
     console.log("Filter change called, Season: " + this.selectedSeason);
     this.results = 0;
-    this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
+    this.http.fetch('/searchableItem/browseSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                      '&season=' + encodeURI(this.selectedSeason) + 
                                      // '&season=' + this.selectedSeason + 
-                                      '&theme='+ this.selectedTheme)
+                                      '&theme='+ this.selectedTheme + 
+                                      '&maxR=' + this.maxR)
           .then(response => response.json())
           .then(rows => {
             this.rows = rows;
@@ -88,7 +98,7 @@ export class Guestpage {
           ;
   }
 
-    filterChangeTheme(){
+    filterChangeTheme(event){
     if (event)if (event.detail)if(event.detail.value)if(event.detail.value==this.selectedTheme)return
     this.busy.on();
     console.log("Filter Change changing Theme");
@@ -104,11 +114,12 @@ export class Guestpage {
         }
     console.log("Filter change called, Theme: " + this.selectedTheme);
     this.results = 0;
-    this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
+    this.http.fetch('/searchableItem/browseSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                      '&season=' + encodeURI(this.selectedSeason) + 
                                      // '&season=' + this.selectedSeason + 
-                                      '&theme='+ this.selectedTheme)
+                                      '&theme='+ this.selectedTheme +
+                                      '&maxR=' + this.maxR)
           .then(response => response.json())
           .then(rows => {
             this.rows = rows;
@@ -125,7 +136,7 @@ export class Guestpage {
   }
 
 
-  constructor(http,dialogService,busy) {
+  constructor(http,dialogService,busy, userService) {
     http.configure(config => {
       config
         .useStandardConfiguration();
@@ -133,30 +144,62 @@ export class Guestpage {
     this.http = http;
     this.dialogService = dialogService;
     this.busy = busy;
+    this.userService = userService;
 
   }
 
 
   attached(){
-    this.filterChangeBrand(); // .then($("img.lazy").unveil());
+    this.filterChangeBrand();
 
     var parent = this;
     $('input[type=search]').on('search', function () {
     // search logic here
     // this function will be executed on click of X (clear button)
-      parent.filterChangeBrand(event)});
+      parent.filterChangeBrand(event)
+    });
 
-    // scroll handler to fire unveil
-    //$("#mainScrollWindow").on('scroll',function(){$("img.lazy").unveil();});
-    //
-    // kludge for IE to get started
-    //setTimeout (function () {$("img.lazy").unveil();}, 3000);
+
+    // welcome banner
+    let show = this.userService.show();
+    if(show){
+      this.dialogService.open({viewModel: IntroductionGuest, model: "no-op" }).then(
+        response => {
+        this.userService.introShown();
+        // nag banner
+        this.nagTimer();
+      });
+    }
+
+
+  
   }
+
+  nagTimer() {
+    console.log ("nagTimer started with timeout at secs: " + this.nagTimeout/1000);
+    if (!this.nagVisted) {
+      var parent = this;
+      setTimeout (function () 
+        {
+          parent.dialogService.open({viewModel: NagGuest, model: "no-op" })
+          .then(response => {
+                             // console.log("nag dialog was cancelled: " + response.wasCancelled);
+                             if (response.wasCancelled) {
+                                parent.nagTimeout = parent.nagTimeout * parent.nagMultiplier;
+                                if(parent.nagTimeout >= parent.nagMaxTimeout) parent.nagTimeout = parent.nagMaxTimeout;
+                                parent.nagTimer();}
+                            else {
+                              this.nagVisted = true;
+                            }})}, 
+        this.nagTimeout);
+    }
+  }
+
 
   detached() {
   }
 
-  submitSearch () {
+  submitSearch (event) {
     //console.log("submitSearch");
     this.filterChangeBrand(event);
   }

@@ -22,7 +22,6 @@ class SearchableItemController {
         def keywords = null
         def theme = null
 
-
         if(params.itemType != null && params.itemType != "")
             type = SearchableItemType.findByDisplay(params.itemType)
 
@@ -34,10 +33,9 @@ class SearchableItemController {
             brand = Brand.get(params.brand)
         
 
-        if(params.season != "")
+        if(params.season != "" && params.season != null)
             season = Season.findByName(URLDecoder.decode(params.season))
-            
-        
+                   
 
         if(params.availableFrom != null && params.availableFrom != "" )
             availableFrom = dateFormat.parse(params.availableFrom)
@@ -59,6 +57,7 @@ class SearchableItemController {
         log.info "theme:"+theme
         log.info "availableFrom:"+availableFrom
         log.info "availableTo:"+ availableTo
+
         def criteria = SearchableItem.createCriteria()
         
         List results = criteria.listDistinct () {
@@ -82,6 +81,122 @@ class SearchableItemController {
                         }
                     }
                 }
+                cache true
+            } 
+
+        long endTime = System.currentTimeMillis()
+        long duration = (endTime - startTime)
+        log.info "search duration:"+duration
+        startTime = System.currentTimeMillis()
+
+        def fixImagesPerRow = 5 
+        if(fixImagesPerRow > 5) fixImagesPerRow = 5
+        if(fixImagesPerRow < 3) fixImagesPerRow = 3
+        
+        Integer resultsSize = results.size()
+        log.info "results:"+resultsSize
+        
+        Integer rows = resultsSize/fixImagesPerRow  
+        
+        if(resultsSize % fixImagesPerRow > 0)
+            rows = rows + 1
+        List resultList = []
+        log.info "rows:"+rows
+        
+        def j = 0
+        for(def i=1; i<=rows; i++){
+
+            def arow = [:]
+            def item = []
+
+            arow.numberImagesThisRowPC = 100/fixImagesPerRow
+            if(j < resultsSize){
+                arow.numberImages = resultsSize
+                arow.numberImagesThisRow = 1
+                item << results[j]
+                j = j + 1
+            }
+            if(j < resultsSize ){
+                arow.numberImagesThisRow = 2
+                item << results[j]
+                j = j + 1
+            }
+            if(j < resultsSize && fixImagesPerRow >= 3){
+                arow.numberImagesThisRow = 3
+                item << results[j]
+                j = j + 1
+            }
+            if(j < resultsSize && fixImagesPerRow >= 4){
+                arow.numberImagesThisRow = 4
+                item << results[j]
+                j = j + 1
+            }
+            if(j < resultsSize && fixImagesPerRow >= 5) {
+                arow.numberImagesThisRow = 5
+                item << results[j]
+                j = j + 1
+            }
+            arow.items = item
+            resultList << arow
+        }
+        endTime = System.currentTimeMillis()
+        duration = (endTime - startTime)
+        log.info "collect results duration:"+duration
+        
+        startTime = System.currentTimeMillis()
+        render resultList as JSON
+        endTime = System.currentTimeMillis()
+        duration = (endTime - startTime)
+        log.info "JSON render duration:"+duration
+        log.info "**************************************************************"
+        
+        
+    }
+
+
+    def browseSearch(){
+        long startTime = System.currentTimeMillis()
+        int maxRInt = params.maxR.toInteger()
+        SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
+        
+        Brand brand = null
+
+        Season season = null
+        def keywords = null
+        def theme = null
+
+        if(params.theme != null && params.theme != "")
+            theme = params.theme
+
+        if(params.brand != "" || params.brand != "All")
+            brand = Brand.get(params.brand)
+        
+        if(params.season != "")
+            season = Season.findByName(URLDecoder.decode(params.season))
+        
+
+        if(params.searchtext != null && params.searchtext != "" && params.searchtext != "undefined"){
+            keywords = URLDecoder.decode(params.searchtext)
+            keywords = keywords.split(" ")
+        }
+        log.info "**************************  BROWSE SEARCH **********************"
+        log.info "Brand:"+brand
+        log.info "keywords:"+keywords
+        log.info "season:"+season
+        log.info "theme:"+theme
+
+        def criteria = SearchableItem.createCriteria()
+        
+        List results = criteria.list() {
+
+                isNotNull('image')
+                if(brand) eq('brand', brand)
+                if(theme) ilike('theme', "%${theme}%")
+                if(keywords) and {
+                    keywords.each {  ilike('attributes', "%${it}%") }
+                }
+                if(season) eq('season',season)
+                maxResults(maxRInt)
                 cache true
             } 
 

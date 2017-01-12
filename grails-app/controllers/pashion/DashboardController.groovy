@@ -27,15 +27,18 @@ class DashboardController {
         def user = session.user
         log.info "user:"+user
         def type
+        def companyId
         if(user.brand){
             type = 'brand'
+            companyId = user.brand.id
         } else if (user.pressHouse) {
             type = 'press'
+            companyId = user.pressHouse.id
         } else {
             type = 'guest'
         }
         //creating a map is more simple than a bunch of marshalling code
-        def userInfo = [email:user.email,id:user.id, type:type,name:user.name,surname:user.surname ] as JSON
+        def userInfo = [email:user.email,id:user.id, type:type,companyId:companyId, name:user.name,surname:user.surname ] as JSON
         render userInfo
     }
 

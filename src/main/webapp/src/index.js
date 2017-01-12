@@ -67,7 +67,7 @@ export class Index {
           .then(rows => {this.numberImages = this.rows[0].numberImages});
   }
 
-  filterChangeBrand(){
+  filterChangeBrand(event){
     console.log("Filter Change changing Brand");
     if(event)
       if(event.detail)
@@ -87,7 +87,7 @@ export class Index {
 
   }
 
-  filterChangeSeason(){
+  filterChangeSeason(event){
     console.log("Filter Change changing Season");
     this.selectedSeason = '';
     if(event)
@@ -108,7 +108,7 @@ export class Index {
 
   }
 
-    filterChangeTheme(){
+    filterChangeTheme(event){
     console.log("Filter Change changing Theme");
     this.selectedTheme = '';
     if(event)
@@ -160,6 +160,7 @@ export class Index {
       this.user = this.userService.getUser().then(user => {
         this.user = user;
         if (this.user.type ==="guest") window.location.href = '/user/login';
+        if (this.user.type === "brand") this.selectedBrand = user.companyId;
       })
 
     ]);
@@ -170,7 +171,8 @@ export class Index {
               this.availableTo = response.elementValue;
             if(response.elementId === 'datepickerfrom') 
               this.availableFrom = response.elementValue;
-            this.filterChange();
+            if((this.availableTo && this.availableFrom) || (this.availableFrom) )
+              this.filterChange();
             
     });
     let show = this.userService.show();
