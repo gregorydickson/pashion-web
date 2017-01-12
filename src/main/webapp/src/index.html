@@ -200,6 +200,7 @@
                         <!-- Header for 'press'-->
                         <span if.bind="user.type === 'press'">
                             <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
+                            <span if.bind="maxRReached" class="ui-text-label-m-broad">></span>
                             <span class="ui-text-label-m-broad">${numberImages} Images)</span>
                         </span> 
 
@@ -207,10 +208,12 @@
                         <select if.bind="user.type === 'brand'" class="select-transparent" name="" id="imagesFunctionality">
                             <option value="optionSearchImages"> 
                                 <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
+                                <span if.bind="maxRReached" class="ui-text-label-m-broad">></span>
                                 <span class="ui-text-label-m-broad">${numberImages} Images )</span>
                             </option>
                             <option value="optionManageImages">
                                 <span class="ui-text-label-m-broad">MANAGE IMAGES (</span>
+                                <span if.bind="maxRReached" class="ui-text-label-m-broad">></span>
                                 <span class="ui-text-label-m-broad">${numberImages} Images )</span>
                             </option>
                         </select>
@@ -219,10 +222,12 @@
                         <select if.bind="user.type === 'agency'" class="select-transparent" name="" id="imagesFunctionality">
                             <option value="optionSearchImages"> 
                                 <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
+                                <span if.bind="maxRReached" class="ui-text-label-m-broad">></span>
                                 <span class="ui-text-label-m-broad">${numberImages} Images )</span>
                             </option>
                             <option value="optionManageImages">
                                 <span class="ui-text-label-m-broad">MANAGE IMAGES (</span>
+                                <span if.bind="maxRReached" class="ui-text-label-m-broad">></span>
                                 <span class="ui-text-label-m-broad">${numberImages} Images )</span>
                             </option>
                         </select>

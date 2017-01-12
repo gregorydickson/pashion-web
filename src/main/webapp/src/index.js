@@ -35,7 +35,8 @@ export class Index {
   availableTo = '';
   selectedSeason = '';
   selectedTheme = '';
-  maxR = 250;
+  maxR = 500;
+  maxRReached = false;
   
   
 
@@ -59,6 +60,7 @@ export class Index {
     console.log(this.availableFrom);
     console.log(this.availableTo);
     this.numberImages = 0;
+    this.maxRReached = false;
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) +                                      
                                       '&itemType=' + this.selectedItemType + 
                                       '&availableFrom=' + this.availableFrom + 
@@ -70,6 +72,7 @@ export class Index {
             if (rows.length >0) {
             this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
             this.numberImages += rows[rows.length-1].numberImagesThisRow;
+            if (this.numberImages==this.maxR) this.maxRReached = true;
           }})
 
          .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
@@ -100,6 +103,7 @@ export class Index {
             if (rows.length >0) {
             this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
             this.numberImages += rows[rows.length-1].numberImagesThisRow;
+            if (this.numberImages==this.maxR) this.maxRReached = true;
           }})
 
          .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
@@ -133,6 +137,7 @@ export class Index {
             if (rows.length >0) {
             this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
             this.numberImages += rows[rows.length-1].numberImagesThisRow;
+            if (this.numberImages==this.maxR) this.maxRReached = true;
           }})
 
          .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
@@ -169,6 +174,7 @@ export class Index {
             if (rows.length >0) {
             this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
             this.numberImages += rows[rows.length-1].numberImagesThisRow;
+            if (this.numberImages==this.maxR) this.maxRReached = true;
           }})
           
          .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
