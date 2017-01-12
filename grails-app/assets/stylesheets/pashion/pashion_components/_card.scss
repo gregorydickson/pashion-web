@@ -6,36 +6,15 @@
 .cards-list-wrap {
 	overflow-y: scroll;
 	overflow-x: hidden;
-	width: 100%;
-	height: 100%;
-	position: relative; 
 }
 
-#mainScrollWindow {
-  min-height: 100%;
-  height: 100%;
-  width: 100%;
-  display: table; 
-  
-}
 .cards-list {
 	display: flex;
 	display: -webkit-flex;
 	flex-wrap: wrap;
 	flex-flow: row wrap;
 	justify-content: center;
-	width: 100%;
 }
-
-
-.cards-list-bottom {
-	margin-top: 3em;
-	margin-bottom: 3em;
-	text-align: center; 
-	width: 100%;
-	align-self: flex-end;
-}
-
 
 .cards-list {
 	.card {

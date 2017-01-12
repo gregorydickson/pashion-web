@@ -171,9 +171,7 @@ export class Guestpage {
       });
     }
 
-    // show text with delay
-    $('.cards-list-bottom').hide();
-    $('.cards-list-bottom').delay(2000).fadeIn(500);
+
   
   }
 
