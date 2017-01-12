@@ -71,6 +71,11 @@ export class Index {
             this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
             this.numberImages += rows[rows.length-1].numberImagesThisRow;
           }})
+
+         .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
+         .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow')) // scroll to top
+
+
           ;
   }
 
@@ -96,6 +101,12 @@ export class Index {
             this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
             this.numberImages += rows[rows.length-1].numberImagesThisRow;
           }})
+
+         .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
+         .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow')) // scroll to top
+
+
+
           ;
 
   }
@@ -123,6 +134,11 @@ export class Index {
             this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
             this.numberImages += rows[rows.length-1].numberImagesThisRow;
           }})
+
+         .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
+         .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow')) // scroll to top
+
+
           ;
 
   }
@@ -154,6 +170,11 @@ export class Index {
             this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
             this.numberImages += rows[rows.length-1].numberImagesThisRow;
           }})
+          
+         .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
+         .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow')) // scroll to top
+
+
           ;
 
   }
