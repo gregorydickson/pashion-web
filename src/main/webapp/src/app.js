@@ -16,6 +16,7 @@ export class App {
     this.router = router;
     config.title = 'PASHION';
     config.map([
+     // { route: ['', '/'],       name: 'index',       moduleId: 'index' },
       { route: ['', '/'],       name: 'guestpage',       moduleId: 'guestpage' },
       {	route: 'requestman',	name: 'requestman',  moduleId: 'requestman'},
       {	route: 'guestpage',	name: 'guestpage',  moduleId: 'guestpage'},
