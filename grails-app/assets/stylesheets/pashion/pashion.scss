@@ -163,7 +163,7 @@
   -moz-border-radius: 50%;
   -webkit-border-radius: 50%;
   border-radius: 50%;
-  background: $white-three;
+  background: $white-two;
   font-size: $font-size-extra-large;
   font-weight: 700;
   line-height: $font-size-extra-large;
@@ -219,13 +219,13 @@
 }
 
 select.top-menu-modifier {
-  background-color: $black-three;
+  background-color: $white-three;
   border: none;
   margin-top: 1.5rem;
 }
 
 select.top-menu-modifier:hover {
-  background-color: $black;
+  background-color: $white-three;
   border: none;
   margin-top: 1.5rem;
 }
