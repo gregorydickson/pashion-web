@@ -124,8 +124,8 @@ class DashboardController {
     }
 
     def courier(){
-        def list = ['Stuart: Bike','Stuart: Car','Stuart: Foot',
-                        'Stuart: Scooter', 'My Courier'] as JSON
+        def list = ['Bike','Car','Foot',
+                        'Scooter', 'My Courier'] as JSON
         render list
     }
 
