@@ -32,5 +32,9 @@ class PressHouse {
         users nullable: true
     }
 
+    String toString() {
+        return name
+    }
+
     
 }

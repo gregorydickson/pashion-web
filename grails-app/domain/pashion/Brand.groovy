@@ -31,4 +31,8 @@ class Brand {
 		users nullable:true
 		addresses nullable:true
 	}
+
+	String toString() {
+        return name
+    }
 }
