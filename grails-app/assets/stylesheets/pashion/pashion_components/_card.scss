@@ -117,3 +117,11 @@
 .card .look-menu-click {
 	z-index: 3; 
 }
+
+
+.cards-list-wrap .cards-list .card {
+	border-top-width: 0; 
+	border-right-width: 0; 
+	border-bottom-width: 1rem; 
+	border-left-width: 1rem; 
+}
