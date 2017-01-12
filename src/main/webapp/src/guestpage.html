@@ -50,7 +50,7 @@
             <div id="looks" class="vertical grid-block grid-block-vertical-shadow" style="overflow:hidden;">
                 <!-- search / filter area -->
                 <!-- top row -->
-                <div class="medium-up-1 align-center grid-block" style="margin-top: 3rem; padding-bottom: 1rem; overflow:hidden;">
+                <div class="medium-up-1 align-center grid-block guestpage-filters" >
 
                     <!-- Brand -->
                     <div class="grid-content shrink" style="min-width: 225px;">
@@ -75,7 +75,7 @@
                         <a class="hollow button" click.delegate="submitSearch()" style="height:26px; font-size:1rem; line-height: 0.8rem; margin-left:-12px;">Search</a>
                     </div>
 
-                    <div class="medium-up-1 align-center grid-block" style="margin-top: 10px; margin-bottom:30px; overflow:hidden;">
+                    <div class="medium-up-1 align-center grid-block" style="align-self: center; overflow:hidden;">
                         <span> ${results} &nbsp; RESULT </span>
                         <span if.bind="((results>1) || (results==0))"> S </span>
                     </div>
@@ -83,42 +83,46 @@
                 </div>                
                 
                 <!-- Images/Looks -->
-                <div id="mainScrollWindow" class="cards-list-wrap">
-                
-                    <div class="cards-list" repeat.for="row of rows" >
+                <div id="cards-list">
+                    <div class="cards-list-wrap">
+                    
+                        <div id="mainScrollWindow" >
+                            <div class="cards-list" repeat.for="row of rows" >
 
-                        <div class="card" style="min-height: 158px" repeat.for="i of row.numberImagesThisRow" css="width: ${row.numberImagesThisRowPC}%;">
+                                <div class="card" style="min-height: 158px" repeat.for="i of row.numberImagesThisRow" css="width: ${row.numberImagesThisRowPC}%;">
 
-                            <!-- Main image 
-                            <div id="card-${row.items[i].id}" class="card-image">
+                                    <!-- Main image 
+                                    <div id="card-${row.items[i].id}" class="card-image">
 
-                                <img src.bind="row.items[i].image" ref="image"  click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"/>
+                                        <img src.bind="row.items[i].image" ref="image"  click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"/>
+                                    </div>
+                                    <img src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align"/> -->
+
+                                    <div id="card-${row.items[i].id}" class="card-image">
+
+                                           <img class="lazy" src="/assets/bg.jpg" data-src.bind="row.items[i].image" ref="image" 
+                                             click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"/> 
+                                        
+
+
+                                            <div class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
+                                            <div class="card-look-number-name" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
+                                            <div class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].brand} <br> ${row.items[i].season}</div>
+                                            <img src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align"/> 
+
+                                            <div class="card-hover-overlay" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"></div>
+
+                                    </div>
+
+                                </div>                 
                             </div>
-                            <img src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align"/> -->
+                        </div>
 
-                            <div id="card-${row.items[i].id}" class="card-image">
+                        <div class="cards-list-bottom" >
+                            <a href="http://www.pashiontool.com/beta" target="_blank" style="">Join Pashion to get more than ${maxR} results</a>
+                        </div>
 
-                                   <img class="lazy" src="/assets/bg.jpg" data-src.bind="row.items[i].image" ref="image" 
-                                     click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"/> 
-                                
-
-
-                                    <div class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
-                                    <div class="card-look-number-name" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
-                                    <div class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].brand} <br> ${row.items[i].season}</div>
-                                    <img src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align"/> 
-
-                                    <div class="card-hover-overlay" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"></div>
-
-                            </div>
-
-                        </div>                 
                     </div>
-
-                    <div class="medium-up-1 align-center grid-block" style="margin-top:3rem; margin-bottom:3rem;">
-                        <a href="http://www.pashiontool.com/beta" target="_blank" style="">Join Pashion to get more than ${maxR} results</a>
-                    </div>
-
                 </div>
                 <!-- white lip at bottom of scroll region -->
                 <div class="grid-content shrink scrolling-lip">

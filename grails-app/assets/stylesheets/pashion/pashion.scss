@@ -337,7 +337,7 @@ ai-dialog-body .grid-block-row {
 .grid-row {
   width: 100%;
   display: flex;
-  margin: 1rem 0;
+  margin: 0.8rem 0;
   height: 28px; 
   min-height: 28px; 
 }
@@ -425,4 +425,15 @@ filters-city {
 .modal-table-wrap {overflow-x:hidden; max-height:10rem; margin-top: 10px; }
 .modal-table-wrap table {
   margin-bottom:7px;
+}
+
+
+#looks > div > .grid-row:first-child {
+  margin-top: 1em; 
+}
+.guestpage-filters {
+  margin-top: 3rem; 
+  padding-bottom: 1rem; 
+  overflow:hidden; 
+  min-height: 80px; 
 }
