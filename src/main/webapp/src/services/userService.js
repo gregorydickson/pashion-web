@@ -220,6 +220,7 @@ export class UserService {
     }
 
     clearAllUnreadMessagesForTheCurrentUser (){
+      if (this.users[this.user.id-1] == 'undefined') return;
       var i;
       // my connections
       for (i =0; i < this.users[this.user.id-1].connections.length; i++) {
@@ -229,6 +230,7 @@ export class UserService {
 
     clearUnreadMessages(withUserId) {
         // assume for the logged in user
+        if(this.users[this.user.id - 1] == 'undefined') return;
         var connectionId1 = -1;
         var i;
         for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
