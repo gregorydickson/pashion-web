@@ -35,6 +35,7 @@ export class Index {
   availableTo = '';
   selectedSeason = '';
   selectedTheme = '';
+  maxR = 250;
   
   
 
@@ -57,14 +58,20 @@ export class Index {
     console.log(this.searchText);
     console.log(this.availableFrom);
     console.log(this.availableTo);
-
+    this.numberImages = 0;
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) +                                      
                                       '&itemType=' + this.selectedItemType + 
                                       '&availableFrom=' + this.availableFrom + 
-                                      '&availableTo=' + this.availableTo)
+                                      '&availableTo=' + this.availableTo +
+                                      '&maxR=' + this.maxR)
           .then(response => response.json())
-          .then(rows => {this.rows = rows})
-          .then(rows => {this.numberImages = this.rows[0].numberImages});
+          .then(rows => {
+            this.rows = rows;
+            if (rows.length >0) {
+            this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
+            this.numberImages += rows[rows.length-1].numberImagesThisRow;
+          }})
+          ;
   }
 
   filterChangeBrand(event){
@@ -76,14 +83,20 @@ export class Index {
           console.log("value:"+event.detail.value)
         }
     console.log("Filter change called, Brand: " + this.selectedBrand);
+    this.numberImages = 0;
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                      '&season=' + encodeURI(this.selectedSeason) + 
-                                      '&theme='+ this.selectedTheme)
+                                      '&theme='+ this.selectedTheme+
+                                      '&maxR=' + this.maxR)
           .then(response => response.json())
           .then(rows => {
             this.rows = rows;
-          });
+            if (rows.length >0) {
+            this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
+            this.numberImages += rows[rows.length-1].numberImagesThisRow;
+          }})
+          ;
 
   }
 
@@ -97,14 +110,20 @@ export class Index {
           console.log("value:"+event.detail.value)
         }
     console.log("Filter change called, Season: " + this.selectedSeason);
+    this.numberImages = 0;
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                      '&season=' + encodeURI(this.selectedSeason) + 
-                                      '&theme='+ this.selectedTheme)
+                                      '&theme='+ this.selectedTheme+
+                                      '&maxR=' + this.maxR)
           .then(response => response.json())
           .then(rows => {
             this.rows = rows;
-          })
+            if (rows.length >0) {
+            this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
+            this.numberImages += rows[rows.length-1].numberImagesThisRow;
+          }})
+          ;
 
   }
 
@@ -121,15 +140,21 @@ export class Index {
           console.log("value:"+event.detail.value)
         }
     console.log("Filter change called, Theme: " + this.selectedTheme);
+    this.numberImages = 0;
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                      '&season=' + encodeURI(this.selectedSeason) + 
                                      // '&season=' + this.selectedSeason + 
-                                      '&theme='+ this.selectedTheme)
+                                      '&theme='+ this.selectedTheme+
+                                      '&maxR=' + this.maxR)
           .then(response => response.json())
           .then(rows => {
             this.rows = rows;
-          })
+            if (rows.length >0) {
+            this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
+            this.numberImages += rows[rows.length-1].numberImagesThisRow;
+          }})
+          ;
 
   }
 
