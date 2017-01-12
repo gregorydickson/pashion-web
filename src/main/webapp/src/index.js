@@ -92,6 +92,7 @@ export class Index {
         }
     console.log("Filter change called, Brand: " + this.selectedBrand);
     this.numberImages = 0;
+    this.maxRReached = false;
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                      '&season=' + encodeURI(this.selectedSeason) + 
@@ -126,6 +127,7 @@ export class Index {
         }
     console.log("Filter change called, Season: " + this.selectedSeason);
     this.numberImages = 0;
+    this.maxRReached = false;
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                      '&season=' + encodeURI(this.selectedSeason) + 
@@ -162,6 +164,7 @@ export class Index {
         }
     console.log("Filter change called, Theme: " + this.selectedTheme);
     this.numberImages = 0;
+    this.maxRReached = false;
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                      '&season=' + encodeURI(this.selectedSeason) + 
