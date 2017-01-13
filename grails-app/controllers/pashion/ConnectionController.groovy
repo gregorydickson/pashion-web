@@ -71,7 +71,7 @@ class ConnectionController {
         // invalidate cache here for connected or connecting user     
         Callback callback=new Callback() {}
         def channel = jsonObject.fromEmail + '_cacheInvalidate'
-        log.info "send invalidate on:" + channel
+        log.info "send invalidate from acceptcontact on:" + channel
         pubnub.publish(channel, "refresh the cache please" , callback)
 
 
@@ -104,10 +104,10 @@ class ConnectionController {
         // invalidate cache here for connected or connecting user     
         Callback callback=new Callback() {}
         def channel = jsonObject.fromEmail + '_cacheInvalidate'
-        log.info "send invalidate on:" + channel
+        log.info "send invalidate from addcontactrequest on:" + channel
         pubnub.publish(channel, "refresh the cache please" , callback)
 
-        def sent = [message:'contact request sent'] 
+        def sent = [message:'contact request sent', id1: con1.id, id2: con2.id] 
         render sent as JSON
     }
 
@@ -209,8 +209,11 @@ class ConnectionController {
 
 
     @Transactional
-    def delete(Connection connection) {
+    def delete() {
+        def connection = Connection.get(params.id.toInteger())
+        def jsonObject = request.JSON 
         log.info "delete " + connection
+        log.info "delete json: "+jsonObject
         if (connection == null) {
             transactionStatus.setRollbackOnly()
             notFound()
@@ -226,7 +229,14 @@ class ConnectionController {
             }
             '*'{ render status: NO_CONTENT }
         }
-        // invalidate cache here????
+    
+        // invalidate cache here for connected or connecting user    
+        Callback callback=new Callback() {}
+        def channel = jsonObject.fromEmail + '_cacheInvalidate'
+        log.info "send invalidate from delete on:" + channel
+        pubnub.publish(channel, "refresh the cache please" , callback)
+
+
         def sent = [message:'contact request deleted']
         render sent as JSON
     }

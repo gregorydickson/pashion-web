@@ -129,7 +129,7 @@ export class UserService {
     // Build new connection
     addContactRequest(idIn) {
 
-        console.log("contact request: " + idIn);
+        console.log("add contact request: " + idIn);
         // first connection record
         var nameString1 = this.users[this.user.id -1].name + this.users[this.user.id -1].surname + this.users[this.user.id-1].email; // spaces to match name display and prvent run on match for the other fields
         if (this.users[this.user.id-1].brand.id!=null) nameString1 += this.users[this.user.id-1].brand.name;
@@ -148,6 +148,7 @@ export class UserService {
             numberNewMessages: 0,
             mostRecentRead: 0,
             name: nameString2, // for search and filter // add name of connecting to item not 'host' item
+            id:0,
             connectingStatus: 'PendingOut'
         };
         // second connection record
@@ -159,13 +160,13 @@ export class UserService {
             numberNewMessages: 0,
             mostRecentRead: 0,
             name: nameString1,
+            id:0, // need a place for the id
             connectingStatus: 'PendingIn'
         };
-        // locally
-        this.users[this.user.id - 1].connections.push(conn1);
-        this.users[idIn - 1].connections.push(conn2);
+
         // save out
         var connectedEmail=this.users[idIn -1].email;
+        parent = this;
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/addContactRequest/', {
                     method: 'post',
@@ -173,7 +174,12 @@ export class UserService {
                 })
                 .then(response => response.json())
                 .then(result => {
-                    console.log("json addContactRequest1:" + result.message);
+                    console.log("json addContactRequest1: " + result.message);
+                    // locally
+                    conn1.id = result.id1; // add in the connection id from the create, locally
+                    conn2.id = result.id2; // add in the connection id from the create, locally
+                    parent.users[parent.user.id - 1].connections.push(conn1);
+                    parent.users[idIn - 1].connections.push(conn2);
                 }).catch(err => reject(err));
         });
         return promise;
@@ -318,14 +324,27 @@ export class UserService {
 
 
     //RM need to check this code carefully as not kept up to date
-    deleteContact(user, id) { // id=contact id 
-        console.log("delete contact: " + id + " from user " + user);
+    deleteContact(user, id) { // id=connection id 
+        console.log("delete connection, id: " + id + " from user " + user);
         // local
+        if (typeof(id) == 'undefined') {
+            // console.log ("id undefined: " + id);
+            // pf = new Promise ();
+            return false; 
+        }
+        if (typeof(user) == 'undefined') {
+            // console.log ("user undefined");
+            // pf = new Promise ();
+            return false; 
+        }
+
         var connectedUserId;
+        var connectedEmail;
         var i;
         for (i = 0; i < this.users[user - 1].connections.length; i++) {
             if (this.users[user - 1].connections[i].id == id) {
-              connectedUserId = this.users[user - 1].connections[i].connectedUserId;
+                connectedUserId = this.users[user - 1].connections[i].connectedUserId; 
+                connectedEmail=this.users[connectedUserId -1].email;
                 this.users[user - 1].connections.splice(i, 1);
                 break;
             }
@@ -333,18 +352,21 @@ export class UserService {
 
         //write out
         // make 2 calls because not sureif the standard delete should be used or not.
+        var payload = {fromEmail: connectedEmail};
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/delete/' + id, {
-                    method: 'post'
-                }).then(response => response.json())
-                .then(result => resolve(result));
+                    method: 'post',
+                    body: json(payload)
+                })
+            //.then(response => response.json())
+              //  .then(result => resolve(result));
         });
         // 2nd fllipped 
         var id2;
         for (i = 0; i < this.users[connectedUserId - 1].connections.length; i++) {
-            if (this.users[connectedUserId - 1].connections[i].user.id == user) {
-                this.users[connectedUserId - 1].connections.splice(i, 1);
+            if (this.users[connectedUserId - 1].connections[i].connectedUserId == user) {
                 id2 = this.users[connectedUserId - 1].connections[i].id;
+                this.users[connectedUserId - 1].connections.splice(i, 1);
                 break;
             }
         }
@@ -353,8 +375,9 @@ export class UserService {
         promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/delete/' + id2, {
                     method: 'post'
-                }).then(response => response.json())
-                .then(result => resolve(result));
+                })
+                //.then(response => response.json())
+                //.then(result => resolve(result));
         }); 
 
         // not sure if I should serilize the deletes, lest's assue not for now.
