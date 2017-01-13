@@ -424,15 +424,47 @@
                                                 LOOK ${row.items[i].name} <!-- ${i} ${row.numberImagesThisRow} -->
                                             </div>
 
-                                            <ul class="look-menu-list">
+                                            <!-- different actions for roles:
+                                            press:
+                                            book
+                                            details
+                                            check next availability
+                                            add to lightbox
+                                            share
+                                            chat to desinger
+                                            Favourite
+
+                                            brand / agency
+                                            edit
+                                            details
+                                            set initial availability
+                                            check availability
+                                            delete -->
+
+                                            <!-- press -->
+                                            <ul if.bind="user.type === 'press'" class="look-menu-list">
                                                 <li class="look-menu-item"><a href="#" click.delegate="createSampleRequest(row.items[i].id )" class="look-menu-link">Booking &nbsp;</a></li>
                                                <!--  <li class="look-menu-item"><a href="#" class="look-menu-link">Details</a></li> -->
+                                                
+                                                <li if.bind="row.items[i].fromDate" class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
+                                            </ul>
+
+                                            <!-- brand -->
+                                            <ul if.bind="user.type === 'brand'" class="look-menu-list">                                        
+                                                <li class="pure-menu-item"><a href="#" click.delegate="editSearchableItem(row.items[i].id)" class="look-menu-link">Edit</a></li>
+
+                                                <li if.bind="!row.items[i].fromDate" class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Set Initial Availability</a></li>
+
+                                                <li if.bind="row.items[i].fromDate" class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
+                                            </ul>
+                                            <!-- agency -->
+                                            <ul if.bind="user.type === 'agency'" class="look-menu-list">
+
+                                                <li class="pure-menu-item"><a href="#" click.delegate="editSearchableItem(row.items[i].id)" class="look-menu-link">Edit</a></li>
                                                 
                                                 <li if.bind="!row.items[i].fromDate" class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Set Initial Availability</a></li>
 
                                                 <li if.bind="row.items[i].fromDate" class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
-
-                                                <li class="pure-menu-item"><a href="#" click.delegate="editSearchableItem(row.items[i].id)" class="look-menu-link">Edit</a></li>
                                             </ul>
                                         </div>
                                     </div>
