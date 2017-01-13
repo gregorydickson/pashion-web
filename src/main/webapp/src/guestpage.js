@@ -169,10 +169,18 @@ export class Guestpage {
         // nag banner
         this.nagTimer();
       });
+    };
+
+    //Set height of scrollable list of looks 
+    function mainScrollWindowHeight () {
+      var emptySpace = 30;
+      var setHeight = $(window).height() - $('.footer').outerHeight() - $('.cards-list-wrap').offset().top - emptySpace;
+          $('.cards-list-wrap').css('height', setHeight);        
     }
-
-
-  
+    mainScrollWindowHeight();
+    $(window).resize(function() {
+        mainScrollWindowHeight();
+    });
   }
 
   nagTimer() {

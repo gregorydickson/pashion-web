@@ -50,7 +50,7 @@
             <div id="looks" class="vertical grid-block grid-block-vertical-shadow" style="overflow:hidden;">
                 <!-- search / filter area -->
                 <!-- top row -->
-                <div class="medium-up-1 align-center grid-block" style="margin-top: 3rem; padding-bottom: 1rem; overflow:hidden;">
+                <div class="medium-up-1 align-center grid-block guestpage-filters">
 
                     <!-- Brand -->
                     <div class="grid-content shrink" style="min-width: 225px;">
@@ -75,7 +75,7 @@
                         <a class="hollow button" click.delegate="submitSearch()" style="height:26px; font-size:1rem; line-height: 0.8rem; margin-left:-12px;">Search</a>
                     </div>
 
-                    <div class="medium-up-1 align-center grid-block" style="margin-top: 10px; margin-bottom:30px; overflow:hidden;">
+                    <div class="medium-up-1 align-center grid-block" style="overflow:hidden;">
                         <span> ${results} &nbsp; RESULT </span>
                         <span if.bind="((results>1) || (results==0))"> S </span>
                     </div>
