@@ -181,6 +181,12 @@ export class Guestpage {
     $(window).resize(function() {
         mainScrollWindowHeight();
     });
+    }
+
+    // show text with delay
+    $('.cards-list-bottom').hide();
+    $('.cards-list-bottom').delay(2000).fadeIn(500);
+  
   }
 
   nagTimer() {

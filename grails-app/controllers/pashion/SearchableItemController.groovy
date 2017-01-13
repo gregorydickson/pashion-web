@@ -22,6 +22,9 @@ class SearchableItemController {
         def keywords = null
         def theme = null
 
+        Integer maxRInt = params.maxR.toInteger()
+        if(!maxRInt) maxRInt = 2000
+
         if(params.itemType != null && params.itemType != "")
             type = SearchableItemType.findByDisplay(params.itemType)
 
@@ -81,6 +84,7 @@ class SearchableItemController {
                         }
                     }
                 }
+                maxResults(maxRInt)
                 cache true
             } 
 

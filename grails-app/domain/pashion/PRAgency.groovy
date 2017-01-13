@@ -21,4 +21,8 @@ class PRAgency {
     static mapping = {
         cache true
     }
+
+    String toString() {
+        return name
+    }
 }

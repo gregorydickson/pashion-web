@@ -35,10 +35,8 @@ export class Index {
   availableTo = '';
   selectedSeason = '';
   selectedTheme = '';
-  
-  
-
-
+  maxR = 500;
+  maxRReached = false;
   numberImages = 0;
   
   
@@ -57,14 +55,31 @@ export class Index {
     console.log(this.searchText);
     console.log(this.availableFrom);
     console.log(this.availableTo);
-
+    this.numberImages = 0;
+    this.maxRReached = false;
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) +                                      
                                       '&itemType=' + this.selectedItemType + 
                                       '&availableFrom=' + this.availableFrom + 
-                                      '&availableTo=' + this.availableTo)
+                                      '&availableTo=' + this.availableTo +
+                                      '&maxR=' + this.maxR)
           .then(response => response.json())
-          .then(rows => {this.rows = rows})
-          .then(rows => {this.numberImages = this.rows[0].numberImages});
+          .then(rows => {
+            if(rows.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
+            this.rows = rows;
+            if (rows.length >0) {
+            this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
+            this.numberImages += rows[rows.length-1].numberImagesThisRow;
+            if (this.numberImages==this.maxR) this.maxRReached = true;
+          }})
+
+         .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
+         .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow')) // scroll to top
+
+
+          ;
   }
 
   filterChangeBrand(event){
@@ -76,14 +91,32 @@ export class Index {
           console.log("value:"+event.detail.value)
         }
     console.log("Filter change called, Brand: " + this.selectedBrand);
+    this.numberImages = 0;
+    this.maxRReached = false;
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                      '&season=' + encodeURI(this.selectedSeason) + 
-                                      '&theme='+ this.selectedTheme)
+                                      '&theme='+ this.selectedTheme+
+                                      '&maxR=' + this.maxR)
           .then(response => response.json())
           .then(rows => {
+            if(rows.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
             this.rows = rows;
-          });
+            if (rows.length >0) {
+            this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
+            this.numberImages += rows[rows.length-1].numberImagesThisRow;
+            if (this.numberImages==this.maxR) this.maxRReached = true;
+          }})
+
+         .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
+         .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow')) // scroll to top
+
+
+
+          ;
 
   }
 
@@ -97,14 +130,31 @@ export class Index {
           console.log("value:"+event.detail.value)
         }
     console.log("Filter change called, Season: " + this.selectedSeason);
+    this.numberImages = 0;
+    this.maxRReached = false;
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                      '&season=' + encodeURI(this.selectedSeason) + 
-                                      '&theme='+ this.selectedTheme)
+                                      '&theme='+ this.selectedTheme+
+                                      '&maxR=' + this.maxR)
           .then(response => response.json())
           .then(rows => {
+            if(rows.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
             this.rows = rows;
-          })
+            if (rows.length >0) {
+            this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
+            this.numberImages += rows[rows.length-1].numberImagesThisRow;
+            if (this.numberImages==this.maxR) this.maxRReached = true;
+          }})
+
+         .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
+         .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow')) // scroll to top
+
+
+          ;
 
   }
 
@@ -121,15 +171,32 @@ export class Index {
           console.log("value:"+event.detail.value)
         }
     console.log("Filter change called, Theme: " + this.selectedTheme);
+    this.numberImages = 0;
+    this.maxRReached = false;
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
                                      '&season=' + encodeURI(this.selectedSeason) + 
                                      // '&season=' + this.selectedSeason + 
-                                      '&theme='+ this.selectedTheme)
+                                      '&theme='+ this.selectedTheme+
+                                      '&maxR=' + this.maxR)
           .then(response => response.json())
           .then(rows => {
+            if(rows.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
             this.rows = rows;
-          })
+            if (rows.length >0) {
+            this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
+            this.numberImages += rows[rows.length-1].numberImagesThisRow;
+            if (this.numberImages==this.maxR) this.maxRReached = true;
+          }})
+          
+         .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
+         .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow')) // scroll to top
+
+
+          ;
 
   }
 
@@ -144,6 +211,8 @@ export class Index {
     this.dialogService = dialogService;
     this.sampleRequestService = sampleRequestService;
     this.userService = userService;
+    this.maxRReached = false;
+    this.numberImages = 0;
 
   }
 

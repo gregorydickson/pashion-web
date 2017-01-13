@@ -20,6 +20,10 @@ export class SampleRequestService{
   		  this.http.fetch('/sampleRequest/show/'+id+'.json')
     			.then(response => response.json())
     			.then(sampleRequest => {
+            if(sampleRequest.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
             sampleRequest.searchableItemsProposed.forEach(function(item1) {
               item1.status = sampleRequest.searchableItemsStatus.find(function (item2) {
                 return item2.itemId === item1.id;
@@ -43,6 +47,10 @@ export class SampleRequestService{
                                       '&status=' + status)
       			.then(response => response.json())
       			.then(sampleRequests => {
+              if(sampleRequests.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+              }
       				this.sampleRequests = sampleRequests;
       				resolve(this.sampleRequests);
       			}).catch(err=>reject(err));
@@ -58,7 +66,13 @@ export class SampleRequestService{
             body: json(sr)
         })
           .then(response => response.json())
-          .then(result => resolve(result));
+          .then(result =>{
+            if(result.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
+            resolve(result);
+          });
       });
       return promise;
     }
@@ -70,6 +84,10 @@ export class SampleRequestService{
           })
           .then(response => response.json())
           .then(result => {
+              if(result.session == 'invalid'){
+                  window.location.href = '/user/login';
+                  return;
+              }
               resolve(result);
           });
   	}
@@ -78,14 +96,26 @@ export class SampleRequestService{
     denySampleRequest(id){
       var promise = new Promise((resolve, reject) => {
         this.http.fetch('/sampleRequest/brandDeny/'+id, {method: 'post'}).then(response => response.json())
-          .then(result => resolve(result));
+          .then(result => {
+            if(result.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
+            resolve(result);
+          });
       });
       return promise;
     }
     approveSampleRequest(id){
       var promise = new Promise((resolve, reject) => {
         this.http.fetch('/sampleRequest/brandApprove/'+id, {method: 'post'}).then(response => response.json())
-          .then(result => resolve(result));
+          .then(result => {
+            if(result.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
+            resolve(result);
+          });
       });
       return promise;
     }
@@ -96,7 +126,13 @@ export class SampleRequestService{
             body: json(sr)
         })
           .then(response => response.json())
-          .then(result => resolve(result));
+          .then(result => {
+            if(result.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
+            resolve(result);
+          });
       });
       return promise;
     }
@@ -104,35 +140,65 @@ export class SampleRequestService{
     sendSampleRequest(id){
       var promise = new Promise((resolve, reject) => {
         this.http.fetch('/sampleRequest/brandSend/'+id, {method: 'post'}).then(response => response.json())
-          .then(result => resolve(result));
+          .then(result => {
+            if(result.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
+            resolve(result);
+          });
       });
       return promise;
     }
     markPickedUpSampleRequest(id){
       var promise = new Promise((resolve, reject) => {
         this.http.fetch('/sampleRequest/brandMarkPickedUp/'+id, {method: 'post'}).then(response => response.json())
-          .then(result => resolve(result));
+          .then(result => {
+            if(result.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
+            resolve(result);
+          });
       });
       return promise;
     }
     markReturnedSampleRequest(id){
       var promise = new Promise((resolve, reject) => {
         this.http.fetch('/sampleRequest/brandMarkReturned/'+id, {method: 'post'}).then(response => response.json())
-          .then(result => resolve(result));
+          .then(result => {
+            if(result.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
+            resolve(result);
+          });
       });
       return promise;
     }
     restockedSampleRequest(id){
       var promise = new Promise((resolve, reject) => {
         this.http.fetch('/sampleRequest/brandRestocked/'+id, {method: 'post'}).then(response => response.json())
-          .then(result => resolve(result));
+          .then(result => {
+            if(result.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
+            resolve(result);
+          });
       });
       return promise;
     }
     deleteSampleRequest(id){
       var promise = new Promise((resolve, reject) => {
         this.http.fetch('/sampleRequest/brandMarkDeleted/'+id, {method: 'post'}).then(response => response.json())
-          .then(result => resolve(result));
+          .then(result => {
+            if(result.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
+            resolve(result);
+          });
       });
       return promise;
     }
@@ -142,28 +208,52 @@ export class SampleRequestService{
     pressMarkReceivedSampleRequest(id){
       var promise = new Promise((resolve, reject) => {
         this.http.fetch('/sampleRequest/pressMarkReceived/'+id, {method: 'post'}).then(response => response.json())
-          .then(result => resolve(result));
+          .then(result => {
+            if(result.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
+            resolve(result);
+          });
       });
       return promise;
     }
     pressShipSampleRequest(id){
       var promise = new Promise((resolve, reject) => {
         this.http.fetch('/sampleRequest/pressShip/'+id, {method: 'post'}).then(response => response.json())
-          .then(result => resolve(result));
+          .then(result => {
+            if(result.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
+            resolve(result);
+          });
       });
       return promise;
     }
     pressMarkPickedUpSampleRequest(id){
       var promise = new Promise((resolve, reject) => {
         this.http.fetch('/sampleRequest/pressMarkPickedUp/'+id, {method: 'post'}).then(response => response.json())
-          .then(result => resolve(result));
+          .then(result => {
+            if(result.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
+            resolve(result);
+          });
       });
       return promise;
     }
     pressDeleteSampleRequest(id){
       var promise = new Promise((resolve, reject) => {
         this.http.fetch('/sampleRequest/pressDelete/'+id, {method: 'post'}).then(response => response.json())
-          .then(result => resolve(result));
+          .then(result => {
+            if(result.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
+            resolve(result);
+          });
       });
       return promise;
     }
