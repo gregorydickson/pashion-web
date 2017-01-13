@@ -116,11 +116,11 @@ class ConnectionController {
         def connection = Connection.get(params.id.toInteger())
         
         def jsonObject = request.JSON
-        log.info "addMessageCount for: " + params.id.toInteger() + " json:"+jsonObject
-        connection.numberNewMessages = connection.numberNewMessages + 1
+        connection.numberNewMessages = connection.numberNewMessages + 1   
+        log.info "addMessageCount for: " + params.id.toInteger() + " json:"+jsonObject + ' to ' + connection.numberNewMessages
         
         connection.save(failOnError : true, flush: true)
-        def connectionString  = 'numbers count updated'
+        def connectionString  = 'message numbers count updated for: ' + connection
         def sent = [message:connectionString]
         render sent as JSON
     }
@@ -134,7 +134,7 @@ class ConnectionController {
         connection.mostRecentRead = jsonObject.mostRecentRead
         //log.info "saveMostRecentRead input as: " + connection.mostRecentRead
         connection.save(failOnError : true, flush: true)
-        def connectionString  = 'most recent read updated'
+        def connectionString  = 'saveMostRecentRead updated'
         def sent = [message:connectionString]
         render sent as JSON
     }
