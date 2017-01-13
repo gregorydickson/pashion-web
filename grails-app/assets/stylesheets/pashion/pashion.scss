@@ -337,7 +337,7 @@ ai-dialog-body .grid-block-row {
 .grid-row {
   width: 100%;
   display: flex;
-  margin: 2rem 0;
+  margin: 2% 0 0 0;
   height: 28px; 
   min-height: 28px; 
 }
@@ -430,4 +430,7 @@ filters-city {
   min-height: 100px; 
   margin-top: 3rem; margin-bottom: 1rem; overflow:hidden;
 
+}
+.index-filters > div {
+  padding-bottom: 2%;
 }

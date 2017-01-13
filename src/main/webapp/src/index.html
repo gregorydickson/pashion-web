@@ -246,160 +246,161 @@
                 </div>
                 <!-- search / filter area -->
 
-                <!-- PRESS filters BEGIN -->
-                        <div if.bind="user.type === 'press'">
-                                <!-- top row -->
-                                <div class="grid-row">
-                                    <!-- <div class="grid-row-col" style="margin-top: 0.5rem;">
-                                        <input id="checkbox-search" type="checkbox" checked>
-                                    </div> -->
-                                    <!-- change to UI, use "All" for each filter instead -->
-                                    <!-- Search -->
-                                    <div class="grid-row-col">
-                                        <filters-search></filters-search>
+                <div class="index-filters">
+                    <!-- PRESS filters BEGIN -->
+                            <div if.bind="user.type === 'press'">
+                                    <!-- top row -->
+                                    <div class="grid-row">
+                                        <!-- <div class="grid-row-col" style="margin-top: 0.5rem;">
+                                            <input id="checkbox-search" type="checkbox" checked>
+                                        </div> -->
+                                        <!-- change to UI, use "All" for each filter instead -->
+                                        <!-- Search -->
+                                        <div class="grid-row-col">
+                                            <filters-search></filters-search>
+                                        </div>
+                                        <!-- Trending -->
+                                        <!--<div class="grid-row-col" >
+                                            <input id="checkbox-trending" type="checkbox"><label for="checkbox-trending">Trending</label>
+                                        </div> -->
+                                        <!-- Trending postponed until later release -->
+                                        <!-- Latest -->
+                                        <!-- <div class="grid-row-col" >
+                                           <input id="checkbox-latest" type="checkbox"><label for="checkbox-latest">Latest</label>
+                                        </div> -->
+                                        <!-- Latest postponed until later release -->
+                                        <!-- Available -->
+                                        <!-- end date -->
+                                        <div class="grid-row-col grid-row-date-start">
+                                            <filters-available-from></filters-available-from>
+                                        </div>
+                                        <!-- end date -->
+                                        <div class="grid-row-col grid-row-date-end">
+                                            <filters-available-to></filters-available-to>
+                                        </div>
+                                        <!-- theme -->
+                                        <div class="grid-row-col">
+                                            <filters-theme></filters-theme>
+                                        </div>
                                     </div>
-                                    <!-- Trending -->
-                                    <!--<div class="grid-row-col" >
-                                        <input id="checkbox-trending" type="checkbox"><label for="checkbox-trending">Trending</label>
-                                    </div> -->
-                                    <!-- Trending postponed until later release -->
-                                    <!-- Latest -->
-                                    <!-- <div class="grid-row-col" >
-                                       <input id="checkbox-latest" type="checkbox"><label for="checkbox-latest">Latest</label>
-                                    </div> -->
-                                    <!-- Latest postponed until later release -->
-                                    <!-- Available -->
-                                    <!-- end date -->
-                                    <div class="grid-row-col grid-row-date-start">
-                                        <filters-available-from></filters-available-from>
+                                    <!-- 2nd row -->
+                                    <div class="grid-row">
+                                        <!-- <div class="grid-content shrink" style="margin-top: 0.5rem;">
+                                                <input id="checkbox-brand" type="checkbox">
+                                        </div> -->
+                                        <!-- Brand -->
+                                        <div class="grid-row-col">
+                                            <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>
+                                        </div>
+                                        <!-- Seasons -->
+                                        <div class="grid-row-col">
+                                            <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
+                                        </div>
+                                        <!-- Type -->
+                                        <div class="grid-row-col">
+                                            <filters-type></filters-type>
+                                        </div>
+                                        <!--- Color -->
+                                        <div class="grid-row-col">
+                                           <filters-color></filters-color>
+                                        </div>
                                     </div>
-                                    <!-- end date -->
-                                    <div class="grid-row-col grid-row-date-end">
-                                        <filters-available-to></filters-available-to>
-                                    </div>
-                                    <!-- theme -->
-                                    <div class="grid-row-col">
-                                        <filters-theme></filters-theme>
-                                    </div>
+                            </div>
+                    <!-- PRESS filters END -->
+
+                    <!-- BRAND filters BEGIN -->
+                    <div if.bind="user.type === 'brand'">
+                        <div class="blockSearchImages">
+                            <div class="grid-row">
+                                <div class="grid-row-col">
+                                    <filters-search></filters-search>
                                 </div>
-                                <!-- 2nd row -->
-                                <div class="grid-row">
-                                    <!-- <div class="grid-content shrink" style="margin-top: 0.5rem;">
-                                            <input id="checkbox-brand" type="checkbox">
-                                    </div> -->
-                                    <!-- Brand -->
-                                    <div class="grid-row-col">
-                                        <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>
-                                    </div>
-                                    <!-- Seasons -->
-                                    <div class="grid-row-col">
-                                        <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
-                                    </div>
-                                    <!-- Type -->
-                                    <div class="grid-row-col">
-                                        <filters-type></filters-type>
-                                    </div>
-                                    <!--- Color -->
-                                    <div class="grid-row-col">
-                                       <filters-color></filters-color>
-                                    </div>
+                                <div class="grid-row-col">
+                                    <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
                                 </div>
-                        </div>
-                <!-- PRESS filters END -->
-
-                <!-- BRAND filters BEGIN -->
-                <div if.bind="user.type === 'brand'">
-                    <div class="blockSearchImages">
-                        <div class="grid-row">
-                            <div class="grid-row-col">
-                                <filters-search></filters-search>
-                            </div>
-                            <div class="grid-row-col">
-                                <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
-                            </div>
-                            <div class="grid-row-col">
-                                <filters-color></filters-color>
-                            </div>
-                            <div class="grid-row-col">
-                                <filters-city></filters-city>
+                                <div class="grid-row-col">
+                                    <filters-color></filters-color>
+                                </div>
+                                <div class="grid-row-col">
+                                    <filters-city></filters-city>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="blockManageImages">
-                        <div class="grid-row">
-                            <div class="grid-row-col">
-                                <filters-search></filters-search>
+                        <div class="blockManageImages">
+                            <div class="grid-row">
+                                <div class="grid-row-col">
+                                    <filters-search></filters-search>
+                                </div>
+                                <div class="grid-row-col">
+                                    <filters-season season.bind="season" change.delegate="filterChange($event)"></filters-season>
+                                </div>                    
+                                <div class="grid-row-col"></div>
+                                <div class="grid-row-col"></div>
                             </div>
-                            <div class="grid-row-col">
-                                <filters-season season.bind="season" change.delegate="filterChange($event)"></filters-season>
-                            </div>                    
-                            <div class="grid-row-col"></div>
-                            <div class="grid-row-col"></div>
-                        </div>
-                        <div class="grid-row">
-                            <div class="grid-content shrink">
-                                <button id="btn-add-files" class="small button hollow" click.delegate="createAddfilesDialog()">Add Images</button>
-                                <button class="small button hollow">Delete Season</button>
-                            </div>              
+                            <div class="grid-row">
+                                <div class="grid-content shrink">
+                                    <button id="btn-add-files" class="small button hollow" click.delegate="createAddfilesDialog()">Add Images</button>
+                                    <button class="small button hollow">Delete Season</button>
+                                </div>              
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- BRAND filters END -->
+                    <!-- BRAND filters END -->
 
 
-                <!-- AGENCY filters BEGIN -->
-                <div if.bind="user.type === 'agency'">
-                    <div class="blockSearchImages">
-                        <div class="grid-row">
-                            <div class="grid-row-col">
-                                <filters-search></filters-search>
+                    <!-- AGENCY filters BEGIN -->
+                    <div if.bind="user.type === 'agency'">
+                        <div class="blockSearchImages">
+                            <div class="grid-row">
+                                <div class="grid-row-col">
+                                    <filters-search></filters-search>
+                                </div>
+                                <div class="grid-row-col">
+                                    <filters-available-from></filters-available-from>
+                                </div>
+                                <div class="grid-row-col">
+                                    <filters-available-to></filters-available-to>
+                                </div>
+                                <div class="grid-row-col">
+                                    <filters-city></filters-city>
+                                </div>
                             </div>
-                            <div class="grid-row-col">
-                                <filters-available-from></filters-available-from>
-                            </div>
-                            <div class="grid-row-col">
-                                <filters-available-to></filters-available-to>
-                            </div>
-                            <div class="grid-row-col">
-                                <filters-city></filters-city>
+                            <div class="grid-row">
+                                <div class="grid-row-col">
+                                    <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>
+                                </div>
+                                <div class="grid-row-col">
+                                    <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
+                                </div>
+                                <div class="grid-row-col">
+                                    <filters-color></filters-color>
+                                </div>
+                                <div class="grid-row-col"></div>
                             </div>
                         </div>
-                        <div class="grid-row">
-                            <div class="grid-row-col">
-                                <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>
+                        <div class="blockManageImages">
+                            <div class="grid-row">
+                                <div class="grid-row-col">
+                                    <filters-search></filters-search>
+                                </div>
+                                <div class="grid-row-col">
+                                    <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>
+                                </div>
+                                <div class="grid-row-col">
+                                    <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
+                                </div>                    
+                                <div class="grid-row-col"></div>            
                             </div>
-                            <div class="grid-row-col">
-                                <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
+                            <div class="grid-row">
+                                <div class="grid-content shrink">
+                                    <button id="btn-add-files" class="small button hollow" click.delegate="createAddfilesDialog()">Add Images</button>
+                                    <button class="small button hollow">Delete Season</button>
+                                </div>              
                             </div>
-                            <div class="grid-row-col">
-                                <filters-color></filters-color>
-                            </div>
-                            <div class="grid-row-col"></div>
                         </div>
                     </div>
-                    <div class="blockManageImages">
-                        <div class="grid-row">
-                            <div class="grid-row-col">
-                                <filters-search></filters-search>
-                            </div>
-                            <div class="grid-row-col">
-                                <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>
-                            </div>
-                            <div class="grid-row-col">
-                                <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
-                            </div>                    
-                            <div class="grid-row-col"></div>            
-                        </div>
-                        <div class="grid-row">
-                            <div class="grid-content shrink">
-                                <button id="btn-add-files" class="small button hollow" click.delegate="createAddfilesDialog()">Add Images</button>
-                                <button class="small button hollow">Delete Season</button>
-                            </div>              
-                        </div>
-                    </div>
-                </div>
                 <!-- AGENCY filters END --> 
-
+                </div>
 <!-- -->
 <!-- Images/Looks -->
 <!-- -->
