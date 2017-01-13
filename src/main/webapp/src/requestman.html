@@ -133,8 +133,9 @@
                                             </td>
                                             <td class="accordion-grey w4">${booking.id}</td>
                                             <td class="accordion-grey w11">${booking.bookingStartDate | viewDateFormat}</td>
+                                            <td if.bind="user.type === 'press'" class="accordion-grey w14">${booking.brand.name}</td>
                                             <td class="accordion-grey w25">${booking.editorialName}</td>
-                                            <td class="accordion-grey w14">${booking.pressHouse.name}</td>
+                                            <td if.bind="user.type === 'brand'" class="accordion-grey w14">${booking.pressHouse.name}</td>
                                             <td class="accordion-grey w13">${booking.requestingUser.name} ${booking.requestingUser.surname}</td>
                                             <td class="accordion-grey w5">${booking.searchableItems.length}</td>
                                             <td if.bind="user.type === 'press'" class="accordion-grey w14">${booking.requestStatusPress}</td>
