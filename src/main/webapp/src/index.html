@@ -17,9 +17,11 @@
 
 
         <div class="grid-block spa-background" style="overflow:visible;">
-            <!-- -->
-            <!-- Calendar + Request  Panel -->
-            <!-- -->
+
+<!-- -->
+<!-- Calendar + Request  Panel -->
+<!-- -->
+
             <div id="left-panel" class="vertical grid-block grid-block-vertical-shadow">
                 <!-- header -->
                 <div class="grid-block tool-header shrink">
@@ -46,7 +48,7 @@
                         <input type="search" value.two-way="searchtext" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
                         <!-- filter requests -->
                         <span class="inline-label" style="margin-top:1rem;">
-                        <span class="form-label">Order</span>
+                        <span class="form-label" style="font-weight:500;">ORDER</span>
                         <select name="" id="">
                             <option>By Date</option>
                             <option>By Person</option>
@@ -63,7 +65,7 @@
                     <!--header -->
                     <div>
                         <table class="accordion">
-                            <tr>
+                            <tr> 
                                 <th class="accordion w10"></th>
                                 <th class="accordion w22">ID</th>
                                 <th class="accordion w34">PRESS</th>
@@ -187,9 +189,11 @@
             <!-- spacer -->
             <div class="grid-block shrink spa-h-spacer">
             </div>
-            <!-- -->
-            <!-- Image Grid Large Panel-->
-            <!-- -->
+
+<!-- -->
+<!-- Image Grid Large Panel-->
+<!-- -->
+
             <div id="looks" class="vertical grid-block grid-block-vertical-shadow" style="overflow:hidden;">
                 <!-- Header -->
                 <div class="grid-block tool-header shrink ">
@@ -198,36 +202,37 @@
                     <div id="comms_panel" class="grid-block align-left tool-header tool-header-spacer shrink">
 
                         <!-- Header for 'press'-->
-                        <span if.bind="user.type === 'press'">
+                        <span if.bind="user.type == 'press'">
                             <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
-                            <span if.bind="maxRReached" class="ui-text-label-m-broad">></span>
+                            <span if.bind="maxRReached" class="ui-text-label-m-broad"> > </span>
                             <span class="ui-text-label-m-broad">${numberImages} Results )</span>
                         </span> 
 
                         <!-- Header for 'brand'-->
-                        <select if.bind="user.type === 'brand'" class="select-transparent" name="" id="imagesFunctionality">
+                        <!-- if.bind bug here, only for brand have to remove '>' -->
+                        <select if.bind="user.type == 'brand'" class="select-transparent" name="" id="imagesFunctionality">
                             <option value="optionSearchImages"> 
                                 <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
-                                <span if.bind="maxRReached" class="ui-text-label-m-broad">></span>
+                               <!-- <span if.bind="maxRReached == 'true'" class="ui-text-label-m-broad"> ${maxRReached} </span> -->
                                 <span class="ui-text-label-m-broad">${numberImages} Results )</span>
                             </option>
                             <option value="optionManageImages">
                                 <span class="ui-text-label-m-broad">MANAGE IMAGES (</span>
-                                <span if.bind="maxRReached" class="ui-text-label-m-broad">></span>
+                                <!-- <span if.bind=" maxRReached " class="ui-text-label-m-broad"> > </span> -->
                                 <span class="ui-text-label-m-broad">${numberImages} Results )</span>
                             </option>
                         </select>
                        
                         <!-- Header for 'agency'-->
-                        <select if.bind="user.type === 'agency'" class="select-transparent" name="" id="imagesFunctionality">
+                        <select if.bind="user.type == 'agency'" class="select-transparent" name="" id="imagesFunctionality">
                             <option value="optionSearchImages"> 
                                 <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
-                                <span if.bind="maxRReached" class="ui-text-label-m-broad">></span>
+                                <span if.bind="maxRReached" class="ui-text-label-m-broad"> > </span>
                                 <span class="ui-text-label-m-broad">${numberImages} Results )</span>
                             </option>
                             <option value="optionManageImages">
                                 <span class="ui-text-label-m-broad">MANAGE IMAGES (</span>
-                                <span if.bind="maxRReached" class="ui-text-label-m-broad">></span>
+                                <span if.bind="maxRReached" class="ui-text-label-m-broad"> > </span>
                                 <span class="ui-text-label-m-broad">${numberImages} Results )</span>
                             </option>
                         </select>
@@ -240,7 +245,6 @@
                     </div>
                 </div>
                 <!-- search / filter area -->
-
 
                 <!-- PRESS filters BEGIN -->
                         <div if.bind="user.type === 'press'">
@@ -301,10 +305,7 @@
                                     </div>
                                 </div>
                         </div>
-
                 <!-- PRESS filters END -->
-
-
 
                 <!-- BRAND filters BEGIN -->
                 <div if.bind="user.type === 'brand'">
@@ -397,11 +398,12 @@
                         </div>
                     </div>
                 </div>
-                <!-- AGENCY filters END -->
+                <!-- AGENCY filters END --> 
 
-           
- 
-                <!-- Images/Looks -->
+<!-- -->
+<!-- Images/Looks -->
+<!-- -->
+
                 <div id="mainScrollWindow" class="cards-list-wrap">
                 
                         <div class="cards-list" repeat.for="row of rows" >
@@ -454,41 +456,14 @@
 
                                     <div class="card-hover-overlay" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"></div>
 
-                                </div>
-
-                                
-                        </div>
-
-                  
+                                </div>  
+                        </div>                  
                     </div>
                 </div>
                 <!-- white lip at bottom of scroll region -->
                 <div class="grid-content shrink scrolling-lip">
                 </div>
-
             </div>
-
-<!-- Right panel -->
-<!--            <div id="right-panel" class="vertical grid-block grid-block-vertical-shadow" style="overflow:auto;">
-                <compose view-model="comms/commsHeader"></compose>
-                <compose view-model="messages/messagesHeader" style="min-height:90px; margin-top: 1rem; margin-right:1rem;margin-left: 1rem;"></compose>
-                <compose id="message-container-dad"  view-model="messages/messages" style="overflow-x:hidden;"></compose>
--->
-                <!-- white lip at bottom of scroll region -->
-<!--                <div class="grid-content shrink scrolling-fat-lip">
-                </div>
--->                <!-- New message -->
-<!--                <div class="grid-content align-right shrink">
-                    <div class="new-message-block">
-                        <div class="message-userpic"><img src="/assets/lauren.png"></div>
-                        <input type="text" id="msgInput" class="message-new-message-box" placeholder="New Message">
-                        <a class="hollow button"  click.delegate="sendMessage()">Send Message</a>
-                    </div>
-                </div>
-            </div>
-        </div>
--->        <!-- spacer -->
-
         </div>
 
 </template>

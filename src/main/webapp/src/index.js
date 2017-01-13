@@ -37,10 +37,6 @@ export class Index {
   selectedTheme = '';
   maxR = 500;
   maxRReached = false;
-  
-  
-
-
   numberImages = 0;
   
   
@@ -199,6 +195,8 @@ export class Index {
     this.dialogService = dialogService;
     this.sampleRequestService = sampleRequestService;
     this.userService = userService;
+    this.maxRReached = false;
+    this.numberImages = 0;
 
   }
 
