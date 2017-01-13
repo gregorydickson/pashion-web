@@ -324,7 +324,7 @@ export class Index {
   
 
   createSampleRequest(itemId) {
-    this.lookMenu(itemId);
+    // this.lookMenu(itemId);
     this.dialogService.open({viewModel: CreateSampleRequest, model: itemId })
       .then(response => {
         this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
@@ -332,19 +332,19 @@ export class Index {
   }
 
   checkAvailabilitySearchableItem(itemId) {
-    this.lookMenu(itemId);
+    //this.lookMenu(itemId);
     this.dialogService.open({viewModel: CheckAvailability, model: itemId })
       .then(response => {});
   }
 
   setAvailabilitySearchableItem(itemId) {
-    this.lookMenu(itemId);
+    //this.lookMenu(itemId);
     this.dialogService.open({viewModel: SetAvailability, model: itemId })
       .then(response => {});
   }
 
   editSearchableItem(itemId) {
-    this.lookMenu(itemId);
+    //this.lookMenu(itemId);
     this.dialogService.open({viewModel: EditSearchableItem, model: itemId })
       .then(response => {});
   }
