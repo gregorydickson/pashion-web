@@ -230,6 +230,8 @@ export class CreateSampleRequest {
       
     }else{
       this.sampleRequest.samples = [];
+      document.getElementById("CreateSampleRequestButton").disabled = true;
+
       
       
     }
@@ -240,26 +242,32 @@ export class CreateSampleRequest {
 
   updateAvailability(){
     this.allSamplesSelected();
-    var queryString = DateFormat.urlString(this.endOffset,1);
-    this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
-            method: 'post',
-            body: json(this.sampleRequest.samples)
-          })
-          .then(response => response.json())
-          .then(calendar => {
-              this.endCalendar = calendar;
-          });
+    if(this.sampleRequest.samples.length == 0) {
+      console.log("no samples");
+      document.getElementById("CreateSampleRequestButton").disabled = true;
+    } else {
 
-    queryString = DateFormat.urlString(this.startOffset,1);
-    this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
-            method: 'post',
-            body: json(this.sampleRequest.samples)
-          })
-          .then(response => response.json())
-          .then(calendar => {
-              this.startCalendar = calendar;
-          });
-    this.enableCheck();
+      var queryString = DateFormat.urlString(this.endOffset,1);
+      this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
+              method: 'post',
+              body: json(this.sampleRequest.samples)
+            })
+            .then(response => response.json())
+            .then(calendar => {
+                this.endCalendar = calendar;
+            });
+
+      queryString = DateFormat.urlString(this.startOffset,1);
+      this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
+              method: 'post',
+              body: json(this.sampleRequest.samples)
+            })
+            .then(response => response.json())
+            .then(calendar => {
+                this.startCalendar = calendar;
+            });
+    }
+    
   }
 
   allSamplesSelected() {
