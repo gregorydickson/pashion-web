@@ -64,6 +64,10 @@ export class Index {
                                       '&maxR=' + this.maxR)
           .then(response => response.json())
           .then(rows => {
+            if(rows.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
             this.rows = rows;
             if (rows.length >0) {
             this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
@@ -96,6 +100,10 @@ export class Index {
                                       '&maxR=' + this.maxR)
           .then(response => response.json())
           .then(rows => {
+            if(rows.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
             this.rows = rows;
             if (rows.length >0) {
             this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
@@ -131,6 +139,10 @@ export class Index {
                                       '&maxR=' + this.maxR)
           .then(response => response.json())
           .then(rows => {
+            if(rows.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
             this.rows = rows;
             if (rows.length >0) {
             this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
@@ -169,6 +181,10 @@ export class Index {
                                       '&maxR=' + this.maxR)
           .then(response => response.json())
           .then(rows => {
+            if(rows.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
             this.rows = rows;
             if (rows.length >0) {
             this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;

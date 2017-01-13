@@ -7,6 +7,7 @@ class APIInterceptor {
     public APIInterceptor() {
         
         match controller: 'sampleRequest'
+        match controller: 'searchableItem', action:'filterSearch'
 
         
     }
