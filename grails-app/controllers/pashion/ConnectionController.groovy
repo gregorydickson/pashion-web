@@ -119,7 +119,8 @@ class ConnectionController {
         connection.numberNewMessages = connection.numberNewMessages + 1   
         log.info "addMessageCount for: " + params.id.toInteger() + " json:"+jsonObject + ' to ' + connection.numberNewMessages
         
-        connection.save(failOnError : true, flush: true)
+        def success = connection.save(failOnError : true, flush: true)
+        connection.errors.each {log.info "addMessageCount errors: " + it}
         def connectionString  = 'message numbers count updated for: ' + connection
         def sent = [message:connectionString]
         render sent as JSON
@@ -134,7 +135,7 @@ class ConnectionController {
         connection.mostRecentRead = jsonObject.mostRecentRead
         //log.info "saveMostRecentRead input as: " + connection.mostRecentRead
         connection.save(failOnError : true, flush: true)
-        def connectionString  = 'saveMostRecentRead updated'
+        def connectionString  = 'saveMostRecentRead success'
         def sent = [message:connectionString]
         render sent as JSON
     }
@@ -148,13 +149,14 @@ class ConnectionController {
         connection.numberNewMessages = 0
         
         connection.save(failOnError : true, flush: true)
-        def connectionString  = 'numbers count zeroed: ' + params.id.toInteger()
+        def connectionString  = 'numbers count zero-ed: ' + params.id.toInteger()
         def sent = [message:connectionString]
         render sent as JSON
     }
 
     @Transactional
     def save(Connection connection) {
+        log.info "connection save: " + connection
         if (connection == null) {
             transactionStatus.setRollbackOnly()
             notFound()

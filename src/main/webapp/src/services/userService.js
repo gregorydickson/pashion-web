@@ -193,7 +193,7 @@ export class UserService {
         // get id for email;
         var fromUserId = this.checkValidUser(fromEmail);
         var connectionId=-1;
-        console.log("Update message count from:" + fromEmail + " id:" + fromUserId);
+        console.log("Update message count from:" + fromEmail + " id:" + fromUserId + ' pushToServer: ' + pushToServer);
 
         var i;
         for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
