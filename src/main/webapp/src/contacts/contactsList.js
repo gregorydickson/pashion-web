@@ -4,7 +4,6 @@ import {DialogService} from 'aurelia-dialog';
 import 'fetch';
 import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
-import {CreateDialogEditContact} from './dialogEditContact';
 import {CreateDialogUpdatePhoto} from './dialogUpdatePhoto';
 import {UserService} from 'services/userService';
 import {CommsHeader} from 'comms/commsHeader';
@@ -145,10 +144,11 @@ export class ContactsList {
 
 
 // contact lists
-  lookEditContact(id){
+
+/*  lookEditContact(id){
     var menu = document.getElementById(id); 
     menu.classList.toggle("look-menu-show");
-  }
+  } */
 
   closeExpand(buttonNumber) {
     var buttonChoice = document.getElementById("button" + buttonNumber);
@@ -157,6 +157,7 @@ export class ContactsList {
     panelChoice.classList.toggle("show"); 
   }
 
+/*
   // Create dialog edit contact 
   createDialogEditContact(id) {
     var menu = document.getElementById(id); 
@@ -164,7 +165,7 @@ export class ContactsList {
     this.dialogService.open({viewModel: CreateDialogEditContact, model: 0 })
       .then(response => {});
   }
-
+*/
 
   // Create dialog update photo
   CreateDialogUpdatePhoto(id) {
