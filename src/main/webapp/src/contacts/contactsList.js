@@ -174,6 +174,12 @@ export class ContactsList {
       .then(response => {});
   }
 
+    // Create dialog update photo
+  updatePhoto() {
+    this.dialogService.open({viewModel: CreateDialogUpdatePhoto, model: 0 })
+      .then(response => {});
+  }
+
   initiateMessage (userId) { // id not email
     console.log("initiate message for current contact: " + userId);
     // clear unread messages
@@ -195,13 +201,10 @@ export class ContactsList {
       
   }
 
-    filterFunc(searchExpression, value){
-
-     let itemValue = value.name;
-     if(!searchExpression || !itemValue) return false;
-     
-     return itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;
-     
+  filterFunc(searchExpression, value){
+   let itemValue = value.name;
+   if(!searchExpression || !itemValue) return false;
+   return itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;    
   }
 
 
