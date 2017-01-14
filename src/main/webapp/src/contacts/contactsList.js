@@ -128,8 +128,9 @@ fetchGetUserFromServer () {
 
   deleteContact(user,id) {
     this.userService.deleteContact(user,id)
-      .then(response => {
-      });
+      // .then(response => {
+      // })
+      ;
   }
 
 
