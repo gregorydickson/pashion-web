@@ -81,11 +81,14 @@
                     </td>
                     <td class="accordion-grey"> <span>Alphabetical</span>
                     </td>
+                    <td class="accordion-grey" style="width:20px;">
+                        <button id="button1221" class="accordionAZ active" click.delegate="switchAlpha(1221)"></button>
+                    </td>
                 </tr>
             </table>
         </div>
         <div id="panel1212" class="panel grid-block vertical scroll show" style="overflow-y:auto;">
-            <div id="contacts-inside-top" if.bind="(users[user.id -1].connections!=null)" repeat.for="connection of users[user.id -1].connections | sort: 'name': 'ascending' | filter:searchTerm:filterFunc " class="" style="width:255px; overflow: visible;margin-left: 1rem; margin-bottom:1.5rem;">
+            <div id="contacts-inside-top" if.bind="(users[user.id -1].connections!=null)" repeat.for="connection of users[user.id -1].connections | sort: 'name': filterDirection | filter:searchTerm:filterFunc " class="" style="width:255px; overflow: visible;margin-left: 1rem; margin-bottom:1.5rem;">
                 <table if.bind="(connection.connectingStatus=='Accepted')" class="width100">
                     <tr>
                         <td>

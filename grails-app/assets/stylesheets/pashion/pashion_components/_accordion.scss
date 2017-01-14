@@ -30,6 +30,35 @@ button.accordion.active:before {
     color: #9b9b9b;
 }
 
+
+button.accordionAZ {
+    background-color: $white-two;
+    cursor: pointer;
+    min-width: 9px;
+    border: none;
+    text-align: left;
+    outline: none;
+    // transition: 0.4s;
+}
+
+button.accordionAZ.active {
+    // background-color: var(--white-two);
+}
+
+button.accordionAZ:before {
+    content: 'Z to A';
+    font-size: 1rem;
+    // font-weight: 900;
+    color: #9b9b9b;
+}
+
+button.accordionAZ.active:before {
+    content: 'A to Z';
+    font-size: 1rem;
+    // font-weight: 900;
+    color: #9b9b9b;
+}
+
 div.panel {
     background-color: white;
     max-height: 0;

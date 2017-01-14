@@ -22,6 +22,7 @@ export class ContactsList {
   contactActivity = "19";
   connectString ="connect";
   currentPNTime;
+  filterDirection = 'ascending';
   
   //pubnub
     pubnub;
@@ -106,12 +107,21 @@ export class ContactsList {
     ]);
 	}
 
-//RM test button & pubnub message cache invalidate response target
-fetchGetUserFromServer () {
-  this.userService.getUsers(true).then(users => this.users = users);
-}
+  //RM test button & pubnub message cache invalidate response target
+  fetchGetUserFromServer () {
+    this.userService.getUsers(true).then(users => this.users = users);
+  }
 
-// contact workflow
+  // switch alphabetical filtering
+  switchAlpha (buttonNumber) {
+    if(this.filterDirection == 'ascending') this.filterDirection = 'descending';
+    else this.filterDirection = 'ascending';
+
+    var buttonChoice = document.getElementById("button" + buttonNumber);
+    buttonChoice.classList.toggle("active");
+  }
+
+  // contact workflow
   contactMenu(id){
     var menu = document.getElementById('connect'+id); 
     menu.classList.toggle("look-menu-show");
