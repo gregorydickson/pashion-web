@@ -6,10 +6,11 @@
                     <!-- <img  src="/assets/lauren.png" style="margin-right: 1rem;"/> -->
                     <img if.bind="(user.image)" src=${user.image} class="clip-circle contact-entry" />
                     <div if.bind="(!user.image)" style="margin-right: 1rem; margin-left:1rem; margin-top:1rem; text-transform: uppercase;" class="avatar-circle ">${user.name.charAt(0)}</div>
-                    <select value.bind="selectval" change.trigger="logout()" name="LAUREN" id="headerModeSelect" class="nav-label-header top-menu-modifier" style="max-width:150px;">
+                    <select value.bind="selectval" change.trigger="userActions()" name="LAUREN" id="headerModeSelect" class="nav-label-header top-menu-modifier" style="max-width:150px;">
                         <option value="no">${user.name}</option>
                        <!-- <option value="guest">GUEST</option> -->
                         <option value= "logout">LOGOUT</option>
+                        <option value= "edit">EDIT PROFILE</option>
                     </select>
                 </li>
                     <li></li>
