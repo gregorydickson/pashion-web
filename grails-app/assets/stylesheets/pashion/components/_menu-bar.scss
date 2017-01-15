@@ -62,6 +62,7 @@ $menubar-icon-spacing: $menubar-item-padding !default;
       flex-flow: column nowrap;
       align-items: center;
       padding: $menubar-item-padding;
+      padding: 15px 0 0 0;
       font-size: $menubar-fontsize;
       letter-spacing: 4px; //RM
       line-height: 2.2;
@@ -245,7 +246,7 @@ $menubar-icon-spacing: $menubar-item-padding !default;
     @if $position == top {
       > a {
         flex-flow: column nowrap;
-        > img { margin: 5px 0 5px 0; } //RM
+        > img { margin: 0; } //RM
 
         @if using(icon) {
           @each $iconclass in $icon-classes {

@@ -388,7 +388,7 @@ ai-dialog-body .grid-block-row {
   }
 
   .grid-row .grid-row-date-end {
-    max-width: 11rem;
+    max-width: 12rem;
   }
 
 }
@@ -433,4 +433,9 @@ filters-city {
 }
 .index-filters > div {
   padding-bottom: 2%;
+}
+@media (max-width: $screen-medium) {
+  .indigital-and-align {
+    width: 60px !important;
+  }
 }

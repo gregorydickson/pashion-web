@@ -17,7 +17,9 @@
 		position: relative;
 		overflow: visible; 
 	}
-
+	.card img {
+		display: flex; 
+	}
 	.card-image-name {
 		position: absolute;
 		top: 5px;
@@ -67,7 +69,6 @@
 	right: 5px;
 	bottom: 1px;
 	color: $pinkish-grey;
-	
 	cursor: pointer;
 }
 
@@ -79,10 +80,11 @@
 	font-weight: 500;
 	width: 100%;
 	text-align: center;
-	top: calc(40% - 0.86rem);
+	top: calc(42% - 0.86rem);
 	z-index: 2;
 	right: auto;
 	bottom: auto; 
+	 overflow: hidden;
 }
 .card-image:hover .card-look-number-name {
 	display: block;
@@ -95,7 +97,8 @@
 	top: calc(30% - 0.86rem);
 	z-index: 2;
 	right: auto;
-	bottom: auto; 
+	bottom: auto;
+	overflow: hidden;
 }
 
 .card-image:hover .card-look-number {
@@ -124,4 +127,33 @@
 	border-right-width: 0; 
 	border-bottom-width: 1rem; 
 	border-left-width: 1rem; 
+}
+@media (max-width: $screen-big) {
+	.card-image:hover {
+		min-height: 200px;
+	}
+}
+@media (max-width: $screen-medium) {
+	.card-image:hover .card-look-number-name , 
+	.card-image:hover .card-look-number-brand-season{
+		font-size: $font-size-mid;
+		line-height: $font-size-headings;
+	}	
+
+	.card-image:hover .card-look-number {
+		font-size: $font-size-medium;
+	}
+	.card-image .card-look-number {
+		bottom: 10px; 
+
+	}
+	.card-image:hover {
+		min-height: 132px;
+	}
+	.card-image:hover .card-look-number-brand-season,
+	.card-image:hover .card-look-number-name {
+		overflow: hidden;
+	    white-space: nowrap;
+	    text-overflow: ellipsis; 
+	}
 }

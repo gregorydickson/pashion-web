@@ -138,3 +138,18 @@ body.ai-dialog-open .blue-image {
 .cards-list .card .look-menu-absolute-wrap .look-menu-link {
 white-space: normal;   
 }
+@media (max-width: $screen-big) {
+  .cards-list .card:first-child .look-menu-absolute-wrap .look-menu-absolute  {
+      right: auto;
+      left: calc(100% - 48px);
+  }
+}
+@media (max-width: $screen-medium) {
+
+  .menu-stripe:before,
+  .menu-stripe:after {
+    width: 4px; 
+    height: 4px;
+    border-radius: 4px; 
+    }
+}
