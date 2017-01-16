@@ -1,22 +1,18 @@
 import {DialogController} from 'aurelia-dialog';
-import {HttpClient,json} from 'aurelia-fetch-client';
-import 'fetch';
 import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
+import {UserService} from './services/userService';
 
-@inject(HttpClient, DialogController)
+@inject(DialogController, UserService)
 export class CreateDialogNewUser {
   static inject = [DialogController];
 
 
-  constructor(http, controller){
+  constructor(controller, userService){
     this.controller = controller;
-    http.configure(config => {
-      config
-        .useStandardConfiguration();
-    });
-    this.http = http;
+    this.userService = userService;
   }
+
 
   close(){
     this.controller.close();
@@ -24,4 +20,6 @@ export class CreateDialogNewUser {
   
 
 
-  }
+
+
+}

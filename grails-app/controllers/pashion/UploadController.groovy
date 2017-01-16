@@ -88,6 +88,7 @@ class UploadController {
                                     }
                                     item.attributes = sb.toString()
                                     look.attributes = look.attributes + " " + sb.toString()
+                                    look.isBookable = true
                                     look.save(flush:true,failOnError:true)
 
                                     item.brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season).save()
