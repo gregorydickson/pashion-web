@@ -33,7 +33,7 @@ export class Header {
   		if (this.selectval=="logout") window.location.href = '/user/logout';
       //if (this.selectval=="guest") this.theRouter.navigate("guestpage");
       if (this.selectval=="edit") {
-        this.selectval = ""; // changes selectval back to name, not sure why
+        this.selectval = ""; // changes selectval back to name, not sure why As should be 2 way binding
         this.dialogService.open({viewModel: CreateDialogEditContact, model: 0 })
           .then(response => {});
       };

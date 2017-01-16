@@ -218,7 +218,7 @@ export class UserService {
                     })
                     .then(response => response.json())
                     .then(result => {
-                        console.log("fetch addMessageCount:" + result.message);
+                        console.log("json addMessageCount result:" + result.message);
                     }).catch(err => reject(err));
             });
             return promise;
@@ -328,12 +328,12 @@ export class UserService {
         console.log("delete connection, id: " + id + " from user " + user);
         // local
         if (typeof(id) == 'undefined') {
-             console.log ("id undefined: " + id);
+            // console.log ("id undefined: " + id);
             // pf = new Promise ();
             return false; 
         }
         if (typeof(user) == 'undefined') {
-             console.log ("user undefined");
+            // console.log ("user undefined");
             // pf = new Promise ();
             return false; 
         }

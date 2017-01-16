@@ -6,7 +6,7 @@
         <ai-dialog-header>
             <div class="grid-block align-center tool-header shrink ">
                 <div id="" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad">EDIT CONTACT &nbsp;</span> <!-- fudge to take account of the X -->
+                    <span class="ui-text-label-m-broad">EDIT PROFILE</span> <!-- fudge to take account of the X -->
                 </div>
             </div>
         </ai-dialog-header>
@@ -21,35 +21,31 @@
 
                         <!-- Username -->
                         <div class="grid-block shrink">                       
-                            <span class="inline-label slim-text-box-label">Username</span>
-                            <input type="text" class="slim-text-box" value="PaulineU@miumiuUK">
+                            <span class="inline-label slim-text-box-label">Email</span>
+                            <input type="text" class="slim-text-box" value=${user.email}>
                         </div>
 
 
                         <!-- Name -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Name</span>
-                            <input type="text" class="slim-text-box" value="Lauren">
+                            <input type="text" class="slim-text-box" value="${user.name} ${user.surname}">
                         </div>
 
                         <!-- Company -->
-                        <div class="grid-block shrink">        
-                                <span class="inline-label">
-                                    <span class="slim-text-box-label">Company</span>
-                                </span>
-                                <select name="" id=""  class="slim-text-box">
-                                    <option>Ralph Lauren</option>
-                                    <option>Chanel</option>
-                                </select>
+                        <div class="grid-block shrink">  
+                            <span class="slim-text-box-label">Company</span>
+                            <input type="text" class="slim-text-box" value="${user.brand.name} ${user.pressHouse.name} ${user.agency.name}">
+
                         </div>
 
                         <!-- Title -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Title</span>
-                            <input type="text" class="slim-text-box" value="Runner / Assistant">
+                            <input type="text" class="slim-text-box" value=${user.title}>
                         </div>
 
-                        <!-- Role -->
+                        <!-- Role 
                         <div class="grid-block shrink">        
                                 <span class="inline-label">
                                     <span class="slim-text-box-label">Role</span>
@@ -58,7 +54,7 @@
                                     <option>Brand</option>
                                     <option>Sales manager</option>
                                 </select>
-                        </div>
+                        </div> -->
 
                         <!-- Location -->
                         <div class="grid-block shrink">        
@@ -69,43 +65,43 @@
                                     <option>London</option>
                                     <option>Paris</option>
                                 </select>
-                        </div>
+                        </div> 
 
-                        <!-- Address 1 -->
+                        <!-- Address 1
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Address 1</span>
-                            <input type="text" class="slim-text-box" value="#1234 Via Messamoto">
-                        </div>
+                            <input type="text" class="slim-text-box" value=${user.address1}>
+                        </div> -->
 
-                        <!-- Address 2 -->
+                        <!-- Address 2 
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Address 2</span>
-                            <input type="text" class="slim-text-box" value="Milano">
-                        </div>
+                            <input type="text" class="slim-text-box" value=${user.address2}>
+                        </div> -->
 
-                        <!-- Address 3 -->
+                        <!-- Address 3 
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Address 3</span>
-                            <input type="text" class="slim-text-box" value="12345 Italy">
-                        </div>                        
+                            <input type="text" class="slim-text-box" value=${user.address3}>
+                        </div>  -->                      
 
                         <!-- Phone -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Phone</span>
-                            <input type="text" class="slim-text-box" value="+ (12) 3 456 77 89">
+                            <input type="text" class="slim-text-box" value=${user.phone}>
                         </div>
 
-                        <!-- Email -->
+                        <!-- Email
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Email</span>
                             <input type="text" class="slim-text-box" value="pau@miumiu.com">
                         </div>
-
-                        <!-- Skype -->
+                        -->
+                        <!-- Skype 
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Skype</span>
-                            <input type="text" class="slim-text-box" value="pauline.skype.me">
-                        </div>                        
+                            <input type="text" class="slim-text-box" value=${user.skype}>
+                        </div> -->                       
                    
                     </div>
 

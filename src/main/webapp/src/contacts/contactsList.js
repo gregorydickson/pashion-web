@@ -5,6 +5,7 @@ import 'fetch';
 import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import {CreateDialogUpdatePhoto} from './dialogUpdatePhoto';
+import {CreateDialogConfirmDelete} from './dialogConfirmDelete'; 
 import {UserService} from 'services/userService';
 import {CommsHeader} from 'comms/commsHeader';
 import {EventAggregator} from 'aurelia-event-aggregator';
@@ -135,11 +136,19 @@ export class ContactsList {
   }
 
 
-  deleteContact(user,id) {
-    this.userService.deleteContact(user,id)
-      // .then(response => {
-      // })
-      ;
+  deleteContact(userId,id,deleteEmail) {
+
+      this.dialogService.open({viewModel: CreateDialogConfirmDelete, model: deleteEmail })
+          .then(response => {
+                             console.log("confirm dialog was cancelled: " + response.wasCancelled);
+                             if (response.wasCancelled) return false ;
+                             this.userService.deleteContact(userId,id);
+                           });
+
+  }
+
+    deleteConnection(userId,id) {
+     this.userService.deleteContact(userId,id);
   }
 
 

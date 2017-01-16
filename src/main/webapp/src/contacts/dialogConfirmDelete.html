@@ -1,0 +1,28 @@
+<template>
+
+   <ai-dialog>
+        <ai-dialog-header>
+            <!-- header -->
+            <div class="grid-block align-center tool-header shrink">
+              <span class="ui-text-label-m-broad">DELETE CONTACT</span>
+            </div>
+        </ai-dialog-header>
+      <ai-dialog-body>
+
+        <div class="paragraph-30 text-center">
+          Are you sure you want to delete your contact:
+        </div>
+        <div class="paragraph-30 text-center"> 
+          ${userForDeletion} ?
+        </div>
+
+      </ai-dialog-body>
+
+
+      <ai-dialog-footer>
+         <button click.delegate="confirm()" style="background: white;">Delete</button>
+         <button click.delegate="close()">Cancel</button>
+      </ai-dialog-footer>
+
+   </ai-dialog>
+</template>

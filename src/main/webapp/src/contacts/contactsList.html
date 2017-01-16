@@ -44,7 +44,7 @@
                     </table>
                     <div class="grid-block align-center shrink">
                         <!--  <a class="hollow button" click.delegate="declineContact(connectionC.user.id,connectionC.id) ">Decline</a> //RM no deny, just delete, more permissive -->
-                        <a class="hollow button" click.delegate="deleteContact(user.id,connectionC.id) ">Decline</a>
+                        <a class="hollow button" click.delegate="deleteConnection(user.id,connectionC.id) ">Decline</a>
                         <a class="button" href="#" click.delegate="acceptContact(user.id,connectionC.id)">Accept</a>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                         </tr>
                     </table>
                     <div class="grid-block align-center shrink">
-                        <a class="hollow button" click.delegate="deleteContact(user.id,connectionC.id) ">Delete</a>
+                        <a class="hollow button" click.delegate="deleteConnection(user.id,connectionC.id) ">Delete</a>
                     </div>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                     <td class="accordion-grey" style="width:20px;">
                         <button id="button1212" class="accordion active" click.delegate="closeExpand(1212)"></button>
                     </td>
-                    <td class="accordion-grey"> <span>Alphabetical</span>
+                    <td class="accordion-grey"> <span>Contacts</span>
                     </td>
                     <td class="accordion-grey" style="width:20px;">
                         <button id="button1221" class="accordionAZ active" click.delegate="switchAlpha(1221)"></button>
@@ -145,7 +145,7 @@
                         <td class="align-top">
                             <div class="look-menu-absolute-wrap">
 
-                                <a href="#" click.delegate="deleteContact(connection.user.id,connection.id)">
+                                <a href="#" click.delegate="deleteContact(connection.user.id,connection.id, users[connection.connectedUserId -1].email)">
                                     <span class="edit-box" style="font-size: 20px; margin-left: 11px; margin-right: 0px; margin-top: 6px; height:16px;width:16px;">
 
                                     <img style="vertical-align: center;" src="../../assets/ximg.png"  /> 
