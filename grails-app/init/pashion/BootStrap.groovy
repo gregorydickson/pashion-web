@@ -24,6 +24,7 @@ class BootStrap {
         returnArray['name'] =  it.name
         returnArray['season'] = it.season.name
         returnArray['brand'] = it.brand.name
+        returnArray['fromDate'] = it.fromDate
         return returnArray
       }
 // RM don't remove this section, used by comms

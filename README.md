@@ -1,15 +1,6 @@
-# Databases
+# Testing
 
-## Development Database - contains bookable samples for testing and development:
-* pashionweb.c7nidmmcu7kv.us-east-1.rds.amazonaws.com:3306/pashionweb
-* username: pashionweb
-* password: ETWxa634WwxGaW6v
-
-
-## browse.pashiontool.com and Production Single Page Application(SPA) DB, marked as Production in application.yml
-* pashion-prod.cnjmlfc6tctw.eu-west-1.rds.amazonaws.com:3306/pashionprod
-* username: pashionprod
-* password: 2Mc9Nf17gBzyGs*a4$WS
+* Test Miu Miu with miu@pashiontool.com / Pashion123
 
 # Pashion 
 
@@ -149,7 +140,24 @@ https://github.com/stormpath/stormpath-sdk-java/issues/17
 * I have noticed that even when there are missing images, we have data for the Look in the CSV
 * In these instances of missing images. I have deleted the record in the Searchable_Items table so that errors do not appear in the Javascript console and broken images do not show in the user interface.
 
-## www.pashiontool.com development environment and deployment
 
 
+# Onboarding
+ * Create Directory in StormPath for the Brand, put directory URI in the Brand's record in the table.
+ * Create Group for the user type (Brand or Press). Add the application to the Group.
+ * Create users with the page /users/create
+
+
+# Databases
+
+## Development Database - contains bookable samples for testing and development:
+* pashionweb.c7nidmmcu7kv.us-east-1.rds.amazonaws.com:3306/pashionweb
+* username: pashionweb
+* password: ETWxa634WwxGaW6v
+
+
+## browse.pashiontool.com and Production Single Page Application(SPA) DB, marked as Production in application.yml
+* pashion-prod.cnjmlfc6tctw.eu-west-1.rds.amazonaws.com:3306/pashionprod
+* username: pashionprod
+* password: 2Mc9Nf17gBzyGs*a4$WS
 

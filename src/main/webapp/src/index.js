@@ -343,7 +343,8 @@ export class Index {
   setAvailabilitySearchableItem(itemId) {
     //this.lookMenu(itemId);
     this.dialogService.open({viewModel: SetAvailability, model: itemId })
-      .then(response => {});
+      .then(response => {
+      });
   }
 
   editSearchableItem(itemId) {

@@ -8,15 +8,10 @@ import {DateFormat} from 'common/dateFormat';
 export class SetAvailability {
   static inject = [DialogController];
   
-  currentItem = {};
+  id = '';
   calendar = {};
   offset = 0;
-
-  
- 
-
-
-
+  newDate = '';
   
 
   constructor(http, controller){
@@ -30,11 +25,7 @@ export class SetAvailability {
   }
 
   activate(itemId){
-    this.http.fetch('/searchableItems/'+itemId+'.json')
-      .then(response => response.json())
-      .then(item => {
-          this.currentItem = item;
-    });
+    this.id = itemId;
 
 
     var queryString = DateFormat.urlString(0, 1);
@@ -57,7 +48,7 @@ export class SetAvailability {
 	  });
   	element.className += " start-selected";
   	this.redraw(element);
-  	this.currentItem.fromDate = this.calendar.calendarMonths[0].year+"-"+this.calendar.calendarMonths[0].monthNumber+"-"+day;
+  	this.newDate = this.calendar.calendarMonths[0].year+"-"+this.calendar.calendarMonths[0].monthNumber+"-"+day;
 
   }
   
@@ -102,19 +93,21 @@ export class SetAvailability {
   submit(){
     console.log("submitting Availability Data");
 
-    var item = this.currentItem;
-    console.log("item:"+item);
+    var update = {};
+    update.fromDate = this.newDate;
+    update.id = this.id;
+    console.log("update:"+update.id + " " + update.fromDate);
     
     this.http.fetch('/searchableItem/saveFromDate', {
             method: 'post',
-            body: json(item)
+            body: json(update)
           })
           .then(response => response.json())
           .then(result => {
               this.result = result;
           });
-    this.currentItem.id = this.result;
-    alert('Start Date Updated');
+    
+    
     this.controller.close();
     
   }

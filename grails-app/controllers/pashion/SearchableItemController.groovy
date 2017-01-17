@@ -31,7 +31,7 @@ class SearchableItemController {
         if(params.theme != null && params.theme != "")
             theme = params.theme
 
-
+        log.info "brand param:"+params.brand
         if(params.brand && params.brand != '' && params.brand.trim() != 'All'){
             brand = Brand.get(params.brand.trim())
         }
@@ -149,7 +149,8 @@ class SearchableItemController {
         log.info "collect results duration:"+duration
         
         startTime = System.currentTimeMillis()
-        render resultList as JSON
+        def jsonList = resultList as JSON
+        render jsonList
         endTime = System.currentTimeMillis()
         duration = (endTime - startTime)
         log.info "JSON render duration:"+duration
@@ -289,6 +290,7 @@ class SearchableItemController {
     @Transactional
     def saveFromDate(){
         def jsonObject = request.JSON
+        log.info "fromdate:"+jsonObject.fromDate
         log.info "json:"+jsonObject
         SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
         def item =  SearchableItem.get(jsonObject.id)
