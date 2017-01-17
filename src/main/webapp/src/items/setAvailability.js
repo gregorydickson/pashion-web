@@ -105,10 +105,11 @@ export class SetAvailability {
           .then(response => response.json())
           .then(result => {
               this.result = result;
+              this.controller.close();
           });
     
     
-    this.controller.close();
+    
     
   }
 
