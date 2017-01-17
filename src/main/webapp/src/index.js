@@ -12,11 +12,12 @@ import {Introduction} from './hello/introduction';
 import {Zoom} from './zoom/zoom';
 import {SampleRequestService} from './services/sampleRequestService';
 import {UserService} from './services/userService';
+import {BrandService} from './services/brandService';
 import {AddFilesDialog} from './add_files/add_files';
 import {ErrorDialogSample} from './error_dialog/error_dialog_sample';
 
 
-@inject(HttpClient, EventAggregator, DialogService,SampleRequestService, UserService)
+@inject(HttpClient, EventAggregator, DialogService,SampleRequestService, UserService, BrandService)
 export class Index {
   user = {};
   bookings = [];
@@ -200,7 +201,7 @@ export class Index {
 
   }
 
-  constructor(http, eventAggregator,dialogService,sampleRequestService,userService) {
+  constructor(http, eventAggregator,dialogService,sampleRequestService,userService, brandService) {
     http.configure(config => {
       config
         .useStandardConfiguration();
@@ -211,6 +212,7 @@ export class Index {
     this.dialogService = dialogService;
     this.sampleRequestService = sampleRequestService;
     this.userService = userService;
+    this.brandService = brandService;
     this.maxRReached = false;
     this.numberImages = 0;
 
@@ -223,7 +225,8 @@ export class Index {
     return Promise.all([
       this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
       this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes),
-      this.http.fetch('/brand/fastList').then(response => response.json()).then(brands => this.brands = brands),
+      //this.http.fetch('/brand/fastList').then(response => response.json()).then(brands => this.brands = brands),
+      this.brandService.getBrands().then (brands => this.brands = brands),
       this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors),
       this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings),
       this.user = this.userService.getUser().then(user => {

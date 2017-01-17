@@ -4,15 +4,17 @@ import 'fetch';
 import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import {UserService} from 'services/userService';
+import {BrandService} from 'services/brandService';
 
-@inject(HttpClient, DialogController, UserService)
+@inject(HttpClient, DialogController, UserService, BrandService)
 export class CreateDialogEditContact {
   static inject = [DialogController];
 
   user = {};
   userId = -1;
+  brands = {};
 
-  constructor(http, controller, userService){
+  constructor(http, controller, userService, brandService){
     this.controller = controller;
     http.configure(config => {
       config
@@ -20,14 +22,17 @@ export class CreateDialogEditContact {
     });
     this.http = http;
     this.userService = userService;
+    this.brandService = brandService;
 
-    parent = this;
-    this.userService.getUser()
-      .then(user => {
-              parent.userId = user.id;
-              parent.userService.getUserDetails(parent.userId)
-                .then(currentContact => parent.user = currentContact) ;});
+  }
 
+  activate() {
+
+    this.brandService.getBrands().then (brands => this.brands = brands);
+    this.userService.getUser().then(user => {
+              this.userId = user.id;
+              this.userService.getUserDetails(this.userId)
+                .then(currentContact => this.user = currentContact);});
   }
 
   close(){
