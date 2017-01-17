@@ -21,9 +21,12 @@ class BrandController {
         render list as JSON
     }
 
-    def addresses(){
-        def brand = Brand.get(params.id.toInteger())
-        def addresses = brand.addresses as JSON
+    def addresses(){ 
+        // log.info "brand/addresses id: " + params.id.toInteger()
+        def brand = Brand.get(params.id.toInteger())  
+        // log.info "brand addresses brand: " + brand
+        def addresses = brand.addresses as JSON 
+        // log.info "brand/addresses addresses: " + addresses
         render addresses
     }
 
