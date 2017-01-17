@@ -41,30 +41,23 @@ export class CreateDialogEditContact {
             this.userService.getUserDetails(this.userId)
                 .then(currentContact => {
                     this.user = currentContact;
-                    if (this.user.brand) {
-                        this.brandService.getBrandFromId(this.user.brand.id)
-                        .then(brand => {
-                              this.brand = brand;
-                              this.http.fetch('/brand/addresses/'+this.brand.id)
-                                .then(response => response.json())
-                                .then(addresses => this.addresses = addresses);})
-                    }
+                    if (this.user.brand)
+                        this.brandService.getBrandAddresses(this.user.brand.id)
+                            .then(addresses=>this.addresses = addresses)})
+    
+                             
+                    
                    /* if (this.user.press) {
                         this.pressService.getPressFromId(this.user.press.id).then(press => this.press = press);
                     } */
                    /* if (this.user.prAgency) {
                         this.prAgencyService.getPrAgencyFromId(this.user.prAgency.id).then(prAgency => this.prAgency = prAgency);
                     }*/
-                })
-        });
-
-        
-
-        
-    }
+                  })
+        }
 
 
-    close() {
+ close() {
         this.controller.close();
     }
 
