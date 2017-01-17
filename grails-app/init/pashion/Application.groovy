@@ -1,4 +1,4 @@
-package pashion.web
+package pashion
 
 import grails.boot.GrailsApp
 import grails.boot.config.GrailsAutoConfiguration

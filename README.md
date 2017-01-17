@@ -19,7 +19,7 @@ To setup the Development Environment:
 
 * Install SDKMan. It dramatically reduces the complexity of installing and upgrading Grails. http://sdkman.io/install.html
 
-* With SDKMan installed, run 'sdk install grails 3.1.14' and let it set that version to be the default.
+* With SDKMan installed, run 'sdk install grails 3.2.4' and let it set that version to be the default.
 
 * git clone git@github.com:gregorydickson/pashion-web.git  (we will be moving to a Pashion account soon but for now use this git repository)
 

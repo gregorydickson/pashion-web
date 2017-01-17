@@ -159,7 +159,9 @@ class SearchableItemController {
 
 
     def browseSearch(){
+        
         long startTime = System.currentTimeMillis()
+        
         int maxRInt = params.maxR.toInteger()
         SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
         
@@ -168,17 +170,17 @@ class SearchableItemController {
         Season season = null
         def keywords = null
         def theme = null
-
+        
         if(params.theme != null && params.theme != "")
             theme = params.theme
-
-        if(params.brand != "" || params.brand != "All")
-            brand = Brand.get(params.brand)
+        
+        if(params.brand && params.brand != '' && params.brand.trim() != 'All'){
+            brand = Brand.get(params.brand.trim())
+        }
         
         if(params.season != "")
             season = Season.findByName(URLDecoder.decode(params.season))
         
-
         if(params.searchtext != null && params.searchtext != "" && params.searchtext != "undefined"){
             keywords = URLDecoder.decode(params.searchtext)
             keywords = keywords.split(" ")
