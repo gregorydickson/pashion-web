@@ -35,4 +35,18 @@ export class BrandService {
         });
         return promise;
     }
+
+    getBrandFromId (id) {
+        var promise = new Promise ((resolve, reject) => {
+        this.getBrands().then(brands => {
+            var i;
+            for (i=0;i<brands.length;i++){
+                if (brands[i].id == id) {
+                    console.log("getBrandsFromId: " + id + " is: "+ brands[i].name);
+                    resolve(brands[i]);
+                }
+            }
+            resolve(null);});})
+            return promise;
+    }
 }

@@ -62,8 +62,7 @@
                                     <span class="slim-text-box-label">Location</span>
                                 </span>
                                 <select name="" id="" class="slim-text-box">
-                                    <option>London</option>
-                                    <option>Paris</option>
+                                    <option repeat.for="address of brand.addresses">${address.city}</option>
                                 </select>
                         </div> 
 
