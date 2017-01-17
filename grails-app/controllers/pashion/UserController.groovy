@@ -49,12 +49,12 @@ class UserController {
 
     
     def index(Integer max) {
-        params.max = 5000 // Math.min(max ?: 10, 100)
+        /*params.max = 5000 // Math.min(max ?: 10, 100)
         if(params.email && params.email != ""){
             def email = URLDecoder.decode(params.email)
             respond User.findByEmail(email)
             return
-        }
+        }*/
         respond User.list(params), model:[userCount: User.count()]
     }
 
@@ -98,7 +98,7 @@ class UserController {
         log.info "do Login params:"+params
         def account = null
         def user = User.findWhere(email:params['email'])
-        log.info user
+        log.info "user:"+user.id.toString()
         if(user){
             account = userService.login(params.email,params.password)
             session.user = user                   
