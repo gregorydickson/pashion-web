@@ -21,6 +21,8 @@ To setup the Development Environment:
 
 * With SDKMan installed, run 'sdk install grails 3.2.4' and let it set that version to be the default.
 
+* Ensure that [NodeJS](http://nodejs.org/) is installed. This provides the platform on which the Aurelia build tooling runs.
+
 * git clone git@github.com:gregorydickson/pashion-web.git  (we will be moving to a Pashion account soon but for now use this git repository)
 
 * open two terminal windows. In the first terminal window navigate to the root directory of the application and run 'grails', then 'run-app'
@@ -43,9 +45,7 @@ To setup the Development Environment:
 
 * Brand test user account:  lauren@pashiontool.com / Pashion123 - Ralph Lauren
 
-* Brand test user account: paco@pashiontool.com / Pashion123 - Paco Rabanne
-
-* The application uses a development database on Amazon AWS which will require internet connectivity. If this is too slow then you can setup MySQL locally.
+* The application uses a database on Amazon AWS which will require internet connectivity. If this is too slow then you can setup MySQL locally.
 
 ## Install a javascript package
 
