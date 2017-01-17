@@ -1,13 +1,6 @@
-import {
-    inject
-} from 'aurelia-framework';
-import {
-    HttpClient,
-    json
-} from 'aurelia-fetch-client';
-import {
-    singleton
-} from 'aurelia-framework';
+import {inject} from 'aurelia-framework';
+import {HttpClient,json} from 'aurelia-fetch-client';
+import {singleton} from 'aurelia-framework';
 import 'fetch';
 
 @inject(HttpClient)
@@ -30,7 +23,7 @@ export class UserService {
     activate() {}
 
     // there are no calls to this function in this file. 
-    // All access to users is via the implicit variable created at #37
+    // All access to users is via the implicit variable created at #36
     // All access to users from outside userService should go through this call
     getUsers(forceGetFromServer) {
         console.log("getting users: forceGetFromServer: " + forceGetFromServer);
@@ -46,7 +39,7 @@ export class UserService {
                         resolve(this.users);
                     }).catch(err => reject(err));
             } else {
-                console.log("getting users lcoally");
+                console.log("getting users locally");
                 resolve(this.users);
             }
         });
