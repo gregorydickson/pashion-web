@@ -19,8 +19,8 @@ class PressHouseController {
     }
 
     def addresses(){
-        def brand = Brand.get(params.id.toInteger())
-        def addresses = brand.addresses as JSON
+        def pressHouse = PressHouse.get(params.id.toInteger())
+        def addresses = pressHouse.addresses as JSON
         render addresses
     }
 

@@ -5,19 +5,19 @@ import { inject } from 'aurelia-framework';
 import { DateFormat } from 'common/dateFormat';
 import { UserService } from 'services/userService';
 import { BrandService } from 'services/brandService';
-//import { PressService } from 'services/pressService';
+import { PressHouseService } from 'services/pressHouseService';
 //import { PrAgencyService } from 'services/PrAgencyService';
 
 @inject(HttpClient, DialogController, UserService, BrandService 
   //,PrAgencyService
-  //,PressService
+  ,PressHouseService
   )
 export class CreateDialogEditContact {
     static inject = [DialogController];
 
     constructor(http, controller, userService, brandService  
       //,prAgencyService
-      //,pressService
+      ,pressHouseService
       ) {
         this.controller = controller;
         http.configure(config => {
@@ -27,7 +27,7 @@ export class CreateDialogEditContact {
         this.http = http;
         this.userService = userService;
         this.brandService = brandService;
-        //this.pressService = pressService;
+        this.pressHouseService = pressHouseService;
         //this.prAgencyService = prAgencyService;
 
     }
@@ -41,19 +41,15 @@ export class CreateDialogEditContact {
             this.userService.getUserDetails(this.userId)
                 .then(currentContact => {
                     this.user = currentContact;
-                    if (this.user.brand)
+                    if (this.user.brand.id != null)
                         this.brandService.getBrandAddresses(this.user.brand.id)
-                            .then(addresses=>this.addresses = addresses)})
-    
-                             
-                    
-                   /* if (this.user.press) {
-                        this.pressService.getPressFromId(this.user.press.id).then(press => this.press = press);
-                    } */
-                   /* if (this.user.prAgency) {
-                        this.prAgencyService.getPrAgencyFromId(this.user.prAgency.id).then(prAgency => this.prAgency = prAgency);
-                    }*/
+                            .then(addresses=>this.addresses = addresses)
+                    if (this.user.pressHouse.id != null)
+                        this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
+                            .then(addresses=>this.addresses = addresses)
+
                   })
+            })
         }
 
 
