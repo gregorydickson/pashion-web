@@ -6,18 +6,13 @@ import { DateFormat } from 'common/dateFormat';
 import { UserService } from 'services/userService';
 import { BrandService } from 'services/brandService';
 import { PressHouseService } from 'services/pressHouseService';
-//import { PrAgencyService } from 'services/PrAgencyService';
+import { PRAgencyService } from 'services/PRAgencyService';
 
-@inject(HttpClient, DialogController, UserService, BrandService 
-  //,PrAgencyService
-  ,PressHouseService
-  )
+@inject(HttpClient, DialogController, UserService, BrandService ,PRAgencyService,PressHouseService)
 export class CreateDialogEditContact {
     static inject = [DialogController];
 
-    constructor(http, controller, userService, brandService  
-      //,prAgencyService
-      ,pressHouseService
+    constructor(http, controller, userService, brandService ,prAgencyService ,pressHouseService
       ) {
         this.controller = controller;
         http.configure(config => {
@@ -28,7 +23,7 @@ export class CreateDialogEditContact {
         this.userService = userService;
         this.brandService = brandService;
         this.pressHouseService = pressHouseService;
-        //this.prAgencyService = prAgencyService;
+        this.prAgencyService = prAgencyService;
 
     }
 
@@ -46,6 +41,9 @@ export class CreateDialogEditContact {
                             .then(addresses=>this.addresses = addresses)
                     if (this.user.pressHouse.id != null)
                         this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
+                            .then(addresses=>this.addresses = addresses)
+                    if (this.user.prAgency.id != null)
+                        this.prAgencyService.getPRAgencyAddresses(this.user.PRAgency.id)
                             .then(addresses=>this.addresses = addresses)
 
                   })

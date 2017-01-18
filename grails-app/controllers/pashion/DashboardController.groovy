@@ -34,6 +34,9 @@ class DashboardController {
         } else if (user.pressHouse) {
             type = 'press'
             companyId = user.pressHouse.id
+        } else if (user.prAgency) {
+            type = 'prAgency'
+            companyId = user.prAgency.id
         } else {
             type = 'guest'
         }

@@ -15,4 +15,11 @@ json g.render(user,[expand:['connections']]){
 		name user.brand?.name
 		id user.brand?.id
 	}
+
+	prAgency {
+		name user.prAgency?.name
+		id user.prAgency?.id
+	} 
+
+
 }
