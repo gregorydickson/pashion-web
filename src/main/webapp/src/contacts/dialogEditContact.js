@@ -12,8 +12,7 @@ import { PRAgencyService } from 'services/PRAgencyService';
 export class CreateDialogEditContact {
     static inject = [DialogController];
 
-    constructor(http, controller, userService, brandService ,prAgencyService ,pressHouseService
-      ) {
+    constructor(http, controller, userService, brandService, prAgencyService, pressHouseService) {
         this.controller = controller;
         http.configure(config => {
             config
@@ -50,10 +49,14 @@ export class CreateDialogEditContact {
             })
         }
 
+   save () {
+    this.userService.update(this.user);
+    this.controller.close();
+   }
 
- close() {
-        this.controller.close();
-    }
+  close() {
+    this.controller.close();
+  }
 
 
 

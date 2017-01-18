@@ -119,6 +119,18 @@ export class UserService {
         return promise;
     }
 
+    update (user) {
+        var promise = new Promise((resolve, reject) => {
+            this.http.fetch('/user/update/' + user.id + ".json", {
+                    method: 'post',
+                    body: json({user: user})
+                })
+                .then(response => response.json())
+                .then(result => {}).catch(err => reject(err));
+            });
+
+    }
+
     // Build new connection
     addContactRequest(idIn) {
 

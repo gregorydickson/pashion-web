@@ -22,27 +22,33 @@
                         <!-- Username -->
                         <div class="grid-block shrink">                       
                             <span class="inline-label slim-text-box-label">Email</span>
-                            <input type="text" class="slim-text-box" value=${user.email}>
+                            <input type="text" class="slim-text-box" disabled value=${user.email}>
                         </div>
 
 
                         <!-- Name -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Name</span>
-                            <input type="text" class="slim-text-box" value="${user.name} ${user.surname}">
+                            <input type="text" class="slim-text-box" value.bind="user.name">
+                        </div>
+
+                        <!-- Surname -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Surname</span>
+                            <input type="text" class="slim-text-box" value.bind="user.surname">
                         </div>
 
                         <!-- Company -->
                         <div class="grid-block shrink">  
                             <span class="slim-text-box-label">Company</span>
-                            <input type="text" class="slim-text-box" value="${user.brand.name} ${user.pressHouse.name} ${user.agency.name}">
+                            <input type="text" class="slim-text-box" disabled value="${user.brand.name} ${user.pressHouse.name} ${user.prAgency.name}">
 
                         </div>
 
                         <!-- Title -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Title</span>
-                            <input type="text" class="slim-text-box" value=${user.title}>
+                            <input type="text" class="slim-text-box" value.bind="user.title">
                         </div>
 
                         <!-- Role 
@@ -61,7 +67,7 @@
                                 <span class="inline-label">
                                     <span class="slim-text-box-label">Location</span>
                                 </span>
-                                <select name="" id="" class="slim-text-box">
+                                <select name="" id="" class="slim-text-box" value.bind="user.address">
                                     <option repeat.for="address of addresses">${address.city}</option>
                                 </select>
                         </div> 
@@ -87,7 +93,7 @@
                         <!-- Phone -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Phone</span>
-                            <input type="text" class="slim-text-box" value=${user.phone}>
+                            <input type="text" class="slim-text-box" value.bind="user.phone">
                         </div>
 
                         <!-- Email
@@ -112,7 +118,7 @@
         <!-- Footer buttons -->
         <ai-dialog-footer>
                     <a class="hollow button"  click.delegate="close()">Cancel</a>
-                    <a class="button" href="javascript:;">Save</a>
+                    <a class="button" click.delegate="save()">Save</a>
         </ai-dialog-footer>
     </ai-dialog>
 </template>
