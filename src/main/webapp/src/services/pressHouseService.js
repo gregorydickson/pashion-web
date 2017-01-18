@@ -5,7 +5,7 @@ import 'fetch';
 
 @inject(HttpClient)
 @singleton()
-export class BrandService {
+export class PressHouseService {
 
     constructor(http) {
         http.configure(config => {
@@ -17,29 +17,29 @@ export class BrandService {
 
     activate() {}
 
-    getBrands() {
+    getPressHouses() {
         var promise = new Promise((resolve, reject) => {
-            if (!this.brands) {
-                console.log("Getting brands from JSON");
-                this.http.fetch('/brand/fastList')
+            if (!this.press) {
+                console.log("Getting press from JSON");
+                this.http.fetch('/pressHouse/index.json')
                     .then(response =>
-                        response.json()).then(brands => {
-                        this.brands = brands;
+                        response.json()).then(press => {
+                        this.pressHouses = pressHouses;
                         // console.log ("user brands fetched: " + brands);
-                        resolve(this.brands);
+                        resolve(this.pressHouses);
                     }).catch(err => reject(err));
             } else {
-                console.log("getting brands from local");
-                resolve(this.brands);
+                console.log("getting pressHouses from local");
+                resolve(this.press);
             }
         });
         return promise;
     }
 
 
-    getBrandAddresses(brandId) {
+    getPressHouseAddresses(pressHouseId) {
         var promise = new Promise((resolve, reject) => 
-                this.http.fetch('/brand/addresses/'+brandId)
+                this.http.fetch('/pressHouse/addresses/'+pressHouseId)
                                         .then(response => response.json())
                                         .then(addresses => resolve(addresses)).catch(err => reject(err)));
         return promise;

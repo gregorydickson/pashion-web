@@ -5,7 +5,7 @@ import 'fetch';
 
 @inject(HttpClient)
 @singleton()
-export class BrandService {
+export class PRAgencyService {
 
     constructor(http) {
         http.configure(config => {
@@ -17,29 +17,28 @@ export class BrandService {
 
     activate() {}
 
-    getBrands() {
+    getPRAgencies() {
         var promise = new Promise((resolve, reject) => {
-            if (!this.brands) {
-                console.log("Getting brands from JSON");
-                this.http.fetch('/brand/fastList')
+            if (!this.press) {
+                console.log("Getting PRAgencies from JSON");
+                this.http.fetch('/PRAgency/index.json')
                     .then(response =>
-                        response.json()).then(brands => {
-                        this.brands = brands;
-                        // console.log ("user brands fetched: " + brands);
-                        resolve(this.brands);
+                        response.json()).then(PRAgencies => {
+                        this.PRAgencies = PRAgencies;
+                        resolve(this.PRAgencies);
                     }).catch(err => reject(err));
             } else {
-                console.log("getting brands from local");
-                resolve(this.brands);
+                console.log("getting PRAgencies from local");
+                resolve(this.PRAgencies);
             }
         });
         return promise;
     }
 
 
-    getBrandAddresses(brandId) {
+    getPrAgencyAddresses(PRAgencyId) {
         var promise = new Promise((resolve, reject) => 
-                this.http.fetch('/brand/addresses/'+brandId)
+                this.http.fetch('/PRAgency/addresses/'+PRAgencyId)
                                         .then(response => response.json())
                                         .then(addresses => resolve(addresses)).catch(err => reject(err)));
         return promise;

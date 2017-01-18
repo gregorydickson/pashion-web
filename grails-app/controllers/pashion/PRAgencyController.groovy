@@ -2,6 +2,7 @@ package pashion
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.converters.JSON
 
 @Transactional(readOnly = true)
 class PRAgencyController {
@@ -11,6 +12,15 @@ class PRAgencyController {
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond PRAgency.list(params), model:[PRAgencyCount: PRAgency.count()]
+    }
+
+    def addresses(){ 
+        // log.info "pragency/addresses id: " + params.id.toInteger()
+        def prAgency = PRAgency.get(params.id.toInteger())  
+        // log.info "pragency addresses brand: " + brand
+        def addresses = prAgency.addresses as JSON 
+        // log.info "pragency/addresses addresses: " + addresses
+        render addresses
     }
 
     def show(PRAgency PRAgency) {

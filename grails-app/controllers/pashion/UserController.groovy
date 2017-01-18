@@ -19,7 +19,7 @@ class UserController {
     //   /user/updateConnections
     @Transactional
     def updateConnections(){
-        //log.info 'updateConnections called'
+        //log.info 'updateConnections called' 
         //log.info "json:"+request.JSON
         def jsonObject = request.JSON
         try{
@@ -131,6 +131,8 @@ class UserController {
             owner = PressHouse.get(params.pressHouse.id.toInteger())
         } else if (params.brand.id != "null"){
             owner = Brand.get(params.brand.id.toInteger())
+        } else if (params.prAgency.id != "null"){
+            owner = PRAgency.get(params.prAgency.id.toInteger())
         }
 
         log.info "params:"+params

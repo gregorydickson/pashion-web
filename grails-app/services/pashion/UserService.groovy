@@ -107,7 +107,11 @@ class UserService {
             log.info "creating Press user"
     		role = "press-users"
     		user = new User(name:name,surname:surname, email:email,pressHouse:owner,isInPashionNetwork:true).save(failOnError : true)
-    	}
+    	} else if(owner instanceof PRAgency){
+            log.info "creating PRAgency user"
+            role = "prAgency-users"
+            user = new User(name:name,surname:surname, email:email,prAgency:owner,isInPashionNetwork:true).save(failOnError : true)
+        }
         Directory directory
         try{
             directory = client.getResource(owner.stormpathDirectory, Directory.class)

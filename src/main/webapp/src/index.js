@@ -225,7 +225,6 @@ export class Index {
     return Promise.all([
       this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
       this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes),
-      //this.http.fetch('/brand/fastList').then(response => response.json()).then(brands => this.brands = brands),
       this.brandService.getBrands().then (brands => this.brands = brands),
       this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors),
       this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings),
