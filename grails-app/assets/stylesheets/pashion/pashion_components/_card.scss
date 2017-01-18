@@ -130,7 +130,7 @@
 }
 @media (max-width: $screen-big) {
 	.card-image:hover {
-		min-height: 200px;
+		min-height: 190px;
 	}
 }
 @media (max-width: $screen-medium) {
@@ -148,7 +148,7 @@
 
 	}
 	.card-image:hover {
-		min-height: 132px;
+		min-height: 126px;
 	}
 	.card-image:hover .card-look-number-brand-season,
 	.card-image:hover .card-look-number-name {

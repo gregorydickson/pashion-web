@@ -29,7 +29,7 @@ export class Header {
   }
 
   userActions(){
-  		console.log("header action: " + this.selectval);
+  		//console.log("header action: " + this.selectval);
   		if (this.selectval=="logout") window.location.href = '/user/logout';
       //if (this.selectval=="guest") this.theRouter.navigate("guestpage");
       if (this.selectval=="edit") {
