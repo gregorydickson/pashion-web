@@ -8,7 +8,7 @@ import com.bloomhealthco.jasypt.*
 class User {
 	Account account
 	String password
-
+	Address address
 	String name
 	String surname
 	String email
@@ -45,6 +45,7 @@ class User {
    	static transients = ['account','password']
 	static constraints = {
 		account nullable: true
+		address nullable: true
 
 		name nullable:true
 		surname nullable:true
