@@ -9,6 +9,8 @@ class User {
 	Account account
 	String password
 	Address address
+	String title
+	String phone
 	String name
 	String surname
 	String email
@@ -46,7 +48,8 @@ class User {
 	static constraints = {
 		account nullable: true
 		address nullable: true
-
+		title nullable: true
+		phone nullable: true
 		name nullable:true
 		surname nullable:true
 		email nullable: true
