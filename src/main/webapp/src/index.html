@@ -435,6 +435,7 @@
                                             Favourite
 
                                             brand / agency
+                                            book
                                             edit
                                             details
                                             set initial availability
@@ -481,7 +482,7 @@
 
                                    <!--  <div class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div> -->
 
-                                    <div class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
+                                    <div if.bind="user.type === 'brand'" class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
                                     <div class="card-look-number-name" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
                                     <div class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].brand} <br> ${row.items[i].season}</div>
 
