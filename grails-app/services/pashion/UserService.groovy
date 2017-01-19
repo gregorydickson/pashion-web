@@ -95,22 +95,21 @@ class UserService {
         account
     }
     
-    def createUser(String email,String name,String surname,
-    				 def owner, String rawpassword, Boolean isInPashionNetwork ){
+    def createUser(def params, def owner, Boolean isInPashionNetwork ){
     	def role
     	User user
     	if(owner instanceof Brand){
             log.info "creating Brand user"
     		role = "brand-users"
-    		user = new User(name:name,surname:surname, email:email,brand:owner,isInPashionNetwork:true).save(failOnError : true)
+    		user = new User(title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,brand:owner,isInPashionNetwork:true).save(failOnError : true)
     	} else if(owner instanceof PressHouse){
             log.info "creating Press user"
     		role = "press-users"
-    		user = new User(name:name,surname:surname, email:email,pressHouse:owner,isInPashionNetwork:true).save(failOnError : true)
+    		user = new User(title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,pressHouse:owner,isInPashionNetwork:true).save(failOnError : true)
     	} else if(owner instanceof PRAgency){
             log.info "creating PRAgency user"
             role = "prAgency-users"
-            user = new User(name:name,surname:surname, email:email,prAgency:owner,isInPashionNetwork:true).save(failOnError : true)
+            user = new User(title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,prAgency:owner,isInPashionNetwork:true).save(failOnError : true)
         }
         Directory directory
         try{

@@ -146,8 +146,7 @@ class UserController {
             return
         }
 
-        user = userService.createUser(params.email, params.name,params.surname, 
-                     owner, params.password, inNetwork)
+        user = userService.createUser(params, owner, inNetwork)
         
         
         request.withFormat {

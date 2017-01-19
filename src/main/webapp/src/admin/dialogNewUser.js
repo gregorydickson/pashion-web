@@ -1,7 +1,7 @@
 import {DialogController} from 'aurelia-dialog';
 import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
-import {UserService} from './services/userService';
+import {UserService} from 'services/userService';
 
 @inject(DialogController, UserService)
 export class CreateDialogNewUser {
