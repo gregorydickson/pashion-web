@@ -10,19 +10,30 @@
         <!-- connection requests -->
         <!-- -->
         <div class="grid-block shrink" style="margin-left:1rem; margin-bottom:0.5rem;">
-            <table class="big-accordion">
+            <table style="table-layout:fixed;" class="big-accordion">
                 <tr>
                     <td class="accordion-grey" style="width:20px;">
-                        <button id="button1111" class="accordion active" click.delegate="closeExpand(1111)"></button>
+                        <button id="button1111" class="accordion " click.delegate="closeExpand(1111)"></button>
                     </td>
                     <td class="accordion-grey">
                         <span>Connection Requests</span>
-                        <!-- <span if.bind="(contactActivity)" class="alert-box">${contactActivity}</span> -->
                     </td>
+                    <td class="accordion-grey" style="width:35px; overflow: hidden;">
+                        <span class="accordion-grey"
+                        if.bind="(users[user.id -1].connections!=null)"
+                        repeat.for="connectionC of users[user.id -1].connections">
+
+                        <span if.bind="(connectionC.connectingStatus=='PendingIn' ||
+                                        connectionC.connectingStatus=='PendingOut')" style="color:#3971b1; font-weight:500;">New</span>
+
+
+                        </span>                        
+                    </td>
+                    <td class="accordion-grey" style="width:3px;"></td>
                 </tr>
             </table>
         </div>
-        <div id="panel1111" class="panel grid-block vertical show" style="overflow-y:auto;">
+        <div id="panel1111" class="panel grid-block vertical " style="overflow-y:auto;">
             <div id="contacts-inside-top2" if.bind="(users[user.id -1].connections!=null)" repeat.for="connectionC of users[user.id -1].connections" class="" style="width:255px; overflow: visible;margin-left: 1rem;">
                 <!-- in coming -->
                 <div if.bind="(connectionC.connectingStatus=='PendingIn')" style="">
