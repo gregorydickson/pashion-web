@@ -121,9 +121,9 @@ export class UserService {
 
     update (user) {
         var promise = new Promise((resolve, reject) => {
-            this.http.fetch('/user/update/' + user.id + ".json", {
+            this.http.fetch('/user/updatejson/' + user.id + ".json", {
                     method: 'post',
-                    body: json({user: user})
+                    body: json(user)
                 })
                 .then(response => response.json())
                 .then(result => {}).catch(err => reject(err));

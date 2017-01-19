@@ -34,6 +34,8 @@ class UserService {
 
 	Application stormpathApp
 	Client client
+    GroupList groups
+
 	
 	@PostConstruct
     def init(){
@@ -114,19 +116,55 @@ class UserService {
         Directory directory
         try{
             directory = client.getResource(owner.stormpathDirectory, Directory.class)
+
             Account account = client.instantiate(Account.class)
-                            .setEmail(email)
-                            .setGivenName(name)
-                            .setSurname(surname)
-                            .setPassword(rawpassword)
+                            .setEmail(params.email)
+                            .setGivenName(params.name)
+                            .setSurname(params.surname)
+                            .setPassword(params.password)
 
             directory.createAccount(account)
+            groups = directory.getGroups()
+            Group group = groups.iterator().next()
+            account.addGroup(group)
         } catch(Exception e){
 
                 //TODO: create stormpath directory????
                 log.error "No Stormpath Directory for user"
         }
 		user
+    }
+
+    def updateUser(def params,def user, def account){
+
+        
+            log.info "params:"+params
+            user.title = params.title
+            user.phone = params.phone
+            user.name = params.name
+            user.surname = params.surname
+            user.save(failOnError:true)
+            log.info "saved user:"+user.toString()
+        if(params.password || params.name || params.surname){
+            try{
+                
+                
+                if(account){
+                    log.info "account not null"
+                    account.setGivenName(params.name)
+                    account.setSurname(params.surname)
+                    account.setPassword(params.password)
+
+                    account.save()
+                }
+
+                
+            } catch(Exception e){
+
+                log.error "stormpath update error:"+e.message
+            }
+        }
+        user
     }
 
 

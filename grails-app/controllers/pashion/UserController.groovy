@@ -80,7 +80,7 @@ class UserController {
             def user = User.findWhere(email:coooookie)
             account = userService.login(user.email,user.stormpathString)
             if(account instanceof Account){
-               user.account = account
+               session.account = account
                session.user = user
                redirect(controller:'dashboard',action:'index')
             }
@@ -164,20 +164,20 @@ class UserController {
 
     @Transactional
     def update(User user) {
+        def jsonObject = request.JSON
+        log.info "json:"+jsonObject
+        if(jsonObject?.id != null){
+            user = userService.updateUser(jsonObject,user,session)
+            log.info "user update json:"+jsonObject
+        } else{
+            user = userService.updateUser(params,user, session)
+        }
+        
         if (user == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
-
-        if (user.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond user.errors, view:'edit'
-            return
-        }
-
-        user.save flush:true
-
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), user.id])
@@ -185,6 +185,19 @@ class UserController {
             }
             '*'{ respond user, [status: OK] }
         }
+    }
+
+    @Transactional
+    def updatejson() {
+        def jsonObject = request.JSON
+        log.info "json:"+jsonObject
+        def user = session.user
+        Account account = session.account
+        user = userService.updateUser(jsonObject,user,account)
+        
+        
+       respond user, [status: OK] 
+        
     }
 
     @Transactional

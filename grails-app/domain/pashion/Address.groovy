@@ -30,6 +30,15 @@ class Address{
 		postalCode nullable: true
 	}
 
+	String toString() {
+		if(brand)
+        	return brand.toString() +" "+ name
+        if(pressHouse)
+        	return pressHouse.toString()+" "+ name
+        if(prAgency)
+        	return prAgency.toString()+" "+ name
+    }
+
 }
 
 

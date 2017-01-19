@@ -71,4 +71,8 @@ class User {
 
 	}
 
+	String toString(){
+		return title+ " "+name + " "+ surname + " " + phone
+	}
+
 }

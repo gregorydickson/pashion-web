@@ -5,7 +5,7 @@ model {
     User user
 }
 
-json g.render(user,[expand:['connections']]){
+json g.render(user,[includes:['name','surname','title','phone','email'],expand:['connections']]){
 	pressHouse {
 		name user.pressHouse?.name
 		id user.pressHouse?.id
