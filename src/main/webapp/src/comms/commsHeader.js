@@ -87,7 +87,8 @@ export class CommsHeader {
         window.setTimeout(function () {
             // $("#messages-inside-top").height($("#messages-inside-top").height()+500); // RM kludge to redraw flex box with new elements
             $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight"));
-          },250); // major kludge to scroll messages
+            $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
+          },1500); // major kludge to scroll messages
 
     }
   }
