@@ -19,7 +19,12 @@ td.au-target.today {
 }
 
 td.au-target.not-available {
-	background-color: $pinkish-grey; 
+	background-color: white; 
+
+	> a {
+		color: $warm-grey;
+		font-weight: 300;
+	}
 }
 
 td.au-target.partial-available {
