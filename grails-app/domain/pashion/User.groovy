@@ -46,13 +46,14 @@ class User {
     }
    	static transients = ['account','password']
 	static constraints = {
+		email nullable: true
 		account nullable: true
 		address nullable: true
 		title nullable: true
 		phone nullable: true
 		name nullable:true
 		surname nullable:true
-		email nullable: true
+		
 		stormpathString nullable:true, maxSize: 1000
 		userCreatedId nullable: true
 		lastModifiedDate nullable: true

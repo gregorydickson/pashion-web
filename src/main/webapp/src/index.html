@@ -456,7 +456,7 @@
                                                 <li if.bind="!row.items[i].fromDate" class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Set Initial Availability</a></li>
 
                                                 <li if.bind="row.items[i].fromDate" class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
-                                                <li if.bind="row.items[i].fromDate" class="look-menu-item"><a href="#" click.delegate="createSampleRequest(row.items[i].id )" class="look-menu-link">Booking &nbsp;</a></li>
+                                                <li if.bind="row.items[i].fromDate" class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i].id )" class="look-menu-link">Booking &nbsp;</a></li>
                                             </ul>
                                             <!-- agency -->
                                             <ul if.bind="user.type === 'agency'" class="look-menu-list">

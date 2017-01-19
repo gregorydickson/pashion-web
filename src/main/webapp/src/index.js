@@ -4,6 +4,7 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {DialogService} from 'aurelia-dialog';
 import 'fetch';
 import {CreateSampleRequest} from './sample_request/createSampleRequest';
+import {CreateSampleRequestBrand} from './sample_request/createSampleRequestBrand';
 import {EditSampleRequest} from './sample_request/editSampleRequest';
 import {EditSearchableItem} from './items/editSearchableItem';
 import {CheckAvailability} from './items/checkAvailability';
@@ -328,6 +329,14 @@ export class Index {
   createSampleRequest(itemId) {
     // this.lookMenu(itemId);
     this.dialogService.open({viewModel: CreateSampleRequest, model: itemId })
+      .then(response => {
+        this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
+      });
+  }
+
+  createSampleRequestBrand(itemId) {
+    // this.lookMenu(itemId);
+    this.dialogService.open({viewModel: CreateSampleRequestBrand, model: itemId })
       .then(response => {
         this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
       });
