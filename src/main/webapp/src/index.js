@@ -37,7 +37,7 @@ export class Index {
   availableTo = '';
   selectedSeason = '';
   selectedTheme = '';
-  maxR = 500;
+  maxR = 250;
   maxRReached = false;
   numberImages = 0;
   

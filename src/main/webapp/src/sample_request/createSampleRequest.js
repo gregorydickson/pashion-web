@@ -3,8 +3,9 @@ import {HttpClient,json} from 'aurelia-fetch-client';
 import 'fetch';
 import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
+import { BrandService } from 'services/brandService';
 
-@inject(HttpClient, DialogController)
+@inject(HttpClient, DialogController, BrandService)
 export class CreateSampleRequest {
   static inject = [DialogController];
   currentItem = {};
@@ -14,11 +15,13 @@ export class CreateSampleRequest {
   selectAll = true;
   required = [];
   deliverTo = [];
+  brand = [];
   brandAddresses = [];
   returnBy = [];
   returnTo = [];
   courier = [];
   payment = [];
+ // seasons = [];
 
 
   sampleRequest = {};
@@ -30,7 +33,7 @@ export class CreateSampleRequest {
 
 
 
-  constructor(http, controller){
+  constructor(http, controller, brandService){
     this.controller = controller;
 
     http.configure(config => {
@@ -38,6 +41,7 @@ export class CreateSampleRequest {
         .useStandardConfiguration();
     });
     this.http = http;
+    this.brandService = brandService;
   }
 
   activate(itemId){
@@ -53,10 +57,14 @@ export class CreateSampleRequest {
     this.http.fetch('/searchableItems/'+itemId+'.json')
       .then(response => response.json())
       .then(item => {
-          this.currentItem = item;        
-          this.http.fetch('/brand/addresses/'+item.brand.id)
+          this.currentItem = item;   
+
+         /* this.http.fetch('/brand/addresses/'+item.brand.id)
               .then(response => response.json())
-              .then(addresses => this.brandAddresses = addresses);
+              .then(addresses => this.brandAddresses = addresses); */
+
+          this.brandService.getBrandAddresses(item.brand.id).then(addresses => this.brandAddresses = addresses);
+          this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);
           this.sampleRequest.samples = [];
           var ids = this.sampleRequest.samples;
           item.samples.forEach(function(item){
@@ -72,6 +80,7 @@ export class CreateSampleRequest {
     this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => this.courier = courier);
     this.http.fetch('/dashboard/returnTo').then(response => response.json()).then(returnTo => this.returnTo = returnTo);
     this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => this.payment = payment);
+   // this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
   }
 
   attached(){

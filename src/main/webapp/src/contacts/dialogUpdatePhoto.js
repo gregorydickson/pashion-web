@@ -19,10 +19,10 @@ export class CreateDialogUpdatePhoto {
   }
 
   activate(itemId){
-    this.http.fetch('/searchableItems/'+itemId+'.json')
+   /* this.http.fetch('/searchableItems/'+itemId+'.json')
          .then(response => response.json())
          .then(item => {}
-         );
+         );*/
   }
 
   close(){

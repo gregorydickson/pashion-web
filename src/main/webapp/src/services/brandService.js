@@ -36,6 +36,13 @@ export class BrandService {
         return promise;
     }
 
+    getBrand(brandId) {
+        var promise = new Promise((resolve, reject) => 
+                this.http.fetch('/brand/show/'+brandId+ '.json')
+                                        .then(response => response.json())
+                                        .then(brand => resolve(brand)).catch(err => reject(err)));
+        return promise;
+    }
 
     getBrandAddresses(brandId) {
         var promise = new Promise((resolve, reject) => 

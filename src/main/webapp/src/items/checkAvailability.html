@@ -5,8 +5,8 @@
             <!-- header -->
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad">CHECK AVAILABILITY LOOK</span>
-                    <span class="ui-text-label-m-broad"> ${currentItem.name}</span>
+                    <span class="ui-text-label-m-broad">CHECK AVAILABILITY LOOK&nbsp;</span>
+                    <span class="ui-text-label-m-broad">${currentItem.name}</span>
                 </div>
             </div>
         </ai-dialog-header>
@@ -65,7 +65,7 @@
           <div class="vertical grid-content accordion" style="overflow-x:hidden; max-height:8rem;"> 
               <table class="big-accordion" style="margin-bottom:0px;" repeat.for="sample of currentItem.samples">
                   <tr>
-                      <td class="accordion w5">1</td>
+                      <td class="accordion w5">${$index + 1}</td>
                       <td class="accordion w19">${sample.id}</td>
                       <td class="accordion w73">${sample.name}</td>
                       <td class="accordion w3">
