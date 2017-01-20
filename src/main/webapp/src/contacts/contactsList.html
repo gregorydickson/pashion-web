@@ -102,7 +102,7 @@
         </div>
         <div id="panel1212" class="panel grid-block vertical scroll show" style="overflow-y:auto;">
             <!-- ME -->
-            <div id="contacts-inside-top-me" style="width:255px; overflow: visible;margin-left: 1rem; margin-bottom:1.5rem;">
+            <div id="contacts-inside-top-me" style="width:255px; overflow: visible;margin-left: 1rem; margin-bottom:1.5rem; border-bottom: 1px solid #e7e7e7; padding-bottom: 9px;">
                 <table class="width100">
                     <tr>
                         <td style="width:43px;">
@@ -129,8 +129,8 @@
                 </table>
             </div>
             <!-- main list -->
-            <div id="contacts-inside-top" if.bind="(users[user.id -1].connections!=null)" repeat.for="connection of users[user.id -1].connections | sort: 'name': filterDirection | filter:searchTerm:filterFunc " class="" style="width:255px; overflow: visible;margin-left: 1rem; margin-bottom:1.5rem;">
-                <table if.bind="(connection.connectingStatus=='Accepted')" class="width100">
+            <div id="contacts-inside-top" if.bind="(users[user.id -1].connections!=null)" repeat.for="connection of users[user.id -1].connections | sort: 'name': filterDirection | filter:searchTerm:filterFunc " class="" style="width:255px; overflow: visible;margin-left: 1rem;">
+                <table if.bind="(connection.connectingStatus=='Accepted')" class="width100" style="margin-bottom: 10px;">
                     <tr>
                         <td>
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
