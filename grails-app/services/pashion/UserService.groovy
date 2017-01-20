@@ -23,6 +23,7 @@ import com.stormpath.sdk.group.GroupList
 import com.stormpath.sdk.group.Groups
 import com.stormpath.sdk.resource.ResourceException
 import com.stormpath.sdk.tenant.Tenant
+import com.pubnub.api.*
 
 
 @Transactional
@@ -35,6 +36,8 @@ class UserService {
 	Application stormpathApp
 	Client client
     GroupList groups
+
+     Pubnub pubnub = new Pubnub("pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73", "sub-c-dd158aea-b76b-11e6-b38f-02ee2ddab7fe")
 
 	
 	@PostConstruct
@@ -136,9 +139,8 @@ class UserService {
     }
 
     def updateUser(def params,def user, def account){
-
-        
-            log.info "params:"+params
+       
+            log.info "updateUser params:"+params
             user.title = params.title
             user.phone = params.phone
             user.name = params.name
@@ -146,28 +148,45 @@ class UserService {
             if(params.address?.id)
                 user.address = Address.get(params.address.id)
 
-            user.save(failOnError:true)
-            log.info "saved user:"+user.toString()
-        if(params.password || params.name || params.surname){
-            try{
-                
-                
-                if(account){
-                    log.info "account not null"
-                    account.setGivenName(params.name)
-                    account.setSurname(params.surname)
-                    account.setPassword(params.password)
 
-                    account.save()
+            User.withTransaction { status ->
+                try{
+                 user.save(failOnError:true, flush:true)
+                } catch(Exception e){
+
+                    log.error "updateUser error:"+e.message
                 }
 
-                
-            } catch(Exception e){
 
-                log.error "stormpath update error:"+e.message
-            }
-        }
-        user
+                log.info "updateUser saved user:"+user.toString()
+                if(params.password || params.name || params.surname){
+                    try{
+                        
+                        
+                        if(account){
+                            log.info "account not null"
+                            account.setGivenName(params.name)
+                            account.setSurname(params.surname)
+                            account.setPassword(params.password)
+
+                            account.save()
+                        }
+
+                        
+                    } catch(Exception e){
+
+                        log.error "stormpath update error:"+e.message
+                    }
+                }
+             }
+
+            // invalidate cache here for connected or connecting user     
+            Callback callback=new Callback() {}
+            def channel = user.email + '_cacheInvalidate'
+            log.info "send invalidate from updateuser on:" + channel
+            pubnub.publish(channel, "refresh the cache please" , callback) 
+
+            user
     }
 
 

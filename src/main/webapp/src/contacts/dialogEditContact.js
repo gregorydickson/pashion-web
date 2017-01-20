@@ -48,7 +48,7 @@ export class CreateDialogEditContact {
         }
 
    save(){
-    console.log("updating user:"+this.user.id)
+    console.log("updating user:"+this.user.id + " name: " + this.user.name)
     this.userService.update(this.user);
     this.controller.close();
    }

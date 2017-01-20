@@ -126,7 +126,7 @@ class UserController {
     @Transactional
     def save(User user) {
         def owner 
-        log.info "params:"+ params
+        log.info " save params:"+ params
         if(params.pressHouse.id != "null"){
             owner = PressHouse.get(params.pressHouse.id.toInteger())
         } else if (params.brand.id != "null"){
@@ -165,7 +165,7 @@ class UserController {
     @Transactional
     def update(User user) {
         def jsonObject = request.JSON
-        log.info "json:"+jsonObject
+        log.info "update json:"+jsonObject
         if(jsonObject?.id != null){
             user = userService.updateUser(jsonObject,user,session)
             log.info "user update json:"+jsonObject
@@ -190,8 +190,9 @@ class UserController {
     @Transactional
     def updatejson() {
         def jsonObject = request.JSON
-        log.info "json:"+jsonObject
+        log.info "updateJson json:"+jsonObject
         def user = session.user
+        log.info "updateJson: user: "+user.toString()
         Account account = session.account
         user = userService.updateUser(jsonObject,user,account)
         

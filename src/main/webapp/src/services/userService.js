@@ -29,7 +29,7 @@ export class UserService {
         console.log("getting users: forceGetFromServer: " + forceGetFromServer);
         var promise = new Promise((resolve, reject) => {
             if ((!this.users) || forceGetFromServer) { // local storage if already loaded
-                console.log("getting users from JSON");
+                console.log("getUsers() getting users from JSON");
                 this.http.fetch('/user/connections.json')
                     .then(response => response.json())
                     .then(users => {
@@ -39,7 +39,7 @@ export class UserService {
                         resolve(this.users);
                     }).catch(err => reject(err));
             } else {
-                console.log("getting users locally");
+                console.log("getUsers() getting users locally");
                 resolve(this.users);
             }
         });
@@ -503,7 +503,7 @@ export class UserService {
     getUser() {
         var promise = new Promise((resolve, reject) => {
             if (!this.user) {
-                console.log("getUser: no user fetch json");
+                console.log("getUser(): no user fetch json");
                 this.http.fetch('/dashboard/user')
                     .then(response => response.json())
                     .then(result => {
@@ -527,7 +527,7 @@ export class UserService {
                         })
                     }).catch(err => reject(err));
             } else {
-                console.log("gotUser from local: " + this.user.id);
+                console.log("gotUser() from local: " + this.user.id);
                 resolve(this.user);
             }
         });
