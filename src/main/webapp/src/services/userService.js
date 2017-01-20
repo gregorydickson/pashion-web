@@ -105,7 +105,7 @@ export class UserService {
 
     getUserDetails(id) {
         // could replace this with users database I guess. RM for later...
-        // console.log("getting user details for: " + id);
+        console.log("getting user details for: " + id);
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/user/show/' + id + ".json")
                 .then(response => response.json())
@@ -119,7 +119,7 @@ export class UserService {
         return promise;
     }
 
-    update (user) {
+    update(user) {
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/user/updatejson/' + user.id + ".json", {
                     method: 'post',

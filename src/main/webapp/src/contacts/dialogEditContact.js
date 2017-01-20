@@ -28,28 +28,29 @@ export class CreateDialogEditContact {
 
 
     activate() {
-      this.userService.getUser()
-        .then(user => {
-            this.user = user;
-            this.userId = user.id;
-            this.userService.getUserDetails(this.userId)
-                .then(currentContact => {
-                    this.user = currentContact;
-                    if (this.user.brand.id != null)
-                        this.brandService.getBrandAddresses(this.user.brand.id)
-                            .then(addresses=>this.addresses = addresses)
-                    if (this.user.pressHouse.id != null)
-                        this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
-                            .then(addresses=>this.addresses = addresses)
-                    if (this.user.prAgency.id != null)
-                        this.prAgencyService.getPRAgencyAddresses(this.user.PRAgency.id)
-                            .then(addresses=>this.addresses = addresses)
+        this.userService.getUser()
+            .then(user => {
+                this.user = user;
+                this.userId = user.id;
+                this.userService.getUserDetails(this.userId)
+                    .then(currentContact => {
+                        this.user = currentContact;
+                        if (this.user.brand.id != null)
+                            this.brandService.getBrandAddresses(this.user.brand.id)
+                                .then(addresses=>this.addresses = addresses)
+                        if (this.user.pressHouse.id != null)
+                            this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
+                                .then(addresses=>this.addresses = addresses)
+                        if (this.user.prAgency.id != null)
+                            this.prAgencyService.getPRAgencyAddresses(this.user.PRAgency.id)
+                                .then(addresses=>this.addresses = addresses)
 
-                  })
-            })
+                      })
+                })
         }
 
-   save () {
+   save(){
+    console.log("updating user:"+this.user.id)
     this.userService.update(this.user);
     this.controller.close();
    }
