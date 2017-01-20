@@ -30,9 +30,7 @@ export class CreateDialogEditContact {
     activate() {
         this.userService.getUser()
             .then(user => {
-                this.user = user;
-                this.userId = user.id;
-                this.userService.getUserDetails(this.userId)
+                this.userService.getUserDetails(user.id)
                     .then(currentContact => {
                         this.user = currentContact;
                         if (this.user.brand.id != null)

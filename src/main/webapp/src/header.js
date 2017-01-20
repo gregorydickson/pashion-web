@@ -9,7 +9,7 @@ import {DialogService} from 'aurelia-dialog';
 @inject(HttpClient,UserService,Router, DialogService)
 export class Header {
 
-	user = {};
+	//user = {};
 
   constructor(http,userService,router, dialogService) {
     http.configure(config => {
