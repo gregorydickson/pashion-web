@@ -44,9 +44,22 @@ export class Adminpage{
 
   CreateDialogNewOffice() {
     this.dialogService.open({viewModel: CreateDialogNewOffice, model: "no-op" })
-      .then(response => {});
+      .then(response => {})
   }
 
+  delete(id){
+    console.log("deleting:"+id);
+    this.userService.delete(id)
+      .then(response =>{
+        console.log("response to delete:"+response);
+        this.userService.getUsersByOrganization(true).then(users => this.users = users)
+      });
+
+      
+
+      
+
+  }
 
   /* RM accordion expansion button */
   closeExpand(buttonNumber) {

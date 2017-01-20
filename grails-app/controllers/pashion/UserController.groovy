@@ -208,8 +208,10 @@ class UserController {
             notFound()
             return
         }
+        User.withTransaction { status ->
 
-        user.delete flush:true
+            user.delete flush:true
+        }
 
         request.withFormat {
             form multipartForm {

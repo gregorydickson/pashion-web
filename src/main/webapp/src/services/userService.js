@@ -64,7 +64,7 @@ export class UserService {
         } else{
             return null;
         }
-        
+        console.log("method for org:"+method + " id:"+id);
         var promise = new Promise((resolve, reject) => {
             if ((!this.usersOrg) || forceGetFromServer) { // local storage if already loaded
                 console.log("getting users from JSON");
@@ -72,6 +72,7 @@ export class UserService {
                     .then(response => response.json())
                     .then(users => {
                         this.usersOrg = users;
+                        console.log("users for an org:"+this.usersOrg);
                         resolve(this.usersOrg);
                     }).catch(err => reject(err));
             } else {
@@ -445,6 +446,25 @@ export class UserService {
         return promise;
     }
 
+    delete(id){
+
+        var promise = new Promise((resolve, reject) => {
+            
+            this.http.fetch('/user/delete/'+id,{method:'delete'})
+                .then(response => {
+                    if(response.ok) {
+                        resolve(response);
+                    } else {
+                        console.log('Network response was not ok.');
+                        reject("Not Deleted");
+                    }
+            })
+            .catch(err => reject(err));
+            
+        });
+        return promise;
+
+    }
 
     acceptContact(user, id) {
         console.log("accept contact: " + id + " from user " + user);

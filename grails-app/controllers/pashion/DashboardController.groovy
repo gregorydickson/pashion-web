@@ -57,6 +57,7 @@ class DashboardController {
         render users
     }
     def usersPressHouse(){
+
         def company = PressHouse.get(params.id.toInteger())
         def users = company.users as JSON
         render users

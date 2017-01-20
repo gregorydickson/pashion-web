@@ -136,7 +136,7 @@
                            <select name="" id="" class="slim-text-box" value.bind="currentUser">
                                     <option model.bind="user" repeat.for="user of users">${user.name} ${user.surname}</option>
                                 </select>
-                           <span class="slim-text-box-label"><a href="#" style="">Delete</a></span>
+                           <span class="slim-text-box-label"><button class="small hollow button" click.delegate="delete(currentUser.id)">Delete</button></span>
                         </div>
                         <!-- Email -->
                         <div class="inline-label">
@@ -209,7 +209,7 @@
                               <option value="">Sofi Lauren</option>
                               <option value="">Sofi Lauren</option>
                            </select>
-                           <span class="slim-text-box-label"><a href="#" style="">Delete</a></span>
+                           <span class="slim-text-box-label"><button class="small hollow button" click.delegate="delete(currentUser.id)">Delete</button></span>
                         </div>
                         <!-- Add white list name -->
                         <div class="inline-label">
