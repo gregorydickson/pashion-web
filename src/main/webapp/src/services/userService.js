@@ -106,7 +106,10 @@ export class UserService {
     getUserDetails(id) {
         // could replace this with users database I guess. RM for later...
         console.log("getting user details for: " + id);
-
+        if(!id) {
+            window.location.href = '/user/login';
+            return
+        }
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/user/show/' + id + ".json")
                 .then(response => response.json())
