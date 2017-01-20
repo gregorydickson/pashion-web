@@ -47,6 +47,42 @@ export class UserService {
 
     }
 
+    getUsersByOrganization(forceGetFromServer) {
+        console.log("getting users by org: forceGetFromServer: " + forceGetFromServer);
+        let user = this.user;
+        let method = ''
+        let id = '';
+        if (user.brand.id!=null) {
+            method = 'usersBrand';
+            id = user.brand.id;
+        } else if (user.pressHouse.id!=null) {
+            method = 'usersPressHouse';
+            id = user.pressHouse.id;
+        } else if (user.prAgency.id!=null) {
+            method = 'usersPRAgency';
+            id = user.prAgency.id;
+        } else{
+            return null;
+        }
+        
+        var promise = new Promise((resolve, reject) => {
+            if ((!this.usersOrg) || forceGetFromServer) { // local storage if already loaded
+                console.log("getting users from JSON");
+                this.http.fetch('/dashboard/'+method+"/"+id)
+                    .then(response => response.json())
+                    .then(users => {
+                        this.usersOrg = users;
+                        resolve(this.usersOrg);
+                    }).catch(err => reject(err));
+            } else {
+                console.log("getting users locally");
+                resolve(this.usersOrg);
+            }
+        });
+        return promise;
+
+    }
+
     // Updates the server with the current copies of all the connections 
     // Has potential for lots of flush/uploading that is irrelevant
     // used to update the server when finished updating the connections with history from pubnub

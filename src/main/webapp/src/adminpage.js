@@ -9,7 +9,8 @@ import {CreateDialogNewOffice} from './admin/dialogNewOffice';
 export class Adminpage{
 	  
 
-  user = {};
+  currentUser = {};
+  users = [];
 
 
 
@@ -17,11 +18,10 @@ export class Adminpage{
     
     this.dialogService = dialogService;
     this.userService = userService;
-
   }
 
 	activate() {
-      this.user = this.userService.getUser().then(user => this.user = user);
+      this.userService.getUsersByOrganization(true).then(users => this.users = users);
   }
 
 

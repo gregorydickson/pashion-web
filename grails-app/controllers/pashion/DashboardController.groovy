@@ -51,6 +51,25 @@ class DashboardController {
         render users
     }
 
+    def usersBrand(){
+        def company = Brand.get(params.id.toInteger())
+        def users = company.users as JSON
+        render users
+    }
+    def usersPressHouse(){
+        def company = PressHouse.get(params.id.toInteger())
+        def users = company.users as JSON
+        render users
+    }
+
+    def usersPRAgency(){
+        def company = PRAgency.get(params.id.toInteger())
+        def users = company.users as JSON
+        render users
+        
+    }
+
+
 
     def required(){
     	def list = ['9:00','9:30','10:00','10:30','11:00','11:30',
