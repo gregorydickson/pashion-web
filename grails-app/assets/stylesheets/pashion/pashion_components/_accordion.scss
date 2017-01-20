@@ -1,6 +1,15 @@
 @import "../compass/compass/functions";
 @import "../compass/compass/css3";
 
+button.accordionNew {
+    background-color: $white-two;
+    cursor: pointer;
+    min-width: 9px;
+    border: none;
+    text-align: left;
+    outline: none;
+    // transition: 0.4s;
+}
 
 button.accordion {
     background-color: $white-two;

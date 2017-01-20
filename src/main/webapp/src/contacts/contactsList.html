@@ -23,13 +23,14 @@
                         if.bind="(users[user.id -1].connections!=null)"
                         repeat.for="connectionC of users[user.id -1].connections">
 
-                        <span if.bind="(connectionC.connectingStatus=='PendingIn' ||
-                                        connectionC.connectingStatus=='PendingOut')" style="color:#3971b1; font-weight:500;">New</span>
+                        <button click.delegate="closeExpand(1111)" class="accordionNew"
+                        if.bind="(connectionC.connectingStatus=='PendingIn' ||
+                                        connectionC.connectingStatus=='PendingOut')" style="color:#3971b1; font-weight:500;">New</button>
 
 
                         </span>                        
                     </td>
-                    <td class="accordion-grey" style="width:3px;"></td>
+                    <td class="accordion-grey" style="width:15px;"></td>
                 </tr>
             </table>
         </div>
