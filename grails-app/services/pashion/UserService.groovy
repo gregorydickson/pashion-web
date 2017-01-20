@@ -143,9 +143,9 @@ class UserService {
             user.phone = params.phone
             user.name = params.name
             user.surname = params.surname
-            if(params.address)
-                user.address = Address.get(params.address)
-                
+            if(params.address?.id)
+                user.address = Address.get(params.address.id)
+
             user.save(failOnError:true)
             log.info "saved user:"+user.toString()
         if(params.password || params.name || params.surname){
