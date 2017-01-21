@@ -16,9 +16,10 @@ import { UserService } from './services/userService';
 import { BrandService } from './services/brandService';
 import { AddFilesDialog } from './add_files/add_files';
 import { ErrorDialogSample } from './error_dialog/error_dialog_sample';
+import {busy} from './services/busy';
 
 
-@inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService)
+@inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, busy)
 export class Index {
     user = {};
     bookings = [];
@@ -40,9 +41,11 @@ export class Index {
     maxR = 250;
     maxRReached = false;
     numberImages = 0;
+    busy;
 
 
     filterChangeSearch(event) {
+        this.busy.on();
         console.log("Filter Change changing search: search value:" + this.searchText);
         // this.searchText = '';
        /* if (event)
@@ -69,6 +72,7 @@ export class Index {
                     return;
                 }
                 this.rows = rows;
+                this.busy.off();
                 if (rows.length > 0) {
                     this.numberImages = (rows.length - 1) * rows[0].numberImagesThisRow;
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
@@ -82,6 +86,7 @@ export class Index {
     }
 
     filterChangeBrand(event) {
+        this.busy.on();
         console.log("Filter Change changing Brand");
         this.selectedBrand = '';
         if (event)
@@ -108,6 +113,7 @@ export class Index {
                     return;
                 }
                 this.rows = rows;
+                this.busy.off();
                 if (rows.length > 0) {
                     this.numberImages = (rows.length - 1) * rows[0].numberImagesThisRow;
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
@@ -121,6 +127,7 @@ export class Index {
     }
 
     filterChangeSeason(event) {
+        this.busy.on();
         console.log("Filter Change changing Season");
         this.selectedSeason = '';
         if (event)
@@ -147,6 +154,7 @@ export class Index {
                     return;
                 }
                 this.rows = rows;
+                this.busy.off();
                 if (rows.length > 0) {
                     this.numberImages = (rows.length - 1) * rows[0].numberImagesThisRow;
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
@@ -160,6 +168,7 @@ export class Index {
     }
 
     filterChangeTheme(event) {
+        this.busy.on();
         console.log("Filter Change changing Theme");
         this.selectedTheme = '';
         if (event)
@@ -189,6 +198,7 @@ export class Index {
                     return;
                 }
                 this.rows = rows;
+                this.busy.off();
                 if (rows.length > 0) {
                     this.numberImages = (rows.length - 1) * rows[0].numberImagesThisRow;
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
@@ -202,6 +212,7 @@ export class Index {
     }
 
     filterChangeColor(event) {
+        this.busy.on();
         console.log("Filter Change changing Color");
         this.selectedColor = '';
         if (event)
@@ -231,6 +242,7 @@ export class Index {
                     return;
                 }
                 this.rows = rows;
+                this.busy.off();
                 if (rows.length > 0) {
                     this.numberImages = (rows.length - 1) * rows[0].numberImagesThisRow;
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
@@ -244,6 +256,7 @@ export class Index {
     }
 
     filterChangeDates(event) {
+        this.busy.on();
         console.log("Filter Change changing Change Dates: from: " + this.availableFrom + " to: " + this.availableTo);
         //this.availableTo = '';
         /* if (event)
@@ -274,6 +287,7 @@ export class Index {
                     return;
                 }
                 this.rows = rows;
+                this.busy.off();
                 if (rows.length > 0) {
                     this.numberImages = (rows.length - 1) * rows[0].numberImagesThisRow;
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
@@ -285,50 +299,8 @@ export class Index {
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
         ;
     }
-/*
-    filterChangeChangeDatesFrom(event) {
-        console.log("Filter Change changing Change Dates From");
-        this.availableFrom = '';
-        if (event)
-            if (event.detail)
-                if (event.detail.value) {
-                    if (event.detail.value == 'All') event.detail.value = '';
-                    if (event.detail.value == 'Select') event.detail.value = '';
 
-                    this.availableFrom = event.detail.value;
-                    console.log("value:" + event.detail.value)
-                }
-                //console.log("Filter change called, Color: " + this.selectedColor);
-        this.numberImages = 0;
-        this.maxRReached = false;
-        this.http.fetch('/searchableItem/filterSearch?searchtext=' + encodeURI(this.searchText) +
-                '&brand=' + this.selectedBrand +
-                '&season=' + encodeURI(this.selectedSeason) +
-                '&availableFrom=' + this.availableFrom +
-                '&availableTo=' + this.availableTo +
-                '&theme=' + this.selectedTheme +
-                '&color=' + this.selectedColor +
-                '&maxR=' + this.maxR)
-            .then(response => response.json())
-            .then(rows => {
-                if (rows.session == 'invalid') {
-                    window.location.href = '/user/login';
-                    return;
-                }
-                this.rows = rows;
-                if (rows.length > 0) {
-                    this.numberImages = (rows.length - 1) * rows[0].numberImagesThisRow;
-                    this.numberImages += rows[rows.length - 1].numberImagesThisRow;
-                    if (this.numberImages == this.maxR) this.maxRReached = true;
-                }
-            })
-
-        .then(anything => setTimeout(function() { $("img.lazy").unveil(); }, 1000)) // initial unveil of first images on load
-            .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
-        ;
-    }
-*/
-    constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService) {
+    constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, busy) {
         http.configure(config => {
             config
                 .useStandardConfiguration();
@@ -340,6 +312,7 @@ export class Index {
         this.sampleRequestService = sampleRequestService;
         this.userService = userService;
         this.brandService = brandService;
+        this.busy = busy;
         this.maxRReached = false;
         this.numberImages = 0;
 
@@ -409,6 +382,10 @@ export class Index {
 
         $('#search-images').on('search', function() {
             console.log("x hit/search in search-images call filterChangeSearch");
+            parent.filterChangeSearch(event)
+        });
+        $('#search-images2').on('search', function() {
+            console.log("x hit/search in search-images2 call filterChangeSearch");
             parent.filterChangeSearch(event)
         });
         $('#search-contacts').on('search', function() {
