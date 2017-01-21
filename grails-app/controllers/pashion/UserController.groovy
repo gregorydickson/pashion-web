@@ -188,6 +188,32 @@ class UserController {
     }
 
     @Transactional
+    def createjson() {
+        def jsonObject = request.JSON
+        def owner
+        def user
+        log.info "create User Json :"+jsonObject
+        if(jsonObject.pressHouse != "null"){
+            owner = PressHouse.get(jsonObject.pressHouse.toInteger())
+        } else if (jsonObject.brand != "null"){
+            owner = Brand.get(jsonObject.brand.toInteger())
+        } else if (jsonObject.prAgency != "null"){
+            owner = PRAgency.get(jsonObject.prAgency.toInteger())
+        }
+        
+        def inNetwork = false
+        if(jsonObject.isInPashionNetwork) {
+            inNetwork = true
+        }
+
+        user = userService.createUser(jsonObject, owner, inNetwork) as JSON
+        
+        
+       render user
+        
+    }
+
+    @Transactional
     def updatejson() {
         def jsonObject = request.JSON
         log.info "updateJson json:"+jsonObject

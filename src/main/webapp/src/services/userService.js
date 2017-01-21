@@ -11,7 +11,7 @@ export class UserService {
     // one each with a user set to each participant, with the other user set in connectedIUserd
 
     showIntro = true;
-
+    user = null;
     constructor(http) {
         http.configure(config => {
             config
@@ -532,6 +532,40 @@ export class UserService {
             }
         });
         return promise;
+    }
+
+    createUser(userToAdd){
+        console.log("new user:"+userToAdd);
+        console.log(JSON.stringify(this.user));
+        let currentUser = this.user;
+        
+        if (currentUser.brand.id) {
+            userToAdd.brand = currentUser.brand;
+        } else if (currentUser.pressHouse.id) {
+            userToAdd.pressHouse = currentUser.pressHouse.id;
+            console.log("user presshouse"+currentUser.pressHouse.id);
+        } else if (currentUser.prAgency.id) {
+            userToAdd.prAgency = currentUser.prAgency.id;
+        }
+        var promise = new Promise((resolve, reject) => {
+            
+            this.http.fetch('/user/createjson/?format=json',{
+                method: 'post',
+                body: json(userToAdd)
+            })
+                .then(response => {
+                    if(response.ok) {
+                        resolve(response);
+                    } else {
+                        console.log('Network response was not ok.');
+                        reject("Not Created");
+                    }
+            })
+            .catch(err => reject(err));
+            
+        });
+        return promise;
+
     }
 
     introShown() {

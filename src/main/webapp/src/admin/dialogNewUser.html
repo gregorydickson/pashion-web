@@ -17,41 +17,36 @@
                   <div class="grid-block-row">
                      <div class="ui-text-label-m-broad ">PERSONAL DETAILS</div>
                      <div class="grid-block-row-body">
-                        <!-- Name -->
-                        <div class="inline-label">
-                           <span class="slim-text-box-label">Name</span>
-                           <input class="slim-text-box" type='text' name='' value='Name'>
-                        </div>
-                        <!-- Username -->
-                        <div class="inline-label">
-                           <span class="slim-text-box-label">Username</span>
-                           <input class="slim-text-box" type='text' name='' value='lauren@email.com'>
-                           <span class="slim-text-box-label"><img src="/assets/CheckMark.png" /></span>
-                        </div>
-                        <!-- Company -->
-                        <div class="inline-label disabled">
-                           <span class="slim-text-box-label">Company</span>
-                           <input class="slim-text-box" type='text' name='' value='Company name'>
-                        </div>
+                        
+                        
                         <!-- Email -->
                         <div class="inline-label">
                            <span class="slim-text-box-label">Email</span>
-                           <input class="slim-text-box" type='text' name='' value='lauren2@email.com'>
-                           <span class="slim-text-box-label"><img src="/assets/CheckMark.png" /></span>
+                           <input class="slim-text-box" type='text' name='' value.bind="newUser.email" blur.trigger="emailCheck()">
+                           <span  class="slim-text-box-label"><img id="userCheck" src="/assets/CheckMark.png" /></span>
+                        </div>
+                        <!-- Name -->
+                        <div class="inline-label">
+                           <span class="slim-text-box-label">Name</span>
+                           <input class="slim-text-box" type='text' name='' value.bind="newUser.name">
+                        </div>
+                        <!-- Name -->
+                        <div class="inline-label">
+                           <span class="slim-text-box-label">Last Name</span>
+                           <input class="slim-text-box" type='text' name='' value.bind="newUser.surname">
                         </div>
                         <!-- Office -->
                         <div class="inline-label">
                            <span class="slim-text-box-label">Office</span>
-                           <select class="slim-text-box" name="" id="" value.bind="selectedSample">
-                              <option value="">London</option>
-                              <option value="">Paris</option>
+                           <select name="" id="" class="slim-text-box" value.bind="newUser.address.id">
+                                    <option model.bind="address.id" repeat.for="address of addresses">${address.name}</option>
                            </select>
                         </div>
                         <!-- Password -->
                         <div class="inline-label">
                            <span class="slim-text-box-label">Password</span>
-                           <input class="slim-text-box" type='password' name='password' value='password'/>
-                           <span class="slim-text-box-label"><a id="" href="javascript:hide_un_hide_password()" style="">Show</a></span>
+                           <input class="slim-text-box" id='password' type='password' name='password' value.bind="newUser.password"/>
+                           <span class="slim-text-box-label"><a id="password-word" click.trigger="togglePassword()" style="">Show</a></span>
                         </div>
                      </div>
                   </div>
@@ -87,7 +82,7 @@
       <!-- Footer buttons -->
       <ai-dialog-footer>
          <a class="hollow button"  click.delegate="close()">Cancel</a>
-         <a class="button" href="javascript:;">Add user</a>
+         <a class="button" click.delegate="create()">Add user</a>
       </ai-dialog-footer>
    </ai-dialog>
 </template>

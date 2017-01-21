@@ -29,7 +29,12 @@ export class Adminpage{
 
   CreateDialogNewUser() {
     this.dialogService.open({viewModel: CreateDialogNewUser, model: "no-op" })
-      .then(response => {});
+      .then(response => {
+
+        console.log("user created:"+response);
+        this.userService.getUsersByOrganization(true).then(users => this.users = users)
+      
+      });
   }
 
     // Create dialog IMPORT USERS
@@ -54,10 +59,6 @@ export class Adminpage{
         console.log("response to delete:"+response);
         this.userService.getUsersByOrganization(true).then(users => this.users = users)
       });
-
-      
-
-      
 
   }
 
