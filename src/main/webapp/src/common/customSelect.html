@@ -4,6 +4,7 @@
         <option value="All">All</option>
 
         <option if.bind="options[0].name" repeat.for="option of options" value.bind="option.id">${option.name}</option>
-      	<option if.bind="!options[0].name" repeat.for="option of options" value.bind="option">${option}</option> 
+        <option if.bind="options[0].display" repeat.for="option of options" value.bind="option.id">${option.display}</option>
+      	<option if.bind="(!options[0].name && !options[0].display)" repeat.for="option of options" value.bind="option">${option}</option> 
     </select>
 </template>

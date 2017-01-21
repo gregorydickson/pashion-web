@@ -257,7 +257,8 @@
                                         <!-- change to UI, use "All" for each filter instead -->
                                         <!-- Search -->
                                         <div class="grid-row-col">
-                                            <filters-search></filters-search>
+                                            <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search Text">
+                                            <!-- <filters-search change.delegate="filterChangeSearch($event)"></filters-search> -->
                                         </div>
                                         <!-- Trending -->
                                         <!--<div class="grid-row-col" >
@@ -280,7 +281,7 @@
                                         </div>
                                         <!-- theme -->
                                         <div class="grid-row-col">
-                                            <filters-theme></filters-theme>
+                                            <filters-theme change.delegate="filterChangeTheme($event)"></filters-theme>
                                         </div>
                                     </div>
                                     <!-- 2nd row -->
@@ -296,13 +297,13 @@
                                         <div class="grid-row-col">
                                             <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
                                         </div>
-                                        <!-- Type -->
+                                        <!-- Type
                                         <div class="grid-row-col">
                                             <filters-type></filters-type>
-                                        </div>
+                                        </div> -->
                                         <!--- Color -->
                                         <div class="grid-row-col">
-                                           <filters-color></filters-color>
+                                           <filters-color change.delegate="filterChangeColor($event)"></filters-color>
                                         </div>
                                     </div>
                             </div>
@@ -313,13 +314,14 @@
                         <div class="blockSearchImages">
                             <div class="grid-row">
                                 <div class="grid-row-col">
-                                    <filters-search></filters-search>
+                                    <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search Text">
+                                    <!-- <filters-search></filters-search> -->
                                 </div>
                                 <div class="grid-row-col">
                                     <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
                                 </div>
                                 <div class="grid-row-col">
-                                    <filters-color></filters-color>
+                                    <filters-color change.delegate="filterChangeColor($event)"></filters-color>
                                 </div>
                                 <div class="grid-row-col">
                                     <filters-city></filters-city>
@@ -329,7 +331,8 @@
                         <div class="blockManageImages">
                             <div class="grid-row">
                                 <div class="grid-row-col">
-                                    <filters-search></filters-search>
+                                    <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search Text">
+                                    <!-- <filters-search></filters-search> -->
                                 </div>
                                 <div class="grid-row-col">
                                     <filters-season season.bind="season" change.delegate="filterChange($event)"></filters-season>
@@ -353,7 +356,8 @@
                         <div class="blockSearchImages">
                             <div class="grid-row">
                                 <div class="grid-row-col">
-                                    <filters-search></filters-search>
+                                    <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search Text">
+                                    <!-- <filters-search></filters-search> -->
                                 </div>
                                 <div class="grid-row-col">
                                     <filters-available-from></filters-available-from>
@@ -373,7 +377,7 @@
                                     <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
                                 </div>
                                 <div class="grid-row-col">
-                                    <filters-color></filters-color>
+                                    <filters-color change.delegate="filterChangeColor($event)"></filters-color>
                                 </div>
                                 <div class="grid-row-col"></div>
                             </div>
@@ -381,7 +385,8 @@
                         <div class="blockManageImages">
                             <div class="grid-row">
                                 <div class="grid-row-col">
-                                    <filters-search></filters-search>
+                                    <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search Text">
+                                    <!-- <filters-search></filters-search> -->
                                 </div>
                                 <div class="grid-row-col">
                                     <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>

@@ -42,25 +42,14 @@ export class Index {
   numberImages = 0;
   
   
-  filterChange(event){
-    console.log("Filter Change changing");
     if(event)
       if(event.detail)
         if(event.detail.value){
-          this.selectedBrand = event.detail.value;
           console.log("value:"+event.detail.value)
         }
-     
-    console.log("brand:"+this.selectedBrand);
-    console.log("season:"+this.season);
-    console.log(this.selectedItemType);
-    console.log(this.searchText);
-    console.log(this.availableFrom);
-    console.log(this.availableTo);
     this.numberImages = 0;
     this.maxRReached = false;
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) +                                      
-                                      '&itemType=' + this.selectedItemType + 
                                       '&availableFrom=' + this.availableFrom + 
                                       '&availableTo=' + this.availableTo +
                                       '&maxR=' + this.maxR)
@@ -79,8 +68,6 @@ export class Index {
 
          .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
          .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow')) // scroll to top
-
-
           ;
   }
 
@@ -92,12 +79,10 @@ export class Index {
           this.selectedBrand = event.detail.value;
           console.log("value:"+event.detail.value)
         }
-    console.log("Filter change called, Brand: " + this.selectedBrand);
     this.numberImages = 0;
     this.maxRReached = false;
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
-                                     '&season=' + encodeURI(this.selectedSeason) + 
                                       '&theme='+ this.selectedTheme+
                                       '&maxR=' + this.maxR)
           .then(response => response.json())
@@ -115,7 +100,6 @@ export class Index {
 
          .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
          .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow')) // scroll to top
-
 
 
           ;
@@ -131,12 +115,10 @@ export class Index {
           this.selectedSeason = event.detail.value;
           console.log("value:"+event.detail.value)
         }
-    console.log("Filter change called, Season: " + this.selectedSeason);
     this.numberImages = 0;
     this.maxRReached = false;
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
-                                     '&season=' + encodeURI(this.selectedSeason) + 
                                       '&theme='+ this.selectedTheme+
                                       '&maxR=' + this.maxR)
           .then(response => response.json())
@@ -160,7 +142,6 @@ export class Index {
 
   }
 
-    filterChangeTheme(event){
     console.log("Filter Change changing Theme");
     this.selectedTheme = '';
     if(event)
@@ -172,13 +153,10 @@ export class Index {
           this.selectedTheme = event.detail.value;
           console.log("value:"+event.detail.value)
         }
-    console.log("Filter change called, Theme: " + this.selectedTheme);
     this.numberImages = 0;
     this.maxRReached = false;
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
                                       '&brand=' + this.selectedBrand + 
-                                     '&season=' + encodeURI(this.selectedSeason) + 
-                                     // '&season=' + this.selectedSeason + 
                                       '&theme='+ this.selectedTheme+
                                       '&maxR=' + this.maxR)
           .then(response => response.json())
@@ -199,7 +177,6 @@ export class Index {
 
 
           ;
-
   }
 
   constructor(http, eventAggregator,dialogService,sampleRequestService,userService, brandService) {
@@ -244,7 +221,6 @@ export class Index {
             if(response.elementId === 'datepickerfrom') 
               this.availableFrom = response.elementValue;
             if((this.availableTo && this.availableFrom) || (this.availableFrom) )
-              this.filterChange();
             
     });
     let show = this.userService.show();
@@ -255,12 +231,8 @@ export class Index {
     }
 
     this.filterChangeBrand();
-
     var parent = this;
-    $('input[type=search]').on('search', function () {
     // search logic here
-    // this function will be executed on click of X (clear button)
-      parent.filterChangeBrand(event)});
 
     // Three dots Menu dropdown close when click outside
     $('body').click(function() {      
@@ -286,10 +258,8 @@ export class Index {
         }
       });
 
-    document.getElementById('search-images').addEventListener('keypress', this.boundHandler, false);
 
     //Set height of scrollable list of looks 
-    function mainScrollWindowHeight () {
       var emptySpace = 0;
       var setHeight = $(window).height() - $('.footer').outerHeight() - $('.cards-list-wrap').offset().top - emptySpace;
           $('.cards-list-wrap').css('height', setHeight);        
@@ -303,13 +273,9 @@ export class Index {
    window.removeEventListener('keypress', this.boundHandler);
   }
 
-  handleKeyInput(event) {
    //console.log(event);
     if(event.which == 13 && event.srcElement.id === 'search-images') {
       console.log("user hit enter");
-      this.filterChange(event);
-    }
-  }
  
   /* RM Sample Request - accordion expansion button */
   closeExpand(buttonNumber) {

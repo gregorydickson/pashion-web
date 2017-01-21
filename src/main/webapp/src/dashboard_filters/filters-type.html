@@ -1,11 +1,14 @@
 <template>
+<require from="../common/customSelect"></require>
 
 	<span class="inline-label">
 		<span class="form-label" style="font-weight:500;">TYPE</span>
-		<select name="" id="" value.bind="type">
+		<select2 name="itemType" options.bind="itemTypes" selected.bind="typeo" change.delegate="setType($event)" ></select2>
+
+		<!-- <select name="" id="" value.bind="type">
 		    <option value="">All</option>
 		    <option repeat.for="type of itemTypes" model.bind="type.searchCode">${type.display}</option>
-		</select>
+		</select> -->
 	</span>
 
 </template>

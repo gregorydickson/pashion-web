@@ -36,14 +36,36 @@ export class DatePicker {
       this._notifyChange(inst);
       this._adjustDate(target);
     }
-    $(this.element).datepicker({dateFormat: "yy-mm-dd",
+    var parent = this;
+    $(this.element).datepicker({
+        dateFormat: "yy-mm-dd",
         autoclose: true,
         showButtonPanel: true,
-        closeText: 'Close'})
+        closeText: 'Clear',
+        onClose: function(dateText, inst) {
+            if ($(window.event.srcElement).hasClass('ui-datepicker-close')) {
+                document.getElementById(this.id).value = '';
+                $(this.element).datepicker('setDate', null);
+                parent.ea.publish('datepicker',{elementId: parent.element.id,elementValue:''});
+            }
+        }
+
+    })
+
       .on('change', e => fireEvent(e.target, 'input'));
       
     $(this.element).on('change', e =>  this.ea.publish('datepicker', {elementId: this.element.id,
                                                          elementValue:this.element.value}));
+    // RM new
+    // #clearDates is a button to clear the datepickers
+    /*$('#clearDates').on('click', function(){
+        dates.attr('value', '');
+        dates.each(function(){
+            $.datepicker._clearDate(this);
+        });
+      });​​*/
+
+
   }
   
   detached() {

@@ -8,15 +8,16 @@ import 'fetch';
 @customElement('filters-search')
 
 export class filtersSearch {
-    searchText = '';
+    // searchText = '';
 
-    filterChange(event){
-    console.log(this.searchText);
-    
+  filterChangeSearch(event){
+    console.log("filter-search text: " + this.searchText);
+   
+   /* 
     this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText))
           .then(response => response.json())
           .then(rows => {this.rows = rows})
-          .then(rows => {this.numberImages = this.rows[0].numberImages});
+          .then(rows => {this.numberImages = this.rows[0].numberImages}); */
 	}
 
 
