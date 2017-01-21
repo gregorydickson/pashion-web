@@ -89,7 +89,8 @@ export class Index {
     filterChangeBrand(event) {
         this.busy.on();
         console.log("Filter Change changing Brand");
-        this.selectedBrand = '';
+        if (this.user.type === "brand") this.selectedBrand = this.user.companyId; 
+        else this.selectedBrand = '';
         if (event)
             if (event.detail)
                 if (event.detail.value) {
@@ -382,7 +383,6 @@ export class Index {
             this.user = this.userService.getUser().then(user => {
                 this.user = user;
                 if (this.user.type === "guest") window.location.href = '/user/login';
-                if (this.user.type === "brand") this.selectedBrand = user.companyId;
             })
 
         ]);
