@@ -80,7 +80,7 @@ class DashboardController {
     }
 
     def cities(){
-        def list = ['London','Paris','Madrid','Milan'] as JSON
+        def list = ['London','Paris','Milan', 'New York'] as JSON
         render list
     }
 
