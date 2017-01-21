@@ -1,473 +1,656 @@
-import {inject} from 'aurelia-framework';
-import {HttpClient} from 'aurelia-fetch-client';
-import {EventAggregator} from 'aurelia-event-aggregator';
-import {DialogService} from 'aurelia-dialog';
+import { inject } from 'aurelia-framework';
+import { HttpClient } from 'aurelia-fetch-client';
+import { EventAggregator } from 'aurelia-event-aggregator';
+import { DialogService } from 'aurelia-dialog';
 import 'fetch';
-import {CreateSampleRequest} from './sample_request/createSampleRequest';
-import {CreateSampleRequestBrand} from './sample_request/createSampleRequestBrand';
-import {EditSampleRequest} from './sample_request/editSampleRequest';
-import {EditSearchableItem} from './items/editSearchableItem';
-import {CheckAvailability} from './items/checkAvailability';
-import {SetAvailability} from './items/setAvailability';
-import {Introduction} from './hello/introduction';
-import {Zoom} from './zoom/zoom';
-import {SampleRequestService} from './services/sampleRequestService';
-import {UserService} from './services/userService';
-import {BrandService} from './services/brandService';
-import {AddFilesDialog} from './add_files/add_files';
-import {ErrorDialogSample} from './error_dialog/error_dialog_sample';
+import { CreateSampleRequest } from './sample_request/createSampleRequest';
+import { CreateSampleRequestBrand } from './sample_request/createSampleRequestBrand';
+import { EditSampleRequest } from './sample_request/editSampleRequest';
+import { EditSearchableItem } from './items/editSearchableItem';
+import { CheckAvailability } from './items/checkAvailability';
+import { SetAvailability } from './items/setAvailability';
+import { Introduction } from './hello/introduction';
+import { Zoom } from './zoom/zoom';
+import { SampleRequestService } from './services/sampleRequestService';
+import { UserService } from './services/userService';
+import { BrandService } from './services/brandService';
+import { AddFilesDialog } from './add_files/add_files';
+import { ErrorDialogSample } from './error_dialog/error_dialog_sample';
 
 
-@inject(HttpClient, EventAggregator, DialogService,SampleRequestService, UserService, BrandService)
+@inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService)
 export class Index {
-  user = {};
-  bookings = [];
-  rows = [];
-  seasons = [];
-  brands = [];
-  itemTypes = [];
-  colors = [];
-  
-  selectedBrand = '';
-  season = '';
-  selectedItemType = '';
-  selectedColor = '';
-  searchText = '';
-  availableFrom = '';
-  availableTo = '';
-  selectedSeason = '';
-  selectedTheme = '';
-  maxR = 250;
-  maxRReached = false;
-  numberImages = 0;
-  
-  
-    if(event)
-      if(event.detail)
-        if(event.detail.value){
-          console.log("value:"+event.detail.value)
-        }
-    this.numberImages = 0;
-    this.maxRReached = false;
-    this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) +                                      
-                                      '&availableFrom=' + this.availableFrom + 
-                                      '&availableTo=' + this.availableTo +
-                                      '&maxR=' + this.maxR)
-          .then(response => response.json())
-          .then(rows => {
-            if(rows.session == 'invalid'){
-                window.location.href = '/user/login';
-                return;
-            }
-            this.rows = rows;
-            if (rows.length >0) {
-            this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
-            this.numberImages += rows[rows.length-1].numberImagesThisRow;
-            if (this.numberImages==this.maxR) this.maxRReached = true;
-          }})
+    user = {};
+    bookings = [];
+    rows = [];
+    seasons = [];
+    brands = [];
+    itemTypes = [];
+    colors = [];
 
-         .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
-         .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow')) // scroll to top
-          ;
-  }
-
-  filterChangeBrand(event){
-    console.log("Filter Change changing Brand");
-    if(event)
-      if(event.detail)
-        if(event.detail.value){
-          this.selectedBrand = event.detail.value;
-          console.log("value:"+event.detail.value)
-        }
-    this.numberImages = 0;
-    this.maxRReached = false;
-    this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
-                                      '&brand=' + this.selectedBrand + 
-                                      '&theme='+ this.selectedTheme+
-                                      '&maxR=' + this.maxR)
-          .then(response => response.json())
-          .then(rows => {
-            if(rows.session == 'invalid'){
-                window.location.href = '/user/login';
-                return;
-            }
-            this.rows = rows;
-            if (rows.length >0) {
-            this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
-            this.numberImages += rows[rows.length-1].numberImagesThisRow;
-            if (this.numberImages==this.maxR) this.maxRReached = true;
-          }})
-
-         .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
-         .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow')) // scroll to top
+    selectedBrand = '';
+    season = '';
+    selectedItemType = '';
+    selectedColor = '';
+    searchText = '';
+    availableFrom = '';
+    availableTo = '';
+    selectedSeason = '';
+    selectedTheme = '';
+    maxR = 250;
+    maxRReached = false;
+    numberImages = 0;
 
 
-          ;
+    filterChangeSearch(event) {
+        console.log("Filter Change changing search: search value:" + this.searchText);
+        // this.searchText = '';
+       /* if (event)
+            if (event.detail)
+                if (event.detail.value) {
+                    this.searchText = event.detail.value;
+                    console.log("value:" + event.detail.value)
+                }*/
+                //console.log("Filter change called, SEARCH: " + this.searchText);
+        this.numberImages = 0;
+        this.maxRReached = false;
+        this.http.fetch('/searchableItem/filterSearch?searchtext=' + encodeURI(this.searchText) +
+                // '&itemType=' + this.selectedItemType + 
+                '&brand=' + this.selectedBrand +
+                '&season=' + encodeURI(this.selectedSeason) +
+                '&availableFrom=' + this.availableFrom +
+                '&availableTo=' + this.availableTo +
+                '&color=' + this.selectedColor +
+                '&maxR=' + this.maxR)
+            .then(response => response.json())
+            .then(rows => {
+                if (rows.session == 'invalid') {
+                    window.location.href = '/user/login';
+                    return;
+                }
+                this.rows = rows;
+                if (rows.length > 0) {
+                    this.numberImages = (rows.length - 1) * rows[0].numberImagesThisRow;
+                    this.numberImages += rows[rows.length - 1].numberImagesThisRow;
+                    if (this.numberImages == this.maxR) this.maxRReached = true;
+                }
+            })
 
-  }
-
-  filterChangeSeason(event){
-    console.log("Filter Change changing Season");
-    this.selectedSeason = '';
-    if(event)
-      if(event.detail)
-        if(event.detail.value){
-          this.selectedSeason = event.detail.value;
-          console.log("value:"+event.detail.value)
-        }
-    this.numberImages = 0;
-    this.maxRReached = false;
-    this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
-                                      '&brand=' + this.selectedBrand + 
-                                      '&theme='+ this.selectedTheme+
-                                      '&maxR=' + this.maxR)
-          .then(response => response.json())
-          .then(rows => {
-            if(rows.session == 'invalid'){
-                window.location.href = '/user/login';
-                return;
-            }
-            this.rows = rows;
-            if (rows.length >0) {
-            this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
-            this.numberImages += rows[rows.length-1].numberImagesThisRow;
-            if (this.numberImages==this.maxR) this.maxRReached = true;
-          }})
-
-         .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
-         .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow')) // scroll to top
-
-
-          ;
-
-  }
-
-    console.log("Filter Change changing Theme");
-    this.selectedTheme = '';
-    if(event)
-      if(event.detail)
-        if(event.detail.value){
-          if(event.detail.value=='All') event.detail.value = '';
-          if(event.detail.value=='Select') event.detail.value = '';
-
-          this.selectedTheme = event.detail.value;
-          console.log("value:"+event.detail.value)
-        }
-    this.numberImages = 0;
-    this.maxRReached = false;
-    this.http.fetch('/searchableItem/filterSearch?searchtext='+ encodeURI(this.searchText) + 
-                                      '&brand=' + this.selectedBrand + 
-                                      '&theme='+ this.selectedTheme+
-                                      '&maxR=' + this.maxR)
-          .then(response => response.json())
-          .then(rows => {
-            if(rows.session == 'invalid'){
-                window.location.href = '/user/login';
-                return;
-            }
-            this.rows = rows;
-            if (rows.length >0) {
-            this.numberImages = (rows.length -1) * rows[0].numberImagesThisRow;
-            this.numberImages += rows[rows.length-1].numberImagesThisRow;
-            if (this.numberImages==this.maxR) this.maxRReached = true;
-          }})
-          
-         .then (anything => setTimeout (function () {$("img.lazy").unveil();}, 1000)) // initial unveil of first images on load
-         .then (result => $('div.cards-list-wrap').animate({scrollTop: $('div.cards-list-wrap').offset().top - 250}, 'slow')) // scroll to top
-
-
-          ;
-  }
-
-  constructor(http, eventAggregator,dialogService,sampleRequestService,userService, brandService) {
-    http.configure(config => {
-      config
-        .useStandardConfiguration();
-    });
-    this.ea = eventAggregator;
-    this.http = http;
-    this.boundHandler = this.handleKeyInput.bind(this);
-    this.dialogService = dialogService;
-    this.sampleRequestService = sampleRequestService;
-    this.userService = userService;
-    this.brandService = brandService;
-    this.maxRReached = false;
-    this.numberImages = 0;
-
-  }
-
-  //activate() is called before attached()
-  activate() {
-    
-    
-    return Promise.all([
-      this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
-      this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes),
-      this.brandService.getBrands().then (brands => this.brands = brands),
-      this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors),
-      this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings),
-      this.user = this.userService.getUser().then(user => {
-        this.user = user;
-        if (this.user.type ==="guest") window.location.href = '/user/login';
-        if (this.user.type === "brand") this.selectedBrand = user.companyId;
-      })
-
-    ]);
-  }
-  attached () {
-    this.subscriber = this.ea.subscribe('datepicker', response => {
-            if(response.elementId === 'datepickerto')
-              this.availableTo = response.elementValue;
-            if(response.elementId === 'datepickerfrom') 
-              this.availableFrom = response.elementValue;
-            if((this.availableTo && this.availableFrom) || (this.availableFrom) )
-            
-    });
-    let show = this.userService.show();
-    if(show){
-      this.dialogService.open({viewModel: Introduction, model: "no-op" }).then(response => {
-        this.userService.introShown();
-      });
+        .then(anything => setTimeout(function() { $("img.lazy").unveil(); }, 1000)) // initial unveil of first images on load
+            .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
+        ;
     }
 
-    this.filterChangeBrand();
-    var parent = this;
-    // search logic here
+    filterChangeBrand(event) {
+        console.log("Filter Change changing Brand");
+        this.selectedBrand = '';
+        if (event)
+            if (event.detail)
+                if (event.detail.value) {
+                    this.selectedBrand = event.detail.value;
+                    console.log("value:" + event.detail.value)
+                }
+                //console.log("Filter change called, Brand: " + this.selectedBrand);
+        this.numberImages = 0;
+        this.maxRReached = false;
+        this.http.fetch('/searchableItem/filterSearch?searchtext=' + encodeURI(this.searchText) +
+                '&brand=' + this.selectedBrand +
+                '&season=' + encodeURI(this.selectedSeason) +
+                '&availableFrom=' + this.availableFrom +
+                '&availableTo=' + this.availableTo +
+                '&theme=' + this.selectedTheme +
+                '&color=' + this.selectedColor +
+                '&maxR=' + this.maxR)
+            .then(response => response.json())
+            .then(rows => {
+                if (rows.session == 'invalid') {
+                    window.location.href = '/user/login';
+                    return;
+                }
+                this.rows = rows;
+                if (rows.length > 0) {
+                    this.numberImages = (rows.length - 1) * rows[0].numberImagesThisRow;
+                    this.numberImages += rows[rows.length - 1].numberImagesThisRow;
+                    if (this.numberImages == this.maxR) this.maxRReached = true;
+                }
+            })
 
-    // Three dots Menu dropdown close when click outside
-    $('body').click(function() {      
-      $(".look-menu-absolute").each(function () {
-        $(this).removeClass("look-menu-show");
-      });
-    });
-
-    //Select functionality for brand and agency users to toggle/show "search images"/"manage images" blocks
-    // Show/hide on document ready
-      $('.blockSearchImages').show();
-      $('.blockManageImages').hide();
-    
-    //Show/hide on select  
-      $('#imagesFunctionality').change(function(){
-        if($(this).val() == 'optionSearchImages'){ 
-          $('.blockSearchImages').show();
-          $('.blockManageImages').hide();
-        }
-        else if ($(this).val() == 'optionManageImages'){ 
-          $('.blockSearchImages').hide();
-          $('.blockManageImages').show();
-        }
-      });
-
-
-    //Set height of scrollable list of looks 
-      var emptySpace = 0;
-      var setHeight = $(window).height() - $('.footer').outerHeight() - $('.cards-list-wrap').offset().top - emptySpace;
-          $('.cards-list-wrap').css('height', setHeight);        
+        .then(anything => setTimeout(function() { $("img.lazy").unveil(); }, 1000)) // initial unveil of first images on load
+            .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
+        ;
     }
-    mainScrollWindowHeight();
-    $(window).resize(function() {
-        mainScrollWindowHeight();
-    });
-  }
-  detached() {
-   window.removeEventListener('keypress', this.boundHandler);
-  }
 
-   //console.log(event);
-    if(event.which == 13 && event.srcElement.id === 'search-images') {
-      console.log("user hit enter");
- 
-  /* RM Sample Request - accordion expansion button */
-  closeExpand(buttonNumber) {
-    var buttonChoice = document.getElementById("button" + buttonNumber);
-    var panelChoice = document.getElementById("panel" + buttonNumber);
-    buttonChoice.classList.toggle("active");
-    panelChoice.classList.toggle("show");  
-  }
+    filterChangeSeason(event) {
+        console.log("Filter Change changing Season");
+        this.selectedSeason = '';
+        if (event)
+            if (event.detail)
+                if (event.detail.value) {
+                    this.selectedSeason = event.detail.value;
+                    console.log("value:" + event.detail.value)
+                }
+                //console.log("Filter change called, Season: " + this.selectedSeason);
+        this.numberImages = 0;
+        this.maxRReached = false;
+        this.http.fetch('/searchableItem/filterSearch?searchtext=' + encodeURI(this.searchText) +
+                '&brand=' + this.selectedBrand +
+                '&season=' + encodeURI(this.selectedSeason) +
+                '&availableFrom=' + this.availableFrom +
+                '&availableTo=' + this.availableTo +
+                '&theme=' + this.selectedTheme +
+                '&color=' + this.selectedColor +
+                '&maxR=' + this.maxR)
+            .then(response => response.json())
+            .then(rows => {
+                if (rows.session == 'invalid') {
+                    window.location.href = '/user/login';
+                    return;
+                }
+                this.rows = rows;
+                if (rows.length > 0) {
+                    this.numberImages = (rows.length - 1) * rows[0].numberImagesThisRow;
+                    this.numberImages += rows[rows.length - 1].numberImagesThisRow;
+                    if (this.numberImages == this.maxR) this.maxRReached = true;
+                }
+            })
 
-  lookMenu(id){
-    var menu = document.getElementById("look-"+id);
-    menu.classList.toggle("look-menu-show");
-  }
+        .then(anything => setTimeout(function() { $("img.lazy").unveil(); }, 1000)) // initial unveil of first images on load
+            .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
+        ;
+    }
 
-  
+    filterChangeTheme(event) {
+        console.log("Filter Change changing Theme");
+        this.selectedTheme = '';
+        if (event)
+            if (event.detail)
+                if (event.detail.value) {
+                    if (event.detail.value == 'All') event.detail.value = '';
+                    if (event.detail.value == 'Select') event.detail.value = '';
 
-  createSampleRequest(itemId) {
-    // this.lookMenu(itemId);
-    this.dialogService.open({viewModel: CreateSampleRequest, model: itemId })
-      .then(response => {
-        this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
-      });
-  }
+                    this.selectedTheme = event.detail.value;
+                    console.log("value:" + event.detail.value)
+                }
+                //console.log("Filter change called, Theme: " + this.selectedTheme);
+        this.numberImages = 0;
+        this.maxRReached = false;
+        this.http.fetch('/searchableItem/filterSearch?searchtext=' + encodeURI(this.searchText) +
+                '&brand=' + this.selectedBrand +
+                '&season=' + encodeURI(this.selectedSeason) +
+                '&availableFrom=' + this.availableFrom +
+                '&availableTo=' + this.availableTo +
+                '&theme=' + this.selectedTheme +
+                '&color=' + this.selectedColor +
+                '&maxR=' + this.maxR)
+            .then(response => response.json())
+            .then(rows => {
+                if (rows.session == 'invalid') {
+                    window.location.href = '/user/login';
+                    return;
+                }
+                this.rows = rows;
+                if (rows.length > 0) {
+                    this.numberImages = (rows.length - 1) * rows[0].numberImagesThisRow;
+                    this.numberImages += rows[rows.length - 1].numberImagesThisRow;
+                    if (this.numberImages == this.maxR) this.maxRReached = true;
+                }
+            })
 
-  createSampleRequestBrand(itemId) {
-    // this.lookMenu(itemId);
-    this.dialogService.open({viewModel: CreateSampleRequestBrand, model: itemId })
-      .then(response => {
-        this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
-      });
-  }
+        .then(anything => setTimeout(function() { $("img.lazy").unveil(); }, 1000)) // initial unveil of first images on load
+            .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
+        ;
+    }
 
-  checkAvailabilitySearchableItem(itemId) {
-    //this.lookMenu(itemId);
-    this.dialogService.open({viewModel: CheckAvailability, model: itemId })
-      .then(response => {});
-  }
+    filterChangeColor(event) {
+        console.log("Filter Change changing Color");
+        this.selectedColor = '';
+        if (event)
+            if (event.detail)
+                if (event.detail.value) {
+                    if (event.detail.value == 'All') event.detail.value = '';
+                    if (event.detail.value == 'Select') event.detail.value = '';
 
-  setAvailabilitySearchableItem(itemId) {
-    //this.lookMenu(itemId);
-    this.dialogService.open({viewModel: SetAvailability, model: itemId })
-      .then(response => {
+                    this.selectedColor = event.detail.value;
+                    console.log("value:" + event.detail.value)
+                }
+                //console.log("Filter change called, Color: " + this.selectedColor);
+        this.numberImages = 0;
+        this.maxRReached = false;
+        this.http.fetch('/searchableItem/filterSearch?searchtext=' + encodeURI(this.searchText) +
+                '&brand=' + this.selectedBrand +
+                '&season=' + encodeURI(this.selectedSeason) +
+                '&availableFrom=' + this.availableFrom +
+                '&availableTo=' + this.availableTo +
+                '&theme=' + this.selectedTheme +
+                '&color=' + this.selectedColor +
+                '&maxR=' + this.maxR)
+            .then(response => response.json())
+            .then(rows => {
+                if (rows.session == 'invalid') {
+                    window.location.href = '/user/login';
+                    return;
+                }
+                this.rows = rows;
+                if (rows.length > 0) {
+                    this.numberImages = (rows.length - 1) * rows[0].numberImagesThisRow;
+                    this.numberImages += rows[rows.length - 1].numberImagesThisRow;
+                    if (this.numberImages == this.maxR) this.maxRReached = true;
+                }
+            })
+
+        .then(anything => setTimeout(function() { $("img.lazy").unveil(); }, 1000)) // initial unveil of first images on load
+            .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
+        ;
+    }
+
+    filterChangeDates(event) {
+        console.log("Filter Change changing Change Dates: from: " + this.availableFrom + " to: " + this.availableTo);
+        //this.availableTo = '';
+        /* if (event)
+            if (event.detail)
+                if (event.detail.value) {
+                    if (event.detail.value == 'All') event.detail.value = '';
+                    if (event.detail.value == 'Select') event.detail.value = '';
+
+                    this.availableTo = event.detail.value;
+                    console.log("value:" + event.detail.value)
+                }
+                //console.log("Filter change called, Color: " + this.selectedColor);
+        */
+        this.numberImages = 0;
+        this.maxRReached = false;
+        this.http.fetch('/searchableItem/filterSearch?searchtext=' + encodeURI(this.searchText) +
+                '&brand=' + this.selectedBrand +
+                '&season=' + encodeURI(this.selectedSeason) +
+                '&availableFrom=' + this.availableFrom +
+                '&availableTo=' + this.availableTo +
+                '&theme=' + this.selectedTheme +
+                '&color=' + this.selectedColor +
+                '&maxR=' + this.maxR)
+            .then(response => response.json())
+            .then(rows => {
+                if (rows.session == 'invalid') {
+                    window.location.href = '/user/login';
+                    return;
+                }
+                this.rows = rows;
+                if (rows.length > 0) {
+                    this.numberImages = (rows.length - 1) * rows[0].numberImagesThisRow;
+                    this.numberImages += rows[rows.length - 1].numberImagesThisRow;
+                    if (this.numberImages == this.maxR) this.maxRReached = true;
+                }
+            })
+
+        .then(anything => setTimeout(function() { $("img.lazy").unveil(); }, 1000)) // initial unveil of first images on load
+            .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
+        ;
+    }
+/*
+    filterChangeChangeDatesFrom(event) {
+        console.log("Filter Change changing Change Dates From");
+        this.availableFrom = '';
+        if (event)
+            if (event.detail)
+                if (event.detail.value) {
+                    if (event.detail.value == 'All') event.detail.value = '';
+                    if (event.detail.value == 'Select') event.detail.value = '';
+
+                    this.availableFrom = event.detail.value;
+                    console.log("value:" + event.detail.value)
+                }
+                //console.log("Filter change called, Color: " + this.selectedColor);
+        this.numberImages = 0;
+        this.maxRReached = false;
+        this.http.fetch('/searchableItem/filterSearch?searchtext=' + encodeURI(this.searchText) +
+                '&brand=' + this.selectedBrand +
+                '&season=' + encodeURI(this.selectedSeason) +
+                '&availableFrom=' + this.availableFrom +
+                '&availableTo=' + this.availableTo +
+                '&theme=' + this.selectedTheme +
+                '&color=' + this.selectedColor +
+                '&maxR=' + this.maxR)
+            .then(response => response.json())
+            .then(rows => {
+                if (rows.session == 'invalid') {
+                    window.location.href = '/user/login';
+                    return;
+                }
+                this.rows = rows;
+                if (rows.length > 0) {
+                    this.numberImages = (rows.length - 1) * rows[0].numberImagesThisRow;
+                    this.numberImages += rows[rows.length - 1].numberImagesThisRow;
+                    if (this.numberImages == this.maxR) this.maxRReached = true;
+                }
+            })
+
+        .then(anything => setTimeout(function() { $("img.lazy").unveil(); }, 1000)) // initial unveil of first images on load
+            .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
+        ;
+    }
+*/
+    constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService) {
+        http.configure(config => {
+            config
+                .useStandardConfiguration();
+        });
+        this.ea = eventAggregator;
+        this.http = http;
+        this.boundHandler = this.handleKeyInput.bind(this);
+        this.dialogService = dialogService;
+        this.sampleRequestService = sampleRequestService;
+        this.userService = userService;
+        this.brandService = brandService;
+        this.maxRReached = false;
+        this.numberImages = 0;
+
+    }
+
+    //activate() is called before attached()
+    activate() {
+
+
+        return Promise.all([
+            this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
+            this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes),
+            this.brandService.getBrands().then(brands => this.brands = brands),
+            this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors),
+            this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings),
+            this.user = this.userService.getUser().then(user => {
+                this.user = user;
+                if (this.user.type === "guest") window.location.href = '/user/login';
+                if (this.user.type === "brand") this.selectedBrand = user.companyId;
+            })
+
+        ]);
+    }
+    attached() {
+        //RM upgrades here: 
+        // - check for backwards dates
+        // - don't fire search if no change to data
+        // - don't fire search if it a clear on an empty date (should be covered by above)
+        // - don't fire if dates are in the past
+        // - have a special color for when selected date is today (blue background + black text? IE combine the two)
+        this.subscriber = this.ea.subscribe('datepicker', response => {
+            console.log("datepicker event: " + response.elementId + " : " + response.elementValue);
+            var fireChange = false;
+            if (response.elementId === 'datepickerto') {
+                  if (this.availableFrom) {
+                    this.fireChange = true;
+                    this.availableTo = response.elementValue;
+                  }
+                  else document.getElementById('datepickerto').value = '';
+                }
+            if (response.elementId === 'datepickerfrom') {
+                 this.availableFrom = response.elementValue;
+                 this.fireChange = true;
+                 //  clear the to field as well
+                 this.availableTo = '';
+                 document.getElementById('datepickerto').value = ''
+               }
+
+            if (this.fireChange) this.filterChangeDates();
+            /*if ((this.availableTo && this.availableFrom) || (this.availableFrom))
+                this.filterChangeDates(); */
+
+        });
+        let show = this.userService.show();
+        if (show) {
+            this.dialogService.open({ viewModel: Introduction, model: "no-op" }).then(response => {
+                this.userService.introShown();
+            });
+        }
+
         this.filterChangeBrand();
-      });
-  }
+        var parent = this;
 
-  editSearchableItem(itemId) {
-    //this.lookMenu(itemId);
-    this.dialogService.open({viewModel: EditSearchableItem, model: itemId })
-      .then(response => {});
-  }
+        // search box functionality
+        // search logic here
+        // this function will be executed on click of X (clear button) + enter
 
-  sampleRequestMenu(id){
-    var menu = document.getElementById("requestTest"+id);
-    menu.classList.toggle("look-menu-show");
+        $('#search-images').on('search', function() {
+            console.log("x hit/search in search-images call filterChangeSearch");
+            parent.filterChangeSearch(event)
+        });
+        $('#search-contacts').on('search', function() {
+            console.log("x hit/search in search-contacts -> does nothing")
+        });
+        $('#search-requests').on('search', function() {
+            console.log("x hit/search in search-requests -> does nothing")
+        });
 
-  }
 
-  closeSampleRequestMenu(id){
-    var menu = document.getElementById("requestTest"+id);
-    menu.classList.toggle("look-menu-show");
-  }
+        // Three dots Menu dropdown close when click outside
+        $('body').click(function() {
+            $(".look-menu-absolute").each(function() {
+                $(this).removeClass("look-menu-show");
+            });
+        });
 
-  editSampleRequest(id) {
-    this.closeSampleRequestMenu(id);
-    this.dialogService.open({viewModel: EditSampleRequest, model: id }).then(response => {});
-  }
+        //Select functionality for brand and agency users to toggle/show "search images"/"manage images" blocks
+        // Show/hide on document ready
+        $('.blockSearchImages').show();
+        $('.blockManageImages').hide();
 
-  //Brand Workflow Functions
-  denySampleRequest(id){
-    this.closeSampleRequestMenu(id);
-    this.sampleRequestService.denySampleRequest(id).then(message =>{
-      alert(message.message);
-      this.reloadBookings();
-    });
-  }
-  approveSampleRequest(id){
-    this.closeSampleRequestMenu(id);
-    this.sampleRequestService.approveSampleRequest(id).then(message =>{
-      alert(message.message);
-      this.reloadBookings();
-    });
-  }
-  sendSampleRequest(id){
-    this.closeSampleRequestMenu(id);
-    this.sampleRequestService.sendSampleRequest(id).then(message =>{
-      alert(message.message);
-      this.reloadBookings();
-    });
-  }
-  markPickedUpSampleRequest(id){
-    this.closeSampleRequestMenu(id);
-    this.sampleRequestService.markPickedUpSampleRequest(id).then(message =>{
-      alert(message.message);
-      this.reloadBookings();
-    });
-  }
-  markReturnedSampleRequest(id){
-    this.closeSampleRequestMenu(id);
-    this.sampleRequestService.markReturnedSampleRequest(id).then(message =>{
-      alert(message.message);
-      this.reloadBookings();
-    });
-  }
-  restockedSampleRequest(id){
-    this.closeSampleRequestMenu(id);
-    this.sampleRequestService.restockedSampleRequest(id).then(message =>{
-      alert(message.message);
-      this.reloadBookings();
-    });
-  }
-  deleteSampleRequest(id){
-    this.closeSampleRequestMenu(id);
-    this.sampleRequestService.deleteSampleRequest(id).then(message =>{
-      alert(message.message);
-      this.reloadBookings();
-    });
-  }
+        //Show/hide on select  
+        $('#imagesFunctionality').change(function() {
+            if ($(this).val() == 'optionSearchImages') {
+                $('.blockSearchImages').show();
+                $('.blockManageImages').hide();
+            } else if ($(this).val() == 'optionManageImages') {
+                $('.blockSearchImages').hide();
+                $('.blockManageImages').show();
+            }
+        });
 
-  reloadBookings(){
-    this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
-  }
+        document.getElementById('search-images').addEventListener('keypress', this.boundHandler, false);
 
-  //Press Workflow Functions
-  pressMarkReceivedSampleRequest(id){
-    this.closeSampleRequestMenu(id);
-    this.sampleRequestService.pressMarkReceivedSampleRequest(id).then(message =>{
-      alert(message.message);
-      this.reloadBookings();
-    });
-  }
-  pressShipSampleRequest(id){
-    this.closeSampleRequestMenu(id);
-    this.sampleRequestService.pressShipSampleRequest(id).then(message =>{
-      alert(message.message);
-      this.reloadBookings();
-    });
-  }
-  pressMarkPickedUpSampleRequest(id){
-    this.closeSampleRequestMenu(id);
-    this.sampleRequestService.pressMarkPickedUpSampleRequest(id).then(message =>{
-      alert(message.message);
-      this.reloadBookings();
-    });
-  }
-  pressDeleteSampleRequest(id){
-    this.closeSampleRequestMenu(id);
-    this.sampleRequestService.pressDeleteSampleRequest(id).then(message =>{
-      alert(message.message);
-      this.reloadBookings();
-    });
-  }
+        //Set height of scrollable list of looks 
+        function mainScrollWindowHeight() {
+            var emptySpace = 0;
+            var setHeight = $(window).height() - $('.footer').outerHeight() - $('.cards-list-wrap').offset().top - emptySpace;
+            $('.cards-list-wrap').css('height', setHeight);
+        }
+        mainScrollWindowHeight();
+        $(window).resize(function() {
+            mainScrollWindowHeight();
+        });
+    }
+
+
+    detached() {
+        window.removeEventListener('keypress', this.boundHandler);
+    }
+
+    handleKeyInput(event) {
+        //console.log(event);
+        if (event.which == 13 && event.srcElement.id === 'search-images') {
+            console.log("user hit enter");
+            //this.filterChangeSearch(event);
+        }
+    }
+
+    /* RM Sample Request - accordion expansion button */
+    closeExpand(buttonNumber) {
+        var buttonChoice = document.getElementById("button" + buttonNumber);
+        var panelChoice = document.getElementById("panel" + buttonNumber);
+        buttonChoice.classList.toggle("active");
+        panelChoice.classList.toggle("show");
+    }
+
+    lookMenu(id) {
+        var menu = document.getElementById("look-" + id);
+        menu.classList.toggle("look-menu-show");
+    }
 
 
 
-  createZoomDialog(item,rowNumber,itemNumber) {
-    console.log("item number :"+itemNumber);
-    console.log("item  :"+item);
-    let menu = document.getElementById("card-"+item.id);
-    
-    menu.classList.toggle("blue-image");
-    let zoomModel = {};
-    zoomModel.item = item;
-    zoomModel.rows = this.rows;
-    zoomModel.itemNumber = itemNumber;
-    zoomModel.rowNumber = rowNumber;
-    this.dialogService.open({viewModel: Zoom, model: zoomModel })
-      .then(response => {
+    createSampleRequest(itemId) {
+        // this.lookMenu(itemId);
+        this.dialogService.open({ viewModel: CreateSampleRequest, model: itemId })
+            .then(response => {
+                this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
+            });
+    }
+
+    createSampleRequestBrand(itemId) {
+        // this.lookMenu(itemId);
+        this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: itemId })
+            .then(response => {
+                this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
+            });
+    }
+
+    checkAvailabilitySearchableItem(itemId) {
+        //this.lookMenu(itemId);
+        this.dialogService.open({ viewModel: CheckAvailability, model: itemId })
+            .then(response => {});
+    }
+
+    setAvailabilitySearchableItem(itemId) {
+        //this.lookMenu(itemId);
+        this.dialogService.open({ viewModel: SetAvailability, model: itemId })
+            .then(response => {
+                this.filterChangeBrand();
+            });
+    }
+
+    editSearchableItem(itemId) {
+        //this.lookMenu(itemId);
+        this.dialogService.open({ viewModel: EditSearchableItem, model: itemId })
+            .then(response => {});
+    }
+
+    sampleRequestMenu(id) {
+        var menu = document.getElementById("requestTest" + id);
+        menu.classList.toggle("look-menu-show");
+
+    }
+
+    closeSampleRequestMenu(id) {
+        var menu = document.getElementById("requestTest" + id);
+        menu.classList.toggle("look-menu-show");
+    }
+
+    editSampleRequest(id) {
+        this.closeSampleRequestMenu(id);
+        this.dialogService.open({ viewModel: EditSampleRequest, model: id }).then(response => {});
+    }
+
+    //Brand Workflow Functions
+    denySampleRequest(id) {
+        this.closeSampleRequestMenu(id);
+        this.sampleRequestService.denySampleRequest(id).then(message => {
+            alert(message.message);
+            this.reloadBookings();
+        });
+    }
+    approveSampleRequest(id) {
+        this.closeSampleRequestMenu(id);
+        this.sampleRequestService.approveSampleRequest(id).then(message => {
+            alert(message.message);
+            this.reloadBookings();
+        });
+    }
+    sendSampleRequest(id) {
+        this.closeSampleRequestMenu(id);
+        this.sampleRequestService.sendSampleRequest(id).then(message => {
+            alert(message.message);
+            this.reloadBookings();
+        });
+    }
+    markPickedUpSampleRequest(id) {
+        this.closeSampleRequestMenu(id);
+        this.sampleRequestService.markPickedUpSampleRequest(id).then(message => {
+            alert(message.message);
+            this.reloadBookings();
+        });
+    }
+    markReturnedSampleRequest(id) {
+        this.closeSampleRequestMenu(id);
+        this.sampleRequestService.markReturnedSampleRequest(id).then(message => {
+            alert(message.message);
+            this.reloadBookings();
+        });
+    }
+    restockedSampleRequest(id) {
+        this.closeSampleRequestMenu(id);
+        this.sampleRequestService.restockedSampleRequest(id).then(message => {
+            alert(message.message);
+            this.reloadBookings();
+        });
+    }
+    deleteSampleRequest(id) {
+        this.closeSampleRequestMenu(id);
+        this.sampleRequestService.deleteSampleRequest(id).then(message => {
+            alert(message.message);
+            this.reloadBookings();
+        });
+    }
+
+    reloadBookings() {
+        this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
+    }
+
+    //Press Workflow Functions
+    pressMarkReceivedSampleRequest(id) {
+        this.closeSampleRequestMenu(id);
+        this.sampleRequestService.pressMarkReceivedSampleRequest(id).then(message => {
+            alert(message.message);
+            this.reloadBookings();
+        });
+    }
+    pressShipSampleRequest(id) {
+        this.closeSampleRequestMenu(id);
+        this.sampleRequestService.pressShipSampleRequest(id).then(message => {
+            alert(message.message);
+            this.reloadBookings();
+        });
+    }
+    pressMarkPickedUpSampleRequest(id) {
+        this.closeSampleRequestMenu(id);
+        this.sampleRequestService.pressMarkPickedUpSampleRequest(id).then(message => {
+            alert(message.message);
+            this.reloadBookings();
+        });
+    }
+    pressDeleteSampleRequest(id) {
+        this.closeSampleRequestMenu(id);
+        this.sampleRequestService.pressDeleteSampleRequest(id).then(message => {
+            alert(message.message);
+            this.reloadBookings();
+        });
+    }
+
+
+
+    createZoomDialog(item, rowNumber, itemNumber) {
+        console.log("item number :" + itemNumber);
+        console.log("item  :" + item);
+        let menu = document.getElementById("card-" + item.id);
+
         menu.classList.toggle("blue-image");
-      });
-  }
+        let zoomModel = {};
+        zoomModel.item = item;
+        zoomModel.rows = this.rows;
+        zoomModel.itemNumber = itemNumber;
+        zoomModel.rowNumber = rowNumber;
+        this.dialogService.open({ viewModel: Zoom, model: zoomModel })
+            .then(response => {
+                menu.classList.toggle("blue-image");
+            });
+    }
 
-  // Add files (Add images) dialog
-  createAddfilesDialog() {
-    this.dialogService.open({viewModel: AddFilesDialog, model: "no-op" })
-      .then(response => {});
-  }  
+    // Add files (Add images) dialog
+    createAddfilesDialog() {
+        this.dialogService.open({ viewModel: AddFilesDialog, model: "no-op" })
+            .then(response => {});
+    }
 
-  // Create error dialog sample
-  createErrorDialogSample() {
-      this.dialogService.open({viewModel: ErrorDialogSample, model: "no-op" })
-        .then(response => {}); 
-  } 
+    // Create error dialog sample
+    createErrorDialogSample() {
+        this.dialogService.open({ viewModel: ErrorDialogSample, model: "no-op" })
+            .then(response => {});
+    }
 
 
 }
-
-
-
-
-
-
-
-
-
