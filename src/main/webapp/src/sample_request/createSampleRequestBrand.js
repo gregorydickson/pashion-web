@@ -81,6 +81,8 @@ export class CreateSampleRequestBrand {
     this.http.fetch('/dashboard/returnTo').then(response => response.json()).then(returnTo => this.returnTo = returnTo);
     this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => this.payment = payment);
    // this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
+
+   this.sampleRequest["returnToAddress"] = 0; // defualt return to sender
   }
 
   attached(){
@@ -294,7 +296,8 @@ export class CreateSampleRequestBrand {
   }
 
   submit(){
-    console.log("submitting Sample Request");
+    // var payload = json(this.sampleRequest);
+    console.log("submitting Sample Request: " + JSON.stringify(this.sampleRequest));
     this.http.fetch('/sampleRequest/savejson', {
             method: 'post',
             body: json(this.sampleRequest)

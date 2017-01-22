@@ -149,7 +149,7 @@
                     <span class="inline-label">
                         <span class="slim-text-box-label">Return To</span>
                     <select name="" id="" value.bind="sampleRequest.returnToAddress">
-                       <option>Me</option> 
+                       <option value="0" selected>Me</option> 
                         <option repeat.for="address of brandAddresses" model.bind="address.id">${address.name}</option>
                     </select>
                     </span>
