@@ -115,7 +115,7 @@ export class UserService {
         for (i = 0; i < this.users.length; i++) {
             var item1 = this.users[i];
             //console.log("inner users: " + item1.email + " to match: " + email);
-            if (item1.email.toUpperCase() == email.toUpperCase()) {
+            if (item1.email && (item1.email.toUpperCase() == email.toUpperCase())) {
                 //console.log("matched emails");
                 return (item1.id); //return the id of the requested, valid email. Note not "i" as index != id
             }

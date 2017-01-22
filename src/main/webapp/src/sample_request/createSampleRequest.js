@@ -81,6 +81,7 @@ export class CreateSampleRequest {
     this.http.fetch('/dashboard/returnTo').then(response => response.json()).then(returnTo => this.returnTo = returnTo);
     this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => this.payment = payment);
    // this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
+   this.sampleRequest["returnToAddress"] = 0; // defualt return to sender
   }
 
   attached(){

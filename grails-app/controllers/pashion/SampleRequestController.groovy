@@ -189,7 +189,7 @@ class SampleRequestController {
         
         sr.dateRequested = new Date()
         sr.save(failOnError : true, flush: true)
-        cacheInvalidationService.sampleRequests()
+        cacheInvalidationService.sampleRequests() //RM TBD
         def sent = [message:'Sample Request Sent']
         render sent as JSON
 

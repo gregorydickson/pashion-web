@@ -13,6 +13,7 @@
     <require from="./dashboard_filters/filters-season"></require>
     <require from="./dashboard_filters/filters-type"></require>
     <require from="./dashboard_filters/filters-city"></require>
+    <require from="./dashboard_filters/filters-order"></require>
     <require from="./common/jquery.unveil"></require>
 
 
@@ -60,14 +61,15 @@
                         <!-- Search requests -->
                         <input type="search" value.two-way="searchtext" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
                         <!-- filter requests -->
-                        <span class="inline-label" style="margin-top:1rem;">
-                        <span class="form-label" style="font-weight:500;">ORDER</span>
+                        <span class="inline-label" style="margin-top:1rem; width:258px;">
+                        <filters-order change.delegate="orderChange($event)" style="width:259px;"></filters-order> <!-- ORDER -->
+                       <!--  <span class="form-label" style="font-weight:500;">ORDER</span>
                         <select name="" id="">
                             <option>By Date</option>
                             <option>By Person</option>
                             <option>By Request Number</option>
                         </select>
-                        </span>
+                        </span> -->
                     </form>
                 </div>
                 <!-- Accordion -->
@@ -80,8 +82,8 @@
                         <table class="accordion">
                             <tr> 
                                 <th class="accordion w10"></th>
-                                <th class="accordion w22">ID</th>
-                                <th class="accordion w34">PRESS</th>
+                                <th class="accordion w15">ID</th>
+                                <th class="accordion w41">WHO</th>
                                 <th class="accordion w24">STATUS</th>
                                 <th class="accordion w10"></th>
                             </tr>
@@ -94,8 +96,8 @@
                                 <td class="accordion w10">
                                     <button id="button${booking.id}" class="accordion" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
-                                <td class="accordion w22">${booking.id}</td>
-                                <td class="accordion w34">${booking.pressHouse.name}</td>
+                                <td class="accordion w15">${booking.id}</td>
+                                <td class="accordion w41">${booking.pressHouse.name}</td>
                                 <td class="accordion w24">${booking.requestStatusBrand}</td>
                                 <td class="accordion w10">
                                     <div class="look-menu-absolute-wrap">
@@ -120,15 +122,15 @@
                         </table>
 
                         <!-- expanding data -->
-                        <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0.5rem;">
-                            <table class="accordion expanded">
+                        <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0.5rem; overflow:hidden;">
+                            <table class="accordion expanded" style="table-layout:fixed;">
                                 <tr >
-                                    <td class="accordion" style="width:45px;">Due:</td>
+                                    <td class="accordion" style="width:55px; max-width:55px;">Due:</td>
                                     <td class="accordion">${booking.bookingStartDate | viewDateFormat}</td>
                                 </tr>
                                 <tr repeat.for="sample of booking.searchableItems">
-                                    <td class="accordion">Item:</td>
-                                    <td class="accordion">${sample.name}</td>
+                                    <td class="accordion" style="width:55px; max-width:55px;"> ${sample.id}:</td>
+                                    <td class="accordion" style="width:190px; max-width:190px; overflow: hidden;"> ${sample.attributes}</td>
                                 </tr>
                             </table>
                         </div>
@@ -139,11 +141,11 @@
                 <div if.bind="user.type === 'press'"  class="vertical grid-content grid-content-column accordion">
                     <!--header -->
                     <div>
-                        <table class="accordion">
+                        <table class="accordion" >
                             <tr>
                                 <th class="accordion w10"></th>
-                                <th class="accordion w22">ID</th>
-                                <th class="accordion w34">BRAND</th>
+                                <th class="accordion w15">ID</th>
+                                <th class="accordion w41">BRAND</th>
                                 <th class="accordion w24">STATUS</th>
                                 <th class="accordion w10"></th>
                             </tr>
@@ -156,8 +158,8 @@
                                 <td class="accordion w10">
                                     <button id="button${booking.id}" class="accordion" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
-                                <td class="accordion w22">${booking.id}</td>
-                                <td class="accordion w34">${booking.brand.name}</td>
+                                <td class="accordion w15">${booking.id}</td>
+                                <td class="accordion w41">${booking.brand.name}</td>
                                 <td class="accordion w24">${booking.requestStatusPress}</td>
                                 <td class="accordion w10">
                                     <div class="look-menu-absolute-wrap">
@@ -179,15 +181,15 @@
                         </table>
 
                         <!-- expanding data -->
-                        <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0.5rem;">
-                            <table class="accordion expanded">
+                        <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0.5rem; overflow:hidden;">
+                            <table class="accordion expanded" style="table-layout:fixed;">
                                 <tr >
-                                    <td class="accordion" style="width:45px;">Due:</td>
+                                    <td class="accordion" style="width:55px; max-width:55px;">Due:</td>
                                     <td class="accordion">${booking.bookingStartDate | viewDateFormat}</td>
                                 </tr>
                                 <tr repeat.for="sample of booking.searchableItems">
-                                    <td class="accordion">Item:</td>
-                                    <td class="accordion"> ${sample.name}</td>
+                                    <td class="accordion" style="width:55px; max-width:55px;"> ${sample.id}:</td>
+                                    <td class="accordion" style="width:190px; max-width:190px; overflow: hidden;"> ${sample.attributes}</td>
                                 </tr>
                             </table>
                         </div>
@@ -337,7 +339,7 @@
                                     <filters-color change.delegate="filterChangeColor($event)"></filters-color>
                                 </div>
                                 <div class="grid-row-col">
-                                    <filters-city></filters-city>
+                                    <filters-city change.delegate="filterChangeCity($event)"></filters-city>
                                 </div>
                             </div>
                         </div>
@@ -379,7 +381,7 @@
                                     <filters-available-to></filters-available-to>
                                 </div>
                                 <div class="grid-row-col">
-                                    <filters-city></filters-city>
+                                    <filters-city change.delegate="filterChangeCity($event)"></filters-city>
                                 </div>
                             </div>
                             <div class="grid-row">

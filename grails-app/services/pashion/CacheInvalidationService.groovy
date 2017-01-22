@@ -6,7 +6,7 @@ import javax.annotation.PostConstruct
 
 
 
-class CacheInvaldationService {
+class CacheInvalidationService {
 
     static lazyInit = false
     Pubnub pubnub

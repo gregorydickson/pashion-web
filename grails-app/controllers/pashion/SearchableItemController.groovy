@@ -22,6 +22,7 @@ class SearchableItemController {
         def keywords = null
         def theme = null
         def color = null
+        City city = null
 
         Integer maxRInt = params.maxR.toInteger()
         if(!maxRInt) maxRInt = 2000
@@ -34,6 +35,9 @@ class SearchableItemController {
 
         if(params.color != null && params.color != "")
             color = params.color
+
+        if(params.city != null && params.city != "")
+            city = City.findByName(URLDecoder.decode(params.city))
 
         log.info "brand param:"+params.brand
         if(params.brand && params.brand != '' && params.brand.trim() != 'All'){
@@ -65,6 +69,7 @@ class SearchableItemController {
         log.info "theme:"+theme
         log.info "availableFrom:"+availableFrom
         log.info "availableTo:"+ availableTo
+        log.info "city:"+ params.city + " (" + city + ")"
         log.info "color:"+color
 
         def criteria = SearchableItem.createCriteria()
@@ -80,6 +85,7 @@ class SearchableItemController {
                 }
                 if(season) eq('season',season)
                 if(type) eq('type',type)
+                if(city) eq('city',city)
                 if(color) ilike('color',"%${color}%")
                 if(availableFrom && availableTo) sampleRequests{
                     and{

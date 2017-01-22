@@ -64,6 +64,7 @@ export class Index {
                 '&availableFrom=' + this.availableFrom +
                 '&availableTo=' + this.availableTo +
                 '&color=' + this.selectedColor +
+                '&city=' + this.selectedCity +
                 '&maxR=' + this.maxR)
             .then(response => response.json())
             .then(rows => {
@@ -88,7 +89,8 @@ export class Index {
     filterChangeBrand(event) {
         this.busy.on();
         console.log("Filter Change changing Brand");
-        this.selectedBrand = '';
+        if (this.user.type === "brand") this.selectedBrand = this.user.companyId; 
+        else this.selectedBrand = '';
         if (event)
             if (event.detail)
                 if (event.detail.value) {
@@ -105,6 +107,7 @@ export class Index {
                 '&availableTo=' + this.availableTo +
                 '&theme=' + this.selectedTheme +
                 '&color=' + this.selectedColor +
+                '&city=' + this.selectedCity +
                 '&maxR=' + this.maxR)
             .then(response => response.json())
             .then(rows => {
@@ -146,6 +149,7 @@ export class Index {
                 '&availableTo=' + this.availableTo +
                 '&theme=' + this.selectedTheme +
                 '&color=' + this.selectedColor +
+                '&city=' + this.selectedCity +
                 '&maxR=' + this.maxR)
             .then(response => response.json())
             .then(rows => {
@@ -190,6 +194,7 @@ export class Index {
                 '&availableTo=' + this.availableTo +
                 '&theme=' + this.selectedTheme +
                 '&color=' + this.selectedColor +
+                '&city=' + this.selectedCity +
                 '&maxR=' + this.maxR)
             .then(response => response.json())
             .then(rows => {
@@ -234,6 +239,7 @@ export class Index {
                 '&availableTo=' + this.availableTo +
                 '&theme=' + this.selectedTheme +
                 '&color=' + this.selectedColor +
+                '&city=' + this.selectedCity +
                 '&maxR=' + this.maxR)
             .then(response => response.json())
             .then(rows => {
@@ -279,6 +285,7 @@ export class Index {
                 '&availableTo=' + this.availableTo +
                 '&theme=' + this.selectedTheme +
                 '&color=' + this.selectedColor +
+                '&city=' + this.selectedCity +
                 '&maxR=' + this.maxR)
             .then(response => response.json())
             .then(rows => {
@@ -298,6 +305,63 @@ export class Index {
         .then(anything => setTimeout(function() { $("img.lazy").unveil(); }, 1000)) // initial unveil of first images on load
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
         ;
+    }
+
+    filterChangeCity(event) {
+        this.busy.on();
+        console.log("Filter Change changing Change City: from: " + this.selectedCity);
+        this.selectedCity = '';
+         if (event)
+            if (event.detail)
+                if (event.detail.value) {
+                    if (event.detail.value == 'All') event.detail.value = '';
+                    if (event.detail.value == 'Select') event.detail.value = '';
+
+                    this.selectedCity = event.detail.value;
+                    console.log("value:" + event.detail.value)
+                }
+                //console.log("Filter change called, Color: " + this.selectedColor);       
+        this.numberImages = 0;
+        this.maxRReached = false;
+        this.http.fetch('/searchableItem/filterSearch?searchtext=' + encodeURI(this.searchText) +
+                '&brand=' + this.selectedBrand +
+                '&season=' + encodeURI(this.selectedSeason) +
+                '&availableFrom=' + this.availableFrom +
+                '&availableTo=' + this.availableTo +
+                '&theme=' + this.selectedTheme +
+                '&color=' + this.selectedColor +
+                '&city=' + this.selectedCity +
+                '&maxR=' + this.maxR)
+            .then(response => response.json())
+            .then(rows => {
+                if (rows.session == 'invalid') {
+                    window.location.href = '/user/login';
+                    return;
+                }
+                this.rows = rows;
+                this.busy.off();
+                if (rows.length > 0) {
+                    this.numberImages = (rows.length - 1) * rows[0].numberImagesThisRow;
+                    this.numberImages += rows[rows.length - 1].numberImagesThisRow;
+                    if (this.numberImages == this.maxR) this.maxRReached = true;
+                }
+            })
+
+        .then(anything => setTimeout(function() { $("img.lazy").unveil(); }, 1000)) // initial unveil of first images on load
+            .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
+        ;
+    }
+  
+  orderChange(event) {
+        console.log("Order changed ");
+        if (event)
+            if (event.detail)
+                if (event.detail.value) {
+                    //if (event.detail.value == 'All') event.detail.value = '';
+                    //if (event.detail.value == 'Select') event.detail.value = '';
+                    // do something
+                    console.log("value:" + event.detail.value)
+                }          
     }
 
     constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, busy) {
@@ -331,7 +395,6 @@ export class Index {
             this.user = this.userService.getUser().then(user => {
                 this.user = user;
                 if (this.user.type === "guest") window.location.href = '/user/login';
-                if (this.user.type === "brand") this.selectedBrand = user.companyId;
             })
 
         ]);
@@ -419,10 +482,10 @@ export class Index {
             }
         });
 
-        document.getElementById('search-images').addEventListener('keypress', this.boundHandler, false);
+        //document.getElementById('search-images').addEventListener('keypress', this.boundHandler, false);
 
         //Set height of scrollable list of looks 
-        function mainScrollWindowHeight() {
+      function mainScrollWindowHeight() {
             var emptySpace = 0;
             var setHeight = $(window).height() - $('.footer').outerHeight() - $('.cards-list-wrap').offset().top - emptySpace;
             $('.cards-list-wrap').css('height', setHeight);
