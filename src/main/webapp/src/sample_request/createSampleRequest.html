@@ -185,11 +185,11 @@
         
              <!-- Bottom Row -->  
                 <div class="grid-content accordion">
-                    <table class="big-accordion" style="margin-bottom:4px;">
+                    <table class="" style="margin-bottom:4px; table-layout:fixed;">
                             <tr>
-                                <td class="accordion w24">SELECT SAMPLES</td>
-                                <td class="accordion w73" style="text-align:right; padding-right: 0.5rem;" >Select All</td>
-                                <td class="accordion w3">
+                                <td class="accordion" style="width:100px;">SELECT SAMPLES</td>
+                                <td class="accordion" style="width:473px;text-align:right; padding-right: 0.5rem;" >Select All</td>
+                                <td class="accordion" style="width:10px;">
                                     <input type="checkbox" checked.bind="selectAll" change.delegate="allsamples($event)">
                                 </td>
                             </tr>
@@ -201,12 +201,12 @@
                         <img src="/assets/bg.jpg"  alt="" src.bind="currentItem.image"  style="height:100px;"/> 
                     </div>
                     <div class="grid-content">
-                        <table class="big-accordion" style="margin-bottom:0px;" repeat.for="sample of currentItem.samples">
+                        <table class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples">
                             <tr>
-                                <td class="accordion w5">${$index + 1}</td>
-                                <td class="accordion w19">${sample.id}</td>
-                                <td class="accordion w73">${sample.name}</td>
-                                <td class="accordion w3">
+                                <td class="accordion" style="width:15px;">${$index + 1}</td>
+                                <td class="accordion" style="width:35px;">${sample.id}</td>
+                                <td class="accordion" style="width:436px;">${sample.attributes}</td>
+                                <td class="accordion" style="width:10px;">
                                    <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="sampleRequest.samples">
                                 </td>
                             </tr>

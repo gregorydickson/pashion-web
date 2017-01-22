@@ -3,9 +3,10 @@ import {HttpClient,json} from 'aurelia-fetch-client';
 import 'fetch';
 import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
+import { BrandService } from 'services/brandService';
 
-@inject(HttpClient, DialogController)
-export class CreateSampleRequest {
+@inject(HttpClient, DialogController, BrandService)
+export class CreateSampleRequestBrand {
   static inject = [DialogController];
   currentItem = {};
   startCalendar = {};
@@ -14,11 +15,13 @@ export class CreateSampleRequest {
   selectAll = true;
   required = [];
   deliverTo = [];
+  brand = [];
   brandAddresses = [];
   returnBy = [];
   returnTo = [];
   courier = [];
   payment = [];
+ // seasons = [];
 
 
   sampleRequest = {};
@@ -30,7 +33,7 @@ export class CreateSampleRequest {
 
 
 
-  constructor(http, controller){
+  constructor(http, controller, brandService){
     this.controller = controller;
 
     http.configure(config => {
@@ -38,13 +41,14 @@ export class CreateSampleRequest {
         .useStandardConfiguration();
     });
     this.http = http;
+    this.brandService = brandService;
   }
 
   activate(itemId){
 
     var queryString = DateFormat.urlString(0, 2);
     this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+itemId)
-    	.then(response => response.json())
+      .then(response => response.json())
         .then(calendar => {
               this.startCalendar = calendar;
               this.endCalendar = calendar;
@@ -53,10 +57,14 @@ export class CreateSampleRequest {
     this.http.fetch('/searchableItems/'+itemId+'.json')
       .then(response => response.json())
       .then(item => {
-          this.currentItem = item;        
-          this.http.fetch('/brand/addresses/'+item.brand.id)
+          this.currentItem = item;   
+
+         /* this.http.fetch('/brand/addresses/'+item.brand.id)
               .then(response => response.json())
-              .then(addresses => this.brandAddresses = addresses);
+              .then(addresses => this.brandAddresses = addresses); */
+
+          this.brandService.getBrandAddresses(item.brand.id).then(addresses => this.brandAddresses = addresses);
+          this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);
           this.sampleRequest.samples = [];
           var ids = this.sampleRequest.samples;
           item.samples.forEach(function(item){
@@ -72,6 +80,7 @@ export class CreateSampleRequest {
     this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => this.courier = courier);
     this.http.fetch('/dashboard/returnTo').then(response => response.json()).then(returnTo => this.returnTo = returnTo);
     this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => this.payment = payment);
+   // this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
   }
 
   attached(){
@@ -79,8 +88,8 @@ export class CreateSampleRequest {
   }
 
   setStartDate(event,day){
-  	console.log("start date"+event);
-  	console.log("day"+day);
+    console.log("start date"+event);
+    console.log("day"+day);
     this.startDay = day;
     let enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber,this.endDay)
     let startdate = new Date(this.startCalendar.calendarMonths[0].year,this.startCalendar.calendarMonths[0].monthNumber,day)
@@ -102,35 +111,35 @@ export class CreateSampleRequest {
         });
       }
     }
-  	var element = event.srcElement.parentElement;
-  	var document = element.ownerDocument;
-  	var elems = document.querySelectorAll(".start-selected");
-  	[].forEach.call(elems, function(el) {
-    	el.classList.remove("start-selected");
-	  });
-  	element.className += " start-selected";
-  	this.redraw(element);
-  	this.sampleRequest.startDate = this.startCalendar.calendarMonths[0].year+"-"+this.startCalendar.calendarMonths[0].monthNumber+"-"+day;
+    var element = event.srcElement.parentElement;
+    var document = element.ownerDocument;
+    var elems = document.querySelectorAll(".start-selected");
+    [].forEach.call(elems, function(el) {
+      el.classList.remove("start-selected");
+    });
+    element.className += " start-selected";
+    this.redraw(element);
+    this.sampleRequest.startDate = this.startCalendar.calendarMonths[0].year+"-"+this.startCalendar.calendarMonths[0].monthNumber+"-"+day;
     this.enableCheck();
   }
 
   setEndDate(event, day){
     this.endDay = day;
     let enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber,day)
-  	let startdate = new Date(this.startCalendar.calendarMonths[0].year,this.startCalendar.calendarMonths[0].monthNumber,this.startDay)
+    let startdate = new Date(this.startCalendar.calendarMonths[0].year,this.startCalendar.calendarMonths[0].monthNumber,this.startDay)
     if(this.startDay === '' || enddate < startdate || enddate.getTime() == startdate.getTime()){
       return
     }
     console.log("end date"+event);
-  	console.log("day"+day);
-  	let element = event.srcElement.parentElement;
-  	let document = element.ownerDocument;
-  	let elems = document.querySelectorAll(".end-selected");
-  	[].forEach.call(elems, function(el) {
-    	el.classList.remove("end-selected");
-	  });
-  	element.className += " end-selected";
-  	this.redraw(element);
+    console.log("day"+day);
+    let element = event.srcElement.parentElement;
+    let document = element.ownerDocument;
+    let elems = document.querySelectorAll(".end-selected");
+    [].forEach.call(elems, function(el) {
+      el.classList.remove("end-selected");
+    });
+    element.className += " end-selected";
+    this.redraw(element);
     this.sampleRequest.endDate = this.endCalendar.calendarMonths[0].year+"-"+this.endCalendar.calendarMonths[0].monthNumber+"-"+day;
     this.enableCheck();
     
@@ -156,12 +165,12 @@ export class CreateSampleRequest {
   redraw(element){
     element.style.display='none';
     element.offsetHeight; 
-	  element.style.display='';
+    element.style.display='';
   }
   startNext(){
-  	var queryString = DateFormat.urlString(++this.startOffset,1);
+    var queryString = DateFormat.urlString(++this.startOffset,1);
     return this.http.fetch('/calendar/searchableItemPicker' + queryString+
-    					   '&item='+this.currentItem.id)
+                 '&item='+this.currentItem.id)
           .then(response => response.json())
           .then(calendar => {
               this.startCalendar = calendar;
@@ -169,9 +178,9 @@ export class CreateSampleRequest {
 
   }
   startPrevious(){
-  	var queryString = DateFormat.urlString(--this.startOffset,1);
+    var queryString = DateFormat.urlString(--this.startOffset,1);
     return this.http.fetch('/calendar/searchableItemPicker' +queryString+
-    					   '&item='+this.currentItem.id)
+                 '&item='+this.currentItem.id)
           .then(response => response.json())
           .then(calendar => {
               this.startCalendar = calendar;
@@ -179,9 +188,9 @@ export class CreateSampleRequest {
 
   }
   startReset(){
-  	var queryString = DateFormat.urlString(0,1);
+    var queryString = DateFormat.urlString(0,1);
     return this.http.fetch('/calendar/searchableItemPicker' + queryString+
-    					   '&item='+this.currentItem.id)
+                 '&item='+this.currentItem.id)
           .then(response => response.json())
           .then(calendar => {
               this.startCalendar = calendar;
@@ -190,9 +199,9 @@ export class CreateSampleRequest {
   }
 
   endNext(){
-  	var queryString = DateFormat.urlString(++this.endOffset,1);
+    var queryString = DateFormat.urlString(++this.endOffset,1);
     return this.http.fetch('/calendar/searchableItemPicker' + queryString+
-    					   '&item='+this.currentItem.id)
+                 '&item='+this.currentItem.id)
           .then(response => response.json())
           .then(calendar => {
               this.endCalendar = calendar;
@@ -200,9 +209,9 @@ export class CreateSampleRequest {
 
   }
   endPrevious(){
-  	var queryString = DateFormat.urlString(--this.endOffset,1);
+    var queryString = DateFormat.urlString(--this.endOffset,1);
     return this.http.fetch('/calendar/searchableItemPicker' +queryString+
-    					   '&item='+this.currentItem.id)
+                 '&item='+this.currentItem.id)
           .then(response => response.json())
           .then(calendar => {
               this.endCalendar = calendar;
@@ -210,9 +219,9 @@ export class CreateSampleRequest {
 
   }
   endReset(){
-  	var queryString = DateFormat.urlString(0,1);
+    var queryString = DateFormat.urlString(0,1);
     return this.http.fetch('/calendar/searchableItemPicker' + queryString+
-    					   '&item='+this.currentItem.id)
+                 '&item='+this.currentItem.id)
           .then(response => response.json())
           .then(calendar => {
               this.endCalendar = calendar;
