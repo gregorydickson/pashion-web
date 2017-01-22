@@ -11,6 +11,8 @@ export class CustomSelect {
     @bindable name = null; // The name of our custom select
 
     @bindable options = []; // The label/option values
+    @bindable ss = []; // selector select
+    @bindable sa = []; // selector all
 
     constructor(element) {
         this.element = element;

@@ -8,9 +8,10 @@ import 'fetch';
 
 export class FiltersCityCustomElement {
   cities = [];
-  
-  //@bindable({ defaultBindingMode: bindingMode.twoWay }) city;
-  @bindable city0 = '';
+  selectorselector = true;
+  selectorall = true;
+
+  @bindable cityo = '';
 
   constructor(http, element){
     this.http = http;
@@ -18,7 +19,7 @@ export class FiltersCityCustomElement {
   }
 
   setCity(event) {
-  	this.city = event.detail.value;
+  	this.cityo = event.detail.value;
   }
   
 

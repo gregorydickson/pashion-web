@@ -351,6 +351,18 @@ export class Index {
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
         ;
     }
+  
+  orderChange(event) {
+        console.log("Order changed ");
+        if (event)
+            if (event.detail)
+                if (event.detail.value) {
+                    //if (event.detail.value == 'All') event.detail.value = '';
+                    //if (event.detail.value == 'Select') event.detail.value = '';
+                    // do something
+                    console.log("value:" + event.detail.value)
+                }          
+    }
 
     constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, busy) {
         http.configure(config => {

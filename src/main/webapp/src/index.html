@@ -13,6 +13,7 @@
     <require from="./dashboard_filters/filters-season"></require>
     <require from="./dashboard_filters/filters-type"></require>
     <require from="./dashboard_filters/filters-city"></require>
+    <require from="./dashboard_filters/filters-order"></require>
     <require from="./common/jquery.unveil"></require>
 
 
@@ -60,14 +61,15 @@
                         <!-- Search requests -->
                         <input type="search" value.two-way="searchtext" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
                         <!-- filter requests -->
-                        <span class="inline-label" style="margin-top:1rem;">
-                        <span class="form-label" style="font-weight:500;">ORDER</span>
+                        <span class="inline-label" style="margin-top:1rem; width:259px;">
+                        <filters-order change.delegate="orderChange($event)" style="width:259px;"></filters-order> <!-- ORDER -->
+                       <!--  <span class="form-label" style="font-weight:500;">ORDER</span>
                         <select name="" id="">
                             <option>By Date</option>
                             <option>By Person</option>
                             <option>By Request Number</option>
                         </select>
-                        </span>
+                        </span> -->
                     </form>
                 </div>
                 <!-- Accordion -->
