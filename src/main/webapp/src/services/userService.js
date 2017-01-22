@@ -450,7 +450,7 @@ export class UserService {
 
         var promise = new Promise((resolve, reject) => {
             
-            this.http.fetch('/user/delete/'+id,{method:'delete'})
+            this.http.fetch('/user/blank/'+id,{method:'delete'})
                 .then(response => {
                     if(response.ok) {
                         resolve(response);

@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.converters.JSON
 
+
 import com.stormpath.sdk.account.Account
 
 
@@ -227,6 +228,29 @@ class UserController {
         
     }
 
+    @Transactional
+    def blank(User user){
+
+        user.properties.each{
+            if(!(user[it.key] instanceof Boolean)){
+                
+                if(user[it.key] != null){
+                    
+                    try{
+                        user[it.key] = null
+                    }catch(Exception e){
+
+                    }
+                }
+            }
+            
+        }
+        user.save(failOnError: true)
+        
+        def response = [status: 'OK'] as JSON
+        render response
+    }
+    
     @Transactional
     def delete(User user) {
 
