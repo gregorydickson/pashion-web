@@ -203,10 +203,10 @@
                     <div class="grid-content">
                         <table class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples">
                             <tr>
-                                <td class="accordion" style="width:15px;">${$index + 1}</td>
-                                <td class="accordion" style="width:35px;">${sample.id}</td>
-                                <td class="accordion" style="width:436px;">${sample.attributes}</td>
-                                <td class="accordion" style="width:10px;">
+                                <td class="accordion" style="width:15px; max-width:15px;">${$index + 1}</td>
+                                <td class="accordion" style="width:55px; max-width:55px;">${sample.id}</td>
+                                <td class="accordion" style="width:416px; max-width:416px; overflow:hidden;">${sample.attributes}</td>
+                                <td class="accordion" style="width:10px; max-width:10px;">
                                    <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="sampleRequest.samples">
                                 </td>
                             </tr>
