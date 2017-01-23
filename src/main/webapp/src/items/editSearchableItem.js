@@ -17,7 +17,7 @@ export class EditSearchableItem {
   colors = [];
   material = [];
 
-
+  createdNew = true;
   selectedSample = {};
   
 
@@ -42,6 +42,7 @@ export class EditSearchableItem {
       .then(response => response.json())
       .then(item => {
           this.currentItem = item;
+          this.createdNew = false;
     });
   }
 
@@ -96,13 +97,15 @@ export class EditSearchableItem {
   }
 
   newsample(){
-    
-    var newsample = {};
-    newsample.name = "NEW";
-    newsample.description = "NEW";
-    this.currentItem.samples.push(newsample)
-    this.selectedSample = newsample
-    
+    if (!this.createdNew) {
+      this.createdNew = true;
+      var newsample = {};
+      newsample.name = "NEW";
+      newsample.description = "NEW";
+      newsample.attributes = "NEW";
+      this.currentItem.samples.push(newsample)
+      this.selectedSample = newsample
+    }
   }
  
 
