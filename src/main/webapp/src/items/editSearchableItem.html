@@ -1,4 +1,5 @@
 <template>
+<require from="./sort"></require>
     
    <ai-dialog>
         <ai-dialog-header>
@@ -22,7 +23,7 @@
                 <div class="grid-block shrink">                       
                     <span class="inline-label slim-text-box-label">ID</span>
                     <div style="">
-                        <input type="text" class="slim-text-box" value.bind="currentItem.name">
+                        <input type="text" class="slim-text-box" value.bind="currentItem.id">
                     </div>
                 </div>
                 <!-- Collection -->
@@ -36,7 +37,7 @@
                 <div class="grid-block shrink menu-divider">                       
                     <span class="inline-label slim-text-box-label">Description</span>
                     <div class="">
-                        <textarea rows="1" type="textarea" class="slim-text-box" style="min-width:169px;" value.bind="selectedSample.description"></textarea>
+                        <textarea rows="1" type="textarea" class="slim-text-box" style="min-width:169px;" value.bind="currentItem.attributes"></textarea>
                     </div>
                 </div>
 
@@ -46,28 +47,29 @@
                         <span class="slim-text-box-label">SAMPLE</span>
                         <select name="" id="" value.bind="selectedSample">
                             <option value="">Select Sample</option>
-                            <option repeat.for="sample of currentItem.samples" model.bind="sample">${sample.name}</option>
+                            <option if.bind="currentItem.samples" repeat.for="sample of currentItem.samples | sort: 'id': 'ascending'" model.bind="sample">${sample.id}</option>
                         </select>
                         <a style= "width: 30px; margin-left: 1rem;" click.delegate="newsample()">Add</a>
                     </span>
                 </div>
-                <!-- Sample ID & count -->
+                <!-- Sample ID & count
                 <div class="grid-block shrink">                       
                     <span class="inline-label slim-text-box-label">ID</span>
                     <div class="">
-                        <input type="text" class="slim-text-box-mid" value.bind="selectedSample.name">
+                        <input type="text" class="slim-text-box-mid" value.bind="selectedSample.id">
                     </div>
-                    <span class="inline-label slim-text-box-label">Count</span>
+                    <span class="inline-label slim-text-box-label">Count:</span>
                     <div class="">
-                        <input type="text" class="slim-text-box-narrow" value.bind="selectedSample.count">
+                        <input if.bind="selectedSample.count" type="text" class="slim-text-box-narrow" value.bind="selectedSample.count">
                     </div>
-                </div>
+                </div> -->
                 <!-- Sample Type -->
                 <div class="grid-block shrink" >                        
                     <span class="inline-label">
                         <span class="slim-text-box-label">Type</span>
                         <select name="" id="" value.bind="selectedSample.sampleType">
-                            <option value="">Select Type</option>
+                            <option selected>${selectedSample.sampleType}</option>
+                            <option>Other</option>
                             <option repeat.for="type of sampleTypes" model.bind="type">${type}</option>
                         </select>
                     </span>
@@ -76,7 +78,7 @@
                 <div class="grid-block shrink">                       
                     <span class="inline-label slim-text-box-label">Description</span>
                     <div class="">
-                        <textarea rows="1" type="textarea" class="slim-text-box" style="min-width:169px;"  value.bind="selectedSample.description"></textarea>
+                        <textarea rows="1" type="textarea" class="slim-text-box" style="min-width:169px;"  value.bind="selectedSample.attributes"></textarea>
                     </div>
                 </div>
                 <!-- Colour -->
@@ -84,8 +86,9 @@
                     <span class="inline-label">
                         <span class="slim-text-box-label">Colour</span>
                         <select name="" id="" value.bind="selectedSample.color">
-                            <option value="">Select Colour</option>
-                            <option repeat.for="color of colors" model.bind="color">${color}</option>
+                            <!-- <option value="">Select Colour</option>-->
+                            <option  selected>${selectedSample.color}</option>
+                            <option value="selectedSample.color"repeat.for="color of colors" model.bind="color">${color}</option>
                         </select>
                     </span>
                 </div>
@@ -94,7 +97,9 @@
                     <span class="inline-label">
                         <span class="slim-text-box-label">Material</span>
                         <select name="" id="" value.bind="selectedSample.material">
-                            <option value="">Select Material</option>
+                            <!-- <option value="">Select Material</option> -->
+                            <option selected>${selectedSample.material}</option>
+                            <option>Other</option>
                             <option repeat.for="material of material" model.bind="material">${material}</option>
                         </select>
                     </span>
@@ -123,7 +128,7 @@
       </ai-dialog-body>
 
       <ai-dialog-footer>
-         <a class="hollow button" click.delegate="cancel()">Cancel</a>
+         <a class="hollow button" click.delegate="close()">Cancel</a>
          <a class="button" click.delegate="submit()">Save Changes</a>
       </ai-dialog-footer>
    </ai-dialog>

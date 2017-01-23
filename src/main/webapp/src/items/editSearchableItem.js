@@ -84,6 +84,8 @@ export class EditSearchableItem {
           })
   }
 
+
+  //RM necessary to do on cancel?
   reset(){
   	var queryString = DateFormat.urlString(0,1);
     return this.http.fetch('/calendar/datePickerNoAvailability' + queryString)
@@ -121,6 +123,11 @@ export class EditSearchableItem {
     alert("Updated");
     this.controller.close();
     
+  }
+
+  close(){
+    //RM ? necessary RM this.reset();
+    this.controller.close();
   }
 
 
