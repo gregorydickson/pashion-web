@@ -330,7 +330,6 @@ class SearchableItemController {
                 sample.look = item
                 sample.season = item.season
                 sample.brandCollection = item.brandCollection
-                sample.material = item.material
                 sample.brand = item.brand
                 sample.type = SearchableItemType.get(2)
             }
@@ -339,6 +338,7 @@ class SearchableItemController {
             sample.name = it.name
             sample.description = it.description
             sample.attributes = it.attributes
+            sample.material = it.material
 
             sample.save(failOnError : true, flush: true)
         } 
