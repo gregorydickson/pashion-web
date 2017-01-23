@@ -338,6 +338,7 @@ class SearchableItemController {
             sample.color = it.color
             sample.name = it.name
             sample.description = it.description
+            sample.attributes = it.attributes
 
             sample.save(failOnError : true, flush: true)
         } 

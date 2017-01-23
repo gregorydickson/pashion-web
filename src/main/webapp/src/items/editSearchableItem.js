@@ -106,7 +106,6 @@ export class EditSearchableItem {
   }
  
 
-
   submit(){
     console.log("submitting Image Data");
     var item = this.currentItem;
