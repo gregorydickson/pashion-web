@@ -8,23 +8,28 @@ import { BrandService } from 'services/brandService';
 import { PressHouseService } from 'services/pressHouseService';
 import { PRAgencyService } from 'services/PRAgencyService';
 
-@inject(DialogService, UserService, BrandService ,PRAgencyService,PressHouseService)
+import {AddressService} from 'services/addressService';
+
+@inject(DialogService, UserService, BrandService,PRAgencyService,PressHouseService, AddressService)
 export class Adminpage{
 	  
 
   currentUser = {};
   users = [];
   addresses = [];
+  currentAddress = {};
+  company = {};
 
 
 
-  constructor(dialogService,userService, brandService, prAgencyService, pressHouseService) {
+  constructor(dialogService,userService, brandService,prAgencyService, pressHouseService,addressService) {
     
     this.dialogService = dialogService;
     this.userService = userService;
     this.brandService = brandService;
     this.pressHouseService = pressHouseService;
     this.prAgencyService = prAgencyService;
+    this.addressService = addressService;
   }
 
 	activate() {
@@ -34,21 +39,38 @@ export class Adminpage{
                 this.userService.getUserDetails(user.id)
                     .then(currentContact => {
                         this.user = currentContact;
-                        if (this.user.brand.id != null)
+                        if (this.user.brand.id != null){
                             this.brandService.getBrandAddresses(this.user.brand.id)
-                                .then(addresses=>this.addresses = addresses)
-                        if (this.user.pressHouse.id != null)
+                                .then(addresses=>{this.addresses = addresses})
+                        } else if(this.user.pressHouse.id != null){
                             this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
                                 .then(addresses=>this.addresses = addresses)
-                        if (this.user.prAgency.id != null)
+                        } else if(this.user.prAgency.id != null){
                             this.prAgencyService.getPRAgencyAddresses(this.user.PRAgency.id)
                                 .then(addresses=>this.addresses = addresses)
+                        }
 
                      })
             });
   }
   attached(){
     $("#passwordCheck").toggle();
+  }
+
+  deleteOffice(){
+    this.addressService.delete(this.currentAddress.id).then(response =>{
+      if (this.user.brand.id != null){
+          this.brandService.getBrandAddresses(this.user.brand.id)
+              .then(addresses=>{this.addresses = addresses})
+      } else if(this.user.pressHouse.id != null){
+          this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
+              .then(addresses=>this.addresses = addresses)
+      } else if(this.user.prAgency.id != null){
+          this.prAgencyService.getPRAgencyAddresses(this.user.PRAgency.id)
+              .then(addresses=>this.addresses = addresses)
+      }
+
+    });
   }
 
 

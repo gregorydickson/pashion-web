@@ -20,7 +20,7 @@ class PressHouseController {
 
     def addresses(){
         def pressHouse = PressHouse.get(params.id.toInteger())
-        def addresses = pressHouse.addresses as JSON
+        def addresses = Address.findAllByPressHouseAndArchived(pressHouse,false,[cache: true]) as JSON
         render addresses
     }
 

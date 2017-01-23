@@ -10,6 +10,7 @@ class Address{
 	String country
 	String postalCode
 	Boolean defaultAddress
+	Boolean archived = false
 
 	PressHouse pressHouse
 	PRAgency prAgency

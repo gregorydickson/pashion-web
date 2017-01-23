@@ -25,7 +25,7 @@ class BrandController {
         // log.info "brand/addresses id: " + params.id.toInteger()
         def brand = Brand.get(params.id.toInteger())  
         // log.info "brand addresses brand: " + brand
-        def addresses = brand.addresses as JSON 
+        def addresses = Address.findAllByBrandAndArchived(brand,false,[cache: true])
         // log.info "brand/addresses addresses: " + addresses
         render addresses
     }

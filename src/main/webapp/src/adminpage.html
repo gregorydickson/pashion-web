@@ -66,10 +66,10 @@
                         <!-- Offices -->
                         <div class="inline-label">
                            <span class="slim-text-box-label">Offices</span>
-                           <select name="" id="" class="slim-text-box" >
-                                    <option model.bind="address.id" repeat.for="address of addresses">${address.name}</option>
+                           <select name="" id="" class="slim-text-box" value.bind="currentAddress" >
+                                    <option model.bind="address" repeat.for="address of addresses">${address.name}</option>
                            </select>
-                           <span class="slim-text-box-label"><a href="#" style="">Delete</a></span>
+                           <span class="slim-text-box-label"><a click.delegate="deleteOffice()" style="">Delete</a></span>
                         </div>
                         <!-- Address -->
                         <div class="inline-label disabled">
