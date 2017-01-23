@@ -486,9 +486,11 @@ export class Index {
 
         //Set height of scrollable list of looks 
       function mainScrollWindowHeight() {
-            var emptySpace = 0;
-            var setHeight = $(window).height() - $('.footer').outerHeight() - $('.cards-list-wrap').offset().top - emptySpace;
-            $('.cards-list-wrap').css('height', setHeight);
+            if ($('.cards-list-wrap').offset()) {
+                var emptySpace = 0;
+                var setHeight = $(window).height() - $('.footer').outerHeight() - $('.cards-list-wrap').offset().top - emptySpace;
+                $('.cards-list-wrap').css('height', setHeight);
+            }
         }
         mainScrollWindowHeight();
         $(window).resize(function() {
