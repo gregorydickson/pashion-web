@@ -241,13 +241,8 @@ export class CreateSampleRequestBrand {
       
     }else{
       this.sampleRequest.samples = [];
-      document.getElementById("CreateSampleRequestButton").disabled = true;
-
-      
-      
+      document.getElementById("CreateSampleRequestButton").disabled = true;  
     }
-    
-    
   }
 
 

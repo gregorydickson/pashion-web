@@ -11,10 +11,9 @@ export class CheckAvailability {
   currentItem = {};
   calendar = {};
   offset = 0;
-
   startDate = "";
- 
   selectedProductIds = [];
+  selectAll = true;
 
 
   
@@ -52,10 +51,6 @@ export class CheckAvailability {
     
   }
 
-  
-  
-
-  
   next(){
   	var queryString = DateFormat.urlString(++this.offset,1);
     this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
@@ -92,8 +87,37 @@ export class CheckAvailability {
           });
   }
 
+  allsamples(event){
+    console.log("all samples"+event.srcElement.checked);
+    if(event.srcElement.checked) {
+      for (var i = 0, len = this.currentItem.samples.length; i < len; i++) {
+        if(!(this.selectedProductIds.includes(this.currentItem.samples[i].id))){
+          this.selectedProductIds.push(this.currentItem.samples[i].id);
+        }
+      }
+    } else {
+      this.selectedProductIds = [];
+      //document.getElementById("CreateSampleRequestButton").disabled = true;
+    } 
+  }
+
+  allSamplesSelected() {
+    let samplesSelected = this.selectedProductIds;
+    let samples = this.currentItem.samples;
+
+    if (samples.length != samplesSelected.length) {
+      this.selectAll = false;
+      console.log("length not equal");
+      return;
+    } else {
+      this.selectAll = true;
+    }
+    //this.enableCheck();
+  }
+
   
  updateAvailability(){
+    this.allSamplesSelected();
     console.log ("update availability");
     console.log ("current item samples:"+this.currentItem.samples);
     console.log (this.selectedProductIds);
@@ -106,9 +130,6 @@ export class CheckAvailability {
           .then(calendar => {
               this.calendar = calendar;
           });
-
-    
-
   }
 
   close(){
