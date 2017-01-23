@@ -322,6 +322,7 @@ class SearchableItemController {
         def item =  SearchableItem.get(jsonObject.id)
         item.name = jsonObject.name
         item.description = jsonObject.description
+        item.attributes = jsonObject.attributes
         
         jsonObject.samples.each{
             def sample = SearchableItem.get(it.id)
