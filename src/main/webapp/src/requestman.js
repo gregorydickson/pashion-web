@@ -58,24 +58,41 @@ export class Requestman{
   
   /* RM accordion expansion button */
   closeExpand(buttonNumber, sampleRequest) {
+    console.log("Close Expand");
+      var buttonChoice = document.getElementById("button" + buttonNumber);
+      var panelChoice = document.getElementById("panel" + buttonNumber);
+      buttonChoice.classList.toggle("active");
+      panelChoice.classList.toggle("show");
     if(this.closed){
       this.brand = sampleRequest.brand.name;
       this.image = sampleRequest.image;
       this.season = sampleRequest.season;
       this.look = sampleRequest.look;
       this.closed = false;
-    } else{
-      this.brand = '';
-      this.image = '';
-      this.season = '';
-      this.look = '';
-      this.closed = true;
+      this.opened = buttonNumber; 
     }
-    console.log("Close Expand");
-    var buttonChoice = document.getElementById("button" + buttonNumber);
-    var panelChoice = document.getElementById("panel" + buttonNumber);
-    buttonChoice.classList.toggle("active");
-    panelChoice.classList.toggle("show");  
+    else { 
+      if(this.opened != buttonNumber) {
+        var buttonChoiceC = document.getElementById("button" + this.opened);
+        var panelChoiceC = document.getElementById("panel" + this.opened);
+        buttonChoiceC.classList.toggle("active");
+        panelChoiceC.classList.toggle("show");
+        this.brand = sampleRequest.brand.name;
+        this.image = sampleRequest.image;
+        this.season = sampleRequest.season;
+        this.look = sampleRequest.look;
+        this.closed = false;
+        this.opened = buttonNumber
+      }
+      else {
+        this.brand = '';
+        this.image = '';
+        this.season =  '';
+        this.look = '';
+        this.closed = true;
+        this.opened = ''; 
+      }
+     }
   }
 
   editSampleRequest(itemId) {
