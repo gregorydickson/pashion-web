@@ -160,31 +160,17 @@ export class UserService {
         return promise;
     }
 
-    update(user) {
+    update(updateUser) {
         // if we are updating the current login user then need to set local 
         // and add the extra stuff for the current user
-        if (user.id == this.user.id) {
-            this.user = user;
-            if (user.brand.id!=null) {
-                this.user["type"] = 'brand';
-                this.user["companyId"] = user.brand.id;
-            } else if (user.pressHouse.id!=null) {
-                this.user["type"] = 'press';
-                this.user["companyId"] = user.pressHouse.id;
-            } else if (user.prAgency.id!=null) {
-                this.user["type"] = 'prAgency';
-                this.user["companyId"] = user.prAgency.id;
-            } else {
-                this.user["type"] = 'guest';
-            }
-        }
+
         var promise = new Promise((resolve, reject) => {
-            this.http.fetch('/user/updatejson/' + user.id + ".json", {
+            this.http.fetch('/user/updatejson/' + updateUser.id + ".json", {
                     method: 'post',
-                    body: json(user)
+                    body: json(updateUser)
                 })
                 .then(response => response.json())
-                .then(result => {}).catch(err => reject(err));
+                .then(result => {resolve(result)}).catch(err => reject(err));
         });
 
     }

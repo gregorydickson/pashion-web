@@ -216,12 +216,19 @@ class UserController {
 
     @Transactional
     def updatejson() {
+        def user
         def jsonObject = request.JSON
         log.info "updateJson json:"+jsonObject
-        def user = session.user
-        log.info "updateJson: user: "+user.toString()
-        Account account = session.account
-        user = userService.updateUser(jsonObject,user,account)
+        if(jsonObject.id == session?.user?.id){
+            user = session.user
+            log.info "updateJson: user: "+user.toString()
+            Account account = session.account
+            user = userService.updateUser(jsonObject,user,account)
+        } else{
+            user = userService.updateUser(jsonObject)
+        }
+
+
         
         
        respond user, [status: OK] 

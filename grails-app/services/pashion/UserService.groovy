@@ -138,8 +138,23 @@ class UserService {
 		user
     }
 
+    def updateUser(def params){
+        log.info "UPDATING OTHER USER"
+        Map<String, Object> queryParams = new HashMap<>();
+        queryParams.put("username", params.email);
+        AccountList accounts = stormpathApp.getAccounts(queryParams);
+        Account ac = accounts.iterator().next()
+        User user = User.get(params.id.toInteger())
+        user = updateUser(params,user,ac)
+
+
+    }
+
     def updateUser(def params,def user, def account){
        
+            if (!user.isAttached()) {
+                user.attach()
+            }
             log.info "updateUser params:"+params
             user.title = params.title
             user.phone = params.phone
@@ -151,7 +166,7 @@ class UserService {
 
             User.withTransaction { status ->
                 try{
-                 user.save(failOnError:true, flush:true)
+                    user.save(failOnError:true, flush:true)
                 } catch(Exception e){
 
                     log.error "updateUser error:"+e.message
@@ -165,9 +180,12 @@ class UserService {
                         
                         if(account){
                             log.info "account not null"
-                            account.setGivenName(params.name)
-                            account.setSurname(params.surname)
-                            account.setPassword(params.password)
+                            if(params.name) account.setGivenName(params.name)
+                            if(params.surname) account.setSurname(params.surname)
+                            if(params.password) {
+                                account.setPassword(params.password)
+                                log.info "Updating PASSWORD ****"
+                            }
 
                             account.save()
                         }

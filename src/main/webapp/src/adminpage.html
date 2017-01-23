@@ -66,9 +66,8 @@
                         <!-- Offices -->
                         <div class="inline-label">
                            <span class="slim-text-box-label">Offices</span>
-                           <select class="slim-text-box" name="" id="" value.bind="selectedSample">
-                              <option value="">London</option>
-                              <option value="">Paris</option>
+                           <select name="" id="" class="slim-text-box" >
+                                    <option model.bind="address.id" repeat.for="address of addresses">${address.name}</option>
                            </select>
                            <span class="slim-text-box-label"><a href="#" style="">Delete</a></span>
                         </div>
@@ -141,32 +140,31 @@
                         <!-- Email -->
                         <div class="inline-label">
                            <span class="slim-text-box-label">Email (Username)</span>
-                           <input class="slim-text-box" type='text' name='' value.bind="currentUser.email">
+                           <input class="slim-text-box" type='text' name='' disabled value.bind="currentUser.email">
                         </div>
                         <!-- name -->
                         <div class="inline-label">
                            <span class="slim-text-box-label">Name</span>
-                           <input class="slim-text-box" type='text' name='' value.bind="currentUser.name">
+                           <input class="slim-text-box" change.trigger="updateUser()" type='text' name='' value.bind="currentUser.name">
                         </div>
                         <!-- surname -->
                         <div class="inline-label">
                            <span class="slim-text-box-label">Surname</span>
-                           <input class="slim-text-box" type='text' name='' value.bind="currentUser.surname">
+                           <input class="slim-text-box" change.trigger="updateUser()" type='text' name='' value.bind="currentUser.surname">
                         </div>
                         
                         <!-- Office -->
                         <div class="inline-label">
                            <span class="slim-text-box-label">Office</span>
-                           <select class="slim-text-box" name="" id="" value.bind="selectedSample">
-                              <option value="">London</option>
-                              <option value="">Paris</option>
+                           <select name="" id="" class="slim-text-box" change.trigger="updateUser()" value.bind="currenUser.address.id">
+                                    <option model.bind="address.id" repeat.for="address of addresses">${address.name}</option>
                            </select>
                         </div>
                         <!-- Password -->
                         <div class="inline-label">
                            <span class="slim-text-box-label">Password</span>
-                           <input class="slim-text-box" type='password' name='password' value='password'/>
-                           <span class="slim-text-box-label"><a id="" href="javascript:hide_un_hide_password()" style="">Show</a></span>
+                           <input id="password" class="slim-text-box" input.trigger="checkPassword(this)"  type="password" name="password" value.bind="currentUser.password"/>
+                           <span class="slim-text-box-label"><a id="password-toggle" click.trigger="togglePassword()" style="">Show</a>&nbsp;<img id="passwordCheck" src="/assets/CheckMark.png" /></span>
                         </div>
                         <!-- Role -->
                         <div class="inline-label">
