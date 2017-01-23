@@ -101,7 +101,7 @@
                         <!--Header -->
                         
                             <div if.bind="user.type === 'brand'"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
-                                <table class="big-accordion">
+                                <table class="big-accordion" style="table-layout: fixed;">
                                     <tr>
                                         <td class="accordion-underline w3"></td>
                                         <td class="accordion-underline w4">ID</td>
@@ -116,7 +116,7 @@
                                 </table>
                             </div>
                             <div if.bind="user.type === 'press'"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
-                                <table class="big-accordion">
+                                <table class="big-accordion" style="table-layout: fixed;">
                                     <tr>
                                         <td class="accordion-underline w3"></td>
                                         <td class="accordion-underline w4">ID</td>
@@ -135,7 +135,7 @@
                             <div class="grid-content" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left: 1rem; margin-right: 1rem;">
                                 
                                 <div repeat.for="booking of bookings">
-                                    <table  class="big-accordion">
+                                    <table  class="big-accordion" style="table-layout: fixed;">
                                         <tr>
                                             <td class="accordion-grey w3">
                                                 <button id="button${$index}" class="accordion" click.delegate="closeExpand($index,booking)"></button>
