@@ -40,12 +40,23 @@
                             <compose view-model="calendars/requestCalendar"></compose>
                         </div> -->
                         <!-- Image holder -->
-                        <div class="grid-content request-image-fix" style="
+                        <div class="request-image-fix " style="
                               background-image: url('${image}');
-                              background-position: left top;">
+                              background-position: left top;
+                              min-width:258px;
+                              max-width:258px;
+                              min-height:400px;
+                              max-height:400px;">
                         </div>
                         <!-- Image information holder -->
-                        <div class="grid-content request-image-info-fix" style="text-align: center;">
+                        <div class="request-image-info-fix" style="
+                                    text-align: center;
+                                    overflow: hidden;
+                                    margin-top:5px;
+                                    min-width:290px;
+                                    max-width:290px;
+                                    min-height:100px;
+                                    max-height:100px;">
                             <span if.bind="brand" class="accordion-grey" style="font-size: 1.1rem; font-weight: 500;">${brand} Look ${look}</span>
                             <br>
                             <span class="accordion-grey">${season}</span>
