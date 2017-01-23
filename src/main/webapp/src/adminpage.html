@@ -134,7 +134,7 @@
                         <div class="inline-label">
                            <span class="slim-text-box-label">Name</span>
                            <select name="" id="" class="slim-text-box" value.bind="currentUser">
-                                    <option model.bind="user" repeat.for="user of users">${user.name} ${user.surname}</option>
+                                    <option if.bind="user.email !=null" model.bind="user" repeat.for="user of users">${user.name} ${user.surname}</option>
                                 </select>
                            <span class="slim-text-box-label"><button class="small hollow button" click.delegate="delete(currentUser.id)">Delete</button></span>
                         </div>
