@@ -1,4 +1,5 @@
 <template>
+<require from="./sort"></require>
     
    <ai-dialog>
         <ai-dialog-header>
@@ -13,6 +14,16 @@
       <ai-dialog-body>
         <div class="grid-block row">
           <div class="vertical grid-block">
+
+              <!-- tumbnail -->
+              <div class="grid-block shrink"> 
+                  <div class="grid-content"></div>
+                      <div class="grid-content align-center shrink" style="margin-bottom:15px;">
+                          <img src="/assets/bg.jpg"  alt="" src.bind="currentItem.image"  style="height:150px;"/> 
+                      </div>
+                  <div class="grid-content"></div>
+              </div>
+
              <div class="grid-block" style="text-align: center;">
                 <span class="calendarnav prev">
                    <a click.delegate="previous()">
@@ -63,7 +74,7 @@
           </div>
 
           <div class="vertical grid-content accordion" style="overflow-x:hidden; max-height:8rem;"> 
-              <table class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples">
+              <table if.bind="currentItem.samples" class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples | sort: 'id': 'ascending' ">
                             <tr>
                                <!-- <td class="accordion" style="width:15px; max-width:15px;">${$index + 1}</td> -->
                                 <td class="accordion" style="width:50px; max-width:50px;">${sample.id}</td>
