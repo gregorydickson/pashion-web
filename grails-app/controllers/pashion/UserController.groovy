@@ -237,6 +237,8 @@ class UserController {
 
     @Transactional
     def blank(User user){
+        user.connections*.delete(failOnError:true)
+        
 
         user.properties.each{
             if(!(user[it.key] instanceof Boolean)){
