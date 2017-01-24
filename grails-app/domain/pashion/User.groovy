@@ -17,6 +17,8 @@ class User {
 	Boolean isInPashionNetwork = false
 	String stormpathString
 
+	City city
+
 	Long userCreatedId
 	Date lastModifiedDate
 	Long lastModifiedUserId
@@ -53,6 +55,8 @@ class User {
 		phone nullable: true
 		name nullable:true
 		surname nullable:true
+
+		city nullable: true
 		
 		stormpathString nullable:true, maxSize: 1000
 		userCreatedId nullable: true
