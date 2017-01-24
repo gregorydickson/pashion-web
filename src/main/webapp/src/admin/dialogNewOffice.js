@@ -8,6 +8,7 @@ import {DateFormat} from 'common/dateFormat';
 export class CreateDialogNewOffice {
   static inject = [DialogController];
 
+  newAddress = {};
 
   constructor(http, controller){
     this.controller = controller;

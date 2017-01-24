@@ -22,13 +22,37 @@
                         <!-- Location -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Name</span>
-                            <input type="text" class="slim-text-box" value="Milano">
+                            <input type="text" class="slim-text-box" value.bind="newAddress.name">
                         </div>
 
                         <!-- Address 1 -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Address 1</span>
-                            <input type="text" class="slim-text-box">
+                            <input type="text" class="slim-text-box" value.bind="newAddress.address1">
+                        </div>
+
+                        <!-- Address 2 -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Address 2</span>
+                            <input type="text" class="slim-text-box" value.bind="newAddress.address2">
+                        </div>
+
+                        <!-- city -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">City</span>
+                            <input type="text" class="slim-text-box" value.bind="newAddress.city">
+                        </div>
+
+                        <!-- Country -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Country</span>
+                            <input type="text" class="slim-text-box" value.bind="newAddress.country">
+                        </div>
+
+                        <!-- Postal Code -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Postal Code</span>
+                            <input type="text" class="slim-text-box" value.bind="newAddress.country">
                         </div>
 
                    

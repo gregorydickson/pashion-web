@@ -9,16 +9,12 @@ class Address{
 	String city
 	String country
 	String postalCode
-	Boolean defaultAddress
+	Boolean defaultAddress = false
 	Boolean archived = false
 
 	PressHouse pressHouse
 	PRAgency prAgency
 	Brand brand
-
-	static mapping ={
-		defaultAddress  defaultValue: false 
-	}
 
 	static constraints = {
 		brand nullable: true 
