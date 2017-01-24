@@ -188,6 +188,7 @@ class UploadController {
                             def image = "//dvch4zq3tq7l4.cloudfront.net" + row.values[35].toString().trim().toLowerCase() + imageFile
                             log.info "image:"+ image
                             item.image = image
+                            item.fromDate = new Date()
                             item.save(flush:true, failOnError: true)
                             log.info "item saved:" + item
                         }
