@@ -7,7 +7,6 @@ import grails.converters.JSON
 @Transactional(readOnly = true)
 class AddressController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
@@ -94,6 +93,38 @@ class AddressController {
         address.save(failOnError:true)
         
         respond address, [status: OK] 
+        
+    }
+
+    @Transactional
+    def createjson() {
+        
+        def jsonObject = request.JSON
+        log.info "updateJson address:"+jsonObject
+        log.info "params address:"+params
+        Address address = new Address()
+
+        if(jsonObject.pressHouse) {
+            PressHouse pr = PressHouse.get(jsonObject.pressHouse.id.toInteger())
+            address.pressHouse = pr
+        } else if(jsonObject.brand){
+            Brand br = Brand.get(jsonObject.brand.id.toInteger())
+            address.brand = br
+        } else if(jsonObject.prAgency){
+            PRAgency pr = PRAgency.get(jsonObject.prAgency.id.toInteger())
+            address.prAgency = pr
+        }
+        address.name = jsonObject.name
+        address.address1 = jsonObject.address1
+        address.address2 = jsonObject.address2
+        address.city = jsonObject.city
+        address.country = jsonObject.country
+        address.postalCode = jsonObject.postalCode
+        address.attention = jsonObject.attention
+
+        address.save(failOnError:true)
+        def response = address as JSON
+        render response
         
     }
 

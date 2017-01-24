@@ -17,7 +17,7 @@
             <!-- header -->
             <div class="grid-block tool-header shrink ">
                <div class="grid-block align-left tool-header-spacer"></div>
-                  <span class="ui-text-label-m-broad ">{company name} ADMINISTRATION</span>
+                  <span class="ui-text-label-m-broad ">${company.name} ADMINISTRATION</span>
                <div class="grid-block align-left tool-header-spacer"></div>
               <!--  <div class="grid-block align-right tool-header-spacer">
                   <span class="expando">
@@ -34,9 +34,9 @@
                      <div class="ui-text-label-m-broad ">COMPANY</div>
                      <div class="grid-block-row-body">
                         <!-- Company Name -->
-                        <div class="inline-label">
+                        <div class="inline-label disabled">
                            <span class="slim-text-box-label">Name</span>
-                           <input class="slim-text-box" type='text' name='' value='Company Name'>
+                           <input class="slim-text-box" type='text' name='' value.bind="company.name">
                         </div>
                         <!-- Type -->
                         <div class="inline-label disabled">

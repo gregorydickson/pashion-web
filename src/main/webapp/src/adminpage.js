@@ -22,6 +22,7 @@ export class Adminpage{
 
 
 
+
   constructor(dialogService,userService, brandService,prAgencyService, pressHouseService,addressService) {
     
     this.dialogService = dialogService;
@@ -41,13 +42,16 @@ export class Adminpage{
                         this.user = currentContact;
                         if (this.user.brand.id != null){
                             this.brandService.getBrandAddresses(this.user.brand.id)
-                                .then(addresses=>{this.addresses = addresses})
+                                .then(addresses=>{this.addresses = addresses});
+                            this.company = user.brand;
                         } else if(this.user.pressHouse.id != null){
                             this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
                                 .then(addresses=>this.addresses = addresses)
+                            this.company = user.pressHouse;
                         } else if(this.user.prAgency.id != null){
                             this.prAgencyService.getPRAgencyAddresses(this.user.PRAgency.id)
                                 .then(addresses=>this.addresses = addresses)
+                            this.company = prAgency;
                         }
 
                      })
@@ -96,9 +100,20 @@ export class Adminpage{
 
     // Create dialog NEW OFFICE
 
-  CreateDialogNewOffice() {
-    this.dialogService.open({viewModel: CreateDialogNewOffice, model: "no-op" })
-      .then(response => {})
+  CreateDialogNewOffice(user) {
+    this.dialogService.open({viewModel: CreateDialogNewOffice, model: this.user })
+      .then(response => {
+        if (this.user.brand.id != null){
+            this.brandService.getBrandAddresses(this.user.brand.id)
+                .then(addresses=>{this.addresses = addresses})
+        } else if(this.user.pressHouse.id != null){
+            this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
+                .then(addresses=>this.addresses = addresses)
+        } else if(this.user.prAgency.id != null){
+            this.prAgencyService.getPRAgencyAddresses(this.user.PRAgency.id)
+                .then(addresses=>this.addresses = addresses)
+        }
+      })
   }
 
   delete(id){

@@ -52,7 +52,7 @@
                         <!-- Postal Code -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Postal Code</span>
-                            <input type="text" class="slim-text-box" value.bind="newAddress.country">
+                            <input type="text" class="slim-text-box" value.bind="newAddress.postalCode">
                         </div>
 
                    
@@ -66,7 +66,7 @@
         <!-- Footer buttons -->
         <ai-dialog-footer>
                     <a class="hollow button"  click.delegate="close()">Cancel</a>
-                    <a class="button" href="javascript:;">Add Office</a>
+                    <a class="button" click.delegate="createAddress()">Add Office</a>
         </ai-dialog-footer>
     </ai-dialog>
 </template>
