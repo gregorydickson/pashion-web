@@ -149,8 +149,8 @@
                                             <td class="accordion-grey w13">${booking.requestingUser.name} ${booking.requestingUser.surname}</td>
                                             <td class="accordion-grey w5">${booking.searchableItems.length}</td>
                                             <td if.bind="user.type === 'press'" class="accordion-grey w14">${booking.requestStatusPress}</td>
-                                            <td if.bind="user.type === 'brand'" class="accordion-grey w14">${booking.requestStatusBrand}</td>
-                                            <td class="accordion-grey w5">
+                                            <td if.bind="user.type === 'brand'" class="accordion-grey ui-text-label-m-blue w14" style="font-weight:500">${booking.requestStatusBrand}</td>
+                                            <td class="accordion-grey w5"> 
                                                 <div class="look-menu-absolute-wrap">
                                                     <span class="edit-box" ><a href="#" click.delegate="lookEditMenu(booking.id)">...</a></span>
                                                     <!-- edit request modal popup -->
@@ -229,7 +229,7 @@
                                             <!-- no images -->
                                             <table class="" style="table-layout:fixed;">
                                                 <tr style="height:1rem;" repeat.for="item of booking.searchableItems" >
-                                                    <td class="accordion sample-padding">${item.id}: ${item.attributes} ${status.brandStatus}</td>
+                                                    <td class="accordion sample-padding">${item.id}: ${item.attributes} ${item.status.Status}</td>
                                                 </tr>
                                             </table>
                                         </div>
