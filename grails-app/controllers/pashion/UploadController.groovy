@@ -182,7 +182,7 @@ class UploadController {
                                 sb.append(row.values[i].toString() + " ") 
                             }
                             item.attributes = sb.toString()
-
+                            item.description = sb.toString()
                             item.brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season).save()
                             String imageFile = row.values[2].toString().trim().padLeft(4,'0') + ".jpg"
                             def image = "//dvch4zq3tq7l4.cloudfront.net" + row.values[35].toString().trim().toLowerCase() + imageFile

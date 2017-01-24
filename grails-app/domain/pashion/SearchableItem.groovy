@@ -62,7 +62,7 @@ class SearchableItem {
 	static constraints = {
 		name nullable:true
 		city nullable:true
-		description nullable:true
+		description nullable:true, maxSize: 1000
 		brand nullable: true
 		sex nullable:true
 		type nullable: true
