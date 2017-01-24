@@ -1,5 +1,6 @@
 <template>
 <require from="./sort"></require>
+<!-- <require from="./truncate"></require> -->
     
    <ai-dialog>
         <ai-dialog-header>
@@ -15,13 +16,9 @@
         <ai-dialog-body>               
            <div class="vertical grid-block">
 
-                <div class="grid-content shrink">
-                    <!-- LOOK title-->
-                    <span style="margin-bottom: 1rem;">LOOK</span>
-                </div>
-                <!-- Look ID -->
+               
                 <div class="grid-block shrink">                       
-                    <span class="inline-label slim-text-box-label">ID</span>
+                    <span class="inline-label slim-text-box-label">LOOK</span>
                     <div style="">
                         <input type="text" class="slim-text-box" value.bind="currentItem.id">
                     </div>
@@ -37,17 +34,19 @@
                 <div class="grid-block shrink menu-divider">                       
                     <span class="inline-label slim-text-box-label">Description</span>
                     <div class="">
-                        <textarea rows="1" type="textarea" class="slim-text-box" style="min-width:169px;" value.bind="currentItem.attributes"></textarea>
+                        <textarea rows="1" type="textarea" class="slim-text-box" style="min-width:200px;" value.bind="currentItem.attributes"></textarea>
                     </div>
                 </div>
 
                 <!-- Choose Sample -->
                 <div class="grid-block shrink" style="margin-top: 1rem;">                        
                     <span class="inline-label">
-                        <span class="slim-text-box-label">SAMPLE</span>
-                        <select name="" id="" value.bind="selectedSample">
+                        <span class="slim-text-box-label">SAMPLES</span>
+
+                        <select name="" id="" value.bind="selectedSample" style="max-width:200px;">
                             <option value="">Select Sample</option>
-                            <option if.bind="currentItem.samples" repeat.for="sample of currentItem.samples | sort: 'id': 'ascending'" model.bind="sample">${sample.id}</option>
+                            <option if.bind="currentItem.samples" repeat.for="sample of currentItem.samples 
+                            | sort: 'id': 'ascending' " model.bind="sample">${sample.id}: ${sample.attributes.substr(0,30)}</option>
                         </select>
                         <a style= "width: 30px; margin-left: 1rem;" click.delegate="newsample()">Add</a>
                     </span>
@@ -78,14 +77,14 @@
                 <div class="grid-block shrink">                       
                     <span class="inline-label slim-text-box-label">Description</span>
                     <div class="">
-                        <textarea rows="1" type="textarea" class="slim-text-box" style="min-width:169px;"  value.bind="selectedSample.attributes"></textarea>
+                        <textarea rows="1" type="textarea" class="slim-text-box" style="min-width:200px;"  value.bind="selectedSample.attributes"></textarea>
                     </div>
                 </div>
                 <!-- Colour -->
                 <div class="grid-block shrink" >                        
                     <span class="inline-label">
                         <span class="slim-text-box-label">Colour</span>
-                        <select name="" id="" value.bind="selectedSample.color">
+                        <select name="" id="" value.bind="selectedSample.color" style="max-width:200px;">
                             <!-- <option value="">Select Colour</option>-->
                             <option  selected>${selectedSample.color}</option>
                             <option value="selectedSample.color"repeat.for="color of colors" model.bind="color">${color}</option>
