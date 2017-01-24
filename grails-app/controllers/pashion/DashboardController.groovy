@@ -85,7 +85,7 @@ class DashboardController {
     }
 
     def material(){
-        def list = ['CASHMERE','CORDUROY','CREPE','CUIR','DENIM','DUNGAREE','FLUFFY',
+        def list = ['CASHMERE','CLOTH','COTTON','CORDUROY','CREPE','CUIR','DENIM','DUNGAREE','FLUFFY',
                     'FRILL','FUR','GLITTER','JOUY','KNIT','LACE','LAMÉ','LEATHER','LINEN',
                     'METAL','MOHAIR','ORGANZA','OXFORD','PAISLEY','PLAID','PLASTIC','PVC',
                     'QUILT','RIB','SHEARLING','SHEEP','SILK','SNAKE','SNAKESKIN','STITCH',

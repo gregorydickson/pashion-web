@@ -46,6 +46,7 @@ export class EditSearchableItem {
     });
   }
 
+/*
   setStartDate(event,day){
   	console.log("start date"+event);
   	console.log("day"+day);
@@ -95,7 +96,7 @@ export class EditSearchableItem {
               this.calendar = calendar;
           })
   }
-
+*/
   newsample(){
     if (!this.createdNew) {
       this.createdNew = true;
