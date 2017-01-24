@@ -25,7 +25,7 @@
 
                         <button click.delegate="closeExpand(1111)" class="accordionNew"
                         if.bind="(connectionC.connectingStatus=='PendingIn' ||
-                                        connectionC.connectingStatus=='PendingOut')" style="color:#3971b1; font-weight:500;">New</button>
+                                        connectionC.connectingStatus=='PendingOut')" style="color: white; font-weight: 500; background: #3971b1;">NEW&nbsp;</button>
 
 
                         </span>                        
@@ -37,7 +37,8 @@
         <div id="panel1111" class="panel grid-block vertical " style="overflow-y:auto;">
             <div id="contacts-inside-top2" if.bind="(users[user.id -1].connections!=null)" repeat.for="connectionC of users[user.id -1].connections" class="" style="width:255px; overflow: visible;margin-left: 1rem;">
                 <!-- in coming -->
-                <div if.bind="(connectionC.connectingStatus=='PendingIn')" style="">
+                <!-- RM check the user still exists -->
+                <div if.bind="(connectionC.connectingStatus=='PendingIn' && users[connectionC.connectedUserId -1].email)" style="">
                     <span class="look-menu-heading paragraph-5" style="outline: 1px solid lightgray; width: 250px; background: white;">Incoming Connection Request</span>
                     <table class="width100">
                         <tr>
@@ -61,7 +62,8 @@
                     </div>
                 </div>
                 <!-- out going -->
-                <div if.bind="(connectionC.connectingStatus=='PendingOut')" style="">
+                <!-- RM check the user still exists -->
+                <div if.bind="(connectionC.connectingStatus=='PendingOut' && users[connectionC.connectedUserId -1].email)" style="">
                     <span class="look-menu-heading paragraph-5" style="outline: 1px solid lightgray; width: 250px; background: white;">Outgoing Connection Request</span>
                     <table class="width100">
                         <tr>
@@ -131,7 +133,8 @@
             </div>
             <!-- main list -->
             <div id="contacts-inside-top" if.bind="(users[user.id -1].connections!=null)" repeat.for="connection of users[user.id -1].connections | sort: 'name': filterDirection | filter:searchTerm:filterFunc " class="" style="width:255px; overflow: visible;margin-left: 1rem;">
-                <table if.bind="(connection.connectingStatus=='Accepted')" class="width100" style="margin-bottom: 10px;">
+                <!-- check the connection is completed and the user still exists -->
+                <table if.bind="(connection.connectingStatus=='Accepted' && users[connection.connectedUserId -1].email)" class="width100" style="margin-bottom: 10px;">
                     <tr>
                         <td>
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
