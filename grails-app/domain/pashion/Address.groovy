@@ -9,6 +9,7 @@ class Address{
 	String city
 	String country
 	String postalCode
+	String attention
 	Boolean defaultAddress = false
 	Boolean archived = false
 
@@ -25,6 +26,7 @@ class Address{
 		city nullable: true
 		country nullable: true
 		postalCode nullable: true
+		attention nullable:true
 	}
 
 	String toString() {

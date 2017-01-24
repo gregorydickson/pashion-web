@@ -124,6 +124,12 @@ export class Adminpage{
     this.userService.update(this.currentUser);
   }
 
+  addressChange(){
+    console.log("updating address");
+    console.log(JSON.stringify(this.currentAddress));
+    this.addressService.update(this.currentAddress);
+  }
+
   
 
   togglePassword() {

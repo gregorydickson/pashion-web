@@ -77,6 +77,27 @@ class AddressController {
     }
 
     @Transactional
+    def updatejson() {
+        
+        def jsonObject = request.JSON
+        log.info "updateJson address:"+jsonObject
+        log.info "params address:"+params
+        Address address = Address.get(params.id.toInteger())
+        address.name = jsonObject.name
+        address.address1 = jsonObject.address1
+        address.address2 = jsonObject.address2
+        address.city = jsonObject.city
+        address.country = jsonObject.country
+        address.postalCode = jsonObject.postalCode
+        address.attention = jsonObject.attention
+
+        address.save(failOnError:true)
+        
+        respond address, [status: OK] 
+        
+    }
+
+    @Transactional
     def delete(Address address) {
 
         if (address == null) {

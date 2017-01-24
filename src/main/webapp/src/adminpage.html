@@ -71,38 +71,41 @@
                            </select>
                            <span class="slim-text-box-label"><a click.delegate="deleteOffice()" style="">Delete</a></span>
                         </div>
-                        <!-- Address -->
-                        <div class="inline-label disabled">
+
+                        <!-- Name -->
+                        <div class="inline-label">
+                           <span class="slim-text-box-label">Name</span>
+                           <input class="slim-text-box" input.delegate="addressChange()" type='text' name='' value.bind='currentAddress.name'>
+                        </div>
+                        <!-- Address 1-->
+                        <div class="inline-label">
                            <span class="slim-text-box-label">Address 1</span>
-                           <input class="slim-text-box" type='text' name='' value.bind='currentAddress.address1'>
+                           <input class="slim-text-box" input.delegate="addressChange()" type='text' name='' value.bind='currentAddress.address1'>
                         </div>
                         <!-- Address 2 -->
-                        <div class="inline-label disabled">
+                        <div class="inline-label">
                            <span class="slim-text-box-label">Address 2</span>
-                           <input class="slim-text-box" type='text' name='' value.bind='currentAddress.address2'>
+                           <input class="slim-text-box" input.delegate="addressChange()" type='text' name='' value.bind='currentAddress.address2'>
                         </div>
                         <!--  -->
-                        <div class="inline-label disabled">
+                        <div class="inline-label">
                            <span class="slim-text-box-label">City</span>
-                           <input class="slim-text-box" type='text' name='' value.bind='currentAddress.city'>
+                           <input class="slim-text-box" input.delegate="addressChange()" type='text' name='' value.bind='currentAddress.city'>
                         </div>
                         <!--  -->
-                        <div class="inline-label disabled">
+                        <div class="inline-label">
                            <span class="slim-text-box-label">Country</span>
-                           <input class="slim-text-box" type='text' name='' value.bind='currentAddress.country'>
+                           <input class="slim-text-box" input.delegate="addressChange()" type='text' name='' value.bind='currentAddress.country'>
                         </div>
                         <!--  -->
-                        <div class="inline-label disabled">
+                        <div class="inline-label">
                            <span class="slim-text-box-label">Postal Code</span>
-                           <input class="slim-text-box" type='text' name='' value.bind='currentAddress.postalCode'>
+                           <input class="slim-text-box" input.delegate="addressChange()" type='text' name='' value.bind='currentAddress.postalCode'>
                         </div>
                         <!-- Attention -->
                         <div class="inline-label">
                            <span class="slim-text-box-label">Attention</span>
-                           <select class="slim-text-box" name="" id="" value.bind="selectedSample">
-                              <option value="">Shipper's username</option>
-                              <option value="">Shipper's username</option>
-                           </select>
+                           <input class="slim-text-box" input.delegate="addressChange()" type='text' name='' value.bind='currentAddress.attention'>
                         </div>
                         <!-- New office -->
                         <div class="inline-label">

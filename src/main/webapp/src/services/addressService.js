@@ -34,5 +34,21 @@ export class AddressService{
 
     }
 
+    update(address) {
+        // if we are updating the current login user then need to set local 
+        // and add the extra stuff for the current user
+        console.log("updating address addressService");
+        console.log(JSON.stringify(address));
+        var promise = new Promise((resolve, reject) => {
+            this.http.fetch('/address/updatejson/' + address.id + ".json", {
+                    method: 'post',
+                    body: json(address)
+                })
+                .then(response => response.json())
+                .then(result => {resolve(result)}).catch(err => reject(err));
+        });
+
+    }
+
 
 }
