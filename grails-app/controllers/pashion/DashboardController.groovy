@@ -100,16 +100,16 @@ class DashboardController {
 
     def sampleTypes(){
 
-        def list = ['bikini','blazer','blouse','body','boyfriend jeans','boots','bra',
+        def list = ['bag','belt','bikini','blazer','blouse','body','boyfriend jeans','boots','bra',
                     'bustier','cape','cardigan','coat','cocktail dress','corsage','corset',
                     'costume','culotte','dress','dressing gown','dungarees','flared jeans',
-                    'gilet','gown','hoodie','jacket','jean','jeggings','jogging','jumper',
+                    'gilet','glasses','gown','hat','hoodie','jacket','jean','jeggings','jogging','jumper',
                     'jumpsuit','jupe','kilt','kimono','laysuit','legging','lingerie','mao',
                     'nightgown','nightwear','overalls','oxford','pajama','pants','parka',
                     'pantyhose','pensil skirt','perfecto','platform boots','pocket','polo',
-                    'poncho','puffer','pyjama','raincoat','reefer','scarf','shirt',
+                    'poncho','puffer','pyjama','raincoat','reefer','satchel','sandal','scarf','shirt',
                     'shirt dress','shorts','skirt','skirt dress','sleeve','sleeveless',
-                    'slip','slip dress','smoking','stilletos','suit','sweater','sweatpants',
+                    'slip','slip dress','smoking','stilletos','suit','sunglasses','sweater','sweatpants',
                     'sweatshirt','teeshirt','tennis','top','trench','trenchcoat','trousers',
                     'turtleneck','tuxedo','vest','waistcoat'] as JSON
         render list
