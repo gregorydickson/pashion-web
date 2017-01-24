@@ -180,7 +180,7 @@
                 </div>
                 <!-- Bottom Row -->
                 <div class="grid-block slim-form-wrap">
-                    <span class="title-form">ITEMS</span>
+                    <span class="title-form">SAMPLES</span>
                 </div>  
 
                 <!-- brand -->
@@ -188,9 +188,9 @@
                     <!-- row -->
                     <table repeat.for="sample of sampleRequest.searchableItemsProposed" class="big-accordion">
                         <tr>
-                            <td class="accordion w3">${$index+1}</td>
-                            <td class="accordion w12">${sample.id}</td>
-                            <td class="accordion w54">${sample.name}</td>
+                            <!-- <td class="accordion w3">${$index+1}</td> -->
+                            <td class="accordion w15">${sample.id}</td>
+                            <td class="accordion w54">${sample.attributes}</td>
                             <td class="accordion w15">                            
                                 <span style="margin-bottom:0px;">${sample.status.status}</span>
                             </td>
@@ -209,9 +209,9 @@
                     <!-- row -->
                     <table repeat.for="sample of sampleRequest.searchableItemsProposed" class="big-accordion" style="margin-bottom:7px;">
                         <tr>
-                            <td class="accordion w3">${$index+1}</td>
-                            <td class="accordion w12">${sample.id}</td>
-                            <td class="accordion w54">${sample.name}</td>
+                           <!--  <td class="accordion w3">${$index+1}</td> -->
+                            <td class="accordion w15">${sample.id}</td>
+                            <td class="accordion w54">${sample.attributes}</td>
                             <td class="accordion w18">
                                 <span style="margin-bottom:0px;">${sample.status.status}</span>
                             </td>
