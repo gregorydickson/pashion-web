@@ -222,23 +222,32 @@
                             <span if.bind="maxRReached" class="ui-text-label-m-broad"> > </span>
                             <span class="ui-text-label-m-broad">${numberImages} Results )</span>
                         </span> 
-
                         <!-- Header for 'brand'-->
+                        <span if.bind="user.type == 'brand'">
+                            <span class="ui-text-label-m-broad">MANAGE IMAGES (</span>
+                            <span class="ui-text-label-m-broad">${numberImages} Results )</span>
+                        </span> 
+                        <!-- Header for 'prAgency'-->
+                        <span if.bind="user.type == 'agency'">
+                            <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
+                            <span if.bind="maxRReached" class="ui-text-label-m-broad"> > </span>
+                            <span class="ui-text-label-m-broad">${numberImages} Results )</span>
+                        </span> 
+
+                        <!-- Header for 'brand'
                         <!-- if.bind bug here, only for brand have to remove '>' -->
-                        <select if.bind="user.type == 'brand'" class="select-transparent" name="" id="imagesFunctionality">
+                        <!-- <select if.bind="user.type == 'brand'" class="select-transparent" name="" id="imagesFunctionality">
                             <option value="optionSearchImages"> 
                                 <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
-                               <!-- <span if.bind="maxRReached == 'true'" class="ui-text-label-m-broad"> ${maxRReached} </span> -->
                                 <span class="ui-text-label-m-broad">${numberImages} Results )</span>
                             </option>
                             <option value="optionManageImages">
                                 <span class="ui-text-label-m-broad">MANAGE IMAGES (</span>
-                                <!-- <span if.bind=" maxRReached " class="ui-text-label-m-broad"> > </span> -->
                                 <span class="ui-text-label-m-broad">${numberImages} Results )</span>
                             </option>
-                        </select>
+                        </select>-->
                        
-                        <!-- Header for 'agency'-->
+                        <!-- Header for 'agency 
                         <select if.bind="user.type == 'agency'" class="select-transparent" name="" id="imagesFunctionality">
                             <option value="optionSearchImages"> 
                                 <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
@@ -250,7 +259,7 @@
                                 <span if.bind="maxRReached" class="ui-text-label-m-broad"> > </span>
                                 <span class="ui-text-label-m-broad">${numberImages} Results )</span>
                             </option>
-                        </select>
+                        </select> -->
                        
                    </div>
                     <div class="grid-block align-right tool-header-spacer">
@@ -326,24 +335,24 @@
 
                     <!-- BRAND filters BEGIN -->
                     <div if.bind="user.type === 'brand'">
-                        <div class="blockSearchImages">
+                        <!--<div class="blockSearchImages">
                             <div class="grid-row">
                                 <div class="grid-row-col">
                                     <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search Text">
-                                    <!-- <filters-search></filters-search> -->
+                                    <!-- <filters-search></filters-search> 
                                 </div>
                                 <div class="grid-row-col">
                                     <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
                                 </div>
-                                <div class="grid-row-col">
+                                <!--<div class="grid-row-col">
                                     <filters-color change.delegate="filterChangeColor($event)"></filters-color>
                                 </div>
                                 <div class="grid-row-col">
                                     <filters-city change.delegate="filterChangeCity($event)"></filters-city>
                                 </div>
                             </div>
-                        </div>
-                        <div class="blockManageImages">
+                        </div> -->
+                        <div class="">
                             <div class="grid-row">
                                 <div class="grid-row-col">
                                     <input type="search" value.bind="searchText" class="search-box" id="search-images2" placeholder="Search Text">
@@ -352,7 +361,9 @@
                                 <div class="grid-row-col">
                                     <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
                                 </div>                    
-                                <div class="grid-row-col"></div>
+                                <div class="grid-row-col">
+                                    <filters-city change.delegate="filterChangeCity($event)"></filters-city>
+                                </div>
                                 <div class="grid-row-col"></div>
                             </div>
                             <div class="grid-row">
