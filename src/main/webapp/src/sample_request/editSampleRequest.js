@@ -27,22 +27,22 @@ export class EditSampleRequest {
   }
 
   activate(requestId){
-    return Promise.all([
-      this.user = this.userService.getUser().then(user => this.user = user),
-      this.sampleRequestService.getSampleRequest(requestId)
-        .then(sampleRequest => {
-          this.sampleRequest = sampleRequest;
-          console.log("sampleRequest"+sampleRequest);
-          this.http.fetch('/brand/addresses/'+sampleRequest.brand.id)
-              .then(response => response.json())
-              .then(addresses => this.brandAddresses = addresses);
-          this.http.fetch('/brand/users/'+sampleRequest.brand.id)
-              .then(response => response.json())
-              .then(brandUsers => this.brandUsers = brandUsers);
-        })
-    ]);
+    
+      
+      return this.sampleRequestService.getSampleRequest(requestId).then(sampleRequest => {this.sampleRequest = sampleRequest;});
     
     
+  }
+
+  attached(){
+    
+    this.user = this.userService.getUser().then(user => this.user = user);
+    this.http.fetch('/brand/addresses/'+this.sampleRequest.brand.id)
+        .then(response => response.json())
+        .then(addresses => this.brandAddresses = addresses);
+    this.http.fetch('/brand/users/'+this.sampleRequest.brand.id)
+        .then(response => response.json())
+        .then(brandUsers => this.brandUsers = brandUsers);
   }
 
   removeSample(id,index){
