@@ -16,7 +16,6 @@ class SearchableItem {
 	String description
 	Brand brand
 	City city
-	City sampleCity
 	String sex
 
 	String image
@@ -63,7 +62,6 @@ class SearchableItem {
 	static constraints = {
 		name nullable:true
 		city nullable:true
-		sampleCity nullable:true
 		description nullable:true, maxSize: 1000
 		brand nullable: true
 		sex nullable:true
