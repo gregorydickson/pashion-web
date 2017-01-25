@@ -27,7 +27,6 @@
                         if.bind="(connectionC.connectingStatus=='PendingIn' ||
                                         connectionC.connectingStatus=='PendingOut')" style="color: white; font-weight: 500; background: #3971b1;">NEW&nbsp;</button>
 
-
                         </span>                        
                     </td>
                     <td class="accordion-grey" style="width:15px;"></td>
@@ -86,6 +85,77 @@
                 </div>
             </div>
         </div>
+
+      <!-- -->
+        <!-- Recent activity lists-->
+        <!-- -->
+        <div class="grid-block shrink" style="margin-left:1rem; margin-bottom:1rem;">
+            <table style="table-layout:fixed;" class="big-accordion">
+                <tr>
+                    <td class="accordion-grey" style="width:20px;">
+                        <button id="button1213" class="accordion active" click.delegate="closeExpand(1213)"></button>
+                    </td>
+                    <td class="accordion-grey"> <span>New Messages</span>
+                    </td>
+                    <td class="accordion-grey" style="width:35px; overflow: hidden;">
+                        <span class="accordion-grey"
+                        if.bind="(users[user.id -1].connections!=null)"
+                        repeat.for="connectionC of users[user.id -1].connections">
+
+                        <button click.delegate="closeExpand(1213)" class="accordionNew"
+                        if.bind="(connectionC.numberNewMessages!=0)" style="color: white; font-weight: 500; background: #3971b1;">NEW&nbsp;</button>
+
+                        </span>                        
+                    </td>
+                    <td class="accordion-grey" style="width:15px;"></td>
+                </tr>
+            </table>
+        </div>
+        <div id="panel1213" class="panel grid-block vertical scroll show" style="overflow-y:auto;">
+            <!-- main list -->
+            <div id="contacts-inside-top" if.bind="(users[user.id -1].connections!=null)" repeat.for="connection of users[user.id -1].connections | filter:searchTerm:filterFunc " class="" style="width:255px; overflow: visible;margin-left: 1rem;">
+                <!-- check the connection is completed and the user still exists -->
+                <table if.bind="(connection.connectingStatus=='Accepted' && users[connection.connectedUserId -1].email && connection.numberNewMessages!=0)" class="width100" style="margin-bottom: 10px;">
+                    <tr>
+                        <td>
+                            <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
+                                <div>
+                                    <img if.bind="(users[connection.connectedUserId -1].image)" src=${users[connection.connectedUserId-1].image} class="clip-circle contact-entry" />
+                                    <div if.bind="(!users[connection.connectedUserId -1].image)" style="margin-right: 1rem; " class="avatar-circle ">${users[connection.connectedUserId -1].name.charAt(0)}</div>
+                                </div>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
+                                <div>
+                                    <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connection.connectedUserId -1].name} ${users[connection.connectedUserId -1].surname}</div>
+                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connection.connectedUserId -1].brand.name} ${users[connection.connectedUserId -1].pressHouse.name}</div>
+                                </div>
+                            </a>
+                        </td>
+                        <td class="align-top">
+                            <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
+                                <span class="alert-box">${connection.numberNewMessages}</span>
+                            </a>
+                        </td>
+                        <td class="align-top">
+                            <div class="look-menu-absolute-wrap">
+
+                                <a href="#" click.delegate="deleteContact(connection.user.id,connection.id, users[connection.connectedUserId -1].email)">
+                                    <span class="edit-box" style="font-size: 20px; margin-left: 11px; margin-right: 0px; margin-top: 6px; height:16px;width:16px;">
+
+                                    <img style="vertical-align: center;" src="../../assets/ximg.png"  /> 
+
+
+                                    </span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
         <!-- -->
         <!-- Contact lists-->
         <!-- -->
@@ -95,7 +165,7 @@
                     <td class="accordion-grey" style="width:20px;">
                         <button id="button1212" class="accordion active" click.delegate="closeExpand(1212)"></button>
                     </td>
-                    <td class="accordion-grey"> <span>Contacts</span>
+                    <td class="accordion-grey"> <span>All Contacts</span>
                     </td>
                     <td class="accordion-grey" style="width: 49px; padding-top: 1px;">
                         <button id="button1221" class="accordionAZ active" click.delegate="switchAlpha(1221)"></button>
@@ -154,7 +224,7 @@
                         </td>
                         <td class="align-top">
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
-                                <span class="alert-box">${connection.numberNewMessages}</span>
+                                <span if.bind="connection.numberNewMessages!=0" class="alert-box">${connection.numberNewMessages}</span>
                             </a>
                         </td>
                         <td class="align-top">
