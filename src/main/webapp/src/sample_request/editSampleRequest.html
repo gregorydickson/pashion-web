@@ -186,15 +186,15 @@
                 <!-- brand -->
                 <div if.bind="user.type === 'brand'" class="vertical grid-content accordion modal-table-wrap"> <!-- scroll after n items -->                    
                     <!-- row -->
-                    <table repeat.for="sample of sampleRequest.searchableItemsProposed" class="big-accordion">
+                    <table repeat.for="sample of sampleRequest.searchableItemsProposed" class="" style="table-layout:fixed">
                         <tr>
                             <!-- <td class="accordion w3">${$index+1}</td> -->
-                            <td class="accordion w15">${sample.id}</td>
-                            <td class="accordion w54">${sample.attributes}</td>
-                            <td class="accordion w15">                            
+                            <td class="accordion" style="width:40px; max-width:40px;">${sampleRequest.look}.${$index+1} :</td>
+                            <td class="accordion" style="width:435px; max-width:435px; overflow:hidden;">${sample.attributes}</td>
+                            <td class="accordion" style="width:40px; max-width:40px;">                            
                                 <span style="margin-bottom:0px;">${sample.status.status}</span>
                             </td>
-                            <td if.bind="sampleRequest.brandStatus === 'Pending'" style="text-align:right;" class="accordion w16">
+                            <td if.bind="sampleRequest.brandStatus === 'Pending'" style="text-align:right;" class="accordion" style="width:40px; max-width:40px;">
                                 <select value.bind="sample.status.brandStatus">
                                     <option value="approved">Approve</option>
                                     <option value="denied">Deny</option>
@@ -207,15 +207,15 @@
                 <!-- press -->
                 <div if.bind="user.type === 'press'" class="vertical grid-content accordion" style="overflow-x:hidden; max-height:10rem;"> <!-- scroll after n items -->                    
                     <!-- row -->
-                    <table repeat.for="sample of sampleRequest.searchableItemsProposed" class="big-accordion" style="margin-bottom:7px;">
+                    <table repeat.for="sample of sampleRequest.searchableItemsProposed" class="" style="margin-bottom:7px; table-layout:fixed">
                         <tr>
                            <!--  <td class="accordion w3">${$index+1}</td> -->
-                            <td class="accordion w15">${sample.id}</td>
-                            <td class="accordion w54">${sample.attributes}</td>
-                            <td class="accordion w18">
+                            <td class="accordion" style="width:40px; max-width:40px;">${sampleRequest.look}.${$index+1} :</td>
+                            <td class="accordion" style="width:435px; max-width:435px; overflow:hidden;">${sample.attributes}</td>
+                            <td class="accordion" style="width:40px; max-width:40px;">
                                 <span style="margin-bottom:0px;">${sample.status.status}</span>
                             </td>
-                            <td if.bind="sampleRequest.requestStatusBrand === 'Pending'" style="text-align:right;" class="accordion w13">
+                            <td if.bind="sampleRequest.requestStatusBrand === 'Pending'" style="text-align:right;" class="accordion" style="width:40px; max-width:40px;">
                                 <a click.delegate="removeSample(sample.id,$index)" style="padding:7px 6px 5px 6px; margin-right:0; margin-bottom:0px; font-size: 1rem;" class="hollow button" href="#">Remove</a>
                             </td> 
                         </tr>

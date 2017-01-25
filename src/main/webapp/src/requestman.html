@@ -2,6 +2,7 @@
 <template>
     <require from="./common/viewDateFormatter"></require>
     <require from="./calendars/datepicker"></require>
+    <require from="./sample_request/sort"></require>
     <!-- Main building block -->
    <!-- <div class="vertical grid-block spa-background">
 
@@ -228,10 +229,11 @@
                                             </table> -->
                                             <!-- no images -->
                                             <table class="" style="table-layout:fixed;">
-                                                <tr style="height:1rem;" repeat.for="item of booking.searchableItems" >
-                                                    <td class="accordion sample-padding">${look}.${$index+1} : ${item.attributes} ${item.status.Status}</td>
+                                                <tr style="height:1rem;" repeat.for="item of booking.searchableItems | sort: 'id': 'ascending'" >
+                                                    <td class="accordion sample-padding">${look}.${$index+1} : &nbsp; &nbsp;${item.attributes} ${item.status.Status}</td>
                                                 </tr>
                                             </table>
+
                                         </div>
                                         
                                     </div>

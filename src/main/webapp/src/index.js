@@ -569,8 +569,8 @@ export class Index {
     }
 
     closeSampleRequestMenu(id) {
-        var menu = document.getElementById("requestTest" + id);
-        menu.classList.toggle("look-menu-show");
+        //var menu = document.getElementById("requestTest" + id);
+        //menu.classList.toggle("look-menu-show");
     }
 
     editSampleRequest(id) {
