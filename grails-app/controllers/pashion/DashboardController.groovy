@@ -107,7 +107,7 @@ class DashboardController {
                     'jumpsuit','jupe','kilt','kimono','laysuit','legging','lingerie','mao',
                     'nightgown','nightwear','overalls','oxford','pajama','pants','parka',
                     'pantyhose','pensil skirt','perfecto','platform boots','pocket','polo',
-                    'poncho','puffer','pyjama','raincoat','reefer','satchel','sandal','scarf','shirt',
+                    'poncho','puffer','pyjama','raincoat','reefer','satchel','sandal','scarf','shoes','shirt',
                     'shirt dress','shorts','skirt','skirt dress','sleeve','sleeveless',
                     'slip','slip dress','smoking','stilletos','suit','sunglasses','sweater','sweatpants',
                     'sweatshirt','teeshirt','tennis','top','trench','trenchcoat','trousers',

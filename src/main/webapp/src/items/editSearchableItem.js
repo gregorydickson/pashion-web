@@ -21,6 +21,8 @@ export class EditSearchableItem {
   selectedSample = {};
 
   listID = 'colors';
+
+  addColor = '';
   
 
   constructor(http, controller){
@@ -48,6 +50,13 @@ export class EditSearchableItem {
     });
   }
 
+  colorAdd (sample) {
+    sample.color = sample.color + " " + this.addColor;
+  }
+
+  colorClear (sample) {
+    sample.color = '';
+  }
 
   newsample(){
     if (!this.createdNew) {

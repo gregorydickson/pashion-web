@@ -1,6 +1,6 @@
 <template>
 <require from="./sort"></require>
-<require from="./set-attribute"></require>
+<!-- <require from="./set-attribute"></require> -->
 <!-- <require from="./truncate"></require> -->
     
    <ai-dialog>
@@ -25,13 +25,13 @@
                     <div class="grid-content"></div>
                 </div>
 
-               <!-- ID -->
+               <!-- ID 
                 <div class="grid-block shrink">                       
-                    <span class="inline-label slim-text-box-label">ID</span>
+                    <span class="inline-label slim-text-box-label">LOOK ID</span>
                     <div style="">
                         <input type="text" class="slim-text-box" value.bind="currentItem.id">
                     </div>
-                </div>
+                </div> -->
                 <!-- Collection -->
                 <div class="grid-block shrink">                       
                     <span class="inline-label slim-text-box-label">Collection:</span>
@@ -41,7 +41,7 @@
                 </div>
                 <!-- Look Description -->
                 <div class="grid-block shrink menu-divider">                       
-                    <span class="inline-label slim-text-box-label">Description</span>
+                    <span class="inline-label slim-text-box-label" style="white-space: normal;">Look Description</span>
                     <div class="">
                         <textarea rows="2" type="textarea" class="slim-text-box" style="min-width:200px;" value.bind="currentItem.attributes"></textarea>
                     </div>
@@ -54,7 +54,7 @@
                         <select name="" id="" value.bind="selectedSample" style="max-width:200px;">
                             <option value="">Select Sample</option>
                             <option if.bind="currentItem.samples" repeat.for="sample of currentItem.samples 
-                            | sort: 'id': 'ascending' " model.bind="sample">${sample.id}: ${sample.attributes.substr(0,25)}</option>
+                            | sort: 'id': 'ascending' " model.bind="sample">${$index+1} : ${sample.attributes.substr(0,25)}</option>
                         </select>
                         <a style= "width: 30px; margin-left: 1rem;" click.delegate="newsample()">Add</a>
                     </span>
@@ -90,16 +90,37 @@
                     </div>
                 </div>
                 <!-- Colour -->
-                <div class="grid-block shrink" >                        
+                <!-- combo box code, not working -->
+                <!--  <input type="text" name="example" list.bind="listID & setAttribute">
+                <datalist name="" id.bind="listID" value.bind="selectedSample.color" style="max-width:200px;">
+                    <option  selected>${selectedSample.color}</option>
+                    <option value="selectedSample.color"repeat.for="color of colors" model.bind="color">${color}</option>
+                </datalist> -->
+
+                <!-- Color -->
+                 <div class="grid-block shrink" >                        
                     <span class="inline-label">
                         <span class="slim-text-box-label">Colour</span>
-                        <input type="text" name="example" list.bind="listID & setAttribute">
-                        <datalist name="" id.bind="listID" value.bind="selectedSample.color" style="max-width:200px;">
-                            <!-- <option value="">Select Colour</option>-->
-                            <option  selected>${selectedSample.color}</option>
-                            <option value="selectedSample.color"repeat.for="color of colors" model.bind="color">${color}</option>
-                        </datalist>
+                        <div>
+                            <input type="text" class="slim-text-box" disabled value.bind="selectedSample.color">
+                        </div>
+                        <a style= "width: 30px; margin-left: 1rem; padding-bottom: 6px;" click.delegate="colorClear(selectedSample)">Clear</a>
                     </span>
+                </div>
+
+                <div class="grid-block shrink" style="margin-top: -10px;">                        
+                    <span class="inline-label" >
+                        <span class="slim-text-box-label">New Colour</span>
+                        <select name="" id="" value.bind="addColor">
+                            <option value="">Select</option>
+                            <!-- <option repeat.for="color of colors" model.bind="color">${color}</option> -->
+                            <!-- <option value="">Select Colour</option>-->
+                            <!-- <option  selected>${selectedSample.color}</option> -->
+                            <option value="" repeat.for="color of colors" model.bind="color">${color}</option>
+                        </select>
+                        <a style= "width: 30px; margin-left: 1rem;" click.delegate="colorAdd(selectedSample)">Add</a>
+                    </span>
+
                 </div>
                 <!-- Material -->
                 <div class="grid-block shrink" >                        
