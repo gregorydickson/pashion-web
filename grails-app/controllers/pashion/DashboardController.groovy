@@ -85,10 +85,10 @@ class DashboardController {
     }
 
     def material(){
-        def list = ['CASHMERE','CLOTH','COTTON','CORDUROY','CREPE','CUIR','DENIM','DUNGAREE','FLUFFY',
+        def list = ['CASHMERE','CHAMBRAY','CLOTH','COTTON','CORDUROY','CREPE','CUIR','DENIM','DUNGAREE','FISHNET','FLUFFY',
                     'FRILL','FUR','GLITTER','JOUY','KNIT','LACE','LAMÉ','LEATHER','LINEN',
                     'METAL','MOHAIR','ORGANZA','OXFORD','PAISLEY','PLAID','PLASTIC','PVC',
-                    'QUILT','RIB','SHEARLING','SHEEP','SILK','SNAKE','SNAKESKIN','STITCH',
+                    'QUILT','RIB','SATIN','SHEARLING','SHEEP','SHEER','SILK','SNAKE','SNAKESKIN','STITCH','SUEDE',
                     'TARTAN','TULLE','TWEED','VELVET','WATERPROOF','WOOL','WRAP'] as JSON
         render list
     }
@@ -100,18 +100,19 @@ class DashboardController {
 
     def sampleTypes(){
 
-        def list = ['bag','belt','bikini','blazer','blouse','body','boyfriend jeans','boots','bra',
-                    'bustier','cape','cardigan','coat','cocktail dress','corsage','corset',
-                    'costume','culotte','dress','dressing gown','dungarees','flared jeans',
-                    'gilet','glasses','gown','hat','hoodie','jacket','jean','jeggings','jogging','jumper',
-                    'jumpsuit','jupe','kilt','kimono','laysuit','legging','lingerie','mao',
-                    'nightgown','nightwear','overalls','oxford','pajama','pants','parka',
-                    'pantyhose','pensil skirt','perfecto','platform boots','pocket','polo',
-                    'poncho','puffer','pyjama','raincoat','reefer','satchel','sandal','scarf','shoes','shirt',
+        def list = ['bag','babouches','bandana','beads','belt','bermuda','bikini','blazer','blouse','bodice','boots','boyfriend jeans','bomber jacket','boots','bra','bracelet',
+                    'braces','bustier','button','cap','cape','cardigan','claudine','coat','cocktail dress','collar','corsage','corset',
+                    'costume','crocs','crop top','culotte','dress','dress on pants','diamond','dressing gown','dungarees','earring','fan',
+                    'feather','flared jeans',
+                    'gilet','glasses','glove','gown','handbag','handkerchief','hat','headband','heels','hoodie','jacket','jeans','jeggings','jogging','jumper',
+                    'jumpsuit','jupe','kerchief','kilt','kimono','knots','laysuit','legging','lingerie','loafers','mao collar','mariniere','necklace','necktie',
+                    'nightgown','nightwear','overalls','oxford','pajama','panties','pants','parka',
+                    'pantyhose','patch','patchwork','pensil skirt','pearl','perfecto','peter pan collar','platform boots','playsuit','pocket','polo',
+                    'pompom','poncho','puffer','pullover','pyjama','raincoat','reefer','ribbon','ring','satchel','sandal','scarf','shoes','shirt',
                     'shirt dress','shorts','skirt','skirt dress','sleeve','sleeveless',
-                    'slip','slip dress','smoking','stilletos','suit','sunglasses','sweater','sweatpants',
-                    'sweatshirt','teeshirt','tennis','top','trench','trenchcoat','trousers',
-                    'turtleneck','tuxedo','vest','waistcoat'] as JSON
+                    'slip','slipper','slip dress','smoking','socks','stilletos','suit','sunglasses','sweater','sweatpants',
+                    'sweatshirt','swimsuit','tank top','teeshirt','tennis','tie','tights','top','trainers','trench','trenchcoat','trousers','tunic',
+                    'turtleneck','tuxedo','underwear','veil','vest','waistcoat','watch','zip'] as JSON
         render list
     }
 
@@ -122,12 +123,12 @@ class DashboardController {
     }
 
     def colors(){
-        def colors = ['baby blue','beige','bicolour','black','bleu','blue','bordeaux',
-                'bright','bronze','burgundy','camel','cobalt','cognac','colorful',
-                'coral','cream','fuschia','glitter','gold','gray','green','grey','jaune',
-                'khaki','lavendar','light blue','lilac','lime','metallic','monochrome',
-                'multicolour','mustard','navy','noir','nude','orange','pastel','pearl',
-                'pink','powder','purple','red','rust','shine','silver','transparence',
+        def colors = ['baby blue','blue light','beige','bicolour','black','bleu','blue','bordeaux',
+                'bright','bronze','brown','brown light','burgundy','camel','cobalt','cognac','colorful',
+                'coral','cream','duotone','fuschia','glitter','gold','gray','green','grey','ivory','jaune',
+                'khaki','lavendar','lilac','lime','metallic','monochrome',
+                'multicolour','mustard','navy blue','noir','nude','orange','pastel','pearl',
+                'pink','powder','purple','red','rust','salmon','shine','silver','transparent',
                 'turquoise','white','yellow'] as JSON
         render colors
     }
@@ -225,3 +226,34 @@ class DashboardController {
         
     }
 }
+
+/*nolwenn's list */
+/*type, type_1, colors, and fabrics have been integrated in the above */
+/*TYPE:
+
+‘BOMBER’,’BIKINI’,’BLAZER’,’BLOUSE’,’BODY’,’TUNIC',’BRA',’BUSTIER',’CAPE',’CARDIGAN',’COAT’,’CORSAGE',‘CORSET',’PANTIES',’CULOTTE',’DRESS',’DRESSING GOWN’,’DUNGAREES',’GILET',’GOWN',’HOODIE',’JACKET',’JEAN',’JOGGING',’JUMPER',’JUMPSUIT',’KILT',’KIMONO',’LAYSUIT',’LEGGING',’LINGERIE’,’PLAYSUIT',’PULLOVER',’NIGHTWEAR',’OVERALLS',’PAJAMA’,’PANTS',’PARKA',’PANYHOSE’,’PERFECTO',’POLO',’PONCHO',’RAINCOAT',’SHIRT',’SHIRT DRESS’,’SHORTS’,’SKIRT',’SMOKING',’SUIT',’SWEATER',’SWEATPANTS',’SWEATSHIRT',’TEESHIRT',’TOP’,’TRENCH',’TRENCHCOAT',’TROUSERS',‘TURTLENECK’,’TUXEDO',’WAISTCOAT',’CROP TOP',’BODYCON',’SWIMSUIT',’DRESS ON PANTS’,’TANK TOP’,’BERMUDA',’PLAYSUIT',’UNDERWEAR',’MARINIÈRE'
+
+TYPE_1 (ACCESSORIES):
+
+‘BAG’,’BELT’,’BRACELET',’BUTTON',’CAP',’COLLAR',’DIAMOND',’EARRING',’TRAINERS',’FAN',’FEATHER',’GLASSES',’GLOVE',’HANDBAG',’HEELS',’KNOTS',’NECKLACE';’NECKTIE’,’NODE',’PATCH',’PATCHWORK',’PEARL',’PETER PAN COLLAR',’PLATFORM SHOES',’POCKET',’POMPOM',’RING’,’SCARF',’SHOES',’BRACES',’SLIPPER',’SMALL BAG',’SOCKS',’SPADE',’STONES',’SUNGLASSES',’TIE',’TIGHTS',’VEIL',’WATCH',’ZIP',’BEADS',’HEADBAND',’BOOTS',’SANDALS',’HAT',’SHOES’,’BABOUCHES',’RIBBON’,’CLAUDINE',’MAO COLLAR',’CROCS',’LOAFERS’
+
+MOTIFS:
+
+‘CAMO’,’CROCHET’,’DOT',’VARNISH',’DRAPE',’EMBROIDERY',’FRINGE',’GEOMETRIC',’GRAFFITI',’HERRINGBONE',’LACEUP’,’LACE',’LEAF',’LEOPARD',’LOGO',’MESH',’PAISLEY',’PINSTRIPE',’POLKA DOT’,’PRINT',’PYTHON',’RUFFLE',’RUSTLE',’SEQUIN',’STITCH',’STRIPE',’TAPESTRY',’TARTAN',’TIGER',’TRIBAL',’VICHY’,’ZEBRA',’ZIGZAG',’SLOGAN',’TRANSPARENT',’GLITTERS',’STRASS',’FLORAL',’ORNAMENT',’EMBELISHMENT',’PATTERN',’PERFORATED',’QUADRILLE',’CROCODILE',‘BEADING’
+
+SHAPE:
+
+‘ASYMETRICAL’,’BALLOON SLEEVES',’FLAT',’HIGH WAIST',’HOTPANTS',’LONG',’MIDI',’MINI',’OFF THE SHOULDER',’OVERSIZE',’PLUNGING NECKLINE',’SHORT',’SHOULDER PADS',’SLEEVELESS’,’SLIM',’SLIT',’SUPERPOSITION',’THICK','V NECK’,’VAPOROUS',’VOLUME',’WAVE','WIDE LEG’,’FLOPPY',’STILETTO','CUT OUT’,'BOLD SHOULDERS’,'MONO SLEEVE’,’LARGE',‘ELASTIC'
+
+COLORS:
+
+’BEIGE’,’BICOLOUR',’BLACK',’BLUE',’BRONZE',’BROWN',’BURGUNDY',’CAMEL',’COGNAC',’COLORFUL',’CORAL',’CREAM',’FUCHSIA',’GLITTER’,’GOLD’,’GRAY',’GREEN,’GREY',’KHAKI',’LAVENDER','LIGHT BLUE’,’LIGHT BROWN’,’LILAC',’METALLIC',’MONOCHROM',’MULTICOLOUR',’MUSTARD',’NAVY BLUE’,’NUDE',’ORANGE',’PASTEL’,’PINK',’POWDER',’PURPLE',’RED',’SHINE',’SILVER',’TURQUOISE',’WHITE',’YELLOW',’SALMON',’IVORY',’FLASH',’PETROL',‘PRUNE'
+
+FABRIC:
+
+‘CASHMERE’,’CORDUROY',’CREPE',’DENIM',’FRILL',’FUR',’KNIT',’LACE',’LAMÉ',’LEATHER',’LINEN',’METAL',’MOHAIR',’ORGANZA',’OXFORD',’PAISLEY',’PLAID’,’PLASTIC',’PVC',’QUILT',’RIB',’SHEARLING',’SHEEP',’SILK',’SUEDE',’SNAKESKIN',’STITCH',’TARTAN',’TULLE',’TWEED',’VELVET',’WATERPROOF',’WOOL',’WRAP',’SATIN',’FISHNET',’SHEER',’CHAMBRAY','NYLON'
+
+BROWSE DATA FOR ’THEME':
+
+‘ANIMAL’,’ARMY',’ART',’ATHLETIC',’AVIATOR',’BABYDOLL',’BALLERINA',’BAROQUE',’BIKER',’BOHEMIAN',’CAMOUFLAGE',’CHECK',’CIRCUS',’COWBOY',’DANCE',’DESTROY',’DETECTIVE',’DISCO',’DOLL',’DOMINATRIX',’ETHNIC',’FAIRY',’FLAMENCO',’FOLK',’FOLKLORIC',’FUNK',’FUTURISTIC',’GIRLY',’GRAPHIC',’GRUNGE',’HIPPY',’JUNGLE',’MASCULINE',’MERMAID',’MILITARY',’MINIMAL',’OFFICER',’ORIENTAL',’POP',’PRINCESS',’PSYCHEDELIC',’PUNK',’REBEL',’RETRO',’ROCK',’ROMANTIC',’ROYAL',’RURAL',’SAFARI',’SAILOR',’SPORT',’STAR','STUDIO 54’,’TEENAGER',’URBAN',’UTILITY',’VICTORIAN',’VINTAGE',’VINYL',’WARRIOR',‘WESTERN'
+*/
