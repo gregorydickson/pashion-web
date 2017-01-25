@@ -28,6 +28,7 @@ export class Index {
     brands = [];
     itemTypes = [];
     colors = [];
+    searchType = '';
 
     selectedBrand = '';
     season = '';
@@ -57,7 +58,7 @@ export class Index {
                 //console.log("Filter change called, SEARCH: " + this.searchText);
         this.numberImages = 0;
         this.maxRReached = false;
-        this.http.fetch('/searchableItem/filterSearch?searchtext=' + encodeURI(this.searchText) +
+        this.http.fetch('/searchableItem/'+this.searchType+'?searchtext=' + encodeURI(this.searchText) +
                 // '&itemType=' + this.selectedItemType + 
                 '&brand=' + this.selectedBrand +
                 '&season=' + encodeURI(this.selectedSeason) +
@@ -100,7 +101,7 @@ export class Index {
                 //console.log("Filter change called, Brand: " + this.selectedBrand);
         this.numberImages = 0;
         this.maxRReached = false;
-        this.http.fetch('/searchableItem/filterSearch?searchtext=' + encodeURI(this.searchText) +
+        this.http.fetch('/searchableItem/'+this.searchType+'?searchtext=' + encodeURI(this.searchText) +
                 '&brand=' + this.selectedBrand +
                 '&season=' + encodeURI(this.selectedSeason) +
                 '&availableFrom=' + this.availableFrom +
@@ -142,7 +143,7 @@ export class Index {
                 //console.log("Filter change called, Season: " + this.selectedSeason);
         this.numberImages = 0;
         this.maxRReached = false;
-        this.http.fetch('/searchableItem/filterSearch?searchtext=' + encodeURI(this.searchText) +
+        this.http.fetch('/searchableItem/'+this.searchType+'?searchtext=' + encodeURI(this.searchText) +
                 '&brand=' + this.selectedBrand +
                 '&season=' + encodeURI(this.selectedSeason) +
                 '&availableFrom=' + this.availableFrom +
@@ -187,7 +188,7 @@ export class Index {
                 //console.log("Filter change called, Theme: " + this.selectedTheme);
         this.numberImages = 0;
         this.maxRReached = false;
-        this.http.fetch('/searchableItem/filterSearch?searchtext=' + encodeURI(this.searchText) +
+        this.http.fetch('/searchableItem/'+this.searchType+'?searchtext=' + encodeURI(this.searchText) +
                 '&brand=' + this.selectedBrand +
                 '&season=' + encodeURI(this.selectedSeason) +
                 '&availableFrom=' + this.availableFrom +
@@ -232,7 +233,7 @@ export class Index {
                 //console.log("Filter change called, Color: " + this.selectedColor);
         this.numberImages = 0;
         this.maxRReached = false;
-        this.http.fetch('/searchableItem/filterSearch?searchtext=' + encodeURI(this.searchText) +
+        this.http.fetch('/searchableItem/'+this.searchType+'?searchtext=' + encodeURI(this.searchText) +
                 '&brand=' + this.selectedBrand +
                 '&season=' + encodeURI(this.selectedSeason) +
                 '&availableFrom=' + this.availableFrom +
@@ -278,7 +279,7 @@ export class Index {
         */
         this.numberImages = 0;
         this.maxRReached = false;
-        this.http.fetch('/searchableItem/filterSearch?searchtext=' + encodeURI(this.searchText) +
+        this.http.fetch('/searchableItem/'+this.searchType+'?searchtext=' + encodeURI(this.searchText) +
                 '&brand=' + this.selectedBrand +
                 '&season=' + encodeURI(this.selectedSeason) +
                 '&availableFrom=' + this.availableFrom +
@@ -323,7 +324,7 @@ export class Index {
                 //console.log("Filter change called, Color: " + this.selectedColor);       
         this.numberImages = 0;
         this.maxRReached = false;
-        this.http.fetch('/searchableItem/filterSearch?searchtext=' + encodeURI(this.searchText) +
+        this.http.fetch('/searchableItem/'+this.searchType+'?searchtext=' + encodeURI(this.searchText) +
                 '&brand=' + this.selectedBrand +
                 '&season=' + encodeURI(this.selectedSeason) +
                 '&availableFrom=' + this.availableFrom +
@@ -395,6 +396,8 @@ export class Index {
             this.user = this.userService.getUser().then(user => {
                 this.user = user;
                 if (this.user.type === "guest") window.location.href = '/user/login';
+                if(this.user.type === "brand") this.searchType = 'brandSearch';
+                if(this.user.type === "press") this.searchType = 'filterSearch';
             })
 
         ]);

@@ -10,7 +10,108 @@ class SearchableItemController {
     
     String dateFormatString = "yyyy-MM-dd"
     
-    
+    def brandSearch(){
+        long startTime = System.currentTimeMillis()
+        SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
+        
+        Brand brand = null
+        SearchableItemType type = null
+        Season season = null
+        City city = null
+        List results = null
+        def keywords = null
+        def criteria = SearchableItem.createCriteria()
+
+        log.info "brand param:"+params.brand
+        if(params.brand && params.brand != '' && params.brand.trim() != 'All'){
+            brand = Brand.get(params.brand.trim())
+        }
+        
+        if(params.season != "" && params.season != null)
+            season = Season.findByName(URLDecoder.decode(params.season))
+
+        if(params.searchtext != null && params.searchtext != "" && params.searchtext != "undefined"){
+            keywords = URLDecoder.decode(params.searchtext)
+            keywords = keywords.split(" ")
+        }
+
+        if(params.city != null && params.city != "" && params.city != "All"){
+            city = City.findByName(URLDecoder.decode(params.city))
+
+            type = SearchableItemType.findByDisplay("Samples")
+            log.info "*****************************  A BRAND CITY SEARCH **********************"
+            log.info "Brand:"+brand
+            log.info "keywords:"+keywords
+            log.info "season:"+season
+            log.info "type:"+type
+            
+            log.info "city:"+ params.city + " (" + city + ")"
+
+            
+            //find Samples in city
+            results = criteria.listDistinct () {
+                    
+                    if(brand) eq('brand', brand)
+
+                    if(keywords) and {
+                        keywords.each {  ilike('attributes', "%${it}%") }
+                    }
+                    if(season) eq('season',season)
+                    if(type) eq('type',type)
+                    if(city) eq('sampleCity',city)
+                    
+                    
+                    cache true
+            } 
+            log.info "brand results count:"+results.size()
+            def ids = []
+            results.collect{ids << it.look.id }
+            ids.unique()
+            if(ids.size()>0){
+                results = SearchableItem.findAllByIdInList(ids)
+            } else{
+                results = []
+            }
+        } else{
+            log.info "*****************************  A BRAND NON-CITY SEARCH **********************"
+            log.info "Brand:"+brand
+            log.info "keywords:"+keywords
+            log.info "season:"+season
+            log.info "type:"+type
+
+            results = criteria.listDistinct () {
+                isNotNull('image')
+                if(brand) eq('brand', brand)
+                if(keywords) and {
+                    keywords.each {  ilike('attributes', "%${it}%") }
+                }
+                if(season) eq('season',season)
+                cache true
+            } 
+
+        }
+
+        long endTime = System.currentTimeMillis()
+        long duration = (endTime - startTime)
+        log.info "search duration:"+duration
+        startTime = System.currentTimeMillis()
+        
+        def resultList = collectItems(results)
+
+        endTime = System.currentTimeMillis()
+        duration = (endTime - startTime)
+        log.info "collect results duration:"+duration
+        
+        startTime = System.currentTimeMillis()
+        def jsonList = resultList as JSON
+        render jsonList
+        endTime = System.currentTimeMillis()
+        duration = (endTime - startTime)
+        log.info "JSON render duration:"+duration
+        log.info "**************************************************************"
+        
+
+    }
     def filterSearch(){
         long startTime = System.currentTimeMillis()
         SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
@@ -105,7 +206,25 @@ class SearchableItemController {
         long duration = (endTime - startTime)
         log.info "search duration:"+duration
         startTime = System.currentTimeMillis()
+        
+        def resultList = collectItems(results)
 
+        endTime = System.currentTimeMillis()
+        duration = (endTime - startTime)
+        log.info "collect results duration:"+duration
+        
+        startTime = System.currentTimeMillis()
+        def jsonList = resultList as JSON
+        render jsonList
+        endTime = System.currentTimeMillis()
+        duration = (endTime - startTime)
+        log.info "JSON render duration:"+duration
+        log.info "**************************************************************"
+        
+        
+    }
+
+    def collectItems(results){
         def fixImagesPerRow = 5 
         if(fixImagesPerRow > 5) fixImagesPerRow = 5
         if(fixImagesPerRow < 3) fixImagesPerRow = 3
@@ -156,19 +275,7 @@ class SearchableItemController {
             arow.items = item
             resultList << arow
         }
-        endTime = System.currentTimeMillis()
-        duration = (endTime - startTime)
-        log.info "collect results duration:"+duration
-        
-        startTime = System.currentTimeMillis()
-        def jsonList = resultList as JSON
-        render jsonList
-        endTime = System.currentTimeMillis()
-        duration = (endTime - startTime)
-        log.info "JSON render duration:"+duration
-        log.info "**************************************************************"
-        
-        
+        resultList
     }
 
 
