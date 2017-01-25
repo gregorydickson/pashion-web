@@ -19,6 +19,8 @@ export class EditSearchableItem {
 
   createdNew = true;
   selectedSample = {};
+
+  listID = 'colors';
   
 
   constructor(http, controller){

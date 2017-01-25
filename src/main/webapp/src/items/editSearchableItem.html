@@ -1,5 +1,6 @@
 <template>
 <require from="./sort"></require>
+<require from="./set-attribute"></require>
 <!-- <require from="./truncate"></require> -->
     
    <ai-dialog>
@@ -92,11 +93,12 @@
                 <div class="grid-block shrink" >                        
                     <span class="inline-label">
                         <span class="slim-text-box-label">Colour</span>
-                        <select name="" id="" value.bind="selectedSample.color" style="max-width:200px;">
+                        <input type="text" name="example" list.bind="listID & setAttribute">
+                        <datalist name="" id.bind="listID" value.bind="selectedSample.color" style="max-width:200px;">
                             <!-- <option value="">Select Colour</option>-->
                             <option  selected>${selectedSample.color}</option>
                             <option value="selectedSample.color"repeat.for="color of colors" model.bind="color">${color}</option>
-                        </select>
+                        </datalist>
                     </span>
                 </div>
                 <!-- Material -->
