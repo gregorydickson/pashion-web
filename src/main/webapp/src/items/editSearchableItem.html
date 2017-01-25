@@ -139,7 +139,7 @@
                     <span class="inline-label">
                         <span class="slim-text-box-label">Size</span>
                         <select name="" id="" value.bind="selectedSample.size">
-                            <option value="">Size</option>
+                            <option selected>${selectedSample.size}</option>
                             <option repeat.for="size of size" model.bind="size">${size}</option>
                         </select>
                     </span>
@@ -149,7 +149,7 @@
                     <span class="inline-label">
                         <span class="slim-text-box-label">Location</span>
                         <select name="" id="" value.bind="selectedSample.location">
-                            <option value="">Select Location</option>
+                            <option selected>${selectedSample.Location}</option>
                             <option repeat.for="location of location" model.bind="size">${location}</option>
                         </select>
                     </span> 
