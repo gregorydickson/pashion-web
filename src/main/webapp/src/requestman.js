@@ -98,7 +98,7 @@ export class Requestman{
   editSampleRequest(itemId) {
     let menu = document.getElementById("requestManTest"+itemId);
     
-    menu.classList.toggle("look-menu-show");
+    this.closeSampleRequestMenu(itemId);
     this.dialogService.open({viewModel: EditSampleRequest, model: itemId })
       .then(response => {
         this.reloadBookings();
