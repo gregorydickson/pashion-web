@@ -78,7 +78,7 @@ SStylist <template>
       <!-- Footer buttons -->
       <ai-dialog-footer>
          <a class="hollow button"  click.delegate="close()">Cancel</a>
-         <a class="button" click.delegate="create()">Add user</a>
+         <button class.bind="(newUser.email && newUser.name && newUser.surname && newUser.address && newUser.password) ? 'button' : 'button disabled'" click.delegate="create()">Add user</button>
       </ai-dialog-footer>
    </ai-dialog>
 </template>
