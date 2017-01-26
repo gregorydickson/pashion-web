@@ -58,6 +58,19 @@ export class EditSearchableItem {
     sample.color = '';
   }
 
+
+  filterChangeType(event) {
+        //console.log("Filter Change changing Type");
+        if (event)
+            if (event.detail)
+                if (event.detail.value) {
+                    // if (event.detail.value == 'All') event.detail.value = '';
+                    //if (event.detail.value == 'Select') event.detail.value = '';
+                    this.selectedSample.sampleType = event.detail.value;
+                    //console.log(" value: " + event.detail.value);
+                  }
+  }
+
   newsample(){
     if (!this.createdNew) {
       this.createdNew = true;

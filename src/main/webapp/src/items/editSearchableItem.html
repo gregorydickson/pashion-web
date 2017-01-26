@@ -1,5 +1,6 @@
 <template>
 <require from="./sort"></require>
+    <require from="./filters-type-item"></require>
 <!-- <require from="./set-attribute"></require> -->
 <!-- <require from="./truncate"></require> -->
     
@@ -82,6 +83,13 @@
                         </select>
                     </span>
                 </div>
+
+                <!-- Sample Type Select2 NOT WORKING RM
+                <div class="grid-block shrink" >                        
+                    <filters-type-item change.delegate="filterChangeType($event)"></filters-type-item>
+                </div> -->
+
+
                 <!-- Sample Description -->
                 <div class="grid-block shrink">                       
                     <span class="inline-label slim-text-box-label">Description</span>
