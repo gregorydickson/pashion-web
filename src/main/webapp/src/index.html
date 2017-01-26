@@ -98,7 +98,7 @@
                                 </td>
                                 <td class="accordion w15">${booking.id}</td>
                                 <td class="accordion w41">${booking.bookingStartDate | viewDateFormat}</td>
-                                <td class="accordion w24 ui-text-label-m-blue w14" style="font-weight:500">${booking.requestStatusBrand}</td>
+                                <td class="accordion w24 ui-text-label-m-blue" style="font-weight:500">${booking.requestStatusBrand}</td>
                                 <td class="accordion w10">
                                     <div class="look-menu-absolute-wrap">
                                         <span class="edit-box" ><a href="#" click.delegate="sampleRequestMenu(booking.id)">...</a></span>
@@ -138,7 +138,7 @@
                      
                 </div>
                
-                <div if.bind="user.type === 'press'"  class="vertical grid-content grid-content-column accordion">
+                <div if.bind="(user.type === 'press') || (user.type === 'agency')"  class="vertical grid-content grid-content-column accordion">
                     <!--header -->
                     <div>
                         <table class="accordion" >
@@ -160,7 +160,7 @@
                                 </td>
                                 <td class="accordion w15">${booking.id}</td>
                                 <td class="accordion w41">${booking.bookingStartDate | viewDateFormat}</td>
-                                <td class="accordion w24">${booking.requestStatusPress}</td>
+                                <td class="accordion w24 ui-text-label-m-blue" style="font-weight:500">${booking.requestStatusPress}</td>
                                 <td class="accordion w10">
                                     <div class="look-menu-absolute-wrap">
                                         <span class="edit-box" ><a href="#" click.delegate="sampleRequestMenu(booking.id)">...</a></span>
