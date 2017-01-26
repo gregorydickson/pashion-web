@@ -11,6 +11,11 @@ class DashboardController {
     def index() {
     }
 
+    def citiesObjects(){
+        def cities = City.list() as JSON
+        render cities
+    }
+
     def user(){
         def info
         if(session.user == null){
@@ -45,11 +50,7 @@ class DashboardController {
         render userInfo
     }
 
-    def users(){
-        
-        def users = user.list() as JSON
-        render users
-    }
+    
 
     def usersBrand(){
         def company = Brand.get(params.id.toInteger())

@@ -5,20 +5,23 @@ import {UserService} from 'services/userService';
 import { BrandService } from 'services/brandService';
 import { PressHouseService } from 'services/pressHouseService';
 import { PRAgencyService } from 'services/PRAgencyService';
+import { CityService } from 'services/cityService';
 
-@inject(DialogController, UserService, BrandService ,PRAgencyService,PressHouseService)
+@inject(DialogController, UserService, BrandService ,PRAgencyService,PressHouseService,CityService)
 export class CreateDialogNewUser {
   static inject = [DialogController];
 
   newUser = {};
   addresses = [];
+  cities = {};
 
-  constructor(controller, userService, brandService, prAgencyService, pressHouseService){
+  constructor(controller, userService, brandService, prAgencyService, pressHouseService,cityService){
     this.controller = controller;
     this.userService = userService;
     this.brandService = brandService;
     this.pressHouseService = pressHouseService;
     this.prAgencyService = prAgencyService;
+    this.cityService = cityService;
   }
 
   attached(){
@@ -44,6 +47,7 @@ export class CreateDialogNewUser {
                      })
             })
         this.newUser.isInPashionNetwork = true;
+        this.cityService.getCities().then(cities=>this.cities = cities);
     }
 
   close(){

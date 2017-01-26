@@ -194,12 +194,12 @@ class UserController {
         def owner
         def user
         log.info "create User Json :"+jsonObject
-        if(jsonObject.pressHouse != "null"){
-            owner = PressHouse.get(jsonObject.pressHouse.toInteger())
-        } else if (jsonObject.brand != "null"){
-            owner = Brand.get(jsonObject.brand.toInteger())
-        } else if (jsonObject.prAgency != "null"){
-            owner = PRAgency.get(jsonObject.prAgency.toInteger())
+        if(jsonObject.pressHouse){
+            owner = PressHouse.get(jsonObject.pressHouse.id.toInteger())
+        } else if (jsonObject.brand){
+            owner = Brand.get(jsonObject.brand.id.toInteger())
+        } else if (jsonObject.prAgency){
+            owner = PRAgency.get(jsonObject.prAgency.id.toInteger())
         }
         
         def inNetwork = false
