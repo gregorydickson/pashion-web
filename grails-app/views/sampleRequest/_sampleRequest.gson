@@ -7,6 +7,6 @@ model {
 
 json g.render(sampleRequest,[excludes:['pressHouse'],expand:['searchableItemsStatus','brand','searchableItemsProposed','deliverTo','searchableItems','requestingUser','returnToAddress','shippingOut','shippingReturn','addressDestination']]){
 	pressHouse {
-		name sampleRequest.pressHouse.name
+		name sampleRequest?.pressHouse?.name
 	}
 }
