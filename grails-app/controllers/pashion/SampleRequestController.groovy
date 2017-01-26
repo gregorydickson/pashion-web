@@ -20,6 +20,17 @@ class SampleRequestController {
     // Brand methods:
     def brandDeny(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
+
+        sampleRequest.searchableItems.each{ sample ->
+                
+                def status = sampleRequest.searchableItemsStatus.find { it.itemId == sample.id }
+                log.info "status:"+status
+                
+                status.status = "Denied"
+                log.info "item status:"+status.status
+                status.save(failOnError:true)
+                
+        }
         sampleRequest.requestStatusBrand = "Closed"
         sampleRequest.requestStatusPress = "Refused"
         sampleRequest.save(flush:true)

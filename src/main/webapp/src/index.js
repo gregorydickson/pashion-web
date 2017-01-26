@@ -578,7 +578,7 @@ export class Index {
 
     editSampleRequest(id) {
         this.closeSampleRequestMenu(id);
-        this.dialogService.open({ viewModel: EditSampleRequest, model: id }).then(response => {});
+        this.dialogService.open({ viewModel: EditSampleRequest, model: id }).then(response => {this.reloadBookings();});
     }
 
     //Brand Workflow Functions

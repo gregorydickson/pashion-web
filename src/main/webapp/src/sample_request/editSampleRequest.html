@@ -194,7 +194,7 @@
                             <td class="accordion" style="width:40px; max-width:40px;">                            
                                 <span style="margin-bottom:0px;">${sample.status.status}</span>
                             </td>
-                            <td if.bind="sampleRequest.brandStatus === 'Pending'" style="text-align:right;" class="accordion" style="width:40px; max-width:40px;">
+                            <td if.bind="sampleRequest.requestStatusBrand === 'Pending'" style="text-align:right;" class="accordion" style="width:40px; max-width:40px;">
                                 <select value.bind="sample.status.brandStatus">
                                     <option value="approved">Approve</option>
                                     <option value="denied">Deny</option>
