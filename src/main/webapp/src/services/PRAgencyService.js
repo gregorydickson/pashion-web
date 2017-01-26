@@ -36,7 +36,7 @@ export class PRAgencyService {
     }
 
 
-    getPrAgencyAddresses(PRAgencyId) {
+    getPRAgencyAddresses(PRAgencyId) {
         var promise = new Promise((resolve, reject) => 
                 this.http.fetch('/PRAgency/addresses/'+PRAgencyId)
                                         .then(response => response.json())

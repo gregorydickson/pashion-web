@@ -49,9 +49,9 @@ export class Adminpage{
                                 .then(addresses=>this.addresses = addresses)
                             this.company = user.pressHouse;
                         } else if(this.user.prAgency.id != null){
-                            this.prAgencyService.getPRAgencyAddresses(this.user.PRAgency.id)
+                            this.prAgencyService.getPRAgencyAddresses(this.user.prAgency.id)
                                 .then(addresses=>this.addresses = addresses)
-                            this.company = prAgency;
+                            this.company = user.prAgency;
                         }
 
                      })
@@ -70,7 +70,7 @@ export class Adminpage{
           this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
               .then(addresses=>this.addresses = addresses)
       } else if(this.user.prAgency.id != null){
-          this.prAgencyService.getPRAgencyAddresses(this.user.PRAgency.id)
+          this.prAgencyService.getPRAgencyAddresses(this.user.prAgency.id)
               .then(addresses=>this.addresses = addresses)
       }
 
@@ -110,7 +110,7 @@ export class Adminpage{
             this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
                 .then(addresses=>this.addresses = addresses)
         } else if(this.user.prAgency.id != null){
-            this.prAgencyService.getPRAgencyAddresses(this.user.PRAgency.id)
+            this.prAgencyService.getPRAgencyAddresses(this.user.prAgency.id)
                 .then(addresses=>this.addresses = addresses)
         }
       })

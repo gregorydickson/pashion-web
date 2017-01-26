@@ -41,7 +41,7 @@
                         <!-- Type -->
                         <div class="inline-label ">
                            <span class="slim-text-box-label">Type</span>
-                           <select class="slim-text-box" disabled name="" id="" value.bind="">
+                           <select class="slim-text-box" disabled name="" id="" >
                               <option value="">Brand</option>
                               <option value="">Press</option>
                               <option value="">Administrator</option>
@@ -128,15 +128,13 @@
                         <div class="inline-label disabled" >
                            <span class="slim-text-box-label">Method</span>
                            <select class="slim-text-box" name="" id="">
-                              <option value="">Direct Bill</option>
-                              <option value="">Method 2</option>
-                              <option value="">Method 3</option>
+                              <option value=""></option>
                            </select>
                         </div>
                         <!-- Start date -->
                         <div class="inline-label disabled">
                            <span class="slim-text-box-label">Start date</span>
-                           <input class="slim-text-box" type='text' name='' value='14 August 2015'>
+                           <input class="slim-text-box" type='text' name='' value=''>
                         </div>
                      </div>
                   </div>
@@ -154,7 +152,7 @@
                      <div class="grid-block-row-body">
                         <!-- Name -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label">Name</span>
+                           <span class="slim-text-box-label">User</span>
                            <select name="" id="" class="slim-text-box" value.bind="currentUser">
                                     <option if.bind="user.email !=null" model.bind="user" repeat.for="user of users">${user.name} ${user.surname}</option>
                                 </select>
@@ -168,7 +166,7 @@
                         </div>
                         <!-- name -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label">Name</span>
+                           <span class="slim-text-box-label">First Name</span>
                            <input class="slim-text-box" change.trigger="updateUser()" type='text' name='' value.bind="currentUser.name">
                         </div>
                         <!-- surname -->
@@ -191,22 +189,18 @@
                            <span class="slim-text-box-label"><a id="password-toggle" click.trigger="togglePassword()" style="">Show</a>&nbsp;<img id="passwordCheck" src="/assets/CheckMark.png" /></span>
                         </div>
                         <!-- Role -->
-                        <div class="inline-label">
+                        <div class="inline-label disabled">
                            <span class="slim-text-box-label">Role</span>
                            <select class="slim-text-box" name="" id="" >
-                              <option value="">Stylist</option>
-                              <option value="">Stylist</option>
-                              <option value="">Stylist</option>
+                              <option value=""></option>
                            </select>
                            <!-- <span class="slim-text-box-label"> <a  href="#" style=""><img src="/assets/QuestionMark.png" /></a></span> -->
                         </div>
                         <!-- Access -->
-                        <div class="inline-label">
+                        <div class="inline-label disabled">
                            <span class="slim-text-box-label">Access</span>
                            <select class="slim-text-box" name="" id="" >
-                              <option value="">Supervisor</option>
-                              <option value="">Sales manager</option>
-                              <option value="">Account manager</option>
+                              <option value="">Full Access</option>
                            </select>
                            <!-- <span class="slim-text-box-label"> <a  href="#" style=""><img src="/assets/QuestionMark.png" /></a></span> -->
                         </div>
@@ -245,11 +239,10 @@
                      <div class="ui-text-label-m-broad ">Black ball</div>
                      <div class="grid-block-row-body">
                         <!-- Company -->
-                        <div class="inline-label">
+                        <div class="inline-label disabled">
                            <span class="slim-text-box-label">Company</span>
                            <select class="slim-text-box" name="" id="" >
-                              <option value="">Some company</option>
-                              <option value="">Ellen company</option>
+                              <option value=""></option>
                            </select>
                            <span class="slim-text-box-label"><a href="#" style="">Delete</a></span>
                         </div>
@@ -266,11 +259,11 @@
                <div class="vertical grid-block noscroll">
                   <!-- ID Structure -->
                   <!-- -->         
-                  <div class="grid-block-row">
+                  <div class="grid-block-row ">
                      <div class="ui-text-label-m-broad ">ID Structure</div>
                      <div class="grid-block-row-body">
                         <!-- Format -->
-                        <div class="inline-label">
+                        <div class="inline-label disabled">
                            <span class="slim-text-box-label">Format</span>
                            <select class="slim-text-box" name="" id="" >
                               <option value="">AA_XXXXXX_AA</option>
