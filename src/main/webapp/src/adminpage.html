@@ -34,31 +34,31 @@
                      <div class="ui-text-label-m-broad ">COMPANY</div>
                      <div class="grid-block-row-body">
                         <!-- Company Name -->
-                        <div class="inline-label disabled">
+                        <div class="inline-label">
                            <span class="slim-text-box-label">Name</span>
-                           <input class="slim-text-box" type='text' name='' value.bind="company.name">
+                           <input class="slim-text-box" disabled type='text' name='' value.bind="company.name">
                         </div>
                         <!-- Type -->
-                        <div class="inline-label disabled">
+                        <div class="inline-label ">
                            <span class="slim-text-box-label">Type</span>
-                           <select class="slim-text-box" name="" id="" value.bind="">
+                           <select class="slim-text-box" disabled name="" id="" value.bind="">
                               <option value="">Brand</option>
                               <option value="">Press</option>
                               <option value="">Administrator</option>
                            </select>
                         </div>
                         <!-- License -->
-                        <div class="inline-label disabled">
+                        <div class="inline-label ">
                            <span class="slim-text-box-label">License</span>
-                           <select class="slim-text-box" name="" id="" value.bind="">
+                           <select class="slim-text-box" disabled name="" id="">
                               <option value="">Full</option>
                               <option value="">Not full</option>
                            </select>
                         </div>
                         <!-- Status -->
-                        <div class="inline-label disabled">
+                        <div class="inline-label ">
                            <span class="slim-text-box-label">Status</span>
-                           <select class="slim-text-box" name="" id="" value.bind="">
+                           <select class="slim-text-box" disabled name="" id="">
                               <option value="">Active</option>
                               <option value="">Not active</option>
                            </select>
@@ -127,7 +127,7 @@
                         <!-- Method -->
                         <div class="inline-label disabled" >
                            <span class="slim-text-box-label">Method</span>
-                           <select class="slim-text-box" name="" id="" value.bind="">
+                           <select class="slim-text-box" name="" id="">
                               <option value="">Direct Bill</option>
                               <option value="">Method 2</option>
                               <option value="">Method 3</option>
@@ -158,11 +158,12 @@
                            <select name="" id="" class="slim-text-box" value.bind="currentUser">
                                     <option if.bind="user.email !=null" model.bind="user" repeat.for="user of users">${user.name} ${user.surname}</option>
                                 </select>
-                           <span class="slim-text-box-label"><button class="small hollow button" click.delegate="delete(currentUser.id)">Delete</button></span>
+                           <!-- <span class="slim-text-box-label"><button class="small hollow button" click.delegate="delete(currentUser.id)">Delete</button></span> -->
+                                 <span class="slim-text-box-label"><a click.trigger="delete(currentUser.id)" style="">Delete</a></span>
                         </div>
                         <!-- Email -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label">Email (Username)</span>
+                           <span class="slim-text-box-label">Username</span>
                            <input class="slim-text-box" type='text' name='' disabled value.bind="currentUser.email">
                         </div>
                         <!-- name -->
@@ -192,29 +193,29 @@
                         <!-- Role -->
                         <div class="inline-label">
                            <span class="slim-text-box-label">Role</span>
-                           <select class="slim-text-box" name="" id="" value.bind="">
+                           <select class="slim-text-box" name="" id="" >
                               <option value="">Stylist</option>
                               <option value="">Stylist</option>
                               <option value="">Stylist</option>
                            </select>
-                           <span class="slim-text-box-label"> <a  href="#" style=""><img src="/assets/QuestionMark.png" /></a></span>
+                           <!-- <span class="slim-text-box-label"> <a  href="#" style=""><img src="/assets/QuestionMark.png" /></a></span> -->
                         </div>
                         <!-- Access -->
                         <div class="inline-label">
                            <span class="slim-text-box-label">Access</span>
-                           <select class="slim-text-box" name="" id="" value.bind="">
+                           <select class="slim-text-box" name="" id="" >
                               <option value="">Supervisor</option>
                               <option value="">Sales manager</option>
                               <option value="">Account manager</option>
                            </select>
-                           <span class="slim-text-box-label"> <a  href="#" style=""><img src="/assets/QuestionMark.png" /></a></span>
+                           <!-- <span class="slim-text-box-label"> <a  href="#" style=""><img src="/assets/QuestionMark.png" /></a></span> -->
                         </div>
                         <!-- Buttons -->
                         <div class="inline-label">
                            <span class="slim-text-box-label"></span>
                            <button class="small hollow button" click.delegate="CreateDialogNewUser()">New User...</button>
                            <div class="grid-block shrink spa-h-spacer"></div>
-                           <button class="small hollow button" click.delegate="CreateDialogImportUsers()">Import...</button>
+                           <button class="small hollow button disabled" click.delegate="CreateDialogImportUsers()">Import...</button>
                         </div>
                      </div>
                   </div>
@@ -224,18 +225,17 @@
                      <div class="ui-text-label-m-broad ">White list</div>
                      <div class="grid-block-row-body">
                         <!-- Name -->
-                        <div class="inline-label">
+                        <div class="inline-label disabled">
                            <span class="slim-text-box-label">Name</span>
-                           <select class="slim-text-box" name="" id="" value.bind="">
-                              <option value="">Sofi Lauren</option>
-                              <option value="">Sofi Lauren</option>
+                           <select class="slim-text-box" name="" id="" >
+                              <option value=""></option>
                            </select>
-                           <span class="slim-text-box-label"><button class="small hollow button" click.delegate="delete(currentUser.id)">Delete</button></span>
+                           <span class="slim-text-box-label"><a href="#" style="">Delete</a></span>
                         </div>
                         <!-- Add white list name -->
                         <div class="inline-label">
                            <span class="slim-text-box-label"></span>
-                           <button class="small hollow button" click.delegate="">Add...</button>
+                           <button class="small hollow button disabled" click.delegate="">Add...</button>
                         </div>
                      </div>
                   </div>
@@ -247,16 +247,16 @@
                         <!-- Company -->
                         <div class="inline-label">
                            <span class="slim-text-box-label">Company</span>
-                           <select class="slim-text-box" name="" id="" value.bind="">
+                           <select class="slim-text-box" name="" id="" >
                               <option value="">Some company</option>
                               <option value="">Ellen company</option>
                            </select>
                            <span class="slim-text-box-label"><a href="#" style="">Delete</a></span>
                         </div>
                         <!-- Add Black ball company -->
-                        <div class="inline-label">
+                        <div class="inline-label disabled">
                            <span class="slim-text-box-label"></span>
-                           <button class="small hollow button" click.delegate="">Add company...</button>
+                           <button class="small hollow button disabled" click.delegate="">Add company...</button>
                         </div>
                      </div>
                   </div>
@@ -272,7 +272,7 @@
                         <!-- Format -->
                         <div class="inline-label">
                            <span class="slim-text-box-label">Format</span>
-                           <select class="slim-text-box" name="" id="" value.bind="">
+                           <select class="slim-text-box" name="" id="" >
                               <option value="">AA_XXXXXX_AA</option>
                               <option value="">AA_XXXXXX_AA</option>
                            </select>
