@@ -190,11 +190,11 @@
                         <tr>
                             <!-- <td class="accordion w3">${$index+1}</td> -->
                             <td class="accordion" style="width:40px; max-width:40px;">${sampleRequest.look}.${$index+1} :</td>
-                            <td class="accordion" style="width:435px; max-width:435px; overflow:hidden;">${sample.attributes}</td>
-                            <td class="accordion" style="width:40px; max-width:40px;">                            
+                            <td class="accordion" style="width:335px; max-width:335px; overflow:hidden;">${sample.attributes}</td>
+                            <td class="accordion" style="width:60px; max-width:60px;">                            
                                 <span style="margin-bottom:0px;">${sample.status.status}</span>
                             </td>
-                            <td if.bind="sampleRequest.brandStatus === 'Pending'" style="text-align:right;" class="accordion" style="width:40px; max-width:40px;">
+                            <td if.bind="sampleRequest.brandStatus === 'Pending'" style="" class="accordion" style="text-align:right; width:70px; max-width:70px;"> <!--RM .requestStatusBrand ?? -->
                                 <select value.bind="sample.status.brandStatus">
                                     <option value="approved">Approve</option>
                                     <option value="denied">Deny</option>
@@ -211,11 +211,11 @@
                         <tr>
                            <!--  <td class="accordion w3">${$index+1}</td> -->
                             <td class="accordion" style="width:40px; max-width:40px;">${sampleRequest.look}.${$index+1} :</td>
-                            <td class="accordion" style="width:435px; max-width:435px; overflow:hidden;">${sample.attributes}</td>
-                            <td class="accordion" style="width:40px; max-width:40px;">
+                            <td class="accordion" style="width:335px; max-width:335px; overflow:hidden;">${sample.attributes}</td>
+                            <td class="accordion" style="width:60px; max-width:60px;">
                                 <span style="margin-bottom:0px;">${sample.status.status}</span>
                             </td>
-                            <td if.bind="sampleRequest.requestStatusBrand === 'Pending'" style="text-align:right;" class="accordion" style="width:40px; max-width:40px;">
+                            <td if.bind="sampleRequest.requestStatusBrand === 'Pending'"  class="accordion" style="text-align:right; width:70px; max-width:70px;">
                                 <a click.delegate="removeSample(sample.id,$index)" style="padding:7px 6px 5px 6px; margin-right:0; margin-bottom:0px; font-size: 1rem;" class="hollow button" href="#">Remove</a>
                             </td> 
                         </tr>
