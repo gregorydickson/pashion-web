@@ -7,7 +7,7 @@ import {CreateDialogNewOffice} from './admin/dialogNewOffice';
 import { BrandService } from 'services/brandService';
 import { PressHouseService } from 'services/pressHouseService';
 import { PRAgencyService } from 'services/PRAgencyService';
-
+import {CreateDialogConfirmDelete} from './admin/dialogConfirmDelete';
 import {AddressService} from 'services/addressService';
 
 @inject(DialogService, UserService, BrandService,PRAgencyService,PressHouseService, AddressService)
@@ -116,13 +116,20 @@ export class Adminpage{
       })
   }
 
-  delete(id){
+  deleteUser(id, userName){
     console.log("deleting:"+id);
-    this.userService.delete(id)
-      .then(response =>{
-        console.log("response to delete:"+response);
-        this.userService.getUsersByOrganization(true).then(users => this.users = users)
-      });
+
+      this.dialogService.open({viewModel: CreateDialogConfirmDelete, model: userName })
+                .then(response => {
+
+                  console.log("confirm dialog was cancelled: " + response.wasCancelled);
+                  if (response.wasCancelled) return false ;
+                  this.userService.delete(id)
+                    .then(response =>{
+                      console.log("response to delete:"+response);
+                      this.userService.getUsersByOrganization(true).then(users => this.users = users)
+                    });
+          })
 
   }
 
