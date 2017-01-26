@@ -155,9 +155,9 @@
                            <span class="slim-text-box-label">User</span>
                            <select name="" id="" class="slim-text-box" value.bind="currentUser">
                                     <option if.bind="user.email !=null" model.bind="user" repeat.for="user of users">${user.name} ${user.surname}</option>
-                                </select>
+                          </select>
                            <!-- <span class="slim-text-box-label"><button class="small hollow button" click.delegate="delete(currentUser.id)">Delete</button></span> -->
-                                 <span class="slim-text-box-label"><a click.trigger="delete(currentUser.id)" style="">Delete</a></span>
+                           <span class="slim-text-box-label"><a click.trigger="deleteUser(currentUser.id,currentUser.email)" style="">Delete</a></span>
                         </div>
                         <!-- Email -->
                         <div class="inline-label">
@@ -247,7 +247,7 @@
                            <span class="slim-text-box-label"><a href="#" style="">Delete</a></span>
                         </div>
                         <!-- Add Black ball company -->
-                        <div class="inline-label disabled">
+                        <div class="inline-label">
                            <span class="slim-text-box-label"></span>
                            <button class="small hollow button disabled" click.delegate="">Add company...</button>
                         </div>

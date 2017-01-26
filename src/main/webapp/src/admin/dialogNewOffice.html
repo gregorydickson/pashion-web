@@ -55,6 +55,12 @@
                             <input type="text" class="slim-text-box" value.bind="newAddress.postalCode">
                         </div>
 
+                        <!-- Attention -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Attention</span>
+                            <input type="text" class="slim-text-box" value.bind="newAddress.attention">
+                        </div>
+
                    
                     </div>
 
@@ -66,7 +72,8 @@
         <!-- Footer buttons -->
         <ai-dialog-footer>
                     <a class="hollow button"  click.delegate="close()">Cancel</a>
-                    <a class="button" click.delegate="createAddress()">Add Office</a>
+                    <button class.bind="(newAddress.name && newAddress.address1 && newAddress.city && newAddress.country && newAddress.postalCode) ? 'button' : 'button disabled'" click.delegate="create()">Add Office</button>
+
         </ai-dialog-footer>
     </ai-dialog>
 </template>
