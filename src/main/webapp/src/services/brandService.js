@@ -45,10 +45,12 @@ export class BrandService {
     }
 
     getBrandAddresses(brandId) {
-        var promise = new Promise((resolve, reject) => 
+        var promise = new Promise((resolve, reject) => {
                 this.http.fetch('/brand/addresses/'+brandId)
                                         .then(response => response.json())
-                                        .then(addresses => resolve(addresses)).catch(err => reject(err)));
+                                        .then(ad => resolve(ad))
+                                        .catch(err => reject(err));
+                                    });
         return promise;
     }
 }
