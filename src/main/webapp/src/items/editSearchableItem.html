@@ -37,14 +37,14 @@
                 <div class="grid-block shrink">                       
                     <span class="inline-label slim-text-box-label">Collection:</span>
                     <div style="padding-top: 0.5rem;">
-                        <span class="">${currentItem.brandCollection.season}</span>
+                        <span class="to-u-c">${currentItem.brandCollection.season}</span>
                     </div>
                 </div>
                 <!-- Look Description -->
                 <div class="grid-block shrink menu-divider">                       
                     <span class="inline-label slim-text-box-label" style="white-space: normal;">Look Description</span>
                     <div class="">
-                        <textarea rows="2" type="textarea" class="slim-text-box" style="min-width:200px;" value.bind="currentItem.attributes"></textarea>
+                        <textarea rows="2" type="textarea" class="slim-text-box to-u-c" style="min-width:200px;" value.bind="currentItem.attributes"></textarea>
                     </div>
                 </div>
                 <!-- Choose Sample -->
@@ -52,7 +52,7 @@
                     <span class="inline-label">
                         <span class="slim-text-box-label">SAMPLES</span>
 
-                        <select name="" id="" value.bind="selectedSample" style="max-width:200px;">
+                        <select class="to-u-c" name="" id="" value.bind="selectedSample" style="max-width:200px;" >
                             <option value="">Select Sample</option>
                             <option if.bind="currentItem.samples" repeat.for="sample of currentItem.samples 
                             | sort: 'id': 'ascending' " model.bind="sample">${$index+1} : ${sample.attributes.substr(0,25)}</option>
@@ -76,9 +76,9 @@
                 <div class="grid-block shrink" >                        
                     <span class="inline-label">
                         <span class="slim-text-box-label">Type</span>
-                        <select name="" id="" value.bind="selectedSample.sampleType">
-                            <option selected>${selectedSample.sampleType}</option>
-                            <option>Other</option>
+                        <select class="to-u-c" name="" id="" value.bind="selectedSample.sampleType">
+                            <option selected >${selectedSample.sampleType}</option>
+                            <option>OTHER</option>
                             <option repeat.for="type of sampleTypes" model.bind="type">${type}</option>
                         </select>
                     </span>
@@ -94,7 +94,7 @@
                 <div class="grid-block shrink">                       
                     <span class="inline-label slim-text-box-label">Description</span>
                     <div class="">
-                        <textarea rows="1" type="textarea" class="slim-text-box" style="min-width:200px;"  value.bind="selectedSample.attributes"></textarea>
+                        <textarea rows="1" type="textarea" class="slim-text-box to-u-c" style="min-width:200px;"  value.bind="selectedSample.attributes"></textarea>
                     </div>
                 </div>
                 <!-- Colour -->
@@ -110,7 +110,7 @@
                     <span class="inline-label">
                         <span class="slim-text-box-label">Colour</span>
                         <div>
-                            <input type="text" class="slim-text-box" disabled value.bind="selectedSample.color">
+                            <input type="text" class="slim-text-box to-u-c" disabled value.bind="selectedSample.color">
                         </div>
                         <a style= "width: 30px; margin-left: 1rem; padding-bottom: 6px;" click.delegate="colorClear(selectedSample)">Clear</a>
                     </span>
@@ -119,7 +119,7 @@
                 <div class="grid-block shrink" style="margin-top: -10px;">                        
                     <span class="inline-label" >
                         <span class="slim-text-box-label">New Colour</span>
-                        <select name="" id="" value.bind="addColor">
+                        <select class="to-u-c" name="" id="" value.bind="addColor">
                             <option value="">Select</option>
                             <!-- <option repeat.for="color of colors" model.bind="color">${color}</option> -->
                             <!-- <option value="">Select Colour</option>-->
@@ -134,7 +134,7 @@
                 <div class="grid-block shrink" >                        
                     <span class="inline-label">
                         <span class="slim-text-box-label">Material</span>
-                        <select name="" id="" value.bind="selectedSample.material">
+                        <select class="to-u-c" name="" id="" value.bind="selectedSample.material">
                             <!-- <option value="">Select Material</option> -->
                             <option selected>${selectedSample.material}</option>
                             <option>Other</option>
@@ -146,7 +146,7 @@
                 <div class="grid-block shrink" >                        
                     <span class="inline-label">
                         <span class="slim-text-box-label">Size</span>
-                        <select name="" id="" value.bind="selectedSample.size">
+                        <select class="to-u-c" name="" id="" value.bind="selectedSample.size">
                             <option selected>${selectedSample.size}</option>
                             <option repeat.for="size of size" model.bind="size">${size}</option>
                         </select>
@@ -156,7 +156,7 @@
                 <div class="grid-block shrink" >                        
                     <span class="inline-label">
                         <span class="slim-text-box-label">Location</span>
-                        <select name="" id="" value.bind="selectedSample.location">
+                        <select class="to-u-c" name="" id="" value.bind="selectedSample.location">
                             <option selected>${selectedSample.Location}</option>
                             <option repeat.for="location of location" model.bind="size">${location}</option>
                         </select>
