@@ -119,20 +119,22 @@ export class CreateSampleRequestBrand {
 
   setStartDate(event,day){
     console.log("set start date: "+event);
-    console.log("day: "+day);
+    console.log("parameterday: "+day);
 
     var today = new Date();
     this.startDay = day;
-    let enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber,this.endDay)
-    let startdate = new Date(this.startCalendar.calendarMonths[0].year,this.startCalendar.calendarMonths[0].monthNumber,day)
+    var enddate = '';
+    if (this.endDay !='') enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber-1,this.endDay);
+    let startdate = new Date(this.startCalendar.calendarMonths[0].year,this.startCalendar.calendarMonths[0].monthNumber-1,day);
 
     // quit if in the past
     // could also add in here, any business logic about if we want to book +1 day out?
-
     console.log("today: " + today);
     console.log("startdate: " + startdate);
-    console.log("enddate: " + enddate);
-    if (startdate <= today) { console.log ("day is before today or is today"); return; }
+    console.log("startDay: " + this.startDay);
+    if (this.endDay !='') console.log("enddate: " + enddate); else console.log("no endDay set")
+    console.log("endDay: " + this.endDay);
+    if (startdate <= today) { console.log ("day is before today or is today, exit"); this.startDay = ''; return; }
     console.log ("day is in the future");
     
     if(this.endDay != ''){
@@ -166,18 +168,23 @@ export class CreateSampleRequestBrand {
 
   setEndDate(event, day){
     this.endDay = day;
-    let enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber,day)
-    let startdate = new Date(this.startCalendar.calendarMonths[0].year,this.startCalendar.calendarMonths[0].monthNumber,this.startDay)
+    var startdate = '';
+    let enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber-1,day);
+    if (this.startDay != '') startdate = new Date(this.startCalendar.calendarMonths[0].year,this.startCalendar.calendarMonths[0].monthNumber-1,this.startDay);
     var today = new Date();
 
     console.log("today: " + today);
-    console.log("startdate: " + startdate);
+    if (this.startDay != '') console.log("startDay: " + this.startDay); else { console.log("no startDay set, exit"); this.endDay = ''; return;}
+    console.log("startdate: " + startdate); 
     console.log("enddate: " + enddate);
-    if (enddate <= today) { console.log ("day is before today or is today"); return; }
+    console.log("endDay: " + this.endDay);
+    if (enddate <= today) { console.log ("day is before today or is today, exit"); this.endDay = ''; return; }
     console.log ("day is in the future");
 
     if(this.startDay === '' || enddate < startdate || enddate.getTime() == startdate.getTime()){
-      return
+      console.log (" empty, reverse or time clash");
+      this.endDay = '';
+      return;
     }
     
     console.log("end date"+event);
