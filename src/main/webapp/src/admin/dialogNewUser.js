@@ -2,53 +2,32 @@ import {DialogController} from 'aurelia-dialog';
 import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import {UserService} from 'services/userService';
-import { BrandService } from 'services/brandService';
-import { PressHouseService } from 'services/pressHouseService';
-import { PRAgencyService } from 'services/PRAgencyService';
 import { CityService } from 'services/cityService';
 
-@inject(DialogController, UserService, BrandService ,PRAgencyService,PressHouseService,CityService)
+@inject(DialogController, CityService,UserService)
 export class CreateDialogNewUser {
   static inject = [DialogController];
 
   newUser = {};
   addresses = [];
-  cities = {};
+  cities = [];
 
-  constructor(controller, userService, brandService, prAgencyService, pressHouseService,cityService){
+  constructor(controller, cityService,userService){
     this.controller = controller;
-    this.userService = userService;
-    this.brandService = brandService;
-    this.pressHouseService = pressHouseService;
-    this.prAgencyService = prAgencyService;
     this.cityService = cityService;
+    this.userService = userService;
   }
 
   attached(){
   	$("#userCheck").toggle();
+    this.newUser.isInPashionNetwork = true;
   }
-    activate() {
-    	
-        this.userService.getUser()
-            .then(user => {
-                this.userService.getUserDetails(user.id)
-                    .then(currentContact => {
-                        this.user = currentContact;
-                        if (this.user.brand.id != null)
-                            this.brandService.getBrandAddresses(this.user.brand.id)
-                                .then(addresses=>this.addresses = addresses)
-                        if (this.user.pressHouse.id != null)
-                            this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
-                                .then(addresses=>this.addresses = addresses)
-                        if (this.user.prAgency.id != null)
-                            this.prAgencyService.getPRAgencyAddresses(this.user.PRAgency.id)
-                                .then(addresses=>this.addresses = addresses)
-
-                     })
-            })
-        this.newUser.isInPashionNetwork = true;
-        this.cityService.getCities().then(cities=>this.cities = cities);
-    }
+  activate(cities) {
+    console.log("cities:");
+    console.log(JSON.stringify(cities));
+    this.cities = cities;
+   
+  }
 
   close(){
     this.controller.close();

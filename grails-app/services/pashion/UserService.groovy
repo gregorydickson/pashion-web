@@ -103,18 +103,20 @@ class UserService {
     def createUser(def params, def owner, Boolean isInPashionNetwork ){
     	def role
     	User user
+        City city = null
+        if(params.city) city = City.get(params.city.toInteger());
     	if(owner instanceof Brand){
             log.info "creating Brand user"
     		role = "brand-users"
-    		user = new User(title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,brand:owner,isInPashionNetwork:true).save(failOnError : true)
+    		user = new User(city:city,title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,brand:owner,isInPashionNetwork:true).save(failOnError : true)
     	} else if(owner instanceof PressHouse){
             log.info "creating Press user"
     		role = "press-users"
-    		user = new User(title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,pressHouse:owner,isInPashionNetwork:true).save(failOnError : true)
+    		user = new User(city:city,title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,pressHouse:owner,isInPashionNetwork:true).save(failOnError : true)
     	} else if(owner instanceof PRAgency){
             log.info "creating PRAgency user"
             role = "prAgency-users"
-            user = new User(title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,prAgency:owner,isInPashionNetwork:true).save(failOnError : true)
+            user = new User(city:city,title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,prAgency:owner,isInPashionNetwork:true).save(failOnError : true)
         }
         Directory directory
         try{

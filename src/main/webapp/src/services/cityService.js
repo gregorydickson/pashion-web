@@ -9,7 +9,7 @@ export class CityService {
 
     // THis version implements two records ("connectins") for each user to user connection,
     // one each with a user set to each participant, with the other user set in connectedIUserd
-
+    cities = [];
     
     constructor(http) {
         http.configure(config => {
@@ -25,18 +25,15 @@ export class CityService {
     getCities() {
         
         var promise = new Promise((resolve, reject) => {
-            if (!this.cities) { // local storage if already loaded
-                console.log("getUsers() getting users from JSON");
+            if (this.cities.length == 0) { // local storage if already loaded
                 this.http.fetch('/dashboard/citiesObjects')
                     .then(response => response.json())
                     .then(cities => {
                         this.cities = cities;
-                        // need to zero saved message count as about to re create it from pubnub
-                        // do it in getAllMessages in messages
-                        resolve(this.users);
+                        
+                        resolve(cities);
                     }).catch(err => reject(err));
             } else {
-                console.log("getCities() getting cities locally");
                 resolve(this.cities);
             }
         });

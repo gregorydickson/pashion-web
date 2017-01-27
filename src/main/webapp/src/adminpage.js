@@ -9,8 +9,9 @@ import { PressHouseService } from 'services/pressHouseService';
 import { PRAgencyService } from 'services/PRAgencyService';
 import {CreateDialogConfirmDelete} from './admin/dialogConfirmDelete';
 import {AddressService} from 'services/addressService';
+import {CityService} from 'services/cityService';
 
-@inject(DialogService, UserService, BrandService,PRAgencyService,PressHouseService, AddressService)
+@inject(DialogService, UserService, BrandService,PRAgencyService,PressHouseService, AddressService, CityService)
 export class Adminpage{
 	  
 
@@ -19,11 +20,12 @@ export class Adminpage{
   addresses = [];
   currentAddress = {};
   company = {};
+  cities = [];
 
 
 
 
-  constructor(dialogService,userService, brandService,prAgencyService, pressHouseService,addressService) {
+  constructor(dialogService,userService, brandService,prAgencyService, pressHouseService,addressService,cityService) {
     
     this.dialogService = dialogService;
     this.userService = userService;
@@ -31,6 +33,7 @@ export class Adminpage{
     this.pressHouseService = pressHouseService;
     this.prAgencyService = prAgencyService;
     this.addressService = addressService;
+    this.cityService = cityService;
   }
 
 	activate() {
@@ -56,6 +59,7 @@ export class Adminpage{
 
                      })
             });
+            this.cityService.getCities().then(cities=>this.cities = cities);
   }
   attached(){
     $("#passwordCheck").toggle();
@@ -81,7 +85,9 @@ export class Adminpage{
   // Create dialog NEW USER
 
   CreateDialogNewUser() {
-    this.dialogService.open({viewModel: CreateDialogNewUser, model: "no-op" })
+    console.log("cities:");
+    console.log(JSON.stringify(this.cities));
+    this.dialogService.open({viewModel: CreateDialogNewUser, model:this.cities })
       .then(response => {
 
         console.log("user created:"+response);
