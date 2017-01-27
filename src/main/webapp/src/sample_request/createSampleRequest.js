@@ -89,8 +89,15 @@ export class CreateSampleRequest {
   }
 
   setStartDate(event,day){
-  	console.log("start date"+event);
-  	console.log("day"+day);
+  	console.log("start date: "+event);
+  	console.log("day: "+day);
+
+    var today = new Date();
+    console.log("today: " + today);
+
+    // quit in the past
+    // could also add in here, any business logic about if we want to book +1 day out?
+    if (day <= today) return;
     this.startDay = day;
     let enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber,this.endDay)
     let startdate = new Date(this.startCalendar.calendarMonths[0].year,this.startCalendar.calendarMonths[0].monthNumber,day)
