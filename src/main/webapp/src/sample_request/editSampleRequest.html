@@ -237,8 +237,8 @@
 
                             <td if.bind="sampleRequest.requestStatusBrand == 'Pending'" class="accordion" style="text-align:right;width:70px; max-width:70px; padding-bottom:4px;">
 
-                                <select value.bind="sample.status.brandStatus" style="margin:0;">
-                                    <option >Action</option>
+                                <select value.two-way="sample.status.brandStatus" style="margin:0;">
+                                    <option value=''>Action</option>
                                     <option value="Pending">Pending</option>
                                     <option value="Approved">Approve</option>
                                     <option value="Denied">Deny</option>
