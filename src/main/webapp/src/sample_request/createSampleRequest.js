@@ -97,7 +97,9 @@ export class CreateSampleRequest {
 
     // quit in the past
     // could also add in here, any business logic about if we want to book +1 day out?
-    if (day <= today) return;
+    //if (day <= today) return;
+    // copy changes from brand version
+    
     this.startDay = day;
     let enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber,this.endDay)
     let startdate = new Date(this.startCalendar.calendarMonths[0].year,this.startCalendar.calendarMonths[0].monthNumber,day)

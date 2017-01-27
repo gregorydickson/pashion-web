@@ -118,11 +118,22 @@ export class CreateSampleRequestBrand {
   }
 
   setStartDate(event,day){
-    console.log("start date"+event);
-    console.log("day"+day);
+    console.log("set start date: "+event);
+    console.log("day: "+day);
+
+    var today = new Date();
     this.startDay = day;
     let enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber,this.endDay)
     let startdate = new Date(this.startCalendar.calendarMonths[0].year,this.startCalendar.calendarMonths[0].monthNumber,day)
+
+    // quit if in the past
+    // could also add in here, any business logic about if we want to book +1 day out?
+
+    console.log("today: " + today);
+    console.log("startdate: " + startdate);
+    console.log("enddate: " + enddate);
+    if (startdate <= today) { console.log ("day is before today or is today"); return; }
+    console.log ("day is in the future");
     
     if(this.endDay != ''){
       console.log("setting start date END DATE not empty");
@@ -157,9 +168,18 @@ export class CreateSampleRequestBrand {
     this.endDay = day;
     let enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber,day)
     let startdate = new Date(this.startCalendar.calendarMonths[0].year,this.startCalendar.calendarMonths[0].monthNumber,this.startDay)
+    var today = new Date();
+
+    console.log("today: " + today);
+    console.log("startdate: " + startdate);
+    console.log("enddate: " + enddate);
+    if (enddate <= today) { console.log ("day is before today or is today"); return; }
+    console.log ("day is in the future");
+
     if(this.startDay === '' || enddate < startdate || enddate.getTime() == startdate.getTime()){
       return
     }
+    
     console.log("end date"+event);
     console.log("day"+day);
     let element = event.srcElement.parentElement;
