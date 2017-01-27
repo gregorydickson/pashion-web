@@ -147,60 +147,11 @@ class SampleRequestController {
     
 
 
-    
+    // Only for initial creation
     //Create a Sample Request - for a Press User
     def savejson(){
-        SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
-        def jsonObject = request.JSON
-        log.info "json:"+jsonObject
-        def sr = new SampleRequest()
-        sr.bookingStartDate = dateFormat.parse(jsonObject.startDate)
-
-        sr.bookingEndDate = dateFormat.parse(jsonObject.endDate)
-        sr.requiredBy = jsonObject.requiredBy
-        
-        sr.returnToAddress = Address.get(jsonObject.returnToAddress.toInteger())
-        def aUser = User.get(jsonObject.deliverTo)
-        if(aUser.pressHouse) {
-            sr.pressHouse = aUser.pressHouse
-            sr.addressDestination = Address.findByPressHouseAndDefaultAddress(sr.pressHouse, true)
-        }
-
-        sr.deliverTo = aUser
-        sr.returnBy = jsonObject.returnBy
-
-        sr.requestStatusBrand = "Pending"
-        sr.requestStatusPress = "Pending"
-     
-
-        SearchableItem item
-
-        jsonObject.samples.each{
-            item = SearchableItem.get(it)
-            log.info "sample request item:"+item
-            if(!sr.brand) sr.brand = item.brand
-            if(!sr.image) sr.image = item.look.image
-            if(!sr.season) sr.season = item.season.name
-            if(!sr.look) sr.look = item.look.name
-            sr.addToSearchableItemsProposed(item)
-            def status = new BookingStatus()
-            status.itemId = item.id
-            status.status = "Requested"
-            
-            sr.addToSearchableItemsStatus(status)
-        } 
-        sr.shippingOut = new ShippingEvent(courier:jsonObject.courier,status:'Proposed').save(failOnError:true)
-        sr.shippingReturn = new ShippingEvent(status:'Proposed').save(failOnError:true)
-        sr.paymentOut = jsonObject.paymentOut
-        sr.paymentReturn = jsonObject.paymentReturn
-        sr.courierOut = jsonObject.courierOut
-        sr.courierReturn = jsonObject.courierReturn
-        sr.requestingUser = session.user
-        
-        
-        sr.dateRequested = new Date()
-        sr.save(failOnError : true, flush: true)
-        cacheInvalidationService.sampleRequests() //RM TBD
+        def requestingUser = session.user
+        sampleRequestService.initialSaveSampleRequest(request.JSON,requestingUser)
         def sent = [message:'Sample Request Sent']
         render sent as JSON
 
