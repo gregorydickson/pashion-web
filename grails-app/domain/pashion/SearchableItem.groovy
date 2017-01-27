@@ -127,8 +127,8 @@ class SearchableItem {
 			}
 			LocalDate now = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
 			if(pashionCalendar.calendarMonths[0].sameMonth(now)){
-				pashionCalendar.calendarMonths[0].days[now.getDayOfMonth()].event =
-					pashionCalendar.calendarMonths[0].days[now.getDayOfMonth()].event + " today"
+				pashionCalendar.calendarMonths[0].days[now.getDayOfMonth()].event = pashionCalendar.calendarMonths[0].days[now.getDayOfMonth()].event + " today"
+				pashionCalendar = currentMonth(pashionCalendar,now)
 			}
 			pashionCalendar = availableDaysInMonth(pashionCalendar)
 		} else if(type.id == 2){//The SearchableItem is a Sample and can have requests
@@ -139,6 +139,18 @@ class SearchableItem {
 				pashionCalendar = it.checkMonthForEvents(monthToCheck,pashionCalendar)
 			}
 			
+		}
+		pashionCalendar
+	}
+
+	PashionCalendar currentMonth(PashionCalendar pashionCalendar,LocalDate today){
+		IntRange range
+		if(today.getDayOfMonth() > 1){
+			range = 1..(today.getDayOfMonth()-1)
+			range.each{
+				println "start in this month set not-available "+it
+				pashionCalendar.calendarMonths[0].days[it].event =  "not-available"
+			}
 		}
 		pashionCalendar
 	}

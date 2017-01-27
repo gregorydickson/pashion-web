@@ -236,7 +236,6 @@ export class CreateSampleRequestBrand {
   }
   startPrevious(){
     var queryString = DateFormat.urlString(--this.startOffset,1);
-    console.log(JSON.stringify(this.currentItem));
     return this.http.fetch('/calendar/searchableItemPicker' +queryString+
                  '&item='+this.currentItem.id)
           .then(response => response.json())
