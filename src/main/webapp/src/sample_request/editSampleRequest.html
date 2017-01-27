@@ -190,16 +190,19 @@
                         <tr>
                             <!-- <td class="accordion w3">${$index+1}</td> -->
                             <td class="accordion" style="width:40px; max-width:40px;">${sampleRequest.look}.${$index+1} :</td>
-                            <td class="accordion" style="width:335px; max-width:335px; overflow:hidden;">${sample.attributes}</td>
+                            <td class="accordion" style="width:355px; max-width:355px; overflow:hidden;">${sample.attributes}</td>
                             <td class="accordion" style="width:60px; max-width:60px;">                            
-                                <span style="margin-bottom:0px;">${sample.status.status}</span>
+                                <span style="margin-bottom:0px;">${sample.status.brandStatus}</span>
+                                <span if.bind="(!sample.status.brandStatus)" style="margin-bottom:0px;">Pending</span>
                             </td>
 
-                            <td if.bind="sampleRequest.requestStatusBrand === 'Pending'" style="text-align:right;" class="accordion" style="width:60px; max-width:60px;">
+                            <td if.bind="sampleRequest.requestStatusBrand == 'Pending'" class="accordion" style="text-align:right;width:70px; max-width:70px; padding-bottom:4px;">
 
-                                <select value.bind="sample.status.brandStatus">
-                                    <option value="approved">Approve</option>
-                                    <option value="denied">Deny</option>
+                                <select value.bind="sample.status.brandStatus" style="margin:0;">
+                                    <option >Action</option>
+                                    <option value="Pending">Pending</option>
+                                    <option value="Approved">Approve</option>
+                                    <option value="Denied">Deny</option>
                                 </select>
                             </td>
                         </tr>
@@ -213,9 +216,10 @@
                         <tr>
                            <!--  <td class="accordion w3">${$index+1}</td> -->
                             <td class="accordion" style="width:40px; max-width:40px;">${sampleRequest.look}.${$index+1} :</td>
-                            <td class="accordion" style="width:335px; max-width:335px; overflow:hidden;">${sample.attributes}</td>
+                            <td class="accordion" style="width:355px; max-width:355px; overflow:hidden;">${sample.attributes}</td>
                             <td class="accordion" style="width:60px; max-width:60px;">
-                                <span style="margin-bottom:0px;">${sample.status.status}</span>
+                                <span style="margin-bottom:0px;">${sample.status.brandStatus}</span>
+                                <span if.bind="(!sample.status.brandStatus)" style="margin-bottom:0px;">Pending</span>
                             </td>
                             <td if.bind="sampleRequest.requestStatusBrand === 'Pending'"  class="accordion" style="text-align:right; width:70px; max-width:70px;">
                                 <a click.delegate="removeSample(sample.id,$index)" style="padding:7px 6px 5px 6px; margin-right:0; margin-bottom:0px; font-size: 1rem;" class="hollow button" href="#">Remove</a>
