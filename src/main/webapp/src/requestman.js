@@ -45,14 +45,23 @@ export class Requestman{
         });
   }
 
+  attached() {
+    // Three dots Menu dropdown close when click outside
+        $('body').click(function() {
+            $(".look-menu-absolute").each(function() {
+                $(this).removeClass("look-menu-show");
+            });
+        });
+  }
+
 
 	filterChange(event){
 	    console.log("changing");
 	}
 
   closeSampleRequestMenu(id){
-    var menu = document.getElementById("requestManTest"+id);
-    menu.classList.toggle("look-menu-show");
+    //var menu = document.getElementById("requestManTest"+id);
+    //menu.classList.toggle("look-menu-show");
   }
 
   
@@ -96,7 +105,7 @@ export class Requestman{
   }
 
   editSampleRequest(itemId) {
-    let menu = document.getElementById("requestManTest"+itemId);
+    //let menu = document.getElementById("requestManTest"+itemId);
     
     this.closeSampleRequestMenu(itemId);
     this.dialogService.open({viewModel: EditSampleRequest, model: itemId })

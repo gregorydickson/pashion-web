@@ -62,18 +62,34 @@
                         <option repeat.for="item of required" model.bind="item">${item}</option>
                     </select>
                     </span>
+
                 </div>
                 <!-- Deliver To-->
                 <div class="grid-content shrink">
-                    <span class="inline-label">
+                    <span class="inline-label" style="margin-bottom:0px;">
                         <span class="slim-text-box-label">Deliver To</span>
                     <select name="" id="" value.bind="sampleRequest.deliverTo">
-                        <option repeat.for="person of deliverTo" model.bind="person.id">${person.name} ${person.surname}</option>
+                        <option repeat.for="person of deliverTo" model.bind="person.id">${person.name} ${person.surname} ${person.pressHouse.name}${person.prAgency.name}</option>
                     </select>
+                    <span class="slim-text-box-label"><a click.delegate="addAdHoc()" style="">Add</a></span>
                     </span>
                 </div>
-               
- 
+                <div class="grid-content shrink">
+                    <span class="inline-label slim-text-box-label" style="margin-bottom:0px;">Address 1:</span><span class="slim-text-box">addr 1</span>
+                </div>
+                <div class="grid-content shrink">
+                    <span class="inline-label slim-text-box-label" style="margin-bottom:0px;">Address 2:</span><span class="slim-text-box">addr 2</span>
+                </div>
+                <div class="grid-content shrink">
+                    <span class="inline-label slim-text-box-label" style="margin-bottom:0px;">City:</span><span class="slim-text-box">city</span>
+                </div>
+                <div class="grid-content shrink">
+                    <span class="inline-label slim-text-box-label" style="margin-bottom:0px;">Country:</span><span class="slim-text-box">country</span>
+                </div>
+                <div class="grid-content shrink">
+                    <span class="inline-label slim-text-box-label">Postal Code:</span><span class="slim-text-box">code</span>
+                </div>
+
                 <!-- Courier Section -->
                 <div class="grid-content shrink">
                     <span class="inline-label">
@@ -100,10 +116,10 @@
             </div>
             <!--Start Right column -->
             <div class="vertical grid-block">
-                <div class="grid-block">
+                <div class="grid-block shrink">
                     <span class="calendarnav ui-text-label-m-blue" style="text-align:center;">END BOOKING</span>
                 </div>
-               <div class="grid-block calendar-header-align" >
+               <div class="grid-block shrink calendar-header-align" >
                   <span class="calendarnav prev">
                      <a click.delegate="endPrevious()">
                         <img src="/assets/calendar/prev.png"  />
@@ -114,10 +130,10 @@
                      <a click.delegate="endNext()"><img src="/assets/calendar/next.png" /></a>
                   </span>
                </div>
-                <div class="grid-block calendar-header-align">
+                <div class="grid-block shrink calendar-header-align">
                     <span class="calendarnav ui-text-label-m-broad monthyear">${endCalendar.calendarMonths[0].monthName}&emsp;${endCalendar.calendarMonths[0].year}</span>
                 </div>
-                <div class="grid-block calendar-header-align">
+                <div class="grid-block shrink calendar-header-align">
                     <table class="calendar calendar-day-numbers">
                         <thead>
                             <tr>
@@ -207,7 +223,7 @@
                             <tr>
                                 <!-- <td class="accordion" style="width:15px; max-width:15px;">${$index + 1}</td> -->
                                 <td class="accordion" style="width:40px; max-width:40px;">${currentItem.name}.${$index+1} :</td>
-                                <td class="accordion" style="width:446px; max-width:446px; overflow:hidden;">${sample.attributes}</td>
+                                <td class="accordion to-u-c" style="width:446px; max-width:446px; overflow:hidden;">${sample.attributes}</td>
                                 <td class="accordion" style="width:10px; max-width:10px;">
                                    <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="sampleRequest.samples">
                                 </td>
