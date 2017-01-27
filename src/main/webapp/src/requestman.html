@@ -188,7 +188,7 @@
                                             <span>EDITORIAL</span>
                                         </div>
                                         <div class="grid-content">
-                                            <span if.bind="(booking.editorialName || booking.editorialWho || booking.editorialWhen)">Photo shoot ${booking.editorialName} ${booking.editorialWho} ${booking.editorialWhen}</span>
+                                            <span if.bind="(booking.editorialName || booking.editorialWho || booking.editorialWhen)">Photo shoot ${booking.editorialName} ${booking.editorialWho} ${booking.editorialWhen | viewDateFormat }</span>
                                             <span if.bind="(!booking.editorialName && !booking.editorialWho && !booking.editorialWhen)">No details of editorial</span>
                                         </div>
                                         <div class="grid-content" style="margin-top:1rem;">
