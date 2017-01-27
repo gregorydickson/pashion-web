@@ -68,7 +68,7 @@
                     <span class="inline-label">
                         <span class="slim-text-box-label">Deliver To</span>
                     <select name="" id="" value.bind="sampleRequest.deliverTo">
-                        <option repeat.for="person of deliverTo" model.bind="person.id">${person.name}${person.surname}</option>
+                        <option repeat.for="person of deliverTo" model.bind="person.id">${person.name}${person.surname},${person.brand.name}${person.pressHouse.name}${person.prAgency.name}</option>
                     </select>
                     </span>
                 </div>

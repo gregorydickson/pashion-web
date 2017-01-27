@@ -4,8 +4,10 @@ import 'fetch';
 import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import { BrandService } from 'services/brandService';
+import {CreateDialogNewAddress} from './dialogNewAddress';
+import {DialogService} from 'aurelia-dialog';
 
-@inject(HttpClient, DialogController, BrandService)
+@inject(HttpClient, DialogController, BrandService, DialogService)
 export class CreateSampleRequestBrand {
   static inject = [DialogController];
   currentItem = {};
@@ -21,7 +23,7 @@ export class CreateSampleRequestBrand {
   returnTo = [];
   courier = [];
   payment = [];
- // seasons = [];
+  newAddress = [];
 
 
   sampleRequest = {};
@@ -33,7 +35,7 @@ export class CreateSampleRequestBrand {
 
 
 
-  constructor(http, controller, brandService){
+  constructor(http, controller, brandService, dialogService){
     this.controller = controller;
 
     http.configure(config => {
@@ -42,6 +44,7 @@ export class CreateSampleRequestBrand {
     });
     this.http = http;
     this.brandService = brandService;
+    this.dialogService = dialogService;
   }
 
   activate(itemId){
@@ -87,6 +90,31 @@ export class CreateSampleRequestBrand {
 
   attached(){
     document.getElementById("CreateSampleRequestButton").disabled = true;
+  }
+
+  addAdHoc () {
+    console.log ("STUBBED");
+
+    this.dialogService.open({viewModel: CreateDialogNewAddress, model: this.newAddress })
+      .then(response => {});
+
+/* template from admin New office dialog
+  CreateDialogNewOffice(user) {
+    this.dialogService.open({viewModel: CreateDialogNewOffice, model: this.user })
+      .then(response => {
+        if (this.user.brand.id != null){
+            this.brandService.getBrandAddresses(this.user.brand.id)
+                .then(addresses=>{this.addresses = addresses})
+        } else if(this.user.pressHouse.id != null){
+            this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
+                .then(addresses=>this.addresses = addresses)
+        } else if(this.user.prAgency.id != null){
+            this.prAgencyService.getPRAgencyAddresses(this.user.prAgency.id)
+                .then(addresses=>this.addresses = addresses)
+        }
+      })
+  } */
+
   }
 
   setStartDate(event,day){
