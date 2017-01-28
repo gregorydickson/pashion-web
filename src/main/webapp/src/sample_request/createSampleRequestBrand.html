@@ -6,7 +6,7 @@
             <!-- header -->
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad">BOOKING&nbsp;${brand.name}&nbsp;
+                    <span class="ui-text-label-m-broad">BOOKING&nbsp;${brand.name}
                      <!-- ${currentItem.season.id}&nbsp;-->
                      LOOK&nbsp;</span>
                     <span class="ui-text-label-m-broad">${currentItem.name}</span>
@@ -222,8 +222,9 @@
                         <table if.bind="currentItem.samples" class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples | sort: 'id': 'ascending'">
                             <tr>
                                 <!-- <td class="accordion" style="width:15px; max-width:15px;">${$index + 1}</td> -->
-                                <td class="accordion" style="width:40px; max-width:40px;">${currentItem.name}.${$index+1} :</td>
-                                <td class="accordion to-u-c" style="width:446px; max-width:446px; overflow:hidden;">${sample.attributes}</td>
+                                <td class="accordion" style="width:35px; max-width:35px;">${currentItem.name}.${$index+1} :</td>
+                                <td class="accordion" style="width:60px; max-width:60px;">${sample.city}?LONDON?</td>
+                                <td class="accordion to-u-c" style="width:389px; max-width:389px; overflow:hidden;">${sample.attributes}</td>
                                 <td class="accordion" style="width:10px; max-width:10px;">
                                    <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="sampleRequest.samples">
                                 </td>
