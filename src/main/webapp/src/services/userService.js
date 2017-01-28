@@ -131,6 +131,23 @@ export class UserService {
 
     }
 
+    uploadAvatar (user, form){
+        var promise = new Promise((resolve, reject) => {
+            this.http.fetch('/user/uploadAvatar/' + user.id + ".json", {
+                    method: 'post',
+                    body: form
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    resolve(data);
+                })
+                .catch(err => reject(err));
+        });
+
+        return promise;
+    }
+
     // Build new connection
     addContactRequest(idIn) {
 
