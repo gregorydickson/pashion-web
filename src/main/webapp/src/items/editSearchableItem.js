@@ -3,8 +3,9 @@ import {HttpClient,json} from 'aurelia-fetch-client';
 import 'fetch';
 import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
+import {CityService} from 'services/cityService';
 
-@inject(HttpClient, DialogController)
+@inject(HttpClient, DialogController,CityService)
 export class EditSearchableItem {
   static inject = [DialogController];
   
@@ -16,6 +17,7 @@ export class EditSearchableItem {
   currentSample = {};
   colors = [];
   material = [];
+  cities = [];
 
   createdNew = true;
   selectedSample = {};
@@ -25,7 +27,7 @@ export class EditSearchableItem {
   addColor = '';
   
 
-  constructor(http, controller){
+  constructor(http, controller,cityService){
     this.controller = controller;
     
     http.configure(config => {
@@ -33,11 +35,12 @@ export class EditSearchableItem {
         .useStandardConfiguration();
     });
     this.http = http;
+    this.cityService = cityService;
   }
 
   activate(itemId){
     var queryString = DateFormat.urlString(0, 1);
-    
+    this.cityService.getCities().then(cities => this.cities = cities);
     this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes);
     this.http.fetch('/dashboard/sampleTypes').then(response => response.json()).then(sampleTypes => this.sampleTypes = sampleTypes);
     this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors);

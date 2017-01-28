@@ -438,12 +438,16 @@ class SearchableItemController {
                 sample.look = item
                 sample.season = item.season
                 sample.brandCollection = item.brandCollection
+
                 sample.brand = item.brand
                 sample.type = SearchableItemType.get(2)
             }
             sample.sampleType = it.sampleType
             sample.color = it.color
             sample.name = it.name
+            sample.size = it.size
+            sample.material = it.material
+            sample.city = City.get(it.sampleCity.id.toInteger())
             sample.description = it.description
             sample.attributes = it.attributes
             sample.material = it.material
