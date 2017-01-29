@@ -215,10 +215,10 @@
                 </div>
 
                 <div class="grid-block accordion" style="overflow-x:hidden; max-height:105px;"> 
-                    <div class="grid-content shrink">
+                    <div class="grid-content shrink" style="width:88px;">
                         <img src="/assets/bg.jpg"  alt="" src.bind="currentItem.image"  style="height:100px;"/> 
                     </div>
-                    <div class="grid-content">
+                    <div class="grid-content" >
                         <table if.bind="currentItem.samples" class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples | sort: 'id': 'ascending'">
                             <tr>
                                 <!-- <td class="accordion" style="width:15px; max-width:15px;">${$index + 1}</td> -->
