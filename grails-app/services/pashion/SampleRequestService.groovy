@@ -19,6 +19,7 @@ class SampleRequestService {
             def brand = user.brand
             results = criteria.listDistinct () {
                 eq('brand',brand)
+                cache true
             }
         }
         if(user?.pressHouse){
@@ -26,8 +27,10 @@ class SampleRequestService {
             def pressHouse = user.pressHouse
             results = criteria.listDistinct () {
                 eq('pressHouse',pressHouse)
+                cache true
             }
         }
+
         results
     }
 

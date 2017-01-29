@@ -16,6 +16,13 @@ export class BrandService {
     }
 
     activate() {}
+    getDefault(){
+        var promise = new Promise((resolve, reject) => {
+            var brand = {name:'Miu Miu',id:45}
+            resolve( brand);
+        });
+        return promise;
+    }
 
     getBrands() {
         var promise = new Promise((resolve, reject) => {
