@@ -1,6 +1,6 @@
 <template>
 <require from="./sort"></require>
-    <require from="./filters-type-item"></require>
+<require from="./filters-type-item"></require>
 <!-- <require from="./set-attribute"></require> -->
 <!-- <require from="./truncate"></require> -->
     
@@ -61,106 +61,108 @@
                     </span>
                 </div>
 
-                <!-- Sample ID & count
-                <div class="grid-block shrink">                       
-                    <span class="inline-label slim-text-box-label">ID</span>
-                    <div class="">
-                        <input type="text" class="slim-text-box-mid" value.bind="selectedSample.id">
-                    </div>
-                    <span class="inline-label slim-text-box-label">Count:</span>
-                    <div class="">
-                        <input if.bind="selectedSample.count" type="text" class="slim-text-box-narrow" value.bind="selectedSample.count">
-                    </div>
-                </div> -->
-                <!-- Sample Type -->
-                <div class="grid-block shrink" >                        
-                    <span class="inline-label">
-                        <span class="slim-text-box-label">Type</span>
-                        <select class="to-u-c" name="" id="" value.bind="selectedSample.sampleType">
-                            <option selected >${selectedSample.sampleType}</option>
-                            <option>OTHER</option>
-                            <option repeat.for="type of sampleTypes" model.bind="type">${type}</option>
-                        </select>
-                    </span>
-                </div>
-
-                <!-- Sample Type Select2 NOT WORKING RM
-                <div class="grid-block shrink" >                        
-                    <filters-type-item change.delegate="filterChangeType($event)"></filters-type-item>
-                </div> -->
-
-
-                <!-- Sample Description -->
-                <div class="grid-block shrink">                       
-                    <span class="inline-label slim-text-box-label">Description</span>
-                    <div class="">
-                        <textarea rows="1" type="textarea" class="slim-text-box to-u-c" style="min-width:200px;"  value.bind="selectedSample.attributes"></textarea>
-                    </div>
-                </div>
-                <!-- Colour -->
-                <!-- combo box code, not working -->
-                <!--  <input type="text" name="example" list.bind="listID & setAttribute">
-                <datalist name="" id.bind="listID" value.bind="selectedSample.color" style="max-width:200px;">
-                    <option  selected>${selectedSample.color}</option>
-                    <option value="selectedSample.color"repeat.for="color of colors" model.bind="color">${color}</option>
-                </datalist> -->
-
-                <!-- Color -->
-                 <div class="grid-block shrink" >                        
-                    <span class="inline-label">
-                        <span class="slim-text-box-label">Colour</span>
-                        <div>
-                            <input type="text" class="slim-text-box to-u-c" disabled value.bind="selectedSample.color">
+                <div if.bind="selectedSample.sampleType">
+                    <!-- Sample ID & count
+                    <div class="grid-block shrink">                       
+                        <span class="inline-label slim-text-box-label">ID</span>
+                        <div class="">
+                            <input type="text" class="slim-text-box-mid" value.bind="selectedSample.id">
                         </div>
-                        <a style= "width: 30px; margin-left: 1rem; padding-bottom: 6px;" click.delegate="colorClear(selectedSample)">Clear</a>
-                    </span>
-                </div>
+                        <span class="inline-label slim-text-box-label">Count:</span>
+                        <div class="">
+                            <input if.bind="selectedSample.count" type="text" class="slim-text-box-narrow" value.bind="selectedSample.count">
+                        </div>
+                    </div> -->
+                    <!-- Sample Type -->
+                    <div class="grid-block shrink" >                        
+                        <span class="inline-label">
+                            <span class="slim-text-box-label">Type</span>
+                            <select class="to-u-c" name="" id="" value.bind="selectedSample.sampleType">
+                                <option selected >${selectedSample.sampleType}</option>
+                                <option>OTHER</option>
+                                <option repeat.for="type of sampleTypes" model.bind="type">${type}</option>
+                            </select>
+                        </span>
+                    </div>
 
-                <div class="grid-block shrink" style="margin-top: -10px;">                        
-                    <span class="inline-label" >
-                        <span class="slim-text-box-label">New Colour</span>
-                        <select class="to-u-c" name="" id="" value.bind="addColor">
-                            <option value="">Select</option>
-                            <!-- <option repeat.for="color of colors" model.bind="color">${color}</option> -->
-                            <!-- <option value="">Select Colour</option>-->
-                            <!-- <option  selected>${selectedSample.color}</option> -->
-                            <option value="" repeat.for="color of colors" model.bind="color">${color}</option>
-                        </select>
-                        <a style= "width: 30px; margin-left: 1rem;" click.delegate="colorAdd(selectedSample)">Add</a>
-                    </span>
+                    <!-- Sample Type Select2 NOT WORKING RM 
+                    <div  class="grid-block shrink" >                        
+                        <filters-type-item  change.delegate="filterChangeType($event)"></filters-type-item>
+                    </div> -->
 
-                </div>
-                <!-- Material -->
-                <div class="grid-block shrink" >                        
-                    <span class="inline-label">
-                        <span class="slim-text-box-label">Material</span>
-                        <select class="to-u-c" name="" id="" value.bind="selectedSample.material">
-                            <!-- <option value="">Select Material</option> -->
-                            <option selected>${selectedSample.material}</option>
-                            <option>Other</option>
-                            <option repeat.for="material of material" model.bind="material">${material}</option>
-                        </select>
-                    </span>
-                </div>
-                <!-- Size -->
-                <div class="grid-block shrink" >                        
-                    <span class="inline-label">
-                        <span class="slim-text-box-label">Size</span>
-                        <select class="to-u-c" name="" id="" value.bind="selectedSample.size">
-                            <option selected>${selectedSample.size}</option>
-                            <option repeat.for="size of size" model.bind="size">${size}</option>
-                        </select>
-                    </span>
-                </div>  
-                <!-- Location -->
-                <div class="grid-block shrink" >                        
-                    <span class="inline-label">
-                        <span class="slim-text-box-label">Location</span>
-                        <select class="to-u-c" name="" id="" value.bind="selectedSample.sampleCity.id">
-                            <option selected>${selectedSample.city}</option>
-                            <option repeat.for="city of cities" model.bind="city.id">${city.name}</option>
-                        </select>
-                    </span> 
+
+                    <!-- Sample Description -->
+                    <div class="grid-block shrink">                       
+                        <span class="inline-label slim-text-box-label">Description</span>
+                        <div class="">
+                            <textarea rows="1" type="textarea" class="slim-text-box to-u-c" style="min-width:200px;"  value.bind="selectedSample.attributes"></textarea>
+                        </div>
+                    </div>
+                    <!-- Colour -->
+                    <!-- combo box code, not working -->
+                    <!--  <input type="text" name="example" list.bind="listID & setAttribute">
+                    <datalist name="" id.bind="listID" value.bind="selectedSample.color" style="max-width:200px;">
+                        <option  selected>${selectedSample.color}</option>
+                        <option value="selectedSample.color"repeat.for="color of colors" model.bind="color">${color}</option>
+                    </datalist> -->
+
+                    <!-- Color -->
+                     <div class="grid-block shrink" >                        
+                        <span class="inline-label">
+                            <span class="slim-text-box-label">Colour</span>
+                            <div>
+                                <input type="text" class="slim-text-box to-u-c" disabled value.bind="selectedSample.color">
+                            </div>
+                            <a style= "width: 30px; margin-left: 1rem; padding-bottom: 6px;" click.delegate="colorClear(selectedSample)">Clear</a>
+                        </span>
+                    </div>
+
+                    <div class="grid-block shrink" style="margin-top: -10px;">                        
+                        <span class="inline-label" >
+                            <span class="slim-text-box-label">New Colour</span>
+                            <select class="to-u-c" name="" id="" value.bind="addColor">
+                                <option value="">Select</option>
+                                <!-- <option repeat.for="color of colors" model.bind="color">${color}</option> -->
+                                <!-- <option value="">Select Colour</option>-->
+                                <!-- <option  selected>${selectedSample.color}</option> -->
+                                <option value="" repeat.for="color of colors" model.bind="color">${color}</option>
+                            </select>
+                            <a style= "width: 30px; margin-left: 1rem;" click.delegate="colorAdd(selectedSample)">Add</a>
+                        </span>
+
+                    </div>
+                    <!-- Material -->
+                    <div class="grid-block shrink" >                        
+                        <span class="inline-label">
+                            <span class="slim-text-box-label">Material</span>
+                            <select class="to-u-c" name="" id="" value.bind="selectedSample.material">
+                                <!-- <option value="">Select Material</option> -->
+                                <option selected>${selectedSample.material}</option>
+                                <option>Other</option>
+                                <option repeat.for="material of material" model.bind="material">${material}</option>
+                            </select>
+                        </span>
+                    </div>
+                    <!-- Size -->
+                    <div class="grid-block shrink" >                        
+                        <span class="inline-label">
+                            <span class="slim-text-box-label">Size</span>
+                            <select class="to-u-c" name="" id="" value.bind="selectedSample.size">
+                                <option selected>${selectedSample.size}</option>
+                                <option repeat.for="size of size" model.bind="size">${size}</option>
+                            </select>
+                        </span>
+                    </div>  
+                    <!-- Location -->
+                    <div class="grid-block shrink" >                        
+                        <span class="inline-label">
+                            <span class="slim-text-box-label">Location</span>
+                            <select class="to-u-c" name="" id="" value.bind="selectedSample.sampleCity.id">
+                                <option selected>${selectedSample.city}</option>
+                                <option repeat.for="city of cities" model.bind="city.id">${city.name}</option>
+                            </select>
+                        </span> 
+                    </div>
                 </div>
             </div>
       </ai-dialog-body>
