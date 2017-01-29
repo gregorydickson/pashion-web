@@ -9,6 +9,8 @@ import {DateFormat} from 'common/dateFormat';
 export class AddFilesDialog {
   static inject = [DialogController];
 
+  seasons = [];
+
   constructor(http, controller){
     this.controller = controller;
 
@@ -64,6 +66,25 @@ export class AddFilesDialog {
 
 
 
+  }
+  filterAddToSeason (){
+
+  }
+
+
+  addFiles (){
+    console.log("add actions here");
+    this.controller.close();
+
+  }
+
+  lookEditMenu(){
+    var menu = document.getElementById("newCollection");
+    menu.classList.toggle("look-menu-hide");
+  }
+
+  close (){
+    this.controller.close();
   }
   
 }
