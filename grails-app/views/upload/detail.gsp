@@ -52,7 +52,14 @@
         </g:if>
     <form enctype="multipart/form-data" action="${createLink(action: 'uploaddetail')}"
           class="dropzone" id="my-awesome-dropzone" method="post">
-          <h1> For uploading Detail CSV Files</h1>
+          <h1> For uploading DETAIL - SAMPLE CSV Files</h1>
+          <h1> City setting will set the location of the sample</h1>
+          <select name="city">
+            <option value="Paris">Paris</option>
+            <option value="New York">New York</option>
+            <option value="Milan">Milan</option>
+            <option value="London">London</option>
+        </select>
         <div class="fallback">
             <input name="file" type="file" required="true"/>
             <g:actionSubmit value="Upload" />
