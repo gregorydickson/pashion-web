@@ -1,5 +1,6 @@
 <template>
 <require from="./sort"></require>
+<require from="./cleanup"></require>
 <require from="./filters-type-item"></require>
 <!-- <require from="./set-attribute"></require> -->
 <!-- <require from="./truncate"></require> -->
@@ -44,7 +45,7 @@
                 <div class="grid-block shrink menu-divider">                       
                     <span class="inline-label slim-text-box-label" style="white-space: normal;">Look Description</span>
                     <div class="">
-                        <textarea rows="2" type="textarea" class="slim-text-box to-u-c" style="min-width:200px;" value.bind="currentItem.attributes"></textarea>
+                        <textarea rows="2" type="textarea" class="slim-text-box to-u-c" style="min-width:200px;" value.bind="currentItem.attributes | cleanup"></textarea>
                     </div>
                 </div>
                 <!-- Choose Sample -->
@@ -95,7 +96,7 @@
                     <div class="grid-block shrink">                       
                         <span class="inline-label slim-text-box-label">Description</span>
                         <div class="">
-                            <textarea rows="1" type="textarea" class="slim-text-box to-u-c" style="min-width:200px;"  value.bind="selectedSample.attributes"></textarea>
+                            <textarea rows="1" type="textarea" class="slim-text-box to-u-c" style="min-width:200px;"  value.bind="selectedSample.attributes | cleanup"></textarea>
                         </div>
                     </div>
                     <!-- Colour -->
