@@ -50,8 +50,8 @@ export class Index {
         var itemValue ='';
         if (value.pressHouse) itemValue = value.pressHouse.name;
         if (value.brand)  itemValue = itemValue + value.brand.name;
-        if (value.prAgency) itemValue = itemValye + value.prAgency.name;
-        console.log("Filter value: " + itemValue);
+        if (value.prAgency) itemValue = itemValue + value.prAgency.name;
+        // console.log("Filter value: " + itemValue);
         if(!searchExpression || !itemValue) return false;
         return itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;    
       }

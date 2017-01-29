@@ -21,6 +21,7 @@ export class Requestman{
   image = '';
   season = '';
   closed = true;
+  searchTextReqMan = '';
 
 
 
@@ -52,6 +53,27 @@ export class Requestman{
                 $(this).removeClass("look-menu-show");
             });
         });
+  }
+
+  filterFunc(searchExpression, value){
+    // editorialName, pressHouse
+    var itemValue ='';
+    if (value.pressHouse) itemValue = value.pressHouse.name;
+    if (value.brand)  itemValue = itemValue + value.brand.name;
+    if (value.prAgency) itemValue = itemValue + value.prAgency.name;
+    if (value.deliverTo.pressHouse) itemValue = value.deliverTo.pressHouse.name;
+    if (value.deliverTo.brand)  itemValue = itemValue + value.deliverTo.brand.name;
+    if (value.deliverTo.prAgency) itemValue = itemValue + value.deliverTo.prAgency.name;
+    if (value.editorialName) itemValue = itemValue + value.editorialName;
+    if (value.editorialWho) itemValue = itemValue + value.editorialWho;
+    if (value.requestingUser) itemValue = itemValue + value.requestingUser.surname + value.requestingUser.name;
+    if (value.returnToName) itemValue = itemValue + value.returnToName;
+    if (value.returnToSurname) itemValue = itemValue + value.returnToSurname;
+    if (value.addressDestination) itemValue = itemValue + value.addressDestination.name;
+
+    //console.log("Filter value: " + itemValue);
+    if(!searchExpression || !itemValue) return false;
+    return itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;    
   }
 
 

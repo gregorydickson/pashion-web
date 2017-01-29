@@ -3,6 +3,7 @@
     <require from="./common/viewDateFormatter"></require>
     <require from="./calendars/datepicker"></require>
     <require from="./sample_request/sort"></require>
+    <require from="./contacts/filter"></require>
     <!-- Main building block -->
    <!-- <div class="vertical grid-block spa-background">
 
@@ -74,7 +75,7 @@
                         <div class="grid-block shrink" style="margin-left: 1rem; margin-right: 1rem; margin-top:1.5rem;">
                             <div class="grid-block">
                                 <!-- Search requests -->
-                                <input type="search" value.two-way="searchtext" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
+                                <input type="search" value.two-way="searchTextReqMan" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
                             </div>
                             <div class="grid-block align-center">
                                 <!-- filter requests -->
@@ -135,7 +136,7 @@
                             <!-- Rows of content BRAND View-->
                             <div class="grid-content" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left: 1rem; margin-right: 1rem;">
                                 
-                                <div repeat.for="booking of bookings">
+                                <div repeat.for="booking of bookings | filter:searchTextReqMan:filterFunc">
                                     <table  class="big-accordion" style="table-layout: fixed;">
                                         <tr>
                                             <td class="accordion-grey w3">

@@ -60,7 +60,7 @@
                 <div class="vertical grid-block shrink" style="margin-left: 1rem; margin-right: 1rem;">
                     <form style="margin-top:1rem;">
                         <!-- Search requests -->
-                        <input type="search" value.two-way="searchTextRequests" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
+                        <input type="search" value.two-way="searchTextRequests" class="search-box" id="search-requests" placeholder="Search for Companies" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search for Companies'">
                         <!-- filter requests -->
                         <span class="inline-label" style="margin-top:1rem; width:258px;">
                         <filters-order change.delegate="orderChange($event)" style="width:259px;"></filters-order> <!-- ORDER -->
@@ -153,7 +153,7 @@
                         </table>
                     </div>
                     <!-- row with button -->
-                    <div repeat.for="booking of bookings ">
+                    <div repeat.for="booking of bookings | filter:searchTextRequests:filterFunc">
                         <table class="accordion">
                             <tr>
                                 <td class="accordion w10">
