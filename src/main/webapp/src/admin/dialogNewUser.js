@@ -12,6 +12,11 @@ export class CreateDialogNewUser {
   addresses = [];
   cities = [];
 
+  //testing
+  testSelected = [];
+  testOptions = [];
+  //end testing
+
   constructor(controller, cityService,userService){
     this.controller = controller;
     this.cityService = cityService;
@@ -23,9 +28,15 @@ export class CreateDialogNewUser {
     this.newUser.isInPashionNetwork = true;
   }
   activate(cities) {
+    this.testOptions = [
+      {name: 'First Option', id: "1"},
+      {name: 'Second Option', id: "2"},
+      {name: 'Third Option', id: "3"}
+    ];
     console.log("cities:");
     console.log(JSON.stringify(cities));
     this.cities = cities;
+    this.testSelected = ["2"];
    
   }
 

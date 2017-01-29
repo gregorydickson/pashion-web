@@ -1,4 +1,5 @@
-SStylist <template>
+<template>
+<require from="../common/formSelect"></require>
    <ai-dialog style="width: auto;">
       <!-- header -->
       <ai-dialog-header>
@@ -39,8 +40,14 @@ SStylist <template>
                         <div class="inline-label">
                            <span class="slim-text-box-label">City</span>
                            <select name="" id="" class="slim-text-box" value.bind="newUser.city">
-                                    <option model.bind="city.id" repeat.for="city of cities">${city.name}</option>
+                              <option model.bind="city.id" repeat.for="city of cities">${city.name}</option>
                            </select>
+                        </div>
+                        <div class="inline-label">
+                           
+                            <span class="slim-text-box-label">Test Select</span>
+                            <form-select name="options" selected.bind="testSelected" options.bind="testOptions" ></form-select>
+                           </span>
                         </div>
                         <!-- Password -->
                         <div class="inline-label">
