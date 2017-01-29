@@ -424,7 +424,7 @@ class SearchableItemController {
     @Transactional
     def savejson(){
         def jsonObject = request.JSON
-        log.info "json:"+jsonObject
+        
 
         def item =  SearchableItem.get(jsonObject.id)
         item.name = jsonObject.name
@@ -432,6 +432,7 @@ class SearchableItemController {
         item.attributes = jsonObject.attributes
         
         jsonObject.samples.each{
+            
             def sample = SearchableItem.get(it.id)
             if(!sample){
                 sample = new SearchableItem()
@@ -447,7 +448,8 @@ class SearchableItemController {
             sample.name = it.name
             sample.size = it.size
             sample.material = it.material
-            sample.city = City.get(it.sampleCity.id.toInteger())
+            sample.sampleCity = City.get(it.sampleCity.id.toInteger())
+            
             sample.description = it.description
             sample.attributes = it.attributes
             sample.material = it.material
@@ -461,7 +463,7 @@ class SearchableItemController {
     }
 
     def fetchdeep(){
-        def item = SearchableItem.findById(params.id.toInteger(),[fetch:[brandCollection:"join"]])
+        def item = SearchableItem.findById(params.id.toInteger(),[fetch:[brandCollection:"join",cache:true]])
         respond item
     }
 

@@ -88,8 +88,10 @@ export class EditSearchableItem {
  
 
   submit(){
-    console.log("submitting Image Data");
+
     var item = this.currentItem;
+    console.log("submitting Image Data");
+    //console.log(JSON.stringify(item));
     
     this.http.fetch('/searchableItem/savejson', {
             method: 'post',

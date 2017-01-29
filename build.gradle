@@ -30,6 +30,7 @@ ext {
 repositories {
     mavenLocal()
     maven { url "https://repo.grails.org/grails/core" }
+    maven { url 'http://dl.bintray.com/agorapulse/libs' }
 }
 
 dependencyManagement {
@@ -81,6 +82,8 @@ dependencies {
     compile 'com.pubnub:pubnub:3.7.10'
 
     compile 'com.logentries:logentries-appender:1.1.36'
+
+    compile 'org.grails.plugins:aws-sdk-s3:2.1.9'
 
 }
 war{

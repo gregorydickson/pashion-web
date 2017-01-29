@@ -32,7 +32,12 @@ elasticSearch:
     index:
         store:
             type: simplefs
-
+grails:
+    plugin:
+        awssdk:
+            accessKey: AKIAIDWK6XYVRHVN6HUQ
+            secretKey: 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
+            region: eu-west-1
 environments:
     development:
         dataSource:

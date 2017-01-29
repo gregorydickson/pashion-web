@@ -105,7 +105,9 @@ class SearchableItem {
 		samples nullable:true
 	}
 
-
+	String toString(){
+		return name +" sample city:" +sampleCity.name
+	}
 
 
 		

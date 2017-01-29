@@ -19,6 +19,8 @@ class User {
 
 	City city
 
+	String image
+
 	Long userCreatedId
 	Date lastModifiedDate
 	Long lastModifiedUserId
@@ -57,6 +59,7 @@ class User {
 		surname nullable:true
 
 		city nullable: true
+		image nullable: true
 		
 		stormpathString nullable:true, maxSize: 1000
 		userCreatedId nullable: true
