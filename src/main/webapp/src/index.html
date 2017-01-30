@@ -181,11 +181,10 @@
                         </table>
 
                         <!-- expanding data -->
-                        <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0.5rem; overflow:hidden;">
+                        <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
                             <table class="accordion expanded" style="table-layout:fixed;">
                                 <tr >
-                                    <td class="accordion" style="width:55px; max-width:55px;">Who:</td>
-                                    <td class="accordion">${booking.brand.name}</td>
+                                    <td class="accordion" style="width:37px; max-width:37px; padding-top:10px;padding-left:10px;">${booking.brand.name}</td>
                                 </tr>
                                 <tr repeat.for="sample of booking.searchableItems">
                                     <td class="accordion" style="width:55px; max-width:55px;"> ${sample.id}:</td>
