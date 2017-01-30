@@ -23,6 +23,7 @@ class SearchableItem {
 	
 	SearchableItemType type //Look or Sample or Runway
 	Boolean isBookable = false
+	String imageProvider
 	
 	// Start of searchable attributes
 	String color
@@ -69,6 +70,8 @@ class SearchableItem {
 		sex nullable:true
 		type nullable: true
 		image nullable:true
+
+		imageProvider nullable:true
 
 		color nullable: true
 		material nullable: true
