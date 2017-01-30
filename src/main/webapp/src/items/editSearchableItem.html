@@ -2,6 +2,7 @@
 <require from="./sort"></require>
 <require from="./cleanup"></require>
 <require from="./filters-type-item"></require>
+<require from="../common/formSelect"></require>
 <!-- <require from="./set-attribute"></require> -->
 <!-- <require from="./truncate"></require> -->
     
@@ -74,7 +75,7 @@
                             <input if.bind="selectedSample.count" type="text" class="slim-text-box-narrow" value.bind="selectedSample.count">
                         </div>
                     </div> -->
-                    <!-- Sample Type -->
+                    <!-- Sample Type 
                     <div class="grid-block shrink" >                        
                         <span class="inline-label">
                             <span class="slim-text-box-label">Type</span>
@@ -84,6 +85,11 @@
                                 <option repeat.for="type of sampleTypes" model.bind="type">${type}</option>
                             </select>
                         </span>
+                    </div> -->
+
+                    <div class="inline-label">
+                        <span class="slim-text-box-label">Type</span>
+                        <form-select class="to-u-c" name="options" selected.two-way="selectedSample.sampleType" options.bind="sampleTypes" ></form-select>
                     </div>
 
                     <!-- Sample Type Select2 NOT WORKING RM 
