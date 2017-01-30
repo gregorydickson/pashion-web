@@ -222,7 +222,7 @@
                         <table if.bind="currentItem.samples" class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples | sort: 'id': 'ascending'">
                             <tr>
                                 <!-- <td class="accordion" style="width:15px; max-width:15px;">${$index + 1}</td> -->
-                                <td class="accordion" style="width:35px; max-width:35px;">${currentItem.name}.${$index+1} :</td>
+                                <td class="accordion" style="width:35px; max-width:35px;">${currentItem.name}.${$index+1} :&nbsp;</td>
                                 <td class="accordion" style="width:60px; max-width:60px;">${sample.sampleCity.name}</td>
                                 <td class="accordion to-u-c" style="width:389px; max-width:389px; overflow:hidden;">${sample.attributes}</td>
                                 <td class="accordion" style="width:10px; max-width:10px;">
