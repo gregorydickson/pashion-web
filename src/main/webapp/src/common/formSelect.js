@@ -22,7 +22,8 @@ export class CustomSelect {
     // to happenings within the DOM itself
     attached() {
         var el = $(this.element).find('select');
-        var sel = el.select2();
+        var sel = el.select2({minimumResultsForSearch: 15 // only allow terms up to n characters long
+                        });
 
         // preload selected values
         sel.val(this.selected).trigger('change');

@@ -1,7 +1,7 @@
 import {DialogController} from 'aurelia-dialog';
 import {HttpClient,json} from 'aurelia-fetch-client';
 import 'fetch';
-import {inject} from 'aurelia-framework';
+import {inject, bindable} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import {CityService} from 'services/cityService';
 
@@ -24,7 +24,7 @@ export class EditSearchableItem {
 
   listID = 'colors';
 
-  addColor = '';
+  @bindable addColor = '';
   
 
   constructor(http, controller,cityService){
@@ -54,6 +54,8 @@ export class EditSearchableItem {
   }
 
   colorAdd (sample) {
+    if (!this.addColor) return;
+    if (this.addColor=='') return;
     sample.color = sample.color + " " + this.addColor;
   }
 
@@ -91,7 +93,7 @@ export class EditSearchableItem {
 
     var item = this.currentItem;
     console.log("submitting Image Data");
-    //console.log(JSON.stringify(item));
+    console.log(JSON.stringify(item));
     
     this.http.fetch('/searchableItem/savejson', {
             method: 'post',

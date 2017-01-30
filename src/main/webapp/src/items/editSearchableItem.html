@@ -127,13 +127,18 @@
                     <div class="grid-block shrink" style="margin-top: -10px;">                        
                         <span class="inline-label" >
                             <span class="slim-text-box-label">New Colour</span>
-                            <select class="to-u-c" name="" id="" value.bind="addColor">
+
+                            <!-- <select class="to-u-c" name="" id="" value.bind="addColor">
                                 <option value="">Select</option>
                                 <!-- <option repeat.for="color of colors" model.bind="color">${color}</option> -->
                                 <!-- <option value="">Select Colour</option>-->
                                 <!-- <option  selected>${selectedSample.color}</option> -->
-                                <option value="" repeat.for="color of colors" model.bind="color">${color}</option>
-                            </select>
+                               <!-- <option value="" repeat.for="color of colors" model.bind="color">${color}</option>
+                            </select> -->
+
+                            <form-select class="to-u-c" name="options" selected.two-way="addColor" options.bind="colors" ></form-select>
+
+
                             <a style= "width: 30px; margin-left: 1rem;" click.delegate="colorAdd(selectedSample)">Add</a>
                         </span>
 
@@ -142,12 +147,12 @@
                     <div class="grid-block shrink" >                        
                         <span class="inline-label">
                             <span class="slim-text-box-label">Material</span>
-                            <select class="to-u-c" name="" id="" value.bind="selectedSample.material">
-                                <!-- <option value="">Select Material</option> -->
+                           <!-- <select class="to-u-c" name="" id="" value.bind="selectedSample.material">
                                 <option selected>${selectedSample.material}</option>
                                 <option>Other</option>
                                 <option repeat.for="material of material" model.bind="material">${material}</option>
-                            </select>
+                            </select> -->
+                        <form-select class="to-u-c" name="options" selected.two-way="selectedSample.material" options.bind="material" ></form-select>
                         </span>
                     </div>
                     <!-- Size -->
@@ -166,7 +171,8 @@
                             <span class="slim-text-box-label">Location</span>
                             <select class="to-u-c" name="" id="" value.bind="selectedSample.sampleCity.id">
                                 <option repeat.for="city of cities" model.bind="city.id">${city.name}</option>
-                            </select>
+                            </select> 
+                            <!-- <form-select class="to-u-c" name="options" selected.two-way="selectedSample.sampleCity.id" options.bind="cities" ></form-select> -->
                         </span> 
                     </div>
                 </div>
