@@ -68,8 +68,10 @@
 	position: absolute;
 	right: 5px;
 	bottom: 1px;
-	color: $pinkish-grey;
-	cursor: pointer;
+	color: white;
+	cursor: pointer;    
+	background: rgba(0, 0, 0, 0.03);
+    font-weight: 500;
 }
 
 .card-image:hover .card-look-number-brand-season {
