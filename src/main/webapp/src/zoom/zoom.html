@@ -24,7 +24,7 @@
           <div id="imageZoomWrapper" class="card-image-zoom-wrap">
                     <img id="imageZoom" src.bind="image"  />
 
-                    <img src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align-wide"/> 
+                    <img if.bind="row.items[i].imageProvider=='indigital'" src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align-wide"/> 
 
           </div>
       </ai-dialog-body>

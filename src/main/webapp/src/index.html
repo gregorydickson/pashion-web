@@ -522,7 +522,7 @@
                                     <div if.bind="user.type === 'agency'" class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].brand} <br> ${row.items[i].season}</div>
 
 
-                                    <img src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align"/> 
+                                    <img if.bind="row.items[i].imageProvider=='indigital'" src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align"/> 
 
                                     <div class="card-hover-overlay" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"></div>
 
