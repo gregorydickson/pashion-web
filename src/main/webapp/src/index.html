@@ -82,8 +82,8 @@
                     <div>
                         <table class="accordion">
                             <tr> 
-                                <th class="accordion w10"></th>
-                                <th class="accordion w15">ID</th>
+                                <th class="accordion w5"></th>
+                                <th class="accordion w20">LOOK</th>
                                 <th class="accordion w35">OUT</th>
                                 <th class="accordion w30">STATUS</th>
                                 <th class="accordion w10"></th>
@@ -97,7 +97,7 @@
                                 <td class="accordion w10">
                                     <button id="button${booking.id}" class="accordion" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
-                                <td class="accordion w15">${booking.id}</td>
+                                <td class="accordion w15">${booking.look}</td>
                                 <td class="accordion w35">${booking.bookingStartDate | viewDateFormat}</td>
                                 <td class="accordion w30 ui-text-label-m-blue" style="font-weight:500">${booking.requestStatusBrand}</td>
                                 <td class="accordion w10">
@@ -126,8 +126,7 @@
                         <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0.5rem; overflow:hidden;">
                             <table class="accordion expanded" style="table-layout:fixed;">
                                 <tr >
-                                    <td class="accordion" style="width:40px; max-width:40px;">Who:</td>
-                                    <td class="accordion">${booking.pressHouse.name}</td>
+                                    <td class="accordion" style="width:37px; max-width:37px;">{booking.pressHouse.name}</td>
                                 </tr>
                                 <tr repeat.for="sample of booking.searchableItems">
                                     <td class="accordion" style="width:40px; max-width:40px;"> ${booking.look}.${$index+1} :</td>
