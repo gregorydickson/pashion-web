@@ -86,7 +86,7 @@ class DashboardController {
     }
 
     def material(){
-        def list = ['CASHMERE','CHAMBRAY','CLOTH','COTTON','CORDUROY','CREPE','CUIR','DENIM','DUNGAREE','FISHNET','FLUFFY',
+        def list = ['ANGORA','CASHMERE','CHAMBRAY','CLOTH','COTTON','CORDUROY','CREPE','CUIR','DENIM','DUNGAREE','FISHNET','FLUFFY',
                     'FRILL','FUR','GLITTER','JOUY','KNIT','LACE','LAMÉ','LEATHER','LINEN',
                     'METAL','MOHAIR','ORGANZA','OXFORD','PAISLEY','PLAID','PLASTIC','PVC',
                     'QUILT','RIB','SATIN','SHEARLING','SHEEP','SHEER','SILK','SNAKE','SNAKESKIN','STITCH','SUEDE',
@@ -102,7 +102,7 @@ class DashboardController {
     def sampleTypes(){
 
         def list = ['bag','babouches','bandana','beads','belt','bermuda','bikini','blazer','blouse','bodice','boots','boyfriend jeans','bomber jacket','boots','bra','bracelet',
-                    'braces','bustier','button','cap','cape','cardigan','claudine','coat','cocktail dress','collar','corsage','corset',
+                    'braces','bustier','button','cap','cape','cardigan','claudine', 'clutch bag','coat','cocktail dress','collar','corsage','corset',
                     'costume','crocs','crop top','culotte','dress','dress on pants','diamond','dressing gown','dungarees','earring','fan',
                     'feather','flared jeans',
                     'gilet','glasses','glove','gown','handbag','handkerchief','hat','headband','heels','hoodie','jacket','jeans','jeggings','jogging','jumper',
