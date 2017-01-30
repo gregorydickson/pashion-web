@@ -123,14 +123,14 @@
                         </table>
 
                         <!-- expanding data -->
-                        <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0.5rem; overflow:hidden;">
+                        <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
                             <table class="accordion expanded" style="table-layout:fixed;">
                                 <tr >
-                                    <td class="accordion" style="width:37px; max-width:37px;">{booking.pressHouse.name}</td>
+                                    <td class="accordion" style="width:37px; max-width:37px; padding-top:10px;padding-left:10px;">${booking.pressHouse.name}</td>
                                 </tr>
                                 <tr repeat.for="sample of booking.searchableItems">
-                                    <td class="accordion" style="width:40px; max-width:40px;"> ${booking.look}.${$index+1} :</td>
-                                    <td class="accordion to-u-c" style="width:190px; max-width:190px; overflow: hidden;"> ${sample.attributes}</td>
+                                    <td class="accordion" style="width:40px; max-width:40px; padding-left:10px;"> ${booking.look}.${$index+1} :</td>
+                                    <td class="accordion to-u-c" style="width:190px; max-width:190px; overflow: hidden; padding-right:10px;"> ${sample.attributes}</td>
                                 </tr>
                             </table>
                         </div>
