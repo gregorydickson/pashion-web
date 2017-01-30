@@ -4,8 +4,10 @@ import 'fetch';
 import {inject, bindable} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import {CityService} from 'services/cityService';
+import {ObserverLocator, observable} from 'aurelia-framework';  // or 'aurelia-framework'
 
-@inject(HttpClient, DialogController,CityService)
+
+@inject(HttpClient, DialogController,CityService, ObserverLocator)
 export class EditSearchableItem {
   static inject = [DialogController];
   
@@ -20,6 +22,7 @@ export class EditSearchableItem {
   cities = [];
 
   createdNew = true;
+  // @observable selectedSample = {};
   selectedSample = {};
 
   listID = 'colors';
@@ -27,7 +30,7 @@ export class EditSearchableItem {
   @bindable addColor = '';
   
 
-  constructor(http, controller,cityService){
+  constructor(http, controller,cityService, observerLocator){
     this.controller = controller;
     
     http.configure(config => {
@@ -37,6 +40,11 @@ export class EditSearchableItem {
     this.http = http;
     this.cityService = cityService;
   }
+
+ /* selectedSampleChanged(newValue, oldValue) {
+    console.log("changed from: " + oldValue + " to " + newValue);
+    if ((newValue != '') && (oldValue !='')) this.sampleChanged = true;
+  } */
 
   activate(itemId){
     var queryString = DateFormat.urlString(0, 1);
@@ -105,7 +113,7 @@ export class EditSearchableItem {
           });
     
     alert("Updated");
-    this.controller.close();
+    //this.controller.close();
     
   }
 
