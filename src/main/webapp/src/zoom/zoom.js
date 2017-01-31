@@ -31,6 +31,7 @@ export class Zoom {
     this.itemNumber = zoomModel.itemNumber;
     this.image = zoomModel.item.image;
     this.name = zoomModel.item.name;
+    this.imageProvider = zoomModel.item.imageProvider;
     this.user = this.userService.getUser().then(user => {
                 this.user = user;
             })

@@ -16,6 +16,7 @@
     <require from="./dashboard_filters/filters-order"></require>
     <require from="./common/jquery.unveil"></require>
     <require from="./contacts/filter"></require>
+    <require from="./contacts/sort"></require>
 
 
     <!-- start preloader -->
@@ -91,13 +92,13 @@
                         </table>
                     </div>
                     <!-- row with button -->
-                    <div repeat.for="booking of bookings | filter:searchTextRequests:filterFunc">
+                    <div repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc">
                         <table class="accordion">
                             <tr>
                                 <td class="accordion w10">
                                     <button id="button${booking.id}" class="accordion" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
-                                <td class="accordion w15">${booking.look}</td>
+                                <td class="accordion w15">${booking.look.season.abbreviation}${booking.look}</td>
                                 <td class="accordion w35">${booking.bookingStartDate | viewDateFormat}</td>
                                 <td class="accordion w30 ui-text-label-m-blue" style="font-weight:500">${booking.requestStatusBrand}</td>
                                 <td class="accordion w10">
@@ -126,11 +127,11 @@
                         <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
                             <table class="accordion expanded" style="table-layout:fixed;">
                                 <tr >
-                                    <td class="accordion" style="width:37px; max-width:37px; padding-top:10px;padding-left:10px;">${booking.pressHouse.name}</td>
+                                    <td class="accordion" style="width:65px; max-width:65px; padding-top:10px;padding-left:10px;">${booking.pressHouse.name}</td>
                                 </tr>
                                 <tr repeat.for="sample of booking.searchableItems">
-                                    <td class="accordion" style="width:40px; max-width:40px; padding-left:10px;"> ${booking.look}.${$index+1} :</td>
-                                    <td class="accordion to-u-c" style="width:190px; max-width:190px; overflow: hidden; padding-right:10px;"> ${sample.attributes}</td>
+                                    <td class="accordion" style="width:60px; max-width:60px; padding-left:10px;"> ${booking.look.season.abbreviation}${booking.look}.${$index+1} :</td>
+                                    <td class="accordion to-u-c" style="width:142px; max-width:142px; overflow: hidden; padding-right:10px;"> ${sample.attributes}</td>
                                 </tr>
                             </table>
                         </div>

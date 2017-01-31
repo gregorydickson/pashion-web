@@ -7,7 +7,7 @@ import 'fetch';
 @customElement('filters-order')
 
 export class FiltersOrderCustomElement {
-  orders = ["By Date","By Person","By Request Number"];
+  orders = ["By Due Out Date","By Look Number","By Status"];
   selectorselector = false;
   selectorall = false;
 

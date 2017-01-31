@@ -44,6 +44,7 @@ export class Index {
     maxRReached = false;
     numberImages = 0;
     busy;
+    ordering = 'bookingStartDate';
 
 
     filterFunc(searchExpression, value){
@@ -371,9 +372,9 @@ export class Index {
         if (event)
             if (event.detail)
                 if (event.detail.value) {
-                    //if (event.detail.value == 'All') event.detail.value = '';
-                    //if (event.detail.value == 'Select') event.detail.value = '';
-                    // do something
+                    if (event.detail.value == 'By Due Out Date') this.ordering = 'bookingStartDate';
+                    if (event.detail.value == 'By Look Number') this.ordering = 'look';
+                    if (event.detail.value == 'By Status') this.ordering = 'requestStatusBrand';
                     console.log("value:" + event.detail.value)
                 }          
     }
