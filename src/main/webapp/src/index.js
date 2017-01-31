@@ -373,7 +373,7 @@ export class Index {
             if (event.detail)
                 if (event.detail.value) {
                     if (event.detail.value == 'By Due Out Date') this.ordering = 'bookingStartDate';
-                    if (event.detail.value == 'By Look Number') this.ordering = 'look';
+                    if (event.detail.value == 'By Number') this.ordering = 'look';
                     if (event.detail.value == 'By Status') this.ordering = 'requestStatusBrand';
                     console.log("value:" + event.detail.value)
                 }          

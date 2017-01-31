@@ -2,8 +2,10 @@
 <template>
     <require from="./common/viewDateFormatter"></require>
     <require from="./calendars/datepicker"></require>
-    <require from="./sample_request/sort"></require>
+    <require from="./contacts/sort"></require>
     <require from="./contacts/filter"></require>
+    <require from="./dashboard_filters/filters-order"></require>
+
     <!-- Main building block -->
    <!-- <div class="vertical grid-block spa-background">
 
@@ -80,15 +82,14 @@
                             <div class="grid-block align-center">
                                 <!-- filter requests -->
                                 <span class="inline-label">
-                                  <span class="form-label" style="font-weight: 500">FILTER</span>
-                                <select name="" id="">
-                                    <option>Overdue</option>
+                                  <span class="form-label" style="height:28px; ">FILTER</span>
+                                <select name="" id="" disabled>
                                     <option>All</option>
                                 </select>
                                 </span>
                             </div>
                             <div class="grid-block">
-                                <!-- order results -->
+                                <!-- order results
                                 <span class="inline-label">
                                   <span class="form-label" style="font-weight: 500">ORDER</span>
                                 <select name="" id="">
@@ -96,6 +97,9 @@
                                     <option>By Person</option>
                                     <option>By Request ID</option>
                                 </select>
+                                </span> -->
+                                <span class="inline-label" style="width:258px;">
+                                    <filters-order change.delegate="orderChange($event)" style="width:259px;"></filters-order> 
                                 </span>
                             </div>
                         </div>
@@ -136,7 +140,7 @@
                             <!-- Rows of content BRAND View-->
                             <div class="grid-content" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left: 1rem; margin-right: 1rem;">
                                 
-                                <div repeat.for="booking of bookings | filter:searchTextReqMan:filterFunc">
+                                <div repeat.for="booking of bookings | filter:searchTextReqMan:filterFunc | sort: ordering : 'ascending' ">
                                     <table  class="big-accordion" style="table-layout: fixed;">
                                         <tr>
                                             <td class="accordion-grey w3">
@@ -230,7 +234,7 @@
                                             </table> -->
                                             <!-- no images -->
                                             <table class="" style="table-layout:fixed;">
-                                                <tr style="height:1rem;" repeat.for="item of booking.searchableItems | sort: 'id': 'ascending'" >
+                                                <tr style="height:1rem;" repeat.for="item of booking.searchableItems" >
                                                     <td class="accordion sample-padding to-u-c">${look}.${$index+1} : &nbsp; &nbsp;${item.attributes} ${item.status.Status}</td>
                                                 </tr>
                                             </table>

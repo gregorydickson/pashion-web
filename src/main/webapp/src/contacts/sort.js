@@ -2,6 +2,9 @@ export class SortValueConverter {
   toView(array, propertyName, direction) {
     var factor = direction === 'ascending' ? 1 : -1;
 
+    if (!typeof(array)) return array;
+    if (array==undefined) return array;
+    if (array=='') return array;
     return array
       .slice(0)
      // .sort((a, b) => {
