@@ -91,7 +91,7 @@ export class AddFilesDialog {
         body:this.formData   
     }).then(function(res) {
         console.log('Status', res);
-        //this.controller.close();
+        this.controller.close();
     }).catch(function(e) {
         console.log('Error',e);
     });
