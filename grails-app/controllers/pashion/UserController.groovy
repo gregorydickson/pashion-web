@@ -99,7 +99,7 @@ class UserController {
         log.info "do Login params:"+params
         def account = null
         def user = User.findWhere(email:params['email'])
-        log.info "user:"+user.id.toString()
+        log.info "user:"+user?.id?.toString()
         if(user){
             account = userService.login(params.email,params.password)
             session.user = user                   
