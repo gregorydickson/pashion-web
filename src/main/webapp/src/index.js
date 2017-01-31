@@ -700,7 +700,7 @@ export class Index {
 
     // Add files (Add images) dialog
     createAddfilesDialog() {
-        this.dialogService.open({ viewModel: AddFilesDialog, model: "no-op" })
+        this.dialogService.open({ viewModel: AddFilesDialog, model: null })
             .then(response => {});
     }
 

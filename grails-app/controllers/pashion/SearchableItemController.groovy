@@ -4,11 +4,14 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.converters.JSON
 import java.text.SimpleDateFormat
+import org.springframework.web.multipart.MultipartFile
 
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 class SearchableItemController {
+    static scope = "session"
     
     String dateFormatString = "yyyy-MM-dd"
+    def amazonS3Service
     
     def brandSearch(){
         long startTime = System.currentTimeMillis()
@@ -465,6 +468,63 @@ class SearchableItemController {
     def fetchdeep(){
         def item = SearchableItem.findById(params.id.toInteger(),[fetch:[brandCollection:"join",cache:true]])
         respond item
+    }
+
+    @Transactional
+    def upload(){
+        log.info "upload params:"+params
+        def user = session.user
+        
+        log.info "user:"+user
+
+        Brand brand = user.brand
+        log.info "brand:"+brand
+        Season season = Season.findOrSaveWhere(name:params.season.toString().trim()).save()
+        log.info "season:"+season
+        BrandCollection brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season).save()
+        SearchableItemType type = SearchableItemType.findByDisplay('Looks')
+        String path = brand.name.toLowerCase().replace(" ","-")+"/"+season.name.toLowerCase().replace(" ","-") +"/"
+        log.info "path:"+path
+        SearchableItem item = null
+        def all = request.getFileNames()
+        all.each{String name ->
+            log.info "file:"+name
+            try{
+               log.info "try block"
+               item = new SearchableItem()
+               log.info "created item"
+               item.type = type
+               item.brand = brand
+               log.info "brand"
+               item.brandCollection = brandCollection
+               item.season = season
+               log.info "season"
+               def imageString = "//dvch4zq3tq7l4.cloudfront.net/" + path + name
+               log.info "image string:"+imageString
+               item.image = imageString
+               MultipartFile multipartFile = request.getFile(name)
+               log.info "file:"+multipartFile
+               
+               String location = path + name
+               log.info "location:"+location
+               String message
+               if (multipartFile && !multipartFile.empty) {
+                    log.info "storing"
+                    message = amazonS3Service.storeMultipartFile("pashion-tool", location, multipartFile)
+                    log.info "store message:"+message
+               }
+               if(message){
+                    item.save(failOnError:true)
+               }
+              
+            } catch(Exception e){
+                log.error "exception saving file:"+e.message
+            }
+        }
+
+        def sent = [message:'Items Updated']
+        render sent as JSON
+
     }
 
 

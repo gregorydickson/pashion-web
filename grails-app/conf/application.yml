@@ -37,7 +37,7 @@ grails:
         awssdk:
             accessKey: AKIAIDWK6XYVRHVN6HUQ
             secretKey: 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
-            region: eu-west-1
+            region: eu-central-1
 environments:
     development:
         dataSource:
@@ -63,6 +63,10 @@ environments:
 ---
 ---
 grails:
+    controllers:
+        upload:
+            maxFileSize: 2000000
+            maxRequestSize: 2000000
     profile: web
     codegen:
         defaultPackage: pashion

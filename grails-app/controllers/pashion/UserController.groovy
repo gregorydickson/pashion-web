@@ -79,10 +79,10 @@ class UserController {
         if(coooookie){
             log.info "has Cookie:"+coooookie
             def user = User.findWhere(email:coooookie)
+            session.user = user
             account = userService.login(user.email,user.stormpathString)
             if(account instanceof Account){
                session.account = account
-               session.user = user
                redirect(controller:'dashboard',action:'index')
             }
         }
