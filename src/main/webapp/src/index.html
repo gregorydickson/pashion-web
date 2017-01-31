@@ -16,6 +16,7 @@
     <require from="./dashboard_filters/filters-order"></require>
     <require from="./common/jquery.unveil"></require>
     <require from="./contacts/filter"></require>
+    <require from="./contacts/sort"></require>
 
 
     <!-- start preloader -->
@@ -91,7 +92,7 @@
                         </table>
                     </div>
                     <!-- row with button -->
-                    <div repeat.for="booking of bookings | filter:searchTextRequests:filterFunc">
+                    <div repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc">
                         <table class="accordion">
                             <tr>
                                 <td class="accordion w10">
