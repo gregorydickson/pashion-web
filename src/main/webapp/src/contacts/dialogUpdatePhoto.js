@@ -21,22 +21,30 @@ export class CreateDialogUpdatePhoto {
   }
 
   uploadAvatar() {
-
-    console.log(this.avatar);
+      var data = '';
+      var current = this;
 
     if(this.avatar != undefined){
-      var form = new FormData()
-      form.append('file', this.avatar)
 
-      this.userService.getUser()
-        .then(user => {
-          this.user = user;
-          this.userService.uploadAvatar(this.user, form)
-            .then(data => {
-              console.log('URL ' + data.url);
-              this.controller.close();
-              });
-          });
+        console.log(this.avatar);
+        var reader = new FileReader();
+        reader.readAsDataURL(this.avatar[0]);
+        reader.onload = function () {
+            data = reader.result;
+            current.userService.getUser()
+                .then(user => {
+                current.user = user;
+            current.userService.uploadAvatar(current.user, data)
+                .then(data => {
+                console.log('URL ' + data.url);
+            current.controller.close();
+        });
+        });
+        };
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+        };
+        console.log('waiting');
     } else {
       console.log('Selected image successfully');
     }    
