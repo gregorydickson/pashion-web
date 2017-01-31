@@ -24,11 +24,22 @@ import com.stormpath.sdk.group.Groups
 import com.stormpath.sdk.resource.ResourceException
 import com.stormpath.sdk.tenant.Tenant
 
+import com.amazonaws.services.s3.model.CannedAccessControlList
+import com.amazonaws.services.s3.model.ObjectMetadata
+import grails.converters.JSON
+import org.apache.commons.codec.binary.Base64
+import org.json.XML
+import javax.imageio.ImageIO
+import javax.servlet.http.HttpServletResponse
+import java.awt.image.BufferedImage
+import java.util.HashMap
+
 
 @Transactional
 class UserService {
 
 	def grailsApplication
+    def amazonS3Service
 
 	def APPLICATION_NAME = "pashiontool"
 
@@ -127,6 +138,24 @@ class UserService {
                 log.error "No Stormpath Directory for user"
         }
 		user
+    }
+
+    def uploadAvatar(String data, User user){
+
+        def ext = data.split("/")[1].split(";")[0]
+        String encodingPrefix = "base64,"
+        int contentStartIndex = data.indexOf(encodingPrefix) + encodingPrefix.length()
+        byte[] imageData = Base64.decodeBase64(data.substring(contentStartIndex))
+        def fileName = user.id
+        BufferedImage inputImage = ImageIO.read(new ByteArrayInputStream(imageData))
+        ByteArrayOutputStream os = new ByteArrayOutputStream()
+        ImageIO.write(inputImage, ext, os)
+        InputStream is = new ByteArrayInputStream(os.toByteArray())
+
+        ObjectMetadata metadata = amazonS3Service.buildMetadataFromType('image', ext, CannedAccessControlList.PublicRead)
+        amazonS3Service.storeInputStream('pashion-profiles',fileName+'.'+ext, is, metadata)
+
+        return 'https://pashion-profiles.s3.amazonaws.com/'+fileName+'.'+ext
     }
 
 
