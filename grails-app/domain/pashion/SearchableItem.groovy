@@ -123,6 +123,13 @@ class SearchableItem {
 	 */
 	PashionCalendar bookedDaysInMonth(LocalDate monthToCheck, PashionCalendar pashionCalendar){
 		log.info "Searchable Item - bookedDaysInMonth"
+		LocalDate now = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+		
+		if(pashionCalendar.calendarMonths[0].afterThisMonth(now)){
+			log.info "month is in the past so not available"
+			pashionCalendar = monthNotAvailable(pashionCalendar)
+			return pashionCalendar
+		}
 		//type 1 is Look which will have samples
 		if(type.id == 1){
 			log.info "SearchableItem:"+id+" - booked Days In Month - Look Case"
@@ -130,7 +137,7 @@ class SearchableItem {
 				log.info "sample: "+it.id
 				pashionCalendar = it.bookedDaysInMonth(monthToCheck, pashionCalendar)
 			}
-			LocalDate now = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+			
 			if(pashionCalendar.calendarMonths[0].sameMonth(now)){
 				pashionCalendar.calendarMonths[0].days[now.getDayOfMonth()].event = pashionCalendar.calendarMonths[0].days[now.getDayOfMonth()].event + " today"
 				pashionCalendar = currentMonth(pashionCalendar,now)
@@ -174,15 +181,17 @@ class SearchableItem {
 		switch(start){
 		
 			case {pashionCalendar.calendarMonths[0].sameMonth(start)}:
+				log.info "***********  same month"
 				pashionCalendar = startInThisMonth(pashionCalendar, start)
 				break
 			
 			case {pashionCalendar.calendarMonths[0].beforeThisMonth(start)}:
-				log.info "before this month"
+				log.info "*************    before this month"
 				pashionCalendar = monthNotAvailable(pashionCalendar)
 				break
 
 			case {pashionCalendar.calendarMonths[0].afterThisMonth(start)}:
+				log.info "***********       after this month"
 				pashionCalendar = monthAvailable(pashionCalendar)
 				break
 		}
