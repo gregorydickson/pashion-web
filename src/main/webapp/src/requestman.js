@@ -64,7 +64,7 @@ export class Requestman{
                     if (event.detail.value == 'By Due Out Date') this.ordering = 'bookingStartDate';
                     if (event.detail.value == 'By Number') this.ordering = 'id'; 
                     if (event.detail.value == 'By Status') this.ordering = 'requestStatusBrand';
-                    console.log("value:" + event.detail.value)
+                    console.log("value:" + event.detail.value + "ordering: " +this.ordering);
                 }          
     }
 
