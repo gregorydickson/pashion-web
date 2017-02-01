@@ -267,13 +267,9 @@ export class CreateSampleRequest {
       
     }else{
       this.sampleRequest.samples = [];
-      document.getElementById("CreateSampleRequestButton").disabled = true;
-
-      
-      
+      document.getElementById("CreateSampleRequestButton").disabled = true; 
     }
-    
-    
+    this.enableCheck();    
   }
 
 
@@ -314,7 +310,7 @@ export class CreateSampleRequest {
     if (samples.length != samplesSelected.length) {
       this.selectAll = false;
       console.log("length not equal");
-      return;
+      // return;
     } else {
       this.selectAll = true;
     }
