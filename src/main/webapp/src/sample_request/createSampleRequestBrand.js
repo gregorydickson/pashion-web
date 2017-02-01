@@ -298,6 +298,7 @@ export class CreateSampleRequestBrand {
       this.sampleRequest.samples = [];
       document.getElementById("CreateSampleRequestButton").disabled = true;  
     }
+    this.enableCheck();
   }
 
 
@@ -338,7 +339,7 @@ export class CreateSampleRequestBrand {
     if (samples.length != samplesSelected.length) {
       this.selectAll = false;
       console.log("length not equal");
-      return;
+      //return;
     } else {
       this.selectAll = true;
     }
