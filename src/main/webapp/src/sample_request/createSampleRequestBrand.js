@@ -23,7 +23,7 @@ export class CreateSampleRequestBrand {
   returnTo = [];
   courier = [];
   payment = [];
-  newAddress = [];
+  newAddress = {};
 
 
   sampleRequest = {};

@@ -30,6 +30,32 @@ class BrandController {
         render addresses
     }
 
+    def destinations(){
+        def brand = session.user.brand
+        
+        def addresses = brand.destinations as JSON
+        
+        render addresses
+    }
+
+    def addAddress(){
+        def jsonObject = request.JSON
+        Address address = new Address()
+        address.name =       jsonObject.address.name
+        address.address1 =   jsonObject.address.address1
+        address.address2 =   jsonObject.address.address2
+        address.city =       jsonObject.address.city
+        address.country =    jsonObject.address.country
+        address.postalCode = jsonObject.address.postalCode
+        address.attention =  jsonObject.address.attention
+        address.save(failOnError: true)
+        
+        Brand brand = session.user.brand
+        brand.addToDestinations(address)
+        def response = address as JSON
+        render response
+    }
+
     def users(){
         Brand brand = Brand.get(params.id)
         def users = User.findAllByBrand(brand) as JSON
