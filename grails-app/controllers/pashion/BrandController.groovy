@@ -32,7 +32,7 @@ class BrandController {
 
     def destinations(){
         def brand = session.user.brand
-        
+        def users = User.getAllByBrand(brand)
         def addresses = brand.destinations as JSON
         
         render addresses

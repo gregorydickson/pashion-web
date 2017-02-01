@@ -178,6 +178,7 @@ class SearchableItem {
 				break
 			
 			case {pashionCalendar.calendarMonths[0].beforeThisMonth(start)}:
+				log.info "before this month"
 				pashionCalendar = monthNotAvailable(pashionCalendar)
 				break
 
@@ -191,6 +192,7 @@ class SearchableItem {
 	PashionCalendar monthNotAvailable(PashionCalendar pashionCalendar){
 		IntRange range = 1..pashionCalendar.calendarMonths[0].numberOfDays
 		range.each{
+			log.info "month not available"
 			pashionCalendar.calendarMonths[0].days[it].event = 
 						pashionCalendar.calendarMonths[0].days[it].event + " not-available"
 		}
