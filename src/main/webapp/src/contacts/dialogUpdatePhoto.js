@@ -37,6 +37,13 @@ export class CreateDialogUpdatePhoto {
             current.userService.uploadAvatar(current.user, data)
                 .then(data => {
                 console.log('URL ' + data.url);
+                if (($('.avatar-container').children().attr('class')).indexOf("avatar-img")!= -1){
+                    $('.avatar-img').attr('src', data.url);
+                }else {
+                    $('.avatar-container').html("<img src='"+data.url+"' class='clip-circle contact-entry avatar-img' />");
+                    //quitar avatar-text y agregar avatar-img
+                }
+
             current.controller.close();
         });
         });

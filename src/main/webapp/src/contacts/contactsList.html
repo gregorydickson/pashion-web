@@ -96,9 +96,9 @@
                     <tr>
                         <td style="width:43px;">
                             <a href="#" click.delegate="updatePhoto()">
-                                <div>
-                                    <img if.bind="(user.avatar)" src=${user.avatar} class="clip-circle contact-entry" />
-                                    <div if.bind="(!user.avatar)" style="margin-right: 1rem; " class="avatar-circle ">${users[user.id -1].name.charAt(0)}</div>
+                                <div class="avatar-container">
+                                    <img if.bind="(user.avatar)" src=${user.avatar} class="clip-circle contact-entry avatar-img" />
+                                    <div if.bind="(!user.avatar)" style="margin-right: 1rem; " class="avatar-circle avatar-text ">${users[user.id -1].name.charAt(0)}</div>
                                 </div>
                             </a>
                         </td>
