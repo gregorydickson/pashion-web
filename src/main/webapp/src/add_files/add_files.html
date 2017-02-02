@@ -20,13 +20,18 @@
           </div>
 
           <div class="grid-row-col" style="width:250px; margin-right:0; margin-left:20px;">
-          <span class="inline-label">
-            <span class="form-label" style="padding-right: 0.5rem; font-weight:500">SEASON</span>
-
-            <form-select class="to-u-c" name="options" selected.two-way="selectedSeason" options.bind="seasons" ></form-select>
-          </span>
-                    
-         </div>
+            <span class="inline-label">
+              <span class="form-label" style="padding-right: 0.5rem; font-weight:500">SEASON</span>
+              <form-select class="to-u-c" name="options" selected.two-way="selectedSeason" options.bind="seasons" ></form-select>
+            </span>
+          </div>
+          <div class="grid-row-col" style="width:250px; margin-right:0; margin-left:20px;">
+            <span class="inline-label">
+              <span class="form-label" style="padding-right: 0.5rem; font-weight:500">Mark Private:
+                <input id="" type="checkbox" checked.bind="isPrivate" >
+              </span>
+            </span>    
+          </div>
 
          <div id="newCollection" class="look-menu-hide" >
          <!-- <span class="inline-label slim-text-box-label">Name</span> -->

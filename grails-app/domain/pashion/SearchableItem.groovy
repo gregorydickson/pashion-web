@@ -23,6 +23,7 @@ class SearchableItem {
 	
 	SearchableItemType type //Look or Sample or Runway
 	Boolean isBookable = false
+	Boolean isPrivate = false
 	String imageProvider
 	
 	// Start of searchable attributes

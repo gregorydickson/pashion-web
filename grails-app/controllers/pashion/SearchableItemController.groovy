@@ -182,6 +182,7 @@ class SearchableItemController {
 
                 log.info "image:"+'image'
                 isNotNull('image')
+                eq('isPrivate',false)
                 if(brand) eq('brand', brand)
                 if(theme) ilike('theme', "%${theme}%")
                 if(keywords) and {
@@ -320,6 +321,7 @@ class SearchableItemController {
         List results = criteria.list() {
 
                 isNotNull('image')
+                eq('isPrivate',false)
                 if(brand) eq('brand', brand)
                 if(theme) ilike('theme', "%${theme}%")
                 if(keywords) and {
@@ -493,6 +495,9 @@ class SearchableItemController {
                log.info "try block"
                item = new SearchableItem()
                log.info "created item"
+               if(params.isPrivate){
+                    item.isPrivate = true
+                }
                item.type = type
                item.brand = brand
                log.info "brand"
@@ -508,6 +513,7 @@ class SearchableItemController {
                String location = path + name
                log.info "location:"+location
                String message
+
                if (multipartFile && !multipartFile.empty) {
                     log.info "storing"
                     message = amazonS3Service.storeMultipartFile("pashion-tool", location, multipartFile)

@@ -13,6 +13,7 @@ export class AddFilesDialog {
   selectedSeason = '';
   selectedFiles;
   formData;
+  isPrivate;
 
   constructor(http, controller){
     this.controller = controller;
@@ -83,17 +84,18 @@ export class AddFilesDialog {
 
       this.formData.append(this.selectedFiles[i].name,file)
     }
-
+    if(this.isPrivate)
+      this.formData.append('isPrivate', this.isPrivate);
     this.formData.append('season', this.selectedSeason);
 
     this.http.fetch('/searchableItem/upload', {
         method:'POST',
         body:this.formData   
-    }).then(function(res) {
-        console.log('Status', res);
+    }).then(response => {
+        console.log('Status:', response);
         this.controller.close();
-    }).catch(function(e) {
-        console.log('Error',e);
+    }).catch(e => {
+        console.log('Error saving ',e);
     });
     
 
