@@ -214,9 +214,9 @@ export class ContactsList {
       
   }
 
-  filterFunc(searchExpression, value){
+  filterFunc(searchExpression, value, ignore1, ingore2){
    let itemValue = value.name;
-   if(!searchExpression || !itemValue) return false;
+   if(!searchExpression || !itemValue) return true;
    return itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;    
   }
 

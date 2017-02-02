@@ -5,6 +5,7 @@
     <require from="./contacts/sort"></require>
     <require from="./contacts/filter"></require>
     <require from="./dashboard_filters/filters-order"></require>
+    <require from="./dashboard_filters/filters-filterrequests"></require>
 
     <!-- Main building block -->
    <!-- <div class="vertical grid-block spa-background">
@@ -80,13 +81,19 @@
                                 <input type="search" value.two-way="searchTextReqMan" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
                             </div>
                             <div class="grid-block align-center">
-                                <!-- filter requests -->
+                                <!-- filter requests
                                 <span class="inline-label">
                                   <span class="form-label" style="height:28px; ">FILTER</span>
                                 <select name="" id="" disabled>
                                     <option>All</option>
                                 </select>
+                                </span> -->
+
+                                <span class="inline-label" style="width:200px;">
+                                    <filters-filterrequests change.delegate="filterChange($event)" style="width:200px;"></filters-filterrequests> 
                                 </span>
+
+
                             </div>
                             <div class="grid-block">
                                 <!-- order results
@@ -98,8 +105,8 @@
                                     <option>By Request ID</option>
                                 </select>
                                 </span> -->
-                                <span class="inline-label" style="width:258px;">
-                                    <filters-order change.delegate="orderChange($event)" style="width:259px;"></filters-order> 
+                                <span class="inline-label" style="width:200px;">
+                                    <filters-order change.delegate="orderChange($event)" style="width:200px;"></filters-order> 
                                 </span>
                             </div>
                         </div>
@@ -140,7 +147,7 @@
                             <!-- Rows of content BRAND View-->
                             <div class="grid-content" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left: 1rem; margin-right: 1rem;">
                                 
-                                <div repeat.for="booking of bookings | filter:searchTextReqMan:filterFunc | sort: ordering : 'ascending' ">
+                                <div repeat.for="booking of bookings | filter:searchTextReqMan:filterFunc:filtering:user | sort: ordering : 'ascending' ">
                                     <table  class="big-accordion" style="table-layout: fixed;">
                                         <tr>
                                             <td class="accordion-grey w3">

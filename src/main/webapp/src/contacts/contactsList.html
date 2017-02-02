@@ -113,7 +113,7 @@
         </div>
         <div id="panel1213" class="panel grid-block vertical scroll show" style="overflow-y:auto;">
             <!-- main list -->
-            <div id="contacts-inside-top" if.bind="(users[user.id -1].connections!=null)" repeat.for="connection of users[user.id -1].connections | filter:searchTerm:filterFunc " class="" style="width:255px; overflow: visible;margin-left: 1rem;">
+            <div id="contacts-inside-top" if.bind="(users[user.id -1].connections!=null)" repeat.for="connection of users[user.id -1].connections | filter:searchTerm:filterFunc:'null':'null' " class="" style="width:255px; overflow: visible;margin-left: 1rem;">
                 <!-- check the connection is completed and the user still exists -->
                 <table if.bind="(connection.connectingStatus=='Accepted' && users[connection.connectedUserId -1].email && connection.numberNewMessages!=0)" class="width100" style="margin-bottom: 10px;">
                     <tr>

@@ -23,6 +23,7 @@ export class Requestman{
   closed = true;
   searchTextReqMan = '';
   ordering ='bookingStartDate';
+  filtering = '';
 
 
 
@@ -68,8 +69,28 @@ export class Requestman{
                 }          
     }
 
-  filterFunc(searchExpression, value){
+
+  filterChange(event){
+      console.log("changing filter: ");
+          if (event)
+            if (event.detail)
+                if (event.detail.value) {
+                    if (event.detail.value == 'All') this.filtering = '';
+                    if (event.detail.value == 'My Requests') this.filtering = 'My Requests'; 
+                    if (event.detail.value == 'Overdue Requests') this.filtering = 'Overdue Requests';  
+                    if (event.detail.value == 'Open Requests') this.filtering = 'Open Requests'; 
+                    console.log("value:" + event.detail.value + " filtering: " +this.filtering);
+                } 
+  }
+
+
+  filterFunc(searchExpression, value, filter, user){
     // editorialName, pressHouse
+
+    var searchVal = true;
+    var filterVal = true;
+
+    if (searchExpression == '' && filter == '') return true;
     var itemValue ='';
     if (value.pressHouse) itemValue = value.pressHouse.name;
     if (value.brand)  itemValue = itemValue + value.brand.name;
@@ -85,14 +106,21 @@ export class Requestman{
     if (value.addressDestination) itemValue = itemValue + value.addressDestination.name;
 
     //console.log("Filter value: " + itemValue);
-    if(!searchExpression || !itemValue) return false;
-    return itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;    
+    if(searchExpression && itemValue) searchVal = itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;   
+
+    if (filter == 'My Requests') {
+      filterVal = (value.requestingUser.id == user.id);
+    }
+    if (filter == 'Overdue Requests') {
+      filterVal = (value.requestStatusBrand == 'Overdue');
+    }
+    if (filter == 'Open Requests') {
+      filterVal = (value.requestStatusBrand != 'Closed');
+    }
+
+    return (searchVal && filterVal); 
   }
 
-
-	filterChange(event){
-	    console.log("changing");
-	}
 
   closeSampleRequestMenu(id){
     //var menu = document.getElementById("requestManTest"+id);
