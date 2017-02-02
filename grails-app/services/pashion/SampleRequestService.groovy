@@ -36,6 +36,7 @@ class SampleRequestService {
 
     def initialSaveSampleRequest(JSONObject jsonObject, User requestingUser){
         SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
+        log.info "initial save sample request:"+jsonObject
         def sr = new SampleRequest()
         sr.bookingStartDate = dateFormat.parse(jsonObject.startDate)
 
@@ -43,13 +44,20 @@ class SampleRequestService {
         sr.requiredBy = jsonObject.requiredBy
         
         sr.returnToAddress = Address.get(jsonObject.returnToAddress.toInteger())
-        def aUser = User.get(jsonObject.deliverTo)
-        if(aUser.pressHouse) {
-            sr.pressHouse = aUser.pressHouse
-            sr.addressDestination = Address.findByPressHouseAndDefaultAddress(sr.pressHouse, true)
+        
+        if(jsonObject.deliverTo?.address1)
+        {
+            sr.addressDestination = Address.get(jsonObject.deliverTo.id.toInteger())
+        } else {
+            def aUser = User.get(jsonObject.deliverTo.id.toInteger())
+            if(aUser.pressHouse) {
+                sr.pressHouse = aUser.pressHouse
+                sr.addressDestination = Address.findByPressHouseAndDefaultAddress(sr.pressHouse, true)
+            } else{
+                sr.addressDestination = aUser.address
+            }
+            sr.deliverTo = aUser
         }
-
-        sr.deliverTo = aUser
         sr.returnBy = jsonObject.returnBy
 
         sr.requestStatusBrand = "Pending"

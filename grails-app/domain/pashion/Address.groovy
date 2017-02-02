@@ -16,9 +16,11 @@ class Address{
 	PressHouse pressHouse
 	PRAgency prAgency
 	Brand brand
+	Brand destination
 
 	static constraints = {
 		brand nullable: true 
+		destination nullable:true
 		pressHouse nullable:true
 		prAgency nullable:true
 		address1 nullable: true

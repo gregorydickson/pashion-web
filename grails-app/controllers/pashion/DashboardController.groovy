@@ -11,6 +11,17 @@ class DashboardController {
     def index() {
     }
 
+    def deliverToBrand(){
+        Brand brand = Brand.get(session.user.brand.id)
+        
+        def destinations = brand.destinations
+        def users = brand.users
+        destinations.addAll(users)
+        def response = destinations as JSON
+        
+        render response
+    }
+
     def citiesObjects(){
         def cities = City.list() as JSON
         render cities

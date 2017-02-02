@@ -78,7 +78,7 @@ export class CreateSampleRequestBrand {
       )
       
     this.http.fetch('/dashboard/required').then(response => response.json()).then(required => this.required = required);
-    this.http.fetch('/dashboard/deliverTo').then(response => response.json()).then(deliverTo => this.deliverTo = deliverTo);
+    this.http.fetch('/dashboard/deliverToBrand').then(response => response.json()).then(deliverTo => this.deliverTo = deliverTo);
     this.http.fetch('/dashboard/returnBy').then(response => response.json()).then(returnBy => this.returnBy = returnBy);
     this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => this.courier = courier);
     this.http.fetch('/dashboard/returnTo').then(response => response.json()).then(returnTo => this.returnTo = returnTo);
@@ -93,10 +93,17 @@ export class CreateSampleRequestBrand {
   }
 
   addAdHoc () {
-    console.log ("STUBBED");
-
-    this.dialogService.open({viewModel: CreateDialogNewAddress, model: this.newAddress })
-      .then(response => {});
+    console.log ("ad hoc");
+    
+    this.http.fetch('/brand/AddAddress', {
+              method: 'post',
+              body: json(this.newAddress)
+            })
+            .then(response => response.json())
+            .then(newList => {
+                this.deliverTo = newList;
+                this.newAddress = {};
+            });
 
 /* template from admin New office dialog
   CreateDialogNewOffice(user) {

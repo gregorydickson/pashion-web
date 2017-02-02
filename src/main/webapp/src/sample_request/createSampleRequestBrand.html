@@ -69,10 +69,13 @@
                     <span class="inline-label" style="margin-bottom:0px;">
                         <span class="slim-text-box-label">Deliver To</span>
                     <select name="" id="" value.bind="sampleRequest.deliverTo">
-                        <option repeat.for="person of deliverTo" model.bind="person.id">${person.name} ${person.surname} ${person.pressHouse.name}${person.prAgency.name}</option>
+                        <option repeat.for="address of deliverTo" model.bind="address">${address.name} ${address.surname}</option>
                     </select>
                     <span class="slim-text-box-label"><a click.delegate="addAdHoc()" style="">Add</a></span>
                     </span>
+                </div>
+                <div class="grid-content shrink">
+                    <span class="inline-label slim-text-box-label" style="margin-bottom:0px;">Name:</span><input type="text" class="slim-text-box" value.bind="newAddress.name">
                 </div>
                 <div class="grid-content shrink">
                     <span class="inline-label slim-text-box-label" style="margin-bottom:0px;">Address 1:</span><input type="text" class="slim-text-box" value.bind="newAddress.address1">
@@ -81,13 +84,13 @@
                     <span class="inline-label slim-text-box-label" style="margin-bottom:0px;">Address 2:</span><input type="text" class="slim-text-box" value.bind="newAddress.address2">
                 </div>
                 <div class="grid-content shrink">
-                    <span class="inline-label slim-text-box-label" style="margin-bottom:0px;">City:</span><span class="slim-text-box">city</span><input type="text" class="slim-text-box" value.bind="newAddress.city">
+                    <span class="inline-label slim-text-box-label" style="margin-bottom:0px;">City:</span><input type="text" class="slim-text-box" value.bind="newAddress.city">
                 </div>
                 <div class="grid-content shrink">
-                    <span class="inline-label slim-text-box-label" style="margin-bottom:0px;">Country:</span><span class="slim-text-box">country</span><input type="text" class="slim-text-box" value.bind="newAddress.country">
+                    <span class="inline-label slim-text-box-label" style="margin-bottom:0px;">Country:</span><input type="text" class="slim-text-box" value.bind="newAddress.country">
                 </div>
                 <div class="grid-content shrink">
-                    <span class="inline-label slim-text-box-label">Postal Code:</span><span class="slim-text-box">code</span><input type="text" class="slim-text-box" value.bind="newAddress.postalCode">
+                    <span class="inline-label slim-text-box-label">Postal Code:</span><input type="text" class="slim-text-box" value.bind="newAddress.postalCode">
                 </div>
 
                 <!-- Courier Section -->
