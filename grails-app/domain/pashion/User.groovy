@@ -16,6 +16,7 @@ class User {
 	String email
 	Boolean isInPashionNetwork = false
 	String stormpathString
+	String avatar
 
 	Long userCreatedId
 	Date lastModifiedDate
@@ -53,6 +54,7 @@ class User {
 		phone nullable: true
 		name nullable:true
 		surname nullable:true
+		avatar nullable: true
 		
 		stormpathString nullable:true, maxSize: 1000
 		userCreatedId nullable: true

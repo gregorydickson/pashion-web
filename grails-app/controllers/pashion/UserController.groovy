@@ -215,6 +215,9 @@ class UserController {
         url = userService.uploadAvatar(params.data, user)
         println user
 
+        user.avatar = url
+        user.save(flush:true,failOnError:true)
+
         def data = [
                 url: url
         ]
