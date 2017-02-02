@@ -47,13 +47,13 @@ export class Index {
     ordering = 'bookingStartDate';
 
 
-    filterFunc(searchExpression, value){
+    filterFunc(searchExpression, value, ignore1, ignore2){
         var itemValue ='';
         if (value.pressHouse) itemValue = value.pressHouse.name;
         if (value.brand)  itemValue = itemValue + value.brand.name;
         if (value.prAgency) itemValue = itemValue + value.prAgency.name;
         // console.log("Filter value: " + itemValue);
-        if(!searchExpression || !itemValue) return false;
+        if(!searchExpression || !itemValue) return true;
         return itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;    
       }
 
