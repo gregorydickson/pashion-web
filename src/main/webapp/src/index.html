@@ -14,6 +14,7 @@
     <require from="./dashboard_filters/filters-type"></require>
     <require from="./dashboard_filters/filters-city"></require>
     <require from="./dashboard_filters/filters-order"></require>
+    <require from="./dashboard_filters/filters-filterrequests"></require>
     <require from="./common/jquery.unveil"></require>
     <require from="./contacts/filter"></require>
     <require from="./contacts/sort"></require>
@@ -63,8 +64,13 @@
                         <!-- Search requests -->
                         <input type="search" value.two-way="searchTextRequests" class="search-box" id="search-requests" placeholder="Search for Companies" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search for Companies'">
                         <!-- filter requests -->
-                        <span class="inline-label" style="margin-top:1rem; width:258px;">
-                        <filters-order change.delegate="orderChange($event)" style="width:259px;"></filters-order> <!-- ORDER -->
+                        <span class="inline-label" style="width:258px; margin-bottom: 0px; margin-top:1.5rem;">
+                            <filters-filterrequests change.delegate="filterChange($event)" style="width:258px;"></filters-filterrequests> 
+                        </span>
+                        <!-- ORDER -->     
+                        <span class="inline-label" style="margin-top:1rem; width:258px; margin-top:0.5rem;">
+                            <filters-order change.delegate="orderChange($event)" style="width:259px;"></filters-order> 
+                        </span>
                        <!--  <span class="form-label" style="font-weight:500;">ORDER</span>
                         <select name="" id="">
                             <option>By Date</option>
@@ -92,7 +98,7 @@
                         </table>
                     </div>
                     <!-- row with button -->
-                    <div repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:'null':'null'">
+                    <div repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user">
                         <table class="accordion">
                             <tr>
                                 <td class="accordion w10">

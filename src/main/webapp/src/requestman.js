@@ -23,7 +23,7 @@ export class Requestman{
   closed = true;
   searchTextReqMan = '';
   ordering ='bookingStartDate';
-  filtering = '';
+  filtering = 'Open Requests';
 
 
 

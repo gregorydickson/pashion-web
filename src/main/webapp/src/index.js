@@ -45,18 +45,47 @@ export class Index {
     numberImages = 0;
     busy;
     ordering = 'bookingStartDate';
+    filtering = 'Open Requests';
 
 
-    filterFunc(searchExpression, value, ignore1, ignore2){
+    filterFunc(searchExpression, value, filter, user){
+        var searchVal = true;
+        var filterVal = true;
+        if (searchExpression == '' && filter == '') return true;
         var itemValue ='';
         if (value.pressHouse) itemValue = value.pressHouse.name;
         if (value.brand)  itemValue = itemValue + value.brand.name;
         if (value.prAgency) itemValue = itemValue + value.prAgency.name;
         // console.log("Filter value: " + itemValue);
-        if(!searchExpression || !itemValue) return true;
-        return itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;    
+        if(searchExpression && itemValue) searchVal = itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;    
+
+        if (filter == 'My Requests') {
+          filterVal = (value.requestingUser.id == user.id);
+        }
+        if (filter == 'Overdue Requests') {
+          filterVal = (value.requestStatusBrand == 'Overdue');
+        }
+        if (filter == 'Open Requests') {
+          filterVal = (value.requestStatusBrand != 'Closed');
+        }
+
+        return (searchVal && filterVal); 
+
       }
 
+
+  filterChange(event){
+      console.log("changing filter: ");
+          if (event)
+            if (event.detail)
+                if (event.detail.value) {
+                    if (event.detail.value == 'All') this.filtering = '';
+                    if (event.detail.value == 'My Requests') this.filtering = 'My Requests'; 
+                    if (event.detail.value == 'Overdue Requests') this.filtering = 'Overdue Requests';  
+                    if (event.detail.value == 'Open Requests') this.filtering = 'Open Requests'; 
+                    console.log("value:" + event.detail.value + " filtering: " +this.filtering);
+                } 
+  }
 
     filterChangeSearch(event) {
         this.busy.on();
