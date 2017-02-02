@@ -547,7 +547,11 @@ export class Index {
         // this.lookMenu(itemId);
         this.dialogService.open({ viewModel: CreateSampleRequest, model: itemId })
             .then(response => {
-                this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
+                if (response.wasCancelled) {
+                    console.log('Canceled');
+                } else {
+                    this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
+                }
             });
     }
 
@@ -555,7 +559,11 @@ export class Index {
         // this.lookMenu(itemId);
         this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: itemId })
             .then(response => {
-                this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
+                if (response.wasCancelled) {
+                    console.log('Canceled');
+                } else {
+                    this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
+                }
             });
     }
 
