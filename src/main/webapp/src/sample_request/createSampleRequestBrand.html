@@ -54,11 +54,11 @@
                         </tbody>
                     </table>
                 </div>
-                <!-- Required Time -->
-                <div class="grid-content shrink" style="margin-top: 1rem;">
+                <!-- Required By -->
+                <div class="grid-content shrink" style="margin-top: 1.5rem;">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Required By</span>
-                    <select name="" id="" value.bind="sampleRequest.requiredBy">
+                    <select class="slim-box" name="" id="" value.bind="sampleRequest.requiredBy">
                         <option repeat.for="item of required" model.bind="item">${item}</option>
                     </select>
                     </span>
@@ -66,48 +66,83 @@
                 </div>
                 <!-- Deliver To-->
                 <div class="grid-content shrink">
-                    <span class="inline-label" style="margin-bottom:0px;">
+                    <span class="inline-label" style="">
                         <span class="slim-text-box-label">Deliver To</span>
-                    <select name="" id="" value.bind="sampleRequest.deliverTo">
+                    <select class="slim-box" name="" id="" value.bind="sampleRequest.deliverTo">
                         <option repeat.for="address of deliverTo" model.bind="address">${address.name} ${address.surname}</option>
                     </select>
                     <span class="slim-text-box-label"><a click.delegate="addAdHoc()" style="">Add</a></span>
                     </span>
                 </div>
+                <!-- Name-->
                 <div class="grid-content shrink">
-                    <span class="inline-label slim-text-box-label" style="margin-bottom:0px;">Name:</span><input type="text" class="slim-text-box" value.bind="newAddress.name">
+                    <span class="inline-label" style="margin-bottom: 0px;">
+                        <span class="slim-text-box-label" style="">Name</span>
+                        <div>
+                            <input type="text" class="slim-text-box" value.bind="newAddress.name">
+                        </div>
+                    </span>
                 </div>
+                <!-- Address 1 -->
                 <div class="grid-content shrink">
-                    <span class="inline-label slim-text-box-label" style="margin-bottom:0px;">Address 1:</span><input type="text" class="slim-text-box" value.bind="newAddress.address1">
+                    <span class="inline-label" style="margin-bottom: 0px;">
+                        <span class="slim-text-box-label" style="">Address 1</span>
+                        <div>
+                            <input type="text" class="slim-text-box" value.bind="newAddress.address1">
+                        </div>
+                    </span>
                 </div>
+                <!-- Address 2 -->
                 <div class="grid-content shrink">
-                    <span class="inline-label slim-text-box-label" style="margin-bottom:0px;">Address 2:</span><input type="text" class="slim-text-box" value.bind="newAddress.address2">
+                    <span class="inline-label" style="margin-bottom: 0px;">
+                        <span class="slim-text-box-label" style="">Address 2</span>
+                        <div>
+                          <input type="text" class="slim-text-box" value.bind="newAddress.address2">
+                        </div>
+                    </span>
                 </div>
+                <!-- City -->
                 <div class="grid-content shrink">
-                    <span class="inline-label slim-text-box-label" style="margin-bottom:0px;">City:</span><input type="text" class="slim-text-box" value.bind="newAddress.city">
+                    <span class="inline-label" style="margin-bottom: 0px;">
+                        <span class="slim-text-box-label" style="">City</span>
+                        <div>
+                            <input type="text" class="slim-text-box" value.bind="newAddress.city">
+                            </div>
+                    </span>
                 </div>
+                <!-- Country -->
                 <div class="grid-content shrink">
-                    <span class="inline-label slim-text-box-label" style="margin-bottom:0px;">Country:</span><input type="text" class="slim-text-box" value.bind="newAddress.country">
+                    <span class="inline-label" style="margin-bottom: 0px;">
+                        <span class="slim-text-box-label" style="">Country</span>
+                        <div>
+                            <input type="text" class="slim-text-box" value.bind="newAddress.country">
+                        </div>
+                    </span>
                 </div>
+                <!-- Postal Code -->
                 <div class="grid-content shrink">
-                    <span class="inline-label slim-text-box-label">Postal Code:</span><input type="text" class="slim-text-box" value.bind="newAddress.postalCode">
+                    <span class="inline-label" style="margin-bottom: 0px;">
+                        <span class="slim-text-box-label">Postal Code</span>
+                        <div> 
+                            <input type="text" class="slim-text-box" value.bind="newAddress.postalCode">
+                        </div>
+                    </span>
                 </div>
-
                 <!-- Courier Section -->
                 <div class="grid-content shrink">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Courier</span>
-                        <select name="" id="" value.bind="sampleRequest.courierOut">
+                        <select class="slim-box" name="" id="" value.bind="sampleRequest.courierOut">
                             <option repeat.for="option of courier" model.bind="option">${option}</option>
                         </select>
                     </span>
 
                 </div>
                <!--  <div class="grid-block shrink"> -->
-                    <div class="grid-content shrink">
+                    <div class="grid-content shrink" style="margin-bottom:0.5rem;">
                         <span class="inline-label">
                             <span class=" slim-text-box-label">Split</span>
-                            <select name="" id="" value.bind="sampleRequest.paymentOut">
+                            <select class="slim-box" name="" id="" value.bind="sampleRequest.paymentOut">
                                 <option repeat.for="option of payment" model.bind="option">${option}</option>
                             </select>
                         </span>
@@ -156,10 +191,10 @@
                     </table>
                 </div>
                 <!-- Return By Time -->
-                <div class="grid-content shrink" style="margin-top: 1rem;">
+                <div class="grid-content shrink" style="margin-top: 1.5rem;">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Return By</span>
-                    <select name="" id="" value.bind="sampleRequest.returnBy">
+                    <select class="slim-box" name="" id="" value.bind="sampleRequest.returnBy">
                         <option repeat.for="item of returnBy" model.bind="item">${item}</option>
                     </select>
                     </span>
@@ -168,7 +203,7 @@
                 <div class="grid-content shrink">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Return To</span>
-                    <select name="" id="" value.bind="sampleRequest.returnToAddress">
+                    <select class="slim-box" name="" id="" value.bind="sampleRequest.returnToAddress">
                        <option value="0" selected>Me</option> 
                         <option repeat.for="address of brandAddresses" model.bind="address.id">${address.name}</option>
                     </select>
@@ -179,7 +214,7 @@
                 <div class="grid-content shrink">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Courier</span>
-                        <select name="" id="" value.bind="sampleRequest.courierReturn">
+                        <select class="slim-box" name="" id="" value.bind="sampleRequest.courierReturn">
                             <option repeat.for="option of courier" model.bind="option">${option}</option>
                         </select>
                     </span>
@@ -189,7 +224,7 @@
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class=" slim-text-box-label">Split</span>
-                            <select name="" id="" value.bind="sampleRequest.paymentReturn">
+                            <select class="slim-box" name="" id="" value.bind="sampleRequest.paymentReturn">
                                 <option repeat.for="option of payment" model.bind="option">${option}</option>
                             </select>
                         </span>
