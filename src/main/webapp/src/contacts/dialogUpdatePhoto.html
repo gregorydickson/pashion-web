@@ -9,19 +9,21 @@
         </ai-dialog-header>
       <ai-dialog-body>
 
-          <div class="add-drag-and-drop">
+        <!--   <div class="add-drag-and-drop">
           <span class="text-circled">+</span>
             <span class="label">Drag and Drop an image</span>
-          </div>
+          </div> -->
 
           <div class="add-choose-file">          
             <input type="file" name="file-1" id="file-img" class="input-file" accept="image/*" files.bind="avatar"/>
             <label for="file-img"><span>Choose a File...</span></label>
 
           </div>
+      </ai-dialog-body>
+      <ai-dialog-footer>    
           <a class="button" click.delegate="uploadAvatar()">Accept</a>
           <a class="hollow button"  click.delegate="close()">Cancel</a>
-      </ai-dialog-body>
+      </ai-dialog-footer>
 
    </ai-dialog>
 </template>

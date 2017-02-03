@@ -218,7 +218,7 @@ export class Messages {
         );
         window.setTimeout(function () {
               $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight"));
-            },500); // major kludge to scroll messages
+            },250); // major kludge to scroll messages
     }
 
     filterFunc(searchExpression, value){

@@ -1,44 +1,28 @@
 <template>
  
     <div class="grid-block grid-block-overflow-visible" style="margin-bottom:1rem;">
-            <table class="width100">
-                <tr>
-                    <td>
-                        <div>
-                            <img if.bind="(userVar.image)" src=${userVar.image} class="clip-circle contact-entry" />
-                            <div if.bind="(!userVar.image)" class="avatar-circle">${currentContact.name.charAt(0)}</div>
-                           <!--  <div class="contact-mark">
-                                <img src="/assets/CheckMark.png" alt="">
-                                <!-- <img src="/assets/QuestionMark.png" alt=""> 
-                            </div> -->
-                        </div>
-                    </td>
-                    <td>
-                        <div class="ui-text-label-me-left paragraph-5 contact-box">${currentContact.name} ${currentContact.surname}</div>
-                        <div class="ui-text-label-s-left paragraph-5 contact-box">${currentContact.brand.name} ${currentContact.pressHouse.name}</div>    
-                    </td>
-                   <!-- <td class="align-top"><span class="alert-box">8</span></td>
-                    <td class="align-top">
-                        <div class="look-menu-absolute-wrap">
-                            <span class="edit-box" ><a href="#" click.delegate="lookEditContact(1)">...</a>
-                            </span>
-                        
-                        <!-- edit contact modal popup
-                                 <div class="look-menu-absolute" id="lookEditContact1">
-                                    <span class="look-menu-heading">CONTACT</span>
-                                    <ul class="look-menu-list">
-                                        <li class="look-menu-item">
-                                            <a href="#" click.delegate="createDialogEditContact(1)" class="look-menu-link">Edit</a>
-                                        </li>
-                                        <li class="look-menu-item">
-                                            <a href="#" click.delegate="CreateDialogUpdatePhoto(1)" class="look-menu-link">Update your photo</a>
-                                        </li>                                   
-                                    </ul>
-                                </div>                           
-                        </div> 
-                    </td> -->
-                </tr>
-            </table>
 
+                <table class="width100" style="table-layout: fixed;">
+                    <tr>
+                        <td class="con-td-1">
+                                <div class="avatar-container">
+                                    <img if.bind="(currentContact.avatar)" src=${currentContact.avatar} class="clip-circle contact-entry avatar-img" />
+                                    <div if.bind="(!currentContact.avatar)" class="avatar-circle avatar-text ">${currentContact.name.charAt(0)}</div>
+                                </div>
+                            </a>
+                        </td>
+                        <td class="con-td-2">
+                                <div>
+                                    <div class="ui-text-label-me-left paragraph-5 contact-box">${currentContact.name} ${currentContact.surname}</div>
+                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${currentContact.brand.name}${currentContact.pressHouse.name}${currentContact.prAgency.name}</div>
+                                </div>
+                            </a>
+                        </td>
+                        <td class="align-top con-td-3">
+                        </td>
+                        <td class="align-top con-td-4">
+                        </td>
+                    </tr>
+                </table>
     </div>
 </template>

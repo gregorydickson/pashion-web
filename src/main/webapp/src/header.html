@@ -4,8 +4,17 @@
             <ul class="menu-bar" style="background: #ebebeb">
                 <li style="display:flex; max-width:250px;">
                     <!-- <img  src="/assets/lauren.png" style="margin-right: 1rem;"/> -->
+                    <!-- 
                     <img if.bind="(user.image)" src=${user.image} class="clip-circle contact-entry" />
-                    <div if.bind="(!user.image)" style="margin-right: 1rem; margin-left:1rem; margin-top:1rem; text-transform: uppercase;" class="avatar-circle ">${user.name.charAt(0)}</div>
+                    <div if.bind="(!user.image)" style="margin-right: 1rem; margin-left:1rem; margin-top:1rem; text-transform: uppercase;" class="avatar-circle ">${user.name.charAt(0)}</div> -->
+
+                    <div class="avatar-container" style="margin-right: 1rem; margin-left:1rem; margin-top:0.5rem;">
+                        <img if.bind="(user.avatar)" src=${user.avatar} class="clip-circle contact-entry avatar-img" />
+                        <div if.bind="(!user.avatar)"  class="avatar-circle avatar-text ">${user.name.charAt(0)}</div>
+                    </div>
+
+
+
                     <select value.bind="selectval" change.trigger="userActions()" name="NotUSed" id="headerModeSelect" class="nav-label-header top-menu-modifier" style="max-width:150px;">
                         <option value="no">${user.name}</option>
                        <!-- <option value="guest">GUEST</option> -->
