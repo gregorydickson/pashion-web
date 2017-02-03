@@ -15,10 +15,12 @@
           </div>
 
           <div class="add-choose-file">          
-            <input type="file" name="file-1" id="file-img" class="input-file" data-multiple-caption="{count} files selected" multiple />
-            <label for="file-1"><span>Choose a File...</span></label>
-          </div>
+            <input type="file" name="file-1" id="file-img" class="input-file" accept="image/*" files.bind="avatar"/>
+            <label for="file-img"><span>Choose a File...</span></label>
 
+          </div>
+          <a class="button" click.delegate="uploadAvatar()">Accept</a>
+          <a class="hollow button"  click.delegate="close()">Cancel</a>
       </ai-dialog-body>
 
    </ai-dialog>

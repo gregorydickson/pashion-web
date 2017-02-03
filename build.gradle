@@ -30,7 +30,8 @@ ext {
 repositories {
     mavenLocal()
     maven { url "https://repo.grails.org/grails/core" }
-    maven { url 'http://dl.bintray.com/agorapulse/libs' }
+    maven { url "http://dl.bintray.com/agorapulse/libs"}
+    maven { url "http://dl.bintray.com/karman/karman"}
 }
 
 dependencyManagement {
@@ -83,6 +84,8 @@ dependencies {
 
     compile 'com.logentries:logentries-appender:1.1.36'
 
+    compile 'com.bertramlabs.plugins:selfie:1.1.1'
+    
     compile 'org.grails.plugins:aws-sdk-s3:2.1.9'
 
 }

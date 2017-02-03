@@ -45,6 +45,13 @@ environments:
             url: jdbc:mysql://pashion-prod.cnjmlfc6tctw.eu-west-1.rds.amazonaws.com:3306/pashionprod
             username: pashionprod
             password: 2Mc9Nf17gBzyGs*a4$WS
+
+        grails:
+          plugin:
+            awssdk:
+              accessKey: AKIAIDWK6XYVRHVN6HUQ
+              secretKey: 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
+              region: eu-west-1
     test:
         dataSource:
             dbCreate: update
@@ -57,6 +64,12 @@ environments:
             url: jdbc:mysql://pashion-prod.cnjmlfc6tctw.eu-west-1.rds.amazonaws.com:3306/pashionprod
             username: pashionprod
             password: 2Mc9Nf17gBzyGs*a4$WS
+        grails:
+            plugin:
+              awssdk:
+                accessKey: AKIAIDWK6XYVRHVN6HUQ
+                secretKey: 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
+                region: eu-west-1
             # vpc: vpc-0b88176e
             # security group: rds-launch-wizard-1 (sg-47b6f321)
 

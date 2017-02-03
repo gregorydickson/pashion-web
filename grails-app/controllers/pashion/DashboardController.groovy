@@ -57,7 +57,8 @@ class DashboardController {
             type = 'guest'
         }
         //creating a map is more simple than a bunch of marshalling code
-        def userInfo = [email:user.email,id:user.id, type:type,companyId:companyId, name:user.name,surname:user.surname ] as JSON
+        def avatar = User.findById(user.id).avatar
+        def userInfo = [email:user.email,id:user.id, type:type,companyId:companyId, name:user.name,surname:user.surname, avatar:avatar] as JSON
         render userInfo
     }
 

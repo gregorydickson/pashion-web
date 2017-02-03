@@ -6,6 +6,7 @@ import grails.converters.JSON
 
 
 import com.stormpath.sdk.account.Account
+import javax.servlet.http.HttpServletResponse
 
 
 @Transactional(readOnly = true)
@@ -280,6 +281,28 @@ class UserController {
             }
             '*'{ render status: NO_CONTENT }
         }
+    }
+
+    def uploadAvatar(User user){
+
+        def params = request.JSON
+        def url = ''
+        url = userService.uploadAvatar(params.data, user)
+        println user
+
+        user.avatar = url
+        user.save(flush:true,failOnError:true)
+
+        def data = [
+                url: url
+        ]
+
+        withFormat {
+            json {
+                render(status: HttpServletResponse.SC_OK, text: data as JSON, contentType: "application/json")
+            }
+        }
+
     }
 
     protected void notFound() {
