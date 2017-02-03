@@ -2,6 +2,11 @@
 <template>
     <require from="./common/viewDateFormatter"></require>
     <require from="./calendars/datepicker"></require>
+    <require from="./contacts/sort"></require>
+    <require from="./contacts/filter"></require>
+    <require from="./dashboard_filters/filters-order"></require>
+    <require from="./dashboard_filters/filters-filterrequests"></require>
+
     <!-- Main building block -->
    <!-- <div class="vertical grid-block spa-background">
 
@@ -40,17 +45,26 @@
                             <compose view-model="calendars/requestCalendar"></compose>
                         </div> -->
                         <!-- Image holder -->
-                        <div class="grid-content request-image-fix" style="
+                        <div class="request-image-fix " style="
                               background-image: url('${image}');
-                              background-position: left top;">
+                              background-position: center top;
+                              min-width:258px;
+                              max-width:258px;
+                              min-height:400px;
+                              max-height:400px;">
                         </div>
                         <!-- Image information holder -->
-                        <div class="grid-content ui-text-label-m request-image-info-fix">
-                            <span>${look}</span>
+                        <div class="request-image-info-fix" style="
+                                    text-align: center;
+                                    overflow: hidden;
+                                    margin-top:5px;
+                                    min-width:290px;
+                                    max-width:290px;
+                                    min-height:100px;
+                                    max-height:100px;">
+                            <span if.bind="brand" class="accordion-grey" style="font-size: 1.1rem; font-weight: 500;">${brand} Look ${look}</span>
                             <br>
-                            <span>${brand}</span>
-                            <br>
-                            <span>${season}</span>
+                            <span class="accordion-grey">${season}</span>
                             <br>
                         </div>
                     </div>
@@ -64,27 +78,35 @@
                         <div class="grid-block shrink" style="margin-left: 1rem; margin-right: 1rem; margin-top:1.5rem;">
                             <div class="grid-block">
                                 <!-- Search requests -->
-                                <input type="search" value.two-way="searchtext" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
+                                <input type="search" value.two-way="searchTextReqMan" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
                             </div>
                             <div class="grid-block align-center">
-                                <!-- filter requests -->
+                                <!-- filter requests
                                 <span class="inline-label">
-                                  <span class="form-label">Filter</span>
-                                <select name="" id="">
-                                    <option>Overdue</option>
+                                  <span class="form-label" style="height:28px; ">FILTER</span>
+                                <select name="" id="" disabled>
                                     <option>All</option>
                                 </select>
+                                </span> -->
+
+                                <span class="inline-label" style="width:200px;">
+                                    <filters-filterrequests change.delegate="filterChange($event)" style="width:200px;"></filters-filterrequests> 
                                 </span>
+
+
                             </div>
                             <div class="grid-block">
-                                <!-- order results -->
+                                <!-- order results
                                 <span class="inline-label">
-                                  <span class="form-label">Order</span>
+                                  <span class="form-label" style="font-weight: 500">ORDER</span>
                                 <select name="" id="">
                                     <option>By Date</option>
                                     <option>By Person</option>
-                                    <option>By Request Number</option>
+                                    <option>By Request ID</option>
                                 </select>
+                                </span> -->
+                                <span class="inline-label" style="width:200px;">
+                                    <filters-order change.delegate="orderChange($event)" style="width:200px;"></filters-order> 
                                 </span>
                             </div>
                         </div>
@@ -92,7 +114,7 @@
                         <!--Header -->
                         
                             <div if.bind="user.type === 'brand'"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
-                                <table class="big-accordion">
+                                <table class="big-accordion" style="table-layout: fixed;">
                                     <tr>
                                         <td class="accordion-underline w3"></td>
                                         <td class="accordion-underline w4">ID</td>
@@ -106,8 +128,8 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div if.bind="user.type === 'press'"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
-                                <table class="big-accordion">
+                            <div if.bind="(user.type === 'press') || (user.type === 'agency')"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
+                                <table class="big-accordion" style="table-layout: fixed;">
                                     <tr>
                                         <td class="accordion-underline w3"></td>
                                         <td class="accordion-underline w4">ID</td>
@@ -125,27 +147,28 @@
                             <!-- Rows of content BRAND View-->
                             <div class="grid-content" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left: 1rem; margin-right: 1rem;">
                                 
-                                <div repeat.for="booking of bookings">
-                                    <table  class="big-accordion">
+                                <div repeat.for="booking of bookings | filter:searchTextReqMan:filterFunc:filtering:user | sort: ordering : 'ascending' ">
+                                    <table  class="big-accordion" style="table-layout: fixed;">
                                         <tr>
                                             <td class="accordion-grey w3">
                                                 <button id="button${$index}" class="accordion" click.delegate="closeExpand($index,booking)"></button>
                                             </td>
                                             <td class="accordion-grey w4">${booking.id}</td>
                                             <td class="accordion-grey w11">${booking.bookingStartDate | viewDateFormat}</td>
-                                            <td if.bind="user.type === 'press'" class="accordion-grey w14">${booking.brand.name}</td>
-                                            <td class="accordion-grey w25">${booking.editorialName}</td>
+                                            <td if.bind="(user.type === 'press') || (user.type === 'agency')" class="accordion-grey w14">${booking.brand.name}</td>
+                                            <td if.bind="booking.editorialName" class="accordion-grey w25">${booking.editorialName}</td>
+                                            <td if.bind="!booking.editorialName" class="accordion-grey w25">n/a</td>
                                             <td if.bind="user.type === 'brand'" class="accordion-grey w14">${booking.pressHouse.name}</td>
                                             <td class="accordion-grey w13">${booking.requestingUser.name} ${booking.requestingUser.surname}</td>
                                             <td class="accordion-grey w5">${booking.searchableItems.length}</td>
-                                            <td if.bind="user.type === 'press'" class="accordion-grey w14">${booking.requestStatusPress}</td>
-                                            <td if.bind="user.type === 'brand'" class="accordion-grey w14">${booking.requestStatusBrand}</td>
-                                            <td class="accordion-grey w5">
+                                            <td if.bind="(user.type === 'press') || (user.type === 'agency')" class="accordion-grey ui-text-label-m-blue w14" style="font-weight:500;">${booking.requestStatusPress}</td>
+                                            <td if.bind="user.type === 'brand'" class="accordion-grey ui-text-label-m-blue w14" style="font-weight:500;">${booking.requestStatusBrand}</td>
+                                            <td class="accordion-grey w5"> 
                                                 <div class="look-menu-absolute-wrap">
                                                     <span class="edit-box" ><a href="#" click.delegate="lookEditMenu(booking.id)">...</a></span>
                                                     <!-- edit request modal popup -->
                                                      <div class="look-menu-absolute" id="requestManTest${booking.id}">
-                                                        <span class="look-menu-heading">REQUEST #${booking.id}</span>
+                                                        <span class="look-menu-heading">REQUEST ${booking.id}</span>
                                                         <ul if.bind="user.type === 'brand'"  class="look-menu-list">
                                                             <li class="look-menu-item"><a click.delegate="editSampleRequest(booking.id)" href="#" class="look-menu-link">Edit</a></li>
                                                             <li if.bind="booking.requestStatusBrand === 'Pending'" class="look-menu-item"><a click.delegate="denySampleRequest(booking.id)" href="#" class="look-menu-link">Deny</a></li>                                            
@@ -157,7 +180,7 @@
                                                             <li class="look-menu-item"><a click.delegate="deleteSampleRequest(booking.id)" href="#" class="look-menu-link">Delete Request</a></li>
                                                         </ul>
 
-                                                        <ul if.bind="user.type === 'press'" class="look-menu-list">
+                                                        <ul if.bind="(user.type === 'press') || (user.type === 'agency')" class="look-menu-list">
                                                             <li class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id)" class="look-menu-link">Edit</a></li>
                                                             <li class="look-menu-item"><a href="#" click.delegate="pressMarkReceivedSampleRequest(booking.id)" class="look-menu-link">Mark Received</a></li>
                                                             <li class="look-menu-item"><a href="#" click.delegate="pressShipSampleRequest(booking.id)"  class="look-menu-link">Ship</a></li>
@@ -174,40 +197,55 @@
                                     <!-- expanding data -->
                                     <div id="panel${$index}" class="panel grid-block vertical" style="margin-left: 0.5rem; margin-top:0.5rem;">
                                         <div class="grid-content">
-                                            <span>OVERVIEW</span>
+                                            <span>EDITORIAL</span>
                                         </div>
                                         <div class="grid-content">
-                                            <span>${booking.editorialName} by ${booking.editorialWho} </span>
+                                            <span if.bind="(booking.editorialName || booking.editorialWho || booking.editorialWhen)">Photo shoot ${booking.editorialName} ${booking.editorialWho} ${booking.editorialWhen | viewDateFormat }</span>
+                                            <span if.bind="(!booking.editorialName && !booking.editorialWho && !booking.editorialWhen)">No details of editorial</span>
                                         </div>
-                                        <div class="grid-content" style="margin-top:0.5rem;">
-                                            <span>SHIPPING OUT:</span><span style="margin-left:0.5rem;"></span>
+                                        <div class="grid-content" style="margin-top:1rem;">
+                                            <span>SHIPPING OUT: ID ${booking.shippingOut.id} ${booking.shippingOut.tracking}</span>
                                         </div>
                                         <div class="grid-content">
                                             <span class="ui-text-label-m-blue">${booking.shippingOut.status}</span>
-                                            <span>on ${booking.editorialWhen | viewDateFormat} by ${booking.shippingOut.courier} () going to  ${booking.pressHouse.name}, ${booking.addressDestination.address1}, ${booking.addressDestination.address2} picked up at   </span>
+                                            <span>for ${booking.bookingStartDate | viewDateFormat} ${booking.requiredBy} by ${booking.courierOut} (${booking.paymentOut}) to  ${booking.deliverTo.pressHouse.name} ${booking.deliverTo.prAgency.name} ${booking.deliverTo.brand.name} at ${booking.addressDestination.address1}, ${booking.addressDestination.address2}, ${booking.addressDestination.city}, ${booking.addressDestination.postalCode} </span>
+                                            <span if.bind="booking.pickedupAt.addressDestination.name"> (${booking.addressDestination.name)</span> 
+                                            <span if.bind="booking.pickedupAt"> at ${booking.pickedupAt} signed ${booking.signedBy} </span>
                                         </div>
-                                        <div class="grid-content" style="margin-top:0.5rem;">
-                                            <span>RETURN:</span><span style="margin-left:0.5rem;">${booking.shippingReturn.tracking}</span>
+                                        <div class="grid-content" style="margin-top:1rem;">
+                                            <span>RETURN: ID ${booking.shippingReturn.id} ${booking.shippingReturn.tracking}</span>
                                         </div>
                                         <div class="grid-content">
                                             <span class="ui-text-label-m-blue">${booking.shippingReturn.status}</span>
-                                            <span>for ${booking.bookingEndDate | viewDateFormat} by  () coming back to ${booking.returnToAddress.name} by ${booking.returnBy} addressed to ${booking.deliverTo.name} ${booking.deliverTo.surname}. </span>
+                                            <span>for ${booking.bookingEndDate | viewDateFormat} ${booking.returnBy} by ${booking.courierReturn} (${booking.paymentReturn}) </span>
+                                            <span if.bind="booking.returnToAddress">coming back to ${booking.returnToAddress.name} </span>
+                                            <span if.bind="!booking.returnToAddress">coming back to here</span>
+                                            <span if.bind="booking.returnToName"> to ${booking.returnToName} ${booking.returnToSurname}</span>
+                                            <span if.bind="!booking.returnToName"> to me</span>
                                         </div>
-                                        <div class="grid-content" style="margin-top:0.5rem;">
+                                        <div class="grid-content" style="margin-top:1rem;">
                                             <span>SAMPLES:</span><span style="margin-left:0.5rem;">${booking.searchableItems.length}</span>
                                         </div>
-                                        <div class="grid-content" style="margin-top:0.5rem; margin-bottom: 1rem;">
+                                        <div class="grid-content" style="margin-bottom: 2rem;">
+                                        <!-- with sample images 
                                             <table class="" style="table-layout:fixed;">
                                                 <tr  style="height:1rem;">
-                                                    <td repeat.for="item of booking.searchableItems" class="accordion"><img if.bind="item.image !== undefined"  src="${item.image}" width="60px;" /></td> <!-- src="${item.image}" -->
+                                                    <td repeat.for="item of booking.searchableItems" class="accordion"><img if.bind="item.image !== undefined"  src="${item.image}" width="60px;" /></td> 
                                                 </tr>
                                                 <tr  style="height:1rem;">
-                                                    <td repeat.for="item of booking.searchableItems" class="accordion sample-padding">${item.name}</td>
+                                                    <td repeat.for="item of booking.searchableItems" class="accordion sample-padding">${item.id}: ${item.attributes}</td>
                                                 </tr>
                                                <tr>
                                                     <td repeat.for="status of booking.searchableItemsStatus" class="accordion sample-padding">${status.brandStatus}</td>
                                                 </tr> 
+                                            </table> -->
+                                            <!-- no images -->
+                                            <table class="" style="table-layout:fixed;">
+                                                <tr style="height:1rem;" repeat.for="item of booking.searchableItems" >
+                                                    <td class="accordion sample-padding to-u-c">${look}.${$index+1} : &nbsp; &nbsp;${item.attributes} ${item.status.Status}</td>
+                                                </tr>
                                             </table>
+
                                         </div>
                                         
                                     </div>

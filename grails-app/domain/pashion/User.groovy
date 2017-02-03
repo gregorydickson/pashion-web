@@ -18,6 +18,10 @@ class User {
 	String stormpathString
 	String avatar
 
+	City city
+
+	String image
+
 	Long userCreatedId
 	Date lastModifiedDate
 	Long lastModifiedUserId
@@ -55,7 +59,9 @@ class User {
 		name nullable:true
 		surname nullable:true
 		avatar nullable: true
-		
+		city nullable: true
+		image nullable: true
+
 		stormpathString nullable:true, maxSize: 1000
 		userCreatedId nullable: true
 		lastModifiedDate nullable: true
@@ -71,6 +77,10 @@ class User {
 		connections nullable: true
 		permissions nullable: true
 
+	}
+
+	String toString(){
+		return title+ " "+name + " "+ surname + " " + phone
 	}
 
 }

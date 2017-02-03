@@ -11,6 +11,8 @@ export class CustomSelect {
     @bindable name = null; // The name of our custom select
 
     @bindable options = []; // The label/option values
+    @bindable ss = []; // selector select
+    @bindable sa = []; // selector all
 
     constructor(element) {
         this.element = element;
@@ -20,7 +22,8 @@ export class CustomSelect {
     // to happenings within the DOM itself
     attached() {
         $(this.element).find('select')
-            .select2()
+            .select2({minimumResultsForSearch: 15 // only allow terms up to n characters long
+                        })
             .on('change', (event) => {
                 let changeEvent;
 

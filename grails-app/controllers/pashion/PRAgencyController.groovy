@@ -18,7 +18,7 @@ class PRAgencyController {
         // log.info "pragency/addresses id: " + params.id.toInteger()
         def prAgency = PRAgency.get(params.id.toInteger())  
         // log.info "pragency addresses brand: " + brand
-        def addresses = prAgency.addresses as JSON 
+        def addresses = Address.findAllByPRAgencyAndArchived(prAgency,false) as JSON 
         // log.info "pragency/addresses addresses: " + addresses
         render addresses
     }

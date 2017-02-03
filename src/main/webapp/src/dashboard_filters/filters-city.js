@@ -6,13 +6,20 @@ import 'fetch';
 @inject(HttpClient)
 @customElement('filters-city')
 
-export class FiltersCity {
+export class FiltersCityCustomElement {
   cities = [];
-  
-  @bindable({ defaultBindingMode: bindingMode.twoWay }) city;
+  selectorselector = true;
+  selectorall = true;
 
-  constructor(http){
+  @bindable cityo = '';
+
+  constructor(http, element){
     this.http = http;
+    this.element = element;
+  }
+
+  setCity(event) {
+  	this.cityo = event.detail.value;
   }
   
 

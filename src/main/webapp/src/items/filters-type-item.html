@@ -1,0 +1,14 @@
+<template>
+<require from="../common/customSelect"></require>
+
+	<span class="inline-label">
+		<span class="slim-text-box-label">Type</span>
+		<select2 sa.bind="false" name="" options.bind="sampleTypes" selected.bind="selectedSample.sampleType" change.delegate="setType($event)" ></select2>
+
+		<!-- <select name="" id="" value.bind="type">
+		    <option value="">All</option>
+		    <option repeat.for="type of itemTypes" model.bind="type.searchCode">${type.display}</option>
+		</select> -->
+	</span>
+
+</template>

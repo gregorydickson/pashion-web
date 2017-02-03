@@ -5,7 +5,7 @@
   //margin: 100px auto;   
   position: fixed;
   left: 50%;
-  top: 193px;
+  top: 250px;
   margin-left: -38px; // 50% - half width of the spinner
   margin-top: -20px; 
   width: 76px;
@@ -38,6 +38,7 @@
 .sk-spinner-wave div 
   {
       background-color: $pinkish-grey;
+      //box-shadow: 10px 10px 5px #888888;
       height: 100%;
       width: 5px;
       margin-left:3px;

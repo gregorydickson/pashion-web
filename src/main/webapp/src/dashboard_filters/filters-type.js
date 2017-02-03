@@ -3,18 +3,23 @@ import {HttpClient} from 'aurelia-fetch-client';
 import 'fetch';
 
 
-@inject(HttpClient)
+@inject(HttpClient, Element)
 @customElement('filters-type')
 
-export class FiltersType {
+export class FiltersTypeCustomElement {
   itemTypes = [];
   
-  @bindable({ defaultBindingMode: bindingMode.twoWay }) type;
+ // @bindable({ defaultBindingMode: bindingMode.twoWay }) type;
+  @bindable typeo = '';
 
-  constructor(http){
+  constructor(http, element){
     this.http = http;
+    this.element = element;
   }
   
+  setType(event){
+    this.typeo = event.detail.value;
+}
 
   attached() {
       return Promise.all([

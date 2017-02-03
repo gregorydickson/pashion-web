@@ -1,0 +1,11 @@
+<template>
+    <select value.two-way="selected" name.one-way="name" id.one-way="name" >
+   <!-- <option repeat.for="option of options" value.bind="option.id">${option.name}</option> -->
+   		<option>Select</option>
+        <option class="to-u-c" if.bind="options[0].name" repeat.for="option of options" value.bind="option.id">${option.name}</option>
+        <option class="to-u-c" if.bind="options[0].display" repeat.for="option of options" value.bind="option.id">${option.display}</option>
+      	<option class="to-u-c" if.bind="(!options[0].name && !options[0].display)" repeat.for="option of options" value.bind="option">${option}</option> 
+
+
+  </select>
+</template>

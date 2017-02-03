@@ -60,6 +60,8 @@ export class SampleRequestService{
   	}
 
     updateSampleRequest(sr){
+      console.log("sample request:");
+      console.log(JSON.stringify(sr));
       var promise = new Promise((resolve, reject) => {
         this.http.fetch('/sampleRequest/updatejson', {
             method: 'post',

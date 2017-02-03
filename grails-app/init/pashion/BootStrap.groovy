@@ -25,6 +25,7 @@ class BootStrap {
         returnArray['season'] = it.season.name
         returnArray['brand'] = it.brand.name
         returnArray['fromDate'] = it.fromDate
+        returnArray['imageProvider'] = it.imageProvider
         return returnArray
       }
 // RM don't remove this section, used by comms
@@ -40,6 +41,13 @@ class BootStrap {
       }
 
       JSON.registerObjectMarshaller(Brand) {
+        def returnArray = [:]
+        returnArray['name'] = it.name
+        returnArray['id'] =  it.id
+        return returnArray
+      }
+
+      JSON.registerObjectMarshaller(City) {
         def returnArray = [:]
         returnArray['name'] = it.name
         returnArray['id'] =  it.id

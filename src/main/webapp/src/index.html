@@ -13,7 +13,24 @@
     <require from="./dashboard_filters/filters-season"></require>
     <require from="./dashboard_filters/filters-type"></require>
     <require from="./dashboard_filters/filters-city"></require>
+    <require from="./dashboard_filters/filters-order"></require>
+    <require from="./dashboard_filters/filters-filterrequests"></require>
     <require from="./common/jquery.unveil"></require>
+    <require from="./contacts/filter"></require>
+    <require from="./contacts/sort"></require>
+
+
+    <!-- start preloader -->
+    <div class="preloader" show.bind="busy.active" >
+        <div class="sk-spinner sk-spinner-wave">
+            <div class="sk-rect1"></div>
+            <div class="sk-rect2"></div>
+            <div class="sk-rect3"></div>
+            <div class="sk-rect4"></div>
+            <div class="sk-rect5"></div>
+        </div>
+    </div>
+    <!-- end preloader -->
 
 
         <div class="grid-block spa-background" style="overflow:visible;">
@@ -45,16 +62,22 @@
                 <div class="vertical grid-block shrink" style="margin-left: 1rem; margin-right: 1rem;">
                     <form style="margin-top:1rem;">
                         <!-- Search requests -->
-                        <input type="search" value.two-way="searchtext" class="search-box" id="search-requests" placeholder="Search Text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Text'">
+                        <input type="search" value.two-way="searchTextRequests" class="search-box" id="search-requests" placeholder="Search for Companies" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search for Companies'">
                         <!-- filter requests -->
-                        <span class="inline-label" style="margin-top:1rem;">
-                        <span class="form-label" style="font-weight:500;">ORDER</span>
+                        <span class="inline-label" style="width:258px; margin-bottom: 0px; margin-top:1.5rem;">
+                            <filters-filterrequests change.delegate="filterChange($event)" style="width:258px;"></filters-filterrequests> 
+                        </span>
+                        <!-- ORDER -->     
+                        <span class="inline-label" style="margin-top:1rem; width:258px; margin-top:0.5rem;">
+                            <filters-order change.delegate="orderChange($event)" style="width:259px;"></filters-order> 
+                        </span>
+                       <!--  <span class="form-label" style="font-weight:500;">ORDER</span>
                         <select name="" id="">
                             <option>By Date</option>
                             <option>By Person</option>
                             <option>By Request Number</option>
                         </select>
-                        </span>
+                        </span> -->
                     </form>
                 </div>
                 <!-- Accordion -->
@@ -66,30 +89,30 @@
                     <div>
                         <table class="accordion">
                             <tr> 
-                                <th class="accordion w10"></th>
-                                <th class="accordion w22">ID</th>
-                                <th class="accordion w34">PRESS</th>
-                                <th class="accordion w24">STATUS</th>
+                                <th class="accordion w5"></th>
+                                <th class="accordion w20">LOOK</th>
+                                <th class="accordion w35">OUT</th>
+                                <th class="accordion w30">STATUS</th>
                                 <th class="accordion w10"></th>
                             </tr>
                         </table>
                     </div>
                     <!-- row with button -->
-                    <div repeat.for="booking of bookings">
+                    <div repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user">
                         <table class="accordion">
                             <tr>
                                 <td class="accordion w10">
                                     <button id="button${booking.id}" class="accordion" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
-                                <td class="accordion w22">${booking.id}</td>
-                                <td class="accordion w34">${booking.pressHouse.name}</td>
-                                <td class="accordion w24">${booking.requestStatusBrand}</td>
+                                <td class="accordion w15">${booking.look.season.abbreviation}${booking.look}</td>
+                                <td class="accordion w35">${booking.bookingStartDate | viewDateFormat}</td>
+                                <td class="accordion w30 ui-text-label-m-blue" style="font-weight:500">${booking.requestStatusBrand}</td>
                                 <td class="accordion w10">
                                     <div class="look-menu-absolute-wrap">
                                         <span class="edit-box" ><a href="#" click.delegate="sampleRequestMenu(booking.id)">...</a></span>
                                         <!-- edit request modal BRAND popup -->
                                          <div class="look-menu-absolute" id="requestTest${booking.id}">
-                                            <span class="look-menu-heading">REQUEST #${booking.id}</span>
+                                            <span class="look-menu-heading">REQUEST ${booking.id}</span>
                                             <ul class="look-menu-list">
                                                 <li class="look-menu-item"><a click.delegate="editSampleRequest(booking.id)" href="#" class="look-menu-link">Edit</a></li>
                                                 <li class="look-menu-item"><a click.delegate="denySampleRequest(booking.id)" href="#" class="look-menu-link">Deny</a></li>                                            
@@ -107,15 +130,14 @@
                         </table>
 
                         <!-- expanding data -->
-                        <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0.5rem;">
-                            <table class="accordion expanded">
+                        <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
+                            <table class="accordion expanded" style="table-layout:fixed;">
                                 <tr >
-                                    <td class="accordion" style="width:45px;">Due:</td>
-                                    <td class="accordion">${booking.bookingStartDate | viewDateFormat}</td>
+                                    <td class="accordion" style="width:65px; max-width:65px; padding-top:10px;padding-left:10px;">${booking.pressHouse.name}</td>
                                 </tr>
                                 <tr repeat.for="sample of booking.searchableItems">
-                                    <td class="accordion">Item:</td>
-                                    <td class="accordion">${sample.name}</td>
+                                    <td class="accordion" style="width:60px; max-width:60px; padding-left:10px;"> ${booking.look.season.abbreviation}${booking.look}.${$index+1} :</td>
+                                    <td class="accordion to-u-c" style="width:142px; max-width:142px; overflow: hidden; padding-right:10px;"> ${sample.attributes}</td>
                                 </tr>
                             </table>
                         </div>
@@ -123,35 +145,35 @@
                      
                 </div>
                
-                <div if.bind="user.type === 'press'"  class="vertical grid-content grid-content-column accordion">
+                <div if.bind="(user.type === 'press') || (user.type === 'agency')"  class="vertical grid-content grid-content-column accordion">
                     <!--header -->
                     <div>
-                        <table class="accordion">
+                        <table class="accordion" >
                             <tr>
                                 <th class="accordion w10"></th>
-                                <th class="accordion w22">ID</th>
-                                <th class="accordion w34">BRAND</th>
-                                <th class="accordion w24">STATUS</th>
+                                <th class="accordion w15">ID</th>
+                                <th class="accordion w35">DUE</th>
+                                <th class="accordion w30">STATUS</th>
                                 <th class="accordion w10"></th>
                             </tr>
                         </table>
                     </div>
                     <!-- row with button -->
-                    <div repeat.for="booking of bookings">
+                    <div repeat.for="booking of bookings | filter:searchTextRequests:filterFunc">
                         <table class="accordion">
                             <tr>
                                 <td class="accordion w10">
                                     <button id="button${booking.id}" class="accordion" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
-                                <td class="accordion w22">${booking.id}</td>
-                                <td class="accordion w34">${booking.brand.name}</td>
-                                <td class="accordion w24">${booking.requestStatusPress}</td>
+                                <td class="accordion w15">${booking.id}</td>
+                                <td class="accordion w35">${booking.bookingStartDate | viewDateFormat}</td>
+                                <td class="accordion w30 ui-text-label-m-blue" style="font-weight:500">${booking.requestStatusPress}</td>
                                 <td class="accordion w10">
                                     <div class="look-menu-absolute-wrap">
                                         <span class="edit-box" ><a href="#" click.delegate="sampleRequestMenu(booking.id)">...</a></span>
                                         <!-- edit request modal PRESS popup -->
                                          <div class="look-menu-absolute" id="requestTest${booking.id}">
-                                            <span class="look-menu-heading">REQUEST #${booking.id}</span>
+                                            <span class="look-menu-heading">REQUEST ${booking.id}</span>
                                             <ul class="look-menu-list">
                                                 <li class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id)" class="look-menu-link">Edit</a></li>
                                                 <li class="look-menu-item"><a href="#" click.delegate="pressMarkReceivedSampleRequest(booking.id)" class="look-menu-link">Mark Received</a></li>
@@ -166,15 +188,14 @@
                         </table>
 
                         <!-- expanding data -->
-                        <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0.5rem;">
-                            <table class="accordion expanded">
+                        <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
+                            <table class="accordion expanded" style="table-layout:fixed;">
                                 <tr >
-                                    <td class="accordion" style="width:45px;">Due:</td>
-                                    <td class="accordion">${booking.bookingStartDate | viewDateFormat}</td>
+                                    <td class="accordion" style="width:37px; max-width:37px; padding-top:10px;padding-left:10px;">${booking.brand.name}</td>
                                 </tr>
                                 <tr repeat.for="sample of booking.searchableItems">
-                                    <td class="accordion">Item:</td>
-                                    <td class="accordion"> ${sample.name}</td>
+                                    <td class="accordion" style="width:55px; max-width:55px;"> ${sample.id}:</td>
+                                    <td class="accordion" style="width:190px; max-width:190px; overflow: hidden;"> ${sample.attributes}</td>
                                 </tr>
                             </table>
                         </div>
@@ -207,23 +228,32 @@
                             <span if.bind="maxRReached" class="ui-text-label-m-broad"> > </span>
                             <span class="ui-text-label-m-broad">${numberImages} Results )</span>
                         </span> 
-
                         <!-- Header for 'brand'-->
+                        <span if.bind="user.type == 'brand'">
+                            <span class="ui-text-label-m-broad">MANAGE IMAGES (</span>
+                            <span class="ui-text-label-m-broad">${numberImages} Results )</span>
+                        </span> 
+                        <!-- Header for 'prAgency'-->
+                        <span if.bind="user.type == 'agency'">
+                            <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
+                            <span if.bind="maxRReached" class="ui-text-label-m-broad"> > </span>
+                            <span class="ui-text-label-m-broad">${numberImages} Results )</span>
+                        </span> 
+
+                        <!-- Header for 'brand'
                         <!-- if.bind bug here, only for brand have to remove '>' -->
-                        <select if.bind="user.type == 'brand'" class="select-transparent" name="" id="imagesFunctionality">
+                        <!-- <select if.bind="user.type == 'brand'" class="select-transparent" name="" id="imagesFunctionality">
                             <option value="optionSearchImages"> 
                                 <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
-                               <!-- <span if.bind="maxRReached == 'true'" class="ui-text-label-m-broad"> ${maxRReached} </span> -->
                                 <span class="ui-text-label-m-broad">${numberImages} Results )</span>
                             </option>
                             <option value="optionManageImages">
                                 <span class="ui-text-label-m-broad">MANAGE IMAGES (</span>
-                                <!-- <span if.bind=" maxRReached " class="ui-text-label-m-broad"> > </span> -->
                                 <span class="ui-text-label-m-broad">${numberImages} Results )</span>
                             </option>
-                        </select>
+                        </select>-->
                        
-                        <!-- Header for 'agency'-->
+                        <!-- Header for 'agency 
                         <select if.bind="user.type == 'agency'" class="select-transparent" name="" id="imagesFunctionality">
                             <option value="optionSearchImages"> 
                                 <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
@@ -235,7 +265,7 @@
                                 <span if.bind="maxRReached" class="ui-text-label-m-broad"> > </span>
                                 <span class="ui-text-label-m-broad">${numberImages} Results )</span>
                             </option>
-                        </select>
+                        </select> -->
                        
                    </div>
                     <div class="grid-block align-right tool-header-spacer">
@@ -257,7 +287,8 @@
                                         <!-- change to UI, use "All" for each filter instead -->
                                         <!-- Search -->
                                         <div class="grid-row-col">
-                                            <filters-search></filters-search>
+                                            <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search Text">
+                                            <!-- <filters-search change.delegate="filterChangeSearch($event)"></filters-search> -->
                                         </div>
                                         <!-- Trending -->
                                         <!--<div class="grid-row-col" >
@@ -280,7 +311,7 @@
                                         </div>
                                         <!-- theme -->
                                         <div class="grid-row-col">
-                                            <filters-theme></filters-theme>
+                                            <filters-theme change.delegate="filterChangeTheme($event)"></filters-theme>
                                         </div>
                                     </div>
                                     <!-- 2nd row -->
@@ -296,13 +327,13 @@
                                         <div class="grid-row-col">
                                             <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
                                         </div>
-                                        <!-- Type -->
+                                        <!-- Type
                                         <div class="grid-row-col">
                                             <filters-type></filters-type>
-                                        </div>
+                                        </div> -->
                                         <!--- Color -->
                                         <div class="grid-row-col">
-                                           <filters-color></filters-color>
+                                           <filters-color change.delegate="filterChangeColor($event)"></filters-color>
                                         </div>
                                     </div>
                             </div>
@@ -310,37 +341,41 @@
 
                     <!-- BRAND filters BEGIN -->
                     <div if.bind="user.type === 'brand'">
-                        <div class="blockSearchImages">
+                        <!--<div class="blockSearchImages">
                             <div class="grid-row">
                                 <div class="grid-row-col">
-                                    <filters-search></filters-search>
+                                    <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search Text">
+                                    <!-- <filters-search></filters-search> 
                                 </div>
                                 <div class="grid-row-col">
                                     <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
                                 </div>
-                                <div class="grid-row-col">
-                                    <filters-color></filters-color>
+                                <!--<div class="grid-row-col">
+                                    <filters-color change.delegate="filterChangeColor($event)"></filters-color>
                                 </div>
                                 <div class="grid-row-col">
-                                    <filters-city></filters-city>
+                                    <filters-city change.delegate="filterChangeCity($event)"></filters-city>
                                 </div>
                             </div>
-                        </div>
-                        <div class="blockManageImages">
+                        </div> -->
+                        <div class="">
                             <div class="grid-row">
                                 <div class="grid-row-col">
-                                    <filters-search></filters-search>
+                                    <input type="search" value.bind="searchText" class="search-box" id="search-images2" placeholder="Search Text">
+                                    <!-- <filters-search></filters-search> -->
                                 </div>
                                 <div class="grid-row-col">
-                                    <filters-season season.bind="season" change.delegate="filterChange($event)"></filters-season>
+                                    <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
                                 </div>                    
-                                <div class="grid-row-col"></div>
+                                <div class="grid-row-col">
+                                    <filters-city change.delegate="filterChangeCity($event)"></filters-city>
+                                </div>
                                 <div class="grid-row-col"></div>
                             </div>
                             <div class="grid-row">
                                 <div class="grid-content shrink">
                                     <button id="btn-add-files" class="small button hollow" click.delegate="createAddfilesDialog()">Add Images</button>
-                                    <button class="small button hollow">Delete Season</button>
+                                    <button class="small button hollow disabled">Delete Season</button>
                                 </div>              
                             </div>
                         </div>
@@ -353,7 +388,8 @@
                         <div class="blockSearchImages">
                             <div class="grid-row">
                                 <div class="grid-row-col">
-                                    <filters-search></filters-search>
+                                    <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search Text">
+                                    <!-- <filters-search></filters-search> -->
                                 </div>
                                 <div class="grid-row-col">
                                     <filters-available-from></filters-available-from>
@@ -362,7 +398,7 @@
                                     <filters-available-to></filters-available-to>
                                 </div>
                                 <div class="grid-row-col">
-                                    <filters-city></filters-city>
+                                    <filters-city change.delegate="filterChangeCity($event)"></filters-city>
                                 </div>
                             </div>
                             <div class="grid-row">
@@ -373,7 +409,7 @@
                                     <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
                                 </div>
                                 <div class="grid-row-col">
-                                    <filters-color></filters-color>
+                                    <filters-color change.delegate="filterChangeColor($event)"></filters-color>
                                 </div>
                                 <div class="grid-row-col"></div>
                             </div>
@@ -381,7 +417,8 @@
                         <div class="blockManageImages">
                             <div class="grid-row">
                                 <div class="grid-row-col">
-                                    <filters-search></filters-search>
+                                    <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search Text">
+                                    <!-- <filters-search></filters-search> -->
                                 </div>
                                 <div class="grid-row-col">
                                     <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>
@@ -447,26 +484,26 @@
                                                 <li class="look-menu-item"><a href="#" click.delegate="createSampleRequest(row.items[i].id )" class="look-menu-link">Booking &nbsp;</a></li>
                                                <!--  <li class="look-menu-item"><a href="#" class="look-menu-link">Details</a></li> -->
                                                 
-                                                <li if.bind="row.items[i].fromDate" class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
+                                                <li class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
                                             </ul>
 
                                             <!-- brand -->
                                             <ul if.bind="user.type === 'brand'" class="look-menu-list">                                        
                                                 <li class="pure-menu-item"><a href="#" click.delegate="editSearchableItem(row.items[i].id)" class="look-menu-link">Edit</a></li>
 
-                                                <li if.bind="!row.items[i].fromDate" class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Set Initial Availability</a></li>
+                                                <li class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Set Initial Availability</a></li>
 
-                                                <li if.bind="row.items[i].fromDate" class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
-                                                <li if.bind="row.items[i].fromDate" class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i].id )" class="look-menu-link">Booking &nbsp;</a></li>
+                                                <li class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
+                                                <li class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i].id )" class="look-menu-link">Booking &nbsp;</a></li>
                                             </ul>
                                             <!-- agency -->
                                             <ul if.bind="user.type === 'agency'" class="look-menu-list">
 
                                                 <li class="pure-menu-item"><a href="#" click.delegate="editSearchableItem(row.items[i].id)" class="look-menu-link">Edit</a></li>
                                                 
-                                                <li if.bind="!row.items[i].fromDate" class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Set Initial Availability</a></li>
+                                                <li class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Set Initial Availability</a></li>
 
-                                                <li if.bind="row.items[i].fromDate" class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
+                                                <li class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -475,19 +512,24 @@
                                 <!-- Main image -->
                                 <div id="card-${row.items[i].id}" class="card-image">
                                     
-                                    <!-- <img src.bind="row.items[i].image" ref="image" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"/> -->
+                                    <img if.bind="user.type == 'brand'" src.bind="row.items[i].image" ref="image" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"/>
 
-                                    <img class="lazy" src="/assets/bg.jpg" data-src.bind="row.items[i].image" ref="image" 
+                                    <img if.bind="user.type != 'brand'" class="lazy" src="/assets/bg.jpg" data-src.bind="row.items[i].image" ref="image" 
                                      click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"/> 
 
-                                   <!--  <div class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div> -->
+                                   <!-- <div if.bind="user.type === 'brand'" class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div> -->
 
+                                    <!-- lower corner look number -->
                                     <div if.bind="user.type === 'brand'" class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
+                                    
+                                    <!-- hover stuff -->
                                     <div class="card-look-number-name" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
-                                    <div class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].brand} <br> ${row.items[i].season}</div>
+                                    <div if.bind="user.type === 'brand'" class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].season}</div>
+                                    <div if.bind="user.type === 'press'" class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].brand} <br> ${row.items[i].season}</div>
+                                    <div if.bind="user.type === 'agency'" class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].brand} <br> ${row.items[i].season}</div>
 
 
-                                    <img src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align"/> 
+                                    <img if.bind="row.items[i].imageProvider=='indigital'" src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align"/> 
 
                                     <div class="card-hover-overlay" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"></div>
 

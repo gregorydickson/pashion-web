@@ -16,8 +16,8 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 export class ContactsList {
 	static inject = [DialogController];
 
-  user = {};
-  users = [];
+  //user = {};
+  //users = [];
   searchTerm = ''; // hard wired search goes here
   contactActivity = "19";
   connectString ="connect";
@@ -99,7 +99,6 @@ export class ContactsList {
   var forceGetFromServer = false;
 	return Promise.all([
       this.user = this.userService.getUser().then(user => this.user = user),
-      //this.connections = this.userService.getConnections().then(connections => this.connections = connections),
       this.users = this.userService.getUsers(forceGetFromServer).then(users => this.users = users)
       // This version now creates two entries for each conneciton, one each with user as the id.
       // But no access to these data structures should be done here
@@ -109,7 +108,11 @@ export class ContactsList {
 
   //RM test button & pubnub message cache invalidate response target
   fetchGetUserFromServer () {
-    this.userService.getUsers(true).then(users => this.users = users);
+    this.userService.getUsers(true).then(users => this.users = users)
+                                   .then(result => this.userService.getUser()
+                                     .then(user => this.user = user)
+                                     .then(result => console.log("fetchGetUserFromServer: user: " + this.users[this.user.id-1].name)
+                                    )) ;
   }
 
   // switch alphabetical filtering
@@ -211,9 +214,9 @@ export class ContactsList {
       
   }
 
-  filterFunc(searchExpression, value){
+  filterFunc(searchExpression, value, ignore1, ingore2){
    let itemValue = value.name;
-   if(!searchExpression || !itemValue) return false;
+   if(!searchExpression || !itemValue) return true;
    return itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;    
   }
 

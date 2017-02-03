@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat
 class SampleRequestService {
 
     String dateFormatString = "yyyy-M-d"
+    def cacheInvalidationService
 
     def listByUserOrganization(User user) {
     	def criteria = SampleRequest.createCriteria()
@@ -18,6 +19,7 @@ class SampleRequestService {
             def brand = user.brand
             results = criteria.listDistinct () {
                 eq('brand',brand)
+                cache true
             }
         }
         if(user?.pressHouse){
@@ -25,9 +27,71 @@ class SampleRequestService {
             def pressHouse = user.pressHouse
             results = criteria.listDistinct () {
                 eq('pressHouse',pressHouse)
+                cache true
             }
         }
+
         results
+    }
+
+    def initialSaveSampleRequest(JSONObject jsonObject, User requestingUser){
+        SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
+        log.info "initial save sample request:"+jsonObject
+        def sr = new SampleRequest()
+        sr.bookingStartDate = dateFormat.parse(jsonObject.startDate)
+
+        sr.bookingEndDate = dateFormat.parse(jsonObject.endDate)
+        sr.requiredBy = jsonObject.requiredBy
+        
+        sr.returnToAddress = Address.get(jsonObject.returnToAddress.toInteger())
+        
+        if(jsonObject.deliverTo?.address1)
+        {
+            sr.addressDestination = Address.get(jsonObject.deliverTo.id.toInteger())
+        } else {
+            def aUser = User.get(jsonObject.deliverTo.id.toInteger())
+            if(aUser.pressHouse) {
+                sr.pressHouse = aUser.pressHouse
+                sr.addressDestination = Address.findByPressHouseAndDefaultAddress(sr.pressHouse, true)
+            } else{
+                sr.addressDestination = aUser.address
+            }
+            sr.deliverTo = aUser
+        }
+        sr.returnBy = jsonObject.returnBy
+
+        sr.requestStatusBrand = "Pending"
+        sr.requestStatusPress = "Pending"
+     
+
+        SearchableItem item
+
+        jsonObject.samples.each{
+            item = SearchableItem.get(it)
+            log.info "sample request item:"+item
+            if(!sr.brand) sr.brand = item.brand
+            if(!sr.image) sr.image = item.look.image
+            if(!sr.season) sr.season = item.season.name
+            if(!sr.look) sr.look = item.look.name
+            sr.addToSearchableItemsProposed(item)
+            def status = new BookingStatus()
+            status.itemId = item.id
+            status.status = "Requested"
+            
+            sr.addToSearchableItemsStatus(status)
+        } 
+        sr.shippingOut = new ShippingEvent(courier:jsonObject.courier,status:'Proposed').save(failOnError:true)
+        sr.shippingReturn = new ShippingEvent(status:'Proposed').save(failOnError:true)
+        sr.paymentOut = jsonObject.paymentOut
+        sr.paymentReturn = jsonObject.paymentReturn
+        sr.courierOut = jsonObject.courierOut
+        sr.courierReturn = jsonObject.courierReturn
+        sr.requestingUser = requestingUser
+        
+        
+        sr.dateRequested = new Date()
+        sr.save(failOnError : true, flush: true)
+        cacheInvalidationService.sampleRequests() //RM TBD
     }
 
     def updateSampleRequest(JSONObject jsonObject){
@@ -53,20 +117,21 @@ class SampleRequestService {
             
             jsonObject.searchableItemsProposed.each{ sample ->
                 
-                def status = sr.searchableItemsStatus.find { it.itemId == sample.id }
-                log.info "status:"+status
-                if(status == "Approved"){
-                    status.status = "Approved"
-                    log.info "item status:"+status.status
-                    status.save(failOnError:true)
+                def statusJSON = jsonObject.searchableItemsStatus.find { it.itemId == sample.id }
+                def statusObject = sr.searchableItemsStatus.find { it.itemId == sample.id }
+                log.info "status:"+statusJSON.status
+                if(statusJSON.status == "Approved"){
+                    statusObject.status = "Approved"
+                    log.info "item status:"+statusObject.status
+                    statusObject.save(failOnError:true)
                     def item = sr.searchableItems.find{it.id == sample.id}
                     if(!item){
                         sr.addToSearchableItems(sample)
                     }
-                } else if(status == "Denied"){
-                    status.status = "Denied"
-                    log.info "item status:"+status.status
-                    status.save(failOnError:true)
+                } else if(statusJSON.status == "Denied"){
+                    statusObject.status = "Denied"
+                    log.info "item status:"+statusObject.status
+                    statusObject.save(failOnError:true)
                 }
             }
             

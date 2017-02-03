@@ -1,12 +1,14 @@
 <template>
 
+<require from="../common/customSelect"></require>
 
 	<span class="inline-label">
         <span class="form-label" style="font-weight:500;">COLOR</span>
-	    <select name="" id="" value.bind="color">
+        <select2 name="colorSelect" options.bind="colors" selected.bind="coloro" change.delegate="setColor($event)" ></select2>
+	    <!-- <select name="" id="" value.bind="color">
 	        <option value="">All</option>
 	        <option repeat.for="color of colors" model.bind="color">${color}</option>
-	    </select>
+	    </select> -->
     </span>   
 
 

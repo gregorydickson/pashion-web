@@ -9,7 +9,7 @@ import 'fetch';
 export class FiltersThemeCustomElement {
   themes = [];
   
-  @bindable themeo = '';
+  //@bindable themeo = '';
 
   constructor(http,element){
     this.http = http;
@@ -17,7 +17,7 @@ export class FiltersThemeCustomElement {
   }
   
 setTheme(event){
-	this.themeo = event.detail.value;
+	this.selectedTheme = event.detail.value;
 }
 
 attached() {

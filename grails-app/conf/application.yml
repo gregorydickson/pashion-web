@@ -32,11 +32,16 @@ elasticSearch:
     index:
         store:
             type: simplefs
-
+grails:
+    plugin:
+        awssdk:
+            accessKey: AKIAIDWK6XYVRHVN6HUQ
+            secretKey: 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
+            region: eu-central-1
 environments:
     development:
         dataSource:
-            dbCreate: update
+            
             url: jdbc:mysql://pashion-prod.cnjmlfc6tctw.eu-west-1.rds.amazonaws.com:3306/pashionprod
             username: pashionprod
             password: 2Mc9Nf17gBzyGs*a4$WS
@@ -71,6 +76,10 @@ environments:
 ---
 ---
 grails:
+    controllers:
+        upload:
+            maxFileSize: 2000000
+            maxRequestSize: 2000000
     profile: web
     codegen:
         defaultPackage: pashion

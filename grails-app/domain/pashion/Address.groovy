@@ -9,18 +9,18 @@ class Address{
 	String city
 	String country
 	String postalCode
-	Boolean defaultAddress
+	String attention
+	Boolean defaultAddress = false
+	Boolean archived = false
 
 	PressHouse pressHouse
 	PRAgency prAgency
 	Brand brand
-
-	static mapping ={
-		defaultAddress  defaultValue: false 
-	}
+	Brand destination
 
 	static constraints = {
 		brand nullable: true 
+		destination nullable:true
 		pressHouse nullable:true
 		prAgency nullable:true
 		address1 nullable: true
@@ -28,7 +28,17 @@ class Address{
 		city nullable: true
 		country nullable: true
 		postalCode nullable: true
+		attention nullable:true
 	}
+
+	String toString() {
+		if(brand)
+        	return brand.toString() +" "+ name
+        if(pressHouse)
+        	return pressHouse.toString()+" "+ name
+        if(prAgency)
+        	return prAgency.toString()+" "+ name
+    }
 
 }
 

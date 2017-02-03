@@ -22,13 +22,43 @@
                         <!-- Location -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Name</span>
-                            <input type="text" class="slim-text-box" value="Milano">
+                            <input type="text" class="slim-text-box" value.bind="newAddress.name">
                         </div>
 
                         <!-- Address 1 -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Address 1</span>
-                            <input type="text" class="slim-text-box">
+                            <input type="text" class="slim-text-box" value.bind="newAddress.address1">
+                        </div>
+
+                        <!-- Address 2 -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Address 2</span>
+                            <input type="text" class="slim-text-box" value.bind="newAddress.address2">
+                        </div>
+
+                        <!-- city -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">City</span>
+                            <input type="text" class="slim-text-box" value.bind="newAddress.city">
+                        </div>
+
+                        <!-- Country -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Country</span>
+                            <input type="text" class="slim-text-box" value.bind="newAddress.country">
+                        </div>
+
+                        <!-- Postal Code -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Postal Code</span>
+                            <input type="text" class="slim-text-box" value.bind="newAddress.postalCode">
+                        </div>
+
+                        <!-- Attention -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">Attention</span>
+                            <input type="text" class="slim-text-box" value.bind="newAddress.attention">
                         </div>
 
                    
@@ -42,7 +72,8 @@
         <!-- Footer buttons -->
         <ai-dialog-footer>
                     <a class="hollow button"  click.delegate="close()">Cancel</a>
-                    <a class="button" href="javascript:;">Add Office</a>
+                    <button class.bind="(newAddress.name && newAddress.address1 && newAddress.city && newAddress.country && newAddress.postalCode) ? 'button' : 'button disabled'" click.delegate="create()">Add Office</button>
+
         </ai-dialog-footer>
     </ai-dialog>
 </template>

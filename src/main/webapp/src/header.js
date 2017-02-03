@@ -9,7 +9,7 @@ import {DialogService} from 'aurelia-dialog';
 @inject(HttpClient,UserService,Router, DialogService)
 export class Header {
 
-	user = {};
+	//user = {};
 
   constructor(http,userService,router, dialogService) {
     http.configure(config => {
@@ -35,7 +35,9 @@ export class Header {
       if (this.selectval=="edit") {
         this.selectval = ""; // changes selectval back to name, not sure why As should be 2 way binding
         this.dialogService.open({viewModel: CreateDialogEditContact, model: 0 })
-          .then(response => {});
+          .then(response => {
+            this.userService.getUser().then(user => this.user = user);
+          });
       };
 
   }

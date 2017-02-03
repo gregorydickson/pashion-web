@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.converters.JSON
 
+
 import com.stormpath.sdk.account.Account
 import javax.servlet.http.HttpServletResponse
 
@@ -79,10 +80,10 @@ class UserController {
         if(coooookie){
             log.info "has Cookie:"+coooookie
             def user = User.findWhere(email:coooookie)
+            session.user = user
             account = userService.login(user.email,user.stormpathString)
             if(account instanceof Account){
-               user.account = account
-               session.user = user
+               session.account = account
                redirect(controller:'dashboard',action:'index')
             }
         }
@@ -99,7 +100,7 @@ class UserController {
         log.info "do Login params:"+params
         def account = null
         def user = User.findWhere(email:params['email'])
-        log.info "user:"+user.id.toString()
+        log.info "user:"+user?.id?.toString()
         if(user){
             account = userService.login(params.email,params.password)
             session.user = user                   
@@ -127,7 +128,7 @@ class UserController {
     @Transactional
     def save(User user) {
         def owner 
-        log.info "params:"+ params
+        log.info " save params:"+ params
         if(params.pressHouse.id != "null"){
             owner = PressHouse.get(params.pressHouse.id.toInteger())
         } else if (params.brand.id != "null"){
@@ -165,20 +166,20 @@ class UserController {
 
     @Transactional
     def update(User user) {
+        def jsonObject = request.JSON
+        log.info "update json:"+jsonObject
+        if(jsonObject?.id != null){
+            user = userService.updateUser(jsonObject,user,session)
+            log.info "user update json:"+jsonObject
+        } else{
+            user = userService.updateUser(params,user, session)
+        }
+        
         if (user == null) {
             transactionStatus.setRollbackOnly()
             notFound()
             return
         }
-
-        if (user.hasErrors()) {
-            transactionStatus.setRollbackOnly()
-            respond user.errors, view:'edit'
-            return
-        }
-
-        user.save flush:true
-
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), user.id])
@@ -189,6 +190,78 @@ class UserController {
     }
 
     @Transactional
+    def createjson() {
+        def jsonObject = request.JSON
+        def owner
+        def user
+        log.info "create User Json :"+jsonObject
+        if(jsonObject.pressHouse){
+            owner = PressHouse.get(jsonObject.pressHouse.id.toInteger())
+        } else if (jsonObject.brand){
+            owner = Brand.get(jsonObject.brand.id.toInteger())
+        } else if (jsonObject.prAgency){
+            owner = PRAgency.get(jsonObject.prAgency.id.toInteger())
+        }
+        
+        def inNetwork = false
+        if(jsonObject.isInPashionNetwork) {
+            inNetwork = true
+        }
+
+        user = userService.createUser(jsonObject, owner, inNetwork) as JSON
+        
+        
+       render user
+        
+    }
+
+    @Transactional
+    def updatejson() {
+        def user
+        def jsonObject = request.JSON
+        log.info "updateJson json:"+jsonObject
+        if(jsonObject.id == session?.user?.id){
+            user = session.user
+            log.info "updateJson: user: "+user.toString()
+            Account account = session.account
+            user = userService.updateUser(jsonObject,user,account)
+        } else{
+            user = userService.updateUser(jsonObject)
+        }
+
+
+        
+        
+       respond user, [status: OK] 
+        
+    }
+
+    @Transactional
+    def blank(User user){
+        user.connections*.delete(failOnError:true)
+        
+
+        user.properties.each{
+            if(!(user[it.key] instanceof Boolean)){
+                
+                if(user[it.key] != null){
+                    
+                    try{
+                        user[it.key] = null
+                    }catch(Exception e){
+
+                    }
+                }
+            }
+            
+        }
+        user.save(failOnError: true)
+        
+        def response = [status: 'OK'] as JSON
+        render response
+    }
+    
+    @Transactional
     def delete(User user) {
 
         if (user == null) {
@@ -196,8 +269,10 @@ class UserController {
             notFound()
             return
         }
+        User.withTransaction { status ->
 
-        user.delete flush:true
+            user.delete flush:true
+        }
 
         request.withFormat {
             form multipartForm {

@@ -4,13 +4,117 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.converters.JSON
 import java.text.SimpleDateFormat
+import org.springframework.web.multipart.MultipartFile
 
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 class SearchableItemController {
+    static scope = "session"
     
     String dateFormatString = "yyyy-MM-dd"
+    def amazonS3Service
     
-    
+    def brandSearch(){
+        long startTime = System.currentTimeMillis()
+        SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
+        
+        Brand brand = null
+        SearchableItemType type = null
+        Season season = null
+        City city = null
+        List results = null
+        def keywords = null
+        def criteria = SearchableItem.createCriteria()
+
+        log.info "brand param:"+params.brand
+        if(params.brand && params.brand != '' && params.brand.trim() != 'All'){
+            brand = Brand.get(params.brand.trim())
+        }
+        
+        if(params.season != "" && params.season != null)
+            season = Season.findByName(URLDecoder.decode(params.season))
+
+        if(params.searchtext != null && params.searchtext != "" && params.searchtext != "undefined"){
+            keywords = URLDecoder.decode(params.searchtext)
+            keywords = keywords.split(" ")
+        }
+
+        if(params.city != null && params.city != "" && params.city != "All"){
+            city = City.findByName(URLDecoder.decode(params.city))
+
+            type = SearchableItemType.findByDisplay("Samples")
+            log.info "*****************************  A BRAND CITY SEARCH **********************"
+            log.info "Brand:"+brand
+            log.info "keywords:"+keywords
+            log.info "season:"+season
+            log.info "type:"+type
+            
+            log.info "city:"+ params.city + " (" + city + ")"
+
+            
+            //find Samples in city
+            results = criteria.listDistinct () {
+                    
+                    if(brand) eq('brand', brand)
+
+                    if(keywords) and {
+                        keywords.each {  ilike('attributes', "%${it}%") }
+                    }
+                    if(season) eq('season',season)
+                    if(type) eq('type',type)
+                    if(city) eq('sampleCity',city)
+                    
+                    
+                    cache true
+            } 
+            log.info "brand results count:"+results.size()
+            def ids = []
+            results.collect{ids << it.look.id }
+            ids.unique()
+            if(ids.size()>0){
+                results = SearchableItem.findAllByIdInList(ids)
+            } else{
+                results = []
+            }
+        } else{
+            log.info "*****************************  A BRAND NON-CITY SEARCH **********************"
+            log.info "Brand:"+brand
+            log.info "keywords:"+keywords
+            log.info "season:"+season
+            log.info "type:"+type
+
+            results = criteria.listDistinct () {
+                isNotNull('image')
+                if(brand) eq('brand', brand)
+                if(keywords) and {
+                    keywords.each {  ilike('attributes', "%${it}%") }
+                }
+                if(season) eq('season',season)
+                cache true
+            } 
+
+        }
+
+        long endTime = System.currentTimeMillis()
+        long duration = (endTime - startTime)
+        log.info "search duration:"+duration
+        startTime = System.currentTimeMillis()
+        
+        def resultList = collectItems(results)
+
+        endTime = System.currentTimeMillis()
+        duration = (endTime - startTime)
+        log.info "collect results duration:"+duration
+        
+        startTime = System.currentTimeMillis()
+        def jsonList = resultList as JSON
+        render jsonList
+        endTime = System.currentTimeMillis()
+        duration = (endTime - startTime)
+        log.info "JSON render duration:"+duration
+        log.info "**************************************************************"
+        
+
+    }
     def filterSearch(){
         long startTime = System.currentTimeMillis()
         SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
@@ -21,6 +125,8 @@ class SearchableItemController {
         Season season = null
         def keywords = null
         def theme = null
+        def color = null
+        City city = null
 
         Integer maxRInt = params.maxR.toInteger()
         if(!maxRInt) maxRInt = 2000
@@ -30,6 +136,12 @@ class SearchableItemController {
 
         if(params.theme != null && params.theme != "")
             theme = params.theme
+
+        if(params.color != null && params.color != "")
+            color = params.color
+
+        if(params.city != null && params.city != "")
+            city = City.findByName(URLDecoder.decode(params.city))
 
         log.info "brand param:"+params.brand
         if(params.brand && params.brand != '' && params.brand.trim() != 'All'){
@@ -61,6 +173,8 @@ class SearchableItemController {
         log.info "theme:"+theme
         log.info "availableFrom:"+availableFrom
         log.info "availableTo:"+ availableTo
+        log.info "city:"+ params.city + " (" + city + ")"
+        log.info "color:"+color
 
         def criteria = SearchableItem.createCriteria()
         
@@ -68,6 +182,7 @@ class SearchableItemController {
 
                 log.info "image:"+'image'
                 isNotNull('image')
+                eq('isPrivate',false)
                 if(brand) eq('brand', brand)
                 if(theme) ilike('theme', "%${theme}%")
                 if(keywords) and {
@@ -75,6 +190,8 @@ class SearchableItemController {
                 }
                 if(season) eq('season',season)
                 if(type) eq('type',type)
+                if(city) eq('city',city)
+                if(color) ilike('color',"%${color}%")
                 if(availableFrom && availableTo) sampleRequests{
                     and{
                         not{
@@ -93,7 +210,25 @@ class SearchableItemController {
         long duration = (endTime - startTime)
         log.info "search duration:"+duration
         startTime = System.currentTimeMillis()
+        
+        def resultList = collectItems(results)
 
+        endTime = System.currentTimeMillis()
+        duration = (endTime - startTime)
+        log.info "collect results duration:"+duration
+        
+        startTime = System.currentTimeMillis()
+        def jsonList = resultList as JSON
+        render jsonList
+        endTime = System.currentTimeMillis()
+        duration = (endTime - startTime)
+        log.info "JSON render duration:"+duration
+        log.info "**************************************************************"
+        
+        
+    }
+
+    def collectItems(results){
         def fixImagesPerRow = 5 
         if(fixImagesPerRow > 5) fixImagesPerRow = 5
         if(fixImagesPerRow < 3) fixImagesPerRow = 3
@@ -144,19 +279,7 @@ class SearchableItemController {
             arow.items = item
             resultList << arow
         }
-        endTime = System.currentTimeMillis()
-        duration = (endTime - startTime)
-        log.info "collect results duration:"+duration
-        
-        startTime = System.currentTimeMillis()
-        def jsonList = resultList as JSON
-        render jsonList
-        endTime = System.currentTimeMillis()
-        duration = (endTime - startTime)
-        log.info "JSON render duration:"+duration
-        log.info "**************************************************************"
-        
-        
+        resultList
     }
 
 
@@ -198,6 +321,7 @@ class SearchableItemController {
         List results = criteria.list() {
 
                 isNotNull('image')
+                eq('isPrivate',false)
                 if(brand) eq('brand', brand)
                 if(theme) ilike('theme', "%${theme}%")
                 if(keywords) and {
@@ -305,27 +429,35 @@ class SearchableItemController {
     @Transactional
     def savejson(){
         def jsonObject = request.JSON
-        log.info "json:"+jsonObject
+        
 
         def item =  SearchableItem.get(jsonObject.id)
         item.name = jsonObject.name
         item.description = jsonObject.description
+        item.attributes = jsonObject.attributes
         
         jsonObject.samples.each{
+            
             def sample = SearchableItem.get(it.id)
             if(!sample){
                 sample = new SearchableItem()
                 sample.look = item
                 sample.season = item.season
                 sample.brandCollection = item.brandCollection
-                sample.material = item.material
+
                 sample.brand = item.brand
                 sample.type = SearchableItemType.get(2)
             }
             sample.sampleType = it.sampleType
             sample.color = it.color
             sample.name = it.name
+            sample.size = it.size
+            sample.material = it.material
+            sample.sampleCity = City.get(it.sampleCity.id.toInteger())
+            
             sample.description = it.description
+            sample.attributes = it.attributes
+            sample.material = it.material
 
             sample.save(failOnError : true, flush: true)
         } 
@@ -336,8 +468,69 @@ class SearchableItemController {
     }
 
     def fetchdeep(){
-        def item = SearchableItem.findById(params.id.toInteger(),[fetch:[brandCollection:"join"]])
+        def item = SearchableItem.findById(params.id.toInteger(),[fetch:[brandCollection:"join",cache:true]])
         respond item
+    }
+
+    @Transactional
+    def upload(){
+        log.info "upload params:"+params
+        def user = session.user
+        
+        log.info "user:"+user
+
+        Brand brand = user.brand
+        log.info "brand:"+brand
+        Season season = Season.findOrSaveWhere(name:params.season.toString().trim()).save()
+        log.info "season:"+season
+        BrandCollection brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season).save()
+        SearchableItemType type = SearchableItemType.findByDisplay('Looks')
+        String path = brand.name.toLowerCase().replace(" ","-")+"/"+season.name.toLowerCase().replace(" ","-") +"/"
+        log.info "path:"+path
+        SearchableItem item = null
+        def all = request.getFileNames()
+        all.each{String name ->
+            log.info "file:"+name
+            try{
+               log.info "try block"
+               item = new SearchableItem()
+               log.info "created item"
+               if(params.isPrivate){
+                    item.isPrivate = true
+                }
+               item.type = type
+               item.brand = brand
+               log.info "brand"
+               item.brandCollection = brandCollection
+               item.season = season
+               log.info "season"
+               def imageString = "//dvch4zq3tq7l4.cloudfront.net/" + path + name
+               log.info "image string:"+imageString
+               item.image = imageString
+               MultipartFile multipartFile = request.getFile(name)
+               log.info "file:"+multipartFile
+               
+               String location = path + name
+               log.info "location:"+location
+               String message
+
+               if (multipartFile && !multipartFile.empty) {
+                    log.info "storing"
+                    message = amazonS3Service.storeMultipartFile("pashion-tool", location, multipartFile)
+                    log.info "store message:"+message
+               }
+               if(message){
+                    item.save(failOnError:true)
+               }
+              
+            } catch(Exception e){
+                log.error "exception saving file:"+e.message
+            }
+        }
+
+        def sent = [message:'Items Updated']
+        render sent as JSON
+
     }
 
 

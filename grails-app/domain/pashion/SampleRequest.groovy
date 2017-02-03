@@ -76,6 +76,7 @@ class SampleRequest {
 		brand nullable:true
 		returnToAddress nullable: true
 		addressDestination nullable:true
+		deliverTo nullable:true
 
 		pressHouse nullable: true
 		courierOut nullable: true

@@ -81,6 +81,7 @@ export class CreateSampleRequest {
     this.http.fetch('/dashboard/returnTo').then(response => response.json()).then(returnTo => this.returnTo = returnTo);
     this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => this.payment = payment);
    // this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
+   this.sampleRequest["returnToAddress"] = 0; // defualt return to sender
   }
 
   attached(){
@@ -88,11 +89,24 @@ export class CreateSampleRequest {
   }
 
   setStartDate(event,day){
-  	console.log("start date"+event);
-  	console.log("day"+day);
+    console.log("set start date: "+event);
+    console.log("parameterday: "+day);
+
+    var today = new Date();
     this.startDay = day;
-    let enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber,this.endDay)
-    let startdate = new Date(this.startCalendar.calendarMonths[0].year,this.startCalendar.calendarMonths[0].monthNumber,day)
+    var enddate = '';
+    if (this.endDay !='') enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber-1,this.endDay);
+    let startdate = new Date(this.startCalendar.calendarMonths[0].year,this.startCalendar.calendarMonths[0].monthNumber-1,day);
+
+    // quit if in the past
+    // could also add in here, any business logic about if we want to book +1 day out?
+    console.log("today: " + today);
+    console.log("startdate: " + startdate);
+    console.log("startDay: " + this.startDay);
+    if (this.endDay !='') console.log("enddate: " + enddate); else console.log("no endDay set")
+    console.log("endDay: " + this.endDay);
+    if (startdate <= today) { console.log ("day is before today or is today, exit"); this.startDay = ''; return; }
+    console.log ("day is in the future");
     
     if(this.endDay != ''){
       console.log("setting start date END DATE not empty");
@@ -111,35 +125,49 @@ export class CreateSampleRequest {
         });
       }
     }
-  	var element = event.srcElement.parentElement;
-  	var document = element.ownerDocument;
-  	var elems = document.querySelectorAll(".start-selected");
-  	[].forEach.call(elems, function(el) {
-    	el.classList.remove("start-selected");
-	  });
-  	element.className += " start-selected";
-  	this.redraw(element);
-  	this.sampleRequest.startDate = this.startCalendar.calendarMonths[0].year+"-"+this.startCalendar.calendarMonths[0].monthNumber+"-"+day;
+    var element = event.srcElement.parentElement;
+    var document = element.ownerDocument;
+    var elems = document.querySelectorAll(".start-selected");
+    [].forEach.call(elems, function(el) {
+      el.classList.remove("start-selected");
+    });
+    element.className += " start-selected";
+    this.redraw(element);
+    this.sampleRequest.startDate = this.startCalendar.calendarMonths[0].year+"-"+this.startCalendar.calendarMonths[0].monthNumber+"-"+day;
     this.enableCheck();
   }
 
   setEndDate(event, day){
     this.endDay = day;
-    let enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber,day)
-  	let startdate = new Date(this.startCalendar.calendarMonths[0].year,this.startCalendar.calendarMonths[0].monthNumber,this.startDay)
+    var startdate = '';
+    let enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber-1,day);
+    if (this.startDay != '') startdate = new Date(this.startCalendar.calendarMonths[0].year,this.startCalendar.calendarMonths[0].monthNumber-1,this.startDay);
+    var today = new Date();
+
+    console.log("today: " + today);
+    if (this.startDay != '') console.log("startDay: " + this.startDay); else { console.log("no startDay set, exit"); this.endDay = ''; return;}
+    console.log("startdate: " + startdate); 
+    console.log("enddate: " + enddate);
+    console.log("endDay: " + this.endDay);
+    if (enddate <= today) { console.log ("day is before today or is today, exit"); this.endDay = ''; return; }
+    console.log ("day is in the future");
+
     if(this.startDay === '' || enddate < startdate || enddate.getTime() == startdate.getTime()){
-      return
+      console.log (" empty, reverse or time clash");
+      this.endDay = '';
+      return;
     }
+    
     console.log("end date"+event);
-  	console.log("day"+day);
-  	let element = event.srcElement.parentElement;
-  	let document = element.ownerDocument;
-  	let elems = document.querySelectorAll(".end-selected");
-  	[].forEach.call(elems, function(el) {
-    	el.classList.remove("end-selected");
-	  });
-  	element.className += " end-selected";
-  	this.redraw(element);
+    console.log("day"+day);
+    let element = event.srcElement.parentElement;
+    let document = element.ownerDocument;
+    let elems = document.querySelectorAll(".end-selected");
+    [].forEach.call(elems, function(el) {
+      el.classList.remove("end-selected");
+    });
+    element.className += " end-selected";
+    this.redraw(element);
     this.sampleRequest.endDate = this.endCalendar.calendarMonths[0].year+"-"+this.endCalendar.calendarMonths[0].monthNumber+"-"+day;
     this.enableCheck();
     
@@ -239,13 +267,9 @@ export class CreateSampleRequest {
       
     }else{
       this.sampleRequest.samples = [];
-      document.getElementById("CreateSampleRequestButton").disabled = true;
-
-      
-      
+      document.getElementById("CreateSampleRequestButton").disabled = true; 
     }
-    
-    
+    this.enableCheck();    
   }
 
 
@@ -286,7 +310,7 @@ export class CreateSampleRequest {
     if (samples.length != samplesSelected.length) {
       this.selectAll = false;
       console.log("length not equal");
-      return;
+      // return;
     } else {
       this.selectAll = true;
     }

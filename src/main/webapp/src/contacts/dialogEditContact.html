@@ -67,8 +67,8 @@
                                 <span class="inline-label">
                                     <span class="slim-text-box-label">Location</span>
                                 </span>
-                                <select name="" id="" class="slim-text-box" value.bind="user.address">
-                                    <option repeat.for="address of addresses">${address.city}</option>
+                                <select name="" id="" class="slim-text-box" value.bind="user.address.id">
+                                    <option model.bind="address.id" repeat.for="address of addresses">${address.city}</option>
                                 </select>
                         </div> 
 

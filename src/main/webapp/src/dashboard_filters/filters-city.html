@@ -9,12 +9,15 @@
     </span>   
 -->
 
+<require from="../common/customSelect"></require>
+
 	<span class="inline-label">
-        <span class="form-label">City</span>
-		<select name="" id="" value.bind="city">
+        <span class="form-label" style="font-weight:500">CITY</span>
+        <select2 name="citySelect" sa.bind="selectorall" ss.bind="selectorselector" options.bind="cities" selected.bind="cityo" change.delegate="setCity($event)" ></select2>
+		<!-- <select name="" id="" value.bind="city">
 		    <option value="">All</option>
 		    <option repeat.for="city of cities" model.bind="city">${city}</option>
-		</select>
+		</select> -->
     </span>   
     
 

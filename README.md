@@ -133,6 +133,7 @@ https://github.com/stormpath/stormpath-sdk-java/issues/17
 5. Choose the City for the collection, then drag the CSV file to the 'Drop files here to Upload' area. The file will upload. You can view the command line to view debugging information on the upload. The code for this upload is in UploadController.groovy index() method.
 6. You may verify the data by connecting to the database with Sequel Pro.
 7. To prepare for the next upload, refresh the /upload/ screen in the browser.
+8. upload detail metadata into URL:/upload/detail
 
 ### Verification
 * You can verify the collection by viewing browse.pashiontool.com and selecting the designer (and Collection if neccessary). Verify that there are no broken images. In case of discrepancies, you may view the collection in Vogue Runway for comparison. Occasionally, the 'make public' portion in S3 has to be reapplied if you see errors in the javascript console 503 permission errors. 

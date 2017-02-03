@@ -1,4 +1,5 @@
 <template>
+  <require from="../common/formSelect"></require>
 
    <ai-dialog>
         <ai-dialog-header>
@@ -8,26 +9,52 @@
             </div>
         </ai-dialog-header>
       <ai-dialog-body>
-          <div class="add-drag-and-drop">
+          <!-- <div class="add-drag-and-drop">
           <span class="text-circled">+</span>
             <span class="label">Drag and Drop images</span>
-          </div>
+          </div> -->
 
           <div class="add-choose-file">          
-            <input type="file" name="file-1" id="file-img" class="input-file" data-multiple-caption="{count} files selected" multiple />
+            <input type="file" files.bind="selectedFiles" name="file-1" id="file-img" class="input-file" data-multiple-caption="{count} files selected" accept="image/*" multiple />
             <label for="file-1"><span>Choose Files...</span></label>
           </div>
 
-          <div class="add-import-excel disabled">
+          <div class="grid-row-col" style="width:250px; margin-right:0; margin-left:20px;">
+            <span class="inline-label">
+              <span class="form-label" style="padding-right: 0.5rem; font-weight:500">SEASON</span>
+              <form-select class="to-u-c" name="options" selected.two-way="selectedSeason" options.bind="seasons" ></form-select>
+            </span>
+          </div>
+          <div class="grid-row-col" style="width:250px; margin-right:0; margin-left:20px;">
+            <span class="inline-label">
+              <span class="form-label" style="padding-right: 0.5rem; font-weight:500">Mark Private:
+                <input id="" type="checkbox" checked.bind="isPrivate" >
+              </span>
+            </span>    
+          </div>
+
+         <div id="newCollection" class="look-menu-hide" >
+         <!-- <span class="inline-label slim-text-box-label">Name</span> -->
+              <div class="" style="margin-left: 64px;">
+                  <input type="text" placeholder="New Collection" value.bind="newCollection" class="slim-text-box" style="width:145px;">
+              </div>
+         </div>
+         
+
+         <!--  <div class="add-import-excel disabled">
             <input type="file" name="file-1" id="file-excel" class="input-file" data-multiple-caption="{count} files selected" multiple />
-            <label for="file-1"><span>Import Excel...</span></label>
+            <label for="file-1"><span>Import via Excel File</span></label>
           </div>
 
           <div class="get-blank-template disabled">
             <a href="#">Get a blank template</a>
-          </div>
+          </div> -->
 
       </ai-dialog-body>
+      <ai-dialog-footer>
+         <a class="button hollow"  click.delegate="close()">Cancel</a>
+         <button id="AddFilesButton" class="button" click.delegate="addFiles()">Add file(s)</button>
+      </ai-dialog-footer>
 
    </ai-dialog>
 </template>

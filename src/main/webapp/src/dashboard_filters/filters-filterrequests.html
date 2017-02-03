@@ -1,0 +1,24 @@
+<template>
+<!--
+<span class="inline-label">
+        <span class="form-label">City</span>
+	    <select name="" id="" >
+	        <option value="">All</option>
+	        <option>City</option>
+	    </select>
+    </span>   
+-->
+
+<require from="../common/customSelect"></require>
+
+	<span class="inline-label">
+        <span class="form-label" style="font-weight:500">SHOW</span>
+        <select2 name="orderFilter" sa.bind="selectorall" ss.bind="selectorselector" options.bind="filters" selected.bind="ordero" change.delegate="setFilter($event)" ></select2>
+		<!-- <select name="" id="" value.bind="city">
+		    <option value="">All</option>
+		    <option repeat.for="city of cities" model.bind="city">${city}</option>
+		</select> -->
+    </span>   
+    
+
+</template>

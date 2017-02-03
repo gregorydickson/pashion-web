@@ -23,6 +23,7 @@ import com.stormpath.sdk.group.GroupList
 import com.stormpath.sdk.group.Groups
 import com.stormpath.sdk.resource.ResourceException
 import com.stormpath.sdk.tenant.Tenant
+import com.pubnub.api.*
 
 import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.amazonaws.services.s3.model.ObjectMetadata
@@ -45,6 +46,10 @@ class UserService {
 
 	Application stormpathApp
 	Client client
+    GroupList groups
+
+     Pubnub pubnub = new Pubnub("pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73", "sub-c-dd158aea-b76b-11e6-b38f-02ee2ddab7fe")
+
 	
 	@PostConstruct
     def init(){
@@ -109,29 +114,35 @@ class UserService {
     def createUser(def params, def owner, Boolean isInPashionNetwork ){
     	def role
     	User user
+        City city = null
+        if(params.city) city = City.get(params.city.toInteger());
     	if(owner instanceof Brand){
             log.info "creating Brand user"
     		role = "brand-users"
-    		user = new User(title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,brand:owner,isInPashionNetwork:true).save(failOnError : true)
+    		user = new User(city:city,title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,brand:owner,isInPashionNetwork:true).save(failOnError : true)
     	} else if(owner instanceof PressHouse){
             log.info "creating Press user"
     		role = "press-users"
-    		user = new User(title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,pressHouse:owner,isInPashionNetwork:true).save(failOnError : true)
+    		user = new User(city:city,title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,pressHouse:owner,isInPashionNetwork:true).save(failOnError : true)
     	} else if(owner instanceof PRAgency){
             log.info "creating PRAgency user"
             role = "prAgency-users"
-            user = new User(title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,prAgency:owner,isInPashionNetwork:true).save(failOnError : true)
+            user = new User(city:city,title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,prAgency:owner,isInPashionNetwork:true).save(failOnError : true)
         }
         Directory directory
         try{
             directory = client.getResource(owner.stormpathDirectory, Directory.class)
+
             Account account = client.instantiate(Account.class)
-                            .setEmail(email)
-                            .setGivenName(name)
-                            .setSurname(surname)
-                            .setPassword(rawpassword)
+                            .setEmail(params.email)
+                            .setGivenName(params.name)
+                            .setSurname(params.surname)
+                            .setPassword(params.password)
 
             directory.createAccount(account)
+            groups = directory.getGroups()
+            Group group = groups.iterator().next()
+            account.addGroup(group)
         } catch(Exception e){
 
                 //TODO: create stormpath directory????
@@ -140,7 +151,7 @@ class UserService {
 		user
     }
 
-    def uploadAvatar(String data, User user){
+    def uploadAvatar(String data, User user) {
 
         def ext = data.split("/")[1].split(";")[0]
         String encodingPrefix = "base64,"
@@ -153,9 +164,79 @@ class UserService {
         InputStream is = new ByteArrayInputStream(os.toByteArray())
 
         ObjectMetadata metadata = amazonS3Service.buildMetadataFromType('image', ext, CannedAccessControlList.PublicRead)
-        amazonS3Service.storeInputStream('pashion-profiles',fileName+'.'+ext, is, metadata)
+        amazonS3Service.storeInputStream('pashion-profiles', fileName + '.' + ext, is, metadata)
 
-        return 'https://pashion-profiles.s3.amazonaws.com/'+fileName+'.'+ext
+        return 'https://pashion-profiles.s3.amazonaws.com/' + fileName + '.' + ext
+
+    }
+
+    def updateUser(def params){
+        log.info "UPDATING OTHER USER"
+        Map<String, Object> queryParams = new HashMap<>();
+        queryParams.put("username", params.email);
+        AccountList accounts = stormpathApp.getAccounts(queryParams);
+        Account ac = accounts.iterator().next()
+        User user = User.get(params.id.toInteger())
+        user = updateUser(params,user,ac)
+
+
+    }
+
+    def updateUser(def params,def user, def account){
+       
+            if (!user.isAttached()) {
+                user.attach()
+            }
+            log.info "updateUser params:"+params
+            user.title = params.title
+            user.phone = params.phone
+            user.name = params.name
+            user.surname = params.surname
+            if(params.address?.id)
+                user.address = Address.get(params.address.id)
+
+
+            User.withTransaction { status ->
+                try{
+                    user.save(failOnError:true, flush:true)
+                } catch(Exception e){
+
+                    log.error "updateUser error:"+e.message
+                }
+
+
+                log.info "updateUser saved user:"+user.toString()
+                if(params.password || params.name || params.surname){
+                    try{
+                        
+                        
+                        if(account){
+                            log.info "account not null"
+                            if(params.name) account.setGivenName(params.name)
+                            if(params.surname) account.setSurname(params.surname)
+                            if(params.password) {
+                                account.setPassword(params.password)
+                                log.info "Updating PASSWORD ****"
+                            }
+
+                            account.save()
+                        }
+
+                        
+                    } catch(Exception e){
+
+                        log.error "stormpath update error:"+e.message
+                    }
+                }
+             }
+
+            // invalidate cache here for connected or connecting user     
+            Callback callback=new Callback() {}
+            def channel = user.email + '_cacheInvalidate'
+            log.info "send invalidate from updateuser on:" + channel
+            pubnub.publish(channel, "refresh the cache please" , callback) 
+
+            user
     }
 
 

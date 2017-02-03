@@ -3,16 +3,22 @@ import {HttpClient} from 'aurelia-fetch-client';
 import 'fetch';
 
 
-@inject(HttpClient)
+@inject(HttpClient, Element)
 @customElement('filters-color')
 
-export class Filterscolor {
+export class FiltersColorCustomElement {
   colors = [];
   
-  @bindable({ defaultBindingMode: bindingMode.twoWay }) color;
+  //@bindable({ defaultBindingMode: bindingMode.twoWay }) color;
+  @bindable coloro = '';
 
-  constructor(http){
+  constructor(http, element){
     this.http = http;
+    this.element = element;
+  }
+
+  setColor(event) {
+  	this.coloro = event.detail.value;
   }
   
 

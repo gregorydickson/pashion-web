@@ -10,7 +10,10 @@
                     <a click.delegate="nextImage()" class="controls-arrow controls-arrow-next"><img id="next" src="/assets/calendar/next.png"/></a>
                     
             </div>
-            <div class="align-center tool-header brand-font" >
+            <div if.bind="user.type === 'press'" class="align-center tool-header brand-font" >
+              <span>${brand}</span>
+            </div>
+            <div if.bind="user.type === 'agency'" class="align-center tool-header brand-font" >
               <span>${brand}</span>
             </div>
             <div class="align-center tool-header season-font">
@@ -21,7 +24,7 @@
           <div id="imageZoomWrapper" class="card-image-zoom-wrap">
                     <img id="imageZoom" src.bind="image"  />
 
-                    <img src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align-wide"/> 
+                    <img if.bind="imageProvider=='indigital'" src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align-wide"/> 
 
           </div>
       </ai-dialog-body>
