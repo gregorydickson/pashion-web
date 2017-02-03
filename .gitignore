@@ -3,6 +3,7 @@
 /.bundle
 /build
 .asscache
+*.idea
 
 /src/main/webapp/node_modules
 /src/main/webapp/dist
