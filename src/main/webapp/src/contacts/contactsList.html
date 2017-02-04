@@ -16,7 +16,7 @@
                         <button id="button1111" class="accordion " click.delegate="closeExpand(1111)"></button>
                     </td>
                     <td class="accordion-grey">
-                        <span>Connection Requests</span>
+                        <span>CONNECTION REQUESTS</span>
                     </td>
                     <td class="accordion-grey" style="width:35px; overflow: hidden;">
                         <span class="accordion-grey"
@@ -38,19 +38,23 @@
                 <!-- in coming -->
                 <!-- RM check the user still exists -->
                 <div if.bind="(connectionC.connectingStatus=='PendingIn' && users[connectionC.connectedUserId -1].email)" style="">
-                    <span class="look-menu-heading paragraph-5" style="outline: 1px solid lightgray; width: 250px; background: white;">Incoming Connection Request</span>
-                    <table class="width100">
+                    <span class="look-menu-heading paragraph-5" style="outline: 1px solid lightgray; width: 250px; background: white;">Incoming Request</span>
+                    <table class="width100" style="table-layout: fixed;">
                         <tr>
-                            <td>
-                                <div>
-                                    <img if.bind="(users[connectionC.connectedUserId -1].image)" src=${users[connectionC.connectedUserId-1].image} class="clip-circle contact-entry" />
-                                    <div if.bind="(!users[connectionC.connectedUserId -1].image)" style="margin-right: 1rem;" class="avatar-circle "> ${users[connectionC.connectedUserId -1].name.charAt(0)}</div>
+                            <td class="con-td-1">
+                                <div class="">
+                                    <img if.bind="(users[connectionC.connectedUserId -1].avatar)" src=${users[connectionC.connectedUserId-1].avatar} class="clip-circle contact-entry" />
+                                    <div if.bind="(!users[connectionC.connectedUserId -1].avatar)" style="" class="avatar-circle avatar-text "> ${users[connectionC.connectedUserId -1].name.charAt(0)}</div>
                                 </div>
                             </td>
-                            <td>
+                            <td class="con-td-2">
                                 <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connectionC.connectedUserId -1].name} ${users[connectionC.connectedUserId -1].surname}</div>
                                 <!--     <div class="ui-text-label-s-left paragraph-5 contact-box">${connection.brand.name} ${connection.pressHouse.name}</div> -->
                                 <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connectionC.connectedUserId -1].email}</div>
+                            </td>
+                            <td class="align-top con-td-3">
+                            </td>
+                            <td class="align-top con-td-4">
                             </td>
                         </tr>
                     </table>
@@ -63,19 +67,23 @@
                 <!-- out going -->
                 <!-- RM check the user still exists -->
                 <div if.bind="(connectionC.connectingStatus=='PendingOut' && users[connectionC.connectedUserId -1].email)" style="">
-                    <span class="look-menu-heading paragraph-5" style="outline: 1px solid lightgray; width: 250px; background: white;">Outgoing Connection Request</span>
-                    <table class="width100">
+                    <span class="look-menu-heading paragraph-5" style="outline: 1px solid lightgray; width: 250px; background: white;">Outgoing Request</span>
+                    <table class="width100" style="table-layout: fixed;">
                         <tr>
-                            <td>
-                                <div>
-                                    <img if.bind="(users[connectionC.connectedUserId -1].image)" src=${users[connectionC.connectedUserId-1].image} class="clip-circle contact-entry" />
-                                    <div if.bind="(!users[connectionC.connectedUserId -1].image)" style="margin-right: 1rem;" class="avatar-circle "> ${users[connectionC.connectedUserId -1].name.charAt(0)}</div>
+                            <td class="con-td-1">
+                                <div class="">
+                                    <img if.bind="(users[connectionC.connectedUserId -1].avatar)" src=${users[connectionC.connectedUserId-1].avatar} class="clip-circle contact-entry" />
+                                    <div if.bind="(!users[connectionC.connectedUserId -1].avatar)" style="" class="avatar-circle avatar-text "> ${users[connectionC.connectedUserId -1].name.charAt(0)}</div>
                                 </div>
                             </td>
-                            <td>
+                            <td class="con-td-2">
                                 <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connectionC.connectedUserId -1].name} ${users[connectionC.connectedUserId -1].surname}</div>
                                 <!--     <div class="ui-text-label-s-left paragraph-5 contact-box">${connection.brand.name} ${connection.pressHouse.name}</div> -->
                                 <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connectionC.connectedUserId -1].email}</div>
+                            </td>                        
+                            <td class="align-top con-td-3">
+                            </td>
+                            <td class="align-top con-td-4">
                             </td>
                         </tr>
                     </table>
@@ -95,7 +103,7 @@
                     <td class="accordion-grey" style="width:20px;">
                         <button id="button1213" class="accordion active" click.delegate="closeExpand(1213)"></button>
                     </td>
-                    <td class="accordion-grey"> <span>New Messages</span>
+                    <td class="accordion-grey"> <span>NEW MESSAGES</span>
                     </td>
                     <td class="accordion-grey" style="width:35px; overflow: hidden;">
                         <span class="accordion-grey"
@@ -115,38 +123,34 @@
             <!-- main list -->
             <div id="contacts-inside-top" if.bind="(users[user.id -1].connections!=null)" repeat.for="connection of users[user.id -1].connections | filter:searchTerm:filterFunc:'null':'null' " class="" style="width:255px; overflow: visible;margin-left: 1rem;">
                 <!-- check the connection is completed and the user still exists -->
-                <table if.bind="(connection.connectingStatus=='Accepted' && users[connection.connectedUserId -1].email && connection.numberNewMessages!=0)" class="width100" style="margin-bottom: 10px;">
+                <table if.bind="(connection.connectingStatus=='Accepted' && users[connection.connectedUserId -1].email && connection.numberNewMessages!=0)" class="width100" style="margin-bottom: 10px; table-layout: fixed;">
                     <tr>
-                        <td>
+                        <td class="con-td-1">
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
-                                <div>
-                                    <img if.bind="(users[connection.connectedUserId -1].image)" src=${users[connection.connectedUserId-1].image} class="clip-circle contact-entry" />
-                                    <div if.bind="(!users[connection.connectedUserId -1].image)" style="margin-right: 1rem; " class="avatar-circle ">${users[connection.connectedUserId -1].name.charAt(0)}</div>
+                                <div class="">
+                                    <img if.bind="(users[connection.connectedUserId -1].avatar)" src=${users[connection.connectedUserId-1].avatar} class="clip-circle contact-entry" />
+                                    <div if.bind="(!users[connection.connectedUserId -1].avatar)" style="" class="avatar-circle avatar-text">${users[connection.connectedUserId -1].name.charAt(0)}</div>
                                 </div>
                             </a>
                         </td>
-                        <td>
+                        <td class="con-td-2">
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
                                 <div>
                                     <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connection.connectedUserId -1].name} ${users[connection.connectedUserId -1].surname}</div>
-                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connection.connectedUserId -1].brand.name} ${users[connection.connectedUserId -1].pressHouse.name}</div>
+                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connection.connectedUserId -1].brand.name}${users[connection.connectedUserId -1].pressHouse.name}${users[connection.connectedUserId -1].prAgency.name}</div>
                                 </div>
                             </a>
                         </td>
-                        <td class="align-top">
+                        <td class="align-top con-td-3">
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
                                 <span class="alert-box">${connection.numberNewMessages}</span>
                             </a>
                         </td>
-                        <td class="align-top">
+                        <td class="align-top con-td-4">
                             <div class="look-menu-absolute-wrap">
-
                                 <a href="#" click.delegate="deleteContact(connection.user.id,connection.id, users[connection.connectedUserId -1].email)">
                                     <span class="edit-box" style="font-size: 20px; margin-left: 11px; margin-right: 0px; margin-top: 6px; height:16px;width:16px;">
-
                                     <img style="vertical-align: center;" src="../../assets/ximg.png"  /> 
-
-
                                     </span>
                                 </a>
                             </div>
@@ -165,7 +169,7 @@
                     <td class="accordion-grey" style="width:20px;">
                         <button id="button1212" class="accordion active" click.delegate="closeExpand(1212)"></button>
                     </td>
-                    <td class="accordion-grey"> <span>All Contacts</span>
+                    <td class="accordion-grey"> <span>ALL CONTACTS</span>
                     </td>
                     <td class="accordion-grey" style="width: 49px; padding-top: 1px;">
                         <button id="button1221" class="accordionAZ active" click.delegate="switchAlpha(1221)"></button>
@@ -176,27 +180,27 @@
         <div id="panel1212" class="panel grid-block vertical scroll show" style="overflow-y:auto;">
             <!-- ME -->
             <div id="contacts-inside-top-me" style="width:255px; overflow: visible;margin-left: 1rem; margin-bottom:1.5rem; border-bottom: 1px solid #e7e7e7; padding-bottom: 9px;">
-                <table class="width100">
+                <table class="width100" style="table-layout: fixed;">
                     <tr>
-                        <td style="width:43px;">
+                        <td class="con-td-1">
                             <a href="#" click.delegate="updatePhoto()">
                                 <div class="avatar-container">
                                     <img if.bind="(user.avatar)" src=${user.avatar} class="clip-circle contact-entry avatar-img" />
-                                    <div if.bind="(!user.avatar)" style="margin-right: 1rem; " class="avatar-circle avatar-text ">${users[user.id -1].name.charAt(0)}</div>
+                                    <div if.bind="(!user.avatar)" class="avatar-circle avatar-text ">${users[user.id -1].name.charAt(0)}</div>
                                 </div>
                             </a>
                         </td>
-                        <td>
+                        <td class="con-td-2">
                             <a href="#" click.delegate="updatePhoto()">
                                 <div>
                                     <div class="ui-text-label-me-left paragraph-5 contact-box">${users[user.id -1].name} ${users[user.id -1].surname} (ME)</div>
-                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${users[user.id -1].brand.name} ${users[user.id -1].pressHouse.name}</div>
+                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${users[user.id -1].brand.name}${users[user.id -1].pressHouse.name}${users[user.id -1].prAgency.name}</div>
                                 </div>
                             </a>
                         </td>
-                        <td class="align-top">
+                        <td class="align-top con-td-3">
                         </td>
-                        <td class="align-top">
+                        <td class="align-top con-td-4">
                         </td>
                     </tr>
                 </table>
@@ -204,30 +208,30 @@
             <!-- main list -->
             <div id="contacts-inside-top" if.bind="(users[user.id -1].connections!=null)" repeat.for="connection of users[user.id -1].connections | sort: 'name': filterDirection | filter:searchTerm:filterFunc " class="" style="width:255px; overflow: visible;margin-left: 1rem;">
                 <!-- check the connection is completed and the user still exists -->
-                <table if.bind="(connection.connectingStatus=='Accepted' && users[connection.connectedUserId -1].email)" class="width100" style="margin-bottom: 10px;">
+                <table if.bind="(connection.connectingStatus=='Accepted' && users[connection.connectedUserId -1].email)" class="width100" style="margin-bottom: 10px; table-layout: fixed;" >
                     <tr>
-                        <td>
+                        <td class="con-td-1">
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
-                                <div>
-                                    <img if.bind="(users[connection.connectedUserId -1].image)" src=${users[connection.connectedUserId-1].image} class="clip-circle contact-entry" />
-                                    <div if.bind="(!users[connection.connectedUserId -1].image)" style="margin-right: 1rem; " class="avatar-circle ">${users[connection.connectedUserId -1].name.charAt(0)}</div>
+                                <div class="">
+                                    <img if.bind="(users[connection.connectedUserId -1].avatar)" src=${users[connection.connectedUserId-1].avatar} class="clip-circle contact-entry" />
+                                    <div if.bind="(!users[connection.connectedUserId -1].avatar)" class="avatar-circle avatar-text">${users[connection.connectedUserId -1].name.charAt(0)}</div>
                                 </div>
                             </a>
                         </td>
-                        <td>
+                        <td class="con-td-2">
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
                                 <div>
                                     <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connection.connectedUserId -1].name} ${users[connection.connectedUserId -1].surname}</div>
-                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connection.connectedUserId -1].brand.name} ${users[connection.connectedUserId -1].pressHouse.name}</div>
+                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connection.connectedUserId -1].brand.name}${users[connection.connectedUserId -1].pressHouse.name}${users[connection.connectedUserId -1].prAgency.name}</div>
                                 </div>
                             </a>
                         </td>
-                        <td class="align-top">
+                        <td class="align-top con-td-3">
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
                                 <span if.bind="connection.numberNewMessages!=0" class="alert-box">${connection.numberNewMessages}</span>
                             </a>
                         </td>
-                        <td class="align-top">
+                        <td class="align-top con-td-4">
                             <div class="look-menu-absolute-wrap">
 
                                 <a href="#" click.delegate="deleteContact(connection.user.id,connection.id, users[connection.connectedUserId -1].email)">
