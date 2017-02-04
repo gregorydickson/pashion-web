@@ -167,6 +167,8 @@ class SampleRequestController {
 
 
     def index(){
+        log.info "**************  List Sample Requests ******************"
+        long startTime = System.currentTimeMillis()
         def user = session.user
         List<SampleRequest> results
         if(user == 'guest'){
@@ -176,7 +178,16 @@ class SampleRequestController {
             results = sampleRequestService.listByUserOrganization(user)
             log.info "sample requests count:"+results.size()
         }
+        long endTime = System.currentTimeMillis()
+        long duration = (endTime - startTime)
+        log.info "sample requests index database duration:"+duration
+        startTime = System.currentTimeMillis()
         respond results
+        endTime = System.currentTimeMillis()
+        duration = (endTime - startTime)
+        log.info "JSON render duration:"+duration
+        log.info "*******************************************************"
+        log.info ""
     }
 
     

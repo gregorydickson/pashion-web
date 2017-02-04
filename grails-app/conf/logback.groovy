@@ -29,6 +29,10 @@ logger("grails.app.controllers", DEBUG, ['STDOUT','LE'], false)
 logger("grails.app.domain", DEBUG, ['STDOUT','LE'], false)
 logger("asset.pipeline.jsass", INFO, ['STDOUT'], false)
 logger("asset.pipeline", INFO, ['STDOUT'], false)
+logger("org.hibernate.cache", DEBUG, ["STDOUT"], false)
+logger("grails.views", DEBUG, ["STDOUT"], false)
+
+//logger("org.hibernate.SQL", DEBUG, ["STDOUT"], false)
 
 def targetDir = BuildSettings.TARGET_DIR
 if (Environment.isDevelopmentMode() && targetDir) {

@@ -17,18 +17,12 @@ class SampleRequestService {
         if(user?.brand){
             log.info "brand user get sample requests"
             def brand = user.brand
-            results = criteria.listDistinct () {
-                eq('brand',brand)
-                cache true
-            }
+            results = SampleRequest.findAllByBrand(brand, [cache:true]);
         }
         if(user?.pressHouse){
             log.info "press user get sample requests"
             def pressHouse = user.pressHouse
-            results = criteria.listDistinct () {
-                eq('pressHouse',pressHouse)
-                cache true
-            }
+            results = SampleRequest.findAllByPressHouse(pressHouse, [cache:true]);
         }
 
         results

@@ -25,7 +25,7 @@ class SearchableItemController {
         def keywords = null
         def criteria = SearchableItem.createCriteria()
 
-        log.info "brand param:"+params.brand
+        
         if(params.brand && params.brand != '' && params.brand.trim() != 'All'){
             brand = Brand.get(params.brand.trim())
         }

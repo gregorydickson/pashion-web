@@ -4,9 +4,6 @@ import pashion.SampleRequest
 model {  
     SampleRequest sampleRequest
 }
+log.info "render a sample request"
 
-json g.render(sampleRequest,[excludes:['pressHouse'],expand:['searchableItemsStatus','brand','searchableItemsProposed','deliverTo','searchableItems','requestingUser','returnToAddress','shippingOut','shippingReturn','addressDestination']]){
-	pressHouse {
-		name sampleRequest?.pressHouse?.name
-	}
-}
+json g.render(sampleRequest,[expand:['searchableItemsStatus','brand','searchableItemsProposed','deliverTo','searchableItems','requestingUser','returnToAddress','shippingOut','shippingReturn','addressDestination']])	

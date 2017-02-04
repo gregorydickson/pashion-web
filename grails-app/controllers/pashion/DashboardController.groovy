@@ -41,7 +41,7 @@ class DashboardController {
         }
 
         def user = session.user
-        log.info "user:"+user
+        
         def type
         def companyId
         if(user.brand){

@@ -1,6 +1,11 @@
 import pashion.SampleRequest
-import groovy.transform.Field
+ 
+model {  
+  Iterable<SampleRequest> sampleRequestList
+}
 
-@Field List<SampleRequest> sampleRequestList
 
-json tmpl.sampleRequest(sampleRequestList)
+log.info "rendering json list"
+
+
+json g.render(template: 'sampleRequest', collection: sampleRequestList ?: [], var: 'sampleRequest')
