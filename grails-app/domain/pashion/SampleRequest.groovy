@@ -105,9 +105,22 @@ class SampleRequest {
 	static mapping = {
         cache true
         searchableItems lazy:false
+        brand lazy:false
+        deliverTo lazy: false
+        searchableItemsProposed lazy: false
+        searchableItems lazy:false
+        searchableItemsDenied lazy:false
         shippingOut lazy:false
         shippingReturn lazy:false
         searchableItemsStatus lazy:false
+        requestingUser lazy: false
+
+        receivingUser lazy:false
+	
+        returnToAddress lazy:false
+        addressDestination lazy:false
+        pressHouse lazy: false
+
     }
 
 	static belongsTo = SearchableItem 

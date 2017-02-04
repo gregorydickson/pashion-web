@@ -15,6 +15,9 @@ class ShippingEvent {
 	Date lastUpdated
 
 	static belongsTo = [sampleRequest:SampleRequest]
+	static mapping = {
+        cache true
+    }
 
 	static constraints = {
 		status nullable: true

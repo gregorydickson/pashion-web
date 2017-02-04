@@ -31,6 +31,10 @@ class Address{
 		attention nullable:true
 	}
 
+	static mapping = {
+        cache true
+    }
+
 	String toString() {
 		if(brand)
         	return brand.toString() +" "+ name

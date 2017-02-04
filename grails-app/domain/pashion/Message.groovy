@@ -16,7 +16,9 @@ class Message {
 	static hasMany = [to:User]
 
 	static belongsTo = []
-
+	static mapping = {
+        cache true
+    }
 
 	static constraints = {
 		message nullable: true

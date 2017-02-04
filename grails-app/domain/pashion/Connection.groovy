@@ -20,6 +20,9 @@ class Connection {
 	//Date lastUpdated
 
 	static belongsTo = [user:User]
+	static mapping = {
+        cache true
+    }
 
 	static constraints = {
 		numberNewMessages(nullable:true)
