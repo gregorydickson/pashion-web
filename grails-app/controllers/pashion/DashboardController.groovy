@@ -146,6 +146,18 @@ class DashboardController {
                 'turquoise','white','yellow'] as JSON
         render colors
     }
+
+
+    def seasonsByBrand(){
+        log.info "season by brand:"
+        def brand = session.user.brand
+        def seasons = SearchableItem.findAllByBrand(brand).collect{it.season}
+        seasons.unique()
+        def response = seasons as JSON
+
+        render response
+
+    }
     def seasons(){
         
         def seasons = cachingService.seasons()
