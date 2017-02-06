@@ -21,8 +21,8 @@
           </div>
       </ai-dialog-body>
       <ai-dialog-footer>    
-          <a class="button" click.delegate="uploadAvatar()">Accept</a>
-          <a class="hollow button"  click.delegate="close()">Cancel</a>
+          <button class="button" id="button-accept" disabled="disabled" click.delegate="uploadAvatar()">Accept</button>
+          <button class="hollow button" click.delegate="close()">Cancel</button>
       </ai-dialog-footer>
 
    </ai-dialog>
