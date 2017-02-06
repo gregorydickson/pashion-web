@@ -87,9 +87,10 @@ export class CreateDialogUpdatePhoto {
             else
               fileName = e.target.value.split( '\\' ).pop();
 
-            if( fileName )
+            if( fileName ){
               label.querySelector( 'span' ).innerHTML = fileName;
-            else
+              document.getElementById("button-accept").disabled = false;
+            }else
               label.innerHTML = labelVal;
 
           // Make width of file input and label the same
