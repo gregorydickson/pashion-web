@@ -10,3 +10,8 @@
                 document.getElementById('password-word').innerHTML="Show";
             }
       };
+
+      function request_access () {
+
+        window.open("http://www.pashiontool.com/beta#contact",'_blank');
+      }
