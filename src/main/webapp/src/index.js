@@ -24,7 +24,7 @@ export class Index {
     user = {};
     bookings = [];
     rows = [];
-    //seasons = [];
+    seasons = [];
     brands = [];
     itemTypes = [];
     colors = [];
@@ -173,6 +173,18 @@ export class Index {
         ;
     }
 
+    seasonNameFromId(id) {
+        //RM change to seasons to be object
+        //using string here, could probably be better as id, but want to contain the changes 
+        var i;
+        for (i = 0; i < this.seasons.length; i++) {
+            if (this.seasons[i].id == id) {
+                return this.seasons[i].name;
+            }
+        }
+        return '';
+    }
+
     filterChangeSeason(event) {
         this.busy.on();
         console.log("Filter Change changing Season");
@@ -180,15 +192,9 @@ export class Index {
         if (event)
             if (event.detail)
                 if (event.detail.value) {
-                      //RM change to seasons to be object
-                      //using string here, could probably be better as id, but want to contain the changes 
-                      var i;
-                      for (i=0; i < this.seasons.length; i++) {
-                        if (this.seasons[i].id  == event.detail.value) {
-                          this.selectedSeason = this.seasons[i].name;
-                          break;
-                        }
-                      }
+                    //RM change to seasons to be object
+                    //using string here, could probably be better as id, but want to contain the changes 
+                    this.selectedSeason = this.seasonNameFromId (event.detail.value);
                     console.log("value: " + event.detail.value + " selected: " + this.selectedSeason);
                 }
                 //console.log("Filter change called, Season: " + this.selectedSeason);
