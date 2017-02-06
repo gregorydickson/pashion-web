@@ -4,22 +4,6 @@ import pashion.User
 model {  
     User user
 }
+log.info "Rendering a User in _user.gson"
 
-json g.render(user,[expand:['connections']]){
-	pressHouse {
-		name user.pressHouse?.name
-		id user.pressHouse?.id
-	}
-
-	brand {
-		name user.brand?.name
-		id user.brand?.id
-	}
-
-	prAgency {
-		name user.prAgency?.name
-		id user.prAgency?.id
-	} 
-
-
-}
+json g.render(user,[expand:['connections','pressHouse','brand','prAgency']])

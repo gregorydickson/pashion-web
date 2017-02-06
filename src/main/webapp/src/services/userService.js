@@ -30,7 +30,7 @@ export class UserService {
         var promise = new Promise((resolve, reject) => {
             if ((!this.users) || forceGetFromServer) { // local storage if already loaded
                 console.log("getUsers() getting users from JSON");
-                this.http.fetch('/user/connections.json')
+                this.http.fetch('/user/connections')
                     .then(response => response.json())
                     .then(users => {
                         this.users = users;

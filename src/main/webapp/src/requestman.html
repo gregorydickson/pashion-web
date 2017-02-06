@@ -177,7 +177,7 @@
                                                             <li class="look-menu-item"><a click.delegate="markPickedUpSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Picked Up</a></li>
                                                             <li class="look-menu-item"><a click.delegate="markReturnedSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Returned</a></li>
                                                             <li class="look-menu-item"><a click.delegate="restockedSampleRequest(booking.id)" href="#" class="look-menu-link">Restocked</a></li>
-                                                            <li class="look-menu-item"><a click.delegate="deleteSampleRequest(booking.id)" href="#" class="look-menu-link">Delete Request</a></li>
+                                                            <li class="look-menu-item"><a click.delegate="deleteSampleRequest($index,booking.id)" href="#" class="look-menu-link">Delete Request</a></li>
                                                         </ul>
 
                                                         <ul if.bind="(user.type === 'press') || (user.type === 'agency')" class="look-menu-list">

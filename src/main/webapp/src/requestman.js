@@ -123,6 +123,7 @@ export class Requestman{
 
 
   closeSampleRequestMenu(id){
+
     //var menu = document.getElementById("requestManTest"+id);
     //menu.classList.toggle("look-menu-show");
   }
@@ -177,7 +178,7 @@ export class Requestman{
       });
   }
   reloadBookings(){
-    this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
+    this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
   }
 
   denySampleRequest(id){
@@ -222,8 +223,10 @@ export class Requestman{
       this.reloadBookings();
     });
   }
-  deleteSampleRequest(id){
-    this.closeSampleRequestMenu(id);
+  deleteSampleRequest(index,id){
+    this.image = '';
+    console.log ("splicing delete");
+    this.bookings.splice( index, 1 );
     this.sampleRequestService.deleteSampleRequest(id).then(message =>{
       alert(message.message);
       this.reloadBookings();

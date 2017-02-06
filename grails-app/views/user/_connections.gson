@@ -1,7 +1,7 @@
 import pashion.User
 
 log.info ""
-log.info "******   Rendering connections.gson  *************"
+log.info "******   Rendering _connections.gson *************"
 
 
 model {  

@@ -14,14 +14,20 @@ class UserController {
 
     def userService
     def cookieService
+    def cachingService
 
     def connections(){
-        respond User.list()
+        log.info "***************   STARTING  Connections ********************"
+        String json = cachingService.connections()
+        
+        render json
+        log.info "***************   END  Connections ********************"
+        log.info ""
     }
-    //   /user/updateConnections
+    
     @Transactional
     def updateConnections(){
-        //log.info 'updateConnections called' 
+        log.info 'updateConnections called' 
         //log.info "json:"+request.JSON
         def jsonObject = request.JSON
         try{
@@ -44,13 +50,15 @@ class UserController {
             render error as JSON
             return
         }
-        // log.info "update connections OK"
+        notify "connectionsUpdate","connections"
+        log.info "update connections OK"
         def sent = [message:'Connection Data Updated']
         render sent as JSON
     }
 
     
     def index(Integer max) {
+        log.info "USERS INDEX ____ **************"
         /*params.max = 5000 // Math.min(max ?: 10, 100)
         if(params.email && params.email != ""){
             def email = URLDecoder.decode(params.email)
