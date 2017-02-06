@@ -83,7 +83,7 @@ class CachingService implements JsonViewTest {
     }
 
     def loadSeasons(){
-        List items = SearchableItem.list().collect{it.season.name}
+        List items = SearchableItem.list().collect{it.season}
 
         items.unique()
         log.info"seasons"+items

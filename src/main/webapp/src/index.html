@@ -11,6 +11,7 @@
     <require from="./dashboard_filters/filters-theme"></require>
     <require from="./dashboard_filters/filters-designer"></require>
     <require from="./dashboard_filters/filters-season"></require>
+    <require from="./dashboard_filters/filters-season-press"></require>
     <require from="./dashboard_filters/filters-type"></require>
     <require from="./dashboard_filters/filters-city"></require>
     <require from="./dashboard_filters/filters-order"></require>
@@ -325,7 +326,7 @@
                                         </div>
                                         <!-- Seasons -->
                                         <div class="grid-row-col">
-                                            <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
+                                            <filters-season-press season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season-press>
                                         </div>
                                         <!-- Type
                                         <div class="grid-row-col">
@@ -365,7 +366,7 @@
                                     <!-- <filters-search></filters-search> -->
                                 </div>
                                 <div class="grid-row-col">
-                                    <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
+                                    <filters-season change.delegate="filterChangeSeason($event)"></filters-season>
                                 </div>                    
                                 <div class="grid-row-col">
                                     <filters-city change.delegate="filterChangeCity($event)"></filters-city>
@@ -406,7 +407,7 @@
                                     <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>
                                 </div>
                                 <div class="grid-row-col">
-                                    <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
+                                    <filters-season-press season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season-press>
                                 </div>
                                 <div class="grid-row-col">
                                     <filters-color change.delegate="filterChangeColor($event)"></filters-color>

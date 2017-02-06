@@ -4,9 +4,9 @@ import 'fetch';
 
 
 @inject(HttpClient, Element)
-@customElement('filters-season')
+@customElement('filters-season-press')
 
-export class FiltersSeasonCustomElement {
+export class FiltersSeasonPressCustomElement {
   seasons = [];
   
   @bindable seasono = '';
@@ -22,7 +22,7 @@ setSeason(event){
 
 attached() {
     return Promise.all([
-      this.http.fetch('/dashboard/seasonsByBrand').then(response => response.json()).then(seasons => this.seasons = seasons)
+      this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons)
     ]);
 }
 

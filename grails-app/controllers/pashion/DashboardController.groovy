@@ -165,11 +165,14 @@ class DashboardController {
 
     }
     def seasons(){
-        
+
+        log.info "seasons all"       
         def seasons = cachingService.seasons()
 
-        if(!seasons)
-            seasons = Season.list().collect{it.name} as JSON
+        if(!seasons) {
+            log.info "not from cache"
+            seasons = Season.list().collect{it.season} as JSON
+        }
 
         render seasons
     }

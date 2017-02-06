@@ -24,7 +24,7 @@ export class Index {
     user = {};
     bookings = [];
     rows = [];
-    seasons = [];
+    //seasons = [];
     brands = [];
     itemTypes = [];
     colors = [];
@@ -180,8 +180,16 @@ export class Index {
         if (event)
             if (event.detail)
                 if (event.detail.value) {
-                    this.selectedSeason = event.detail.value;
-                    console.log("value:" + event.detail.value)
+                      //RM change to seasons to be object
+                      //using string here, could probably be better as id, but want to contain the changes 
+                      var i;
+                      for (i=0; i < this.seasons.length; i++) {
+                        if (this.seasons[i].id  == event.detail.value) {
+                          this.selectedSeason = this.seasons[i].name;
+                          break;
+                        }
+                      }
+                    console.log("value: " + event.detail.value + " selected: " + this.selectedSeason);
                 }
                 //console.log("Filter change called, Season: " + this.selectedSeason);
         this.numberImages = 0;

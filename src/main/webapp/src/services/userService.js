@@ -516,13 +516,13 @@ export class UserService {
                             // this is the extra stuff created in groovy for the login user that is now relied upon
                             //RM should weed out the places that rely on this and create specific functions here
                             this.user = user;
-                            if (user.brand.id!=null) {
+                            if (user.brand!=null) {
                                 this.user["type"] = 'brand';
                                 this.user["companyId"] = user.brand.id;
-                            } else if (user.pressHouse.id!=null) {
+                            } else if (user.pressHouse!=null) {
                                 this.user["type"] = 'press';
                                 this.user["companyId"] = user.pressHouse.id;
-                            } else if (user.prAgency.id!=null) {
+                            } else if (user.prAgency!=null) {
                                 this.user["type"] = 'prAgency';
                                 this.user["companyId"] = user.prAgency.id;
                             } else {
