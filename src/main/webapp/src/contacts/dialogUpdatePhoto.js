@@ -38,9 +38,9 @@ export class CreateDialogUpdatePhoto {
                 .then(data => {
                 console.log('URL ' + data.url);
                 if (($('.avatar-container').children().attr('class')).indexOf("avatar-img")!= -1){
-                    $('.avatar-img').attr('src', data.url);
+                    $('.avatar-img').attr('src', data.url+'?_='+new Date().getTime());
                 }else {
-                    $('.avatar-container').html("<img src='"+data.url+"' class='clip-circle contact-entry avatar-img' />");
+                    $('.avatar-container').html("<img src='"+data.url+'?_='+new Date().getTime()+"' class='clip-circle contact-entry avatar-img' />");
                     //quitar avatar-text y agregar avatar-img
                 }
 
