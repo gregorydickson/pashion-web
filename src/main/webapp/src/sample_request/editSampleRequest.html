@@ -254,7 +254,7 @@
                     <table repeat.for="sample of sampleRequest.searchableItemsProposed" class="" style="margin-bottom:7px; table-layout:fixed">
                         <tr>
                            <!--  <td class="accordion w3">${$index+1}</td> -->
-                            <td class="accordion" style="width:40px; max-width:40px;">${sampleRequest.look}.${$index+1} :</td>
+                            <td class="accordion" style="width:60px; max-width:60px;">${sampleRequest.season | seasonAbbreviation:seasons}${sampleRequest.look}.${$index+1} :</td>
                             <td class="accordion to-u-c" style="width:355px; max-width:355px; overflow:hidden;">${sample.attributes}</td>
                             <td class="accordion" style="width:60px; max-width:60px;">
                                 <span style="margin-bottom:0px;">${sample.status.brandStatus}</span>

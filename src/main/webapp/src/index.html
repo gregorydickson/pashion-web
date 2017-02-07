@@ -167,7 +167,7 @@
                                 <td class="accordion w10">
                                     <button id="button${booking.id}" class="accordion" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
-                                <td class="accordion w15">${booking.id}</td>
+                                <td class="accordion w15">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
                                 <td class="accordion w35">${booking.bookingStartDate | viewDateFormat}</td>
                                 <td class="accordion w30 ui-text-label-m-blue" style="font-weight:500">${booking.requestStatusPress}</td>
                                 <td class="accordion w10">
@@ -193,11 +193,11 @@
                         <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
                             <table class="accordion expanded" style="table-layout:fixed;">
                                 <tr >
-                                    <td class="accordion" style="width:37px; max-width:37px; padding-top:10px;padding-left:10px;">${booking.brand.name}</td>
+                                    <td class="accordion" style="width:65px; max-width:65px; padding-top:10px;padding-left:10px;">${booking.brand.name}</td>
                                 </tr>
                                 <tr repeat.for="sample of booking.searchableItems">
-                                    <td class="accordion" style="width:55px; max-width:55px;"> ${sample.id}:</td>
-                                    <td class="accordion" style="width:190px; max-width:190px; overflow: hidden;"> ${sample.attributes}</td>
+                                    <td class="accordion" style="width:60px; max-width:60px; padding-left: 10px;">${booking.season | seasonAbbreviation:seasons }${booking.look}.${$index+1}</td>
+                                    <td class="accordion to-u-c" style="width:142px; max-width:142px; overflow: hidden; padding-right:10px;"> ${sample.attributes}</td>
                                 </tr>
                             </table>
                         </div>
