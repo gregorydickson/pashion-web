@@ -34,7 +34,7 @@ export class AddFilesDialog {
   }
 
   attached() {
-    this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
+    this.http.fetch('/dashboard/seasonsByBrand').then(response => response.json()).then(seasons => this.seasons = seasons);
     var inputs = document.querySelectorAll( '.input-file' );
     Array.prototype.forEach.call( inputs, function(input) {
       var label  = input.nextElementSibling,
