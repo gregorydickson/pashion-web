@@ -364,7 +364,7 @@ export class CreateSampleRequestBrand {
           .then(result => {
               this.result = result;
               alert('Request Sent');
-              this.controller.close();
+              this.controller.ok();
 
           });
     

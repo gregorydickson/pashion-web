@@ -605,9 +605,8 @@ export class Index {
         this.dialogService.open({ viewModel: CreateSampleRequest, model: itemId })
             .then(response => {
                 if (response.wasCancelled) {
-                    console.log('Canceled');
                 } else {
-                    this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
+                    this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
                 }
             });
     }
@@ -617,9 +616,8 @@ export class Index {
         this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: itemId })
             .then(response => {
                 if (response.wasCancelled) {
-                    console.log('Canceled');
                 } else {
-                    this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
+                    this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
                 }
             });
     }

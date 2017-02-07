@@ -327,7 +327,7 @@ export class CreateSampleRequest {
           .then(result => {
               this.result = result;
               alert('Request Sent');
-              this.controller.close();
+              this.controller.ok();
 
           });
     
