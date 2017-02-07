@@ -43,15 +43,15 @@ export class Adminpage{
                 this.userService.getUserDetails(user.id)
                     .then(currentContact => {
                         this.user = currentContact;
-                        if (this.user.brand.id != null){
+                        if (user.type === 'brand') {
                             this.brandService.getBrandAddresses(this.user.brand.id)
                                 .then(addresses=>{this.addresses = addresses});
                             this.company = user.brand;
-                        } else if(this.user.pressHouse.id != null){
+                        } else if (user.type === 'press') {
                             this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
                                 .then(addresses=>this.addresses = addresses)
                             this.company = user.pressHouse;
-                        } else if(this.user.prAgency.id != null){
+                        } else {
                             this.prAgencyService.getPRAgencyAddresses(this.user.prAgency.id)
                                 .then(addresses=>this.addresses = addresses)
                             this.company = user.prAgency;

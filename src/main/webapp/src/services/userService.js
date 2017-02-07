@@ -52,18 +52,17 @@ export class UserService {
         let user = this.user;
         let method = ''
         let id = '';
-        if (user.brand.id!=null) {
+        console.log(JSON.stringify(user));
+        if (user.type === 'brand') {
             method = 'usersBrand';
             id = user.brand.id;
-        } else if (user.pressHouse.id!=null) {
+        } else if (user.type === 'press') {
             method = 'usersPressHouse';
             id = user.pressHouse.id;
-        } else if (user.prAgency.id!=null) {
+        } else {
             method = 'usersPRAgency';
             id = user.prAgency.id;
-        } else{
-            return null;
-        }
+        } 
         console.log("method for org:"+method + " id:"+id);
         var promise = new Promise((resolve, reject) => {
             if ((!this.usersOrg) || forceGetFromServer) { // local storage if already loaded
