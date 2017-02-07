@@ -26,17 +26,17 @@ export class CreateDialogUpdatePhoto {
 
     if(this.avatar != undefined){
 
-        console.log(this.avatar);
-        var reader = new FileReader();
-        reader.readAsDataURL(this.avatar[0]);
-        reader.onload = function () {
-            data = reader.result;
-            current.userService.getUser()
-                .then(user => {
-                current.user = user;
-            current.userService.uploadAvatar(current.user, data)
-                .then(data => {
-                console.log('URL ' + data.url);
+        if(this.avatar[0].type.indexOf('image/')!=-1){
+            var reader = new FileReader();
+            reader.readAsDataURL(this.avatar[0]);
+            reader.onload = function () {
+                data = reader.result;
+                current.userService.getUser()
+                    .then(user => {
+                    current.user = user;
+                current.userService.uploadAvatar(current.user, data)
+                    .then(data => {
+                    console.log('URL ' + data.url);
                 if (($('.avatar-container').children().attr('class')).indexOf("avatar-img")!= -1){
                     $('.avatar-img').attr('src', data.url+'?_='+new Date().getTime());
                 }else {
@@ -44,14 +44,19 @@ export class CreateDialogUpdatePhoto {
                     //quitar avatar-text y agregar avatar-img
                 }
 
-            current.controller.close();
-        });
-        });
-        };
-        reader.onerror = function (error) {
-            console.log('Error: ', error);
-        };
-        console.log('waiting');
+                current.controller.close();
+            });
+            });
+            };
+            reader.onerror = function (error) {
+                console.log('Error: ', error);
+            };
+            console.log('waiting');
+        } else{
+            alert('Sorry, we only can accept images files');
+        }
+
+
     } else {
       console.log('Selected image successfully');
     }    
