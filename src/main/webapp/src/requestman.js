@@ -1,15 +1,16 @@
-import {inject} from 'aurelia-framework';
+import {inject,bindable, bindingMode } from 'aurelia-framework';
 import {UserService} from './services/userService';
 import {SampleRequestService} from './services/sampleRequestService';
 import {DialogService} from 'aurelia-dialog';
 import {CreateDialogNewContact} from './contacts/dialogNewContact';
 import {CreateDialogImportContacts} from './contacts/dialogImportContacts';
 import {EditSampleRequest} from './sample_request/editSampleRequest';
+import {busy} from './services/busy';
 
-@inject(DialogService, UserService, SampleRequestService)
+@inject(DialogService, UserService, SampleRequestService,busy)
 export class Requestman{
 	  
-  bookings = [];
+  @bindable({defaultBindingMode: bindingMode.twoWay}) bookings = [];
   searchTest = "";
   status = [];
   selectedStatus = "";
@@ -27,11 +28,12 @@ export class Requestman{
 
 
 
-  constructor(dialogService,userService,sampleRequestService) {
+  constructor(dialogService,userService,sampleRequestService,busy) {
     
     this.dialogService = dialogService;
     this.userService = userService;
     this.sampleRequestService = sampleRequestService;
+    this.busy = busy;
 
   }
 
@@ -79,7 +81,7 @@ export class Requestman{
                     if (event.detail.value == 'My Requests') this.filtering = 'My Requests'; 
                     if (event.detail.value == 'Overdue Requests') this.filtering = 'Overdue Requests';  
                     if (event.detail.value == 'Open Requests') this.filtering = 'Open Requests'; 
-                    console.log("value:" + event.detail.value + " filtering: " +this.filtering);
+                    //console.log("value:" + event.detail.value + " filtering: " +this.filtering);
                 } 
   }
 
@@ -105,7 +107,7 @@ export class Requestman{
     if (value.returnToSurname) itemValue = itemValue + value.returnToSurname;
     if (value.addressDestination) itemValue = itemValue + value.addressDestination.name;
 
-    console.log("Search value: " + itemValue);
+    //console.log("Search value: " + itemValue);
     if(searchExpression && itemValue) searchVal = itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;   
 
     if (filter == 'My Requests') {
@@ -117,7 +119,7 @@ export class Requestman{
     if (filter == 'Open Requests') {
       filterVal = (value.requestStatusBrand != 'Closed');
     }
-    console.log(" filterfunc return value: " +  searchVal + " " + filterVal + " :: " + (searchVal && filterVal));
+    //console.log(" filterfunc return value: " +  searchVal + " " + filterVal + " :: " + (searchVal && filterVal));
     return (searchVal && filterVal); 
   }
 
@@ -136,7 +138,7 @@ export class Requestman{
       var panelChoice = document.getElementById("panel" + buttonNumber);
       buttonChoice.classList.toggle("active");
       panelChoice.classList.toggle("show");
-    if(this.closed){
+    if(this.closed && sampleRequest){
       this.brand = sampleRequest.brand.name;
       this.image = sampleRequest.image;
       this.season = sampleRequest.season;
@@ -178,7 +180,10 @@ export class Requestman{
       });
   }
   reloadBookings(){
-    this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
+    this.sampleRequestService.getSampleRequests().then(bookings => {
+      this.bookings = bookings;
+      this.busy.off();
+    });
   }
 
   denySampleRequest(id){
@@ -223,12 +228,20 @@ export class Requestman{
       this.reloadBookings();
     });
   }
+  delete(index){
+
+    this.bookings = this.bookings.splice( index, 1 );
+  }
   deleteSampleRequest(index,id){
     this.image = '';
+    if(this.open)
+      this.closeExpand(index,null);
     console.log ("splicing delete");
-    this.bookings.splice( index, 1 );
+    this.delete(index);
+    
     this.sampleRequestService.deleteSampleRequest(id).then(message =>{
-      alert(message.message);
+      
+      this.busy.on();
       this.reloadBookings();
     });
   }
