@@ -13,6 +13,7 @@ class Brand {
 	Date lastUpdated
 	Collection destinations
 	Collection addresses
+	Boolean hideCalendar = false
 
 	static hasMany = [destinations:Address, brandCollections: BrandCollection,prAgencies:PRAgency,users:User,addresses:Address]
 
