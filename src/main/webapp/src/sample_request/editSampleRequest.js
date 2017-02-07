@@ -14,6 +14,7 @@ export class EditSampleRequest {
   brandAddresses = [];
   user = {};
   brandUsers = [];
+  //seasons = [];
 
   constructor(sampleRequestService,controller,userService,http){
     http.configure(config => {
@@ -29,8 +30,9 @@ export class EditSampleRequest {
   activate(requestId){
     
       
-      return this.sampleRequestService.getSampleRequest(requestId).then(sampleRequest => {this.sampleRequest = sampleRequest;});
-    
+      return Promise.all ([
+        this.sampleRequestService.getSampleRequest(requestId).then(sampleRequest => {this.sampleRequest = sampleRequest;}),
+        this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons)]);
     
   }
 

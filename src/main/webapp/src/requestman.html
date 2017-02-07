@@ -147,7 +147,7 @@
                             <!-- Rows of content BRAND View-->
                             <div class="grid-content" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left: 1rem; margin-right: 1rem;">
                                 
-                                <div repeat.for="booking of bookings | filter:searchTextReqMan:filterFunc:filtering:user | sort: ordering : 'ascending' ">
+                                <div repeat.for="booking of bookings | sort:ordering:'ascending' | filter:searchTextReqMan:filterFunc:filtering:user">
                                     <table  class="big-accordion" style="table-layout: fixed;">
                                         <tr>
                                             <td class="accordion-grey w3">

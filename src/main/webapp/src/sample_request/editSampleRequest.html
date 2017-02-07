@@ -3,13 +3,14 @@
 <template>
     <require from="common/viewDateFormatter"></require>
     <require from="calendars/datepicker"></require>
+    <require from="common/seasonAbbreviationFormatter"></require>
     <ai-dialog style="width: auto;"> <!-- Based on the design. would prefer to be flexible, but postpone this -->
         
         <!-- header -->
         <ai-dialog-header>
             <div class="grid-block align-center tool-header shrink ">
                 <div id="" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad">EDIT REQUEST ${sampleRequest.id} FOR LOOK ${sampleRequest.look}</span>
+                    <span class="ui-text-label-m-broad">EDIT REQUEST ${sampleRequest.id} FOR LOOK ${sampleRequest.season | seasonAbbreviation:seasons}${sampleRequest.look}</span>
                 </div>
             </div>
         </ai-dialog-header>
@@ -227,8 +228,8 @@
                     <table repeat.for="sample of sampleRequest.searchableItemsProposed" class="" style="table-layout:fixed">
                         <tr>
                             <!-- <td class="accordion w3">${$index+1}</td> -->
-                            <td class="accordion" style="width:40px; max-width:40px;">${sampleRequest.look}.${$index+1} :</td>
-                            <td class="accordion to-u-c" style="width:355px; max-width:355px; overflow:hidden;">${sample.attributes}</td>
+                            <td class="accordion" style="width:60px; max-width:60px;">${sampleRequest.season | seasonAbbreviation:seasons}${sampleRequest.look}.${$index+1} :</td>
+                            <td class="accordion to-u-c" style="width:335px; max-width:335px; overflow:hidden;">${sample.attributes}</td>
                             <td class="accordion" style="width:60px; max-width:60px;">                            
                                 <span style="margin-bottom:0px;">${sample.status.status}</span>
                                 
@@ -248,7 +249,7 @@
                 </div>
 
                 <!-- press -->
-                <div if.bind="user.type === 'press'" class="vertical grid-content accordion" style="overflow-x:hidden; max-height:10rem;"> <!-- scroll after n items -->                    
+                <div if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="vertical grid-content accordion" style="overflow-x:hidden; max-height:10rem;"> <!-- scroll after n items -->                    
                     <!-- row -->
                     <table repeat.for="sample of sampleRequest.searchableItemsProposed" class="" style="margin-bottom:7px; table-layout:fixed">
                         <tr>

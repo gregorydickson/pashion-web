@@ -15,7 +15,7 @@ export class FilterValueConverter {
 
                 return filterFunc(searchTerm, item, filterTerm, user);
             });
-        } catch (e) {}
+        } catch (e) {console.log ("Exception thrown in filter: " + e);}
 
     }
 }

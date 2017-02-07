@@ -24,7 +24,7 @@ export class Index {
     user = {};
     bookings = [];
     rows = [];
-    seasons = [];
+    //seasons = [];
     brands = [];
     itemTypes = [];
     colors = [];
@@ -180,6 +180,18 @@ export class Index {
         for (i = 0; i < this.seasons.length; i++) {
             if (this.seasons[i].id == id) {
                 return this.seasons[i].name;
+            }
+        }
+        return '';
+    }
+
+    seasonAbbreviationFromName(name) {
+        //RM change to seasons to be object
+        //using string here, could probably be better as id, but want to contain the changes 
+        var i;
+        for (i = 0; i < this.seasons.length; i++) {
+            if (this.seasons[i].name == name) {
+                return this.seasons[i].abbreviation;
             }
         }
         return '';

@@ -95,9 +95,9 @@ export class Requestman{
     if (value.pressHouse) itemValue = value.pressHouse.name;
     if (value.brand)  itemValue = itemValue + value.brand.name;
     if (value.prAgency) itemValue = itemValue + value.prAgency.name;
-    if (value.deliverTo.pressHouse) itemValue = value.deliverTo.pressHouse.name;
-    if (value.deliverTo.brand)  itemValue = itemValue + value.deliverTo.brand.name;
-    if (value.deliverTo.prAgency) itemValue = itemValue + value.deliverTo.prAgency.name;
+    if ((value.deliverTo) && value.deliverTo.pressHouse) itemValue = value.deliverTo.pressHouse.name;
+    if ((value.deliverTo) && value.deliverTo.brand)  itemValue = itemValue + value.deliverTo.brand.name;
+    if ((value.deliverTo) && value.deliverTo.prAgency) itemValue = itemValue + value.deliverTo.prAgency.name;
     if (value.editorialName) itemValue = itemValue + value.editorialName;
     if (value.editorialWho) itemValue = itemValue + value.editorialWho;
     if (value.requestingUser) itemValue = itemValue + value.requestingUser.surname + value.requestingUser.name;
@@ -105,7 +105,7 @@ export class Requestman{
     if (value.returnToSurname) itemValue = itemValue + value.returnToSurname;
     if (value.addressDestination) itemValue = itemValue + value.addressDestination.name;
 
-    //console.log("Filter value: " + itemValue);
+    console.log("Search value: " + itemValue);
     if(searchExpression && itemValue) searchVal = itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;   
 
     if (filter == 'My Requests') {
@@ -117,7 +117,7 @@ export class Requestman{
     if (filter == 'Open Requests') {
       filterVal = (value.requestStatusBrand != 'Closed');
     }
-
+    console.log(" filterfunc return value: " +  searchVal + " " + filterVal + " :: " + (searchVal && filterVal));
     return (searchVal && filterVal); 
   }
 

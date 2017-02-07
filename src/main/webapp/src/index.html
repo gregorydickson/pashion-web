@@ -3,6 +3,7 @@
     <require from="./calendars/datepicker"></require>
     <require from="./common/customSelect"></require>
     <require from="./common/viewDateFormatter"></require>
+    <require from="./common/seasonAbbreviationFormatter"></require>
 
     <require from="./dashboard_filters/filters-search"></require>
     <require from="./dashboard_filters/filters-available-from"></require>
@@ -102,10 +103,10 @@
                     <div repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user">
                         <table class="accordion">
                             <tr>
-                                <td class="accordion w10">
+                                <td class="accordion w7">
                                     <button id="button${booking.id}" class="accordion" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
-                                <td class="accordion w15">${booking.look.season.abbreviation}${booking.look}</td>
+                                <td class="accordion w18">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
                                 <td class="accordion w35">${booking.bookingStartDate | viewDateFormat}</td>
                                 <td class="accordion w30 ui-text-label-m-blue" style="font-weight:500">${booking.requestStatusBrand}</td>
                                 <td class="accordion w10">
@@ -137,7 +138,7 @@
                                     <td class="accordion" style="width:65px; max-width:65px; padding-top:10px;padding-left:10px;">${booking.pressHouse.name}</td>
                                 </tr>
                                 <tr repeat.for="sample of booking.searchableItems">
-                                    <td class="accordion" style="width:60px; max-width:60px; padding-left:10px;"> ${booking.look.season.abbreviation}${booking.look}.${$index+1} :</td>
+                                    <td class="accordion" style="width:60px; max-width:60px; padding-left:10px;"> ${booking.season | seasonAbbreviation:seasons }${booking.look}.${$index+1} :</td>
                                     <td class="accordion to-u-c" style="width:142px; max-width:142px; overflow: hidden; padding-right:10px;"> ${sample.attributes}</td>
                                 </tr>
                             </table>
