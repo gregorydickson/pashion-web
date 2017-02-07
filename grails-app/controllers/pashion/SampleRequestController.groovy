@@ -69,7 +69,7 @@ class SampleRequestController {
         def sampleRequest = SampleRequest.get(params.id.toInteger())
                 
         sampleRequest.requestStatusBrand = "Picking Up"
-        sampleRequest.requestStatusPress = "stet"
+        
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Waiting to be Picked Up']
         render sent as JSON
@@ -95,7 +95,7 @@ class SampleRequestController {
     def brandRestocked(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
         sampleRequest.requestStatusBrand = "Restocked"
-        sampleRequest.requestStatusPress = "stet"
+        
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Marked ReStocked']
         render sent as JSON
@@ -128,7 +128,7 @@ class SampleRequestController {
     }
     def pressShip(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
-        sampleRequest.requestStatusBrand = "stet"
+        
         sampleRequest.requestStatusPress = "Picking Up"
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Picking Up']
