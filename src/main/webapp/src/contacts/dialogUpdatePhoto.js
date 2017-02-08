@@ -27,6 +27,7 @@ export class CreateDialogUpdatePhoto {
     if(this.avatar != undefined){
 
         if(this.avatar[0].type.indexOf('image/')!=-1){
+          $('#button-accept')[0].disabled = true;
             var reader = new FileReader();
             reader.readAsDataURL(this.avatar[0]);
             reader.onload = function () {
@@ -37,12 +38,7 @@ export class CreateDialogUpdatePhoto {
                 current.userService.uploadAvatar(current.user, data)
                     .then(data => {
                     console.log('URL ' + data.url);
-                if (($('.avatar-container').children().attr('class')).indexOf("avatar-img")!= -1){
-                    $('.avatar-img').attr('src', data.url+'?_='+new Date().getTime());
-                }else {
-                    $('.avatar-container').html("<img src='"+data.url+'?_='+new Date().getTime()+"' class='clip-circle contact-entry avatar-img' />");
-                    //quitar avatar-text y agregar avatar-img
-                }
+                    $('.avatar-container').html('<div class="avatar-img-cover" style="height: 45px;border-radius: 100%;overflow:hidden;background: url('+data.url+'?_='+new Date().getTime()+');background-repeat: no-repeat;background-size: cover;background-position: center;display: block;width: 45px;"></div>');
 
                 current.controller.close();
             });
