@@ -549,12 +549,12 @@ export class UserService {
         console.log(JSON.stringify(this.user));
         let currentUser = this.user;
         
-        if (currentUser.brand.id) {
+        if (currentUser.brand) {
             userToAdd.brand = currentUser.brand;
-        } else if (currentUser.pressHouse.id) {
+        } else if (currentUser.pressHouse) {
             userToAdd.pressHouse = currentUser.pressHouse.id;
             console.log("user presshouse"+currentUser.pressHouse.id);
-        } else if (currentUser.prAgency.id) {
+        } else if (currentUser.prAgency) {
             userToAdd.prAgency = currentUser.prAgency.id;
         }
         var promise = new Promise((resolve, reject) => {
