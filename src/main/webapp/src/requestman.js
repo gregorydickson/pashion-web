@@ -259,11 +259,20 @@ export class Requestman{
     });
   }
 
-  delete(index){
+  delete(id){
+    console.log("delete hack");
     var someNewArray = [];
-    var theBookings = this.bookings;
-    for (var i = 0, len = theBookings.length-1; i < len; i++) {
-      someNewArray.push(theBookings.pop());
+    this.bookings;
+    
+    for (var i = 0, length = this.bookings.length; i < length; i++) {
+      var abooking = this.bookings.pop();
+      someNewArray.push(abooking);
+    }
+    for (var i = 0, len = someNewArray.length; i < len; i++) {
+        var transfer = someNewArray.pop();
+        if(transfer.id != id){
+          this.bookings.push(transfer);
+        }
     }
     
   }
@@ -272,12 +281,10 @@ export class Requestman{
     this.image = '';
     if(this.open)
       this.closeExpand(index,null);
-    console.log ("splicing delete");
-    this.delete(index);
+    console.log ("push/pop hacking delete");
+    this.delete(id);
     
     this.sampleRequestService.deleteSampleRequest(id).then(message =>{
-      
-      this.busy.on();
       this.reloadBookings();
     });
     this.closeExpanded();
