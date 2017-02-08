@@ -229,8 +229,12 @@ export class Requestman{
     });
   }
   delete(index){
-
-    this.bookings = this.bookings.splice( index, 1 );
+    var someNewArray = [];
+    var theBookings = this.bookings;
+    for (var i = 0, len = theBookings.length-1; i < len; i++) {
+      someNewArray.push(theBookings.pop());
+    }
+    
   }
   deleteSampleRequest(index,id){
     this.image = '';
