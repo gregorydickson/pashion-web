@@ -394,14 +394,14 @@ export class UserService {
         console.log("delete connection, id: " + id + " from user " + user);
         // local
         if (typeof(id) == 'undefined') {
-            // console.log ("id undefined: " + id);
+            console.log ("id undefined: " + id);
             // pf = new Promise ();
-            return false;
+            return Promise.reject(new Error('fail'));
         }
         if (typeof(user) == 'undefined') {
-            // console.log ("user undefined");
+            console.log ("user undefined");
             // pf = new Promise ();
-            return false;
+            return Promise.reject(new Error('fail'));
         }
 
         var connectedUserId;
@@ -431,7 +431,7 @@ export class UserService {
         });
         // 2nd fllipped 
         var id2;
-        var email2 = users[user - 1].email;
+        var email2 = this.users[user - 1].email;
         payload = { fromEmail: email2 };
         for (i = 0; i < this.users[connectedUserId - 1].connections.length; i++) {
             if (this.users[connectedUserId - 1].connections[i].connectedUserId == user) {
