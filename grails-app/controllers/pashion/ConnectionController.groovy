@@ -68,7 +68,7 @@ class ConnectionController {
             sent = [message:connectionString]
         }
 
-        // invalidate cache here for connected or connecting user     
+        // invalidate cache here for non initiator    
         Callback callback=new Callback() {}
         def channel = jsonObject.fromEmail + '_cacheInvalidate'
         log.info "send invalidate from acceptcontact on:" + channel
@@ -101,7 +101,7 @@ class ConnectionController {
         con2.name = jsonObject.user2.name
         con2.save(flush:true, failOnError:true)
 
-        // invalidate cache here for connected or connecting user     
+        // invalidate cache here for  non initiator      
         Callback callback=new Callback() {}
         def channel = jsonObject.fromEmail + '_cacheInvalidate'
         log.info "send invalidate from addcontactrequest on:" + channel
@@ -236,12 +236,14 @@ class ConnectionController {
             '*'{ render status: NO_CONTENT }
         }
     
-        // invalidate cache here for connected or connecting user    
-        Callback callback=new Callback() {}
-        def channel = jsonObject.fromEmail + '_cacheInvalidate'
-        log.info "send invalidate from delete on:" + channel
-        pubnub.publish(channel, "refresh the cache please" , callback)
-
+        // invalidate cache here for connected user ONLY
+        // if email null then don't send an invalidate
+        if (jsonObject.fromEmail != null) {
+            Callback callback=new Callback() {}
+            def channel = jsonObject.fromEmail + '_cacheInvalidate'
+            log.info "send invalidate from delete on:" + channel
+            pubnub.publish(channel, "refresh the cache please" , callback)
+       }   
 
 
         def sent = [message:'contact request deleted']
