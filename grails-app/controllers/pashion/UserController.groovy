@@ -19,7 +19,7 @@ class UserController {
     def connections(){
         log.info "***************   STARTING  Connections ********************"
         String json = cachingService.connections()
-        
+        response.setContentType('application/json')
         render json
         log.info "***************   END  Connections ********************"
         log.info ""
