@@ -57,10 +57,31 @@ export class Requestman{
                 $(this).removeClass("look-menu-show");
             });
         });
+
+        // intercept search to clear the image on the left
+        var parent = this;
+        $('#search-requests').on('keydown', function() {
+            // console.log("x hit/search in search requests");
+            //if (parent.closed) return;
+            var buttonChoice = document.getElementById("button" + parent.opened);
+            var panelChoice = document.getElementById("panel" + parent.opened);
+            if (buttonChoice != null) {
+                  parent.closed = true; 
+                  buttonChoice.classList.toggle("active");}
+            if (panelChoice != null) {
+                  parent.closed = true;
+                  panelChoice.classList.toggle("show");}
+            parent.brand = '';
+            parent.image = '';
+            parent.season =  '';
+            parent.look = '';
+            parent.opened = ''; 
+        });
   }
 
     orderChange(event) {
         console.log("Order changed: ");
+        this.closeExpanded ();
         if (event)
             if (event.detail)
                 if (event.detail.value) {
@@ -74,6 +95,7 @@ export class Requestman{
 
   filterChange(event){
       console.log("changing filter: ");
+      this.closeExpanded ();
           if (event)
             if (event.detail)
                 if (event.detail.value) {
@@ -91,6 +113,7 @@ export class Requestman{
 
     var searchVal = true;
     var filterVal = true;
+    //this.closeExpanded ();
 
     if (searchExpression == '' && filter == '') return true;
     var itemValue ='';
@@ -123,11 +146,18 @@ export class Requestman{
     return (searchVal && filterVal); 
   }
 
-
-  closeSampleRequestMenu(id){
-
-    //var menu = document.getElementById("requestManTest"+id);
-    //menu.classList.toggle("look-menu-show");
+  closeExpanded () {
+    if (this.closed) return;
+    var buttonChoice = document.getElementById("button" + this.opened);
+    var panelChoice = document.getElementById("panel" + this.opened);
+    buttonChoice.classList.toggle("active");
+    panelChoice.classList.toggle("show");
+    this.brand = '';
+    this.image = '';
+    this.season =  '';
+    this.look = '';
+    this.closed = true;
+    this.opened = ''; 
   }
 
   
@@ -228,6 +258,7 @@ export class Requestman{
       this.reloadBookings();
     });
   }
+
   delete(index){
     var someNewArray = [];
     var theBookings = this.bookings;
@@ -236,6 +267,7 @@ export class Requestman{
     }
     
   }
+
   deleteSampleRequest(index,id){
     this.image = '';
     if(this.open)
@@ -248,6 +280,7 @@ export class Requestman{
       this.busy.on();
       this.reloadBookings();
     });
+    this.closeExpanded();
   }
 
 
@@ -282,7 +315,7 @@ export class Requestman{
   }
     
 
-    lookEditMenu(id){
+  lookEditMenu(id){
     var menu = document.getElementById("requestManTest"+id);
     menu.classList.toggle("look-menu-show");
   }

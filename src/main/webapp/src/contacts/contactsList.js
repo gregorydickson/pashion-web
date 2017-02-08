@@ -147,6 +147,7 @@ export class ContactsList {
                              if (response.wasCancelled) return false ;
                              this.userService.deleteContact(userId,id);
                            });
+          console.log("deleteContact complete");
 
   }
 
