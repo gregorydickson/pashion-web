@@ -111,7 +111,7 @@ export class ContactsList {
     this.userService.getUsers(true).then(users => this.users = users)
                                    .then(result => this.userService.getUser()
                                      .then(user => this.user = user)
-                                     .then(result => console.log("fetchGetUserFromServer: user: " + this.users[this.user.id-1].name)
+                                     .then(result => console.log("fetchGetUserFromServer: by user: " + this.users[this.user.id-1].name)
                                     )) ;
   }
 

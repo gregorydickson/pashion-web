@@ -419,7 +419,7 @@ export class UserService {
         //write out
         // make 2 calls because not sureif the standard delete should be used or not.
 
-        console.log("delete connection, id: " + id + " fromEmail " + connectedEmail);
+        console.log("delete connection 1, id: " + id + " fromEmail: " + connectedEmail);
         var payload = { fromEmail: connectedEmail };
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/delete/' + id, {
@@ -431,7 +431,7 @@ export class UserService {
         });
         // 2nd fllipped 
         var id2;
-        var email2 = this.users[user - 1].email;
+        var email2 = null; //RM signal that for 2nd delete we do NOT want to send invalidate
         payload = { fromEmail: email2 };
         for (i = 0; i < this.users[connectedUserId - 1].connections.length; i++) {
             if (this.users[connectedUserId - 1].connections[i].connectedUserId == user) {
@@ -442,7 +442,7 @@ export class UserService {
         }
         //write out
         // make 2 calls because not sureif the standard delete should be used or not.       
-        console.log("delete connection, id: " + id2 + " fromEmail" + email2);
+        console.log("delete connection 2, id: " + id2 + " fromEmail: " + email2);
         promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/delete/' + id2, {
                     method: 'post',

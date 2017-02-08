@@ -160,6 +160,8 @@ export class Requestman{
     this.opened = ''; 
   }
 
+  closeSampleRequestMenu() {}
+
   
   /* RM accordion expansion button */
   closeExpand(buttonNumber, sampleRequest) {
