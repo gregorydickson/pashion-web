@@ -131,7 +131,7 @@ export class UserService {
         var item2;
         for (j = 0; j < this.users[this.user.id - 1].connections.length; j++) {
             item2 = this.users[this.user.id - 1].connections[j];
-            console.log("incoming userId: " + userId + " item2.connectedUserId: " + item2.connectedUserId + " item2.user.id: " + item2.user.id + " this.user.id: " + this.user.id);
+            // console.log("incoming userId: " + userId + " item2.connectedUserId: " + item2.connectedUserId + " item2.user.id: " + item2.user.id + " this.user.id: " + this.user.id);
             if ((item2.connectedUserId == userId) && (item2.connectingStatus == 'Accepted')) return (-1);
             if ((item2.connectedUserId == userId) && (item2.connectingStatus == 'PendingIn')) return (-2);
             if ((item2.connectedUserId == userId) && (item2.connectingStatus == 'PendingOut')) return (-2);
@@ -199,14 +199,14 @@ export class UserService {
         console.log("add contact request: " + idIn);
         // first connection record
         var nameString1 = this.users[this.user.id - 1].name + this.users[this.user.id - 1].surname + this.users[this.user.id - 1].email; // spaces to match name display and prvent run on match for the other fields
-        if (this.users[this.user.id - 1].brand.id != null) nameString1 += this.users[this.user.id - 1].brand.name;
-        if (this.users[this.user.id - 1].pressHouse.id != null) nameString1 += this.users[this.user.id - 1].pressHouse.name;
-        if (this.users[this.user.id - 1].agency) nameString1 += this.users[this.user.id - 1].agency.name;
+        if (this.users[this.user.id - 1].brand) nameString1 += this.users[this.user.id - 1].brand.name;
+        if (this.users[this.user.id - 1].pressHouse) nameString1 += this.users[this.user.id - 1].pressHouse.name;
+        if (this.users[this.user.id - 1].prAgency) nameString1 += this.users[this.user.id - 1].agency.name;
 
         var nameString2 = this.users[idIn - 1].name + this.users[idIn - 1].surname + this.users[idIn - 1].email;
-        if (this.users[idIn - 1].brand.id != null) nameString2 += this.users[idIn - 1].brand.name;
-        if (this.users[idIn - 1].pressHouse.id != null) nameString2 += this.users[idIn - 1].pressHouse.name;
-        if (this.users[idIn - 1].agency) nameString2 += this.users[idIn - 1].agency.name;
+        if (this.users[idIn - 1].brand) nameString2 += this.users[idIn - 1].brand.name;
+        if (this.users[idIn - 1].pressHouse) nameString2 += this.users[idIn - 1].pressHouse.name;
+        if (this.users[idIn - 1].prAgency) nameString2 += this.users[idIn - 1].agency.name;
         var conn1 = {
             user: {
                 id: this.user.id
@@ -418,6 +418,8 @@ export class UserService {
 
         //write out
         // make 2 calls because not sureif the standard delete should be used or not.
+
+        console.log("delete connection, id: " + id + " fromEmail " + connectedEmail);
         var payload = { fromEmail: connectedEmail };
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/delete/' + id, {
@@ -429,6 +431,8 @@ export class UserService {
         });
         // 2nd fllipped 
         var id2;
+        var email2 = users[user - 1].email;
+        payload = { fromEmail: email2 };
         for (i = 0; i < this.users[connectedUserId - 1].connections.length; i++) {
             if (this.users[connectedUserId - 1].connections[i].connectedUserId == user) {
                 id2 = this.users[connectedUserId - 1].connections[i].id;
@@ -437,10 +441,12 @@ export class UserService {
             }
         }
         //write out
-        // make 2 calls because not sureif the standard delete should be used or not.
+        // make 2 calls because not sureif the standard delete should be used or not.       
+        console.log("delete connection, id: " + id2 + " fromEmail" + email2);
         promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/delete/' + id2, {
-                    method: 'post'
+                    method: 'post',
+                    body: json(payload)
                 })
                 //.then(response => response.json())
                 //.then(result => resolve(result));
