@@ -73,7 +73,7 @@ class ConnectionController {
         def channel = jsonObject.fromEmail + '_cacheInvalidate'
         log.info "send invalidate from acceptcontact on:" + channel
         pubnub.publish(channel, "refresh the cache please" , callback)
-
+        notify "connectionsUpdate","connections"
 
         render sent as JSON
     }
@@ -106,7 +106,7 @@ class ConnectionController {
         def channel = jsonObject.fromEmail + '_cacheInvalidate'
         log.info "send invalidate from addcontactrequest on:" + channel
         pubnub.publish(channel, "refresh the cache please" , callback)
-
+        notify "connectionsUpdate","connections"
         def sent = [message:'contact request sent', id1: con1.id, id2: con2.id] 
         render sent as JSON
     }
@@ -122,6 +122,7 @@ class ConnectionController {
         def success = connection.save(failOnError : true, flush: true)
         connection.errors.each {log.info "addMessageCount errors: " + it}
         def connectionString  = 'message numbers count updated for: ' + connection
+        notify "connectionsUpdate","connections"
         def sent = [message:connectionString]
         render sent as JSON
     }
@@ -135,6 +136,7 @@ class ConnectionController {
         connection.mostRecentRead = jsonObject.mostRecentRead
         //log.info "saveMostRecentRead input as: " + connection.mostRecentRead
         connection.save(failOnError : true, flush: true)
+        notify "connectionsUpdate","connections"
         def connectionString  = 'saveMostRecentRead success'
         def sent = [message:connectionString]
         render sent as JSON
@@ -150,6 +152,7 @@ class ConnectionController {
         
         connection.save(failOnError : true, flush: true)
         def connectionString  = 'numbers count zero-ed: ' + params.id.toInteger()
+        notify "connectionsUpdate","connections"
         def sent = [message:connectionString]
         render sent as JSON
     }
@@ -223,6 +226,7 @@ class ConnectionController {
         }
 
         connection.delete flush:true
+        notify "connectionsUpdate","connections"
 
         request.withFormat {
             form multipartForm {
@@ -237,6 +241,7 @@ class ConnectionController {
         def channel = jsonObject.fromEmail + '_cacheInvalidate'
         log.info "send invalidate from delete on:" + channel
         pubnub.publish(channel, "refresh the cache please" , callback)
+
 
 
         def sent = [message:'contact request deleted']
