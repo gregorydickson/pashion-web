@@ -31,11 +31,12 @@ class CachingService implements JsonViewTest {
     void init() {
         on("connectionsUpdate") {
             log.info "UPDATING CONNECTIONS "
-            connections = null
-            connections()
+            String newValue = loadConnections()
+            connections = newValue
         }
     }
 
+    
     def connections(){
         log.info "checking connections:"
         if(connections == null){
