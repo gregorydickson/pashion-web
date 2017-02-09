@@ -64,6 +64,20 @@ class BrandController {
 
     }
 
+    def toggleCalendar(){
+        Brand brand = Brand.get(params.id)
+
+        if(brand.hideCalendar == false){
+            brand.hideCalendar = true
+        } else{
+
+            brand.hideCalendar = false
+        }
+        brand.save(failOnError:true,flush:true)
+        respond brand, [status: OK] 
+
+    }
+
     def show(Brand brand) {
         respond brand
     }

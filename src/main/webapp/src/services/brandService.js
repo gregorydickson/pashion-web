@@ -43,6 +43,20 @@ export class BrandService {
         return promise;
     }
 
+    hideCalendar(id) {
+        var promise = new Promise((resolve, reject) => {
+
+                console.log("toggle hideCalendar");
+                this.http.fetch('/brand/toggleCalendar/'+id+'.json')
+                    .then(response =>
+                        response.json()).then(brand => {
+                        resolve(brand);
+                    }).catch(err => reject(err));
+            
+        });
+        return promise;
+    }
+
     getBrand(brandId) {
         var promise = new Promise((resolve, reject) => 
                 this.http.fetch('/brand/show/'+brandId+ '.json')
