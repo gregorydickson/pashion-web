@@ -46,6 +46,7 @@ export class Adminpage{
                         if (user.type === 'brand') {
                             this.brandService.getBrandAddresses(this.user.brand.id)
                                 .then(addresses=>{this.addresses = addresses});
+                            console.log(JSON.stringify(user.brand));
                             this.company = user.brand;
                         } else if (user.type === 'press') {
                             this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
@@ -79,6 +80,11 @@ export class Adminpage{
       }
 
     });
+  }
+
+  hideCalendar(){
+    console.log("hideCalendar");
+    this.brandService.hideCalendar(this.company.id).then(brand =>this.company=brand);
   }
 
 

@@ -223,7 +223,7 @@
                         <!-- Keep Booking Data Private-->
                         <div class="inline-label" style="">
                             <span class="slim-text-box-label" style="width: 231px;">Keep Sample Availability Private</span>
-                            <input style="margin-top: 8px; margin-left: 5px;" id="" name="privacyCalendar" type="checkbox">
+                            <input style="margin-top: 8px; margin-left: 5px;" id="" name="privacyCalendar" type="checkbox" value.bind="company.hideCalendar" change.delegate="hideCalendar()">
                         </div>
                      </div>
                   </div>
