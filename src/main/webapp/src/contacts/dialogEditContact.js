@@ -33,13 +33,13 @@ export class CreateDialogEditContact {
                 this.userService.getUserDetails(user.id)
                     .then(currentContact => {
                         this.user = currentContact;
-                        if (this.user.brand.id != null)
+                        if (this.user.brand != null)
                             this.brandService.getBrandAddresses(this.user.brand.id)
                                 .then(addresses=>this.addresses = addresses)
-                        if (this.user.pressHouse.id != null)
+                        if (this.user.pressHouse != null)
                             this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
                                 .then(addresses=>this.addresses = addresses)
-                        if (this.user.prAgency.id != null)
+                        if (this.user.prAgency != null)
                             this.prAgencyService.getPRAgencyAddresses(this.user.PRAgency.id)
                                 .then(addresses=>this.addresses = addresses)
 
