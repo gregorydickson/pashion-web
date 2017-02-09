@@ -1,4 +1,5 @@
 <template>
+    <require from="./dashboard_filters/filters-mode"></require>
 <!--header.html-->
         <div class="">
             <ul class="menu-bar" style="background: #ebebeb">
@@ -17,10 +18,15 @@
 
                     <select value.bind="selectval" change.trigger="userActions()" name="NotUSed" id="headerModeSelect" class="nav-label-header top-menu-modifier" style="max-width:150px;">
                         <option value="no">${user.name}</option>
-                       <!-- <option value="guest">GUEST</option> -->
                         <option value= "logout">LOGOUT</option>
                         <option value= "edit">EDIT PROFILE</option>
-                    </select>
+                    </select> 
+
+                        <!-- filter mode 
+                        <span class="inline-label" style="width:150px; margin-bottom: 0px; margin-top:1.5rem;">
+                            <filters-mode change.delegate="filterMode($event)" style="width:150px;"></filters-mode> 
+                        </span> -->
+
                 </li>
                     <li></li>
                     <li></li>

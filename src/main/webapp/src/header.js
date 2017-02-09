@@ -28,6 +28,21 @@ export class Header {
       this.userService.getUser().then(user => this.user = user);
   }
 
+  filterMode(event) {
+        console.log("Filter Mode");
+        if (event)
+            if (event.detail)
+                if (event.detail.value) {
+                    if (event.detail.value == 'All') event.detail.value = '';
+                    if (event.detail.value == 'Select') event.detail.value = '';
+                    console.log("value:" + event.detail.value)
+                }
+                //console.log("Filter change called, Theme: " + this.selectedTheme);
+    }
+
+
+
+
   userActions(){
   		//console.log("header action: " + this.selectval);
   		if (this.selectval=="logout") window.location.href = '/user/logout';
