@@ -217,7 +217,7 @@
                   </div>
                   <!-- Private Calendard Booking -->
                   <!-- -->         
-                  <div class="grid-block-row">
+                  <div if.bind="(user.type =='brand') || (user.type =='prAgency')" class="grid-block-row">
                      <div class="ui-text-label-m-broad ">Privacy Settings</div>
                      <div class="grid-block-row-body">
                         <!-- Keep Booking Data Private-->
