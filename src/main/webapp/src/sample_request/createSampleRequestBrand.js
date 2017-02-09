@@ -109,13 +109,13 @@ export class CreateSampleRequestBrand {
   CreateDialogNewOffice(user) {
     this.dialogService.open({viewModel: CreateDialogNewOffice, model: this.user })
       .then(response => {
-        if (this.user.brand.id != null){
+        if (this.user.brand != null){
             this.brandService.getBrandAddresses(this.user.brand.id)
                 .then(addresses=>{this.addresses = addresses})
-        } else if(this.user.pressHouse.id != null){
+        } else if(this.user.pressHouse != null){
             this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
                 .then(addresses=>this.addresses = addresses)
-        } else if(this.user.prAgency.id != null){
+        } else if(this.user.prAgency != null){
             this.prAgencyService.getPRAgencyAddresses(this.user.prAgency.id)
                 .then(addresses=>this.addresses = addresses)
         }

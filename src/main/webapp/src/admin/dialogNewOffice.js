@@ -26,11 +26,11 @@ export class CreateDialogNewOffice {
   }
   
   createAddress(){
-      if (this.user.brand.id != null){
+      if (this.user.brand != null){
           this.newAddress.brand = this.user.brand;
-      } else if(this.user.pressHouse.id != null){
+      } else if(this.user.pressHouse != null){
           this.newAddress.pressHouse = this.user.pressHouse;
-      } else if(this.user.prAgency.id != null){
+      } else if(this.user.prAgency != null){
           this.newAddress.prAgency = this.user.prAgency;
       }
     this.addressService.create(this.newAddress)
