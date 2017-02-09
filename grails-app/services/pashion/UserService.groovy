@@ -157,7 +157,7 @@ class UserService {
         String encodingPrefix = "base64,"
         int contentStartIndex = data.indexOf(encodingPrefix) + encodingPrefix.length()
         byte[] imageData = Base64.decodeBase64(data.substring(contentStartIndex))
-        def fileName = user.id
+        def fileName = user.id + new Date().getTime()
         BufferedImage inputImage = ImageIO.read(new ByteArrayInputStream(imageData))
         ByteArrayOutputStream os = new ByteArrayOutputStream()
         ImageIO.write(inputImage, ext, os)

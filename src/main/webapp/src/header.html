@@ -10,7 +10,7 @@
                     <div if.bind="(!user.image)" style="margin-right: 1rem; margin-left:1rem; margin-top:1rem; text-transform: uppercase;" class="avatar-circle ">${user.name.charAt(0)}</div> -->
 
                     <div class="avatar-container" style="margin-right: 1rem; margin-left:1rem; margin-top:0.5rem;">
-                        <img if.bind="(user.avatar)" src=${user.avatar} class="clip-circle contact-entry avatar-img" />
+                        <div if.bind="(user.avatar)" class="avatar-img-cover" style="height: 45px;border-radius: 100%;overflow:hidden;background: url(${user.avatar});background-repeat: no-repeat;background-size: cover;background-position: center;display: block;width: 45px;"></div>
                         <div if.bind="(!user.avatar)"  class="avatar-circle avatar-text ">${user.name.charAt(0)}</div>
                     </div>
 
