@@ -110,7 +110,7 @@ class SearchableItem {
 	}
 
 	String toString(){
-		return name +" sample city:" +sampleCity.name
+		return name +" sample city:" +sampleCity?.name
 	}
 
 
