@@ -15,11 +15,11 @@
 	        <!-- <compose view-model="messages/messageEntryNotMe"></compose> -->
 
 	        <!-- from me -->
-		    <div show.bind="(message.fromMe && (message.toId == currentContact.email))" class="grid-block scroll align-right inter-message-gap">
+		    <div show.bind="(message.fromMe && (message.toId == currentContact.email) && (message.text != ''))" class="grid-block scroll align-right inter-message-gap">
 		        <table class="" style="table-layout:fixed;">
 		            <tr>
 		                <td colspan="2">
-		                    <div class="message-box message-me-box">
+		                    <div class="message-box message-me-box" style="min-height: 29px;">
 		                        <div class="message-img">
 		                            <img src=${message.image} alt="">
 		                        </div> 
@@ -36,11 +36,11 @@
 		        </table>
 		    </div>
 		    <!-- not from me -->
-	        <div show.bind="(message.toMe && (message.fromId == currentContact.email))" class="grid-block vertical align-left inter-message-gap">
+	        <div show.bind="(message.toMe && (message.fromId == currentContact.email)&& (message.text != ''))" class="grid-block vertical align-left inter-message-gap">
 		        <table class="message-wrap">
 		            <tr>
 		                <td colspan="2">
-		                    <div class="message-box message-not-me-box">
+		                    <div class="message-box message-not-me-box" style="min-height: 29px;">
 		                        <div class="message-img">
 		                            <img src=${message.image} alt="">
 		                        </div>                                            

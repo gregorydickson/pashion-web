@@ -177,6 +177,7 @@ export class Messages {
     sendMessage() {
         //console.log("Sendmessage from my id:" + this.user.id + " email:" + this.user.email +
           //  " TO id:" + this.currentContact.id + " email:" + this.currentContact.email);
+          if ($("#msgInput").val()=='')  return;
         var message = {
             fromId: this.user.email,
             fromName: this.user.name,
