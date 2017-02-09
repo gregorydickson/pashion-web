@@ -111,7 +111,7 @@
                         repeat.for="connectionC of users[user.id -1].connections">
 
                         <button click.delegate="closeExpand(1213)" class="accordionNew"
-                        if.bind="(connectionC.numberNewMessages!=0)" style="color: white; font-weight: 500; background: #3971b1;">NEW&nbsp;</button>
+                        if.bind="((connectionC.numberNewMessages!=0) && (connectionC.connectingStatus=='Accepted'))" style="color: white; font-weight: 500; background: #3971b1;">NEW&nbsp;</button>
 
                         </span>                        
                     </td>
