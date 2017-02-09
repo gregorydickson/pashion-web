@@ -198,6 +198,7 @@ class UploadController {
                             log.info "image:"+ image
                             item.image = image
                             item.fromDate = new Date()
+                            item.imageProvider = "indigital"
                             item.save(flush:true, failOnError: true)
                             log.info "item saved:" + item
                         }
@@ -301,6 +302,7 @@ class UploadController {
                             log.info "image:"+ image
                             item.image = image
                             item.fromDate = new Date()
+                            item.imageProvider = "indigital"
                             item.save(flush:true, failOnError: true)
                             log.info "item saved:" + item
                         }
