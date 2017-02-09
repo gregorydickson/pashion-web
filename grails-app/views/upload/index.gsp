@@ -52,7 +52,7 @@
         </g:if>
     <form enctype="multipart/form-data" action="${createLink(action: 'upload')}"
           class="dropzone" id="my-awesome-dropzone" method="post">
-        <h1> For uploading Look CSV Files</h1>
+        <h1> OLD FORMAT - For uploading Look CSV Files</h1>
         <h1> City is the city of the show for the Looks</h1>
         <select name="city">
             <option value="Paris">Paris</option>
