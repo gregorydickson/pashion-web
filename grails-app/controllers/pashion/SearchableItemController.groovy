@@ -448,6 +448,7 @@ class SearchableItemController {
                 sample.brand = item.brand
                 sample.type = SearchableItemType.get(2)
             }
+            sample.clientID = it.clientID
             sample.sampleType = it.sampleType
             sample.color = it.color
             sample.name = it.name

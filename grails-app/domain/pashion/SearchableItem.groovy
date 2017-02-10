@@ -12,6 +12,7 @@ import java.time.ZoneId
 class SearchableItem {
 
 	Long id
+	String clientID // The sample id that is used by the client
 	String name //string for ID set by user For Look this is the Look ID which matches Vogue Runway
 	String description
 	Brand brand
@@ -63,6 +64,7 @@ class SearchableItem {
 	User owner
 
 	static constraints = {
+		clientID nullable:true
 		name nullable:true
 		city nullable:true
 		sampleCity nullable:true
