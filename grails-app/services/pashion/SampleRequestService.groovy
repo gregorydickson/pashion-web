@@ -38,11 +38,7 @@ class SampleRequestService {
         sr.requiredBy = jsonObject.requiredBy
         
         sr.returnToAddress = Address.get(jsonObject.returnToAddress.toInteger())
-        
-        if(jsonObject.deliverTo?.address1)
-        {
-            sr.addressDestination = Address.get(jsonObject.deliverTo.id.toInteger())
-        } else {
+        if(jsonObject?.deliverTo?.name) {
             def aUser = User.get(jsonObject.deliverTo.id.toInteger())
             if(aUser.pressHouse) {
                 sr.pressHouse = aUser.pressHouse
@@ -51,6 +47,8 @@ class SampleRequestService {
                 sr.addressDestination = aUser.address
             }
             sr.deliverTo = aUser
+        } else{
+            sr.addressDestination = Address.get(jsonObject.deliverTo.id.toInteger())
         }
         sr.returnBy = jsonObject.returnBy
 
