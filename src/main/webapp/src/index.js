@@ -39,13 +39,13 @@ export class Index {
     availableFrom = '';
     availableTo = '';
     selectedSeason = '';
-    selectedTheme = '';
+    selectedTheme = ''; 
     maxR = 250;
     maxRReached = false;
     numberImages = 0;
     busy;
     ordering = 'bookingStartDate';
-    filtering = 'ALL';
+    filtering = 'ALL REQUESTS';
 
 
     filterFunc(searchExpression, value, filter, user){
@@ -79,7 +79,7 @@ export class Index {
           if (event)
             if (event.detail)
                 if (event.detail.value) {
-                    if (event.detail.value == 'ALL') this.filtering = '';
+                    if (event.detail.value == 'ALL REQUESTS') this.filtering = '';
                     if (event.detail.value == 'MY REQUESTS') this.filtering = 'MY REQUESTS'; 
                     if (event.detail.value == 'OVERDUE REQUESTS') this.filtering = 'OVERDUE REQUESTS';  
                     if (event.detail.value == 'OPEN REQUESTS') this.filtering = 'OPEN REQUESTS'; 

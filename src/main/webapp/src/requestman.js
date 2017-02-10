@@ -24,7 +24,7 @@ export class Requestman{
   closed = true;
   searchTextReqMan = '';
   ordering ='bookingStartDate';
-  filtering = 'ALL';
+  filtering = ''; // IE all
 
 
 
@@ -86,7 +86,7 @@ export class Requestman{
             if (event.detail)
                 if (event.detail.value) {
                     if (event.detail.value == 'BY DATE') this.ordering = 'bookingStartDate';
-                    if (event.detail.value == 'BY NUMBER`') this.ordering = 'id'; 
+                    if (event.detail.value == 'BY NUMBER') this.ordering = 'id'; 
                     if (event.detail.value == 'BY STATUS') this.ordering = 'requestStatusBrand';
                     console.log("value:" + event.detail.value + "ordering: " +this.ordering);
                 }          
@@ -99,7 +99,7 @@ export class Requestman{
           if (event)
             if (event.detail)
                 if (event.detail.value) {
-                    if (event.detail.value == 'ALL') this.filtering = '';
+                    if (event.detail.value == 'ALL REQUESTS') this.filtering = '';
                     if (event.detail.value == 'MY REQUESTS') this.filtering = 'MY REQUESTS'; 
                     if (event.detail.value == 'OVERDUE REQUESTS') this.filtering = 'OVERDUE REQUESTS';  
                     if (event.detail.value == 'OPEN REQUESTS') this.filtering = 'OPEN REQUESTS'; 
