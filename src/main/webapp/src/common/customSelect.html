@@ -3,8 +3,8 @@
         <option if.bind="ss" value="">Select</option> <!-- set selectorselector = false to remove. make sure ss.bind="selectorselector" in html if missing then ignore-->
         <option if.bind="sa" value="All">All</option> <!-- set selectorall = false to remove. make sure sa.bind="selectorall" in html if missing then ignored -->
 
-        <option if.bind="options[0].name" repeat.for="option of options" value.bind="option.id">${option.name}</option>
-        <option if.bind="options[0].display" repeat.for="option of options" value.bind="option.id">${option.display}</option>
-      	<option if.bind="(!options[0].name && !options[0].display)" repeat.for="option of options" value.bind="option">${option}</option> 
+        <option class="to-u-c" if.bind="options[0].name" repeat.for="option of options" value.bind="option.id">${option.name}</option>
+        <option class="to-u-c" if.bind="options[0].display" repeat.for="option of options" value.bind="option.id">${option.display}</option>
+      	<option class="to-u-c" if.bind="(!options[0].name && !options[0].display)" repeat.for="option of options" value.bind="option">${option}</option> 
     </select>
 </template>

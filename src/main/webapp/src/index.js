@@ -45,7 +45,7 @@ export class Index {
     numberImages = 0;
     busy;
     ordering = 'bookingStartDate';
-    filtering = 'Open Requests';
+    filtering = 'ALL';
 
 
     filterFunc(searchExpression, value, filter, user){
@@ -59,13 +59,13 @@ export class Index {
         // console.log("Filter value: " + itemValue);
         if(searchExpression && itemValue) searchVal = itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;    
 
-        if (filter == 'My Requests') {
+        if (filter == 'MY REQUESTS') {
           filterVal = (value.requestingUser.id == user.id);
         }
-        if (filter == 'Overdue Requests') {
+        if (filter == 'OVERDUE REQUESTS') {
           filterVal = (value.requestStatusBrand == 'Overdue');
         }
-        if (filter == 'Open Requests') {
+        if (filter == 'OPEN REQUESTS') {
           filterVal = (value.requestStatusBrand != 'Closed');
         }
 
@@ -79,10 +79,10 @@ export class Index {
           if (event)
             if (event.detail)
                 if (event.detail.value) {
-                    if (event.detail.value == 'All') this.filtering = '';
-                    if (event.detail.value == 'My Requests') this.filtering = 'My Requests'; 
-                    if (event.detail.value == 'Overdue Requests') this.filtering = 'Overdue Requests';  
-                    if (event.detail.value == 'Open Requests') this.filtering = 'Open Requests'; 
+                    if (event.detail.value == 'ALL') this.filtering = '';
+                    if (event.detail.value == 'MY REQUESTS') this.filtering = 'MY REQUESTS'; 
+                    if (event.detail.value == 'OVERDUE REQUESTS') this.filtering = 'OVERDUE REQUESTS';  
+                    if (event.detail.value == 'OPEN REQUESTS') this.filtering = 'OPEN REQUESTS'; 
                     console.log("value:" + event.detail.value + " filtering: " +this.filtering);
                 } 
   }
@@ -427,10 +427,10 @@ export class Index {
         if (event)
             if (event.detail)
                 if (event.detail.value) {
-                    if (event.detail.value == 'By Date') this.ordering = 'bookingStartDate';
-                    if ((this.user.type == "brand") && (event.detail.value == 'By Number')) this.ordering = 'look'; //RM ditto below
-                    if ((this.user.type != "brand") && (event.detail.value == 'By Number')) this.ordering = 'look'; //RM changes needed here to properly order strings
-                    if (event.detail.value == 'By Status') this.ordering = 'requestStatusBrand';
+                    if (event.detail.value == 'BY DATE') this.ordering = 'bookingStartDate';
+                    if ((this.user.type == "brand") && (event.detail.value == 'BY NUMBER')) this.ordering = 'look'; //RM ditto below
+                    if ((this.user.type != "brand") && (event.detail.value == 'BY NUMBER')) this.ordering = 'look'; //RM changes needed here to properly order strings
+                    if (event.detail.value == 'BY STATUS') this.ordering = 'requestStatusBrand';
                     console.log("value:" + event.detail.value)
                 }          
     }
