@@ -1,0 +1,24 @@
+<template>
+
+   <ai-dialog>
+        <ai-dialog-header>
+            <!-- header -->
+            <div class="grid-block align-center tool-header shrink">
+              <span class="ui-text-label-m-broad">${alertTitle}</span>
+            </div>
+        </ai-dialog-header>
+      <ai-dialog-body>
+
+        <div class="paragraph-30 text-center">
+          ${alertMessage}
+        </div>
+
+      </ai-dialog-body>
+
+
+      <ai-dialog-footer>
+         <button click.delegate="close()">OK</button>
+      </ai-dialog-footer>
+
+   </ai-dialog>
+</template>

@@ -5,8 +5,10 @@ import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import {SampleRequestService} from 'services/sampleRequestService';
 import {UserService} from 'services/userService';
+import { CreateDialogAlert } from 'common/dialogAlert';
+import {DialogService} from 'aurelia-dialog';
 
-@inject(SampleRequestService, DialogController,UserService, HttpClient)
+@inject(SampleRequestService, DialogController,UserService, HttpClient, DialogService)
 export class EditSampleRequest {
 	static inject = [DialogController];
 
@@ -16,7 +18,7 @@ export class EditSampleRequest {
   brandUsers = [];
   //seasons = [];
 
-  constructor(sampleRequestService,controller,userService,http){
+  constructor(sampleRequestService,controller,userService,http, DialogService){
     http.configure(config => {
       config
         .useStandardConfiguration();
@@ -25,6 +27,7 @@ export class EditSampleRequest {
     this.controller = controller;
     this.sampleRequestService = sampleRequestService;
     this.userService = userService;
+    this.DialogService = DialogService;
   }
 
   activate(requestId){
@@ -47,6 +50,11 @@ export class EditSampleRequest {
         .then(brandUsers => this.brandUsers = brandUsers);
   }
 
+  alertP (message){
+
+        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Edit", message:message, timeout:5000} }).then(response => {});
+    }
+
   removeSample(id,index){
     let sr = this.sampleRequest;
     if(!sr.samplesRemoved) sr.samplesRemoved = [];
@@ -59,7 +67,7 @@ export class EditSampleRequest {
     let sr = this.sampleRequest;
 
     this.sampleRequestService.approveAndUpdateSampleRequest(sr).then(message => {
-      alert(message.message);
+      this.alertP(message.message);
       this.controller.close();
     });
     
@@ -70,7 +78,7 @@ export class EditSampleRequest {
     let sr = this.sampleRequest;
 
     this.sampleRequestService.denySampleRequest(sr.id).then(message => {
-      alert(message.message);
+      this.alertP(message.message);
       this.controller.close();
     });
 
@@ -81,7 +89,7 @@ export class EditSampleRequest {
     let sr = this.sampleRequest;
 
     this.sampleRequestService.deleteSampleRequest(sr.id).then(message => {
-      alert(message.message);
+      this.alertP(message.message);
       this.controller.close();
     });
 
@@ -92,7 +100,7 @@ export class EditSampleRequest {
     let sr = this.sampleRequest;
 
     this.sampleRequestService.pressDeleteSampleRequest(sr.id).then(message => {
-      alert(message.message);
+      this.alertP(message.message);
       this.controller.close();
     });
 

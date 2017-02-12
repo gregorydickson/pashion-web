@@ -4,8 +4,10 @@ import 'fetch';
 import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import { BrandService } from 'services/brandService';
+import { CreateDialogAlert } from 'common/dialogAlert';
+import {DialogService} from 'aurelia-dialog';
 
-@inject(HttpClient, DialogController, BrandService)
+@inject(HttpClient, DialogController, BrandService ,DialogService)
 export class CreateSampleRequest {
   static inject = [DialogController];
   currentItem = {};
@@ -33,7 +35,7 @@ export class CreateSampleRequest {
 
 
 
-  constructor(http, controller, brandService){
+  constructor(http, controller, brandService, dialogService){
     this.controller = controller;
 
     http.configure(config => {
@@ -42,6 +44,7 @@ export class CreateSampleRequest {
     });
     this.http = http;
     this.brandService = brandService;
+    this.dialogService = dialogService;
   }
 
   activate(itemId){
@@ -87,6 +90,11 @@ export class CreateSampleRequest {
   attached(){
     document.getElementById("CreateSampleRequestButton").disabled = true;
   }
+
+  alertP (message){
+
+        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000} }).then(response => {});
+    }
 
   setStartDate(event,day){
     console.log("set start date: "+event);
@@ -326,7 +334,7 @@ export class CreateSampleRequest {
           .then(response => response.json())
           .then(result => {
               this.result = result;
-              alert('Request Sent');
+              this.alertP('Request Sent');
               this.controller.ok();
 
           });

@@ -5,9 +5,11 @@ import {inject, bindable} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import {CityService} from 'services/cityService';
 import {ObserverLocator, observable} from 'aurelia-framework';  // or 'aurelia-framework'
+import {DialogService} from 'aurelia-dialog';
+import { CreateDialogAlert } from 'common/dialogAlert';
 
 
-@inject(HttpClient, DialogController,CityService, ObserverLocator)
+@inject(HttpClient, DialogController,CityService, ObserverLocator, DialogService)
 export class EditSearchableItem {
   static inject = [DialogController];
   
@@ -30,7 +32,7 @@ export class EditSearchableItem {
   @bindable addColor = '';
   
 
-  constructor(http, controller,cityService, observerLocator){
+  constructor(http, controller,cityService, observerLocator, dialogService){
     this.controller = controller;
     
     http.configure(config => {
@@ -39,6 +41,7 @@ export class EditSearchableItem {
     });
     this.http = http;
     this.cityService = cityService;
+    this.dialogService = dialogService;
   }
 
  /* selectedSampleChanged(newValue, oldValue) {
@@ -60,6 +63,11 @@ export class EditSearchableItem {
           this.createdNew = false;
     });
   }
+
+  alertP (message){
+
+        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Edit", message:message, timeout:5000} }).then(response => {});
+    }
 
   colorAdd (sample) {
     if (!this.addColor) return;
@@ -112,7 +120,7 @@ export class EditSearchableItem {
               this.result = result;
           });
     
-    alert("Updated");
+    this.alertP("Updated");
     //this.controller.close();
     
   }

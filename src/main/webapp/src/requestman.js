@@ -6,6 +6,7 @@ import {CreateDialogNewContact} from './contacts/dialogNewContact';
 import {CreateDialogImportContacts} from './contacts/dialogImportContacts';
 import {EditSampleRequest} from './sample_request/editSampleRequest';
 import {busy} from './services/busy';
+import { CreateDialogAlert } from './common/dialogAlert';
 
 @inject(DialogService, UserService, SampleRequestService,busy)
 export class Requestman{
@@ -202,6 +203,11 @@ export class Requestman{
      }
   }
 
+  alertP (message){
+
+        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000} }).then(response => {});
+    }
+
   editSampleRequest(itemId) {
     //let menu = document.getElementById("requestManTest"+itemId);
     
@@ -221,42 +227,42 @@ export class Requestman{
   denySampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.denySampleRequest(id).then(message =>{
-      alert(message.message);
+      this.alertP(message.message);
       this.reloadBookings();
     });
   }
   approveSampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.approveSampleRequest(id).then(message =>{
-      alert(message.message);
+      this.alertP(message.message);
       this.reloadBookings();
     });
   }
   sendSampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.sendSampleRequest(id).then(message =>{
-      alert(message.message);
+      this.alertP(message.message);
       this.reloadBookings();
     });
   }
   markPickedUpSampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.markPickedUpSampleRequest(id).then(message =>{
-      alert(message.message);
+      this.alertP(message.message);
       this.reloadBookings();
     });
   }
   markReturnedSampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.markReturnedSampleRequest(id).then(message =>{
-      alert(message.message);
+      this.alertP(message.message);
       this.reloadBookings();
     });
   }
   restockedSampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.restockedSampleRequest(id).then(message =>{
-      alert(message.message);
+      this.alertP(message.message);
       this.reloadBookings();
     });
   }
@@ -296,14 +302,14 @@ export class Requestman{
   pressMarkReceivedSampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.pressMarkReceivedSampleRequest(id).then(message =>{
-      alert(message.message);
+      this.alertP(message.message);
       this.reloadBookings();
     });
   }
   pressShipSampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.pressShipSampleRequest(id).then(message =>{
-      alert(message.message);
+      this.alertP(message.message);
       this.reloadBookings();
     });
     
@@ -311,14 +317,14 @@ export class Requestman{
   pressMarkPickedUpSampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.pressMarkPickedUpSampleRequest(id).then(message =>{
-      alert(message.message);
+      this.alertP(message.message);
       this.reloadBookings();
     });
   }
   pressDeleteSampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.pressDeleteSampleRequest(id).then(message =>{
-      alert(message.message);
+      this.alertP(message.message);
       this.reloadBookings();
     });
   }

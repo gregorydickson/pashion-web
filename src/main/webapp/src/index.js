@@ -16,6 +16,7 @@ import { UserService } from './services/userService';
 import { BrandService } from './services/brandService';
 import { AddFilesDialog } from './add_files/add_files';
 import { ErrorDialogSample } from './error_dialog/error_dialog_sample';
+import { CreateDialogAlert } from './common/dialogAlert';
 import {busy} from './services/busy';
 
 
@@ -466,12 +467,14 @@ export class Index {
             this.user = this.userService.getUser().then(user => {
                 this.user = user;
                 if (this.user.type === "guest") window.location.href = '/user/login';
-                if(this.user.type === "brand") this.searchType = 'brandSearch';
-                if(this.user.type === "press") this.searchType = 'filterSearch';
+                if(this.user.type === "brand") { this.searchType = 'brandSearch'; this.company = user.brand;}
+                if(this.user.type === "press") { this.searchType = 'filterSearch'; this.company = user.pressHouse; }
+                if(this.user.type === "prAgency") { this.searchType = 'filterSearch'; this.company = user.prAgency; }
             })
 
         ]);
     }
+
     attached() {
         //RM upgrades here: 
         // - check for backwards dates
@@ -658,53 +661,59 @@ export class Index {
         this.dialogService.open({ viewModel: EditSampleRequest, model: id }).then(response => {this.reloadBookings();});
     }
 
+
+    alertP (message){
+
+        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000} }).then(response => {});
+    }
+
     //Brand Workflow Functions
     denySampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.denySampleRequest(id).then(message => {
-            alert(message.message);
+            this.alertP(message.message);
             this.reloadBookings();
         });
     }
     approveSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.approveSampleRequest(id).then(message => {
-            alert(message.message);
+            this.alertP(message.message);
             this.reloadBookings();
         });
     }
     sendSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.sendSampleRequest(id).then(message => {
-            alert(message.message);
+            this.alertP(message.message);
             this.reloadBookings();
         });
     }
     markPickedUpSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.markPickedUpSampleRequest(id).then(message => {
-            alert(message.message);
+            this.alertP(message.message);
             this.reloadBookings();
         });
     }
     markReturnedSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.markReturnedSampleRequest(id).then(message => {
-            alert(message.message);
+            this.alertP(message.message);
             this.reloadBookings();
         });
     }
     restockedSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.restockedSampleRequest(id).then(message => {
-            alert(message.message);
+            this.alertP(message.message);
             this.reloadBookings();
         });
     }
     deleteSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.deleteSampleRequest(id).then(message => {
-            alert(message.message);
+            this.alertP(message.message);
             this.reloadBookings();
         });
     }
@@ -717,28 +726,28 @@ export class Index {
     pressMarkReceivedSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.pressMarkReceivedSampleRequest(id).then(message => {
-            alert(message.message);
+            this.alertP(message.message);
             this.reloadBookings();
         });
     }
     pressShipSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.pressShipSampleRequest(id).then(message => {
-            alert(message.message);
+            this.alertP(message.message);
             this.reloadBookings();
         });
     }
     pressMarkPickedUpSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.pressMarkPickedUpSampleRequest(id).then(message => {
-            alert(message.message);
+            this.alertP(message.message);
             this.reloadBookings();
         });
     }
     pressDeleteSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.pressDeleteSampleRequest(id).then(message => {
-            alert(message.message);
+            this.alertP(message.message);
             this.reloadBookings();
         });
     }

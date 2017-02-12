@@ -6,6 +6,7 @@ import {DateFormat} from 'common/dateFormat';
 import { BrandService } from 'services/brandService';
 import {CreateDialogNewAddress} from './dialogNewAddress';
 import {DialogService} from 'aurelia-dialog';
+import { CreateDialogAlert } from 'common/dialogAlert';
 
 @inject(HttpClient, DialogController, BrandService, DialogService)
 export class CreateSampleRequestBrand {
@@ -91,6 +92,11 @@ export class CreateSampleRequestBrand {
   attached(){
     document.getElementById("CreateSampleRequestButton").disabled = true;
   }
+
+    alertP (message){
+
+        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000} }).then(response => {});
+    }
 
   addAdHoc () {
     console.log ("ad hoc");
@@ -363,7 +369,7 @@ export class CreateSampleRequestBrand {
           .then(response => response.json())
           .then(result => {
               this.result = result;
-              alert('Request Sent');
+              this.alertP('Request Sent');
               this.controller.ok();
 
           });
