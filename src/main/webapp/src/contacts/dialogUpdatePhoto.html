@@ -14,6 +14,9 @@
             <span class="label">Drag and Drop an image</span>
           </div> -->
 
+
+          <!-- error messages -->
+          <div id="flashmessage" if.bind="(flashMessage != '')" class="message" style="color:red; text-align: center;" role="status">${flashMessage}</div>
           <div class="add-choose-file">          
             <input type="file" name="file-1" id="file-img" class="input-file" accept="image/*" files.bind="avatar"/>
             <label for="file-img"><span>Choose a File...</span></label>

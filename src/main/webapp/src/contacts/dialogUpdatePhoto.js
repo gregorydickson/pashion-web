@@ -9,6 +9,8 @@ import { UserService } from 'services/userService';
 export class CreateDialogUpdatePhoto {
   static inject = [DialogController];
 
+  flashMessage = '';
+
   constructor(http, controller, userService){
     this.controller = controller;
     this.userService = userService;
@@ -20,9 +22,11 @@ export class CreateDialogUpdatePhoto {
     this.http = http;
   }
 
+  
   uploadAvatar() {
       var data = '';
       var current = this;
+      this.flashMessage = '';
 
     if(this.avatar != undefined){
 
@@ -49,7 +53,11 @@ export class CreateDialogUpdatePhoto {
             };
             console.log('waiting');
         } else{
-            alert('Sorry, we only can accept images files');
+            //this.alertP('Sorry, we only can accept images files');
+            // alert('Sorry, we only can accept images files');
+            this.flashMessage = 'Image Files Only'
+            var parent = this;
+            setTimeout(function() { parent.flashMessage=''; }, 5000)
         }
 
 
@@ -68,7 +76,10 @@ export class CreateDialogUpdatePhoto {
   close(){
     this.controller.close();
   }
-
+clearMessage () {
+  this.flashMessage ='';
+  console.log("flashMessage cleared");
+}
   attached() {
  
     var inputs = document.querySelectorAll( '.input-file' );
@@ -79,8 +90,13 @@ export class CreateDialogUpdatePhoto {
         // Fit width of file input and label
         input.style.width = label.offsetWidth + "px";
 
+        //var parent = this;
         input.addEventListener( 'change', function(e) {
 
+
+          //parent.flashMessage = '';
+          //var fm = document.getElementById("flashmessage");
+          //if (fm) fm.set
           // Add to styled file input count feature
             var fileName = '';
             if( this.files && this.files.length > 1 )
