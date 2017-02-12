@@ -147,7 +147,7 @@
                      
                 </div>
                
-                <div if.bind="(user.type === 'press') || (user.type === 'agency')"  class="vertical grid-content grid-content-column accordion">
+                <div if.bind="(user.type === 'press') || (user.type === 'prAgency')"  class="vertical grid-content grid-content-column accordion">
                     <!--header -->
                     <div>
                         <table class="accordion" >
@@ -236,7 +236,7 @@
                             <span class="ui-text-label-m-broad">${numberImages} Results )</span>
                         </span> 
                         <!-- Header for 'prAgency'-->
-                        <span if.bind="user.type == 'agency'">
+                        <span if.bind="user.type == 'prAgency'">
                             <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
                             <span if.bind="maxRReached" class="ui-text-label-m-broad"> > </span>
                             <span class="ui-text-label-m-broad">${numberImages} Results )</span>
@@ -386,7 +386,7 @@
 
 
                     <!-- AGENCY filters BEGIN -->
-                    <div if.bind="user.type === 'agency'">
+                    <div if.bind="user.type === 'prAgency'">
                         <div class="blockSearchImages">
                             <div class="grid-row">
                                 <div class="grid-row-col">
@@ -499,7 +499,7 @@
                                                 <li class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i].id )" class="look-menu-link">Booking &nbsp;</a></li>
                                             </ul>
                                             <!-- agency -->
-                                            <ul if.bind="user.type === 'agency'" class="look-menu-list">
+                                            <ul if.bind="user.type === 'prAgency'" class="look-menu-list">
 
                                                 <li class="pure-menu-item"><a href="#" click.delegate="editSearchableItem(row.items[i].id)" class="look-menu-link">Edit</a></li>
                                                 
@@ -528,7 +528,7 @@
                                     <div class="card-look-number-name" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
                                     <div if.bind="user.type === 'brand'" class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].season}</div>
                                     <div if.bind="user.type === 'press'" class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].brand} <br> ${row.items[i].season}</div>
-                                    <div if.bind="user.type === 'agency'" class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].brand} <br> ${row.items[i].season}</div>
+                                    <div if.bind="user.type === 'prAgency'" class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].brand} <br> ${row.items[i].season}</div>
 
 
                                     <img if.bind="row.items[i].imageProvider=='indigital'" src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align"/> 
