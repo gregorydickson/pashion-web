@@ -1,4 +1,33 @@
 /* start preloader */
+.preloader-guest
+  {
+    z-index: 9991;
+  //margin: 100px auto;   
+  position: fixed;
+  left: 50%;
+  top: 250px;
+  margin-left: -38px; // 50% - half width of the spinner
+  margin-top: -80px; 
+  width: 76px;
+  height: 40px;
+
+      display: -webkit-box;
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-flex-flow: row nowrap;
+          -ms-flex-flow: row nowrap;
+              flex-flow: row nowrap;
+      -webkit-box-pack: center;
+      -webkit-justify-content: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+      -webkit-box-align: center;
+      -webkit-align-items: center;
+          -ms-flex-align: center;
+              align-items: center;
+      background: none repeat scroll 0 0 #ffffff;
+  }
 .preloader
   {
     z-index: 9991;

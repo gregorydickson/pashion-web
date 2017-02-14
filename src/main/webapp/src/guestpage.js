@@ -168,11 +168,7 @@ export class Guestpage {
             this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => {
               this.seasons = seasons;
               
-            }),
-
-
-this.user = this.userService.getUser().then(user => {
-                this.user = user;})
+            })
 
             ]);
       }
