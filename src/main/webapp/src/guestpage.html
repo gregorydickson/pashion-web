@@ -1,7 +1,7 @@
 <!-- guestpage.html -->
 <template>
     <require from="./dashboard_filters/filters-designer"></require>
-    <require from="./dashboard_filters/filters-season"></require>
+    <require from="./dashboard_filters/filters-season-press"></require>
     <require from="./dashboard_filters/filters-theme"></require>
     <require from="./common/jquery.unveil"></require>
 
@@ -58,7 +58,7 @@
                     </div>
                     <!-- Seasons -->
                     <div class="grid-content shrink" style="min-width: 225px;">
-                        <filters-season change.delegate="filterChangeSeason($event)" ></filters-season>
+                        <filters-season-press change.delegate="filterChangeSeason($event)" ></filters-season-press>
                     </div>
 
                     <!-- Theme -->
@@ -106,7 +106,7 @@
                                     <div class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
                                     <div class="card-look-number-name" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
                                     <div class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].brand} <br> ${row.items[i].season}</div>
-                                    <img src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align"/> 
+                                    <img if.bind="row.items[i].imageProvider=='indigital'" src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align"/> 
 
                                     <div class="card-hover-overlay" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"></div>
 

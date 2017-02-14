@@ -27,6 +27,7 @@ export class Guestpage {
   nagMultiplier = 2;
   nagMaxTimeout = 480000;
   nagVisted = false;
+  hardWireSeason = 25; //"Fall /Winter 2017"
   
   
 
@@ -64,6 +65,18 @@ export class Guestpage {
           ;
   }
 
+    seasonNameFromId(id) {
+        //RM change to seasons to be object
+        //using string here, could probably be better as id, but want to contain the changes 
+        var i;
+        for (i = 0; i < this.seasons.length; i++) {
+            if (this.seasons[i].id == id) {
+                return this.seasons[i].name;
+            }
+        }
+        return '';
+    }
+
   filterChangeSeason(event){
     if (event)if (event.detail)if(event.detail.value)if(event.detail.value==this.selectedSeason)return
     this.busy.on();
@@ -72,7 +85,8 @@ export class Guestpage {
     if(event)
       if(event.detail)
         if(event.detail.value){
-          this.selectedSeason = event.detail.value;
+          //this.selectedSeason = event.detail.value;
+          this.selectedSeason = this.seasonNameFromId (event.detail.value);
           console.log("value:"+event.detail.value)
         }
     console.log("Filter change called, Season: " + this.selectedSeason);
@@ -149,8 +163,25 @@ export class Guestpage {
   }
 
 
+  activate() {
+        return Promise.all([
+            this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => {
+              this.seasons = seasons;
+              
+            }),
+
+
+this.user = this.userService.getUser().then(user => {
+                this.user = user;})
+
+            ]);
+      }
+
+
   attached(){
-    this.filterChangeBrand();
+    //this.filterChangeBrand();
+    // fake event to show 'current season'
+    this.filterChangeSeason({detail: {value:this.hardWireSeason}});
 
     var parent = this;
     $('input[type=search]').on('search', function () {
@@ -163,7 +194,7 @@ export class Guestpage {
     // welcome banner
     let show = this.userService.show();
     if(show){
-      this.dialogService.open({viewModel: IntroductionGuest, model: "no-op" }).then(
+      this.dialogService.open({viewModel: IntroductionGuest, model: this.seasonNameFromId(this.hardWireSeason) }).then(
         response => {
         this.userService.introShown();
         // nag banner
@@ -181,7 +212,6 @@ export class Guestpage {
     $(window).resize(function() {
         mainScrollWindowHeight();
     });
-    
 
     // show text with delay
     $('.cards-list-bottom').hide();

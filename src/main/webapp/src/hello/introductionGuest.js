@@ -9,13 +9,16 @@ import {DateFormat} from 'common/dateFormat';
 export class IntroductionGuest {
   
 
+  hardWireSeason = "";
+
 
   constructor(controller,userService){
     this.controller = controller;
     // this.userService = userService;
   }
 
-  activate(){
+  activate(season){
+    this.hardWireSeason = season;
   	// return this.user = this.userService.getUser().then(user => {this.user = user;})
   }
   
