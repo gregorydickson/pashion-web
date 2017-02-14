@@ -45,7 +45,12 @@ export class CreateDialogUpdatePhoto {
                     $('.avatar-container').html('<div class="avatar-img-cover" style="height: 45px;border-radius: 100%;overflow:hidden;background: url('+data.url+'?_='+new Date().getTime()+');background-repeat: no-repeat;background-size: cover;background-position: center;display: block;width: 45px;"></div>');
 
                 current.controller.close();
-            });
+            }).catch(function (err) {
+                    console.log(err);
+                    current.flashMessage = 'Incompatible File Type'
+                    var parent = current;
+                    setTimeout(function() { parent.flashMessage=''; }, 5000)
+                });
             });
             };
             reader.onerror = function (error) {
