@@ -5,6 +5,9 @@ export class SortValueConverter {
     if (!typeof(array)) return array;
     if (array==undefined) return array;
     if (array=='') return array;
+    if (array.length == undefined) return array;
+    if (array.length == 'undefined') return array;
+    if (array.length == 0) return array;
 
     try {
 	    return array
