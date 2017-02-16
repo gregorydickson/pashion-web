@@ -20,7 +20,6 @@ setSeason(event){
 	this.seasono = event.detail.value;
 }
 
-
 sortSeasons (array) {
 
     var iarray = array.slice(0)
@@ -31,7 +30,6 @@ sortSeasons (array) {
           );
     return iarray;
   } 
-
 
 attached() {
     return Promise.all([

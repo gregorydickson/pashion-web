@@ -20,7 +20,7 @@ setSeason(event){
 	this.seasono = event.detail.value;
 }
 
-  sortSeasons (array) {
+sortSeasons (array) {
 
     var iarray = array.slice(0)
         .sort(
