@@ -87,15 +87,24 @@
                         </span>
                     </div> -->
 
-                    <div class="inline-label">
-                        <span class="slim-text-box-label">Type</span>
-                        <form-select class="to-u-c" name="options" selected.two-way="selectedSample.sampleType" options.bind="sampleTypes" ></form-select>
+                    <!-- Sample ID -->
+                    <div class="grid-block shrink"> 
+                        <span class="inline-label">
+                            <span class="slim-text-box-label">Sample ID</span>
+                            <div>
+                                <input type="text" class="slim-text-box" value.bind="selectedSample.clientID">
+                            </div>
+                        </span>
                     </div>
 
-                    <div class="inline-label">
-                        <span class="slim-text-box-label">Sample ID</span>
-                        <input type="text" class="slim-text-box-mid" value.bind="selectedSample.clientID">
-                    </div>
+                    <!-- Type -->
+                    <div class="grid-block shrink"> 
+                        <div class="inline-label">
+                            <span class="slim-text-box-label">Type</span>
+                            <form-select class="to-u-c" name="options" selected.two-way="selectedSample.sampleType" options.bind="sampleTypes" ></form-select>
+                        </div>
+                    </div> 
+
 
                     <!-- Sample Type Select2 NOT WORKING RM 
                     <div  class="grid-block shrink" >                        

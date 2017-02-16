@@ -7,8 +7,9 @@ import {CreateDialogImportContacts} from './contacts/dialogImportContacts';
 import {EditSampleRequest} from './sample_request/editSampleRequest';
 import {busy} from './services/busy';
 import { CreateDialogAlert } from './common/dialogAlert';
+import { HttpClient } from 'aurelia-fetch-client';
 
-@inject(DialogService, UserService, SampleRequestService,busy)
+@inject(HttpClient, DialogService, UserService, SampleRequestService,busy)
 export class Requestman{
 	  
   @bindable({defaultBindingMode: bindingMode.twoWay}) bookings = [];
@@ -29,8 +30,13 @@ export class Requestman{
 
 
 
-  constructor(dialogService,userService,sampleRequestService,busy) {
-    
+  constructor(http,dialogService,userService,sampleRequestService,busy) {
+    http.configure(config => {
+            config
+                .useStandardConfiguration();
+        });
+
+    this.http = http;  
     this.dialogService = dialogService;
     this.userService = userService;
     this.sampleRequestService = sampleRequestService;
@@ -39,9 +45,10 @@ export class Requestman{
   }
 
 	activate() {
+      this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
       this.user = this.userService.getUser().then(user => {
         this.user = user;
-        if (this.user.type ==="guest") window.location.href = '/user/login';
+        // if (this.user.type ==="guest") window.location.href = '/user/login';
       });
       return this.bookings = this.sampleRequestService.getSampleRequests()
         .then(bookings => {
