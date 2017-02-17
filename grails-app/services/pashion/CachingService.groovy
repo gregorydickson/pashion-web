@@ -35,7 +35,7 @@ class CachingService implements JsonViewTest {
     }
 
     @Selector('connectionsUpdate')
-    def invalidateConnections(String data){
+    void invalidateConnectionsPubNub(Object data){
         log.info "UPDATING CONNECTIONS "
         String newValue = loadConnections()
         connections = newValue
@@ -45,6 +45,16 @@ class CachingService implements JsonViewTest {
         pubnub.publish(channel, "refresh the cache please" , callback)
 
     }
+
+    @Selector('connectionsUpdateNoPubNub')
+    void invalidateConnections(Object data){
+        log.info "UPDATING CONNECTIONS No Pubnub "
+        String newValue = loadConnections()
+        connections = newValue
+
+    }
+
+
 
     
     def connections(){
