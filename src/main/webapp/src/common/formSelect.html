@@ -2,7 +2,7 @@
     <select value.two-way="selected" name.one-way="name" id.one-way="name" >
    <!-- <option repeat.for="option of options" value.bind="option.id">${option.name}</option> -->
    		<option>Select</option>
-   		<!-- Getting specific here for various data types -->
+   		<!-- Getting specific here for various data types first one is for adhoc addresses in createsamplerequestbrand -->
         <option class="to-u-c" if.bind="options[0].destination" repeat.for="option of options" value.bind="option.name">${option.name} ${option.surname}</option>
         <option class="to-u-c" if.bind="(options[0].name && !options[0].destination)" repeat.for="option of options" value.bind="option.id">${option.name}</option>
         <option class="to-u-c" if.bind="options[0].display" repeat.for="option of options" value.bind="option.id">${option.display}</option>
