@@ -36,8 +36,11 @@ class ConnectionController {
        connection.thing = jsonObject.thing
         
         
+        Connection.withTransaction { status ->
+            connection.save(failOnError : true, flush: true)
+        }
         
-        connection.save(failOnError : true, flush: true)
+        notify "connectionsUpdateNoPubNub","connections"
         def sent = [message:'Connection Made']
         render sent as JSON
     }
@@ -79,24 +82,26 @@ class ConnectionController {
         def jsonObject = request.JSON
         log.info "addContactRequest json: "+jsonObject
         log.info "addContactRequest: session.user: " + session.user
-        def con1 = new Connection()
-        con1.user = session.user 
-        con1.connectedUserId = jsonObject.user1.connectedUserId
-        con1.connectingStatus = 'PendingOut'
-        con1.numberNewMessages = jsonObject.user1.numberNewMessages
-        con1.mostRecentRead = jsonObject.user1.mostRecentRead
-        con1.name = jsonObject.user1.name
-        con1.save(flush:true, failOnError:true)
+        Connection.withTransaction { status ->
+            def con1 = new Connection()
+            con1.user = session.user 
+            con1.connectedUserId = jsonObject.user1.connectedUserId
+            con1.connectingStatus = 'PendingOut'
+            con1.numberNewMessages = jsonObject.user1.numberNewMessages
+            con1.mostRecentRead = jsonObject.user1.mostRecentRead
+            con1.name = jsonObject.user1.name
+            con1.save(flush:true, failOnError:true)
 
-        def con2 = new Connection()
-        con2.user = User.findById(jsonObject.user1.connectedUserId) 
-        con2.connectedUserId = session.user.id
-        con2.connectingStatus = 'PendingIn'
-        con2.numberNewMessages = jsonObject.user2.numberNewMessages
-        con2.mostRecentRead = jsonObject.user2.mostRecentRead
-        con2.name = jsonObject.user2.name
-        con2.save(flush:true, failOnError:true)
-
+            def con2 = new Connection()
+            con2.user = User.findById(jsonObject.user1.connectedUserId) 
+            con2.connectedUserId = session.user.id
+            con2.connectingStatus = 'PendingIn'
+            con2.numberNewMessages = jsonObject.user2.numberNewMessages
+            con2.mostRecentRead = jsonObject.user2.mostRecentRead
+            con2.name = jsonObject.user2.name
+            con2.save(flush:true, failOnError:true)
+        }
+        
         // invalidate cache here for  non initiator      
         
         notify "connectionsUpdate", jsonObject.fromEmail
@@ -111,11 +116,13 @@ class ConnectionController {
         def jsonObject = request.JSON
         connection.numberNewMessages = connection.numberNewMessages + 1   
         log.info "addMessageCount for: " + params.id.toInteger() + " json:"+jsonObject + ' to ' + connection.numberNewMessages
+        Connection.withTransaction { status ->
+            def success = connection.save(failOnError : true, flush: true)
+        }
         
-        def success = connection.save(failOnError : true, flush: true)
         connection.errors.each {log.info "addMessageCount errors: " + it}
         def connectionString  = 'message numbers count updated for: ' + connection
-        
+        notify "connectionsUpdateNoPubNub","connections"
         def sent = [message:connectionString]
         render sent as JSON
     }
@@ -128,8 +135,11 @@ class ConnectionController {
         //log.info "saveMostRecentRead for: " + params.id.toInteger() + " json:"+jsonObject
         connection.mostRecentRead = jsonObject.mostRecentRead
         //log.info "saveMostRecentRead input as: " + connection.mostRecentRead
-        connection.save(failOnError : true, flush: true)
+        Connection.withTransaction { status ->
+            connection.save(failOnError : true, flush: true)
+        }
         
+        notify "connectionsUpdateNoPubNub","connections"
         def connectionString  = 'saveMostRecentRead success'
         def sent = [message:connectionString]
         render sent as JSON
@@ -142,10 +152,12 @@ class ConnectionController {
         def jsonObject = request.JSON
         //log.info "server side: zeroMessage count for: " + params.id.toInteger() + " json:"+jsonObject
         connection.numberNewMessages = 0
+        Connection.withTransaction { status ->
+            connection.save(failOnError : true, flush: true)
+        }
         
-        connection.save(failOnError : true, flush: true)
         def connectionString  = 'numbers count zero-ed: ' + params.id.toInteger()
-        
+        notify "connectionsUpdateNoPubNub","connections"
         def sent = [message:connectionString]
         render sent as JSON
     }
@@ -165,8 +177,11 @@ class ConnectionController {
             return
         }
         // invalidate cache here????
-        connection.save flush:true
-
+        Connection.withTransaction { status ->
+            connection.save flush:true
+        }
+        
+        notify "connectionsUpdateNoPubNub","connections"
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'connection.label', default: 'Connection'), connection.id])
@@ -193,9 +208,10 @@ class ConnectionController {
             respond connection.errors, view:'edit'
             return
         }
-        // invalidate cache here????
-        connection.save flush:true
-
+        Connection.withTransaction { status ->
+            connection.save flush:true
+        }
+        notify "connectionsUpdateNoPubNub","connections"
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'connection.label', default: 'Connection'), connection.id])
