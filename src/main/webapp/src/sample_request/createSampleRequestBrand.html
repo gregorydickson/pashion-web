@@ -1,5 +1,6 @@
 <template>
 <require from="./sort"></require>
+<require from="../common/formSelect"></require>
     
    <ai-dialog>
         <ai-dialog-header>
@@ -58,13 +59,13 @@
                 <div class="grid-content shrink" style="margin-top: 1.5rem;">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Required By</span>
-                    <select class="slim-box" name="" id="" value.bind="sampleRequest.requiredBy">
-                        <option repeat.for="item of required" model.bind="item">${item}</option>
-                    </select>
+                        <form-select class="to-u-c" name="requiredby" selected.two-way="sampleRequest.requiredBy" options.bind="required" ></form-select>
                     </span>
-
                 </div>
+
+
                 <!-- Deliver To-->
+                <!-- requires bespoke selector -->
                 <div class="grid-content shrink">
                     <span class="inline-label" style="">
                         <span class="slim-text-box-label">Deliver To</span>
@@ -74,6 +75,8 @@
                     <span class="slim-text-box-label"><a click.delegate="addAdHoc()" style="">Add</a></span>
                     </span>
                 </div>
+
+
                 <!-- Name-->
                 <div class="grid-content shrink">
                     <span class="inline-label" style="margin-bottom: 0px;">
@@ -132,21 +135,18 @@
                 <div class="grid-content shrink">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Courier</span>
-                        <select class="slim-box" name="" id="" value.bind="sampleRequest.courierOut">
-                            <option repeat.for="option of courier" model.bind="option">${option}</option>
-                        </select>
+                        <form-select class="to-u-c" name="courierOut" selected.two-way="sampleRequest.courierOut" options.bind="courier" ></form-select>
                     </span>
-
                 </div>
-               <!--  <div class="grid-block shrink"> -->
+
+               <!--  split -->
+
                     <div class="grid-content shrink" style="margin-bottom:0.5rem;">
                         <span class="inline-label">
                             <span class=" slim-text-box-label">Split</span>
-                            <select class="slim-box" name="" id="" value.bind="sampleRequest.paymentOut">
-                                <option repeat.for="option of payment" model.bind="option">${option}</option>
-                            </select>
+                            <form-select class="to-u-c" name="paymentOut" selected.two-way="sampleRequest.paymentOut" options.bind="payment" ></form-select>
                         </span>
-                    </div>
+                    </div>                    
                    <!-- <div class="grid-content shrink" style="padding-top: 0.5rem;">
                         <span class="" >Cost: £9.95</span>
                     </div> -->
@@ -194,13 +194,12 @@
                 <div class="grid-content shrink" style="margin-top: 1.5rem;">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Return By</span>
-                    <select class="slim-box" name="" id="" value.bind="sampleRequest.returnBy">
-                        <option repeat.for="item of returnBy" model.bind="item">${item}</option>
-                    </select>
+                        <form-select class="to-u-c" name="returnBy" selected.two-way="sampleRequest.returnBy" options.bind="returnBy" ></form-select>
                     </span>
-                </div>
+                </div>    
+                            
                 <!-- Return To-->
-                <div class="grid-content shrink">
+                <!-- <div class="grid-content shrink">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Return To</span>
                     <select class="slim-box" name="" id="" value.bind="sampleRequest.returnToAddress">
@@ -208,26 +207,28 @@
                         <option repeat.for="address of brandAddresses" model.bind="address.id">${address.name}</option>
                     </select>
                     </span>
+                </div> -->
+
+                <!-- generic drown down used, so no ME. Consider a bespoke one -->
+                <div class="grid-content shrink">
+                    <span class="inline-label">
+                        <span class="slim-text-box-label">Return To</span>
+                        <form-select class="to-u-c" name="returnToAddress" selected.two-way="sampleRequest.returnToAddress" options.bind="brandAddresses" ></form-select>
+                    </span>
                 </div>
 
                 <!-- Courier Section -->
                 <div class="grid-content shrink">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Courier</span>
-                        <select class="slim-box" name="" id="" value.bind="sampleRequest.courierReturn">
-                            <option repeat.for="option of courier" model.bind="option">${option}</option>
-                        </select>
+                        <form-select class="to-u-c" name="courierReturn" selected.two-way="sampleRequest.courierReturn" options.bind="courier" ></form-select>
                     </span>
-
                 </div>
-               <!--  <div class="grid-block shrink"> -->
+                <!--  <div class="grid-block shrink"> -->
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class=" slim-text-box-label">Split</span>
-                            <select class="slim-box" name="" id="" value.bind="sampleRequest.paymentReturn">
-                                <option repeat.for="option of payment" model.bind="option">${option}</option>
-                            </select>
-                        </span>
+                             <form-select class="to-u-c" name="paymentReturn" selected.two-way="sampleRequest.paymentReturn" options.bind="payment" ></form-select>
                         </span>
                     </div>
                     <!-- <div class="grid-content shrink" style="padding-top: 0.5rem;">
