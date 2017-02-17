@@ -13,6 +13,12 @@ class SampleRequestController {
     def cacheInvalidationService
 
     String dateFormatString = "yyyy-M-d"
+
+    def clean(){
+        def list = SampleRequest.list()
+        list*.delete()
+        render 'done'
+    }
     
 
     // The not exactly RESTful verbs for updating a Sample Request:

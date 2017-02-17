@@ -48,6 +48,8 @@ environments:
 
         grails:
           plugin:
+            forceSSL:
+                enabled: false
             awssdk:
               accessKey: AKIAIDWK6XYVRHVN6HUQ
               secretKey: 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

@@ -13,8 +13,10 @@ import reactor.spring.context.annotation.*
 import grails.plugin.json.view.test.*
 import groovy.transform.Synchronized
 
+import com.pubnub.api.*
 
 @Transactional
+@Consumer
 class CachingService implements JsonViewTest {
 
     static lazyInit = false
@@ -25,15 +27,23 @@ class CachingService implements JsonViewTest {
     String connections = null
 
 
-    
+    Pubnub pubnub = null
 
     @PostConstruct
     void init() {
-        on("connectionsUpdate") {
-            log.info "UPDATING CONNECTIONS "
-            String newValue = loadConnections()
-            connections = newValue
-        }
+        pubnub = new Pubnub("pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73", "sub-c-dd158aea-b76b-11e6-b38f-02ee2ddab7fe")
+    }
+
+    @Selector('connectionsUpdate')
+    def invalidateConnections(String data){
+        log.info "UPDATING CONNECTIONS "
+        String newValue = loadConnections()
+        connections = newValue
+        Callback callback=new Callback() {}
+        def channel = data + '_cacheInvalidate'
+        log.info "send invalidate from acceptcontact on:" + channel
+        pubnub.publish(channel, "refresh the cache please" , callback)
+
     }
 
     
