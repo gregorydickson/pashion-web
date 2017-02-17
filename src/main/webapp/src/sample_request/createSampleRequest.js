@@ -26,7 +26,7 @@ export class CreateSampleRequest {
  // seasons = [];
 
 
-  sampleRequest = {};
+  sampleRequest = {requiredBy:"12:00", courierOut:"Scooter",paymentOut:"50/50", returnBy:"Afternoon",courierReturn:"Scooter",paymentReturn:"50/50"};
   startOffset = 0;
   endOffset = 0;
 
