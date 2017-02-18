@@ -51,6 +51,13 @@ export class SampleRequestService{
                 window.location.href = '/user/login';
                 return;
               }
+              sampleRequests.forEach(function(sampleRequest){
+                sampleRequest.searchableItems.forEach(function(item1) {
+                  item1.status = sampleRequest.searchableItemsStatus.find(function (item2) {
+                    return item2.itemId === item1.id;
+                  });
+                });
+              });
       				this.sampleRequests = sampleRequests;
       				resolve(this.sampleRequests);
       			}).catch(err=>reject(err));
