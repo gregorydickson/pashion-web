@@ -41,7 +41,7 @@ class CachingService implements JsonViewTest {
         connections = newValue
         Callback callback=new Callback() {}
         def channel = data + '_cacheInvalidate'
-        log.info "send invalidate from acceptcontact on:" + channel
+        log.info "send invalidate in cachingService:invalidateConnectionsPubNub on:" + channel
         pubnub.publish(channel, "refresh the cache please" , callback)
 
     }
