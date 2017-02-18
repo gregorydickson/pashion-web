@@ -79,6 +79,7 @@ class ConnectionController {
 
     @Transactional 
     def addContactRequest(){
+        def sent = ''
         def jsonObject = request.JSON
         log.info "addContactRequest json: "+jsonObject
         log.info "addContactRequest: session.user: " + session.user
@@ -100,12 +101,14 @@ class ConnectionController {
             con2.mostRecentRead = jsonObject.user2.mostRecentRead
             con2.name = jsonObject.user2.name
             con2.save(flush:true, failOnError:true)
+
+
+            sent = [message:'contact request sent', id1: con1.id, id2: con2.id] 
         }
         
         // invalidate cache here for  non initiator      
-        
+        // log.info "Now notify"
         notify "connectionsUpdate", jsonObject.fromEmail
-        def sent = [message:'contact request sent', id1: con1.id, id2: con2.id] 
         render sent as JSON
     }
 
