@@ -72,12 +72,6 @@
                         </div>
                         -->
 
-                        <!-- Remember me -->
-                        <div class="grid-content shrink" style="text-align:left; margin-top: 0.5rem; margin-left: 0.5rem;">
-                            <span>Remember Me</span>
-                            <input id="" name="remember" type="checkbox">
-                        </div>
-
 
                     </div> <!-- ai-dialog-body -->
                 

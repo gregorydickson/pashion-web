@@ -531,7 +531,7 @@ export class UserService {
                                 this.user["type"] = 'prAgency';
                                 this.user["companyId"] = user.prAgency.id;
                             } else {
-                                this.user["type"] = 'guest';
+                                this.user["type"] = 'nosession';
                             }
                             resolve(this.user);
                         })

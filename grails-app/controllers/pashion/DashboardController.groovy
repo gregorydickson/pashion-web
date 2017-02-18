@@ -33,16 +33,10 @@ class DashboardController {
     def user(){
         def info
         if(session.user == null){
-            info = [type:'guest' ] as JSON
-            session.user = 'guest'
+            info = [type:'nosession' ] as JSON
             render info 
             return
-        } else if(session.user == 'guest'){
-            info = [type:'guest' ] as JSON
-            render info 
-            return
-        }
-
+        } 
         def user = session.user
         
         def type

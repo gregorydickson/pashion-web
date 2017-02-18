@@ -99,11 +99,6 @@ class UserController {
         }
     }
 
-    def guest(){
-        session.user = 'guest'
-        log.info "logging in as guest"
-        redirect (uri:'/dashboard/#guestpage' )
-    }
 
     @Transactional
     def doLogin(){
@@ -116,13 +111,6 @@ class UserController {
             session.user = user                   
             if(account instanceof Account){
                 user.account = account
-                
-                if(params.remember){
-                    response.setCookie('remember', user.email)
-                    log.info "set cookie"
-                    user.stormpathString = params.password
-                    user.save(flush:true)
-                }
 
                 redirect(controller:'dashboard',action:'index')
             } else{

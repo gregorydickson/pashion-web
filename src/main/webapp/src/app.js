@@ -19,7 +19,6 @@ export class App {
      // { route: ['', '/'],       name: 'index',       moduleId: 'index' },
       { route: ['', '/'],       name: 'index',       moduleId: 'index' },
       {	route: 'requestman',	name: 'requestman',  moduleId: 'requestman'},
-      {	route: 'guestpage',	name: 'guestpage',  moduleId: 'guestpage'},
       {	route: 'adminpage',	name: 'adminpage',  moduleId: 'adminpage'}
       
     ]);
