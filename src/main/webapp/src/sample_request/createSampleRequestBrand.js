@@ -167,7 +167,7 @@ export class CreateSampleRequestBrand {
         });
       }
     }
-    var element = event.srcElement.parentElement;
+    var element = event.srcElement;
     var document = element.ownerDocument;
     var elems = document.querySelectorAll(".start-selected");
     [].forEach.call(elems, function(el) {
@@ -202,7 +202,7 @@ export class CreateSampleRequestBrand {
     
     console.log("end date"+event);
     console.log("day"+day);
-    let element = event.srcElement.parentElement;
+    let element = event.srcElement;
     let document = element.ownerDocument;
     let elems = document.querySelectorAll(".end-selected");
     [].forEach.call(elems, function(el) {
