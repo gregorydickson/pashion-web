@@ -180,7 +180,12 @@ class SearchableItem {
 	 * @param pashionCalendar calendar to be mutated with any booked days for the monthToCheck
 	 */
 	PashionCalendar availableDaysInMonth(PashionCalendar pashionCalendar){
-		LocalDate start = fromDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+		LocalDate start
+		if(fromDate){
+			start = fromDate?.toInstant()?.atZone(ZoneId.systemDefault())?.toLocalDate()
+		} else{
+			start = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+		}
 		switch(start){
 		
 			case {pashionCalendar.calendarMonths[0].sameMonth(start)}:
