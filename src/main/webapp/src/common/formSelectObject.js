@@ -17,28 +17,11 @@ export class FormSelectObject {
     constructor(element) {
         this.element = element;
 
-        var el = $(this.element).find('select');
-        var sel = el.select2({minimumResultsForSearch: 15 // only allow terms up to n characters long
-                        });
-
-        // preload selected values
-        sel.val(this.selected).trigger('change');
-
-        // on any change, propagate it to underlying select to trigger two-way bind
-        sel.on('change', (event) => {
-          // don't propagate endlessly
-          // see: http://stackoverflow.com/a/34121891/4354884
-          if (event.originalEvent) { return; }
-          // dispatch to raw select within the custom element
-          // bubble it up to allow change handler on custom element
-          var notice = new Event('change', {bubbles: true});
-          $(el)[0].dispatchEvent(notice);
-        });
-
-        console.log("*****************   formSelectObject ***********************");
+        
     }
 
-    sampleChanged(){
+    sampleChanged(newValue,oldValue){
+      console.log("new:"+newValue+" oldvalue:"+oldValue);
       console.log("sampleChanged OBJECT");
       console.log(JSON.stringify(this.selected));
       if(this.selected){
@@ -52,7 +35,27 @@ export class FormSelectObject {
 
 
     attached() {
-        
+
+      var el = $(this.element).find('select');
+      var sel = el.select2({minimumResultsForSearch: 15 // only allow terms up to n characters long
+                      });
+
+      // preload selected values
+      sel.val(this.selected).trigger('change');
+
+      // on any change, propagate it to underlying select to trigger two-way bind
+      sel.on('change', (event) => {
+        // don't propagate endlessly
+        // see: http://stackoverflow.com/a/34121891/4354884
+        if (event.originalEvent) { return; }
+        // dispatch to raw select within the custom element
+        // bubble it up to allow change handler on custom element
+        var notice = new Event('change', {bubbles: true});
+        $(el)[0].dispatchEvent(notice);
+      });
+
+      console.log("*****************   formSelectObject attached ***********************");
+      
     }
 
     detached() {

@@ -46,7 +46,6 @@ export class EditSearchableItem {
   }
 
   selectedSampleChanged(newValue, oldValue) {
-    console.log("changed from: " + oldValue + " to " + newValue);
     if(newValue)
       $("#sampleEdit").show();
   }

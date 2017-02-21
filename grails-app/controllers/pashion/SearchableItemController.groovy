@@ -437,7 +437,7 @@ class SearchableItemController {
         item.attributes = jsonObject.attributes
         
         jsonObject.samples.each{
-            
+            log.info "sample:"+it
             def sample = SearchableItem.get(it.id)
             if(!sample){
                 sample = new SearchableItem()
