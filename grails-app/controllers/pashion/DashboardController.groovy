@@ -15,7 +15,7 @@ class DashboardController {
     }
 
     def deliverToBrand(){
-        Brand brand = Brand.get(session.user.brand.id)
+        Brand brand = Brand.get(params.id)
         
         def destinations = brand.destinations
         def users = brand.users

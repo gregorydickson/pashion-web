@@ -48,17 +48,17 @@ export class CreateSampleRequestBrand {
     this.dialogService = dialogService;
   }
 
-  activate(itemId){
+  activate(item){
 
     var queryString = DateFormat.urlString(0, 2);
-    this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+itemId)
+    this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+item.id)
       .then(response => response.json())
         .then(calendar => {
               this.startCalendar = calendar;
               this.endCalendar = calendar;
           });
     
-    this.http.fetch('/searchableItems/'+itemId+'.json')
+    this.http.fetch('/searchableItems/'+item.id+'.json')
       .then(response => response.json())
       .then(item => {
           this.currentItem = item;   
@@ -66,7 +66,7 @@ export class CreateSampleRequestBrand {
          /* this.http.fetch('/brand/addresses/'+item.brand.id)
               .then(response => response.json())
               .then(addresses => this.brandAddresses = addresses); */
-
+          this.http.fetch('/dashboard/deliverToBrand/'+item.brand.id).then(response => response.json()).then(deliverTo => this.deliverTo = deliverTo);
           this.brandService.getBrandAddresses(item.brand.id).then(addresses => this.brandAddresses = addresses);
           this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);
           this.sampleRequest.samples = [];
@@ -79,7 +79,7 @@ export class CreateSampleRequestBrand {
       )
       
     this.http.fetch('/dashboard/required').then(response => response.json()).then(required => this.required = required);
-    this.http.fetch('/dashboard/deliverToBrand').then(response => response.json()).then(deliverTo => this.deliverTo = deliverTo);
+    
     this.http.fetch('/dashboard/returnBy').then(response => response.json()).then(returnBy => this.returnBy = returnBy);
     this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => this.courier = courier);
     this.http.fetch('/dashboard/returnTo').then(response => response.json()).then(returnTo => this.returnTo = returnTo);
