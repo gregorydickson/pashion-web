@@ -10,6 +10,6 @@
   </select>
 
   <select if.bind="(name=='location')" value.two-way="selected" name.one-way="name" id.one-way="name" >
-        <option class="to-u-c" repeat.for="option of options" value.bind="option.id">${option.name}</option>
+        <option class="to-u-c" repeat.for="option of options" value.bind="option">${option.name}</option>
   </select>
 </template>

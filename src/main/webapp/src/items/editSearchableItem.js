@@ -7,6 +7,7 @@ import {CityService} from 'services/cityService';
 import {ObserverLocator, observable} from 'aurelia-framework';  // or 'aurelia-framework'
 import {DialogService} from 'aurelia-dialog';
 import { CreateDialogAlert } from 'common/dialogAlert';
+import $ from 'jquery';
 
 
 @inject(HttpClient, DialogController,CityService, ObserverLocator, DialogService)
@@ -18,14 +19,14 @@ export class EditSearchableItem {
 
   itemTypes = [];
   sampleTypes = [];
-  currentSample = {};
+  
   colors = [];
   material = [];
   cities = [];
 
   createdNew = true;
   // @observable selectedSample = {};
-  selectedSample = {};
+  @bindable selectedSample = {};
 
   listID = 'colors';
 
@@ -44,10 +45,11 @@ export class EditSearchableItem {
     this.dialogService = dialogService;
   }
 
- /* selectedSampleChanged(newValue, oldValue) {
+  selectedSampleChanged(newValue, oldValue) {
     console.log("changed from: " + oldValue + " to " + newValue);
-    if ((newValue != '') && (oldValue !='')) this.sampleChanged = true;
-  } */
+    if(newValue)
+      $("#sampleEdit").show();
+  }
 
   activate(itemId){
     var queryString = DateFormat.urlString(0, 1);
@@ -62,6 +64,10 @@ export class EditSearchableItem {
           this.currentItem = item;
           this.createdNew = false;
     });
+    
+  }
+  attached(){
+    $("#sampleEdit").hide();
   }
 
   alertP (message){

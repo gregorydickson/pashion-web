@@ -3,6 +3,7 @@
 <require from="./cleanup"></require>
 <require from="./filters-type-item"></require>
 <require from="../common/formSelect"></require>
+<require from="../common/formSelectObject"></require>
 <!-- <require from="./set-attribute"></require> -->
 <!-- <require from="./truncate"></require> -->
     
@@ -63,7 +64,7 @@
                     </span>
                 </div>
 
-                <div if.bind="selectedSample.look.id">
+                <div id="sampleEdit">
                     <!-- Sample ID & count
                     <div class="grid-block shrink">                       
                         <span class="inline-label slim-text-box-label">ID</span>
@@ -190,7 +191,7 @@
                             <!-- <select class="to-u-c" name="" id="" value.bind="selectedSample.sampleCity.id">
                                 <option repeat.for="city of cities" model.bind="city.id">${city.name}</option>
                             </select> -->
-                           <form-select class="to-u-c" name="location" selected.two-way="selectedSample.sampleCity.id" options.bind="cities" ></form-select>
+                           <form-select-object class="to-u-c" name="location" selected.two-way="selectedSample.sampleCity.id" options.bind="cities" ></form-select-object>
                         </span> 
                     </div>
                 </div>

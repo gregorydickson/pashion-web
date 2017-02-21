@@ -5,33 +5,18 @@ import $ from 'jquery';
 import 'select2';
 
 
-@customElement('form-select') // Define the name of our custom element
+@customElement('form-select-object') // Define the name of our custom element
 @inject(Element) // Inject the instance of this element
-export class FormSelect {
+export class FormSelectObject {
     @bindable name = null;    // name/id of custom select
-    @bindable({ defaultBindingMode: bindingMode.twoWay, changeHandler:'sampleChanged'})  selected = '';  // default selected values
-    @bindable options = {};   // array of options with id/name properties
+    @bindable({ defaultBindingMode: bindingMode.twoWay, changeHandler:'sampleChanged'})  selected = {};  // default selected values
+    @bindable options = [];   // array of options with name properties
     @bindable placeholder = "";
     @bindable allow_clear = false;
 
     constructor(element) {
         this.element = element;
-    }
 
-    sampleChanged(){
-      //console.log("sampleChanged");
-      //console.log(JSON.stringify(this.selected));
-      if(this.selected){
-        var el = $(this.element).find('select');
-        var sel = el.select2();
-        sel.val(this.selected).trigger('change');
-      }
-      //console.log("selected");
-    }
-
-    // Once the Custom Element has its DOM instantiated and ready for binding
-    // to happenings within the DOM itself
-    attached() {
         var el = $(this.element).find('select');
         var sel = el.select2({minimumResultsForSearch: 15 // only allow terms up to n characters long
                         });
@@ -50,11 +35,28 @@ export class FormSelect {
           $(el)[0].dispatchEvent(notice);
         });
 
-        //console.log("*****************   select2 attached ***********************");
+        console.log("*****************   formSelectObject ***********************");
+    }
+
+    sampleChanged(){
+      console.log("sampleChanged OBJECT");
+      console.log(JSON.stringify(this.selected));
+      if(this.selected){
+        var el = $(this.element).find('select');
+        var sel = el.select2();
+        sel.val(this.selected).trigger('change');
+        return false;
+      }
+      
+    }
+
+
+    attached() {
+        
     }
 
     detached() {
         $(this.element).find('select').select2('destroy');
-        //console.log("select2 detached");
+        console.log("formSelectObject detached");
     }
 }
