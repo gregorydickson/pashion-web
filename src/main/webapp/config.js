@@ -36,7 +36,7 @@ System.config({
     "jquery-ui": "github:components/jqueryui@1.12.1",
     "moment": "npm:moment@2.15.1",
     "nodep-date-input-polyfill": "npm:nodep-date-input-polyfill@4.0.6",
-    "select2": "github:select2/select2@4.0.3",
+    "select2": "github:select2/select2@3.5.4",
     "text": "github:systemjs/plugin-text@0.0.8",
     "github:components/jqueryui@1.12.1": {
       "jquery": "npm:jquery@3.1.1"
@@ -59,8 +59,9 @@ System.config({
     "github:jspm/nodelibs-vm@0.1.0": {
       "vm-browserify": "npm:vm-browserify@0.0.4"
     },
-    "github:select2/select2@4.0.3": {
-      "jquery": "npm:jquery@2.2.4"
+    "github:select2/select2@3.5.4": {
+      "css": "github:systemjs/plugin-css@0.1.32",
+      "jquery": "npm:jquery@3.1.1"
     },
     "github:twbs/bootstrap@3.3.7": {
       "jquery": "npm:jquery@3.1.1"
