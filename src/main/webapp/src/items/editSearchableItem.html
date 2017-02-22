@@ -4,6 +4,7 @@
 <require from="./filters-type-item"></require>
 <require from="../common/formSelect"></require>
 <require from="../common/formSelectObject"></require>
+<require from="../common/formSelectSample"></require>
 <!-- <require from="./set-attribute"></require> -->
 <!-- <require from="./truncate"></require> -->
     
@@ -55,11 +56,18 @@
                     <span class="inline-label">
                         <span class="slim-text-box-label">SAMPLES</span>
 
+
+
+                      <!-- trying to get this working with a special selector -->
+                      <!--  <form-select-sample class="to-u-c" name="sample" selected.two-way="selectedSample" options.bind="currentItem.samples" ></form-select-sample> -->
+
                         <select class="to-u-c" name="" id="" value.bind="selectedSample" style="max-width:200px;" >
                             <option value="">Select Sample</option>
                             <option if.bind="currentItem.samples" repeat.for="sample of currentItem.samples 
                             | sort: 'id': 'ascending' " model.bind="sample">${$index+1} : ${sample.attributes.substr(0,25)}</option>
-                        </select>
+                        </select> 
+
+
                         <a style= "width: 30px; margin-left: 1rem;" click.delegate="newsample()">Add</a>
                     </span>
                 </div>
