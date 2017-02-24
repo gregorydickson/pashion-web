@@ -6,4 +6,34 @@ model {
 }
 log.info "render a sample request"
 
-json g.render(sampleRequest,[expand:['searchableItemsStatus','brand','searchableItemsProposed','deliverTo','searchableItems','requestingUser','returnToAddress','shippingOut','shippingReturn','addressDestination']])	
+json g.render(sampleRequest,[expand:['searchableItemsStatus','searchableItemsProposed','searchableItems','returnToAddress','shippingOut','shippingReturn','addressDestination'],excludes:['brand','shippingOut','shippingReturn','requestingUser','deliverTo']]){
+	brand{
+		name sampleRequest.brand.name
+		id sampleRequest.brand.id
+	}
+	shippingOut{
+		status sampleRequest.shippingOut.status
+		courier sampleRequest.shippingOut.courier
+		tracking sampleRequest.shippingOut.tracking
+		startDate sampleRequest.shippingOut.startDate
+		endDate sampleRequest.shippingOut.endDate
+	}
+	shippingReturn{
+		status sampleRequest.shippingReturn.status
+		courier sampleRequest.shippingReturn.courier
+		tracking sampleRequest.shippingReturn.tracking
+		startDate sampleRequest.shippingReturn.startDate
+		endDate sampleRequest.shippingReturn.endDate
+	}
+	requestingUser{
+		id sampleRequest.requestingUser.id
+		name sampleRequest.requestingUser.name
+		surname sampleRequest.requestingUser.surname
+	}
+	deliverTo{
+		id sampleRequest.deliverTo.id
+		name sampleRequest.deliverTo.name
+		surname sampleRequest.deliverTo.surname
+	}
+
+}
