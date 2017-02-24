@@ -658,7 +658,14 @@ export class Index {
 
     editSampleRequest(id) {
         this.closeSampleRequestMenu(id);
-        this.dialogService.open({ viewModel: EditSampleRequest, model: id }).then(response => {this.reloadBookings();});
+        this.dialogService.open({ viewModel: EditSampleRequest, model: id })
+            .then(response => {
+                if (response.wasCancelled) {
+                } else {
+                    this.reloadBookings();
+                }
+                
+            });
     }
 
 

@@ -221,7 +221,10 @@ export class Requestman{
     this.closeSampleRequestMenu(itemId);
     this.dialogService.open({viewModel: EditSampleRequest, model: itemId })
       .then(response => {
-        this.reloadBookings();
+          if (response.wasCancelled) {
+          } else {
+              this.reloadBookings();
+          }
       });
   }
   reloadBookings(){

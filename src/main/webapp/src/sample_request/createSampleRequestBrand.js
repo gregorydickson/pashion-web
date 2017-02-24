@@ -27,7 +27,7 @@ export class CreateSampleRequestBrand {
   newAddress = {};
 
 
-  sampleRequest = {requiredBy:"12:00", courierOut:"Scooter",paymentOut:"50/50", returnBy:"Afternoon",courierReturn:"Scooter",paymentReturn:"50/50"};
+  sampleRequest = {};
   startOffset = 0;
   endOffset = 0;
 
@@ -38,7 +38,7 @@ export class CreateSampleRequestBrand {
 
   constructor(http, controller, brandService, dialogService){
     this.controller = controller;
-
+    console.log("createSampleRequestBrand");
     http.configure(config => {
       config
         .useStandardConfiguration();
@@ -86,11 +86,13 @@ export class CreateSampleRequestBrand {
     this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => this.payment = payment);
    // this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
 
-   this.sampleRequest["returnToAddress"] = 0; // defualt return to sender
+   //this.sampleRequest["returnToAddress"] = 0; // defualt return to sender
+   this.sampleRequest = {requiredBy:"12:00", courierOut:"Scooter",paymentOut:"50/50", returnBy:"Afternoon",courierReturn:"Scooter",paymentReturn:"50/50"};
   }
 
   attached(){
     document.getElementById("CreateSampleRequestButton").disabled = true;
+    
   }
 
     alertP (message){
