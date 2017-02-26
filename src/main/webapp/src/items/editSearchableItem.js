@@ -135,5 +135,10 @@ export class EditSearchableItem {
     this.controller.close();
   }
 
+  sample2Callback(evt) {
+        if (evt.detail) {
+            this.selectedSample = evt.detail.value;
+        }
+    }
 
 }
