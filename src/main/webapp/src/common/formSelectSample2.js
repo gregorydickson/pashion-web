@@ -28,7 +28,7 @@ export class CustomSelect {
                 let changeEvent;
 
                 // lets grab the option object from the selection
-                let option = event.added.element["0"].model;
+                let option = event.added.element["0"].model || null;
 
                 if (window.CustomEvent) {
                     changeEvent = new CustomEvent('change', {
