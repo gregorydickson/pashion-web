@@ -4,13 +4,11 @@ import 'fetch';
 import {inject, bindable} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import {CityService} from 'services/cityService';
-import {ObserverLocator, observable} from 'aurelia-framework';  // or 'aurelia-framework'
 import {DialogService} from 'aurelia-dialog';
 import { CreateDialogAlert } from 'common/dialogAlert';
-import $ from 'jquery';
 
 
-@inject(HttpClient, DialogController,CityService, ObserverLocator, DialogService)
+@inject(HttpClient, DialogController,CityService, DialogService)
 export class EditSearchableItem {
   static inject = [DialogController];
   
@@ -25,7 +23,7 @@ export class EditSearchableItem {
   cities = [];
 
   createdNew = true;
-  // @observable selectedSample = {};
+
   @bindable selectedSample = {};
 
   listID = 'colors';
@@ -34,7 +32,7 @@ export class EditSearchableItem {
   
   showSampleEdit = false;
 
-  constructor(http, controller,cityService, observerLocator, dialogService){
+  constructor(http, controller,cityService, dialogService){
     this.controller = controller;
     
     http.configure(config => {
@@ -46,10 +44,6 @@ export class EditSearchableItem {
     this.dialogService = dialogService;
   }
 
-  // selectedSampleChanged(newValue, oldValue) {
-  //   if(newValue)
-  //     $("#sampleEdit").show();
-  // }
 
   activate(itemId){
     var queryString = DateFormat.urlString(0, 1);
@@ -66,9 +60,7 @@ export class EditSearchableItem {
     });
     
   }
-  // attached(){
-  //   $("#sampleEdit").hide();
-  // }
+
 
   alertP (message){
 
@@ -85,17 +77,24 @@ export class EditSearchableItem {
     sample.color = '';
   }
 
+  sample2Callback(evt) {
+    if (evt.detail) {
+        this.selectedSample = evt.detail.value;
+        this.showSampleEdit = (this.selectedSample !== null);
+    }
+  }
+
 
   filterChangeType(event) {
-        //console.log("Filter Change changing Type");
-        if (event)
-            if (event.detail)
-                if (event.detail.value) {
-                    // if (event.detail.value == 'All') event.detail.value = '';
-                    //if (event.detail.value == 'Select') event.detail.value = '';
-                    this.selectedSample.sampleType = event.detail.value;
-                    //console.log(" value: " + event.detail.value);
-                  }
+    //console.log("Filter Change changing Type");
+    if (event)
+        if (event.detail)
+            if (event.detail.value) {
+                // if (event.detail.value == 'All') event.detail.value = '';
+                //if (event.detail.value == 'Select') event.detail.value = '';
+                this.selectedSample.sampleType = event.detail.value;
+                //console.log(" value: " + event.detail.value);
+              }
   }
 
   newsample(){
@@ -127,20 +126,13 @@ export class EditSearchableItem {
           });
     
     this.alertP("Updated");
-    //this.controller.close();
     
   }
 
   close(){
-    //RM ? necessary RM this.reset();
     this.controller.close();
   }
 
-  sample2Callback(evt) {
-        if (evt.detail) {
-            this.selectedSample = evt.detail.value;
-            this.showSampleEdit = (this.selectedSample !== null);
-        }
-    }
+  
 
 }
