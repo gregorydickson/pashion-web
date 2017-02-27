@@ -32,6 +32,7 @@ export class EditSearchableItem {
 
   @bindable addColor = '';
   
+  showSampleEdit = false;
 
   constructor(http, controller,cityService, observerLocator, dialogService){
     this.controller = controller;
@@ -45,10 +46,10 @@ export class EditSearchableItem {
     this.dialogService = dialogService;
   }
 
-  selectedSampleChanged(newValue, oldValue) {
-    if(newValue)
-      $("#sampleEdit").show();
-  }
+  // selectedSampleChanged(newValue, oldValue) {
+  //   if(newValue)
+  //     $("#sampleEdit").show();
+  // }
 
   activate(itemId){
     var queryString = DateFormat.urlString(0, 1);
@@ -65,9 +66,9 @@ export class EditSearchableItem {
     });
     
   }
-  attached(){
-    $("#sampleEdit").hide();
-  }
+  // attached(){
+  //   $("#sampleEdit").hide();
+  // }
 
   alertP (message){
 
@@ -135,5 +136,11 @@ export class EditSearchableItem {
     this.controller.close();
   }
 
+  sample2Callback(evt) {
+        if (evt.detail) {
+            this.selectedSample = evt.detail.value;
+            this.showSampleEdit = (this.selectedSample !== null);
+        }
+    }
 
 }

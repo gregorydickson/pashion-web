@@ -1,0 +1,6 @@
+﻿<template>
+    <select name.bind="name" value.bind="selected" id.bind="name">
+        <option if.bind="placeHolder" value="">${placeHolder}</option>
+        <option repeat.for="option of options" model.bind="option">${option.attributes.substr(0,25)}</option>
+    </select>
+</template>
