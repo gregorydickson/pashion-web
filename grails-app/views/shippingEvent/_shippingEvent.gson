@@ -1,0 +1,4 @@
+model {
+    ShippingEvent shippingEvent
+}
+json g.render(shippingEvent)
