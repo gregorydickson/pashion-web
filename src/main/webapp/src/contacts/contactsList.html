@@ -101,7 +101,7 @@
             <table style="table-layout:fixed;" class="big-accordion">
                 <tr>
                     <td class="accordion-grey" style="width:20px;">
-                        <button id="button1213" class="accordion active" click.delegate="closeExpand(1213)"></button>
+                        <button id="button1213" class="accordion" click.delegate="closeExpand(1213)"></button>
                     </td>
                     <td class="accordion-grey"> <span>NEW MESSAGES</span>
                     </td>
@@ -119,7 +119,7 @@
                 </tr>
             </table>
         </div>
-        <div id="panel1213" class="panel grid-block vertical scroll show" style="overflow-y:auto;">
+        <div id="panel1213" class="panel grid-block vertical scroll" style="overflow-y:auto;">
             <!-- main list -->
             <div id="contacts-inside-top" if.bind="(users[user.id -1].connections!=null)" repeat.for="connection of users[user.id -1].connections | filter:searchTerm:filterFunc:'null':'null' " class="" style="width:255px; overflow: visible;margin-left: 1rem;">
                 <!-- check the connection is completed and the user still exists -->
