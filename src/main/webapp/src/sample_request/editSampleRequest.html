@@ -2,8 +2,10 @@
 <!-- Currently this static template is setup for Press -->
 <template>
     <require from="common/viewDateFormatter"></require>
+    <require from="common/dateTimeFormatter"></require>
     <require from="calendars/datepicker"></require>
     <require from="common/seasonAbbreviationFormatter"></require>
+    <require from="calendars/datetimepicker"></require>
     <ai-dialog style="width: auto;"> <!-- Based on the design. would prefer to be flexible, but postpone this -->
         
         <!-- header -->
@@ -118,7 +120,7 @@
                         <div class="grid-block shrink">                       
                             <span class="inline-label slim-text-box-label">ID:</span>
                             <span class="slim-text-box">
-                                ${sampleRequest.shippingOut.tracking}
+                                <input type="text"  class="slim-text-box" value.bind="sampleRequest.shippingReturn.tracking">
                             </span>
                         </div>
 
@@ -127,7 +129,7 @@
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Arrives:</span>
                             <span class="slim-text-box">
-                                ${sampleRequest.shippingOut.endDate}
+                                <input type="text" timething class="slim-text-box" value.bind="sampleRequest.shippingReturn.endDate">
                             </span>
                         </div>
 
@@ -149,14 +151,14 @@
                         <div class="grid-block ">
                             <span class="inline-label slim-text-box-label">ID:</span>
                             <span class="slim-text-box">
-                                ${sampleRequest.shippingReturn.tracking}
+                                <input type="text" class="slim-text-box" value.bind="sampleRequest.shippingOut.tracking">
                             </span>
                         </div>
                         <!-- Pickup -->
                         <div class="grid-block ">
                             <span class="inline-label slim-text-box-label">Pickup:</span>
                             <span class="slim-text-box">
-                                ${sampleRequest.shippingReturn.startDate}
+                                <input timething type="text" class="slim-text-box" value.bind="sampleRequest.shippingOut.startDate">
                             </span>
                         </div>
 

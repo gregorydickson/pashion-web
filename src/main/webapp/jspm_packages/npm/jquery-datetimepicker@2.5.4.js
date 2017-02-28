@@ -1,0 +1,1 @@
+module.exports = require("npm:jquery-datetimepicker@2.5.4/build/jquery.datetimepicker.full.min.js");

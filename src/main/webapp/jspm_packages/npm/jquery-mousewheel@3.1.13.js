@@ -1,0 +1,1 @@
+module.exports = require("npm:jquery-mousewheel@3.1.13/jquery.mousewheel.js");

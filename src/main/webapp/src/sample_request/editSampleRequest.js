@@ -8,6 +8,7 @@ import {UserService} from 'services/userService';
 import { CreateDialogAlert } from 'common/dialogAlert';
 import {DialogService} from 'aurelia-dialog';
 
+
 @inject(SampleRequestService, DialogController,UserService, HttpClient, DialogService)
 export class EditSampleRequest {
 	static inject = [DialogController];
@@ -48,6 +49,8 @@ export class EditSampleRequest {
     this.http.fetch('/brand/users/'+this.sampleRequest.brand.id)
         .then(response => response.json())
         .then(brandUsers => this.brandUsers = brandUsers);
+
+
   }
 
   alertP (message){

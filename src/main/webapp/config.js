@@ -32,6 +32,7 @@ System.config({
     "fetch": "github:github/fetch@1.0.0",
     "font-awesome": "npm:font-awesome@4.6.3",
     "jquery": "npm:jquery@3.1.1",
+    "jquery-datetimepicker": "npm:jquery-datetimepicker@2.5.4",
     "jquery-ui": "github:components/jqueryui@1.12.1",
     "moment": "npm:moment@2.15.1",
     "nodep-date-input-polyfill": "npm:nodep-date-input-polyfill@4.0.6",
@@ -232,6 +233,11 @@ System.config({
     },
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"
+    },
+    "npm:jquery-datetimepicker@2.5.4": {
+      "jquery": "npm:jquery@3.1.1",
+      "jquery-mousewheel": "npm:jquery-mousewheel@3.1.13",
+      "php-date-formatter": "npm:php-date-formatter@1.3.4"
     },
     "npm:nodep-date-input-polyfill@4.0.6": {
       "babel-runtime": "npm:babel-runtime@6.11.6",

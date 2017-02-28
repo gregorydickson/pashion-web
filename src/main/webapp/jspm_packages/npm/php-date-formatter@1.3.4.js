@@ -1,0 +1,1 @@
+module.exports = require("npm:php-date-formatter@1.3.4/js/php-date-formatter.js");
