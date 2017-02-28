@@ -21,7 +21,7 @@
 
 
     <!--  <script src="//messaging-public.realtime.co/js/2.1.0/ortc.js"></script>  -->
-      <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.3.2.min.js"></script>  
+      <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.4.4.min.js"></script>  
       <script src="/jspm_packages/system.js"></script>
       <script src="/config.js"></script>
       <script>
