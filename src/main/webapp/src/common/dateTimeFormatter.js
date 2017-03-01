@@ -2,10 +2,10 @@ import moment from 'moment'
  
 export class DateTimeFormatValueConverter{
 
-  toView(value) {
+  fromView(value) {
   	console.warn('to', value);
     if(value)
-    	return moment(value).format('M/D/YYYY h:mm:ss a');
+    	return moment(value).format('YYYY-MM-DD hh:mm');
   }
   
   

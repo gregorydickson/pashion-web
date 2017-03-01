@@ -18,7 +18,7 @@ export class DateTimePicker {
   
   attached() {
     console.log("attached timething");
-    $(this.element).datetimepicker()
+    $(this.element).datetimepicker({format:'d-M-Y H:i'})
       .on('change', e => fireEvent(e.target, 'input'));
         
 

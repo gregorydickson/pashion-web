@@ -15,15 +15,15 @@ json g.render(sampleRequest,[expand:['searchableItemsStatus','searchableItemsPro
 		status sampleRequest.shippingOut.status
 		courier sampleRequest.shippingOut.courier
 		tracking sampleRequest.shippingOut.tracking
-		startDate sampleRequest.shippingOut.startDate?.format('yyyy/MM/dd HH:mm')
-		endDate sampleRequest.shippingOut.endDate?.format('yyyy/MM/dd HH:mm')
+		startDate sampleRequest.shippingOut.startDate?.format('yyyy-MMM-dd HH:mm')
+		endDate sampleRequest.shippingOut.endDate?.format('yyyy-MMM-dd HH:mm')
 	}
 	shippingReturn{
 		status sampleRequest.shippingReturn.status
 		courier sampleRequest.shippingReturn.courier
 		tracking sampleRequest.shippingReturn.tracking
-		startDate sampleRequest.shippingReturn.startDate?.format('yyyy/MM/dd HH:mm')
-		endDate sampleRequest.shippingReturn.endDate?.format('yyyy/MM/dd HH:mm')
+		startDate sampleRequest.shippingReturn.startDate?.format('yyyy-MMM-dd HH:mm')
+		endDate sampleRequest.shippingReturn.endDate?.format('yyyy-MMM-dd HH:mm')
 	}
 	requestingUser{
 		id sampleRequest.requestingUser.id

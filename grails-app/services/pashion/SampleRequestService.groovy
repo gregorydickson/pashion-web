@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat
 class SampleRequestService {
 
     String dateFormatString = "yyyy-M-d"
-    String dateTimeFormatString = "yyyy/MM/dd HH:mm"
+    String dateTimeFormatString = "yyyy-MM-dd HH:mm"
     def cacheInvalidationService
 
     def listByUserOrganization(User user) {
@@ -89,7 +89,7 @@ class SampleRequestService {
 
     def updateSampleRequest(JSONObject jsonObject){
             SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
-            SimpleDateFormat dateTimeFormat =  new SimpleDateFormat(dateTimeFormatString)
+            SimpleDateFormat dateTimeFormat =  new SimpleDateFormat(dateTimeFormatString, Locale.US)
             log.info "update json:"+jsonObject
             SampleRequest sr = SampleRequest.get(jsonObject.id)
             sr.editorialName = jsonObject.editorialName
@@ -102,6 +102,7 @@ class SampleRequestService {
             if(jsonObject.shippingOut.startDate){
                 log.info "start date:"+jsonObject.shippingOut.startDate
                 sr.shippingOut.startDate = dateTimeFormat.parse(jsonObject.shippingOut.startDate)
+                log.info "start date parsed:"+sr.shippingOut.startDate
                 sr.shippingOut.save(failOnError:true)
             }
             
@@ -109,6 +110,7 @@ class SampleRequestService {
             if(jsonObject.shippingReturn.endDate){
                 log.info "end date:"+jsonObject.shippingReturn.endDate
                 sr.shippingReturn.endDate = dateTimeFormat.parse(jsonObject.shippingReturn.endDate)
+                log.info "end date parsed:"+sr.shippingReturn.endDate
                 sr.shippingReturn.save(failOnError:true)
             }
             //remove samples from list - Press User

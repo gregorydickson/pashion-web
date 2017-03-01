@@ -7,6 +7,7 @@ import {SampleRequestService} from 'services/sampleRequestService';
 import {UserService} from 'services/userService';
 import { CreateDialogAlert } from 'common/dialogAlert';
 import {DialogService} from 'aurelia-dialog';
+import moment from 'moment'
 
 
 @inject(SampleRequestService, DialogController,UserService, HttpClient, DialogService)
@@ -112,6 +113,10 @@ export class EditSampleRequest {
   update(){
     console.log("submitting Sample Request");
     let sr = this.sampleRequest;
+    if(sr.shippingOut.startDate)
+      sr.shippingOut.startDate = moment(sr.shippingOut.startDate).format('YYYY-MM-DD hh:mm')
+    if(sr.shippingReturn.endDate)
+      sr.shippingReturn.endDate = moment(sr.shippingReturn.endDate).format('YYYY-MM-DD hh:mm')
 
     this.sampleRequestService.updateSampleRequest(sr).then(message => {
       this.controller.close();
