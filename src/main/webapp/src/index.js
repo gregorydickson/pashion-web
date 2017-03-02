@@ -430,8 +430,11 @@ export class Index {
                 if (event.detail.value) {
                     if (event.detail.value == 'BY DATE') this.ordering = 'bookingStartDate';
                     if ((this.user.type == "brand") && (event.detail.value == 'BY NUMBER')) this.ordering = 'look'; //RM ditto below
-                    if ((this.user.type != "brand") && (event.detail.value == 'BY NUMBER')) this.ordering = 'look'; //RM changes needed here to properly order strings
-                    if (event.detail.value == 'BY STATUS') this.ordering = 'requestStatusBrand';
+                    if ((this.user.type == "prAgency") && (event.detail.value == 'BY NUMBER')) this.ordering = 'look'; //RM ditto below
+                    if ((this.user.type == "press") && (event.detail.value == 'BY NUMBER')) this.ordering = 'look'; //RM changes needed here to properly order strings
+                    if ((this.user.type == "brand") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusBrand'; 
+                    if ((this.user.type == "prAgency") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusBrand'; //RM double check this
+                    if ((this.user.type == "press") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusPress';
                     console.log("value:" + event.detail.value)
                 }          
     }
