@@ -81,14 +81,19 @@ export class CreateSampleRequestBrand {
     this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => this.courier = courier);
     this.http.fetch('/dashboard/returnTo').then(response => response.json()).then(returnTo => this.returnTo = returnTo);
     this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => this.payment = payment);
-   // this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
 
    //this.sampleRequest["returnToAddress"] = 0; // defualt return to sender
-   this.sampleRequest = {requiredBy:"12:00", courierOut:"Scooter",paymentOut:"50/50", returnBy:"Afternoon",courierReturn:"Scooter",paymentReturn:"50/50"};
+   
   }
 
   attached(){
     document.getElementById("CreateSampleRequestButton").disabled = true;
+    this.sampleRequest.requiredBy ="12:00";
+    this.sampleRequest.courierOut ="Scooter";
+    this.sampleRequest.returnBy = "Afternoon";
+    this.sampleRequest.paymentOut = "50/50";
+    this.sampleRequest.courierReturn = "Scooter";
+    this.sampleRequest.paymentReturn = "50/50";
     
   }
 

@@ -57,7 +57,7 @@
                 <div class="grid-content shrink" style="margin-top: 1.5rem;">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Required By</span>
-                        <form-select class="to-u-c" name="requiredby" selected.two-way="sampleRequest.requiredBy" options.bind="required" ></form-select>
+                        <form-select class="to-u-c" name="requiredby" selected.bind="sampleRequest.requiredBy" options.bind="required" ></form-select>
                     </span>
                 </div>
 
@@ -201,7 +201,7 @@
                 <div class="grid-content shrink" style="margin-top: 1.5rem;">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Return By</span>
-                        <form-select class="to-u-c" name="returnBy" selected.two-way="sampleRequest.returnBy" options.bind="returnBy" ></form-select>
+                        <form-select class="to-u-c" name="returnBy" selected.bind="sampleRequest.returnBy" options.bind="returnBy" ></form-select>
                     </span>
                 </div>    
                             
