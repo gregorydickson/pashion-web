@@ -94,7 +94,7 @@ class CalendarController {
                                              params.offset.toInteger(),
                                              params.months.toInteger())
         log.debug "showing availability for Look and Samples"
-        if(samples[0].look.brand.hideCalendar == false){
+        if(params.searchType == "brand" || samples[0].look.brand.hideCalendar == false){
             aCalendar = calendarService.availableDaysForALook(samples[0].look,aCalendar)
             aCalendar = calendarService.availableDaysForSamples(samples,localDate,aCalendar)
         }
@@ -121,7 +121,7 @@ class CalendarController {
                                              params.offset.toInteger(),
                                              params.months.toInteger())
         log.debug "showing availability for Samples"
-        if(samples[0].look.brand.hideCalendar == false)
+        if(params.searchType == "brand" || samples[0].look.brand.hideCalendar == false)
             aCalendar = calendarService.availableDaysForSamples(samples,localDate,aCalendar)
         render aCalendar as JSON
     }

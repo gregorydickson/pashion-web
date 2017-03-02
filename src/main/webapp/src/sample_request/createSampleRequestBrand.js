@@ -50,8 +50,8 @@ export class CreateSampleRequestBrand {
 
   activate(item){
 
-    var queryString = DateFormat.urlString(0, 2);
-    this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+item.id+'&searchType=brand')
+    var queryString = DateFormat.urlString(0, 2)+'&searchType=brand';
+    this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+item.id)
       .then(response => response.json())
         .then(calendar => {
               this.startCalendar = calendar;
@@ -237,7 +237,7 @@ export class CreateSampleRequestBrand {
     element.style.display='';
   }
   startNext(){
-    var queryString = DateFormat.urlString(++this.startOffset,1);
+    var queryString = DateFormat.urlString(++this.startOffset,1)+'&searchType=brand';
     return this.http.fetch('/calendar/searchableItemPicker' + queryString+
                  '&item='+this.currentItem.id)
           .then(response => response.json())
@@ -247,7 +247,7 @@ export class CreateSampleRequestBrand {
 
   }
   startPrevious(){
-    var queryString = DateFormat.urlString(--this.startOffset,1);
+    var queryString = DateFormat.urlString(--this.startOffset,1)+'&searchType=brand';
     return this.http.fetch('/calendar/searchableItemPicker' +queryString+
                  '&item='+this.currentItem.id)
           .then(response => response.json())
@@ -257,7 +257,7 @@ export class CreateSampleRequestBrand {
 
   }
   startReset(){
-    var queryString = DateFormat.urlString(0,1);
+    var queryString = DateFormat.urlString(0,1)+'&searchType=brand';
     return this.http.fetch('/calendar/searchableItemPicker' + queryString+
                  '&item='+this.currentItem.id)
           .then(response => response.json())
@@ -268,7 +268,7 @@ export class CreateSampleRequestBrand {
   }
 
   endNext(){
-    var queryString = DateFormat.urlString(++this.endOffset,1);
+    var queryString = DateFormat.urlString(++this.endOffset,1)+'&searchType=brand';
     return this.http.fetch('/calendar/searchableItemPicker' + queryString+
                  '&item='+this.currentItem.id)
           .then(response => response.json())
@@ -278,7 +278,7 @@ export class CreateSampleRequestBrand {
 
   }
   endPrevious(){
-    var queryString = DateFormat.urlString(--this.endOffset,1);
+    var queryString = DateFormat.urlString(--this.endOffset,1)+'&searchType=brand';
     return this.http.fetch('/calendar/searchableItemPicker' +queryString+
                  '&item='+this.currentItem.id)
           .then(response => response.json())
@@ -288,7 +288,7 @@ export class CreateSampleRequestBrand {
 
   }
   endReset(){
-    var queryString = DateFormat.urlString(0,1);
+    var queryString = DateFormat.urlString(0,1)+'&searchType=brand';
     return this.http.fetch('/calendar/searchableItemPicker' + queryString+
                  '&item='+this.currentItem.id)
           .then(response => response.json())
@@ -321,7 +321,7 @@ export class CreateSampleRequestBrand {
       document.getElementById("CreateSampleRequestButton").disabled = true;
     } else {
 
-      var queryString = DateFormat.urlString(this.endOffset,1);
+      var queryString = DateFormat.urlString(this.endOffset,1)+'&searchType=brand';
       this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
               method: 'post',
               body: json(this.sampleRequest.samples)
@@ -331,7 +331,7 @@ export class CreateSampleRequestBrand {
                 this.endCalendar = calendar;
             });
 
-      queryString = DateFormat.urlString(this.startOffset,1);
+      queryString = DateFormat.urlString(this.startOffset,1)+'&searchType=brand';
       this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
               method: 'post',
               body: json(this.sampleRequest.samples)
