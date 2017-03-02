@@ -39,6 +39,6 @@ class Brand {
 	}
 
 	String toString() {
-        return name
+        return name +" "+ hideCalendar
     }
 }

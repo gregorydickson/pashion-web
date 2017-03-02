@@ -51,7 +51,7 @@ export class CreateSampleRequestBrand {
   activate(item){
 
     var queryString = DateFormat.urlString(0, 2);
-    this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+item.id)
+    this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+item.id+'&searchType=brand')
       .then(response => response.json())
         .then(calendar => {
               this.startCalendar = calendar;
@@ -63,9 +63,6 @@ export class CreateSampleRequestBrand {
       .then(item => {
           this.currentItem = item;   
 
-         /* this.http.fetch('/brand/addresses/'+item.brand.id)
-              .then(response => response.json())
-              .then(addresses => this.brandAddresses = addresses); */
           this.http.fetch('/dashboard/deliverToBrand/'+item.brand.id).then(response => response.json()).then(deliverTo => this.deliverTo = deliverTo);
           this.brandService.getBrandAddresses(item.brand.id).then(addresses => this.brandAddresses = addresses);
           this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);

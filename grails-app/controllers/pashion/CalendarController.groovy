@@ -14,7 +14,7 @@ class CalendarController {
     	log.debug "month:"+params.month
     	log.debug "year:"+params.year
     	Map events = ["3":"overdue","10":"international","12":"waiting"]
-        //TODO: look up this user's events and add them for current month
+        
     	def aCalendar = new PashionCalendar( events,
     										 params.month.toInteger(),
     										 params.day.toInteger(),
@@ -43,8 +43,13 @@ class CalendarController {
                                              params.months.toInteger())
         
         log.debug "Calendar Controller - Searchable Item Picker"
-        if(theItem.brand.hideCalendar == false)
+        log.debug "brand:"+theItem.brand
+        log.debug "params:"+params
+        if(params.searchType == "brand" || theItem.brand.hideCalendar == false){
             aCalendar = calendarService.availableDaysInMonth(theItem,localDate,aCalendar)
+            log.debug "show the brand availability"
+        } 
+        
         render aCalendar as JSON
 
     }
