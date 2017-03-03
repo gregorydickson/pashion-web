@@ -46,8 +46,10 @@
                         </thead>
                         <tbody>
                             <tr repeat.for="row of startCalendar.calendarMonths[0].rows">
-                                <td class="${cell.event} mouseHand"  repeat.for="cell of row" click.delegate="setStartDate($event,cell.dayString)">
-                                ${cell.dayString}
+                                <td class="${cell.event}"  repeat.for="cell of row">
+                                    <a href="#" click.delegate="setStartDate($event,cell.dayString)">
+                                        ${cell.dayString}
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>
@@ -190,8 +192,10 @@
                         </thead>
                         <tbody>
                             <tr repeat.for="row of endCalendar.calendarMonths[0].rows">
-                                <td class="${cell.event} mouseHand" repeat.for="cell of row" click.delegate="setEndDate($event,cell.dayString)">
-                                    ${cell.dayString}
+                                <td class="${cell.event}"  repeat.for="cell of row">
+                                    <a href="#" click.delegate="setEndDate($event,cell.dayString)">
+                                        ${cell.dayString}
+                                    </a>
                                 </td>
                             </tr>
                         </tbody>
