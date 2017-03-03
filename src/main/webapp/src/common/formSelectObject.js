@@ -13,38 +13,35 @@ export class FormSelectObject {
     @bindable options = [];   // array of options with name properties
     @bindable placeholder = "";
     @bindable allow_clear = false;
-
+    sel = null;
     constructor(element) {
         this.element = element;
 
         
     }
 
-    sampleChanged(newValue,oldValue){
-      console.log("new:"+newValue+" oldvalue:"+oldValue);
-      console.log("sampleChanged OBJECT");
-      console.log(JSON.stringify(this.selected));
-      if(this.selected){
-        var el = $(this.element).find('select');
-        var sel = el.select2();
-        sel.val(this.selected).trigger('change');
-        return false;
+    sampleChanged(){
+      console.log("select 2 (formSelectObject.js) Changed");
+      //console.log(JSON.stringify(this.selected));
+      if(this.selected && this.sel){
+        
+        this.sel.val(this.selected).trigger('change');
       }
-      
+      //console.log("selected");
     }
 
 
     attached() {
 
       var el = $(this.element).find('select');
-      var sel = el.select2({minimumResultsForSearch: 15 // only allow terms up to n characters long
+      this.sel = el.select2({minimumResultsForSearch: 15 // only allow terms up to n characters long
                       });
 
       // preload selected values
-      sel.val(this.selected).trigger('change');
+      this.sel.val(this.selected).trigger('change');
 
       // on any change, propagate it to underlying select to trigger two-way bind
-      sel.on('change', (event) => {
+      this.sel.on('change', (event) => {
         // don't propagate endlessly
         // see: http://stackoverflow.com/a/34121891/4354884
         if (event.originalEvent) { return; }
