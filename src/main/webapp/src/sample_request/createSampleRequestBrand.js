@@ -53,6 +53,7 @@ export class CreateSampleRequestBrand {
   activate(item){
 
     var queryString = DateFormat.urlString(0, 2)+'&searchType=brand';
+  
     this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+item.id)
       .then(response => response.json())
         .then(calendar => {
@@ -76,27 +77,38 @@ export class CreateSampleRequestBrand {
           
         }
       )
-      
-    this.http.fetch('/dashboard/required').then(response => response.json()).then(required => this.required = required);
     
-    this.http.fetch('/dashboard/returnBy').then(response => response.json()).then(returnBy => this.returnBy = returnBy);
-    this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => this.courier = courier);
-    this.http.fetch('/dashboard/returnTo').then(response => response.json()).then(returnTo => this.returnTo = returnTo);
-    this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => this.payment = payment);
 
-   //this.sampleRequest["returnToAddress"] = 0; // defualt return to sender
+    this.http.fetch('/dashboard/required').then(response => response.json()).then(required => {
+      this.required = required;
+      this.sampleRequest.requiredBy ="12:00";
+    });
+
+    this.http.fetch('/dashboard/returnBy').then(response => response.json()).then(returnBy => {
+      this.returnBy = returnBy;
+      this.sampleRequest.returnBy = "Afternoon";
+    });
+    this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => {
+      this.courier = courier;
+      this.sampleRequest.courierOut = "Scooter";
+      this.sampleRequest.courierReturn = "Scooter";
+
+    });
+    this.http.fetch('/dashboard/returnTo').then(response => response.json()).then(returnTo => this.returnTo = returnTo);
+    this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => {
+      this.payment = payment;
+      this.sampleRequest.paymentOut = "50/50";
+      this.sampleRequest.paymentReturn = "50/50";
+    });
+
+   //this.sampleRequest.returnToAddress = 0; // defualt return to sender
    
   }
 
   attached(){
     document.getElementById("CreateSampleRequestButton").disabled = true;
-    this.sampleRequest.requiredBy ="12:00";
-    this.sampleRequest.courierOut ="Scooter";
-    this.sampleRequest.returnBy = "Afternoon";
-    this.sampleRequest.paymentOut = "50/50";
-    this.sampleRequest.courierReturn = "Scooter";
-    this.sampleRequest.paymentReturn = "50/50";
     
+    console.log("CreateSampleRequestBrand attached");
   }
 
     alertP (message){

@@ -54,7 +54,8 @@ export class FormSelect {
     }
 
     detached() {
-        $(this.element).find('select').select2('destroy');
-        //console.log("select2 detached");
+        $(this.element).find('select')
+            .select2("destroy").off('change');
+        console.log("select2 detached");
     }
 }
