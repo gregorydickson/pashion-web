@@ -87,7 +87,7 @@ export class Requestman{
         });
   }
 
-    orderChange(event) {
+/*    orderChange(event) {
         console.log("Order changed: ");
         this.closeExpanded ();
         if (event)
@@ -96,6 +96,23 @@ export class Requestman{
                     if (event.detail.value == 'BY DATE') this.ordering = 'bookingStartDate';
                     if (event.detail.value == 'BY NUMBER') this.ordering = 'id'; 
                     if (event.detail.value == 'BY STATUS') this.ordering = 'requestStatusBrand';
+                    console.log("value:" + event.detail.value + "ordering: " +this.ordering);
+                }          
+    } */
+
+      orderChange(event) {
+        console.log("Order changed ");
+        this.closeExpanded ();
+        if (event)
+            if (event.detail)
+                if (event.detail.value) {
+                    if (event.detail.value == 'BY DATE') this.ordering = 'bookingStartDate';
+                    if ((this.user.type == "brand") && (event.detail.value == 'BY NUMBER')) this.ordering = 'id'; //RM ditto below
+                    if ((this.user.type == "prAgency") && (event.detail.value == 'BY NUMBER')) this.ordering = 'id'; //RM ditto below
+                    if ((this.user.type == "press") && (event.detail.value == 'BY NUMBER')) this.ordering = 'id'; //RM changes needed here to properly order strings
+                    if ((this.user.type == "brand") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusBrand'; 
+                    if ((this.user.type == "prAgency") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusBrand'; //RM double check this
+                    if ((this.user.type == "press") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusPress';
                     console.log("value:" + event.detail.value + "ordering: " +this.ordering);
                 }          
     }
