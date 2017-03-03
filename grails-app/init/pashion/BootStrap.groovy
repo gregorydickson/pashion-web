@@ -37,6 +37,11 @@ class BootStrap {
         returnArray['surname'] = it.surname
         returnArray['brand'] = it.brand
         returnArray['pressHouse'] = it.pressHouse
+        returnArray['address1'] = it.address?.address1
+        returnArray['address2'] = it.address?.address2
+        returnArray['city'] = it.address?.city
+        returnArray['country'] = it.address?.country
+        returnArray['postalCode'] = it.address?.postalCode
         return returnArray
       }
 

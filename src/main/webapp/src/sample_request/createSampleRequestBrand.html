@@ -78,22 +78,12 @@
  
 
 
-                <!-- RM can't get the select2 to work because result is bound to the address model 
-                <div class="grid-content shrink">
-                    <span class="inline-label" style="">
-                        <span class="slim-text-box-label">Deliver To</span>
-                        <form-select class="to-u-c" name="deliverTo" selected.two-way="sampleRequest.deliverTo" options.bind="deliverTo" ></form-select>
-                    <span class="slim-text-box-label"><a click.delegate="addAdHoc()" style="">Add</a></span>
-                    </span>
-                </div> -->
-
-
                 <!-- Name-->
                 <div class="grid-content shrink">
                     <span class="inline-label" style="margin-bottom: 0px;">
                         <span class="slim-text-box-label" style="">Name</span>
                         <div>
-                            <input type="text" class="slim-text-box" value.bind="newAddress.name">
+                            <input type="text" class="slim-text-box" value.bind="sampleRequest.deliverTo.name">
                         </div>
                     </span>
                 </div>
@@ -102,7 +92,7 @@
                     <span class="inline-label" style="margin-bottom: 0px;">
                         <span class="slim-text-box-label" style="">Address 1</span>
                         <div>
-                            <input type="text" class="slim-text-box" value.bind="newAddress.address1">
+                            <input type="text" class="slim-text-box" value.bind="sampleRequest.deliverTo.address1">
                         </div>
                     </span>
                 </div>
@@ -111,7 +101,7 @@
                     <span class="inline-label" style="margin-bottom: 0px;">
                         <span class="slim-text-box-label" style="">Address 2</span>
                         <div>
-                          <input type="text" class="slim-text-box" value.bind="newAddress.address2">
+                          <input type="text" class="slim-text-box" value.bind="sampleRequest.deliverTo.address2">
                         </div>
                     </span>
                 </div>
@@ -120,7 +110,7 @@
                     <span class="inline-label" style="margin-bottom: 0px;">
                         <span class="slim-text-box-label" style="">City</span>
                         <div>
-                            <input type="text" class="slim-text-box" value.bind="newAddress.city">
+                            <input type="text" class="slim-text-box" value.bind="sampleRequest.deliverTo.city">
                             </div>
                     </span>
                 </div>
@@ -129,7 +119,7 @@
                     <span class="inline-label" style="margin-bottom: 0px;">
                         <span class="slim-text-box-label" style="">Country</span>
                         <div>
-                            <input type="text" class="slim-text-box" value.bind="newAddress.country">
+                            <input type="text" class="slim-text-box" value.bind="sampleRequest.deliverTo.country">
                         </div>
                     </span>
                 </div>
@@ -138,7 +128,7 @@
                     <span class="inline-label" style="margin-bottom: 0px;">
                         <span class="slim-text-box-label">Postal Code</span>
                         <div> 
-                            <input type="text" class="slim-text-box" value.bind="newAddress.postalCode">
+                            <input type="text" class="slim-text-box" value.bind="sampleRequest.deliverTo.postalCode">
                         </div>
                     </span>
                 </div>
@@ -158,10 +148,7 @@
                             <form-select class="to-u-c" name="paymentOut" selected.two-way="sampleRequest.paymentOut" options.bind="payment" ></form-select>
                         </span>
                     </div>                    
-                   <!-- <div class="grid-content shrink" style="padding-top: 0.5rem;">
-                        <span class="" >Cost: £9.95</span>
-                    </div> -->
-               <!--  </div> -->
+                   
             </div>
             <!--Start Right column -->
             <div class="vertical grid-block">
@@ -209,16 +196,6 @@
                     </span>
                 </div>    
                             
-                <!-- Return To-->
-                <!-- <div class="grid-content shrink">
-                    <span class="inline-label">
-                        <span class="slim-text-box-label">Return To</span>
-                    <select class="slim-box" name="" id="" value.bind="sampleRequest.returnToAddress">
-                       <option value="0" selected>Me</option> 
-                        <option repeat.for="address of brandAddresses" model.bind="address.id">${address.name}</option>
-                    </select>
-                    </span>
-                </div> -->
 
                 <!-- generic drown down used, so no ME. Consider a bespoke one -->
                 <div class="grid-content shrink">
@@ -235,17 +212,14 @@
                         <form-select class="to-u-c" name="courierReturn" selected.two-way="sampleRequest.courierReturn" options.bind="courier" ></form-select>
                     </span>
                 </div>
-                <!--  <div class="grid-block shrink"> -->
+                
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class=" slim-text-box-label">Split</span>
                              <form-select class="to-u-c" name="paymentReturn" selected.two-way="sampleRequest.paymentReturn" options.bind="payment" ></form-select>
                         </span>
                     </div>
-                    <!-- <div class="grid-content shrink" style="padding-top: 0.5rem;">
-                        <span class="" >Cost: £9.95</span>
-                    </div> -->
-               <!--  </div> -->
+                    
 
             </div>
             <!--end Right column -->
@@ -271,7 +245,7 @@
                     <div class="grid-content" >
                         <table if.bind="currentItem.samples" class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples | sort: 'id': 'ascending'">
                             <tr>
-                                <!-- <td class="accordion" style="width:15px; max-width:15px;">${$index + 1}</td> -->
+                                
                                 <td class="accordion" style="width:35px; max-width:35px;">${currentItem.name}.${$index+1} :&nbsp;</td>
                                 <td class="accordion to-u-c" style="width:60px; max-width:60px;">${sample.sampleCity.name}</td>
                                 <td class="accordion to-u-c" style="width:389px; max-width:389px; overflow:hidden;">${sample.attributes}</td>

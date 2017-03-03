@@ -1,7 +1,7 @@
 import {DialogController} from 'aurelia-dialog';
 import {HttpClient,json} from 'aurelia-fetch-client';
 import 'fetch';
-import {inject} from 'aurelia-framework';
+import {inject,bindable} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import { BrandService } from 'services/brandService';
 import {CreateDialogNewAddress} from './dialogNewAddress';
@@ -15,6 +15,7 @@ export class CreateSampleRequestBrand {
   startCalendar = {};
   endCalendar = {};
 
+
   selectAll = true;
   required = [];
   deliverTo = [];
@@ -24,7 +25,8 @@ export class CreateSampleRequestBrand {
   returnTo = [];
   courier = [];
   payment = [];
-  newAddress = {};
+  
+  @bindable selectedAddress = {};
 
 
   sampleRequest = {};
@@ -115,22 +117,6 @@ export class CreateSampleRequestBrand {
                 this.newAddress = {};
             });
 
-/* template from admin New office dialog
-  CreateDialogNewOffice(user) {
-    this.dialogService.open({viewModel: CreateDialogNewOffice, model: this.user })
-      .then(response => {
-        if (this.user.brand != null){
-            this.brandService.getBrandAddresses(this.user.brand.id)
-                .then(addresses=>{this.addresses = addresses})
-        } else if(this.user.pressHouse != null){
-            this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
-                .then(addresses=>this.addresses = addresses)
-        } else if(this.user.prAgency != null){
-            this.prAgencyService.getPRAgencyAddresses(this.user.prAgency.id)
-                .then(addresses=>this.addresses = addresses)
-        }
-      })
-  } */
 
   }
 
