@@ -11,7 +11,7 @@ export class FormSelect {
     @bindable name = null;    // name/id of custom select
     @bindable({ defaultBindingMode: bindingMode.twoWay, changeHandler:'selectedChanged'})  selected = '';  // default selected values
     @bindable options = {};   // array of options with id/name properties
-    @bindable placeholder = "";
+    @bindable placeHolder = null;
     @bindable allow_clear = false;
     sel = null
     constructor(element) {

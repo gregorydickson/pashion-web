@@ -23,7 +23,7 @@ export class CustomSelect {
     attached() {
         var vm = this;
         $(this.element).find('select')
-            .select2()
+            .select2({minimumResultsForSearch: 15})
             .on('change', (event) => {
                 let changeEvent;
 
