@@ -7,6 +7,7 @@
         <option class="to-u-c" if.bind="(options[0].name && !options[0].destination)" repeat.for="option of options" value.bind="option.id">${option.name}</option>
         <option class="to-u-c" if.bind="options[0].display" repeat.for="option of options" value.bind="option.id">${option.display}</option>
       	<option class="to-u-c" if.bind="(!options[0].name && !options[0].display)" repeat.for="option of options" value.bind="option">${option}</option> 
+        <option class="to-u-c" if.bind="(options[0].name && options[0].surname)" repeat.for="option of options" value.bind="option">${option.name} ${option.surname}</option> 
   </select>
 
   <select if.bind="(name=='location')" value.two-way="selected" name.one-way="name" id.one-way="name" >

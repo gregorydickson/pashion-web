@@ -103,7 +103,7 @@ export class CreateSampleRequestBrand {
 
    //this.sampleRequest.returnToAddress = 0; // defualt return to sender
    
-  }
+  } 
 
   attached(){
     document.getElementById("CreateSampleRequestButton").disabled = true;

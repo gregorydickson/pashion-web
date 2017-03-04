@@ -53,9 +53,9 @@ export class FormSelect {
         console.log("*****************   select2 attached ***********************");
     }
 
-    detached() {
+    unbind() {
         $(this.element).find('select')
             .select2("destroy").off('change');
-        console.log("select2 detached");
+        console.log("select2 unbound");
     }
 }
