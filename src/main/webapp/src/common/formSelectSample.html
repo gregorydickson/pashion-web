@@ -1,8 +1,6 @@
-
-<template>
-    
-  <select value.two-way="selected" name.one-way="name" id.one-way="name" >
-  		<option  value="">SELECT SAMPLE</option>
-        <option class="to-u-c" repeat.for="option of options" value.two-way="option">${option.attributes.substr(0,25)}</option>
-  </select>
+﻿<template>
+    <select name.bind="name" value.bind="selected" id.bind="name">
+        <option if.bind="placeHolder" value="">${placeHolder}</option>
+        <option repeat.for="option of options" model.bind="option">${option.attributes.substr(0,25)}</option>
+    </select>
 </template>

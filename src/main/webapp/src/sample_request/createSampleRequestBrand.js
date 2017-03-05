@@ -70,7 +70,7 @@ export class CreateSampleRequestBrand {
 
           this.http.fetch('/dashboard/deliverToBrand/'+item.brand.id).then(response => response.json()).then(deliverTo =>{ 
             this.deliverTo = deliverTo;
-            $("#deliverTo").find('select').trigger('change');
+            //$("#deliverTo").find('select').trigger('change');
           });
           this.brandService.getBrandAddresses(item.brand.id).then(addresses => this.brandAddresses = addresses);
           this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);
@@ -101,7 +101,9 @@ export class CreateSampleRequestBrand {
     });
     this.http.fetch('/dashboard/returnTo').then(response => response.json()).then(returnTo => {
         this.returnTo = returnTo;
+        
         $("#returnTo").find('select').trigger('change');
+
     });
     this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => {
       this.payment = payment;

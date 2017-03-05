@@ -18,6 +18,15 @@ export class FormSelect {
         this.element = element;
     }
 
+    optionsChanged(){
+      
+      if(this.sel){
+        this.sel.trigger('change');
+      } else {
+        this.setup();
+      }
+    }
+
     selectedChanged(){
       console.log("select 2 (formSelect.js) Changed");
       //console.log(JSON.stringify(this.selected));
@@ -30,7 +39,7 @@ export class FormSelect {
 
     // Once the Custom Element has its DOM instantiated and ready for binding
     // to happenings within the DOM itself
-    attached() {
+    setup() {
         var el = $(this.element).find('select');
         this.sel = el.select2({minimumResultsForSearch: 15 // only allow terms up to n characters long
                         });
@@ -50,7 +59,7 @@ export class FormSelect {
         });
         
 
-        console.log("*****************   select2 attached ***********************");
+        console.log("*****************   select2 setup ***********************");
     }
 
     unbind() {
