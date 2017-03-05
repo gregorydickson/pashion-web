@@ -7,6 +7,8 @@ import { BrandService } from 'services/brandService';
 import {CreateDialogNewAddress} from './dialogNewAddress';
 import {DialogService} from 'aurelia-dialog';
 import { CreateDialogAlert } from 'common/dialogAlert';
+import $ from 'jquery';
+
 
 @inject(HttpClient, DialogController, BrandService, DialogService)
 export class CreateSampleRequestBrand {
@@ -66,7 +68,10 @@ export class CreateSampleRequestBrand {
       .then(item => {
           this.currentItem = item;   
 
-          this.http.fetch('/dashboard/deliverToBrand/'+item.brand.id).then(response => response.json()).then(deliverTo => this.deliverTo = deliverTo);
+          this.http.fetch('/dashboard/deliverToBrand/'+item.brand.id).then(response => response.json()).then(deliverTo =>{ 
+            this.deliverTo = deliverTo;
+            $("#deliverTo").find('select').trigger('change');
+          });
           this.brandService.getBrandAddresses(item.brand.id).then(addresses => this.brandAddresses = addresses);
           this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);
           this.sampleRequest.samples = [];
@@ -94,14 +99,17 @@ export class CreateSampleRequestBrand {
       this.sampleRequest.courierReturn = "Scooter";
 
     });
-    this.http.fetch('/dashboard/returnTo').then(response => response.json()).then(returnTo => this.returnTo = returnTo);
+    this.http.fetch('/dashboard/returnTo').then(response => response.json()).then(returnTo => {
+        this.returnTo = returnTo;
+        $("#returnTo").find('select').trigger('change');
+    });
     this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => {
       this.payment = payment;
       this.sampleRequest.paymentOut = "50/50";
       this.sampleRequest.paymentReturn = "50/50";
     });
 
-   //this.sampleRequest.returnToAddress = 0; // defualt return to sender
+   
    
   } 
 

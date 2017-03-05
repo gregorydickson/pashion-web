@@ -68,7 +68,7 @@
                 <div class="grid-content shrink">
                     <span class="inline-label" style="">
                         <span class="slim-text-box-label">Deliver To</span>
-                        <form-select class="to-u-c" name="" id="" selected.bind="sampleRequest.deliverTo" options.bind="deliverTo">
+                        <form-select id="deliverTo" class="to-u-c" name="" id="" selected.bind="sampleRequest.deliverTo" options.bind="deliverTo">
                         </form-select>
                         <span class="slim-text-box-label"><a click.delegate="addAdHoc()" style="">Add</a></span>
                     </span>
@@ -199,7 +199,7 @@
                 <div class="grid-content shrink">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Return To</span>
-                        <form-select class="to-u-c" name="returnToAddress" selected.bind="sampleRequest.returnToAddress" options.bind="brandAddresses" ></form-select>
+                        <form-select id="returnTo" class="to-u-c" name="returnToAddress" selected.bind="sampleRequest.returnToAddress" options.bind="brandAddresses" ></form-select>
                     </span>
                 </div>
 
