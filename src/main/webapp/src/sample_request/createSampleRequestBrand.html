@@ -68,8 +68,9 @@
                 <div class="grid-content shrink">
                     <span class="inline-label" style="">
                         <span class="slim-text-box-label">Deliver To</span>
-                        <form-select id="deliverTo" class="to-u-c" name="" id="" selected.bind="sampleRequest.deliverTo" options.bind="deliverTo">
-                        </form-select>
+                        <select class="slim-box" name="" id="" value.bind="sampleRequest.deliverTo">
+                            <option repeat.for="address of deliverTo" model.bind="address">${address.name} ${address.surname}</option>
+                        </select>
                         <span class="slim-text-box-label"><a click.delegate="addAdHoc()" style="">Add</a></span>
                     </span>
                 </div>
