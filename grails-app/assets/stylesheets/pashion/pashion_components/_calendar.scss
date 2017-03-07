@@ -94,6 +94,10 @@
   display: block;
   
 }
+.calendar td a {
+    display:block;
+    width:100%;
+}
 
 .calendar tbody td {
   display: table-cell;
