@@ -87,20 +87,10 @@ class CachingService implements JsonViewTest {
 
     def loadThemes(){
         
-        def items = SearchableItem.list().collect{it.theme}
-        def result = []
-        items.each{
-            if(it){
-                if(it.contains(",")){
-                    it.split(",").each{result << it.trim().toLowerCase().capitalize()}
-                } else{
-                    result << it.trim().toLowerCase().capitalize()
-                }
-            }
-        }
-        result = result.unique().sort()
-        result.removeAll([""])
-        return result as JSON
+        def items = ['ANIMAL','ARMY','ART','ATHLETIC','AVIATOR','BABYDOLL','BALLERINA','BAROQUE','BIKER','BOHEMIAN','CAMOUFLAGE','CHECK','CIRCUS','COWBOY','DANCE','DESTROY','DETECTIVE','DISCO','DOLL','DOMINATRIX','ETHNIC','FAIRY','FLAMENCO','FOLK','FOLKLORIC','FUNK','FUTURISTIC','GIRLY','GRAPHIC','GRUNGE','HIPPY','JUNGLE','MASCULINE','MERMAID','MILITARY','MINIMAL','OFFICER','ORIENTAL','POP','PRINCESS','PSYCHEDELIC','PUNK','REBEL','RETRO','ROCK','ROMANTIC','ROYAL','RURAL','SAFARI','SAILOR','SPORT','STAR','STUDIO 54','TEENAGER','URBAN','UTILITY','VICTORIAN','VINTAGE','VINYL','WARRIOR','WESTERN']
+        
+        
+        return items as JSON
     }
 
     def loadSeasons(){
