@@ -24,8 +24,8 @@ export class SetAvailability {
     this.http = http;
   }
 
-  activate(itemId){
-    this.id = itemId;
+  activate(item){
+    this.id = item.name;
 
 
     var queryString = DateFormat.urlString(0, 1);

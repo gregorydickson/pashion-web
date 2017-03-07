@@ -634,9 +634,9 @@ export class Index {
             .then(response => {});
     }
 
-    setAvailabilitySearchableItem(itemId) {
+    setAvailabilitySearchableItem(item) {
         //this.lookMenu(itemId);
-        this.dialogService.open({ viewModel: SetAvailability, model: itemId })
+        this.dialogService.open({ viewModel: SetAvailability, model: item })
             .then(response => {
                 this.filterChangeBrand();
             });
