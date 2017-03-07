@@ -3,8 +3,9 @@ import {HttpClient,json} from 'aurelia-fetch-client';
 import 'fetch';
 import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
+import {UserService} from 'services/userService';
 
-@inject(HttpClient, DialogController)
+@inject(HttpClient, DialogController,UserService)
 export class CheckAvailability {
   static inject = [DialogController];
   
@@ -18,7 +19,7 @@ export class CheckAvailability {
 
   
 
-  constructor(http, controller){
+  constructor(http, controller,userService){
     this.controller = controller;
     
     http.configure(config => {
@@ -26,6 +27,7 @@ export class CheckAvailability {
         .useStandardConfiguration();
     });
     this.http = http;
+    this.userService = userService;
   }
 
   activate(itemId){
@@ -40,19 +42,29 @@ export class CheckAvailability {
         }
       );
 
-
-    var queryString = DateFormat.urlString(0, 1);
-    this.http.fetch('/calendar/searchableItemPicker' +queryString+"&item="+itemId)
-    	.then(response => response.json())
-      .then(calendar => {
+    this.userService.getUser().then(user => {
+      this.user = user;
+      var queryString = DateFormat.urlString(0, 1);
+      if (this.user.type === "brand")
+        queryString = queryString+'&searchType=brand';
+      this.http.fetch('/calendar/searchableItemPicker' +queryString+"&item="+itemId)
+        .then(response => response.json())
+        .then(calendar => {
               this.calendar = calendar;
+      });
+              
     });
+
+
+    
 
     
   }
 
   next(){
   	var queryString = DateFormat.urlString(++this.offset,1);
+    if (this.user.type === "brand")
+        queryString = queryString+'&searchType=brand';
     this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
             method: 'post',
             body: json(this.selectedProductIds)
@@ -65,6 +77,9 @@ export class CheckAvailability {
 
   previous(){
   	var queryString = DateFormat.urlString(--this.offset,1);
+    if (this.user.type === "brand")
+      queryString = queryString + '&searchType=brand';
+
     this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
             method: 'post',
             body: json(this.selectedProductIds)
@@ -77,6 +92,8 @@ export class CheckAvailability {
 
   reset(){
   	var queryString = DateFormat.urlString(0,1);
+    if (this.user.type === "brand")
+      queryString = queryString + '&searchType=brand';
     this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
             method: 'post',
             body: json(this.selectedProductIds)
@@ -122,6 +139,8 @@ export class CheckAvailability {
     console.log ("current item samples:"+this.currentItem.samples);
     console.log (this.selectedProductIds);
     var queryString = DateFormat.urlString(this.offset,1);
+    if (this.user.type === "brand")
+      queryString = queryString + '&searchType=brand';
     this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
             method: 'post',
             body: json(this.selectedProductIds)
