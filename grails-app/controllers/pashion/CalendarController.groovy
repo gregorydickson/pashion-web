@@ -26,6 +26,28 @@ class CalendarController {
     	render aCalendar as JSON
     }
 
+    def pastNotAvailable(){
+        
+        def localDate = LocalDate.of(params.year.toInteger(),
+                                     params.month.toInteger(),
+                                     params.day.toInteger())
+        
+        def aCalendar = new PashionCalendar( null,
+                                             params.month.toInteger(),
+                                             params.day.toInteger(),
+                                             params.year.toInteger(),
+                                             request.locale.toString(),
+                                             params.offset.toInteger(),
+                                             params.months.toInteger())
+        
+        
+        aCalendar = calendarService.pastNotAvailable(localDate,aCalendar)
+            
+        
+        render aCalendar as JSON
+
+    }
+
     def searchableItemPicker(){
 
         SearchableItem theItem = SearchableItem.get(params.item)

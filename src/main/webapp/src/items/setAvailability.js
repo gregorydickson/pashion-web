@@ -29,7 +29,7 @@ export class SetAvailability {
 
 
     var queryString = DateFormat.urlString(0, 1);
-    this.http.fetch('/calendar/datePickerNoAvailability' +queryString)
+    this.http.fetch('/calendar/pastNotAvailable' +queryString)
     	.then(response => response.json())
       .then(calendar => {
               this.calendar = calendar;
@@ -60,7 +60,7 @@ export class SetAvailability {
   }
   next(){
   	var queryString = DateFormat.urlString(++this.offset,1);
-    return this.http.fetch('/calendar/datePickerNoAvailability' + queryString)
+    return this.http.fetch('/calendar/pastNotAvailable' + queryString)
           .then(response => response.json())
           .then(calendar => {
               this.calendar = calendar;
@@ -69,7 +69,7 @@ export class SetAvailability {
 
   previous(){
   	var queryString = DateFormat.urlString(--this.offset,1);
-    return this.http.fetch('/calendar/datePickerNoAvailability' +queryString)
+    return this.http.fetch('/calendar/pastNotAvailable' +queryString)
           .then(response => response.json())
           .then(calendar => {
               this.calendar = calendar;
@@ -78,7 +78,7 @@ export class SetAvailability {
 
   reset(){
   	var queryString = DateFormat.urlString(0,1);
-    return this.http.fetch('/calendar/datePickerNoAvailability' + queryString)
+    return this.http.fetch('/calendar/pastNotAvailable' + queryString)
           .then(response => response.json())
           .then(calendar => {
               this.calendar = calendar;
