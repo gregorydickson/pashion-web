@@ -12,10 +12,8 @@ class CalendarService {
 
     PashionCalendar pastNotAvailable( LocalDate localDate,
                                          PashionCalendar pashionCalendar){
-        log.info "past not available - calendar service"
 	   LocalDate now = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
        if(pashionCalendar.calendarMonths[0].beforeThisMonth(now)){
-            log.info "month is in the past so not available"
             pashionCalendar = monthNotAvailable(pashionCalendar)
             return pashionCalendar
         }
@@ -26,7 +24,6 @@ class CalendarService {
             if(now.getDayOfMonth() > 1){
                 range = 1..(now.getDayOfMonth()-1)
                 range.each{
-                    println "start in this month set not-available "+it
                     pashionCalendar.calendarMonths[0].days[it].event =  "not-available"
                 }
             }
