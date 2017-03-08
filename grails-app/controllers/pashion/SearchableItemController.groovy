@@ -184,7 +184,7 @@ class SearchableItemController {
                 isNotNull('image')
                 eq('isPrivate',false)
                 if(brand) eq('brand', brand)
-                if(theme) ilike('theme', "%${theme}%")
+                if(theme) ilike('attributes', "%${theme}%")
                 if(keywords) and {
                     keywords.each {  ilike('attributes', "%${it}%") }
                 }
