@@ -108,6 +108,7 @@ export class Index {
                 '&availableFrom=' + this.availableFrom +
                 '&availableTo=' + this.availableTo +
                 '&color=' + this.selectedColor +
+                '&theme=' + this.selectedTheme +
                 '&city=' + this.selectedCity +
                 '&maxR=' + this.maxR)
             .then(response => response.json())
