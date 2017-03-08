@@ -9,6 +9,7 @@ export class SetAvailability {
   static inject = [DialogController];
   
   id = '';
+  item = null;
   calendar = {};
   offset = 0;
   newDate = '';
@@ -26,6 +27,8 @@ export class SetAvailability {
 
   activate(item){
     this.id = item.name;
+    this.item = item;
+
 
 
     var queryString = DateFormat.urlString(0, 1);
@@ -95,7 +98,7 @@ export class SetAvailability {
 
     var update = {};
     update.fromDate = this.newDate;
-    update.id = this.id;
+    update.id = this.item.id;
     console.log("update:"+update.id + " " + update.fromDate);
     
     this.http.fetch('/searchableItem/saveFromDate', {
