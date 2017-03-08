@@ -261,8 +261,8 @@
                                             <!-- no images -->
                                             <table class="" style="table-layout:fixed;">
                                                 <tr style="height:1rem;" repeat.for="item of booking.searchableItems" >
-                                                    <td if.bind="user.type === 'brand'" class="accordion sample-padding to-u-c">${booking.season | seasonAbbreviation:seasons }${look}.${$index+1} [${item.clientID}] : ${item.attributes} : ${item.status.status}</td>
-                                                    <td if.bind="(user.type === 'press') || (user.type === 'agency')"  class="accordion sample-padding to-u-c">${look}.${$index+1} : ${item.attributes} : ${item.status.status}</td>
+                                                    <td if.bind="user.type === 'brand'" class="accordion sample-padding to-u-c">${booking.season | seasonAbbreviation:seasons }${look}.${$index+1} [${item.clientID}] : ${item.status.status} : ${item.attributes}</td>
+                                                    <td if.bind="(user.type === 'press') || (user.type === 'agency')"  class="accordion sample-padding to-u-c">${look}.${$index+1} : ${item.status.status} : ${item.attributes}</td>
                                                 </tr>
                                             </table>
 
