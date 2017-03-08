@@ -14,7 +14,7 @@
           </div> -->
             <div class="add-choose-file">
                 <input type="file" files.bind="selectedFiles" name="file-1" id="file-img" class="input-file" data-multiple-caption="{count} files selected" accept="image/*" multiple />
-                <label for="file-1"><span>CHOOSE IMAGES...</span></label>
+                <label for="file-1"><span>Choose Image(s)...</span></label>
             </div>
             <div class="grid-row-col" style="width:250px; margin-right:0; margin-left:20px;">
                 <span class="inline-label">
@@ -47,8 +47,8 @@
           </div> -->
         </ai-dialog-body>
         <ai-dialog-footer>
-            <a class="button hollow" click.delegate="close()">CANCEL</a>
-            <button id="AddFilesButton" class="button" click.delegate="addFiles()">ADD IMAGE(S)</button>
+            <a class="button hollow" click.delegate="close()">Cancel</a>
+            <button id="AddFilesButton" class="button" click.delegate="addFiles()">Add Images(s)</button>
         </ai-dialog-footer>
     </ai-dialog>
 </template>
