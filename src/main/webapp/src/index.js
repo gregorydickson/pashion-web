@@ -638,7 +638,6 @@ export class Index {
         //this.lookMenu(itemId);
         this.dialogService.open({ viewModel: SetAvailability, model: item })
             .then(response => {
-                this.filterChangeBrand();
             });
     }
 
