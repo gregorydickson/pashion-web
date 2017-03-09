@@ -4,9 +4,9 @@ import 'fetch';
 import {inject,bindable} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import { BrandService } from 'services/brandService';
-import {CreateDialogNewAddress} from './dialogNewAddress';
 import {DialogService} from 'aurelia-dialog';
 import { CreateDialogAlert } from 'common/dialogAlert';
+import {NewAddress} from './newAddress';
 import $ from 'jquery';
 
 
@@ -132,23 +132,12 @@ export class CreateSampleRequestBrand {
   addAdHoc () {
     console.log ("ad hoc");
 
-    this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: itemId })
+    this.dialogService.open({ viewModel: NewAddress, model: this.addresses })
             .then(response => {
-                if (response.wasCancelled) {
-                } else {
-                    this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
-                }
+               
             });
     
-    this.http.fetch('/brand/AddAddress', {
-              method: 'post',
-              body: json(this.newAddress)
-            })
-            .then(response => response.json())
-            .then(newList => {
-                this.deliverTo = newList;
-                this.newAddress = {};
-            });
+    
 
 
   }

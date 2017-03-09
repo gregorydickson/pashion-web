@@ -22,13 +22,13 @@
                         <!-- Who  -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Attention</span>
-                            <input type="text" class="slim-text-box" value.bind="newAddress.name">
+                            <input type="text" class="slim-text-box" value.bind="newAddress.attention">
                         </div>
 
                         <!-- Company -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Company</span>
-                            <input type="text" class="slim-text-box" value.bind="newAddress.company">
+                            <input type="text" class="slim-text-box" value.bind="newAddress.name">
                         </div>
 
                         <!-- Address 1 -->
@@ -72,7 +72,7 @@
         <!-- Footer buttons -->
         <ai-dialog-footer>
                     <a class="hollow button"  click.delegate="close()">Cancel</a>
-                    <button class.bind="(newAddress.name && newAddress.company && newAddress.address1 && newAddress.city && newAddress.country && newAddress.postalCode) ? 'button' : 'button disabled'" click.delegate="create()">Add Address</button>
+                    <button class.bind="(newAddress.name && newAddress.attention && newAddress.address1 && newAddress.city && newAddress.country && newAddress.postalCode) ? 'button' : 'button disabled'" click.delegate="createAddress()">Add Address</button>
 
         </ai-dialog-footer>
     </ai-dialog>

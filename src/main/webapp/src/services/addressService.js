@@ -73,5 +73,20 @@ export class AddressService{
         return promise;
     }
 
+    createAdHoc(newAddress){
+
+        var promise = new Promise((resolve,reject) => {
+            this.http.fetch('/brand/AddAddress', {
+                  method: 'post',
+                  body: json(newAddress)
+                })
+                .then(response => response.json())
+                .then(newList => {
+                   resolve(newList)
+                });
+        });
+        return promise;
+    }
+
 
 }
