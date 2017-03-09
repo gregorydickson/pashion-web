@@ -121,10 +121,11 @@ https://github.com/stormpath/stormpath-sdk-java/issues/17
 # Brand Onboarding
  * Brand probably already has a Brand record in the database, if not, create a Brand in database at /brand 
  * upload Looks will create a Brand if none exists
- * Create a Directory in StormPath (stormpath tenant: zippy-lizard1) for the Brand, put directory URI in the Brand's record in the table.
+ * Create a Directory in StormPath (stormpath tenant: zippy-lizard1) for the Brand, put directory URI in the Brand's record in the database.
  * In Stormpath admin console, create a Group for the user type (brand_users). Put the Brand's name in the group description.
  * Switch to Groups > brand_users (for the brand you added). Map the application to the group.
  * Create users with the page /users/create in our application.
+ * Required fields for new users are email,city,is in pashion network, and password.
 
 
 # Databases
