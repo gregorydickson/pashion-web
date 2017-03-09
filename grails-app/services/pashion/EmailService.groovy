@@ -62,11 +62,12 @@ class EmailService {
             messageTxt = messageTxt + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + sr.returnToAddress?.country +"<br/>"
             messageTxt = messageTxt + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + sr.returnToAddress?.postalCode +"<br/>"
             messageTxt = messageTxt + "Courier Return: " +sr.courierReturn+"<br/>"
-            messageTxt = messageTxt + "Payment: " +sr.paymentReturn+"<br/>"
+            messageTxt = messageTxt + "Payment: " +sr.paymentReturn+"<br/><br/>"
+            messageTxt = messageTxt + "From the PASHION platform http://www.pashiontool.com <br/>"
             log.info "created message text"
 
             Email from = new Email("support@pashiontool.com")
-            String subject =  "Booking confirmation of look "+sr.look
+            String subject =  "From the PASHION platform: booking confirmation of look "+sr.look
             Email to = new Email(sr.emailNotification)
             Content content = new Content("text/html", messageTxt)
             Mail mail = new Mail(from, subject, to, content)
