@@ -50,31 +50,6 @@ To setup the Development Environment:
 * The aurelia app can be bundled for a faster application load.
 * The Stormpath library requires the Oracle JDK to support encryption. However, the default AMIs used in Elastic Beanstalk come with Open JDK. I have created a custom ami with Java 8 and an Elastic Beanstalk extention for setting the alternative JDK to support loading of the Stormpath library. The ami is name: java8_102_2nd_try, id: ami-600c5277 (in US East amazon).
 
-## To Build and Deploy browse.pashiontool.com
-
-* Go into app.js and change:
-```
- { route: ['', '/'],       name: 'index',       moduleId: 'index' },
-```
-  to
-```
- { route: ['', '/'],       name: 'guestpage',       moduleId: 'guestpage' },
-```
-* from your gulp terminal run `gulp bundle`
-* from your grails terminal run `war`
-* login to Amazon Web Services
-* Under Services (in header, left side), choose Elastic Beanstalk
-* Ensure that you are in the EU (Ireland) data center, (in header, right side)
-* Under the pashion-spa application, choose the browse-pashion environment.
-* In the center of the screen, under where it says 'Running Version', click on Upload and Deploy. Note the existing version number of the application.
-* Input a new version number by incrementing the last version number. Put this number into the Version Label.
-* Click on 'Choose File' and navigate to your pashion-web/build/libs directory.
-* Choose the 'pashion-web-0.1.war' file to upload.
-* wait for the upload and allow about two to five minutes on the deployment and then check the site from a browser.
-* The first time you access it, it might say 'Proxy Error'. Try again after two minutes.
-* Revert the app.js to its previous state (Ctrl-Z in Sublime)
-* run `gulp unbundle` in your gulp terminal to return to development mode. (then run `gulp watch`)
-* to reboot and update the cache of themes and seasons use the Elastic beanstalk 'Restart Instances'
 
 ## Deployment of the Single Page Application 
 
@@ -145,8 +120,8 @@ https://github.com/stormpath/stormpath-sdk-java/issues/17
 
 # Onboarding
  * Create Directory in StormPath for the Brand, put directory URI in the Brand's record in the table.
- * Create Group for the user type (Brand or Press). Add the application to the Group.
- * Create users with the page /users/create
+ * In Stormpath admin console, create a Group for the user type (Brand or Press). Add the application to the Group.
+ * Create users with the page /users/create in our application.
 
 
 # Databases
