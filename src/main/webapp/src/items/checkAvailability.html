@@ -15,10 +15,13 @@
       <ai-dialog-body>
         <div class="grid-block row">
           <div class="vertical grid-block">
-              <div if.bind="brandHideCalendar">
+              <div if.bind="brandHideCalendar" class="text-center">
                 <span class="welcome-text">Access to availability information is blocked by the brand.</span>
               </div>
-              <div if.bind="!brandHideCalendar">
+              <div if.bind="(currentItem.samples.length<=0)" class="text-center">
+                <span class="welcome-text">There is no availability information for this look.</span>
+              </div>
+              <div if.bind="(!brandHideCalendar) && (currentItem.samples.length>0)">
                 <!-- tumbnail -->
                 <div class="grid-block shrink"> 
                     <div class="grid-content"></div>
