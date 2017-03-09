@@ -90,6 +90,9 @@ dependencies {
 
     compile 'com.bertramlabs.plugins:force-ssl:3.0.3'
 
+    compile 'com.sendgrid:sendgrid-java:3.1.0'
+    compile 'javax.mail:javax.mail-api:1.5.2'
+
 }
 war{
     zip64 true

@@ -32,6 +32,7 @@ class SampleRequest {
 	User receivingUser 
 	User requestingUser 
 	User deliverTo
+	String emailNotification
 	
 	String returnBy
 	String requiredBy
@@ -67,6 +68,7 @@ class SampleRequest {
 		searchableItemsProposed nullable: true
 		idString nullable: true
 		dateRequested nullable: true
+		emailNotification nullable: true
 
 		bookingStartDate nullable: true
 	    bookingEndDate nullable: true

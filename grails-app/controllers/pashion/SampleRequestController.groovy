@@ -151,9 +151,11 @@ class SampleRequestController {
     //Create a Sample Request - for a Press User
     def savejson(){
         def requestingUser = session.user
-        sampleRequestService.initialSaveSampleRequest(request.JSON,requestingUser)
+        def sr = sampleRequestService.initialSaveSampleRequest(request.JSON,requestingUser)
         def sent = [message:'Sample Request Sent']
         render sent as JSON
+        if(sr.emailNotification)
+            notify "sampleRequestEmail", sr
 
     }
 

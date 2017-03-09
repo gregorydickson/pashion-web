@@ -27,6 +27,9 @@ export class CreateSampleRequestBrand {
   returnTo = [];
   courier = [];
   payment = [];
+
+  emailOptions = ['EMAIL'];
+  email = null;
   
   @bindable selectedAddress = {};
 
@@ -128,6 +131,14 @@ export class CreateSampleRequestBrand {
 
   addAdHoc () {
     console.log ("ad hoc");
+
+    this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: itemId })
+            .then(response => {
+                if (response.wasCancelled) {
+                } else {
+                    this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
+                }
+            });
     
     this.http.fetch('/brand/AddAddress', {
               method: 'post',

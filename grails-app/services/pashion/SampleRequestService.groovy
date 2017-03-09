@@ -33,6 +33,8 @@ class SampleRequestService {
         SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
         log.info "initial save sample request:"+jsonObject
         def sr = new SampleRequest()
+        if(jsonObject.emailNotification)
+            sr.emailNotification = jsonObject.emailNotification
         sr.bookingStartDate = dateFormat.parse(jsonObject.startDate)
 
         sr.bookingEndDate = dateFormat.parse(jsonObject.endDate)
@@ -85,6 +87,7 @@ class SampleRequestService {
         sr.dateRequested = new Date()
         sr.save(failOnError : true, flush: true)
         cacheInvalidationService.sampleRequests() //RM TBD
+        sr
     }
 
     def updateSampleRequest(JSONObject jsonObject){

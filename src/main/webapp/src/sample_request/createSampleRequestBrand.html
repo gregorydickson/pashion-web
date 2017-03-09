@@ -140,14 +140,14 @@
                 </div>
 
                <!--  split -->
-
-                    <div class="grid-content shrink" style="margin-bottom:0.5rem;">
-                        <span class="inline-label">
-                            <span class=" slim-text-box-label">Split</span>
-                            <form-select class="to-u-c" name="paymentOut" selected.two-way="sampleRequest.paymentOut" options.bind="payment" ></form-select>
-                        </span>
-                    </div>                    
+                <div class="grid-content shrink" style="margin-bottom:0.5rem;">
+                    <span class="inline-label">
+                        <span class=" slim-text-box-label">Split</span>
+                        <form-select class="to-u-c" name="paymentOut" selected.two-way="sampleRequest.paymentOut" options.bind="payment" ></form-select>
+                    </span>
+                </div>                    
                    
+                
             </div>
             <!--Start Right column -->
             <div class="vertical grid-block">
@@ -212,12 +212,24 @@
                     </span>
                 </div>
                 
-                    <div class="grid-content shrink">
-                        <span class="inline-label">
-                            <span class=" slim-text-box-label">Split</span>
-                             <form-select class="to-u-c" name="paymentReturn" selected.two-way="sampleRequest.paymentReturn" options.bind="payment" ></form-select>
-                        </span>
-                    </div>
+                <div class="grid-content shrink">
+                    <span class="inline-label">
+                        <span class=" slim-text-box-label">Split</span>
+                         <form-select class="to-u-c" name="paymentReturn" selected.two-way="sampleRequest.paymentReturn" options.bind="payment" ></form-select>
+                    </span>
+                </div>
+
+                <!--  email -->
+                <div class="grid-content shrink" style="margin-bottom:0.5rem;">
+                    <span class="inline-label">
+                        <span class=" slim-text-box-label">Confirmation</span>
+                        <form-select class="to-u-c" name="emailOptions" selected.two-way="email" options.bind="emailOptions" place-holder="NONE"></form-select>
+                    </span>
+                    <span if.bind="email" class="inline-label">
+                        <span class=" slim-text-box-label">Email</span>
+                        <input type="text" class="slim-text-box" value.bind="sampleRequest.emailNotification">
+                    </span>
+                </div>      
                     
 
             </div>
