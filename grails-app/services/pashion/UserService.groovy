@@ -115,7 +115,7 @@ class UserService {
     	def role
     	User user
         City city = null
-        if(params.city) city = City.get(params.city.toInteger());
+        if(params.city) city = City.get(params.city.id.toInteger());
     	if(owner instanceof Brand){
             log.info "creating Brand user"
     		role = "brand-users"

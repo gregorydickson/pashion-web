@@ -127,11 +127,11 @@ class UserController {
     def save(User user) {
         def owner 
         log.info " save params:"+ params
-        if(params.pressHouse != "null"){
+        if(params.pressHouse.id != "null"){
             owner = PressHouse.get(params.pressHouse.id.toInteger())
-        } else if (params.brand != "null"){
+        } else if (params.brand.id != "null"){
             owner = Brand.get(params.brand.id.toInteger())
-        } else if (params.prAgency != "null"){
+        } else if (params.prAgency.id != "null"){
             owner = PRAgency.get(params.prAgency.id.toInteger())
         }
 
