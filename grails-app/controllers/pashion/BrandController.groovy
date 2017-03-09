@@ -57,6 +57,16 @@ class BrandController {
         render response
     }
 
+    def getCalendar(){
+        //log.info "getCalendar params=>"+params
+        Brand brand = Brand.get(params.id)
+
+        //log.info "getCalendar brand=>"+brand.hideCalendar
+        //def response = brand.hideCalendar as JSON
+        //log.info "getCalendar=>"+response
+        render brand.hideCalendar
+    }
+
     def users(){
         Brand brand = Brand.get(params.id)
         def users = User.findAllByBrand(brand) as JSON

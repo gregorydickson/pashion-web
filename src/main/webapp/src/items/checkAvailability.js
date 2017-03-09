@@ -4,8 +4,9 @@ import 'fetch';
 import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import {UserService} from 'services/userService';
+import {BrandService} from 'services/brandService';
 
-@inject(HttpClient, DialogController,UserService)
+@inject(HttpClient, DialogController,UserService,BrandService)
 export class CheckAvailability {
   static inject = [DialogController];
   
@@ -15,11 +16,12 @@ export class CheckAvailability {
   startDate = "";
   selectedProductIds = [];
   selectAll = true;
+  brandHideCalendar = false;
 
 
   
 
-  constructor(http, controller,userService){
+  constructor(http, controller,userService, brandService){
     this.controller = controller;
     
     http.configure(config => {
@@ -28,6 +30,7 @@ export class CheckAvailability {
     });
     this.http = http;
     this.userService = userService;
+    this.brandService = brandService;
   }
 
   activate(itemId){
@@ -35,6 +38,10 @@ export class CheckAvailability {
       .then(response => response.json())
       .then(item => {
           this.currentItem = item;
+          this.brandService.getHideCalendar(this.currentItem.brand.id).then (HD => { 
+            this.brandHideCalendar = HD;
+            console.log("brandHideCalendar: " + this.brandHideCalendar);
+            });
           var ids = this.selectedProductIds;
           item.samples.forEach(function(item){
             ids.push(item.id);

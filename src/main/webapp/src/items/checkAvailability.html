@@ -11,84 +11,88 @@
                 </div>
             </div>
         </ai-dialog-header>
+
       <ai-dialog-body>
         <div class="grid-block row">
           <div class="vertical grid-block">
-
-              <!-- tumbnail -->
-              <div class="grid-block shrink"> 
-                  <div class="grid-content"></div>
-                      <div class="grid-content align-center shrink" style="margin-bottom:15px;">
-                          <img src="/assets/bg.jpg"  alt="" src.bind="currentItem.image"  style="height:150px;"/> 
-                      </div>
-                  <div class="grid-content"></div>
+              <div if.bind="brandHideCalendar">
+                <span class="welcome-text">Access to availability information is blocked by the brand.</span>
               </div>
+              <div if.bind="!brandHideCalendar">
+                <!-- tumbnail -->
+                <div class="grid-block shrink"> 
+                    <div class="grid-content"></div>
+                        <div class="grid-content align-center shrink" style="margin-bottom:15px;">
+                            <img src="/assets/bg.jpg"  alt="" src.bind="currentItem.image"  style="height:150px;"/> 
+                        </div>
+                    <div class="grid-content"></div>
+                </div>
 
-             <div class="grid-block" style="text-align: center;">
-                <span class="calendarnav prev">
-                   <a click.delegate="previous()">
-                      <img src="/assets/calendar/prev.png"  />
-                   </a>
-                </span>
-                <span class="calendarnav calendar-title"><a id="titlelink" click.delegate="reset()">TODAY</a></span>
-                <span class="calendarnav next">
-                   <a click.delegate="next()"><img src="/assets/calendar/next.png" /></a>
-                </span>
-             </div>
-              <div class="grid-block calendar-header-align">
-                  <span class="calendarnav ui-text-label-m-broad monthyear">${calendar.calendarMonths[0].monthName}&emsp;${calendar.calendarMonths[0].year}</span>
-              </div>
-              <div class="grid-block calendar-header-align">
-                  <table class="calendar calendar-day-numbers">
-                      <thead>
+               <div class="grid-block" style="text-align: center;">
+                  <span class="calendarnav prev">
+                     <a click.delegate="previous()">
+                        <img src="/assets/calendar/prev.png"  />
+                     </a>
+                  </span>
+                  <span class="calendarnav calendar-title"><a id="titlelink" click.delegate="reset()">TODAY</a></span>
+                  <span class="calendarnav next">
+                     <a click.delegate="next()"><img src="/assets/calendar/next.png" /></a>
+                  </span>
+               </div>
+                <div class="grid-block calendar-header-align">
+                    <span class="calendarnav ui-text-label-m-broad monthyear">${calendar.calendarMonths[0].monthName}&emsp;${calendar.calendarMonths[0].year}</span>
+                </div>
+                <div class="grid-block calendar-header-align">
+                    <table class="calendar calendar-day-numbers">
+                        <thead>
+                            <tr>
+                                <td repeat.for="cell of calendar.calendarMonths[0].dayNames[0]">${cell.dayString}
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr repeat.for="row of calendar.calendarMonths[0].rows">
+                                <td class="${cell.event}" repeat.for="cell of row">
+                                    <a href="#" click.delegate="">
+                                    ${cell.dayString}
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+         
+          <!-- Bottom Row -->  
+              <div class="vertical grid-content shrink" style="padding:0; margin-left: 1rem; margin-right: 1rem; margin-top: 1.5rem;">
+                  <table class="big-accordion" style="margin-bottom:4px;">
                           <tr>
-                              <td repeat.for="cell of calendar.calendarMonths[0].dayNames[0]">${cell.dayString}
+                              <td class="accordion w24">SELECT SAMPLES</td>
+                              <td class="accordion w73" style="text-align:right; padding-right: 0.5rem;" >Select All</td>
+                              <td class="accordion w3">
+                                  <input id="" type="checkbox" checked.bind="selectAll" change.delegate="allsamples($event)">
                               </td>
                           </tr>
-                      </thead>
-                      <tbody>
-                          <tr repeat.for="row of calendar.calendarMonths[0].rows">
-                              <td class="${cell.event}" repeat.for="cell of row">
-                                  <a href="#" click.delegate="">
-                                  ${cell.dayString}
-                                  </a>
-                              </td>
-                          </tr>
-                      </tbody>
                   </table>
               </div>
-          </div>
-        </div>
-       
-        <!-- Bottom Row -->  
-          <div class="vertical grid-content shrink" style="padding:0; margin-left: 1rem; margin-right: 1rem; margin-top: 1.5rem;">
-              <table class="big-accordion" style="margin-bottom:4px;">
-                      <tr>
-                          <td class="accordion w24">SELECT SAMPLES</td>
-                          <td class="accordion w73" style="text-align:right; padding-right: 0.5rem;" >Select All</td>
-                          <td class="accordion w3">
-                              <input id="" type="checkbox" checked.bind="selectAll" change.delegate="allsamples($event)">
+
+              <div class="vertical grid-content accordion" style="overflow-x:hidden; max-height:8rem;"> 
+                  <table if.bind="currentItem.samples" class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples | sort: 'id': 'ascending' ">
+                                <tr>
+                                   <!-- <td class="accordion" style="width:15px; max-width:15px;">${$index + 1}</td> -->
+                                    <td class="accordion" style="width:40px; max-width:40px;">${currentItem.name}.${$index+1} :</td>
+                                    <td class="accordion to-u-c" style="width:215px; max-width:215px; overflow:hidden;">${sample.attributes}</td>
+                                    <td class="accordion" style="width:10px; max-width:10px;">
+                              
+
+                             <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="selectedProductIds" >
+
                           </td>
                       </tr>
-              </table>
+                  </table>
+              </div>
+            </div>
           </div>
-
-          <div class="vertical grid-content accordion" style="overflow-x:hidden; max-height:8rem;"> 
-              <table if.bind="currentItem.samples" class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples | sort: 'id': 'ascending' ">
-                            <tr>
-                               <!-- <td class="accordion" style="width:15px; max-width:15px;">${$index + 1}</td> -->
-                                <td class="accordion" style="width:40px; max-width:40px;">${currentItem.name}.${$index+1} :</td>
-                                <td class="accordion to-u-c" style="width:215px; max-width:215px; overflow:hidden;">${sample.attributes}</td>
-                                <td class="accordion" style="width:10px; max-width:10px;">
-                          
-
-                         <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="selectedProductIds" >
-
-                      </td>
-                  </tr>
-              </table>
-          </div>
-      
+        </div>
     
    
 
