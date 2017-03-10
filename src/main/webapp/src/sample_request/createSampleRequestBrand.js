@@ -378,7 +378,8 @@ export class CreateSampleRequestBrand {
   }
 
   submit(){
-    // var payload = json(this.sampleRequest);
+
+    this.sampleRequest.deliverTo = this.selectedAddress;
     console.log("submitting Sample Request: " + JSON.stringify(this.sampleRequest));
     this.http.fetch('/sampleRequest/savejson', {
             method: 'post',
