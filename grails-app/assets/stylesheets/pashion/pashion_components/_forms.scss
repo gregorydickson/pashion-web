@@ -87,7 +87,8 @@ span.slim-text-box-label-narrow {
 
 input.slim-text-box,
 select.slim-text-box {
-  width: 169px;
+  max-width: 169px;
+  min-width: 169px;
 }
 
 input.slim-text-box-mid {
