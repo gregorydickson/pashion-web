@@ -3,6 +3,7 @@ package pashion
 
 
 class Address{
+	String company
 	String name
 	String address1
 	String address2
@@ -19,6 +20,7 @@ class Address{
 	Brand destination
 
 	static constraints = {
+		company nullable:true
 		brand nullable: true 
 		destination nullable:true
 		pressHouse nullable:true

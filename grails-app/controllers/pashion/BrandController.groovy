@@ -38,12 +38,13 @@ class BrandController {
         log.info "address to add:"+jsonObject
         Address address = new Address()
         address.name =       jsonObject.name
+        address.company =    jsonObject.company
         address.address1 =   jsonObject.address1
         address.address2 =   jsonObject.address2
         address.city =       jsonObject.city
         address.country =    jsonObject.country
         address.postalCode = jsonObject.postalCode
-        address.attention =  jsonObject.attention
+        
         address.save(failOnError: true)
         
         Brand brand = Brand.get(session.user.brand.id)
@@ -52,7 +53,12 @@ class BrandController {
         }
         brand.addToDestinations(address)
         brand.save(failOnError:true)
-        def response = brand.destinations as JSON
+        
+        def destinations = brand.destinations
+        def users = brand.users
+        destinations.addAll(users)
+        destinations.sort{it.name}
+        def response = destinations as JSON
 
         render response
     }

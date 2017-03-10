@@ -20,7 +20,7 @@ export class CreateSampleRequestBrand {
 
   selectAll = true;
   required = [];
-  deliverTo = [];
+  @bindable deliverTo = [];
   brand = [];
   brandAddresses = [];
   returnBy = [];
@@ -41,7 +41,9 @@ export class CreateSampleRequestBrand {
   startDay = '';
   endDay = '';
 
-
+  deliverToChanged(){
+    console.log("deliverTo Changed");
+  }
 
   constructor(http, controller, brandService, dialogService){
     this.controller = controller;
@@ -120,20 +122,24 @@ export class CreateSampleRequestBrand {
 
   attached(){
     document.getElementById("CreateSampleRequestButton").disabled = true;
-    
-    console.log("CreateSampleRequestBrand attached");
   }
 
-    alertP (message){
-
-        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000} }).then(response => {});
-    }
+  alertP (message){
+      this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000} }).then(response => {});
+  }
 
   addAdHoc () {
     console.log ("ad hoc");
-
-    this.dialogService.open({ viewModel: NewAddress, model: this.addresses })
+    var newAddressModel = {addresses:this.deliverTo, newAddress:{}}
+    this.dialogService.open({ viewModel: NewAddress, model: newAddressModel })
             .then(response => {
+              if (!response.wasCancelled) {
+                this.deliverTo = response.output;
+                this.selectedAddress = newAddressModel.newAddress;
+                console.log('good - ', response.output);
+              } else {
+                console.log('bad');
+              }
                
             });
     

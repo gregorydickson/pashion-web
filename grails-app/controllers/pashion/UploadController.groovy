@@ -56,14 +56,15 @@ class UploadController {
                                         SearchableItem look = SearchableItem.findByBrandAndSeasonAndName(brand,season,row.values[2].toString().trim())
                                         item.look           = look
                                         item.name           = row.values[3].toString().trim()
-                                        item.sampleType     = row.values[4].toString().trim()
 
-                                        String color1       = row.values[5].toString().trim()
-                                        String color2       = row.values[6].toString().trim()
-                                        String color3       = row.values[7].toString().trim()
+                                        item.sex            = row.values[4].toString().trim()
+
+                                        String color1       = row.values[7].toString().trim()
+                                        String color2       = row.values[8].toString().trim()
+                                        String color3       = row.values[9].toString().trim()
                                         item.color          = color1 + "," + color2 + ","+ color3
                                     
-                                        item.material       = row.values[8].toString().trim()
+                                        item.material       = row.values[10].toString().trim()
                                         String type1         = row.values[9].toString().trim()
                                         if(type != "") item.sampleType = type1
 

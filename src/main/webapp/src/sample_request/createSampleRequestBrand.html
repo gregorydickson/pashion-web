@@ -69,7 +69,7 @@
                     <span class="inline-label" style="">
                         <span class="slim-text-box-label">Deliver To</span>
                         <select class="slim-box" name="" id="" value.bind="sampleRequest.deliverTo">
-                            <option repeat.for="address of deliverTo" model.bind="address">${address.name} ${address.surname}</option>
+                            <option repeat.for="address of deliverTo" model.bind="selectedAddress">${address.name} ${address.surname}</option>
                         </select>
                         <span class="slim-text-box-label"><a click.delegate="addAdHoc()" style="">Add</a></span>
                     </span>
@@ -80,9 +80,18 @@
                 <!-- Name-->
                 <div class="grid-content shrink">
                     <span class="inline-label" style="margin-bottom: 0px;">
-                        <span class="slim-text-box-label" style="">Name</span>
+                        <span class="slim-text-box-label" style="">Attention</span>
                         <div>
-                            <input type="text" class="slim-text-box" value.bind="sampleRequest.deliverTo.name">
+                            <input type="text" class="slim-text-box" value.bind="selectedAddress.name">
+                        </div>
+                    </span>
+                </div>
+                <!-- Company-->
+                <div class="grid-content shrink">
+                    <span class="inline-label" style="margin-bottom: 0px;">
+                        <span class="slim-text-box-label" style="">Company</span>
+                        <div>
+                            <input type="text" class="slim-text-box" value.bind="selectedAddress.company">
                         </div>
                     </span>
                 </div>
@@ -91,7 +100,7 @@
                     <span class="inline-label" style="margin-bottom: 0px;">
                         <span class="slim-text-box-label" style="">Address 1</span>
                         <div>
-                            <input type="text" class="slim-text-box" value.bind="sampleRequest.deliverTo.address1">
+                            <input type="text" class="slim-text-box" value.bind="selectedAddress.address1">
                         </div>
                     </span>
                 </div>
@@ -100,7 +109,7 @@
                     <span class="inline-label" style="margin-bottom: 0px;">
                         <span class="slim-text-box-label" style="">Address 2</span>
                         <div>
-                          <input type="text" class="slim-text-box" value.bind="sampleRequest.deliverTo.address2">
+                          <input type="text" class="slim-text-box" value.bind="selectedAddress.address2">
                         </div>
                     </span>
                 </div>
@@ -109,7 +118,7 @@
                     <span class="inline-label" style="margin-bottom: 0px;">
                         <span class="slim-text-box-label" style="">City</span>
                         <div>
-                            <input type="text" class="slim-text-box" value.bind="sampleRequest.deliverTo.city">
+                            <input type="text" class="slim-text-box" value.bind="selectedAddress.city">
                             </div>
                     </span>
                 </div>
@@ -118,7 +127,7 @@
                     <span class="inline-label" style="margin-bottom: 0px;">
                         <span class="slim-text-box-label" style="">Country</span>
                         <div>
-                            <input type="text" class="slim-text-box" value.bind="sampleRequest.deliverTo.country">
+                            <input type="text" class="slim-text-box" value.bind="selectedAddress.country">
                         </div>
                     </span>
                 </div>
@@ -127,7 +136,7 @@
                     <span class="inline-label" style="margin-bottom: 0px;">
                         <span class="slim-text-box-label">Postal Code</span>
                         <div> 
-                            <input type="text" class="slim-text-box" value.bind="sampleRequest.deliverTo.postalCode">
+                            <input type="text" class="slim-text-box" value.bind="selectedAddress.postalCode">
                         </div>
                     </span>
                 </div>

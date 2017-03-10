@@ -20,6 +20,7 @@ class DashboardController {
         def destinations = brand.destinations
         def users = brand.users
         destinations.addAll(users)
+        destinations.sort{it.name}
         def response = destinations as JSON
         
         render response

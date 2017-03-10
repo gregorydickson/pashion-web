@@ -21,16 +21,17 @@ export class NewAddress {
     this.controller.close();
   }
 
-  activate(addresses){
-    this.addresses = addresses;
+  activate(model){
+    this.addresses = model.addresses;
+    this.newAddress = model.newAddress;
   }
   
   createAddress(){
     
     this.addressService.createAdHoc(this.newAddress)
       .then(response =>{
-        this.addresses = response;
-        this.controller.close();
+        
+        this.controller.ok(response);
       }); 
   }
 
