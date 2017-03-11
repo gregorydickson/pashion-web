@@ -180,8 +180,8 @@
                                             <td if.bind="user.type === 'brand'" class="accordion-grey w14">${booking.pressHouse.name}</td>
                                             <td class="accordion-grey w13">${booking.requestingUser.name} ${booking.requestingUser.surname}</td>
                                             <td class="accordion-grey w5">${booking.searchableItems.length}</td>
-                                            <td if.bind="(user.type === 'press') || (user.type === 'agency')" class="accordion-grey ui-text-label-m-blue w14" style="font-weight:500;">${booking.requestStatusPress}</td>
-                                            <td if.bind="user.type === 'brand'" class="accordion-grey ui-text-label-m-blue w14" style="font-weight:500;">${booking.requestStatusBrand}</td>
+                                            <td if.bind="(user.type === 'press') || (user.type === 'agency')" class="accordion-grey ui-text-label-m-blue w14 to-u-c" style="font-weight:500;">${booking.requestStatusPress}</td>
+                                            <td if.bind="user.type === 'brand'" class="accordion-grey ui-text-label-m-blue w14 to-u-c" style="font-weight:500;">${booking.requestStatusBrand}</td>
                                             <td class="accordion-grey w5"> 
                                                 <div class="look-menu-absolute-wrap">
                                                     <span class="edit-box" ><a href="#" click.delegate="lookEditMenu(booking.id)">...</a></span>
@@ -216,26 +216,26 @@
                                     <!-- expanding data -->
                                     <div id="panel${$index}" class="panel grid-block vertical" style="margin-left: 0.5rem; margin-top:0.5rem;">
                                         <div class="grid-content">
-                                            <span>EDITORIAL</span>
+                                            <span class="ui-text-label-m-blue">Editorial</span>
                                         </div>
                                         <div class="grid-content">
                                             <span if.bind="(booking.editorialName || booking.editorialWho || booking.editorialWhen)">Photo shoot ${booking.editorialName} ${booking.editorialWho} ${booking.editorialWhen | viewDateFormat }</span>
                                             <span if.bind="(!booking.editorialName && !booking.editorialWho && !booking.editorialWhen)">No details of editorial</span>
                                         </div>
                                         <div class="grid-content" style="margin-top:1rem;">
-                                            <span>SHIPPING OUT: ID ${booking.shippingOut.id} ${booking.shippingOut.tracking}</span>
+                                            <span class="ui-text-label-m-blue">Shipping Out:</span><span style="margin-left:0.5rem;"> ${booking.shippingOut.id} ${booking.shippingOut.tracking}</span>
                                         </div>
                                         <div class="grid-content">
-                                            <span class="ui-text-label-m-blue">${booking.shippingOut.status}</span>
+                                            <span class="to-u-c">${booking.shippingOut.status}</span>
                                             <span>for ${booking.bookingStartDate | viewDateFormat} ${booking.requiredBy} by ${booking.courierOut} (${booking.paymentOut}) to  ${booking.deliverTo.pressHouse.name} ${booking.deliverTo.prAgency.name} ${booking.deliverTo.brand.name} at ${booking.addressDestination.address1}, ${booking.addressDestination.address2}, ${booking.addressDestination.city}, ${booking.addressDestination.postalCode} </span>
                                             <span if.bind="booking.pickedupAt.addressDestination.name"> (${booking.addressDestination.name)</span> 
                                             <span if.bind="booking.pickedupAt"> at ${booking.pickedupAt} signed ${booking.signedBy} </span>
                                         </div>
                                         <div class="grid-content" style="margin-top:1rem;">
-                                            <span>RETURN: ID ${booking.shippingReturn.id} ${booking.shippingReturn.tracking}</span>
+                                            <span class="ui-text-label-m-blue">Return:</span><span style="margin-left:0.5rem;"> ${booking.shippingReturn.id} ${booking.shippingReturn.tracking}</span>
                                         </div>
                                         <div class="grid-content">
-                                            <span class="ui-text-label-m-blue">${booking.shippingReturn.status}</span>
+                                            <span class="to-u-c">${booking.shippingReturn.status}</span>
                                             <span>for ${booking.bookingEndDate | viewDateFormat} ${booking.returnBy} by ${booking.courierReturn} (${booking.paymentReturn}) </span>
                                             <span if.bind="booking.returnToAddress">coming back to ${booking.returnToAddress.name} </span>
                                             <span if.bind="!booking.returnToAddress">coming back to here</span>
@@ -243,7 +243,7 @@
                                             <span if.bind="!booking.returnToName"> to me</span>
                                         </div>
                                         <div class="grid-content" style="margin-top:1rem;">
-                                            <span>SAMPLES:</span><span style="margin-left:0.5rem;">${booking.searchableItems.length}</span>
+                                            <span class="ui-text-label-m-blue">Samples:</span><span style="margin-left:0.5rem;">${booking.searchableItems.length}</span>
                                         </div>
                                         <div class="grid-content" style="margin-bottom: 2rem;">
                                         <!-- with sample images 
@@ -261,7 +261,8 @@
                                             <!-- no images -->
                                             <table class="" style="table-layout:fixed;">
                                                 <tr style="height:1rem;" repeat.for="item of booking.searchableItems" >
-                                                    <td if.bind="user.type === 'brand'" class="accordion sample-padding to-u-c">${booking.season | seasonAbbreviation:seasons }${look}.${$index+1} [${item.clientID}] : ${item.status.status} : ${item.attributes}</td>
+                                                    <td if.bind="(user.type === 'brand') && !(item.clientID)" class="accordion sample-padding to-u-c"> ${booking.season | seasonAbbreviation:seasons }${look}.${$index+1} : ${item.status.status} : <span class="to-l-c">${item.attributes}</span></td>
+                                                    <td if.bind="(user.type === 'brand') && (item.clientID)" class="accordion sample-padding to-u-c"> ${booking.season | seasonAbbreviation:seasons }${look}.${$index+1} [ ${item.clientID} ] : ${item.status.status} : <span class="to-l-c">${item.attributes}</span></td>
                                                     <td if.bind="(user.type === 'press') || (user.type === 'agency')"  class="accordion sample-padding to-u-c">${look}.${$index+1} : ${item.status.status} : ${item.attributes}</td>
                                                 </tr>
                                             </table>
