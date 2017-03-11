@@ -40,7 +40,7 @@ class EmailService {
             SampleRequest sr = data
             def messageTxt = "" 
             log.info "email notificaiton start message"
-            messageTxt = messageTxt + "Booking confirmation of samples from look "+sr.look+"<br/><br/>" 
+            messageTxt = messageTxt + "Booking confirmation of samples from " + sr.brand.name+ " look "+sr.look+"<br/><br/>" 
             
             sr.searchableItemsProposed.each{
                 messageTxt = messageTxt + "Sample:" +it?.attributes+"<br/>"
@@ -67,7 +67,7 @@ class EmailService {
             log.info "created message text"
 
             Email from = new Email("support@pashiontool.com")
-            String subject =  "From the PASHION platform: booking confirmation of look "+sr.look
+            String subject =  "From the PASHION platform: booking confirmation of " + sr.brand.name + " look "+sr.look
             Email to = new Email(sr.emailNotification)
             Content content = new Content("text/html", messageTxt)
             Mail mail = new Mail(from, subject, to, content)
