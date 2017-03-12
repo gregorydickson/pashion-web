@@ -8,8 +8,9 @@ import {EditSampleRequest} from './sample_request/editSampleRequest';
 import {busy} from './services/busy';
 import { CreateDialogAlert } from './common/dialogAlert';
 import { HttpClient } from 'aurelia-fetch-client';
+import { EventAggregator } from 'aurelia-event-aggregator';
 
-@inject(HttpClient, DialogService, UserService, SampleRequestService,busy)
+@inject(HttpClient, DialogService, UserService, SampleRequestService,busy, EventAggregator)
 export class Requestman{
 	  
   @bindable({defaultBindingMode: bindingMode.twoWay}) bookings = [];
@@ -30,7 +31,7 @@ export class Requestman{
 
 
 
-  constructor(http,dialogService,userService,sampleRequestService,busy) {
+  constructor(http,dialogService,userService,sampleRequestService,busy,eventAggregator) {
     http.configure(config => {
             config
                 .useStandardConfiguration();
@@ -41,6 +42,7 @@ export class Requestman{
     this.userService = userService;
     this.sampleRequestService = sampleRequestService;
     this.busy = busy;
+    this.ea = eventAggregator;
 
   }
 
@@ -85,6 +87,34 @@ export class Requestman{
             parent.look = '';
             parent.opened = ''; 
         });
+
+        this.subscriber = this.ea.subscribe('datepicker', response => {
+            //console.log("datepicker event: " + response.elementId + " : " + response.elementValue);
+            var fireChange = false;
+            if (response.elementId === 'datepickersearchto') {
+                  this.searchTo = response.elementValue;
+                  if ((this.searchFrom) && (new Date(this.searchFrom).getTime() <= new Date(this.searchTo).getTime()))
+                  {
+                      this.fireChange = true;
+                  }
+                  else {
+                    document.getElementById('datepickersearchto').value = '';
+                    this.searchTo = '';
+                  }
+                }
+            if (response.elementId === 'datepickersearchfrom') {
+                 this.searchFrom = response.elementValue;
+                 this.fireChange = true;
+                 //  clear the to field as well
+                 this.searchTo = '';
+                 document.getElementById('datepickersearchto').value = ''
+               }
+
+            if (this.fireChange) this.filterChange();
+            /*if ((this.availableTo && this.availableFrom) || (this.availableFrom))
+                this.filterChangeDates(); */
+
+        });
   }
 
 /*    orderChange(event) {
@@ -119,7 +149,7 @@ export class Requestman{
 
 
   filterChange(event){
-      console.log("changing filter: ");
+      console.log("changing filter: " + this.searchFrom + " to " + this.searchTo);
       this.closeExpanded ();
           if (event)
             if (event.detail)
@@ -131,6 +161,22 @@ export class Requestman{
                     //console.log("value:" + event.detail.value + " filtering: " +this.filtering);
                 } 
   }
+
+    filterRangeFunc(startDate, searchStartDate, endDate, searchEndDate){
+      // local compare
+        if (!searchStartDate) return true;
+        //if (!searchEndDate) return true; 
+        // convert to milliseconds as coming in as two different formats
+        var startDateMilli = new Date(startDate).getTime();
+        var searchStartDateMilli = new Date(searchStartDate).getTime();
+        var endDateMilli = new Date(endDate).getTime();
+        var searchEndDateMilli = new Date(searchEndDate).getTime();
+        // compare
+        if (searchStartDateMilli > searchEndDateMilli) return true
+        return (((searchStartDateMilli >= startDateMilli) && (searchStartDateMilli <= endDateMilli)) ||
+              ((searchEndDateMilli >= startDateMilli) && (searchEndDateMilli <= endDateMilli)))
+              
+      }
 
 
   filterFunc(searchExpression, value, filter, user){

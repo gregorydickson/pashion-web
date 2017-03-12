@@ -10,7 +10,8 @@ import org.springframework.web.multipart.MultipartFile
 class SearchableItemController {
     static scope = "session"
     
-    String dateFormatString = "yyyy-MM-dd"
+    // String dateFormatString = "yyyy-MM-dd"
+    String dateFormatString = "dd-MMM-yyyy"
     def amazonS3Service
     
     def brandSearch(){
@@ -152,7 +153,8 @@ class SearchableItemController {
         if(params.season != "" && params.season != null)
             season = Season.findByName(URLDecoder.decode(params.season))
                    
-
+        
+        log.info "availableFrom:"+availableFrom
         if(params.availableFrom != null && params.availableFrom != "" )
             availableFrom = dateFormat.parse(params.availableFrom)
 

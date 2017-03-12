@@ -5,8 +5,11 @@
     <require from="./calendars/datepicker"></require>
     <require from="./contacts/sort"></require>
     <require from="./contacts/filter"></require>
+    <require from="./contacts/range"></require>
     <require from="./dashboard_filters/filters-order"></require>
     <require from="./dashboard_filters/filters-filterrequests"></require>
+    <require from="./dashboard_filters/filters-search-from"></require>
+    <require from="./dashboard_filters/filters-search-to"></require>
 
     <!-- start preloader -->
     <div class="preloader" show.bind="busy.active" >
@@ -124,6 +127,14 @@
                                 </span>
                             </div>
                         </div>
+                        <div class="grid-block shrink" style="margin-left: 1rem; margin-right: 1rem;">
+                            <div class="" style="margin: 0 1rem 2rem 0; height:28px; min-height:28px;">
+                                <filters-search-from></filters-search-from>
+                            </div>
+                            <div class="" style="margin: 0 1rem 2rem 0; height:28px; min-height:28px;">
+                                <filters-search-to></filters-search-to>
+                            </div>
+                        </div>
                         <!-- Accordion -->
                         <!--Header -->
                         
@@ -163,7 +174,8 @@
                             <!-- Rows of content BRAND View-->
                             <div class="grid-content" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left: 1rem; margin-right: 1rem;">
                                 
-                                <div repeat.for="booking of bookings | sort:ordering:'ascending' | filter:searchTextReqMan:filterFunc:filtering:user">
+                                <div repeat.for="booking of bookings | sort:ordering:'ascending' | filter:searchTextReqMan:filterFunc:filtering:user
+                                | range:searchFrom:searchTo:filterRangeFunc">
                                     <table  class="big-accordion" style="table-layout: fixed;">
                                         <tr>
                                             <td class="accordion-grey w3">

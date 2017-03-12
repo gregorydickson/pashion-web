@@ -38,7 +38,7 @@ export class DatePicker {
     }
     var parent = this;
     $(this.element).datepicker({
-        dateFormat: "yy-mm-dd",
+        dateFormat: "dd-M-yy",
         autoclose: true,
         showButtonPanel: true,
         closeText: 'Clear',
