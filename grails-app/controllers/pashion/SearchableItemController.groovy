@@ -39,7 +39,7 @@ class SearchableItemController {
             keywords = keywords.split(" ")
         }
 
-        if(params.city != null && params.city != "" && params.city != "All"){
+        if(params.city != null && params.city != "" && params.city != "All" && params.city != "undefined"){
             city = City.findByName(URLDecoder.decode(params.city))
 
             type = SearchableItemType.findByDisplay("Samples")
