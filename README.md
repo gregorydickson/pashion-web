@@ -1,3 +1,10 @@
+# Main file locations
+* CSS - grails-app/assets/stylesheets/pashion/pashion.scss
+* Layout file - grails-app/assets/views/layouts/pashion.gsp
+* Login page - grails-app/views/user/login.gsp
+* The web page hosting the Aurelia Application - grails-app/views/dashboard/index.gsp
+* Aurelia src/main/webapp/
+
 # Testing
 
 * Test Miu Miu with miu@pashiontool.com / Pashion123
@@ -14,7 +21,7 @@ To setup the Development Environment:
 
 * Ensure that [NodeJS](http://nodejs.org/) is installed. This provides the platform on which the Aurelia build tooling runs.
 
-* git clone git@github.com:gregorydickson/pashion-web.git  (we will be moving to a Pashion account soon but for now use this git repository)
+* git clone git@github.com:gregorydickson/pashion-web.git  (we will be moving to a Pashion account but for now use this git repository)
 
 * open two terminal windows. In the first terminal window navigate to the root directory of the application and run 'grails', then 'run-app'
 
@@ -29,6 +36,8 @@ To setup the Development Environment:
 * All of the Aurelia (Javascript) for the application lives under src/main/webapp/src
 
 * The CSS/SCSS for the application lives under grails-app/assets/stylesheets/pashion and is built using the JVM Asset Pipeline.
+
+* the main stylesheet is assets/stylesheets/pashion/pashion.scss
 
 * With the grails server running you can view the dashboard at: http://localhost:8080/ which will first require a login
 
