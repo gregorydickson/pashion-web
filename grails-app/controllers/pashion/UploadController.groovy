@@ -21,7 +21,7 @@ class UploadController {
     def detail(){
 
     }
-    // FOR SAMPLES
+    // FOR SAMPLES - DETAILS Sheets - NOT LOOKS
     def uploaddetail(){
         if (request.method == 'POST') {
             def submittedFile = request.getFile('file')
@@ -37,14 +37,12 @@ class UploadController {
                     def data = parseCsv(submittedFile.getInputStream().getText())
                     City city = City.findOrSaveWhere(name:params.city).save(flush:true,failOnError:true)
                     
-                    
-                        
                         def count = 0
                         for (row in data) {
                             ++count
                             if(count > 2){ 
                                 SearchableItem.withTransaction { status ->     
-                                    
+                                    //SAMPLES -  DETAILS 
                                     try{
                                         SearchableItemType type = SearchableItemType.findByDisplay('Samples')
                                         SearchableItem item = new SearchableItem(type:type)
@@ -57,40 +55,48 @@ class UploadController {
                                         item.look           = look
                                         item.name           = row.values[3].toString().trim()
 
-                                        item.sex            = row.values[4].toString().trim()
+                                        item.sex            = row.values[4].toString().trim().toUpperCase()
 
-                                        String color1       = row.values[7].toString().trim()
-                                        String color2       = row.values[8].toString().trim()
-                                        String color3       = row.values[9].toString().trim()
-                                        item.color          = color1 + "," + color2 + ","+ color3
+                                        String color1       = row.values[7].toString().trim().toUpperCase()
+                                        String color2       = row.values[8].toString().trim().toUpperCase()
+                                        String color3       = row.values[9].toString().trim().toUpperCase()
+                                        item.color          = color1 + " " + color2 + " "+ color3
                                     
-                                        item.material       = row.values[10].toString().trim()
-                                        String type1         = row.values[9].toString().trim()
+                                        String material1      = row.values[10].toString().trim().toUpperCase()
+                                        String material2      = row.values[11].toString().trim().toUpperCase()
+                                        item.material = material1 + " " + material2
+                                        
+                                        String type1         = row.values[12].toString().trim().toUpperCase()
                                         if(type != "") item.sampleType = type1
 
-                                        item.shape      = row.values[10].toString().trim()
+                                        String shape1        = row.values[13].toString().trim().toUpperCase()
+                                        String shape2        = row.values[14].toString().trim().toUpperCase()
+                                        item.shape = shape1 + " " + shape2
                                         
-                                        item.occasion       = row.values[11].toString().trim()
+                                        item.occasion       = row.values[15].toString().trim().toUpperCase()
                                         
-                                        String style1       = row.values[12].toString().trim()
-                                        String style2       = row.values[13].toString().trim()
-                                        item.style = style1 + "," + style2
+                                        String style1       = row.values[16].toString().trim().toUpperCase()
+                                        String style2       = row.values[17].toString().trim().toUpperCase()
+                                        String style3       = row.values[18].toString().trim().toUpperCase()
+                                        item.style = style1 + " " + style2  + " " + style3
                                         
-                                        String motif1       = row.values[14].toString().trim()
-                                        String motif2       = row.values[15].toString().trim()
-                                        String motif3       = row.values[16].toString().trim()
-                                        item.motif = motif1 + "," + motif2 + "," + motif3
+                                        String motif1       = row.values[19].toString().trim().toUpperCase()
+                                        String motif2       = row.values[20].toString().trim().toUpperCase()
+                                        String motif3       = row.values[21].toString().trim().toUpperCase()
+                                        String motif4       = row.values[22].toString().trim().toUpperCase()
+                                        item.motif = motif1 + " " + motif2 + " " + motif3 + " " + motif4
 
-                                        String theme1       = row.values[17].toString().trim()
-                                        String theme2       = row.values[18].toString().trim()
-                                        item.theme = theme1 + "," + theme2 
+                                        String theme1       = row.values[23].toString().trim().toUpperCase()
+                                        String theme2       = row.values[24].toString().trim().toUpperCase()
+                                        String theme3       = row.values[25].toString().trim().toUpperCase()
+                                        item.theme = theme1 + " " + theme2  + " " + theme3
 
-                                        item.culture        = row.values[19].toString().trim()
-                                        item.lookSeason     = row.values[20].toString().trim()
-                                        item.decade         = row.values[21].toString().trim()
+                                        item.culture        = row.values[26].toString().trim().toUpperCase()
+                                        item.lookSeason     = row.values[27].toString().trim().toUpperCase()
+                                        item.decade         = row.values[28].toString().trim().toUpperCase()
                                         
                                         StringBuilder sb = new StringBuilder()
-                                        for(def i=4;i<21;i++){
+                                        for(def i=4;i<28;i++){
                                             sb.append(row.values[i].toString() + " ") 
                                         }
                                         item.attributes = sb.toString()
@@ -100,7 +106,9 @@ class UploadController {
 
                                         item.brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season).save()
                                         item.save(flush:true,failOnError:true)
-                                        log.info "added sample (detail)"+item
+                                        log.info "line:"+count
+                                        log.info "added sample (detail)"+item.name
+                                        log.info "for look:"+look.name
                                     } catch(Exception e){
                                         log.error "exception:"+e.message
                                     }
