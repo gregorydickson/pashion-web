@@ -120,6 +120,14 @@ export class CreateSampleRequestBrand {
    
   } 
 
+  deliverToCallback(evt) {
+    console.log("deliver To Callback");
+    console.log(JSON.stringify(evt))
+    if (evt.detail) {
+        this.selectedAddress = evt.detail.value;
+        
+    }
+  }
   attached(){
     document.getElementById("CreateSampleRequestButton").disabled = true;
   }

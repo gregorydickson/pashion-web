@@ -20,12 +20,21 @@ export class FormSelectObject {
         
     }
 
+    optionsChanged(){
+      console.log("options changed");
+      if(this.sel){
+        
+        this.sel.val(this.selected).trigger('change');
+      }
+
+    }
+
     sampleChanged(){
       console.log("select 2 (formSelectObject.js) Changed");
       //console.log(JSON.stringify(this.selected));
       if(this.selected && this.sel){
         
-        this.sel.val(this.selected).trigger('change');
+        //this.sel.val(this.selected).trigger('change');
       }
       //console.log("selected");
     }

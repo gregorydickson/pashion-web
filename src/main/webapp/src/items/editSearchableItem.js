@@ -77,6 +77,16 @@ export class EditSearchableItem {
     sample.color = '';
   }
 
+  materialAdd (sample) {
+    if (!this.addMaterial) return;
+    if (this.addMaterial=='') return;
+    sample.material = sample.material + " " + this.addMaterial;
+  }
+
+  materialClear (sample) {
+    sample.material = '';
+  }
+
   sample2Callback(evt) {
     if (evt.detail) {
         this.selectedSample = evt.detail.value;

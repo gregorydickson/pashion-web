@@ -134,14 +134,35 @@
                         </span>
 
                     </div>
+                    
                     <!-- Material -->
-                    <div class="grid-block shrink" >                        
+                     <div class="grid-block shrink" >                        
                         <span class="inline-label">
                             <span class="slim-text-box-label">Material</span>
-                            
-                        <form-select class="to-u-c" name="material" selected.two-way="selectedSample.material" options.bind="material" ></form-select>
+                            <div>
+                                <input type="text" class="slim-text-box to-u-c" disabled value.bind="selectedSample.material">
+                            </div>
+                            <a style= "width: 30px; margin-left: 1rem; padding-bottom: 6px;" click.delegate="materialClear(selectedSample)">Clear</a>
                         </span>
                     </div>
+
+                    <div class="grid-block shrink" style="margin-top: -10px;">                        
+                        <span class="inline-label" >
+                            <span class="slim-text-box-label">New Material</span>
+
+
+                            <form-select class="to-u-c" name="material" selected.two-way="addMaterial" options.bind="material" ></form-select>
+
+
+                            <a style= "width: 30px; margin-left: 1rem;" click.delegate="materialAdd(selectedSample)">Add</a>
+                        </span>
+
+                    </div>
+
+
+
+
+
                     <!-- Size 
                     <div class="grid-block shrink" >                        
                         <span class="inline-label">
