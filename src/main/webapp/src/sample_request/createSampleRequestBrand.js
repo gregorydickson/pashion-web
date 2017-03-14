@@ -21,6 +21,10 @@ export class CreateSampleRequestBrand {
   selectAll = true;
   required = [];
   @bindable deliverTo = [];
+
+  availableDeliverToItems = [];
+  selectedDeliverToItems = [];
+
   brand = [];
   brandAddresses = [];
   returnBy = [];
@@ -67,27 +71,7 @@ export class CreateSampleRequestBrand {
               this.startCalendar = calendar;
               this.endCalendar = calendar;
           });
-    
-    this.http.fetch('/searchableItems/'+item.id+'.json')
-      .then(response => response.json())
-      .then(item => {
-          this.currentItem = item;   
-
-          this.http.fetch('/dashboard/deliverToBrand/'+item.brand.id).then(response => response.json()).then(deliverTo =>{ 
-            this.deliverTo = deliverTo;
-            //$("#deliverTo").find('select').trigger('change');
-          });
-          this.brandService.getBrandAddresses(item.brand.id).then(addresses => this.brandAddresses = addresses);
-          this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);
-          this.sampleRequest.samples = [];
-          var ids = this.sampleRequest.samples;
-          item.samples.forEach(function(item){
-            ids.push(item.id);
-          })
-          
-        }
-      )
-    
+        
 
     this.http.fetch('/dashboard/required').then(response => response.json()).then(required => {
       this.required = required;
@@ -114,11 +98,53 @@ export class CreateSampleRequestBrand {
       this.payment = payment;
       this.sampleRequest.paymentOut = "50/50";
       this.sampleRequest.paymentReturn = "50/50";
-    });
+    });  
 
-   
+    this.http.fetch('/searchableItems/'+item.id+'.json')
+      .then(response => response.json())
+      .then(item => {
+          this.currentItem = item;   
+
+          return this.http.fetch('/dashboard/deliverToBrand/'+item.brand.id).then(response => response.json()).then(deliverTo =>{ 
+            this.deliverTo = deliverTo;
+
+            deliverTo.forEach(item => {
+              this.availableDeliverToItems.push({
+                id: item.id,
+                text: item.name
+              });
+            });
+            
+
+            //$("#deliverTo").find('select').trigger('change');
+          });
+
+          this.brandService.getBrandAddresses(item.brand.id).then(addresses => this.brandAddresses = addresses);
+          this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);
+          this.sampleRequest.samples = [];
+          var ids = this.sampleRequest.samples;
+          item.samples.forEach(function(item){
+            ids.push(item.id);
+          })
+          
+        }
+      ) 
    
   } 
+
+  onDeliverToChangeCallback(event) {   
+      console.log('onDeliverToChangeCallback() called:', event.detail.value);
+
+      if (event.detail) {
+          let selectedDeliverToId = event.detail.value;
+          let selectedBrand = this.deliverTo.find(item => item.id == selectedDeliverToId);
+          console.log('Selected brand:', selectedBrand);
+
+          this.selectedAddress.address1 = selectedBrand.address1;
+          this.selectedAddress.city = selectedBrand.city;
+          this.selectedAddress.postalCode = selectedBrand.postalCode;
+      }
+  }
 
   deliverToCallback(evt) {
     console.log("deliver To Callback");

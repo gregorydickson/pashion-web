@@ -3,6 +3,7 @@
 <require from="../common/formSelectSampleRequest"></require>
 <require from="../common/formSelectSample"></require>
 <require from="../common/formSelectObject"></require>
+<require from="../common/select2"></require>
     
    <ai-dialog>
         <ai-dialog-header>
@@ -70,7 +71,21 @@
                 <div class="grid-content shrink">
                     <span class="inline-label" style="">
                         <span class="slim-text-box-label">Deliver To</span>
-                        <form-select-sr class="slim-box" name="deliverTo" id="" selected.two-way="selectedAddress" options.bind="deliverTo" change.delegate="deliverToCallback($event)">
+
+                        <select2 ref="selectControl" name="options"
+                            change.delegate="onDeliverToChangeCallback($event)"                      
+                            selected.bind="selectedDeliverToItems" 
+                            options.bind="availableDeliverToItems" 
+                            placeholder="Select one" 
+                            allow_clear="true">
+                        </select2>
+
+                        <!--<form-select-sr class="slim-box" 
+                        name="deliverTo" 
+                        id="" 
+                        selected.two-way="selectedAddress" 
+                        options.bind="deliverTo" 
+                        change.delegate="deliverToCallback($event)">-->
                             
                         </form-select-sr>
                         <span class="slim-text-box-label"><a click.delegate="addAdHoc()" style="">Add</a></span>

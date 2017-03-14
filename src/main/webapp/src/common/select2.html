@@ -1,0 +1,16 @@
+<template>
+    <select 
+        value.two-way="selected" 
+        name.one-way="name" 
+        id.one-way="name"  
+        data-placeholder.one-way="placeholder" 
+        data-allow-clear.one-way="allow_clear" 
+        size="1">
+        <optgroup label.bind="group.text" repeat.for="group of options" if.bind="grouping">
+            <option repeat.for="option of group.children" value.bind="option.id">${option.text}</option>
+        </optgroup>   
+        <option repeat.for="option of options" value.bind="option.id" if.bind="!grouping">${option.text}</option>
+    </select>
+
+    <!-- multiple/tag mode requires Select2 4.0+ -->
+</template>
