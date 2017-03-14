@@ -1,6 +1,8 @@
 <template>
 <require from="./sort"></require>
-<require from="../common/formSelect"></require>
+<require from="../common/formSelectSampleRequest"></require>
+<require from="../common/formSelectSample"></require>
+<require from="../common/formSelectObject"></require>
     
    <ai-dialog>
         <ai-dialog-header>
@@ -59,7 +61,7 @@
                 <div class="grid-content shrink" style="margin-top: 1.5rem;">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Required By</span>
-                        <form-select class="to-u-c" name="requiredby" selected.bind="sampleRequest.requiredBy" options.bind="required" ></form-select>
+                        <form-select-sr class="to-u-c" name="requiredby" selected.bind="sampleRequest.requiredBy" options.bind="required" ></form-select-sr>
                     </span>
                 </div>
 
@@ -68,9 +70,9 @@
                 <div class="grid-content shrink">
                     <span class="inline-label" style="">
                         <span class="slim-text-box-label">Deliver To</span>
-                        <select class="slim-box" name="" id="" value.bind="selectedAddress">
-                            <option repeat.for="address of deliverTo" model.bind="address">${address.name} ${address.surname}</option>
-                        </select>
+                        <form-select-sr class="slim-box" name="deliverTo" id="" selected.two-way="selectedAddress" options.bind="deliverTo" change.delegate="deliverToCallback($event)">
+                            
+                        </form-select-sr>
                         <span class="slim-text-box-label"><a click.delegate="addAdHoc()" style="">Add</a></span>
                     </span>
                 </div>
@@ -144,7 +146,7 @@
                 <div class="grid-content shrink">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Courier</span>
-                        <form-select class="to-u-c" name="courierOut" selected.two-way="sampleRequest.courierOut" options.bind="courier" ></form-select>
+                        <form-select-sr class="to-u-c" name="courierOut" selected.two-way="sampleRequest.courierOut" options.bind="courier" ></form-select-sr>
                     </span>
                 </div>
 
@@ -152,7 +154,7 @@
                 <div class="grid-content shrink" style="margin-bottom:0.5rem;">
                     <span class="inline-label">
                         <span class=" slim-text-box-label">Split</span>
-                        <form-select class="to-u-c" name="paymentOut" selected.two-way="sampleRequest.paymentOut" options.bind="payment" ></form-select>
+                        <form-select-sr class="to-u-c" name="paymentOut" selected.two-way="sampleRequest.paymentOut" options.bind="payment" ></form-select-sr>
                     </span>
                 </div>                    
                    
@@ -200,7 +202,7 @@
                 <div class="grid-content shrink" style="margin-top: 1.5rem;">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Return By</span>
-                        <form-select class="to-u-c" name="returnBy" selected.bind="sampleRequest.returnBy" options.bind="returnBy" ></form-select>
+                        <form-select-sr class="to-u-c" name="returnBy" selected.bind="sampleRequest.returnBy" options.bind="returnBy" ></form-select-sr>
                     </span>
                 </div>    
                             
@@ -209,7 +211,7 @@
                 <div class="grid-content shrink">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Return To</span>
-                        <form-select id="returnTo" class="to-u-c" name="returnToAddress" selected.bind="sampleRequest.returnToAddress" options.bind="brandAddresses" ></form-select>
+                        <form-select-sr id="returnTo" class="to-u-c" name="returnToAddress" selected.bind="sampleRequest.returnToAddress" options.bind="brandAddresses" ></form-select-sr>
                     </span>
                 </div>
 
@@ -217,14 +219,14 @@
                 <div class="grid-content shrink">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Courier</span>
-                        <form-select class="to-u-c" name="courierReturn" selected.two-way="sampleRequest.courierReturn" options.bind="courier" ></form-select>
+                        <form-select-sr class="to-u-c" name="courierReturn" selected.two-way="sampleRequest.courierReturn" options.bind="courier" ></form-select-sr>
                     </span>
                 </div>
                 
                 <div class="grid-content shrink">
                     <span class="inline-label">
                         <span class=" slim-text-box-label">Split</span>
-                         <form-select class="to-u-c" name="paymentReturn" selected.two-way="sampleRequest.paymentReturn" options.bind="payment" ></form-select>
+                         <form-select-sr class="to-u-c" name="paymentReturn" selected.two-way="sampleRequest.paymentReturn" options.bind="payment" ></form-select-sr>
                     </span>
                 </div>
 
@@ -232,7 +234,7 @@
                 <div class="grid-content shrink" style="margin-bottom:0.5rem;">
                     <span class="inline-label">
                         <span class=" slim-text-box-label">Confirmation</span>
-                        <form-select class="to-u-c" name="emailOptions" selected.two-way="email" options.bind="emailOptions" place-holder="NONE"></form-select>
+                        <form-select-sr class="to-u-c" name="emailOptions" selected.two-way="email" options.bind="emailOptions" place-holder="NONE"></form-select-sr>
                     </span>
                     <span if.bind="email" class="inline-label">
                         <span class=" slim-text-box-label">Email</span>
