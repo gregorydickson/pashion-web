@@ -26,11 +26,12 @@ export class CreateSampleRequestBrand {
   selectedDeliverToItems = [];
   availableReturnToItems = [];
   selectedReturnToItems = [];
+  returnTo = [];
 
   brand = [];
-  brandAddresses = [];
+  
   returnBy = [];
-  returnTo = [];
+  
   courier = [];
   payment = [];
 
@@ -90,19 +91,7 @@ export class CreateSampleRequestBrand {
       this.sampleRequest.courierReturn = "Scooter";
 
     });
-    this.http.fetch('/dashboard/returnTo').then(response => response.json()).then(returnTo => {
-        this.returnTo = returnTo;
-
-        returnTo.forEach(item => {
-              this.availableReturnToItems.push({
-                id: item.id,
-                text: item.name
-              });
-            });
-        
-        //$("#returnTo").find('select').trigger('change');
-
-    });
+    
     this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => {
       this.payment = payment;
       this.sampleRequest.paymentOut = "50/50";
@@ -114,7 +103,7 @@ export class CreateSampleRequestBrand {
       .then(item => {
           this.currentItem = item;   
 
-          return this.http.fetch('/dashboard/deliverToBrand/'+item.brand.id).then(response => response.json()).then(deliverTo =>{ 
+          this.http.fetch('/dashboard/deliverToBrand/'+item.brand.id).then(response => response.json()).then(deliverTo =>{ 
             this.deliverTo = deliverTo;
 
             deliverTo.forEach(item => {
@@ -124,11 +113,21 @@ export class CreateSampleRequestBrand {
               });
             });
             
-
-            //$("#deliverTo").find('select').trigger('change');
+            
           });
 
-          this.brandService.getBrandAddresses(item.brand.id).then(addresses => this.brandAddresses = addresses);
+          this.brandService.getBrandAddresses(item.brand.id).then(addresses => {
+            this.returnTo = addresses;
+
+            addresses.forEach(item => {
+              this.availableReturnToItems.push({
+                id: item.id,
+                text: item.name
+              });
+            });
+
+          });
+          
           this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);
           this.sampleRequest.samples = [];
           var ids = this.sampleRequest.samples;
