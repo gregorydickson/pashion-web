@@ -82,6 +82,7 @@
       "aurelia-plugins-tabs": "npm:aurelia-plugins-tabs@^1.2.0",
       "aurelia-polyfills": "npm:aurelia-polyfills@^1.0.0-rc.1.0.0",
       "aurelia-router": "npm:aurelia-router@^1.0.0-rc.1.0.0",
+      "aurelia-task-queue": "npm:aurelia-task-queue@^1.2.0",
       "aurelia-templating-binding": "npm:aurelia-templating-binding@^1.0.0-rc.1.0.0",
       "aurelia-templating-resources": "npm:aurelia-templating-resources@^1.0.0-rc.1.0.0",
       "aurelia-templating-router": "npm:aurelia-templating-router@^1.0.0-rc.1.0.0",

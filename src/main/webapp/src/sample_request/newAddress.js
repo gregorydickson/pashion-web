@@ -30,7 +30,7 @@ export class NewAddress {
     
     this.addressService.createAdHoc(this.newAddress)
       .then(response =>{
-        
+        // This should probably return the new address and not the list of all 
         this.controller.ok(response);
       }); 
   }

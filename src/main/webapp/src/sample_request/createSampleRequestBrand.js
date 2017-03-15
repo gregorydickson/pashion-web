@@ -66,7 +66,6 @@ export class CreateSampleRequestBrand {
   }
 
   activate(item){
-
     var queryString = DateFormat.urlString(0, 2)+'&searchType=brand';
   
     this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+item.id)
@@ -120,7 +119,9 @@ export class CreateSampleRequestBrand {
                 });
               }
             });
-            
+
+            this.selectedDeliverToItems = [50];
+
             
           });
 
@@ -198,16 +199,54 @@ export class CreateSampleRequestBrand {
               if (!response.wasCancelled) {
                 this.deliverTo = response.output;
                 this.selectedAddress = newAddressModel.newAddress;
-                console.log('good - ', response.output);
+                console.log('good - ', response.output, newAddressModel);
+
+                // Grab the latest deliver to items
+                // This value is returned from the modal I think
+                // but that may be changed to just return the newly added item
+                // only or it's ID so let's use a separate call for now.
+                this.loadDeliverTos().then(() => {
+                  // Get the latest item based on the id
+                  let newestDeliverTo = this.availableDeliverToItems.reduce(function(max, x) {
+                      return x.id > max.id ? x : max;
+                  });
+
+                  console.log('Newest deliver to:', newestDeliverTo);
+                  
+                  this.selectedDeliverToItems = [newestDeliverTo.id];
+                });
+
               } else {
                 console.log('bad');
               }
                
             });
-    
-    
+  }
 
+  loadDeliverTos() {
+    let item = this.currentItem;
 
+    return this.http.fetch('/dashboard/deliverToBrand/'+item.brand.id).then(response => response.json())
+      .then(deliverTo =>{ 
+          this.deliverTo = deliverTo;
+          this.availableDeliverToItems = [];
+          this.selectedDeliverToItems = [];
+
+          deliverTo.forEach(item => {
+            if(item.surname){
+              this.availableDeliverToItems.push({
+                id: item.id,
+                text: item.name + " " + item.surname
+              });
+            } else {
+              this.availableDeliverToItems.push({
+                id: item.id,
+                text: item.name
+              });
+            }
+          });
+    });
+   
   }
 
   setStartDate(event,day){
