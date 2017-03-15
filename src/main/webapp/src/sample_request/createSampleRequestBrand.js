@@ -26,7 +26,7 @@ export class CreateSampleRequestBrand {
   selectedDeliverToItems = [];
   availableReturnToItems = [];
   selectedReturnToItems = [];
-  returnTo = [];
+  
 
   brand = [];
   
@@ -39,6 +39,7 @@ export class CreateSampleRequestBrand {
   email = null;
   
   @bindable selectedAddress = {};
+  returnToAddress = null;
 
 
   sampleRequest = {};
@@ -164,8 +165,9 @@ export class CreateSampleRequestBrand {
 
       if (event.detail) {
           let selectedReturnToId = event.detail.value;
-          let selectedBrand = this.returnTo.find(item => item.id == selectedReturnToId);
-          console.log('Selected brand:', selectedBrand);
+          let selectedReturnTo = this.returnTo.find(item => item.id == selectedReturnToId);
+          console.log('Selected returnTo:',selectedReturnTo);
+          this.sampleRequest.returnToAddress = selectedReturnToId;
 
           
       }
