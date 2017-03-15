@@ -152,12 +152,10 @@ export class CreateSampleRequestBrand {
 
       if (event.detail) {
           let selectedDeliverToId = event.detail.value;
-          let selectedBrand = this.deliverTo.find(item => item.id == selectedDeliverToId);
-          console.log('Selected brand:', selectedBrand);
+          let selectedDeliverTo = this.deliverTo.find(item => item.id == selectedDeliverToId);
+          console.log('Selected deliverTo:', selectedDeliverTo);
 
-          this.selectedAddress.address1 = selectedBrand.address1;
-          this.selectedAddress.city = selectedBrand.city;
-          this.selectedAddress.postalCode = selectedBrand.postalCode;
+          this.selectedAddress = selectedDeliverTo;
       }
   }
 
@@ -169,9 +167,7 @@ export class CreateSampleRequestBrand {
           let selectedBrand = this.returnTo.find(item => item.id == selectedReturnToId);
           console.log('Selected brand:', selectedBrand);
 
-          //this.selectedAddress.address1 = selectedBrand.address1;
-          //this.selectedAddress.city = selectedBrand.city;
-          //this.selectedAddress.postalCode = selectedBrand.postalCode;
+          
       }
   }
 
