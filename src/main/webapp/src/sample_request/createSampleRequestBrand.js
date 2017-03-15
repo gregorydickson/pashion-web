@@ -107,10 +107,17 @@ export class CreateSampleRequestBrand {
             this.deliverTo = deliverTo;
 
             deliverTo.forEach(item => {
-              this.availableDeliverToItems.push({
-                id: item.id,
-                text: item.name
-              });
+              if(item.surname){
+                this.availableDeliverToItems.push({
+                  id: item.id,
+                  text: item.name + " " + item.surname
+                });
+              } else {
+                this.availableDeliverToItems.push({
+                  id: item.id,
+                  text: item.name
+                });
+              }
             });
             
             

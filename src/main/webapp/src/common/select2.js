@@ -28,7 +28,7 @@ export class Select2CustomMultiselect {
         console.log('Select2CustomMultiselect.selectedChanged(): Selected values changed');
 
         let el = $(this.element).find('select');
-        let sel = el.select2(this.selectDefaultOptions);
+        let sel = el.select2({minimumResultsForSearch: 15});
         
         sel.val(this.selected).trigger('change');
     }
