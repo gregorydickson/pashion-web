@@ -24,6 +24,8 @@ export class CreateSampleRequestBrand {
 
   availableDeliverToItems = [];
   selectedDeliverToItems = [];
+  availableReturnToItems = [];
+  selectedReturnToItems = [];
 
   brand = [];
   brandAddresses = [];
@@ -90,8 +92,15 @@ export class CreateSampleRequestBrand {
     });
     this.http.fetch('/dashboard/returnTo').then(response => response.json()).then(returnTo => {
         this.returnTo = returnTo;
+
+        returnTo.forEach(item => {
+              this.availableReturnToItems.push({
+                id: item.id,
+                text: item.name
+              });
+            });
         
-        $("#returnTo").find('select').trigger('change');
+        //$("#returnTo").find('select').trigger('change');
 
     });
     this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => {
@@ -145,6 +154,21 @@ export class CreateSampleRequestBrand {
           this.selectedAddress.postalCode = selectedBrand.postalCode;
       }
   }
+
+  onReturnToChangeCallback(event) {   
+      console.log('onReturnToChangeCallback() called:', event.detail.value);
+
+      if (event.detail) {
+          let selectedReturnToId = event.detail.value;
+          let selectedBrand = this.returnTo.find(item => item.id == selectedReturnToId);
+          console.log('Selected brand:', selectedBrand);
+
+          //this.selectedAddress.address1 = selectedBrand.address1;
+          //this.selectedAddress.city = selectedBrand.city;
+          //this.selectedAddress.postalCode = selectedBrand.postalCode;
+      }
+  }
+
 
   deliverToCallback(evt) {
     console.log("deliver To Callback");

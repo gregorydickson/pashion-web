@@ -72,7 +72,7 @@
                     <span class="inline-label" style="">
                         <span class="slim-text-box-label">Deliver To</span>
 
-                        <select2 ref="selectControl" name="options"
+                        <select2 ref="selectControl" name="deliverTo"
                             change.delegate="onDeliverToChangeCallback($event)"                      
                             selected.bind="selectedDeliverToItems" 
                             options.bind="availableDeliverToItems" 
@@ -226,7 +226,19 @@
                 <div class="grid-content shrink">
                     <span class="inline-label">
                         <span class="slim-text-box-label">Return To</span>
-                        <form-select-sr id="returnTo" class="to-u-c" name="returnToAddress" selected.bind="sampleRequest.returnToAddress" options.bind="brandAddresses" ></form-select-sr>
+
+                        <select2 ref="selectControlReturnTo" name="returnToAddress"
+                            change.delegate="onReturnToChangeCallback($event)"                      
+                            selected.bind="selectedReturnToItems" 
+                            options.bind="availableReturnToItems" 
+                            placeholder="Select one" 
+                            allow_clear="true">
+                        </select2>
+                        <!--<form-select-sr 
+                        id="returnTo" class="to-u-c" 
+                        name="returnToAddress" 
+                        selected.bind="sampleRequest.returnToAddress" 
+                        options.bind="brandAddresses" ></form-select-sr>-->
                     </span>
                 </div>
 
