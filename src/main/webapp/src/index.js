@@ -64,10 +64,16 @@ export class Index {
           filterVal = (value.requestingUser.id == user.id);
         }
         if (filter == 'OVERDUE REQUESTS') {
-          filterVal = (value.requestStatusBrand == 'Overdue');
+            if (user.type == "brand") filterVal = (value.requestStatusBrand == 'Overdue');
+            if (user.type == "press" || user.type == "prAgency")  filterVal = (value.requestStatusPress == 'Overdue');
         }
         if (filter == 'OPEN REQUESTS') {
-          filterVal = (value.requestStatusBrand != 'Closed');
+            if (user.type == "brand") filterVal = (value.requestStatusBrand != 'Closed');
+            if (user.type == "press" || user.type == "prAgency") filterVal = (value.requestStatusPress != 'Closed');
+        }
+        if (filter == 'CLOSED REQUESTS') {
+            if (user.type == "brand") filterVal = (value.requestStatusBrand == 'Closed');
+            if (user.type == "press" || user.type == "prAgency") filterVal = (value.requestStatusPress == 'Closed');
         }
 
         return (searchVal && filterVal); 
@@ -84,6 +90,7 @@ export class Index {
                     if (event.detail.value == 'MY REQUESTS') this.filtering = 'MY REQUESTS'; 
                     if (event.detail.value == 'OVERDUE REQUESTS') this.filtering = 'OVERDUE REQUESTS';  
                     if (event.detail.value == 'OPEN REQUESTS') this.filtering = 'OPEN REQUESTS'; 
+                    if (event.detail.value == 'CLOSED REQUESTS') this.filtering = 'CLOSED REQUESTS'; 
                     console.log("value:" + event.detail.value + " filtering: " +this.filtering);
                 } 
   }

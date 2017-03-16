@@ -90,6 +90,7 @@ export class Requestman{
 
         this.subscriber = this.ea.subscribe('datepicker', response => {
             //console.log("datepicker event: " + response.elementId + " : " + response.elementValue);
+            this.closeExpanded ();
             var fireChange = false;
             if (response.elementId === 'datepickersearchto') {
                   this.searchTo = response.elementValue;
@@ -149,7 +150,7 @@ export class Requestman{
 
 
   filterChange(event){
-      console.log("changing filter: " + this.searchFrom + " to " + this.searchTo);
+      console.log("changing filterChange (dates: " + this.searchFrom + " to " + this.searchTo);
       this.closeExpanded ();
           if (event)
             if (event.detail)
@@ -157,7 +158,8 @@ export class Requestman{
                     if (event.detail.value == 'ALL REQUESTS') this.filtering = '';
                     if (event.detail.value == 'MY REQUESTS') this.filtering = 'MY REQUESTS'; 
                     if (event.detail.value == 'OVERDUE REQUESTS') this.filtering = 'OVERDUE REQUESTS';  
-                    if (event.detail.value == 'OPEN REQUESTS') this.filtering = 'OPEN REQUESTS'; 
+                    if (event.detail.value == 'OPEN REQUESTS') this.filtering = 'OPEN REQUESTS';  
+                    if (event.detail.value == 'CLOSED REQUESTS') this.filtering = 'CLOSED REQUESTS'; 
                     //console.log("value:" + event.detail.value + " filtering: " +this.filtering);
                 } 
   }
@@ -208,10 +210,16 @@ export class Requestman{
       filterVal = (value.requestingUser.id == user.id);
     }
     if (filter == 'OVERDUE REQUESTS') {
-      filterVal = (value.requestStatusBrand == 'Overdue');
+      if (user.type == "brand") filterVal = (value.requestStatusBrand == 'Overdue');
+      if (user.type == "press" || user.type == "prAgency") filterVal = (value.requestStatusPress == 'Overdue');
     }
     if (filter == 'OPEN REQUESTS') {
-      filterVal = (value.requestStatusBrand != 'Closed');
+      if (user.type == "brand") filterVal = (value.requestStatusBrand != 'Closed');
+      if (user.type == "press" || user.type == "prAgency") filterVal = (value.requestStatusPress != 'Closed');
+    }
+    if (filter == 'CLOSED REQUESTS') {
+      if (user.type == "brand")  filterVal = (value.requestStatusBrand == 'Closed');
+      if (user.type == "press" || user.type == "prAgency")  filterVal = (value.requestStatusPress == 'Closed');
     }
     //console.log(" filterfunc return value: " +  searchVal + " " + filterVal + " :: " + (searchVal && filterVal));
     return (searchVal && filterVal); 
