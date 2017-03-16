@@ -143,7 +143,7 @@ export class Requestman{
       if (this.searchFrom) dates = "From: " + this.searchFrom;
       if (this.searchTo) dates = dates + " to " + this.searchTo;
       var headerText = '';
-      if (this.user.type == 'brand' || this.user.type == 'prAgency') headerText = '';
+      if (this.user.type == 'brand' || this.user.type == 'prAgency') headerText = 'ID   LOOK   DUE DATE        EDITORIAL           COMPANY      WHO   #     STATUS';
       if (this.user.type == 'press') headerText = 'ID   LOOK   REQUESTED   BRAND           EDITORIAL           OWNER   #     STATUS';
       this.pDFService.generatePDF(container, this.user.name, this.user.surname, dates, search, filter, headerText );
       console.log("container to text: " + container);
@@ -221,6 +221,8 @@ export class Requestman{
     if (value.returnToName) itemValue = itemValue + value.returnToName;
     if (value.returnToSurname) itemValue = itemValue + value.returnToSurname;
     if (value.addressDestination) itemValue = itemValue + value.addressDestination.name;
+    if (value.id) itemValue = itemValue + value.id; 
+    if (value.look) itemValue = itemValue + value.look;//RM check added to index small request man
 
     //console.log("Search value: " + itemValue);
     if(searchExpression && itemValue) searchVal = itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;   
