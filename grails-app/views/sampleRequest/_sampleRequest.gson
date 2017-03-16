@@ -26,14 +26,14 @@ json g.render(sampleRequest,[expand:['searchableItemsStatus','searchableItemsPro
 		endDate sampleRequest.shippingReturn.endDate?.format('yyyy-MMM-dd HH:mm')
 	}
 	requestingUser{
-		id sampleRequest.requestingUser.id
-		name sampleRequest.requestingUser.name
-		surname sampleRequest.requestingUser.surname
+		id sampleRequest.requestingUser?.id
+		name sampleRequest.requestingUser?.name
+		surname sampleRequest.requestingUser?.surname
 	}
 	deliverTo{
-		id sampleRequest.deliverTo.id
-		name sampleRequest.deliverTo.name
-		surname sampleRequest.deliverTo.surname
+		id sampleRequest.deliverTo?.id
+		name sampleRequest.deliverTo?.name
+		surname sampleRequest.deliverTo?.surname
 	}
 
 }
