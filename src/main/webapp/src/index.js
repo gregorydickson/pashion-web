@@ -55,10 +55,10 @@ export class Index {
         if (searchExpression == '' && filter == '') return true;
         var itemValue ='';
         if (value.pressHouse) itemValue = value.pressHouse.name;
-        if (value.brand)  itemValue = itemValue + value.brand.name;
-        if (value.prAgency) itemValue = itemValue + value.prAgency.name;
-        if (value.id) itemValue = itemValue + value.id;
-        if (value.look) itemValue = itemValue + value.look;
+        if (value.brand)  itemValue = itemValue + ' ' + value.brand.name;
+        if (value.prAgency) itemValue = itemValue + ' ' + value.prAgency.name;
+        if (value.id) itemValue = itemValue + ' ' + value.id;
+        if (value.look) itemValue = itemValue + ' ' + value.look;
         // console.log("Filter value: " + itemValue);
         if(searchExpression && itemValue) searchVal = itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;    
 
