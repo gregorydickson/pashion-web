@@ -1,5 +1,7 @@
 <!-- requestman.html -->
 <template>
+
+
     <require from="./common/viewDateFormatter"></require>
     <require from="./common/seasonAbbreviationFormatter"></require>
     <require from="./calendars/datepicker"></require>
@@ -134,6 +136,9 @@
                             <div class="" style="margin: 0 1rem 2rem 0; height:28px; min-height:28px;">
                                 <filters-search-to></filters-search-to>
                             </div>
+                            <div class="grid-content shrink">
+                                    <button id="btn-pdf" class="small button hollow" click.delegate="createPDFDialog()">Create PDF</button>
+                            </div> 
                         </div>
                         <!-- Accordion -->
                         <!--Header -->
@@ -172,17 +177,17 @@
                             </div>                            
                             <!-- Content Container-->
                             <!-- Rows of content BRAND View-->
-                            <div class="grid-content" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left: 1rem; margin-right: 1rem;">
+                            <div  class="grid-content" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left: 1rem; margin-right: 1rem;">
                                 
                                 <div repeat.for="booking of bookings | sort:ordering:'ascending' | filter:searchTextReqMan:filterFunc:filtering:user
                                 | range:searchFrom:searchTo:filterRangeFunc">
                                     <table  class="big-accordion" style="table-layout: fixed;">
-                                        <tr>
+                                        <tr class="brandGridContent">
                                             <td class="accordion-grey w3">
                                                 <button id="button${$index}" class="accordion" click.delegate="closeExpand($index,booking)"></button>
                                             </td>
-                                            <td class="accordion-grey w6">${booking.id}</td>
-                                            <td if.bind="user.type === 'brand'" class="accordion-grey w7">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
+                                            <td class="bGCId accordion-grey w6">${booking.id}</td>
+                                            <td if.bind="user.type === 'brand'" class="bGCSeason accordion-grey w7">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
                                             <td if.bind="(user.type === 'press') || (user.type === 'agency')" class="accordion-grey w7">${booking.look}</td>
 
                                             <td class="accordion-grey w13">${booking.bookingStartDate | viewDateFormat}</td>

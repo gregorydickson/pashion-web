@@ -9,8 +9,9 @@ import {busy} from './services/busy';
 import { CreateDialogAlert } from './common/dialogAlert';
 import { HttpClient } from 'aurelia-fetch-client';
 import { EventAggregator } from 'aurelia-event-aggregator';
+import {PDFService} from './services/PDFService';
 
-@inject(HttpClient, DialogService, UserService, SampleRequestService,busy, EventAggregator)
+@inject(HttpClient, DialogService, UserService, PDFService, SampleRequestService,busy, EventAggregator)
 export class Requestman{
 	  
   @bindable({defaultBindingMode: bindingMode.twoWay}) bookings = [];
@@ -31,7 +32,7 @@ export class Requestman{
 
 
 
-  constructor(http,dialogService,userService,sampleRequestService,busy,eventAggregator) {
+  constructor(http,dialogService,userService,pDFService, sampleRequestService,busy,eventAggregator) {
     http.configure(config => {
             config
                 .useStandardConfiguration();
@@ -43,6 +44,7 @@ export class Requestman{
     this.sampleRequestService = sampleRequestService;
     this.busy = busy;
     this.ea = eventAggregator;
+    this.pDFService = pDFService;
 
   }
 
@@ -90,6 +92,7 @@ export class Requestman{
 
         this.subscriber = this.ea.subscribe('datepicker', response => {
             //console.log("datepicker event: " + response.elementId + " : " + response.elementValue);
+            this.closeExpanded ();
             var fireChange = false;
             if (response.elementId === 'datepickersearchto') {
                   this.searchTo = response.elementValue;
@@ -130,6 +133,23 @@ export class Requestman{
                 }          
     } */
 
+    createPDFDialog() {
+      var container = document.getElementsByClassName ('brandGridContent');
+      var dates ='';
+      var filter = '';
+      if (this.filtering) filter = "Filter: " + this.filtering;
+      var search = '';
+      if (this.searchTextReqMan) search = "Search: '" + this.searchTextReqMan +"'";
+      if (this.searchFrom) dates = "From: " + this.searchFrom;
+      if (this.searchTo) dates = dates + " to " + this.searchTo;
+      var headerText = '';
+      if (this.user.type == 'brand' || this.user.type == 'prAgency') headerText = '';
+      if (this.user.type == 'press') headerText = 'ID   LOOK   REQUESTED   BRAND           EDITORIAL           OWNER   #     STATUS';
+      this.pDFService.generatePDF(container, this.user.name, this.user.surname, dates, search, filter, headerText );
+      console.log("container to text: " + container);
+    }
+
+
       orderChange(event) {
         console.log("Order changed ");
         this.closeExpanded ();
@@ -149,7 +169,7 @@ export class Requestman{
 
 
   filterChange(event){
-      console.log("changing filter: " + this.searchFrom + " to " + this.searchTo);
+      console.log("changing filterChange (dates: " + this.searchFrom + " to " + this.searchTo);
       this.closeExpanded ();
           if (event)
             if (event.detail)
@@ -157,7 +177,8 @@ export class Requestman{
                     if (event.detail.value == 'ALL REQUESTS') this.filtering = '';
                     if (event.detail.value == 'MY REQUESTS') this.filtering = 'MY REQUESTS'; 
                     if (event.detail.value == 'OVERDUE REQUESTS') this.filtering = 'OVERDUE REQUESTS';  
-                    if (event.detail.value == 'OPEN REQUESTS') this.filtering = 'OPEN REQUESTS'; 
+                    if (event.detail.value == 'OPEN REQUESTS') this.filtering = 'OPEN REQUESTS';  
+                    if (event.detail.value == 'CLOSED REQUESTS') this.filtering = 'CLOSED REQUESTS'; 
                     //console.log("value:" + event.detail.value + " filtering: " +this.filtering);
                 } 
   }
@@ -208,10 +229,16 @@ export class Requestman{
       filterVal = (value.requestingUser.id == user.id);
     }
     if (filter == 'OVERDUE REQUESTS') {
-      filterVal = (value.requestStatusBrand == 'Overdue');
+      if (user.type == "brand" || user.type == "prAgency") filterVal = (value.requestStatusBrand == 'Overdue');
+      if (user.type == "press" ) filterVal = (value.requestStatusPress == 'Overdue');
     }
     if (filter == 'OPEN REQUESTS') {
-      filterVal = (value.requestStatusBrand != 'Closed');
+      if (user.type == "brand"  || user.type == "prAgency") filterVal = (value.requestStatusBrand != 'Closed');
+      if (user.type == "press") filterVal = (value.requestStatusPress != 'Closed');
+    }
+    if (filter == 'CLOSED REQUESTS') {
+      if (user.type == "brand" || user.type == "prAgency")  filterVal = (value.requestStatusBrand == 'Closed');
+      if (user.type == "press" )  filterVal = (value.requestStatusPress == 'Closed');
     }
     //console.log(" filterfunc return value: " +  searchVal + " " + filterVal + " :: " + (searchVal && filterVal));
     return (searchVal && filterVal); 
