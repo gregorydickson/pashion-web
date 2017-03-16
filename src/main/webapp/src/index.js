@@ -64,16 +64,16 @@ export class Index {
           filterVal = (value.requestingUser.id == user.id);
         }
         if (filter == 'OVERDUE REQUESTS') {
-            if (user.type == "brand") filterVal = (value.requestStatusBrand == 'Overdue');
-            if (user.type == "press" || user.type == "prAgency")  filterVal = (value.requestStatusPress == 'Overdue');
+            if (user.type == "brand" || user.type == "prAgency") filterVal = (value.requestStatusBrand == 'Overdue');
+            if (user.type == "press" )  filterVal = (value.requestStatusPress == 'Overdue');
         }
         if (filter == 'OPEN REQUESTS') {
-            if (user.type == "brand") filterVal = (value.requestStatusBrand != 'Closed');
-            if (user.type == "press" || user.type == "prAgency") filterVal = (value.requestStatusPress != 'Closed');
+            if (user.type == "brand" || user.type == "prAgency") filterVal = (value.requestStatusBrand != 'Closed');
+            if (user.type == "press" ) filterVal = (value.requestStatusPress != 'Closed');
         }
         if (filter == 'CLOSED REQUESTS') {
-            if (user.type == "brand") filterVal = (value.requestStatusBrand == 'Closed');
-            if (user.type == "press" || user.type == "prAgency") filterVal = (value.requestStatusPress == 'Closed');
+            if (user.type == "brand" || user.type == "prAgency") filterVal = (value.requestStatusBrand == 'Closed');
+            if (user.type == "press") filterVal = (value.requestStatusPress == 'Closed');
         }
 
         return (searchVal && filterVal); 
