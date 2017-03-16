@@ -197,8 +197,8 @@
                                             <td if.bind="user.type === 'brand'" class="accordion-grey w14">${booking.pressHouse.name}</td>
                                             <td class="accordion-grey w13">${booking.requestingUser.name} ${booking.requestingUser.surname}</td>
                                             <td class="accordion-grey w5">${booking.searchableItems.length}</td>
-                                            <td if.bind="(user.type === 'press') || (user.type === 'agency')" class="accordion-grey ui-text-label-m-blue w14 to-u-c" style="font-weight:500;">${booking.requestStatusPress}</td>
-                                            <td if.bind="user.type === 'brand'" class="accordion-grey ui-text-label-m-blue w14 to-u-c" style="font-weight:500;">${booking.requestStatusBrand}</td>
+                                            <td if.bind="(user.type === 'press') || (user.type === 'agency')" class.bind="(booking.requestStatusPress=='Pending') ? 'accordion-grey ui-text-label-m-blue w14 to-u-c' :'accordion-grey w14 to-u-c'">${booking.requestStatusPress}</td>
+                                            <td if.bind="user.type === 'brand'" class.bind="(booking.requestStatusBrand=='Pending') ? 'accordion-grey ui-text-label-m-blue w14 to-u-c' :'accordion-grey w14 to-u-c'" >${booking.requestStatusBrand}</td>
                                             <td class="accordion-grey w5"> 
                                                 <div class="look-menu-absolute-wrap">
                                                     <span class="edit-box" ><a href="#" click.delegate="lookEditMenu(booking.id)">...</a></span>

@@ -108,7 +108,7 @@
                                 </td>
                                 <td class="accordion w18">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
                                 <td class="accordion w35">${booking.bookingStartDate | viewDateFormat}</td>
-                                <td class="accordion w30 ui-text-label-m-blue" style="font-weight:500">${booking.requestStatusBrand}</td>
+                                <td class.bind="(booking.requestStatusBrand=='Pending') ? 'accordion ui-text-label-m-blue w30 to-u-c' :'accordion w30 to-u-c'">${booking.requestStatusBrand}</td>
                                 <td class="accordion w10">
                                     <div class="look-menu-absolute-wrap">
                                         <span class="edit-box" ><a href="#" click.delegate="sampleRequestMenu(booking.id)">...</a></span>
@@ -169,7 +169,7 @@
                                 </td>
                                 <td class="accordion w15">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
                                 <td class="accordion w35">${booking.bookingStartDate | viewDateFormat}</td>
-                                <td class="accordion w30 ui-text-label-m-blue" style="font-weight:500">${booking.requestStatusPress}</td>
+                                <td class.bind="(booking.requestStatusPress=='Pending') ? 'accordion ui-text-label-m-blue w30 to-u-c' :'accordion w30 to-u-c'" >${booking.requestStatusPress}</td>
                                 <td class="accordion w10">
                                     <div class="look-menu-absolute-wrap">
                                         <span class="edit-box" ><a href="#" click.delegate="sampleRequestMenu(booking.id)">...</a></span>
