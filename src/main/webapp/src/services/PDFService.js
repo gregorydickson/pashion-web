@@ -30,12 +30,12 @@ export class PDFService{
       doc.setFontSize('10');
 
       // Header //
-      var yGap = 10;
+      var yGap = 7;
       var pageHeight = doc.internal.pageSize.height;
       var pageCount = 1;
-      var pageKeepOut = 10;  
+      var pageKeepOut = 20;  
       var margin = 5;
-      var y = pageKeepOut;  
+      var y = 10;  // top margin first page  
       var x = margin;
       console.log("Doc page height: " + pageHeight);
       //doc.addImage("/assets/PashionRMPlainBlack.png", 'PNG', 10,10, 131,22);
@@ -43,12 +43,12 @@ export class PDFService{
         'PNG', x,y, 65,11);
 
       y = y + 20;
-      doc.text("Request Report", x, y);
+      doc.text("Sample Requests Report: " + nodeList.length + " entries", x, y);
 
       y = y + yGap;     
       var today = new Date();
 
-      today = moment(today).format('DD-MMM-YYYY');
+      today = moment(today).format('DD-MMM-YYYY HH:mm');
 
       doc.text("Created: " + today, x, y);
 
@@ -79,7 +79,7 @@ export class PDFService{
       for (i = 0; i < nodeList.length; i++) {
 
         // New Page?
-        if (y >= (pageHeight * pageCount - pageKeepOut)) {
+        if (y >= (pageHeight - pageKeepOut)) {
           // New page
           doc.addPage(); // RM better math here
           pageCount = pageCount + 1;
