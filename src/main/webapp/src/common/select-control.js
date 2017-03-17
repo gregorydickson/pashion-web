@@ -5,17 +5,10 @@ import 'select2';
 /*
  Based off of: https://gist.github.com/mujimu/c2da3ecb61f832bac9e0
 */
-<<<<<<< HEAD:src/main/webapp/src/common/select-control.js
 @customElement('select-control')
 //@inject(Element, TaskQueue)
 @inject(Element)
 export class SelectControl { 
-=======
-@customElement('select2')
-@inject(Element, TaskQueue)
-//@inject(Element)
-export class Select2CustomMultiselect {
->>>>>>> origin/jason-fixes:src/main/webapp/src/common/select2.js
     selectDefaultOptions = { };
     //selectDefaultOptions = { tags: true } // Requires SELECT2 v4.0+;
     @bindable name = null;    // name/id of custom select
