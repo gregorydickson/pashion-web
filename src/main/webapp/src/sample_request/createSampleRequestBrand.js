@@ -26,11 +26,12 @@ export class CreateSampleRequestBrand {
   selectedDeliverToItems = [];
   availableReturnToItems = [];
   selectedReturnToItems = [];
+  
 
   brand = [];
-  brandAddresses = [];
+  
   returnBy = [];
-  returnTo = [];
+  
   courier = [];
   payment = [];
 
@@ -38,6 +39,7 @@ export class CreateSampleRequestBrand {
   email = null;
   
   @bindable selectedAddress = {};
+  returnToAddress = null;
 
 
   sampleRequest = {};
@@ -64,7 +66,6 @@ export class CreateSampleRequestBrand {
   }
 
   activate(item){
-
     var queryString = DateFormat.urlString(0, 2)+'&searchType=brand';
   
     this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+item.id)
@@ -90,19 +91,7 @@ export class CreateSampleRequestBrand {
       this.sampleRequest.courierReturn = "Scooter";
 
     });
-    this.http.fetch('/dashboard/returnTo').then(response => response.json()).then(returnTo => {
-        this.returnTo = returnTo;
-
-        returnTo.forEach(item => {
-              this.availableReturnToItems.push({
-                id: item.id,
-                text: item.name
-              });
-            });
-        
-        //$("#returnTo").find('select').trigger('change');
-
-    });
+    
     this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => {
       this.payment = payment;
       this.sampleRequest.paymentOut = "50/50";
@@ -114,21 +103,40 @@ export class CreateSampleRequestBrand {
       .then(item => {
           this.currentItem = item;   
 
-          return this.http.fetch('/dashboard/deliverToBrand/'+item.brand.id).then(response => response.json()).then(deliverTo =>{ 
+          this.http.fetch('/dashboard/deliverToBrand/'+item.brand.id).then(response => response.json()).then(deliverTo =>{ 
             this.deliverTo = deliverTo;
 
             deliverTo.forEach(item => {
-              this.availableDeliverToItems.push({
+              if(item.surname){
+                this.availableDeliverToItems.push({
+                  id: item.id,
+                  text: item.name + " " + item.surname
+                });
+              } else {
+                this.availableDeliverToItems.push({
+                  id: item.id,
+                  text: item.name
+                });
+              }
+            });
+
+            this.selectedDeliverToItems = [50];
+
+            
+          });
+
+          this.brandService.getBrandAddresses(item.brand.id).then(addresses => {
+            this.returnTo = addresses;
+
+            addresses.forEach(item => {
+              this.availableReturnToItems.push({
                 id: item.id,
                 text: item.name
               });
             });
-            
 
-            //$("#deliverTo").find('select').trigger('change');
           });
-
-          this.brandService.getBrandAddresses(item.brand.id).then(addresses => this.brandAddresses = addresses);
+          
           this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);
           this.sampleRequest.samples = [];
           var ids = this.sampleRequest.samples;
@@ -146,12 +154,10 @@ export class CreateSampleRequestBrand {
 
       if (event.detail) {
           let selectedDeliverToId = event.detail.value;
-          let selectedBrand = this.deliverTo.find(item => item.id == selectedDeliverToId);
-          console.log('Selected brand:', selectedBrand);
+          let selectedDeliverTo = this.deliverTo.find(item => item.id == selectedDeliverToId);
+          console.log('Selected deliverTo:', selectedDeliverTo);
 
-          this.selectedAddress.address1 = selectedBrand.address1;
-          this.selectedAddress.city = selectedBrand.city;
-          this.selectedAddress.postalCode = selectedBrand.postalCode;
+          this.selectedAddress = selectedDeliverTo;
       }
   }
 
@@ -160,12 +166,11 @@ export class CreateSampleRequestBrand {
 
       if (event.detail) {
           let selectedReturnToId = event.detail.value;
-          let selectedBrand = this.returnTo.find(item => item.id == selectedReturnToId);
-          console.log('Selected brand:', selectedBrand);
+          let selectedReturnTo = this.returnTo.find(item => item.id == selectedReturnToId);
+          console.log('Selected returnTo:',selectedReturnTo);
+          this.sampleRequest.returnToAddress = selectedReturnToId;
 
-          //this.selectedAddress.address1 = selectedBrand.address1;
-          //this.selectedAddress.city = selectedBrand.city;
-          //this.selectedAddress.postalCode = selectedBrand.postalCode;
+          
       }
   }
 
@@ -194,16 +199,54 @@ export class CreateSampleRequestBrand {
               if (!response.wasCancelled) {
                 this.deliverTo = response.output;
                 this.selectedAddress = newAddressModel.newAddress;
-                console.log('good - ', response.output);
+                console.log('good - ', response.output, newAddressModel);
+
+                // Grab the latest deliver to items
+                // This value is returned from the modal I think
+                // but that may be changed to just return the newly added item
+                // only or it's ID so let's use a separate call for now.
+                this.loadDeliverTos().then(() => {
+                  // Get the latest item based on the id
+                  let newestDeliverTo = this.availableDeliverToItems.reduce(function(max, x) {
+                      return x.id > max.id ? x : max;
+                  });
+
+                  console.log('Newest deliver to:', newestDeliverTo);
+                  
+                  this.selectedDeliverToItems = [newestDeliverTo.id];
+                });
+
               } else {
                 console.log('bad');
               }
                
             });
-    
-    
+  }
 
+  loadDeliverTos() {
+    let item = this.currentItem;
 
+    return this.http.fetch('/dashboard/deliverToBrand/'+item.brand.id).then(response => response.json())
+      .then(deliverTo =>{ 
+          this.deliverTo = deliverTo;
+          this.availableDeliverToItems = [];
+          this.selectedDeliverToItems = [];
+
+          deliverTo.forEach(item => {
+            if(item.surname){
+              this.availableDeliverToItems.push({
+                id: item.id,
+                text: item.name + " " + item.surname
+              });
+            } else {
+              this.availableDeliverToItems.push({
+                id: item.id,
+                text: item.name
+              });
+            }
+          });
+    });
+   
   }
 
   setStartDate(event,day){

@@ -41,7 +41,7 @@ class SampleRequestService {
         sr.requiredBy = jsonObject.requiredBy
         
         sr.returnToAddress = Address.get(jsonObject.returnToAddress.toInteger())
-        if(jsonObject?.deliverTo?.name) {
+        if(jsonObject?.deliverTo?.surname != null) {
             def aUser = User.get(jsonObject.deliverTo.id.toInteger())
             if(aUser.pressHouse) {
                 sr.pressHouse = aUser.pressHouse
