@@ -3,7 +3,7 @@
 <require from="../common/formSelectSampleRequest"></require>
 <require from="../common/formSelectSample"></require>
 <require from="../common/formSelectObject"></require>
-<require from="../common/select2"></require>
+<require from="../common/select-control"></require>
     
    <ai-dialog>
         <ai-dialog-header>
@@ -72,13 +72,13 @@
                     <span class="inline-label" style="">
                         <span class="slim-text-box-label">Deliver To</span>
 
-                        <select2 ref="selectControl" name="deliverTo"
+                        <select-control ref="selectControl" name="deliverTo"
                             change.delegate="onDeliverToChangeCallback($event)"                      
                             selected.bind="selectedDeliverToItems" 
                             options.bind="availableDeliverToItems" 
                             placeholder="Select one" 
                             allow_clear="true">
-                        </select2>
+                        </select-control>
 
                         <!--<form-select-sr class="slim-box" 
                         name="deliverTo" 
@@ -227,13 +227,13 @@
                     <span class="inline-label">
                         <span class="slim-text-box-label">Return To</span>
 
-                        <select2 ref="selectControlReturnTo" name="returnToAddress"
+                        <select-control ref="selectControlReturnTo" name="returnToAddress"
                             change.delegate="onReturnToChangeCallback($event)"                      
                             selected.bind="selectedReturnToItems" 
                             options.bind="availableReturnToItems" 
                             placeholder="Select one" 
                             allow_clear="true">
-                        </select2>
+                        </select-control>
                         <!--<form-select-sr 
                         id="returnTo" class="to-u-c" 
                         name="returnToAddress" 

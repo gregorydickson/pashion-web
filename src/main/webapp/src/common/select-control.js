@@ -5,10 +5,10 @@ import 'select2';
 /*
  Based off of: https://gist.github.com/mujimu/c2da3ecb61f832bac9e0
 */
-@customElement('select2')
+@customElement('select-control')
 //@inject(Element, TaskQueue)
 @inject(Element)
-export class Select2CustomMultiselect {
+export class SelectControl { 
     selectDefaultOptions = { };
     //selectDefaultOptions = { tags: true } // Requires SELECT2 v4.0+;
     @bindable name = null;    // name/id of custom select
