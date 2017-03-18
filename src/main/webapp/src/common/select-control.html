@@ -1,11 +1,17 @@
-<template>
+<template>   
+    <style>
+        select2 {
+            /*width:auto !important;*/
+        }
+    </style>
     <select 
         value.bind="selected" 
         name.one-way="name" 
         id.one-way="name"  
         data-placeholder.one-way="placeholder" 
         data-allow-clear.one-way="allow_clear" 
-        size="1">
+        size="1"
+        >
         <optgroup label.bind="group.text" repeat.for="group of options" if.bind="grouping">
             <option repeat.for="option of group.children" value.bind="option.id">${option.text}</option>
         </optgroup>   

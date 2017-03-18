@@ -1,14 +1,14 @@
 import {bindable, inject, customElement, TaskQueue} from 'aurelia-framework';
 import $ from 'jquery';
-import 'select2';
+import 'select2'; 
 
 /*
  Based off of: https://gist.github.com/mujimu/c2da3ecb61f832bac9e0
 */
-@customElement('select2')
-@inject(Element, TaskQueue)
-//@inject(Element)
-export class Select2CustomMultiselect {
+@customElement('select-control')
+//@inject(Element, TaskQueue)
+@inject(Element)
+export class SelectControl { 
     selectDefaultOptions = { };
     //selectDefaultOptions = { tags: true } // Requires SELECT2 v4.0+;
     @bindable name = null;    // name/id of custom select
@@ -29,7 +29,7 @@ export class Select2CustomMultiselect {
     }
 
     selectedChanged(value) {    
-        console.log('Select2CustomMultiselect.selectedChanged(): Selected values changed');
+        console.log('SelectControl.selectedChanged(): Selected values changed');
 
         let el = $(this.element).find('select');
 
@@ -99,11 +99,11 @@ export class Select2CustomMultiselect {
             //this.bindingContext[this.element.getAttribute('value.bind')] = value;
         });
        
-        console.log('Select2CustomMultiselect.attached(): Component attached');
+        console.log('SelectControl.attached(): Component attached');
     }
 
     detached() {
         $(this.element).find('select').select2('destroy');
-        console.log('Select2CustomMultiselect.detached(): Component dettached');
+        console.log('SelectControl.detached(): Component dettached');
     }
 }

@@ -5,6 +5,7 @@
 <require from="../common/formSelect"></require>
 <require from="../common/formSelectObject"></require>
 <require from="../common/formSelectSample"></require>
+<require from="../common/select-control"></require>
 <!-- <require from="./set-attribute"></require> -->
 <!-- <require from="./truncate"></require> -->
     
@@ -90,8 +91,22 @@
                     <div class="grid-block shrink"> 
                         <div class="inline-label">
                             <span class="slim-text-box-label">Type</span>
-                            <form-select class="to-u-c" name="type" selected.two-way="selectedSample.sampleType" options.bind="sampleTypes" >
-                            <!-- </form-select> -->
+
+                            <select-control ref="sampleTypeSelectControl" name="type"
+                                class="to-u-c" 
+                                change.delegate="onSampleTypeChangeCallback($event)"                      
+                                selected.bind="selectedSampleTypeItems" 
+                                options.bind="availableSampleTypeItems" 
+                                placeholder="Select one" 
+                                allow_clear="true" style="min-width:160px;">
+                            </select-control>
+
+                            <!--<form-select 
+                            class="to-u-c" 
+                            name="type" 
+                            selected.two-way="selectedSample.sampleType" 
+                            options.bind="sampleTypes" >
+                            </form-select>-->
                         </div>
                     </div> 
 
@@ -126,9 +141,18 @@
                         <span class="inline-label" >
                             <span class="slim-text-box-label">New Colour</span>
 
+                            <select-control ref="newColorSelectControl" name="newColor"
+                                class="to-u-c" 
+                                change.delegate="onNewColorChangeCallback($event)"                      
+                                selected.bind="selectedNewColorItems" 
+                                options.bind="availableNewColorItems" 
+                                placeholder="Select one" 
+                                allow_clear="true" style="min-width:160px;">
+                            </select-control>
 
-                            <form-select class="to-u-c" name="colour" selected.two-way="addColor" options.bind="colors" ></form-select>
-
+                            <!--<form-select class="to-u-c" name="colour" 
+                            selected.two-way="addColor" 
+                            options.bind="colors" ></form-select>-->
 
                             <a style= "width: 30px; margin-left: 1rem;" click.delegate="colorAdd(selectedSample)">Add</a>
                         </span>
@@ -139,9 +163,18 @@
                      <div class="grid-block shrink" >                        
                         <span class="inline-label">
                             <span class="slim-text-box-label">Material</span>
-                            <div>
+                            <select-control ref="materialSelectControl" name="material"
+                                class="to-u-c" 
+                                change.delegate="onMaterialChangeCallback($event)"                      
+                                selected.bind="selectedMaterialItems" 
+                                options.bind="availableMaterialItems" 
+                                placeholder="Select one" 
+                                allow_clear="true" style="min-width:160px;">
+                            </select-control>
+
+                            <!--<div>
                                 <input type="text" class="slim-text-box to-u-c" disabled value.bind="selectedSample.material">
-                            </div>
+                            </div>-->
                             <a style= "width: 30px; margin-left: 1rem; padding-bottom: 6px;" click.delegate="materialClear(selectedSample)">Clear</a>
                         </span>
                     </div>

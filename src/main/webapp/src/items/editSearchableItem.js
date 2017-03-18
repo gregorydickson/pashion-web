@@ -17,7 +17,14 @@ export class EditSearchableItem {
 
   itemTypes = [];
   sampleTypes = [];
-  
+
+  availableSampleTypeItems = [];
+  selectedSampleTypeItems = [];
+  availableNewColorItems = [];
+  selectedNewColorItems = [];
+  availableMaterialItems = [];
+  selectedMaterialItems = [];
+
   colors = [];
   material = [];
   cities = [];
@@ -48,10 +55,39 @@ export class EditSearchableItem {
   activate(itemId){
     var queryString = DateFormat.urlString(0, 1);
     this.cityService.getCities().then(cities => this.cities = cities);
-    this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes);
-    this.http.fetch('/dashboard/sampleTypes').then(response => response.json()).then(sampleTypes => this.sampleTypes = sampleTypes);
-    this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors);
-    this.http.fetch('/dashboard/material').then(response => response.json()).then(material => this.material = material);
+    this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => {
+      this.itemTypes = itemTypes
+    });
+    this.http.fetch('/dashboard/sampleTypes').then(response => response.json()).then(sampleTypes => {
+      this.sampleTypes = sampleTypes
+
+       sampleTypes.forEach(item => {
+          this.availableSampleTypeItems.push({
+            id: item,
+            text: item
+          });
+        });
+    });
+    this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => {
+      this.colors = colors
+
+      colors.forEach(item => {
+          this.availableNewColorItems.push({
+            id: item,
+            text: item
+          });
+        });
+    });
+    this.http.fetch('/dashboard/material').then(response => response.json()).then(material => {
+      this.material = material
+
+      material.forEach(item => {
+          this.availableMaterialItems.push({
+            id: item,
+            text: item
+          });
+        });
+    });
     this.http.fetch('/searchableItem/fetchdeep/'+itemId+'.json')
       .then(response => response.json())
       .then(item => {
@@ -63,7 +99,6 @@ export class EditSearchableItem {
 
 
   alertP (message){
-
         this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Edit", message:message, timeout:5000} }).then(response => {});
     }
 
@@ -97,6 +132,38 @@ export class EditSearchableItem {
     }
   }
 
+  onSampleTypeChangeCallback(event) {   
+      console.log('onSampleTypeCallback() called:', event.detail.value);
+
+      if (event.detail) {
+          let selectedValue = event.detail.value;         
+          console.log('Selected value:', selectedValue);     
+
+          this.selectedSample.sampleType = selectedValue; 
+      }
+  }
+
+  onNewColorChangeCallback(event) {   
+      console.log('onNewColorChangeCallback() called:', event.detail.value);
+
+      if (event.detail) {
+          let selectedValue = event.detail.value;         
+          console.log('Selected value:', selectedValue);      
+
+          this.selectedSample.color = selectedValue;
+      }
+  }
+
+  onMaterialChangeCallback(event) {   
+      console.log('onMaterialChangeCallback() called:', event.detail.value);
+
+      if (event.detail) {
+          let selectedValue = event.detail.value;         
+          console.log('Selected value:', selectedValue);      
+
+          this.selectedSample.material = selectedValue;
+      }
+  }
 
   filterChangeType(event) {
     //console.log("Filter Change changing Type");
