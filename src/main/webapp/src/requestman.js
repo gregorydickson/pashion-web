@@ -134,7 +134,7 @@ export class Requestman{
     } */
 
     createPDFDialog() {
-      var container = document.getElementsByClassName ('brandGridContent');
+      //container = document.getElementsByClassName ('brandGridContent');
       var dates ='';
       var filter = '';
       if (this.filtering) filter = "Filter: " + this.filtering;
@@ -142,11 +142,11 @@ export class Requestman{
       if (this.searchTextReqMan) search = "Search: '" + this.searchTextReqMan +"'";
       if (this.searchFrom) dates = "From: " + this.searchFrom;
       if (this.searchTo) dates = dates + " to " + this.searchTo;
-      var headerText = '';
-      if (this.user.type == 'brand' || this.user.type == 'prAgency') headerText = 'ID   LOOK   DUE DATE        EDITORIAL           COMPANY      WHO   #     STATUS';
-      if (this.user.type == 'press') headerText = 'ID   LOOK   REQUESTED   BRAND           EDITORIAL           OWNER   #     STATUS';
-      this.pDFService.generatePDF(container, this.user.name, this.user.surname, dates, search, filter, headerText );
-      console.log("container to text: " + container);
+      // var headerText = {};
+      if (this.user.type == 'brand' || this.user.type == 'prAgency') var headerText = ['ID','LOOK','DUE DATE','COMPANY','EDITORIAL','WHO','#','STATUS'];
+      if (this.user.type == 'press') var headerText = ['ID','LOOK','REQUESTED','BRAND','EDITORIAL','OWNER','#','STATUS'];
+      this.pDFService.generatePDF(this.user.name, this.user.surname, dates, search, filter, headerText );
+      //console.log("container to text: " + container);
     }
 
 

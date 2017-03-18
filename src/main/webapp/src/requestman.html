@@ -150,8 +150,8 @@
                                         <td class="accordion-underline w6">ID</td>
                                         <td class="accordion-underline w7">LOOK</td>
                                         <td class="accordion-underline w13">DUE DATE</td>
-                                        <td class="accordion-underline w20">EDITORIAL</td>
                                         <td class="accordion-underline w14">COMPANY</td>
+                                        <td class="accordion-underline w20">EDITORIAL</td>
                                         <td class="accordion-underline w13">WHO</td>
                                         <td class="accordion-underline w5">#</td>
                                         <td class="accordion-underline w14">STATUS</td>
@@ -186,19 +186,25 @@
                                             <td class="accordion-grey w3">
                                                 <button id="button${$index}" class="accordion" click.delegate="closeExpand($index,booking)"></button>
                                             </td>
-                                            <td class="bGCId accordion-grey w6">${booking.id}</td>
-                                            <td if.bind="user.type === 'brand'" class="bGCSeason accordion-grey w7">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
-                                            <td if.bind="(user.type === 'press') || (user.type === 'agency')" class="accordion-grey w7">${booking.look}</td>
+                                            <td class="col1 accordion-grey w6">${booking.id}</td>
+                                            <td if.bind="user.type === 'brand'" class="col2 accordion-grey w7">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
+                                            <td if.bind="(user.type === 'press') || (user.type === 'agency')" class="col2 accordion-grey w7">${booking.look}</td>
 
-                                            <td class="accordion-grey w13">${booking.bookingStartDate | viewDateFormat}</td>
-                                            <td if.bind="(user.type === 'press') || (user.type === 'agency')" class="accordion-grey w14">${booking.brand.name}</td>
-                                            <td if.bind="booking.editorialName" class="accordion-grey w20">${booking.editorialName}</td>
-                                            <td if.bind="!booking.editorialName" class="accordion-grey w20">n/a</td>
-                                            <td if.bind="user.type === 'brand'" class="accordion-grey w14">${booking.pressHouse.name}</td>
-                                            <td class="accordion-grey w13">${booking.requestingUser.name} ${booking.requestingUser.surname}</td>
-                                            <td class="accordion-grey w5">${booking.searchableItems.length}</td>
-                                            <td if.bind="(user.type === 'press') || (user.type === 'agency')" class.bind="(booking.requestStatusPress=='Pending') ? 'accordion-grey ui-text-label-m-blue w14 to-u-c' :'accordion-grey w14 to-u-c'">${booking.requestStatusPress}</td>
-                                            <td if.bind="user.type === 'brand'" class.bind="(booking.requestStatusBrand=='Pending') ? 'accordion-grey ui-text-label-m-blue w14 to-u-c' :'accordion-grey w14 to-u-c'" >${booking.requestStatusBrand}</td>
+                                            <td class="col3 accordion-grey w13">${booking.bookingStartDate | viewDateFormat}</td>
+
+                                            <td if.bind="(user.type === 'press') || (user.type === 'agency')" class="col4 accordion-grey w14">${booking.brand.name}</td>
+                                            <td if.bind="user.type === 'brand'" class="col4 accordion-grey w14">${booking.pressHouse.name}</td>
+
+                                            <td if.bind="booking.editorialName" class="col5 accordion-grey w20">${booking.editorialName}</td>
+                                            <td if.bind="!booking.editorialName" class="col5 accordion-grey w20">n/a</td>
+
+                                            <td class="col6 accordion-grey w13">${booking.requestingUser.name} ${booking.requestingUser.surname}</td>
+
+                                            <td class="col7 accordion-grey w5">${booking.searchableItems.length}</td>
+
+                                            <td if.bind="(user.type === 'press') || (user.type === 'agency')" class.bind="(booking.requestStatusPress=='Pending') ? 'col8 accordion-grey ui-text-label-m-blue w14 to-u-c' :'col8 accordion-grey w14 to-u-c'">${booking.requestStatusPress}</td>
+                                            <td if.bind="user.type === 'brand'" class.bind="(booking.requestStatusBrand=='Pending') ? 'col8 accordion-grey ui-text-label-m-blue w14 to-u-c' :'col8 accordion-grey w14 to-u-c'" >${booking.requestStatusBrand}</td>
+
                                             <td class="accordion-grey w5"> 
                                                 <div class="look-menu-absolute-wrap">
                                                     <span class="edit-box" ><a href="#" click.delegate="lookEditMenu(booking.id)">...</a></span>
