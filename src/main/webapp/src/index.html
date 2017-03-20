@@ -104,7 +104,7 @@
                         <table class="accordion">
                             <tr>
                                 <td class="accordion w7">
-                                    <button id="button${booking.id}" class="accordion" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
+                                    <button id="button${booking.id}" class="accordion requestButton" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
                                 <td class="accordion w18">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
                                 <td class="accordion w35">${booking.bookingStartDate | viewDateFormat}</td>
@@ -132,7 +132,7 @@
                         </table>
 
                         <!-- expanding data -->
-                        <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
+                        <div id="panel${booking.id}" class="panel requestPanel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
                             <table class="accordion expanded" style="table-layout:fixed;">
                                 <tr >
                                     <td class="accordion" style="width:65px; max-width:65px; padding-top:10px;padding-left:10px;">${booking.pressHouse.name}</td>
@@ -165,7 +165,7 @@
                         <table class="accordion">
                             <tr>
                                 <td class="accordion w10">
-                                    <button id="button${booking.id}" class="accordion" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
+                                    <button id="button${booking.id}" class="accordion requestButton" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
                                 <td class="accordion w15">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
                                 <td class="accordion w35">${booking.bookingStartDate | viewDateFormat}</td>
@@ -190,7 +190,7 @@
                         </table>
 
                         <!-- expanding data -->
-                        <div id="panel${booking.id}" class="panel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
+                        <div id="panel${booking.id}" class="panel requestPanel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
                             <table class="accordion expanded" style="table-layout:fixed;">
                                 <tr >
                                     <td class="accordion" style="width:65px; max-width:65px; padding-top:10px;padding-left:10px;">${booking.brand.name}</td>

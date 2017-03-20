@@ -84,7 +84,7 @@ export class Index {
 
 
   filterChange(event){
-    this.closeAllOpen();
+    this.closeAllOpenRequestRows();
       console.log("changing filter: ");
           if (event)
             if (event.detail)
@@ -435,7 +435,7 @@ export class Index {
     }
   
   orderChange(event) {
-        this.closeAllOpen();
+        this.closeAllOpenRequestRows();
         console.log("Order changed ");
         if (event)
             if (event.detail)
@@ -611,11 +611,11 @@ export class Index {
         panelChoice.classList.toggle("show");
     }
 
-    closeAllOpen () {
-        var activeList = document.getElementsByClassName("active");
-        var showList = document.getElementsByClassName("show");
+    closeAllOpenRequestRows () {
+        var activeList = document.getElementsByClassName("active requestButton");
+        var showList = document.getElementsByClassName("show requestPanel");
         var numberElements = 0;
-        if (activeList) numberElements = activeList.length; // needed as activeList is dynamically updated HTMLLivecollection
+        if (activeList) numberElements = activeList.length; // needed as activeList is dynamically updated HTMLLiveCollection
         var i;
         if (numberElements > 0) {
             for (i=0; i < numberElements; i++){
