@@ -84,6 +84,7 @@ export class Index {
 
 
   filterChange(event){
+    this.closeAllOpen();
       console.log("changing filter: ");
           if (event)
             if (event.detail)
@@ -434,6 +435,7 @@ export class Index {
     }
   
   orderChange(event) {
+        this.closeAllOpen();
         console.log("Order changed ");
         if (event)
             if (event.detail)
@@ -607,6 +609,25 @@ export class Index {
         var panelChoice = document.getElementById("panel" + buttonNumber);
         buttonChoice.classList.toggle("active");
         panelChoice.classList.toggle("show");
+    }
+
+    closeAllOpen () {
+        var activeList = document.getElementsByClassName("active");
+        var showList = document.getElementsByClassName("show");
+        var numberElements = 0;
+        if (activeList) numberElements = activeList.length; // needed as activeList is dynamically updated HTMLLivecollection
+        var i;
+        if (numberElements > 0) {
+            for (i=0; i < numberElements; i++){
+                if (activeList) activeList[0].classList.toggle("active");
+            }
+        }
+        if (showList) numberElements = showList.length;
+        if (numberElements > 0) {
+            for (i=0; i < numberElements; i++){
+                if (showList) showList[0].classList.toggle("show");
+            }
+        }
     }
 
     lookMenu(id) {
