@@ -10,7 +10,7 @@ class TestController {
 	def stuartService
 
 	def stuart(){
-		stuartService.setup()
+		//stuartService.createLocation()
 		render 'done'
 	}
 

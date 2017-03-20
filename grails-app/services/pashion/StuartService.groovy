@@ -15,7 +15,7 @@ class StuartService {
      
     
     
-	def token(){
+	def newToken(){
 		def newToken = null
 		KeyValue.withTransaction { status ->
 			def current = KeyValue.findByItemKey("stuart")
@@ -38,11 +38,43 @@ class StuartService {
 			current.itemValue = token
 			current.save(failOnError: true, flush:true)
 		}
+		token = newToken
 		newToken
-
 	}
 
-	def test(){
-		
+
+	def createLocation(Address address, String placeTypeId){
+		if(token == null)
+			token = KeyValue.findByItemKey("stuart")?.itemValue
+		if(token == null)
+			newToken()
+
+		def addressStreet = address.address1 + " " + address.postalCode + " " + address.city
+
+		def newLocation = null
+	
+		def http = HttpBuilder.configure {
+	    	request.uri = uri
+	    	
+		}
+		newLocation = http.post {
+			request.headers['Authorization'] = 'Bearer ' + token
+    		request.uri.path = '/v1/places'
+    		request.contentType = 'application/x-www-form-urlencoded'
+    		request.body = [placeTypeId:placeTypeId,
+    						addressStreet:addressStreet,
+    						contactCompany:address.company,
+    						comment:address.comment,
+    						contactPhone:address.contactPhone,
+    						addressPostCode:address.postalCode]
+    		response.success { FromServer from, Object body ->
+    			log.info "Create Location id:"+body.id
+    			log.info "body:"+body
+        		return body.id
+    		}
+		}
+		newLocation
 	}
+
+	
 }
