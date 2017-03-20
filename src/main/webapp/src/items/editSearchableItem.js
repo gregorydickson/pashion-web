@@ -18,6 +18,8 @@ export class EditSearchableItem {
   itemTypes = [];
   sampleTypes = [];
 
+  availableSampleItems = [];
+  selectedSampleItems = [];
   availableSampleTypeItems = [];
   selectedSampleTypeItems = [];
   availableNewColorItems = [];
@@ -93,6 +95,13 @@ export class EditSearchableItem {
       .then(item => {
           this.currentItem = item;
           this.createdNew = false;
+
+          item.samples.forEach(item => {
+            this.availableSampleItems.push({
+              id: item.id,
+              text: item.attributes
+            });
+          });
     });
     
   }
@@ -130,6 +139,18 @@ export class EditSearchableItem {
         this.selectedSample = evt.detail.value;
         this.showSampleEdit = (this.selectedSample !== null);
     }
+  }
+
+  onSampleChangeCallback(event) {   
+      console.log('onSampleCallback() called:', event.detail.value);
+
+      if (event.detail) {
+          let selectedValue = event.detail.value;         
+          console.log('Selected value:', selectedValue);    
+
+          this.selectedSample =  this.availableSampleItems.find(x => x.id == selectedValue);
+          this.showSampleEdit = (this.selectedSample !== null);   
+      }
   }
 
   onSampleTypeChangeCallback(event) {   
@@ -184,8 +205,11 @@ export class EditSearchableItem {
       newsample.name = "NEW";
       newsample.description = "NEW";
       newsample.attributes = "NEW";
-      this.currentItem.samples.push(newsample)
-      this.selectedSample = newsample
+      this.currentItem.samples.push(newsample);    
+      this.selectedSample = newsample;
+      
+      this.availableSampleItems.push({ id: 0, text: newsample.attributes });
+      this.selectedSampleItems.push({ id: 0, text: newsample.attributes });
     }
   }
  

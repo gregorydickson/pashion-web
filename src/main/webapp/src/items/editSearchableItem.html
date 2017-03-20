@@ -50,14 +50,24 @@
                     <span class="inline-label">
                         <span class="slim-text-box-label">SAMPLES</span>
 
-
-
+                        <!--
+                            INFO: Wasn't sure if we wanted to use the newer
+                            select-control element for this one or not, but it's here
+                            in the event we do 
+                       
+                            <select-control ref="sampleSelectControl" name="sample"
+                                class="to-u-c" 
+                                change.delegate="onSampleChangeCallback($event)"                      
+                                selected.bind="selectedSampleItems" 
+                                options.bind="availableSampleItems" 
+                                placeholder="SELECT SAMPLE" 
+                                allow_clear="true" style="min-width:160px;">
+                            </select-control>
+                        -->
                       
                     <form-select-sample class="to-u-c" name="sample" selected.bind="selectedSample" options.bind="currentItem.samples" place-holder="SELECT SAMPLE"
                         change.delegate="sample2Callback($event)">
                     </form-select-sample>
-                       
-
 
                         <a style= "width: 30px; margin-left: 1rem;" click.delegate="newsample()">Add</a>
                     </span>
