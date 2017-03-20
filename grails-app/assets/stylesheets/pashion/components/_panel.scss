@@ -29,7 +29,7 @@ $panel-shadow: 3px 0 10px rgba(black, 0.25) !default;
 
 %panel-base {
   position: absolute;
-  z-index: 100;
+  //z-index: 100; //RM Mar 20/2017 messes items above. Not sure is necessary
   overflow-y: auto;
   display: none;
 
