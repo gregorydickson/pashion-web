@@ -6,10 +6,16 @@ import 'select2';
  Based off of: https://gist.github.com/mujimu/c2da3ecb61f832bac9e0
 */
 @customElement('select-control')
-//@inject(Element, TaskQueue)
-@inject(Element)
+@inject(Element, TaskQueue)
 export class SelectControl { 
-    selectDefaultOptions = { };
+    selectDefaultOptions = { 
+        minimumResultsForSearch: 15,
+        sorter: function(data) {          
+            return data.sort(function(a, b) {               
+                return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+            });
+        }
+    };
     //selectDefaultOptions = { tags: true } // Requires SELECT2 v4.0+;
     @bindable name = null;    // name/id of custom select
     @bindable selected = [];  // default selected values
@@ -34,7 +40,7 @@ export class SelectControl {
         let el = $(this.element).find('select');
 
         if (el) {
-            let sel = el.select2({minimumResultsForSearch: 15});
+            let sel = el.select2(this.selectDefaultOptions);
 
             if (el && value) {
                 try {
@@ -43,7 +49,7 @@ export class SelectControl {
                 catch(err) {
                     // A "find of null" error is raised by select2 in some
                     // instances. Doesn't appear to interfere with any
-                    // functinoality so let's just swallow it until
+                    // functionality so let's just swallow it until
                     // the root cause can be identified (may need to upgrade)
                     // to version 4.0+
                 }

@@ -23,7 +23,13 @@ export class CustomSelect {
     attached() {
         var vm = this;
         $(this.element).find('select')
-            .select2({minimumResultsForSearch: 15})
+            .select2({
+                minimumResultsForSearch: 15,
+                sorter: function(data) {          
+                    return data.sort(function(a, b) {               
+                        return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                    });
+                }})
             .on('change', (event) => {
                 let changeEvent;
 
