@@ -106,6 +106,15 @@
                 <!-- Company-->
                 <div class="grid-content shrink">
                     <span class="inline-label" style="margin-bottom: 0px;">
+                        <span class="slim-text-box-label" style="">Phone</span>
+                        <div>
+                            <input type="text" class="slim-text-box" value.bind="selectedAddress.contactPhone">
+                        </div>
+                    </span>
+                </div>
+                <!-- Company-->
+                <div class="grid-content shrink">
+                    <span class="inline-label" style="margin-bottom: 0px;">
                         <span class="slim-text-box-label" style="">Company</span>
                         <div>
                             <input type="text" class="slim-text-box" value.bind="selectedAddress.company">
@@ -118,15 +127,6 @@
                         <span class="slim-text-box-label" style="">Address 1</span>
                         <div>
                             <input type="text" class="slim-text-box" value.bind="selectedAddress.address1">
-                        </div>
-                    </span>
-                </div>
-                <!-- Address 2 -->
-                <div class="grid-content shrink">
-                    <span class="inline-label" style="margin-bottom: 0px;">
-                        <span class="slim-text-box-label" style="">Address 2</span>
-                        <div>
-                          <input type="text" class="slim-text-box" value.bind="selectedAddress.address2">
                         </div>
                     </span>
                 </div>
@@ -154,6 +154,15 @@
                         <span class="slim-text-box-label">Postal Code</span>
                         <div> 
                             <input type="text" class="slim-text-box" value.bind="selectedAddress.postalCode">
+                        </div>
+                    </span>
+                </div>
+                <!-- Comment  -->
+                <div class="grid-content shrink">
+                    <span class="inline-label" style="margin-bottom: 0px;">
+                        <span class="slim-text-box-label">Comment</span>
+                        <div> 
+                            <input type="text" class="slim-text-box" value.bind="selectedAddress.comment">
                         </div>
                     </span>
                 </div>

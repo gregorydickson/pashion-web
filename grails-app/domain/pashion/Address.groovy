@@ -11,6 +11,9 @@ class Address{
 	String country
 	String postalCode
 	String attention
+	String contactPhone
+	String stuartId
+	String comment
 	Boolean defaultAddress = false
 	Boolean archived = false
 
@@ -31,6 +34,9 @@ class Address{
 		country nullable: true
 		postalCode nullable: true
 		attention nullable:true
+		contactPhone nullable:true
+		stuartId nullable:true
+		comment nullable:true
 	}
 
 	static mapping = {
