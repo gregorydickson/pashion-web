@@ -133,16 +133,23 @@ class DashboardController {
         def itemTypes = SearchableItemType.list() as JSON
         render itemTypes
     }
-
+    def colors = null
     def colors(){
-        def colors = ['baby blue','blue light','beige','bicolour','black','bleu','blue','bordeaux',
-                'bright','bronze','brown','brown light','burgundy','camel','cobalt','cognac','colorful',
-                'coral','cream','duotone','fuschia','glitter','gold','gray','green','grey','ivory','jaune',
-                'khaki','lavendar','lilac','lime','metallic','monochrome',
-                'multicolour','mustard','navy blue','noir','nude','orange','pastel','pearl',
-                'pink','powder','purple','red','rust','salmon','shine','silver','transparent',
-                'turquoise','white','yellow'] as JSON
-        render colors
+        if(colors){
+            render colors
+        } else { 
+
+            colors = ['baby blue','blue light','beige','bicolour','black','bleu','blue','bordeaux',
+                    'bright','bronze','brown','brown light','burgundy','camel','cobalt','cognac','colorful',
+                    'coral','cream','duotone','fuschia','glitter','gold','gray','green','grey','ivory','jaune',
+                    'khaki','lavendar','lilac','lime','metallic','monochrome',
+                    'multicolour','mustard','navy blue','noir','nude','orange','pastel','pearl',
+                    'pink','powder','purple','red','rust','salmon','shine','silver','transparent',
+                    'turquoise','white','yellow']
+            colors = colors.collect{it.toUpperCase()}  
+            colors = colors as JSON
+            render colors
+        }
     }
 
 
