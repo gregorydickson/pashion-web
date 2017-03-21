@@ -223,6 +223,12 @@ export class Requestman{
     if (value.addressDestination) itemValue = itemValue + ' ' + value.addressDestination.name;
     if (value.id) itemValue = itemValue + ' ' + value.id; 
     if (value.look) itemValue = itemValue + ' ' +  value.look;//RM check added to index small request man
+    // Add sample id's to search list
+    if (value.searchableItems){
+      var i;
+      for (i=0;i<value.searchableItems.length;i++)
+        itemValue = itemValue + ' ' + value.searchableItems[i].clientID;
+    }
 
     //console.log("Search value: " + itemValue);
     if(searchExpression && itemValue) searchVal = itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;   
