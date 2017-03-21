@@ -9,9 +9,14 @@ class TestController {
 
 	def stuartService
 
-	def stuart(){
-		//stuartService.createLocation()
+	def test(){
+		stuartService.createLocation()
 		render 'done'
+	}
+
+
+	def update(){
+
 	}
 
 }

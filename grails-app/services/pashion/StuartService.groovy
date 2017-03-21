@@ -55,7 +55,6 @@ class StuartService {
 	
 		def http = HttpBuilder.configure {
 	    	request.uri = uri
-	    	
 		}
 		newLocation = http.post {
 			request.headers['Authorization'] = 'Bearer ' + token
@@ -77,4 +76,27 @@ class StuartService {
 	}
 
 	
+	def createJobQuote(Address fromAddress, Address toAddress){
+		if(token == null)
+			token = KeyValue.findByItemKey("stuart")?.itemValue
+		if(token == null)
+			newToken()
+
+		def quote = http.post {
+			request.headers['Authorization'] = 'Bearer ' + token
+    		request.uri.path = '/v1/jobs/quotes/types'
+    		request.contentType = 'application/x-www-form-urlencoded'
+    		request.body = []
+    		response.success { FromServer from, Object body ->
+    			
+    			log.info "body:"+body
+        		return body
+    		}
+		}
+		quote
+
+
+
+	}
+
 }
