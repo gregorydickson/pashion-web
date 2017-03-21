@@ -83,12 +83,15 @@ class AddressController {
         log.info "params address:"+params
         Address address = Address.get(params.id.toInteger())
         address.name = jsonObject.name
+        address.company = jsonObject.company
         address.address1 = jsonObject.address1
         address.address2 = jsonObject.address2
         address.city = jsonObject.city
         address.country = jsonObject.country
         address.postalCode = jsonObject.postalCode
         address.attention = jsonObject.attention
+        address.contactPhone = jsonObject.contactPhone
+        address.comment = jsonObject.comment
 
         address.save(failOnError:true)
         
@@ -115,12 +118,15 @@ class AddressController {
             address.prAgency = pr
         }
         address.name = jsonObject.name
+        address.company = jsonObject.company
         address.address1 = jsonObject.address1
         address.address2 = jsonObject.address2
         address.city = jsonObject.city
         address.country = jsonObject.country
         address.postalCode = jsonObject.postalCode
         address.attention = jsonObject.attention
+        address.contactPhone = jsonObject.contactPhone
+        address.comment = jsonObject.comment
 
         address.save(failOnError:true)
         def response = address as JSON
