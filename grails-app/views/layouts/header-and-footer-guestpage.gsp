@@ -60,7 +60,7 @@
             <div class="left nav-label-footer">       
                 <!-- <span style="margin-right: 0.5rem;"><a href="http://www.pashiontool.com" target="_blank">ABOUT</a></span> -->
                 <span style="margin-right: 0.5rem;"><a href="mailto:info@pashiontool.com?Subject=Hello" target="_blank">CONTACT</a></span>
-                <span style="margin-right: 0.5rem;"><a href="http://www.pashiontool.com" target="_blank">NEWSLETTER</a></span>
+                <span style="margin-right: 0.5rem;"><a href="http://pashiontool.com/#contact" target="_blank">NEWSLETTER</a></span>
                 <a style="margin-right: 0.5rem;" href="http://www.indigitalimages.com" target="_blank"><img src="/assets/indigitalimages_logo.png" style="width:120px; height:auto;" /></a> 
             </div>
             <!-- <span class="left nav-label-footer"><a href="#">CONTACT</a></span> -->
