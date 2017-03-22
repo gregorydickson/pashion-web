@@ -3,6 +3,7 @@ import {HttpClient,json} from 'aurelia-fetch-client';
 import 'fetch';
 import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
+import moment from 'moment';
 
 @inject(HttpClient, DialogController)
 export class SetAvailability {
@@ -51,7 +52,11 @@ export class SetAvailability {
 	  });
   	element.className += " start-selected";
   	this.redraw(element);
-  	this.newDate = this.calendar.calendarMonths[0].year+"-"+this.calendar.calendarMonths[0].monthNumber+"-"+day;
+    //this.newDate = this.calendar.calendarMonths[0].year+"-"+this.calendar.calendarMonths[0].monthNumber+"-"+day;
+    // needs to be in "dd-M-yy" format for external consumption
+    //RM tested. but unsure if we need to propergate other format changes
+    this.newDate = moment(day+"-"+this.calendar.calendarMonths[0].monthNumber+"-"+this.calendar.calendarMonths[0].year,"D-M-YYYY" ,false).format('DD-MMM-YYYY');
+
 
   }
   
