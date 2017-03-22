@@ -143,7 +143,8 @@
                         </td>
                         <td class="align-top con-td-3">
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
-                                <span class="alert-box">${connection.numberNewMessages}</span>
+                                <span if.bind="(connection.numberNewMessages !=0 && connection.numberNewMessages<100)" class="alert-box">${connection.numberNewMessages}</span>
+                                <span if.bind="(connection.numberNewMessages>99)" class="alert-box">99</span>
                             </a>
                         </td>
                         <td class="align-top con-td-4">
@@ -228,7 +229,8 @@
                         </td>
                         <td class="align-top con-td-3">
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
-                                <span if.bind="connection.numberNewMessages!=0" class="alert-box">${connection.numberNewMessages}</span>
+                                <span if.bind="connection.numberNewMessages!=0 && connection.numberNewMessages<100" class="alert-box">${connection.numberNewMessages}</span>
+                                <span if.bind="connection.numberNewMessages>99" class="alert-box">99</span>
                             </a>
                         </td>
                         <td class="align-top con-td-4">
