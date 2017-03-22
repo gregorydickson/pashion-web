@@ -200,7 +200,7 @@ export class Requestman{
       }
 
 
-  filterFunc(searchExpression, value, filter, user){
+  filterFunc(searchExpression, value, filter, user,seasons){
     // editorialName, pressHouse
 
     var searchVal = true;
@@ -217,12 +217,21 @@ export class Requestman{
     if ((value.deliverTo) && value.deliverTo.prAgency) itemValue = itemValue + ' ' + value.deliverTo.prAgency.name;
     if (value.editorialName) itemValue = itemValue + ' ' + value.editorialName;
     if (value.editorialWho) itemValue = itemValue + ' ' + value.editorialWho;
-    if (value.requestingUser) itemValue = itemValue + ' ' + value.requestingUser.surname + value.requestingUser.name;
+    if (value.requestingUser) itemValue = itemValue + ' ' + value.requestingUser.name + ' ' + value.requestingUser.surname;
     if (value.returnToName) itemValue = itemValue + ' ' + value.returnToName;
     if (value.returnToSurname) itemValue = itemValue + ' ' + value.returnToSurname;
     if (value.addressDestination) itemValue = itemValue + ' ' + value.addressDestination.name;
     if (value.id) itemValue = itemValue + ' ' + value.id; 
-    if (value.look) itemValue = itemValue + ' ' +  value.look;//RM check added to index small request man
+    // Get season abbreviation
+    var i;
+    var abbrev = '';
+    for (i = 0; i < seasons.length; i++) {
+        if (seasons[i].name == value.season) {
+            abbrev = seasons[i].abbreviation;
+        }
+    }
+    if (value.look && abbrev == '') itemValue = itemValue + ' ' +  value.look;//RM check added to index small request man
+    if (value.look && abbrev != '') itemValue = itemValue + ' ' + abbrev+value.look;//RM check added to index small request man
     // Add sample id's to search list
     if (value.searchableItems){
       var i;
