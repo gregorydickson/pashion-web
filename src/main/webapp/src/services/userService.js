@@ -198,12 +198,12 @@ export class UserService {
 
         console.log("add contact request: " + idIn);
         // first connection record
-        var nameString1 = this.users[this.user.id - 1].name + this.users[this.user.id - 1].surname + this.users[this.user.id - 1].email; // spaces to match name display and prvent run on match for the other fields
+        var nameString1 = this.users[this.user.id - 1].name + ' '+this.users[this.user.id - 1].surname + this.users[this.user.id - 1].email; // spaces to match name display and prvent run on match for the other fields
         if (this.users[this.user.id - 1].brand) nameString1 += this.users[this.user.id - 1].brand.name;
         if (this.users[this.user.id - 1].pressHouse) nameString1 += this.users[this.user.id - 1].pressHouse.name;
         if (this.users[this.user.id - 1].prAgency) nameString1 += this.users[this.user.id - 1].agency.name;
 
-        var nameString2 = this.users[idIn - 1].name + this.users[idIn - 1].surname + this.users[idIn - 1].email;
+        var nameString2 = this.users[idIn - 1].name +  ' ' + this.users[idIn - 1].surname + this.users[idIn - 1].email;
         if (this.users[idIn - 1].brand) nameString2 += this.users[idIn - 1].brand.name;
         if (this.users[idIn - 1].pressHouse) nameString2 += this.users[idIn - 1].pressHouse.name;
         if (this.users[idIn - 1].prAgency) nameString2 += this.users[idIn - 1].agency.name;
