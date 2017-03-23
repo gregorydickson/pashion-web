@@ -14,7 +14,7 @@ class StuartController {
 		Address address1 = Address.get(61)
 		Address address2 = Address.get(62)
 		ShippingEvent event = ShippingEvent.get(9)
-		def response = stuartService.createJobQuote(address1,address2,event,"Bike")
+		def response = stuartService.createJobQuote(address1,address2,event,"Scooter")
 		
 		render 'done'
 	}
