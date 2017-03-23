@@ -49,7 +49,7 @@ export class Index {
     filtering = 'ALL REQUESTS';
 
 
-    filterFunc(searchExpression, value, filter, user){
+    filterFunc(searchExpression, value, filter, user,seasons){
         var searchVal = true;
         var filterVal = true;
         if (searchExpression == '' && filter == '') return true;
@@ -58,7 +58,16 @@ export class Index {
         if (value.brand)  itemValue = itemValue + ' ' + value.brand.name;
         if (value.prAgency) itemValue = itemValue + ' ' + value.prAgency.name;
         if (value.id) itemValue = itemValue + ' ' + value.id;
-        if (value.look) itemValue = itemValue + ' ' + value.look;
+            // Get season abbreviation
+        var i;
+        var abbrev = '';
+        for (i = 0; i < seasons.length; i++) {
+            if (seasons[i].name == value.season) {
+                abbrev = seasons[i].abbreviation;
+            }
+        }
+        if (value.look && abbrev == '') itemValue = itemValue + ' ' +  value.look;//RM check added to index small request man
+        if (value.look && abbrev != '') itemValue = itemValue + ' ' + abbrev+value.look;//RM check added to index small request man
         // console.log("Filter value: " + itemValue);
         if(searchExpression && itemValue) searchVal = itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;    
 

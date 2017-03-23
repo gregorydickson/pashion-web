@@ -6,7 +6,7 @@
     <require from="./common/seasonAbbreviationFormatter"></require>
     <require from="./calendars/datepicker"></require>
     <require from="./contacts/sort"></require>
-    <require from="./contacts/filter"></require>
+    <require from="./common/filter"></require>
     <require from="./contacts/range"></require>
     <require from="./dashboard_filters/filters-order"></require>
     <require from="./dashboard_filters/filters-filterrequests"></require>
@@ -179,7 +179,7 @@
                             <!-- Rows of content BRAND View-->
                             <div  class="grid-content" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left: 1rem; margin-right: 1rem;">
                                 
-                                <div repeat.for="booking of bookings | sort:ordering:'ascending' | filter:searchTextReqMan:filterFunc:filtering:user
+                                <div repeat.for="booking of bookings | sort:ordering:'ascending' | filter:searchTextReqMan:filterFunc:filtering:user:seasons
                                 | range:searchFrom:searchTo:filterRangeFunc">
                                     <table  class="big-accordion" style="table-layout: fixed;">
                                         <tr class="brandGridContent">
@@ -188,7 +188,7 @@
                                             </td>
                                             <td class="col1 accordion-grey w6">${booking.id}</td>
                                             <td if.bind="user.type === 'brand'" class="col2 accordion-grey w7">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
-                                            <td if.bind="(user.type === 'press') || (user.type === 'agency')" class="col2 accordion-grey w7">${booking.look}</td>
+                                            <td if.bind="(user.type === 'press') || (user.type === 'agency')" class="col2 accordion-grey w7">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
 
                                             <td class="col3 accordion-grey w13">${booking.bookingStartDate | viewDateFormat}</td>
 
