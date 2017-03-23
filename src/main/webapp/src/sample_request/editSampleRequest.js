@@ -29,7 +29,7 @@ export class EditSampleRequest {
     this.controller = controller;
     this.sampleRequestService = sampleRequestService;
     this.userService = userService;
-    this.DialogService = DialogService;
+    this.dialogService = DialogService;
   }
 
   activate(requestId){
@@ -55,7 +55,6 @@ export class EditSampleRequest {
   }
 
   alertP (message){
-
         this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Edit", message:message, timeout:5000} }).then(response => {});
     }
 
@@ -67,7 +66,7 @@ export class EditSampleRequest {
   }
 
   approve(){
-    console.log("submitting Sample Request");
+    console.log("Approve: submitting Sample Request");
     let sr = this.sampleRequest;
 
     this.sampleRequestService.approveAndUpdateSampleRequest(sr).then(message => {
@@ -78,7 +77,7 @@ export class EditSampleRequest {
   }
 
   deny(){
-    console.log("submitting Sample Request");
+    console.log("Deny: submitting Sample Request");
     let sr = this.sampleRequest;
 
     this.sampleRequestService.denySampleRequest(sr.id).then(message => {
@@ -89,8 +88,8 @@ export class EditSampleRequest {
   }
 
   deleteRequestBrand(){
-    console.log("submitting Sample Request");
-    let sr = this.sampleRequest;
+    let sr = this.sampleRequest;    
+    console.log("Delete Brand: submitting Sample Request: " + sr.id);
 
     this.sampleRequestService.deleteSampleRequest(sr.id).then(message => {
       this.alertP(message.message);
@@ -100,8 +99,8 @@ export class EditSampleRequest {
   }
   
   deleteRequestPress(){
-    console.log("submitting Sample Request");
     let sr = this.sampleRequest;
+    console.log("Delete Press: submitting Sample Request: " + sr.id);
 
     this.sampleRequestService.pressDeleteSampleRequest(sr.id).then(message => {
       this.alertP(message.message);
@@ -111,7 +110,7 @@ export class EditSampleRequest {
   }
 
   update(){
-    console.log("submitting Sample Request");
+    console.log("Update: submitting Sample Request");
     let sr = this.sampleRequest;
     if(sr.shippingOut.startDate)
       sr.shippingOut.startDate = moment(sr.shippingOut.startDate).format('YYYY-MM-DD hh:mm')
