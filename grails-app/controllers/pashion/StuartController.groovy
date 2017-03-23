@@ -13,7 +13,8 @@ class StuartController {
 	def index(){
 		Address address1 = Address.get(61)
 		Address address2 = Address.get(62)
-		def response = stuartService.createJobQuote(address1,address2)
+		ShippingEvent event = ShippingEvent.get(9)
+		def response = stuartService.createJobQuote(address1,address2,event,"Bike")
 		
 		render 'done'
 	}

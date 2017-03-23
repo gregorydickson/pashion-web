@@ -85,7 +85,15 @@ class StuartService {
 		https://docs.stuart.com/#/reference/job-quotes/create-a-job-quote
 
 	*/
-	def createJobQuote(Address fromAddress, Address toAddress, ShippingEvent shippingEvent){
+	def createJobQuote(Address fromAddress, Address toAddress,
+					 ShippingEvent shippingEvent, String transport){
+		if(transport == 'Car')
+			transport = '4'
+		if(transport == 'Bike')
+			transport = '2'
+		if(transport == 'Scooter')
+			transport = '3'
+
 		if(token == null)
 			token = KeyValue.findByItemKey("stuart")?.itemValue
 		if(token == null)
@@ -105,7 +113,7 @@ class StuartService {
 			request.headers['Authorization'] = 'Bearer ' + token
     		request.uri.path = '/v1/jobs/quotes/types'
     		request.contentType = 'application/x-www-form-urlencoded'
-    		request.body = [transportTypeIds:"2,3",
+    		request.body = [transportTypeIds:transport,
 					destination:destination,
 					destinationContactCompany:toAddress.company,
 					destinationContactFirstname:firstName,
@@ -114,12 +122,15 @@ class StuartService {
 					origin:origin,
 					originContactPhone:fromAddress.contactPhone]
     		response.success { FromServer from, Object body ->
-    			log.info "body:"+body
-        		return body
+    			log.info "body:"+body['2']
+        		return body['2']
     		}
 		}
+		log.info "quote id:"+quote.id
+		log.info "distance :"+quote.distance
+		log.info "duration :"+quote.duration
 		shippingEvent.stuartQuoteId = quote.id
-		shippingEvent.save(flush:true)
+		shippingEvent.save(failOnError:true,flush:true)
 	}
 
 	/*
