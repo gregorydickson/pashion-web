@@ -11,6 +11,7 @@ class SampleRequestController {
 
     def sampleRequestService
     def cacheInvalidationService
+    def stuartService
 
     String dateFormatString = "yyyy-M-d"
     
@@ -58,19 +59,22 @@ class SampleRequestController {
 
         sr.requestStatusBrand = "Approved"
         sr.requestStatusPress = "Approved"
+        
+
         sr.save(flush:true)
         def sent = [message:'Sample Request Approved']
         render sent as JSON
     }
     def brandSend(){
-        //Create/Update a shipping event
-        //TODO:API call to Stuart to create a pickup
-        //TODO:save tracking info to Sample Request
-        def sampleRequest = SampleRequest.get(params.id.toInteger())
-                
-        sampleRequest.requestStatusBrand = "Picking Up"
         
-        sampleRequest.save(flush:true)
+        def sr = SampleRequest.get(params.id.toInteger())
+
+        if(sr.courierOut == 'Scooter' || sr.courierOut == 'Bike' || sr.courierOut == 'Car'){
+            notify "shippingOut",sr
+        }
+        sr.requestStatusBrand = "Picking Up"
+        
+        sr.save(flush:true)
         def sent = [message:'Sample Request Waiting to be Picked Up']
         render sent as JSON
     }

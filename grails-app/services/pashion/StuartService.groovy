@@ -2,8 +2,11 @@ package pashion
 
 import groovyx.net.http.FromServer
 import groovyx.net.http.ApacheHttpBuilder
+import grails.transaction.Transactional
+import reactor.spring.context.annotation.*
 
-
+@Transactional
+@Consumer
 class StuartService {
 
     static scope = "singleton"
@@ -183,7 +186,15 @@ class StuartService {
 		} else{
 			return message
 		}
-		
 	}
+
+
+	@Selector('shippingOut')
+    void shippingOut(Object sr){
+    	Address address1 = sr.returnToAddress
+        Address address2 =  sr.addressDestination
+        def shippingEvent = createJobQuote(address1,address2,sr.shippingOut,sr.courierOut)
+        def response = createJob(address1,address2,shippingEvent)
+    }
 
 }
