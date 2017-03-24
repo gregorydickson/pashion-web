@@ -42,7 +42,7 @@ class CachingService implements JsonViewTest {
         Callback callback=new Callback() {}
         def channel = data + '_cacheInvalidate'
         log.info "send invalidate in cachingService:invalidateConnectionsPubNub on:" + channel
-        pubnub.publish(channel, "refresh the cache please" , callback)
+        pubnub.publish(channel, "connections" , callback)
 
     }
 

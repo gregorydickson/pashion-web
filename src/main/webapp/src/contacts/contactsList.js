@@ -70,7 +70,7 @@ export class ContactsList {
                 var channelGroup = m.subscription; // The channel group or wildcard subscription match (if exists)
                 var pubTT = m.timetoken; // Publish timetoken
                 var receivedMessage = m.message; // The Payload
-                console.log("pubnub new nessage in contactList:", receivedMessage);
+                console.log("pubnub new nessage in contactList: ", receivedMessage);
 
                if (channelName == parent.user.email + "_cacheInvalidate") {
                     console.log ("cache invalidate for user:"+ parent.user.email);
@@ -78,7 +78,15 @@ export class ContactsList {
                     // try some toast
                     toastr.options.timeOut = 5000;
                     toastr.options.closeButton = false;
-                    toastr.info('Connections Update'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);                      
+                    if (receivedMessage == "connections") {
+                      toastr.info('Connections Update'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);    
+                    }
+                    if (receivedMessage == "users") {
+                      toastr.info('User Changes'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);    
+                    }     
+                    if (receivedMessage == "requests") {
+                      toastr.info('Requests Update'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);    
+                    }               
                  }
             },
             status: function(s) {
