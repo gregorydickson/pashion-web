@@ -234,7 +234,7 @@ class UserService {
             Callback callback=new Callback() {}
             def channel = user.email + '_cacheInvalidate'
             log.info "send invalidate from updateuser on:" + channel
-            pubnub.publish(channel, "refresh the cache please" , callback) 
+            pubnub.publish(channel, "users" , callback) 
 
             user
     }
