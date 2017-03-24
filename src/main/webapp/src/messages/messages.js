@@ -89,6 +89,10 @@ export class Messages {
                         if (hasTabShowing && (parent.currentContact.email == receivedMessage.fromId)) {}//nothing
                             // push message count to server
                         else parent.userService.addMessageCount(receivedMessage.fromId, true);
+                        // try some toast
+                        toastr.options.timeOut = 5000;
+                        toastr.options.closeButton = false;
+                        toastr.info('New Message from ' + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);
                         }
                     $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
 

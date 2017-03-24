@@ -4,7 +4,8 @@
   <head>
     <meta name="layout" content="header-and-footer-guestpage" /> <!-- nee pashion -->
     <asset:stylesheet src="pashion/pashion.css"/>    
-    <asset:stylesheet src="pashion/splash.css"/>    
+    <asset:stylesheet src="pashion/splash.css"/>   
+    <asset:stylesheet src="pashion/toastr.css"/>    
 
 
     <title>Loading Pashion</title>
@@ -23,6 +24,9 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js"></script>
       <script src="/jspm_packages/system.js"></script>
       <script src="/config.js"></script>
+      <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+      <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> -->
+      <script src="/src/common/toastr.js"></script>
       <script>
         System.import('aurelia-bootstrapper');
       </script>
