@@ -82,7 +82,7 @@ export class ContactsList {
                       toastr.info('Connections Update'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);    
                     }
                     if (receivedMessage == "users") {
-                      toastr.info('User Changes'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);    
+                      // nothing for now as appears on own local window, now remote, could be a bugtoastr.info('User Changes'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);    
                     }     
                     if (receivedMessage == "requests") {
                       toastr.info('Requests Update'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);    
