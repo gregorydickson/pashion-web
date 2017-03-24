@@ -75,6 +75,10 @@ export class ContactsList {
                if (channelName == parent.user.email + "_cacheInvalidate") {
                     console.log ("cache invalidate for user:"+ parent.user.email);
                     parent.fetchGetUserFromServer(); //update data structure from JSON in contact list
+                    // try some toast
+                    toastr.options.timeOut = 5000;
+                    toastr.options.closeButton = false;
+                    toastr.info('Connections Update'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);                      
                  }
             },
             status: function(s) {
