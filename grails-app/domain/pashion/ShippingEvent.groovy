@@ -9,9 +9,12 @@ class ShippingEvent {
 	String courier
 	String tracking
 	String stuartQuoteId
+	String stuartJobId
 	String stuartStatus
 	String stuartJSON
 	String transportType
+	BigDecimal finalAmount
+	String currency
 	
 
 	//auto fields
@@ -30,6 +33,7 @@ class ShippingEvent {
         courier nullable: true
         tracking nullable: true
         stuartQuoteId nullable:true
+        stuartJobId nullable:true
         sampleRequest nullable: true
         stuartStatus nullable: true
         stuartJSON nullable:true

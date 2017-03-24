@@ -93,7 +93,7 @@ dependencies {
     compile 'com.sendgrid:sendgrid-java:3.1.0'
     compile 'javax.mail:javax.mail-api:1.5.2'
 
-    compile 'io.github.http-builder-ng:http-builder-ng-core:0.14.0'
+    compile 'io.github.http-builder-ng:http-builder-ng-apache:0.14.0'
 
 }
 war{
