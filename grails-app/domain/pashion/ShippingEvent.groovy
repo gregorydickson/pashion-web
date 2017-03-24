@@ -38,6 +38,8 @@ class ShippingEvent {
         stuartStatus nullable: true
         stuartJSON nullable:true
         transportType nullable:true
+        finalAmount nullable:true
+        currency nullable: true
     }
 
 
