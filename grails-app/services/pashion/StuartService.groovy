@@ -178,7 +178,7 @@ class StuartService {
 			shippingEvent.stuartJobId = job.id
 			shippingEvent.stuartStatus = job.status
 			shippingEvent.status = job.status
-			shippingEvent.currency = job.currency.isoCode
+			shippingEvent.currency = job.currency?.isoCode
 			shippingEvent.finalAmount =  new BigDecimal(job.finalJobPrice.finalTotalAmount)
 			shippingEvent.save(failOnError:true,flush:true)
 
@@ -195,6 +195,19 @@ class StuartService {
         Address address2 =  sr.addressDestination
         def shippingEvent = createJobQuote(address1,address2,sr.shippingOut,sr.courierOut)
         def response = createJob(address1,address2,shippingEvent)
+        def result
+    	switch (response) {
+	        case 'JOB_DELIVERIES_INVALID':
+	            //email that the delivery is invalid
+	            break
+	        case {it instanceof ShippingEvent}:
+	        	//do nothing??
+	        default:
+	            result = 'Default'
+	            break
+    	}   
+    	
     }
+    
 
 }
