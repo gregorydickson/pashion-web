@@ -187,7 +187,7 @@
                             <a href="#" click.delegate="updatePhoto()">
                                 <div class="avatar-container">
                                     <div if.bind="(user.avatar)" class="avatar-img-cover" style="height: 45px;border-radius: 100%;overflow:hidden;background: url(${user.avatar});background-repeat: no-repeat;background-size: cover;background-position: center;display: block;width: 45px;"></div>
-                                    <div if.bind="(!user.avatar)" class="avatar-circle avatar-text ">${users[user.id -1].name.charAt(0)}</div>
+                                    <div if.bind="(!user.avatar)" class="avatar-circle avatar-text ">${user.name.charAt(0)}</div>
                                 </div>
                             </a>
                         </td>
