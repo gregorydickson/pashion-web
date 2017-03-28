@@ -58,13 +58,13 @@ class CachingService implements JsonViewTest {
 
     
     def connections(){
-        log.info "checking connections:"
+        log.info "connections() checking connections:"
         if(connections == null){
             def result = loadConnections()
             connections = result
             return result
         }
-        log.info "************* Connections not null returning existing connections"
+        log.info "connections() Connections not null, returning existing connections"
         connections
 
     }
@@ -105,7 +105,7 @@ class CachingService implements JsonViewTest {
     def loadConnections(){
         def list = User.list()
         log.info ""
-        log.info "***************   Connections Rendering in Service ********************"
+        log.info "loadConnections() ***************   Connections Rendering in Service ********************"
         JsonRenderResult renderResult = render(template: "/user/connections", model:[userList: list])
         log.info "Rendered Connections in service"
         String json = renderResult.jsonText

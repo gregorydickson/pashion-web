@@ -18,11 +18,11 @@ class UserController {
     def cachingService
 
     def connections(){
-        log.info "***************   STARTING  Connections ********************"
+        log.info "connections() ***************   STARTING  ********************"
         String json = cachingService.connections()
         response.setContentType('application/json')
         render json
-        log.info "***************   END  Connections ********************"
+        log.info "connections() ***************   END   ********************"
         log.info ""
     }
     
@@ -168,9 +168,10 @@ class UserController {
         log.info "update(), json:"+jsonObject
         if(jsonObject?.id != null){
             user = userService.updateUser(jsonObject,user,session)
-            log.info "user update json:"+jsonObject
+            log.info "update(), using json: " +jsonObject
         } else{
-            user = userService.updateUser(params,user, session)
+            user = userService.updateUser(params,user, session)           
+            log.info "update(), using params: "+params
         }
         
         if (user == null) {

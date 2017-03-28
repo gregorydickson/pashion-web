@@ -74,14 +74,15 @@ export class ContactsList {
 
                if (channelName == parent.user.email + "_cacheInvalidate") {
                     console.log ("cache invalidate for user:"+ parent.user.email);
-                    parent.fetchGetUserFromServer(); //update data structure from JSON in contact list
                     // try some toast
                     toastr.options.timeOut = 5000;
                     toastr.options.closeButton = false;
                     if (receivedMessage == "connections") {
+                      parent.fetchGetUserUsersFromServer(); //update data structure from JSON in contact list
                       toastr.info('Connections Update'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);    
                     }
                     if (receivedMessage == "users") {
+                      parent.fetchGetUserUsersFromServer(); //update data structure from JSON in contact list
                       // nothing for now as appears on own local window, now remote, could be a bugtoastr.info('User Changes'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);    
                     }     
                     if (receivedMessage == "requests") {
@@ -119,11 +120,11 @@ export class ContactsList {
 	}
 
   //RM test button & pubnub message cache invalidate response target
-  fetchGetUserFromServer () {
+  fetchGetUserUsersFromServer () {
     this.userService.getUsers(true).then(users => this.users = users)
                                    .then(result => this.userService.getUser()
                                      .then(user => this.user = user)
-                                     .then(result => console.log("contactlist.fetchGetUserFromServer: by user: " + this.users[this.user.id-1].name + " gives " + this.user.name)
+                                     .then(result => console.log("contactlist.fetchGetUserUsersFromServer: by user: " + this.users[this.user.id-1].name + " gives back " + this.user.name)
                                     )) ;
   }
 

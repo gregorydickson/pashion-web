@@ -26,7 +26,7 @@ export class UserService {
     // All access to users is via the implicit variable created at #36
     // All access to users from outside userService should go through this call
     getUsers(forceGetFromServer) {
-        console.log("UserService.getUsers, forceGetFromServer: " + forceGetFromServer);
+        // console.log("UserService.getUsers, forceGetFromServer: " + forceGetFromServer);
         var promise = new Promise((resolve, reject) => {
             if ((!this.users) || forceGetFromServer) { // local storage if already loaded
                 console.log("UserService.getUsers, getting users from /user/connections");
@@ -160,10 +160,11 @@ export class UserService {
     }
 
     update(updateUser) {
-        // if we are updating the current login user then need to set local 
-        // and add the extra stuff for the current user
         console.log("UserService.update, incoming user:" + updateUser.id + " " + updateUser.name + " using /user/updatejson");
+        // if we are updating the current login user then need to set local 
+        // and add the extra stuff for the current user??
         this.user = updateUser;
+        // now write it out
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/user/updatejson/' + updateUser.id + ".json", {
                     method: 'post',
