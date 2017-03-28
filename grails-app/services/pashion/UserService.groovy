@@ -184,7 +184,9 @@ class UserService {
 
     def updateUser(def params,def user, def account){
             
-            User.withNewSession { session ->
+            User.withTransaction { status ->
+                
+        
                 
                 user = User.get(user.id)
                 
@@ -230,7 +232,7 @@ class UserService {
                         log.error "updateUser() stormpath update error:"+e.message
                     }
                 }
-             }
+            }
 
             // invalidate cache here for connected or connecting user     
             Callback callback=new Callback() {}
