@@ -162,11 +162,12 @@ export class UserService {
 
     update(updateUser) {
         // this is for ANY user not necessarily the current user as can come from admin page (any user) or dialogEditcontact (current user)
-        //if add fields to either need to update here
+        // if add fields to either need to update here
         console.log("UserService.update, incoming user:" + updateUser.id + " " + updateUser.name + " using /user/updatejson");
 
 
         // update the info into a full record
+        // json side can then decide what to update
         var tempNewUser = this.users[updateUser.id-1];
         if (updateUser.address) tempNewUser.address = updateUser.address;
         if (updateUser.name) tempNewUser.name = updateUser.name;
