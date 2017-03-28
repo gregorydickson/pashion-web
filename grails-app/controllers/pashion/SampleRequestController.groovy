@@ -66,15 +66,22 @@ class SampleRequestController {
         render sent as JSON
     }
     def brandSend(){
-        
-        def sr = SampleRequest.get(params.id.toInteger())
 
-        if(sr.courierOut == 'Scooter' || sr.courierOut == 'Bike' || sr.courierOut == 'Car'){
-            notify "shippingOut",sr
-        }
-        sr.requestStatusBrand = "Picking Up"
+        SampleRequest.withTransaction { status ->
+            
         
-        sr.save(flush:true)
+            def sr = SampleRequest.get(params.id.toInteger())
+
+            
+            sr.requestStatusBrand = "Picking Up"
+            
+            
+
+            if(sr.courierOut == 'Scooter' || sr.courierOut == 'Bike' || sr.courierOut == 'Car'){
+                notify "shippingOut",sr.id
+            }
+            sr.save(flush:true)
+        }
         def sent = [message:'Sample Request Waiting to be Picked Up']
         render sent as JSON
     }

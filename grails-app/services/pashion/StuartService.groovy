@@ -134,11 +134,13 @@ class StuartService {
 		log.info "duration :"+quote.duration
 		shippingEvent.stuartQuoteId = quote.id
 		shippingEvent.save(failOnError:true,flush:true)
+		log.info "stuart service quote id saved"
+		return shippingEvent
 	}
 
 	
 	def createJob(Address fromAddress, Address toAddress, ShippingEvent shippingEvent){
-
+		log.info "stuart service create job"
 		if(token == null)
 			token = KeyValue.findByItemKey("stuart")?.itemValue
 		if(token == null)
@@ -190,22 +192,32 @@ class StuartService {
 
 
 	@Selector('shippingOut')
-    void shippingOut(Object sr){
-    	Address address1 = sr.returnToAddress
-        Address address2 =  sr.addressDestination
-        def shippingEvent = createJobQuote(address1,address2,sr.shippingOut,sr.courierOut)
-        def response = createJob(address1,address2,shippingEvent)
-        def result
-    	switch (response) {
-	        case 'JOB_DELIVERIES_INVALID':
-	            //email that the delivery is invalid
-	            break
-	        case {it instanceof ShippingEvent}:
-	        	//do nothing??
-	        default:
-	            result = 'Default'
-	            break
-    	}   
+    void shippingOut(Object id){
+    	
+    	try{
+	    	SampleRequest sr = SampleRequest.get(id) 
+	    	Address address1 = sr.returnToAddress
+	        Address address2 =  sr.addressDestination
+	        def shippingEvent = createJobQuote(address1,address2,sr.shippingOut,sr.courierOut)
+	        def response = createJob(address1,address2,shippingEvent)
+	        def result
+	    	switch (response) {
+		        case 'JOB_DELIVERIES_INVALID':
+		            //\that the delivery is invalid
+		            break
+		        case 'JOB_PICKUP_AT_INVALID':
+		        	// invalid time -after 
+		        	//email support
+		        	break
+		        case {it instanceof ShippingEvent}:
+		        	//do nothing??
+		        default:
+		            result = 'Default'
+		            break
+	    	} 
+	    } catch(Exception e){
+
+	    }
     	
     }
     
