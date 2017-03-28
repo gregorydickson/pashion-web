@@ -197,17 +197,8 @@
                         <span class="inline-label" >
                             <span class="slim-text-box-label">New Material</span>
 
-                            <select-control ref="materialSelectControl" name="material"
-                                class="to-u-c"                                                   
-                                selected.bind="selectedMaterialItems" 
-                                options.bind="availableMaterialItems" 
-                                placeholder="Select one" 
-                                allow_clear="true" style="min-width:160px;">
-                            </select-control>
 
-                            <!--<form-select class="to-u-c" name="material" 
-                            selected.two-way="addMaterial" 
-                            options.bind="material"></form-select>-->
+                            <form-select class="to-u-c" name="material" selected.two-way="addMaterial" options.bind="material" ></form-select>
 
 
                             <a style= "width: 30px; margin-left: 1rem;" click.delegate="materialAdd(selectedSample)">Add</a>
