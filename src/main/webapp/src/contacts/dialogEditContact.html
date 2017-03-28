@@ -22,33 +22,33 @@
                         <!-- Username -->
                         <div class="grid-block shrink">                       
                             <span class="inline-label slim-text-box-label">Email</span>
-                            <input type="text" class="slim-text-box" disabled value=${user.email}>
+                            <input type="text" class="slim-text-box" disabled value=${lUser.email}>
                         </div>
 
 
                         <!-- Name -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Name</span>
-                            <input type="text" class="slim-text-box" value.bind="user.name">
+                            <input type="text" class="slim-text-box" value.bind="lUser.name">
                         </div>
 
                         <!-- Surname -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Surname</span>
-                            <input type="text" class="slim-text-box" value.bind="user.surname">
+                            <input type="text" class="slim-text-box" value.bind="lUser.surname">
                         </div>
 
                         <!-- Company -->
                         <div class="grid-block shrink">  
                             <span class="slim-text-box-label">Company</span>
-                            <input type="text" class="slim-text-box" disabled value="${user.brand.name} ${user.pressHouse.name} ${user.prAgency.name}">
+                            <input type="text" class="slim-text-box" disabled value="${lUser.brand.name} ${lUser.pressHouse.name} ${lUser.prAgency.name}">
 
                         </div>
 
                         <!-- Title -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Title</span>
-                            <input type="text" class="slim-text-box" value.bind="user.title">
+                            <input type="text" class="slim-text-box" value.bind="lUser.title">
                         </div>
 
                         <!-- Role 
@@ -67,7 +67,7 @@
                                 <span class="inline-label">
                                     <span class="slim-text-box-label">Location</span>
                                 </span>
-                                <select name="" id="" class="slim-text-box" value.bind="user.address.id">
+                                <select name="" id="" class="slim-text-box" value.bind="lUser.address.id">
                                     <option model.bind="address.id" repeat.for="address of addresses">${address.city}</option>
                                 </select>
                         </div> 
@@ -75,25 +75,25 @@
                         <!-- Address 1
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Address 1</span>
-                            <input type="text" class="slim-text-box" value=${user.address1}>
+                            <input type="text" class="slim-text-box" value=${lUser.address1}>
                         </div> -->
 
                         <!-- Address 2 
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Address 2</span>
-                            <input type="text" class="slim-text-box" value=${user.address2}>
+                            <input type="text" class="slim-text-box" value=${lUser.address2}>
                         </div> -->
 
                         <!-- Address 3 
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Address 3</span>
-                            <input type="text" class="slim-text-box" value=${user.address3}>
+                            <input type="text" class="slim-text-box" value=${lUser.address3}>
                         </div>  -->                      
 
                         <!-- Phone -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Phone</span>
-                            <input type="text" class="slim-text-box" value.bind="user.phone">
+                            <input type="text" class="slim-text-box" value.bind="lUser.phone">
                         </div>
 
                         <!-- Email
@@ -105,7 +105,7 @@
                         <!-- Skype 
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Skype</span>
-                            <input type="text" class="slim-text-box" value=${user.skype}>
+                            <input type="text" class="slim-text-box" value=${lUser.skype}>
                         </div> -->                       
                    
                     </div>
