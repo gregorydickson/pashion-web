@@ -11,7 +11,8 @@ import { CreateDialogAlert } from 'common/dialogAlert';
 @inject(HttpClient, DialogController,CityService, DialogService)
 export class EditSearchableItem {
   static inject = [DialogController];
-  
+  isLoading = true;
+
   currentItem = {};
   result = {};
 
@@ -26,6 +27,8 @@ export class EditSearchableItem {
   selectedNewColorItems = [];
   availableMaterialItems = [];
   selectedMaterialItems = [];
+  availableLocationItems = [];
+  selectedLocationItems = [];
 
   colors = [];
   material = [];
@@ -56,10 +59,20 @@ export class EditSearchableItem {
 
   activate(itemId){
     var queryString = DateFormat.urlString(0, 1);
-    this.cityService.getCities().then(cities => this.cities = cities);
-    this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => {
-      this.itemTypes = itemTypes
+    this.cityService.getCities().then(cities => {
+      this.cities = cities;
+
+      cities.forEach(item => {
+          this.availableLocationItems.push({
+            id: item.id,
+            text: item.name
+          });
+        });
     });
+    Promise.all([
+      this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => {
+      this.itemTypes = itemTypes
+    }),
     this.http.fetch('/dashboard/sampleTypes').then(response => response.json()).then(sampleTypes => {
       this.sampleTypes = sampleTypes
 
@@ -69,7 +82,7 @@ export class EditSearchableItem {
             text: item
           });
         });
-    });
+    }),
     this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => {
       this.colors = colors
 
@@ -79,7 +92,7 @@ export class EditSearchableItem {
             text: item
           });
         });
-    });
+    }),
     this.http.fetch('/dashboard/material').then(response => response.json()).then(material => {
       this.material = material
 
@@ -89,7 +102,7 @@ export class EditSearchableItem {
             text: item
           });
         });
-    });
+    }),
     this.http.fetch('/searchableItem/fetchdeep/'+itemId+'.json')
       .then(response => response.json())
       .then(item => {
@@ -102,8 +115,10 @@ export class EditSearchableItem {
               text: item.attributes
             });
           });
-    });
-    
+          
+          this.selectedSampleItems = [""];
+    })
+    ]).then(() => this.isLoading = false);
   }
 
 
@@ -134,9 +149,15 @@ export class EditSearchableItem {
     sample.material = '';
   }
 
-  sample2Callback(evt) {
-    if (evt.detail) {
-        this.selectedSample = evt.detail.value;
+  sample2Callback(event) {
+    console.log('sample2Callback() called:', event.detail.value);
+
+    if (event.detail) {
+        let selectedValue = event.detail.value;         
+        console.log('Selected value:', selectedValue); 
+
+        this.selectedSample = selectedValue; //this.availableSampleItems.find(x => x.id == selectedValue);
+        this.selectedLocationItems = [this.selectedSample.sampleCity.id];
         this.showSampleEdit = (this.selectedSample !== null);
     }
   }
