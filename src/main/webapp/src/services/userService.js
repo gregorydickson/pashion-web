@@ -164,6 +164,18 @@ export class UserService {
         // if we are updating the current login user then need to set local 
         // and add the extra stuff for the current user??
         this.user = updateUser;
+        if (updateUser.brand!=null) {
+            this.user["type"] = 'brand';
+            this.user["companyId"] = updateUser.brand.id;
+        } else if (updateUser.pressHouse!=null) {
+            this.user["type"] = 'press';
+            this.user["companyId"] = updateUser.pressHouse.id;
+        } else if (updateUser.prAgency!=null) {
+            this.user["type"] = 'prAgency';
+            this.user["companyId"] = updateUser.prAgency.id;
+        } else {
+            this.user["type"] = 'nosession';
+        }
         // now write it out
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/user/updatejson/' + updateUser.id + ".json", {
