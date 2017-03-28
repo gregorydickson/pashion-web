@@ -20,8 +20,19 @@
             </div>
         </ai-dialog-header>  
 
-        <ai-dialog-body>               
-           <div class="vertical grid-block">
+        <ai-dialog-body>          
+            <div if.bind="isLoading" style="min-height:130px">     
+                <div class="preloader">
+                    <div class="sk-spinner sk-spinner-wave">
+                        <div class="sk-rect1"></div>
+                        <div class="sk-rect2"></div>
+                        <div class="sk-rect3"></div>
+                        <div class="sk-rect4"></div>
+                        <div class="sk-rect5"></div>
+                    </div>
+                </div>
+            </div>
+           <div class="vertical grid-block" if.bind="!isLoading">
                 <!-- tumbnail -->
                 <div class="grid-block shrink"> 
                     <div class="grid-content"></div>
@@ -63,7 +74,9 @@
                                 placeholder="SELECT SAMPLE" 
                                 allow_clear="true" style="min-width:160px;">
                             </select-control>
-                        -->
+
+                            -->
+                        
                       
                     <form-select-sample class="to-u-c" name="sample" selected.bind="selectedSample" options.bind="currentItem.samples" place-holder="SELECT SAMPLE"
                         change.delegate="sample2Callback($event)">
@@ -73,7 +86,7 @@
                     </span>
                 </div>
 
-                <div id="sampleEdit" if.bind="showSampleEdit">
+                <div id="sampleEdit" show.bind="showSampleEdit">
                     <!-- Sample ID & count
                     <div class="grid-block shrink">                       
                         <span class="inline-label slim-text-box-label">ID</span>
@@ -192,11 +205,6 @@
                         </span>
 
                     </div>
-
-
-
-
-
                     <!-- Size 
                     <div class="grid-block shrink" >                        
                         <span class="inline-label">
@@ -211,15 +219,23 @@
                     <div class="grid-block shrink" >                        
                         <span class="inline-label">
                             <span class="slim-text-box-label">Location</span>
-                            
-                           <form-select-object class="to-u-c" name="location" selected.two-way="selectedSample.sampleCity.id" options.bind="cities" ></form-select-object>
+
+                            <select-control ref="locationSelectControl" name="location"
+                                class="to-u-c"      
+                                selected.bind="selectedLocationItems" 
+                                options.bind="availableLocationItems" 
+                                placeholder="Select one" 
+                                allow_clear="true" style="min-width:160px;">
+                            </select-control>
+
+                           <!--<form-select-object class="to-u-c" name="location" selected.two-way="selectedSample.sampleCity.id" options.bind="cities" ></form-select-object>-->
                         </span> 
                     </div>
                 </div>
             </div>
       </ai-dialog-body>
 
-      <ai-dialog-footer>
+      <ai-dialog-footer if.bind="!isLoading">
          <a class="hollow button" click.delegate="close()">Exit</a>
         <!--  <a class.bind="sampleChanged ? 'button' :'hollow button'" class="button" click.delegate="submit()">Save Changes</a>-->
          <a class="button" click.delegate="submit()">Save Changes</a>
