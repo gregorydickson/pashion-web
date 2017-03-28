@@ -183,20 +183,22 @@ class UserService {
     }
 
     def updateUser(def params,def user, def account){
-       
-            if (!user.isAttached()) {
-                user.attach()
-            }
-            log.info "updateUser() params:"+params
-            user.title = params.title
-            user.phone = params.phone
-            user.name = params.name
-            user.surname = params.surname
-            if(params.address?.id)
-                user.address = Address.get(params.address.id)
+            
+            User.withNewSession { session ->
+                
+                user = User.get(user.id)
+                
+
+                log.info "updateUser() params:"+params
+                user.title = params.title
+                user.phone = params.phone
+                user.name = params.name
+                user.surname = params.surname
+                if(params.address?.id)
+                    user.address = Address.get(params.address.id)
 
 
-            User.withTransaction { status ->
+            
                 try{
                     user.save(failOnError:true, flush:true)
                 } catch(Exception e){
