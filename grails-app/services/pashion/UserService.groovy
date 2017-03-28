@@ -117,15 +117,15 @@ class UserService {
         City city = null
         if(params.city) city = City.get(params.city.id.toInteger());
     	if(owner instanceof Brand){
-            log.info "creating Brand user"
+            log.info "createUser() creating Brand user"
     		role = "brand-users"
     		user = new User(city:city,title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,brand:owner,isInPashionNetwork:true).save(failOnError : true)
     	} else if(owner instanceof PressHouse){
-            log.info "creating Press user"
+            log.info "createUser() creating Press user"
     		role = "press-users"
     		user = new User(city:city,title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,pressHouse:owner,isInPashionNetwork:true).save(failOnError : true)
     	} else if(owner instanceof PRAgency){
-            log.info "creating PRAgency user"
+            log.info "createUser() creating PRAgency user"
             role = "prAgency-users"
             user = new User(city:city,title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,prAgency:owner,isInPashionNetwork:true).save(failOnError : true)
         }
@@ -146,7 +146,7 @@ class UserService {
         } catch(Exception e){
 
                 //TODO: create stormpath directory????
-                log.error "No Stormpath Directory for user"
+                log.error "createUser() No Stormpath Directory for user"
         }
 		user
     }
@@ -171,7 +171,7 @@ class UserService {
     }
 
     def updateUser(def params){
-        log.info "UPDATING OTHER USER"
+        log.info "updateUser() UPDATING OTHER USER"
         Map<String, Object> queryParams = new HashMap<>();
         queryParams.put("username", params.email);
         AccountList accounts = stormpathApp.getAccounts(queryParams);
@@ -187,7 +187,7 @@ class UserService {
             if (!user.isAttached()) {
                 user.attach()
             }
-            log.info "updateUser params:"+params
+            log.info "updateUser() params:"+params
             user.title = params.title
             user.phone = params.phone
             user.name = params.name
@@ -201,22 +201,22 @@ class UserService {
                     user.save(failOnError:true, flush:true)
                 } catch(Exception e){
 
-                    log.error "updateUser error:"+e.message
+                    log.error "updateUser() error:"+e.message
                 }
 
 
-                log.info "updateUser saved user:"+user.toString()
+                log.info "updateUser() saved user:"+user.toString()
                 if(params.password || params.name || params.surname){
                     try{
                         
                         
                         if(account){
-                            log.info "account not null"
+                            log.info "updateUser() account not null"
                             if(params.name) account.setGivenName(params.name)
                             if(params.surname) account.setSurname(params.surname)
                             if(params.password) {
                                 account.setPassword(params.password)
-                                log.info "Updating PASSWORD ****"
+                                log.info "updateUser() Updating PASSWORD ****"
                             }
 
                             account.save()
@@ -225,7 +225,7 @@ class UserService {
                         
                     } catch(Exception e){
 
-                        log.error "stormpath update error:"+e.message
+                        log.error "updateUser() stormpath update error:"+e.message
                     }
                 }
              }
@@ -233,7 +233,7 @@ class UserService {
             // invalidate cache here for connected or connecting user     
             Callback callback=new Callback() {}
             def channel = user.email + '_cacheInvalidate'
-            log.info "send invalidate from updateuser on:" + channel
+            log.info "updateUser() send invalidate users on:" + channel
             pubnub.publish(channel, "users" , callback) 
 
             user

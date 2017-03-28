@@ -28,7 +28,7 @@ class UserController {
     
     @Transactional
     def updateConnections(){
-        log.info 'updateConnections called' 
+        log.info 'updateConnections() called' 
         //log.info "json:"+request.JSON
         def jsonObject = request.JSON
         try{
@@ -46,20 +46,20 @@ class UserController {
                 }
             }
         } catch(Exception e){
-            log.error "update Connections Error"+e.message
+            log.error "updateConnections() Error"+e.message
             def error = [message:e.message]
             render error as JSON
             return
         }
         notify "connectionsUpdateNoPubNub","connections"
-        log.info "update connections OK"
+        log.info "updateConnections() OK"
         def sent = [message:'Connection Data Updated']
         render sent as JSON
     }
 
     
     def index(Integer max) {
-        log.info "USERS INDEX ____ **************"
+        log.info "index() USERS INDEX ____ **************"
         /*params.max = 5000 // Math.min(max ?: 10, 100)
         if(params.email && params.email != ""){
             def email = URLDecoder.decode(params.email)
@@ -102,7 +102,7 @@ class UserController {
 
     @Transactional
     def doLogin(){
-        log.info "do Login params:"+params
+        log.info "doLogin(), params:"+params
         def account = null
         def user = User.findWhere(email:params['email'])
         log.info "user:"+user?.id?.toString()
@@ -126,7 +126,7 @@ class UserController {
     @Transactional
     def save(User user) {
         def owner 
-        log.info " save params:"+ params
+        log.info "save(), params:"+ params
         if(params.pressHouse.id != "null"){
             owner = PressHouse.get(params.pressHouse.id.toInteger())
         } else if (params.brand.id != "null"){
@@ -165,7 +165,7 @@ class UserController {
     @Transactional
     def update(User user) {
         def jsonObject = request.JSON
-        log.info "update json:"+jsonObject
+        log.info "update(), json:"+jsonObject
         if(jsonObject?.id != null){
             user = userService.updateUser(jsonObject,user,session)
             log.info "user update json:"+jsonObject
@@ -192,7 +192,7 @@ class UserController {
         def jsonObject = request.JSON
         def owner
         def user
-        log.info "create User Json :"+jsonObject
+        log.info "createjson(), json :"+jsonObject
         if(jsonObject.pressHouse){
             owner = PressHouse.get(jsonObject.pressHouse.id.toInteger())
         } else if (jsonObject.brand){
@@ -217,13 +217,14 @@ class UserController {
     def updatejson() {
         def user
         def jsonObject = request.JSON
-        log.info "updateJson json:"+jsonObject
+        log.info "updateJson(), json:"+jsonObject
         if(jsonObject.id == session?.user?.id){
             user = session.user
-            log.info "updateJson: user: "+user.toString()
+            log.info "updateJson(), user for this session: "+user.toString()
             Account account = session.account
             user = userService.updateUser(jsonObject,user,account)
         } else{
+            log.info "updateJson(), other user"
             user = userService.updateUser(jsonObject)
         }
 

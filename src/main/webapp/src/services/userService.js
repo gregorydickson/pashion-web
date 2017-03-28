@@ -26,10 +26,10 @@ export class UserService {
     // All access to users is via the implicit variable created at #36
     // All access to users from outside userService should go through this call
     getUsers(forceGetFromServer) {
-        console.log("getting users: forceGetFromServer: " + forceGetFromServer);
+        console.log("UserService.getUsers, forceGetFromServer: " + forceGetFromServer);
         var promise = new Promise((resolve, reject) => {
             if ((!this.users) || forceGetFromServer) { // local storage if already loaded
-                console.log("getUsers() getting users from JSON");
+                console.log("UserService.getUsers, getting users from /user/connections");
                 this.http.fetch('/user/connections')
                     .then(response => response.json())
                     .then(users => {
@@ -39,7 +39,7 @@ export class UserService {
                         resolve(this.users);
                     }).catch(err => reject(err));
             } else {
-                console.log("getUsers() getting users locally");
+                console.log("UserService.getUsers() getting users locally");
                 resolve(this.users);
             }
         });
@@ -48,11 +48,11 @@ export class UserService {
     }
 
     getUsersByOrganization(forceGetFromServer) {
-        console.log("getting users by org: forceGetFromServer: " + forceGetFromServer);
+        console.log("UserService.getUsersByOrganization, forceGetFromServer: " + forceGetFromServer);
         let user = this.user;
         let method = ''
         let id = '';
-        console.log(JSON.stringify(user));
+        console.log("UserService.getUsersByOrganization, user :" + JSON.stringify(user));
         if (user.type === 'brand') {
             method = 'usersBrand';
             id = user.brand.id;
@@ -63,19 +63,19 @@ export class UserService {
             method = 'usersPRAgency';
             id = user.prAgency.id;
         } 
-        console.log("method for org:"+method + " id:"+id);
+        console.log("UserService.getUsersByOrganization, method for org: "+method + " id:"+id);
         var promise = new Promise((resolve, reject) => {
             if ((!this.usersOrg) || forceGetFromServer) { // local storage if already loaded
-                console.log("getting users from JSON");
+                console.log("UserService.getUsersByOrganization, getting users from /dashboard/" + method);
                 this.http.fetch('/dashboard/'+method+"/"+id)
                     .then(response => response.json())
                     .then(users => {
                         this.usersOrg = users;
-                        console.log("users for an org:"+this.usersOrg);
+                        console.log("UserService.getUsersByOrganization, users for an org:"+this.usersOrg);
                         resolve(this.usersOrg);
                     }).catch(err => reject(err));
             } else {
-                console.log("getting users locally");
+                console.log("UserService.getUsersByOrganization, getting users locally");
                 resolve(this.usersOrg);
             }
         });
@@ -91,14 +91,14 @@ export class UserService {
         var parent = this;
         var promise = new Promise((resolve, reject) => {
             if (parent.users) {
-                console.log("flushing connections to the server");
+                console.log("UserService.flushConnectionsData, using /user/updateConnections");
                 this.http.fetch('/user/updateConnections', {
                     method: 'post',
                     body: json(parent.users)
                 });
                 resolve(true);
             } else {
-                console.log("no users defined");
+                console.log("UserService.flushConnectionsData, no users defined");
                 return (false);
             }
         });
@@ -141,7 +141,7 @@ export class UserService {
 
     getUserDetails(id) {
         // could replace this with users database I guess. RM for later...
-        console.log("getting user details for: " + id);
+        console.log("UserService.getUserDetails, for: " + id);
         if(!id) {
             window.location.href = '/user/login';
             return
@@ -162,7 +162,8 @@ export class UserService {
     update(updateUser) {
         // if we are updating the current login user then need to set local 
         // and add the extra stuff for the current user
-
+        console.log("UserService.update, incoming user:" + updateUser.id + " " + updateUser.name + " using /user/updatejson");
+        this.user = updateUser;
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/user/updatejson/' + updateUser.id + ".json", {
                     method: 'post',
@@ -196,7 +197,7 @@ export class UserService {
     // Build new connection
     addContactRequest(idIn) {
 
-        console.log("add contact request: " + idIn);
+        console.log("UserService.addContactRequest, for id: " + idIn);
         // first connection record
         var nameString1 = this.users[this.user.id - 1].name + ' '+this.users[this.user.id - 1].surname + this.users[this.user.id - 1].email; // spaces to match name display and prvent run on match for the other fields
         if (this.users[this.user.id - 1].brand) nameString1 += this.users[this.user.id - 1].brand.name;
@@ -241,7 +242,7 @@ export class UserService {
                 })
                 .then(response => response.json())
                 .then(result => {
-                    console.log("json addContactRequest1: " + result.message);
+                    //console.log("json addContactRequest1: " + result.message);
                     // locally
                     conn1.id = result.id1; // add in the connection id from the create, locally
                     conn2.id = result.id2; // add in the connection id from the create, locally
@@ -260,12 +261,12 @@ export class UserService {
         // get id for email;
         var fromUserId = this.checkValidUser(fromEmail);
         var connectionId = -1;
-        console.log("Update message count from:" + fromEmail + " id:" + fromUserId + ' pushToServer: ' + pushToServer);
+        console.log("UserService.addMessgeCount, update message count from:" + fromEmail + " id:" + fromUserId + ' pushToServer: ' + pushToServer);
 
         var i;
         for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
             if (this.users[this.user.id - 1].connections[i].connectedUserId == fromUserId) {
-                console.log("addMessageCount actually added to users from: " + fromUserId + " to: " + this.user.id);
+                console.log("UserService.addMessgeCount actually added to users from: " + fromUserId + " to: " + this.user.id);
                 this.users[this.user.id - 1].connections[i].numberNewMessages++;
                 connectionId = this.users[this.user.id - 1].connections[i].id;
                 break;
@@ -278,14 +279,14 @@ export class UserService {
 
         // save out using connection id
         if (pushToServer && (connectionId != -1)) {
-            console.log("pushing message count to server for: " + fromEmail + " user id: " + fromUserId + " in connections id: " + connectionId);
+            console.log("UserService.addMessgeCount, pushing message count to server for: " + fromEmail + " user id: " + fromUserId + " in connections id: " + connectionId);
             var promise = new Promise((resolve, reject) => {
                 this.http.fetch('/connection/addMessageCount/' + connectionId, {
                         method: 'post'
                     })
                     .then(response => response.json())
                     .then(result => {
-                        console.log("json addMessageCount result:" + result.message);
+                        console.log("UserService.addMessgeCount json addMessageCount result:" + result.message);
                     }).catch(err => reject(err));
             });
             return promise;
@@ -310,7 +311,7 @@ export class UserService {
             if (this.users[this.user.id - 1].connections[i].connectedUserId == withUserId) {
                 this.users[this.user.id - 1].connections[i].numberNewMessages = 0;
                 connectionId1 = this.users[this.user.id - 1].connections[i].id;
-                console.log("clearUnreadMessages from: " + withUserId + " on id: " + connectionId1);
+                console.log("UserService.cleanUnreadMessages, from: " + withUserId + " on id: " + connectionId1);
                 break;
             }
         }
@@ -327,7 +328,7 @@ export class UserService {
                 })
                 .then(response => response.json())
                 .then(result => {
-                    console.log("zeroMessageCount success from server with message: " + result.message);
+                    console.log("UserService.addMessgeCount, zeroMessageCount success from server with message: " + result.message);
                     resolve(true);
                 }).catch(err => reject(err));
         });
@@ -338,17 +339,17 @@ export class UserService {
     getMostRecentRead(fromEmail) {
         var withUserId = this.checkValidUser(fromEmail);
         if (withUserId == -1) {
-            console.log("getMostRecentRead from: " + fromEmail + " invalid email");
+            console.log("UserService.getMostRecentRead, from: " + fromEmail + " invalid email");
             return (0);
         }
         var i;
         for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
             if (this.users[this.user.id - 1].connections[i].connectedUserId == withUserId) {
-                console.log("getMostRecentRead from: " + withUserId + " on id: " + " stamp: " + this.users[this.user.id - 1].connections[i].mostRecentRead);
+                console.log("UserService.getMostRecentRead, from: " + withUserId + " on id: " + " stamp: " + this.users[this.user.id - 1].connections[i].mostRecentRead);
                 return (this.users[this.user.id - 1].connections[i].mostRecentRead);
             }
         }
-        console.log("getMostRecentRead from: " + withUserId + " on id: " + " stamp: not found");
+        console.log("UserService.getMostRecentRead, from: " + withUserId + " on id: " + " stamp: not found");
         return (0);
     }
 
@@ -361,7 +362,7 @@ export class UserService {
             if (this.users[this.user.id - 1].connections[i].connectedUserId == withUserId) {
                 this.users[this.user.id - 1].connections[i].mostRecentRead = mostRecentDateStamp;
                 connectionId1 = this.users[this.user.id - 1].connections[i].id;
-                console.log("saveMostRecentRead from: " + withUserId + " on id: " + connectionId1 + " stamp: " + mostRecentDateStamp);
+                console.log("UserService.saveMostRecentRead, from: " + withUserId + " on id: " + connectionId1 + " stamp: " + mostRecentDateStamp);
                 break;
             }
         }
@@ -376,12 +377,12 @@ export class UserService {
                     })
                     .then(response => response.json())
                     .then(result => {
-                        console.log("saveMostRecentRead: " + result.message);
+                        console.log("UserService.saveMostRecentRead, " + result.message);
                     }).catch(err => reject(err));
             });
             return promise;
         } else {
-            console.log("saveMostRecentRead: ERROR");
+            console.log("UserService.saveMostRecentRead, ERROR");
             return (false);
         }
 
@@ -391,15 +392,15 @@ export class UserService {
 
     //RM need to check this code carefully as not kept up to date
     deleteContact(user, id) { // id=connection id 
-        console.log("delete connection, id: " + id + " from user " + user);
+        console.log("UserService.deleteContact, id: " + id + " from user " + user);
         // local
         if (typeof(id) == 'undefined') {
-            console.log ("id undefined: " + id);
+            console.log ("UserService.deleteContact, id undefined: " + id);
             // pf = new Promise ();
             return Promise.reject(new Error('fail'));
         }
         if (typeof(user) == 'undefined') {
-            console.log ("user undefined");
+            console.log ("UserService.deleteContact, user undefined");
             // pf = new Promise ();
             return Promise.reject(new Error('fail'));
         }
@@ -419,7 +420,7 @@ export class UserService {
         //write out
         // make 2 calls because not sureif the standard delete should be used or not.
 
-        console.log("delete connection 1, id: " + id + " fromEmail: " + connectedEmail);
+        console.log("UserService.deleteContact, delete connection 1, id: " + id + " fromEmail: " + connectedEmail);
         var payload = { fromEmail: connectedEmail };
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/delete/' + id, {
@@ -442,7 +443,7 @@ export class UserService {
         }
         //write out
         // make 2 calls because not sureif the standard delete should be used or not.       
-        console.log("delete connection 2, id: " + id2 + " fromEmail: " + email2);
+        console.log("UserService.deleteContact, delete connection 2, id: " + id2 + " fromEmail: " + email2);
         promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/delete/' + id2, {
                     method: 'post',
@@ -465,7 +466,7 @@ export class UserService {
                     if(response.ok) {
                         resolve(response);
                     } else {
-                        console.log('Network response was not ok.');
+                        console.log('UserService.deleteContact, Network response was not ok.');
                         reject("Not Deleted");
                     }
             })
@@ -477,7 +478,7 @@ export class UserService {
     }
 
     acceptContact(user, id) {
-        console.log("accept contact: " + id + " from user " + user);
+        console.log("UserService.acceptContact, " + id + " from user " + user);
         // local
         var i;
         var connectedUserId;
@@ -513,7 +514,7 @@ export class UserService {
     getUser() {
         var promise = new Promise((resolve, reject) => {
             if (!this.user) {
-                console.log("getUser(): no user fetch json");
+                console.log("UserService.getUser, no user variable, fetch json /dashboard/user");
                 this.http.fetch('/dashboard/user')
                     .then(response => response.json())
                     .then(result => {
@@ -521,6 +522,7 @@ export class UserService {
                             // this is the extra stuff created in groovy for the login user that is now relied upon
                             //RM should weed out the places that rely on this and create specific functions here
                             this.user = user;
+                            console.log("userService.getUser, got user " + user.name)
                             if (user.brand!=null) {
                                 this.user["type"] = 'brand';
                                 this.user["companyId"] = user.brand.id;
@@ -537,7 +539,7 @@ export class UserService {
                         })
                     }).catch(err => reject(err));
             } else {
-                console.log("gotUser() from local: " + this.user.id);
+                console.log("UserService.getUser, from local: this.user:" + this.user.id + " " + this.user.name);
                 resolve(this.user);
             }
         });
@@ -545,7 +547,7 @@ export class UserService {
     }
 
     createUser(userToAdd){
-        console.log("new user:"+userToAdd);
+        console.log("UserService.createUser, "+userToAdd);
         console.log(JSON.stringify(this.user));
         let currentUser = this.user;
         
@@ -553,7 +555,7 @@ export class UserService {
             userToAdd.brand = currentUser.brand;
         } else if (currentUser.pressHouse) {
             userToAdd.pressHouse = currentUser.pressHouse.id;
-            console.log("user presshouse"+currentUser.pressHouse.id);
+            console.log("UserService.createUser, user presshouse"+currentUser.pressHouse.id);
         } else if (currentUser.prAgency) {
             userToAdd.prAgency = currentUser.prAgency.id;
         }
@@ -567,7 +569,7 @@ export class UserService {
                     if(response.ok) {
                         resolve(response);
                     } else {
-                        console.log('Network response was not ok.');
+                        console.log('UserService.createUser, Network response was not ok.');
                         reject("Not Created");
                     }
             })
