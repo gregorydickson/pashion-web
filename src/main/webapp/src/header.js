@@ -58,6 +58,9 @@ export class Header {
 
     admin(){
       console.log("admin: " + this.selectval);
+      if(this.selectval == "DASHBOARD") {
+        this.userService.getUser().then(user => this.user = user);
+      }
       var currentRoute = this.theRouter.currentInstruction.config.name;
       if (currentRoute == 'index') this.theRouter.navigate("adminpage");
       if (currentRoute == 'requestman') this.theRouter.navigate("adminpage");
