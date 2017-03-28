@@ -153,35 +153,34 @@ export class EditSearchableItem {
     console.log('sample2Callback() called');
 
     if (event.detail) {
-        let selectedValue = event.detail.value;         
-        console.log('sample2Callback() / Selected value:', selectedValue); 
+        let selectedSample = event.detail.value;         
+        console.log('sample2Callback() / Selected value:', selectedSample); 
 
-        this.selectedSample = selectedValue; //this.availableSampleItems.find(x => x.id == selectedValue);
+        this.selectedSample = selectedSample; //this.availableSampleItems.find(x => x.id == selectedSample);
 
-        let selectedType = this.availableSampleTypeItems.find(x => x.text.toUpperCase() == selectedValue.sampleType.toUpperCase());
+        let selectedSampleType = this.availableSampleTypeItems.find(x => x.text.toUpperCase() == selectedSample.sampleType.toUpperCase());
+        let selectedMaterial = this.availableMaterialItems.find(x => x.text.toUpperCase() == selectedSample.material.toUpperCase())
+        let selectedLocation = this.selectedSample.sampleCity || null;
 
-        if (selectedType) {
-          console.log('Found the selected type match:', selectedType);
-          this.selectedSampleTypeItems = [selectedType.id];
+        if (selectedSampleType) {
+          console.log('Found a match for sample type:', selectedSampleType);
+          this.selectedSampleTypeItems = [selectedSampleType.id];
         }
 
-        this.selectedLocationItems = [this.selectedSample.sampleCity.id];        
+        if (selectedMaterial) {
+          console.log('Found a match for material:', selectedMaterial);
+          this.selectedMaterialItems = [selectedMaterial.id];      
+        }
+
+        if (selectedLocation) {
+          console.log('Found a match for location:', selectedLocation);
+          this.selectedLocationItems = [selectedLocation.id];      
+        }
+         
         this.showSampleEdit = (this.selectedSample !== null);
     }
   }
-
-  onSampleChangeCallback(event) {   
-      console.log('onSampleCallback() called:', event.detail.value);
-
-      if (event.detail) {
-          let selectedValue = event.detail.value;         
-          console.log('Selected value:', selectedValue);    
-
-          this.selectedSample =  this.availableSampleItems.find(x => x.id == selectedValue);
-          this.showSampleEdit = (this.selectedSample !== null);   
-      }
-  }
-
+  
   onSampleTypeChangeCallback(event) {   
       console.log('onSampleTypeCallback() called:', event.detail.value);
 
@@ -203,18 +202,7 @@ export class EditSearchableItem {
           this.selectedSample.color = selectedValue;
       }
   }
-
-  onMaterialChangeCallback(event) {   
-      console.log('onMaterialChangeCallback() called:', event.detail.value);
-
-      if (event.detail) {
-          let selectedValue = event.detail.value;         
-          console.log('Selected value:', selectedValue);      
-
-          this.selectedSample.material = selectedValue;
-      }
-  }
-
+  
   filterChangeType(event) {
     //console.log("Filter Change changing Type");
     if (event)
