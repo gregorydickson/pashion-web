@@ -15,13 +15,13 @@
       <ai-dialog-body>
         <div class="grid-block row">
           <div class="vertical grid-block">
-              <div if.bind="brandHideCalendar" class="text-center">
-                <span class="welcome-text">Access to availability information is blocked by the brand.</span>
+              <div if.bind="((brandHideCalendar) && (user.type != 'brand'))" class="text-center">
+                <span class="welcome-text">Access to availability information is not provided by the brand.</span>
               </div>
               <div if.bind="(currentItem.samples.length<=0)" class="text-center">
-                <span class="welcome-text">This brand is not on the Pashion platform.</span>
+                <span class="welcome-text">This collection is not on the Pashion platform.</span>
               </div>
-              <div if.bind="(!brandHideCalendar) && (currentItem.samples.length>0)">
+              <div if.bind="((!brandHideCalendar) || (brandHideCalendar && user.type == 'brand')) && (currentItem.samples.length>0)">
                 <!-- tumbnail -->
                 <div class="grid-block shrink"> 
                     <div class="grid-content"></div>

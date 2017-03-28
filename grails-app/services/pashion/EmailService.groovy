@@ -38,32 +38,37 @@ class EmailService {
         try {
             
             SampleRequest sr = data
-            def messageTxt = "" 
+            def messageTxt = "<br/>" 
             log.info "email notificaiton start message"
-            messageTxt = messageTxt + "Booking confirmation of samples from " + sr.brand.name+ " look "+sr.look+"<br/><br/>" 
+            messageTxt = messageTxt + '<img src="https://app.pashiontool.com/assets/PashionRMPlainBlackTag.png" style="max-width:524px;">'
+            messageTxt = messageTxt + "<br/><br/>"
+            messageTxt = messageTxt + "Booking confirmation of samples from <b>" + sr.brand.name+ "</b> Look "+sr.look+"<br/><br/>" 
+
+            messageTxt = messageTxt + '<img src="https:' + sr.image + '" style="max-width:258px;"><br/><br/>'
+            log.info "message text + image address: " + messageTxt
             
             sr.searchableItemsProposed.each{
-                messageTxt = messageTxt + "Sample:" +it?.attributes+"<br/>"
+                messageTxt = messageTxt + "<b>Sample: </b>" +it?.attributes+"<br/>"
             }
             messageTxt = messageTxt +"<br/>"
             
-            messageTxt = messageTxt + "Start Date: " +sr.bookingStartDate?.format('yyyy-MMM-dd')+"<br/>"
-            messageTxt = messageTxt + "End Date: " +sr.bookingEndDate?.format('yyyy-MMM-dd')+"<br/>"
-            messageTxt = messageTxt + "Required By: " +sr.requiredBy+"<br/>"
-            messageTxt = messageTxt + "Deliver To: " +sr.deliverTo?.name + " " + sr.deliverTo?.surname +"<br/>"
-            messageTxt = messageTxt + "Courier Out: " +sr.courierOut +"<br/>"
-            messageTxt = messageTxt + "Payment: " +sr.paymentOut +"<br/>"
-            messageTxt = messageTxt + "To be Returned By: " +sr.returnBy +"<br/>"
-            messageTxt = messageTxt + "Return To: " +sr.returnToAddress?.name +"<br/>"
+            messageTxt = messageTxt + "<b>Start Date: </b>" +sr.bookingStartDate?.format('yyyy-MMM-dd')+"<br/>"
+            messageTxt = messageTxt + "<b>End Date: </b>" +sr.bookingEndDate?.format('yyyy-MMM-dd')+"<br/>"
+            messageTxt = messageTxt + "<b>Required By: </b>" +sr.requiredBy+"<br/>"
+            messageTxt = messageTxt + "<b>Deliver To: </b>" +sr.deliverTo?.name + " " + sr.deliverTo?.surname +"<br/>"
+            messageTxt = messageTxt + "<b>Courier Out: </b>" +sr.courierOut +"<br/>"
+            messageTxt = messageTxt + "<b>Payment: </b>" +sr.paymentOut +"<br/>"
+            messageTxt = messageTxt + "<b>To be Returned By: </b>" +sr.returnBy +"<br/>"
+            messageTxt = messageTxt + "<b>Return To: </b>" +sr.returnToAddress?.name +"<br/>"
             messageTxt = messageTxt + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + sr.returnToAddress?.address1 +"<br/>"
             if(sr.returnToAddress.address2)
                 messageTxt = messageTxt + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + sr.returnToAddress?.address2 +"<br/>"
             messageTxt = messageTxt + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + sr.returnToAddress?.city +"<br/>"
             messageTxt = messageTxt + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + sr.returnToAddress?.country +"<br/>"
             messageTxt = messageTxt + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + sr.returnToAddress?.postalCode +"<br/>"
-            messageTxt = messageTxt + "Courier Return: " +sr.courierReturn+"<br/>"
-            messageTxt = messageTxt + "Payment: " +sr.paymentReturn+"<br/><br/>"
-            messageTxt = messageTxt + "From the PASHION platform http://www.pashiontool.com <br/>"
+            messageTxt = messageTxt + "<b>Courier Return: </b>" +sr.courierReturn+"<br/>"
+            messageTxt = messageTxt + "<b>Payment: </b>" +sr.paymentReturn+"<br/><br/>"
+            messageTxt = messageTxt + "Thanks from the team. <br/> http://www.pashiontool.com <br/>"
             log.info "created message text"
 
             Email from = new Email("support@pashiontool.com")

@@ -49,14 +49,25 @@ export class Index {
     filtering = 'ALL REQUESTS';
 
 
-    filterFunc(searchExpression, value, filter, user){
+    filterFunc(searchExpression, value, filter, user,seasons){
         var searchVal = true;
         var filterVal = true;
         if (searchExpression == '' && filter == '') return true;
         var itemValue ='';
         if (value.pressHouse) itemValue = value.pressHouse.name;
-        if (value.brand)  itemValue = itemValue + value.brand.name;
-        if (value.prAgency) itemValue = itemValue + value.prAgency.name;
+        if (value.brand)  itemValue = itemValue + ' ' + value.brand.name;
+        if (value.prAgency) itemValue = itemValue + ' ' + value.prAgency.name;
+        if (value.id) itemValue = itemValue + ' ' + value.id;
+            // Get season abbreviation
+        var i;
+        var abbrev = '';
+        for (i = 0; i < seasons.length; i++) {
+            if (seasons[i].name == value.season) {
+                abbrev = seasons[i].abbreviation;
+            }
+        }
+        if (value.look && abbrev == '') itemValue = itemValue + ' ' +  value.look;//RM check added to index small request man
+        if (value.look && abbrev != '') itemValue = itemValue + ' ' + abbrev+value.look;//RM check added to index small request man
         // console.log("Filter value: " + itemValue);
         if(searchExpression && itemValue) searchVal = itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;    
 
@@ -64,10 +75,16 @@ export class Index {
           filterVal = (value.requestingUser.id == user.id);
         }
         if (filter == 'OVERDUE REQUESTS') {
-          filterVal = (value.requestStatusBrand == 'Overdue');
+            if (user.type == "brand" || user.type == "prAgency") filterVal = (value.requestStatusBrand == 'Overdue');
+            if (user.type == "press" )  filterVal = (value.requestStatusPress == 'Overdue');
         }
         if (filter == 'OPEN REQUESTS') {
-          filterVal = (value.requestStatusBrand != 'Closed');
+            if (user.type == "brand" || user.type == "prAgency") filterVal = (value.requestStatusBrand != 'Closed');
+            if (user.type == "press" ) filterVal = (value.requestStatusPress != 'Closed');
+        }
+        if (filter == 'CLOSED REQUESTS') {
+            if (user.type == "brand" || user.type == "prAgency") filterVal = (value.requestStatusBrand == 'Closed');
+            if (user.type == "press") filterVal = (value.requestStatusPress == 'Closed');
         }
 
         return (searchVal && filterVal); 
@@ -76,6 +93,7 @@ export class Index {
 
 
   filterChange(event){
+    this.closeAllOpenRequestRows();
       console.log("changing filter: ");
           if (event)
             if (event.detail)
@@ -84,6 +102,7 @@ export class Index {
                     if (event.detail.value == 'MY REQUESTS') this.filtering = 'MY REQUESTS'; 
                     if (event.detail.value == 'OVERDUE REQUESTS') this.filtering = 'OVERDUE REQUESTS';  
                     if (event.detail.value == 'OPEN REQUESTS') this.filtering = 'OPEN REQUESTS'; 
+                    if (event.detail.value == 'CLOSED REQUESTS') this.filtering = 'CLOSED REQUESTS'; 
                     console.log("value:" + event.detail.value + " filtering: " +this.filtering);
                 } 
   }
@@ -425,6 +444,7 @@ export class Index {
     }
   
   orderChange(event) {
+        this.closeAllOpenRequestRows();
         console.log("Order changed ");
         if (event)
             if (event.detail)
@@ -598,6 +618,25 @@ export class Index {
         var panelChoice = document.getElementById("panel" + buttonNumber);
         buttonChoice.classList.toggle("active");
         panelChoice.classList.toggle("show");
+    }
+
+    closeAllOpenRequestRows () {
+        var activeList = document.getElementsByClassName("active requestButton");
+        var showList = document.getElementsByClassName("show requestPanel");
+        var numberElements = 0;
+        if (activeList) numberElements = activeList.length; // needed as activeList is dynamically updated HTMLLiveCollection
+        var i;
+        if (numberElements > 0) {
+            for (i=0; i < numberElements; i++){
+                if (activeList) activeList[0].classList.toggle("active");
+            }
+        }
+        if (showList) numberElements = showList.length;
+        if (numberElements > 0) {
+            for (i=0; i < numberElements; i++){
+                if (showList) showList[0].classList.toggle("show");
+            }
+        }
     }
 
     lookMenu(id) {

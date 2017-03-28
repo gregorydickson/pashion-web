@@ -124,7 +124,10 @@ export class EditSearchableItem {
   materialAdd (sample) {
     if (!this.addMaterial) return;
     if (this.addMaterial=='') return;
-    sample.material = sample.material + " " + this.addMaterial;
+    if(sample.material)
+      sample.material = sample.material + " " + this.addMaterial;
+    else
+      sample.material = this.addMaterial;
   }
 
   materialClear (sample) {
@@ -216,7 +219,22 @@ export class EditSearchableItem {
     var item = this.currentItem;
     console.log("submitting Image Data");
     console.log(JSON.stringify(item));
+    //add attributes from samples to the look
+    item.samples.forEach(sample => {
+      let addAttributes = '';
+      if(sample.sampleType)
+        addAttributes = sample.sampleType
+      if(sample.description)
+        addAttributes = addAttributes +" "+ sample.description;
+      if(sample.material)
+        addAttributes = addAttributes +" "+ sample.material;
+      if(sample.color)
+        addAttributes = addAttributes +" "+sample.color;
+
+      item.attributes = item.attributes +" "+ addAttributes;
+    });
     
+
     this.http.fetch('/searchableItem/savejson', {
             method: 'post',
             body: json(item)

@@ -7,7 +7,7 @@ import 'fetch';
 @customElement('filters-filterrequests')
 
 export class FiltersFilterrequestsCustomElement {
-  filters = ["ALL REQUESTS","OPEN REQUESTS","MY REQUESTS","OVERDUE REQUESTS"];
+  filters = ["ALL REQUESTS","OPEN REQUESTS","CLOSED REQUESTS", "MY REQUESTS","OVERDUE REQUESTS"];
   selectorselector = false;
   selectorall = false;
 

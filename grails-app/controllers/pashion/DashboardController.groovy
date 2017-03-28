@@ -110,9 +110,12 @@ class DashboardController {
         render list
     }
 
+    def sampleTypes = null
     def sampleTypes(){
-
-        def list = ['bag','babouches','bandana','beads','belt','bermuda','bikini','blazer','blouse','bodice','boots','boyfriend jeans','bomber jacket','boots','bra','bracelet',
+        if(sampleTypes){
+            render sampleTypes
+        } else{
+            def list = ['bag','babouches','bandana','beads','belt','bermuda','bikini','blazer','blouse','bodice','boots','boyfriend jeans','bomber jacket','boots','bra','bracelet',
                     'braces','bustier','button','cap','cape','cardigan','claudine', 'clutch bag','coat','cocktail dress','collar','corsage','corset',
                     'costume','crocs','crop top','culotte','dress','dress on pants','diamond','dressing gown','dungarees','earring','fan',
                     'feather','flared jeans',
@@ -124,8 +127,12 @@ class DashboardController {
                     'shirt dress','shorts','skirt','skirt dress','sleeve','sleeveless',
                     'slip','slipper','slip dress','smoking','socks','stilletos','suit','sunglasses','sweater','sweatpants',
                     'sweatshirt','swimsuit','tank top','teeshirt','tennis','tie','tights','top','trainers','trench','trenchcoat','trousers','tunic',
-                    'turtleneck','tuxedo','underwear','veil','vest','waistcoat','watch','zip'] as JSON
-        render list
+                    'turtleneck','tuxedo','underwear','veil','vest','waistcoat','watch','zip']
+            
+            list = list.collect{it.toUpperCase()}
+            sampleTypes = list as JSON
+            render sampleTypes
+        }
     }
 
     def itemTypes(){
@@ -133,16 +140,23 @@ class DashboardController {
         def itemTypes = SearchableItemType.list() as JSON
         render itemTypes
     }
-
+    def colors = null
     def colors(){
-        def colors = ['baby blue','blue light','beige','bicolour','black','bleu','blue','bordeaux',
-                'bright','bronze','brown','brown light','burgundy','camel','cobalt','cognac','colorful',
-                'coral','cream','duotone','fuschia','glitter','gold','gray','green','grey','ivory','jaune',
-                'khaki','lavendar','lilac','lime','metallic','monochrome',
-                'multicolour','mustard','navy blue','noir','nude','orange','pastel','pearl',
-                'pink','powder','purple','red','rust','salmon','shine','silver','transparent',
-                'turquoise','white','yellow'] as JSON
-        render colors
+        if(colors){
+            render colors
+        } else { 
+
+            colors = ['baby blue','blue light','beige','bicolour','black','bleu','blue','bordeaux',
+                    'bright','bronze','brown','brown light','burgundy','camel','cobalt','cognac','colorful',
+                    'coral','cream','duotone','fuschia','glitter','gold','gray','green','grey','ivory','jaune',
+                    'khaki','lavendar','lilac','lime','metallic','monochrome',
+                    'multicolour','mustard','navy blue','noir','nude','orange','pastel','pearl',
+                    'pink','powder','purple','red','rust','salmon','shine','silver','transparent',
+                    'turquoise','white','yellow']
+            colors = colors.collect{it.toUpperCase()}  
+            colors = colors as JSON
+            render colors
+        }
     }
 
 

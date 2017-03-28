@@ -9,8 +9,9 @@ import {busy} from './services/busy';
 import { CreateDialogAlert } from './common/dialogAlert';
 import { HttpClient } from 'aurelia-fetch-client';
 import { EventAggregator } from 'aurelia-event-aggregator';
+import {PDFService} from './services/PDFService';
 
-@inject(HttpClient, DialogService, UserService, SampleRequestService,busy, EventAggregator)
+@inject(HttpClient, DialogService, UserService, PDFService, SampleRequestService,busy, EventAggregator)
 export class Requestman{
 	  
   @bindable({defaultBindingMode: bindingMode.twoWay}) bookings = [];
@@ -31,7 +32,7 @@ export class Requestman{
 
 
 
-  constructor(http,dialogService,userService,sampleRequestService,busy,eventAggregator) {
+  constructor(http,dialogService,userService,pDFService, sampleRequestService,busy,eventAggregator) {
     http.configure(config => {
             config
                 .useStandardConfiguration();
@@ -43,6 +44,7 @@ export class Requestman{
     this.sampleRequestService = sampleRequestService;
     this.busy = busy;
     this.ea = eventAggregator;
+    this.pDFService = pDFService;
 
   }
 
@@ -90,6 +92,7 @@ export class Requestman{
 
         this.subscriber = this.ea.subscribe('datepicker', response => {
             //console.log("datepicker event: " + response.elementId + " : " + response.elementValue);
+            this.closeExpanded ();
             var fireChange = false;
             if (response.elementId === 'datepickersearchto') {
                   this.searchTo = response.elementValue;
@@ -130,6 +133,23 @@ export class Requestman{
                 }          
     } */
 
+    createPDFDialog() {
+      //container = document.getElementsByClassName ('brandGridContent');
+      var dates ='';
+      var filter = '';
+      if (this.filtering) filter = "Filter: " + this.filtering;
+      var search = '';
+      if (this.searchTextReqMan) search = "Search: '" + this.searchTextReqMan +"'";
+      if (this.searchFrom) dates = "From: " + this.searchFrom;
+      if (this.searchTo) dates = dates + " to " + this.searchTo;
+      // var headerText = {};
+      if (this.user.type == 'brand' || this.user.type == 'prAgency') var headerText = ['ID','LOOK','DUE DATE','COMPANY','EDITORIAL','WHO','#','STATUS'];
+      if (this.user.type == 'press') var headerText = ['ID','LOOK','REQUESTED','BRAND','EDITORIAL','OWNER','#','STATUS'];
+      this.pDFService.generatePDF(this.user.name, this.user.surname, dates, search, filter, headerText );
+      //console.log("container to text: " + container);
+    }
+
+
       orderChange(event) {
         console.log("Order changed ");
         this.closeExpanded ();
@@ -149,7 +169,7 @@ export class Requestman{
 
 
   filterChange(event){
-      console.log("changing filter: " + this.searchFrom + " to " + this.searchTo);
+      console.log("changing filterChange (dates: " + this.searchFrom + " to " + this.searchTo);
       this.closeExpanded ();
           if (event)
             if (event.detail)
@@ -157,7 +177,8 @@ export class Requestman{
                     if (event.detail.value == 'ALL REQUESTS') this.filtering = '';
                     if (event.detail.value == 'MY REQUESTS') this.filtering = 'MY REQUESTS'; 
                     if (event.detail.value == 'OVERDUE REQUESTS') this.filtering = 'OVERDUE REQUESTS';  
-                    if (event.detail.value == 'OPEN REQUESTS') this.filtering = 'OPEN REQUESTS'; 
+                    if (event.detail.value == 'OPEN REQUESTS') this.filtering = 'OPEN REQUESTS';  
+                    if (event.detail.value == 'CLOSED REQUESTS') this.filtering = 'CLOSED REQUESTS'; 
                     //console.log("value:" + event.detail.value + " filtering: " +this.filtering);
                 } 
   }
@@ -179,7 +200,7 @@ export class Requestman{
       }
 
 
-  filterFunc(searchExpression, value, filter, user){
+  filterFunc(searchExpression, value, filter, user,seasons){
     // editorialName, pressHouse
 
     var searchVal = true;
@@ -189,17 +210,34 @@ export class Requestman{
     if (searchExpression == '' && filter == '') return true;
     var itemValue ='';
     if (value.pressHouse) itemValue = value.pressHouse.name;
-    if (value.brand)  itemValue = itemValue + value.brand.name;
-    if (value.prAgency) itemValue = itemValue + value.prAgency.name;
-    if ((value.deliverTo) && value.deliverTo.pressHouse) itemValue = value.deliverTo.pressHouse.name;
-    if ((value.deliverTo) && value.deliverTo.brand)  itemValue = itemValue + value.deliverTo.brand.name;
-    if ((value.deliverTo) && value.deliverTo.prAgency) itemValue = itemValue + value.deliverTo.prAgency.name;
-    if (value.editorialName) itemValue = itemValue + value.editorialName;
-    if (value.editorialWho) itemValue = itemValue + value.editorialWho;
-    if (value.requestingUser) itemValue = itemValue + value.requestingUser.surname + value.requestingUser.name;
-    if (value.returnToName) itemValue = itemValue + value.returnToName;
-    if (value.returnToSurname) itemValue = itemValue + value.returnToSurname;
-    if (value.addressDestination) itemValue = itemValue + value.addressDestination.name;
+    if (value.brand)  itemValue = itemValue + ' ' + value.brand.name;
+    if (value.prAgency) itemValue = itemValue + ' ' +  value.prAgency.name;
+    if ((value.deliverTo) && value.deliverTo.pressHouse) itemValue = itemValue + ' ' + value.deliverTo.pressHouse.name;
+    if ((value.deliverTo) && value.deliverTo.brand)  itemValue = itemValue + ' ' + value.deliverTo.brand.name;
+    if ((value.deliverTo) && value.deliverTo.prAgency) itemValue = itemValue + ' ' + value.deliverTo.prAgency.name;
+    if (value.editorialName) itemValue = itemValue + ' ' + value.editorialName;
+    if (value.editorialWho) itemValue = itemValue + ' ' + value.editorialWho;
+    if (value.requestingUser) itemValue = itemValue + ' ' + value.requestingUser.name + ' ' + value.requestingUser.surname;
+    if (value.returnToName) itemValue = itemValue + ' ' + value.returnToName;
+    if (value.returnToSurname) itemValue = itemValue + ' ' + value.returnToSurname;
+    if (value.addressDestination) itemValue = itemValue + ' ' + value.addressDestination.name;
+    if (value.id) itemValue = itemValue + ' ' + value.id; 
+    // Get season abbreviation
+    var i;
+    var abbrev = '';
+    for (i = 0; i < seasons.length; i++) {
+        if (seasons[i].name == value.season) {
+            abbrev = seasons[i].abbreviation;
+        }
+    }
+    if (value.look && abbrev == '') itemValue = itemValue + ' ' +  value.look;//RM check added to index small request man
+    if (value.look && abbrev != '') itemValue = itemValue + ' ' + abbrev+value.look;//RM check added to index small request man
+    // Add sample id's to search list
+    if (value.searchableItems){
+      var i;
+      for (i=0;i<value.searchableItems.length;i++)
+        itemValue = itemValue + ' ' + value.searchableItems[i].clientID;
+    }
 
     //console.log("Search value: " + itemValue);
     if(searchExpression && itemValue) searchVal = itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;   
@@ -208,10 +246,16 @@ export class Requestman{
       filterVal = (value.requestingUser.id == user.id);
     }
     if (filter == 'OVERDUE REQUESTS') {
-      filterVal = (value.requestStatusBrand == 'Overdue');
+      if (user.type == "brand" || user.type == "prAgency") filterVal = (value.requestStatusBrand == 'Overdue');
+      if (user.type == "press" ) filterVal = (value.requestStatusPress == 'Overdue');
     }
     if (filter == 'OPEN REQUESTS') {
-      filterVal = (value.requestStatusBrand != 'Closed');
+      if (user.type == "brand"  || user.type == "prAgency") filterVal = (value.requestStatusBrand != 'Closed');
+      if (user.type == "press") filterVal = (value.requestStatusPress != 'Closed');
+    }
+    if (filter == 'CLOSED REQUESTS') {
+      if (user.type == "brand" || user.type == "prAgency")  filterVal = (value.requestStatusBrand == 'Closed');
+      if (user.type == "press" )  filterVal = (value.requestStatusPress == 'Closed');
     }
     //console.log(" filterfunc return value: " +  searchVal + " " + filterVal + " :: " + (searchVal && filterVal));
     return (searchVal && filterVal); 

@@ -49,10 +49,6 @@ export class CreateSampleRequestBrand {
   startDay = '';
   endDay = '';
 
-  deliverToChanged(){
-    console.log("deliverTo Changed");
-  }
-
   constructor(http, controller, brandService, dialogService){
     this.controller = controller;
     console.log("createSampleRequestBrand");
@@ -159,6 +155,7 @@ export class CreateSampleRequestBrand {
 
           this.selectedAddress = selectedDeliverTo;
       }
+      this.enableCheck();
   }
 
   onReturnToChangeCallback(event) {   
@@ -182,6 +179,7 @@ export class CreateSampleRequestBrand {
         this.selectedAddress = evt.detail.value;
         
     }
+
   }
   attached(){
     document.getElementById("CreateSampleRequestButton").disabled = true;
@@ -341,6 +339,7 @@ export class CreateSampleRequestBrand {
        (this.sampleRequest.startDate === undefined) ||
        (this.sampleRequest.startDate == '') ||
        (this.sampleRequest.endDate === undefined) ||
+       (this.selectedAddress === undefined) ||
        (this.sampleRequest.endDate == '')){
           document.getElementById("CreateSampleRequestButton").disabled = true;
           console.log("button DIS abled");

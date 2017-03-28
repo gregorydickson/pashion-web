@@ -41,7 +41,7 @@ grails:
 environments:
     development:
         dataSource:
-            
+
             url: jdbc:mysql://pashion-prod.cnjmlfc6tctw.eu-west-1.rds.amazonaws.com:3306/pashionprod
             username: pashionprod
             password: 2Mc9Nf17gBzyGs*a4$WS

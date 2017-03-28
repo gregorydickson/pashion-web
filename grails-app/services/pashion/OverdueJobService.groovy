@@ -23,7 +23,7 @@ class OverdueJobService implements SchwartzJob {
 		use(TimeCategory) {
                 lastTimeToday = today + 23.hours + 59.minutes
         }
-        List stati = ['Out','stet','Returning','Picking Up','Picked Up']
+        List stati = ['Out','Returning','Picking Up','Picked Up']
 
 
 

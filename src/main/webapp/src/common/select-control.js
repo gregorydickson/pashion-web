@@ -12,7 +12,7 @@ export class SelectControl {
         minimumResultsForSearch: 15,
         sorter: function(data) {          
             return data.sort(function(a, b) {               
-                return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
+                return a.text.toUpperCase() < b.text.toUpperCase() ? -1 : a.text.toUpperCase() > b.text.toUpperCase() ? 1 : 0;
             });
         }
     };

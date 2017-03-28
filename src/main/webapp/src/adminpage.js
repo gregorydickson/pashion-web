@@ -160,7 +160,6 @@ export class Adminpage{
 
   addressChange(){
     console.log("updating address");
-    console.log(JSON.stringify(this.currentAddress));
     this.addressService.update(this.currentAddress);
   }
 
