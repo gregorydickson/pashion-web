@@ -73,7 +73,7 @@ export class ContactsList {
                 console.log("pubnub new nessage in contactList: ", receivedMessage);
 
                if (channelName == parent.user.email + "_cacheInvalidate") {
-                    console.log ("cache invalidate for user:"+ parent.user.email);
+                    console.log ("cache invalidate for user:"+ parent.user.email + " message " + receivedMessage);
                     // try some toast
                     toastr.options.timeOut = 5000;
                     toastr.options.closeButton = false;
@@ -82,6 +82,7 @@ export class ContactsList {
                       toastr.info('Connections Update'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);    
                     }
                     if (receivedMessage == "users") {
+                      // need this as changes in dialogEditContact are done locally to the dialog and then saved to json (and locally)
                       parent.fetchGetUserUsersFromServer(); //update data structure from JSON in contact list
                       // nothing for now as appears on own local window, now remote, could be a bugtoastr.info('User Changes'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);    
                     }     

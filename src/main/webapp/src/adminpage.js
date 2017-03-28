@@ -40,26 +40,24 @@ export class Adminpage{
       this.userService.getUsersByOrganization(true).then(users => this.users = users);
       this.userService.getUser()
             .then(user => {
-                this.userService.getUserDetails(user.id)
-                    .then(currentContact => {
-                        this.user = currentContact;
-                        if (user.type === 'brand') {
-                            this.brandService.getBrandAddresses(this.user.brand.id)
-                                .then(addresses=>{this.addresses = addresses});
-                            console.log(JSON.stringify(user.brand));
-                            this.company = user.brand;
-                        } else if (user.type === 'press') {
-                            this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
-                                .then(addresses=>this.addresses = addresses)
-                            this.company = user.pressHouse;
-                        } else {
-                            this.prAgencyService.getPRAgencyAddresses(this.user.prAgency.id)
-                                .then(addresses=>this.addresses = addresses)
-                            this.company = user.prAgency;
-                        }
+                this.user = user; 
 
-                     })
-            });
+                if (this.user.type === 'brand') {
+                    this.brandService.getBrandAddresses(this.user.brand.id)
+                        .then(addresses=>{this.addresses = addresses});
+                    console.log(JSON.stringify(this.user.brand));
+                    this.company = this.user.brand;
+                } else if (this.user.type === 'press') {
+                    this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
+                        .then(addresses=>this.addresses = addresses)
+                    this.company = this.user.pressHouse;
+                } else {
+                    this.prAgencyService.getPRAgencyAddresses(this.user.prAgency.id)
+                        .then(addresses=>this.addresses = addresses)
+                    this.company = this.user.prAgency;
+                }
+
+             });
             this.cityService.getCities().then(cities=>this.cities = cities);
   }
   attached(){

@@ -62,6 +62,8 @@ export class ContactEntryMessage {
       this.currentContact.name = currentContact.name;
       this.currentContact.surname = currentContact.surname;
       this.currentContact.brand = currentContact.brand;
+      this.currentContact.press = currentContact.press;
+      this.currentContact.prAgency = currentContact.prAgency;
       this.currentContact.email = currentContact.email;
       this.currentContact.id = currentContact.id;
 

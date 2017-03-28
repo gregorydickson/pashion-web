@@ -141,7 +141,7 @@ export class UserService {
 
     getUserDetails(id) {
         // could replace this with users database I guess. RM for later...
-        console.log("UserService.getUserDetails, for: " + id);
+        //console.log("UserService.getUserDetails, for: " + id);
         if(!id) {
             window.location.href = '/user/login';
             return
@@ -151,6 +151,7 @@ export class UserService {
                 .then(response => response.json())
                 .then(currentContact => {
                     this.currentContact = currentContact;
+                    console.log ("UserService.getUserDetails, for: " + id + "returned: " +currentContact.name);
                     resolve(this.currentContact);
                 })
                 .catch(err => reject(err));
