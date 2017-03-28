@@ -150,14 +150,22 @@ export class EditSearchableItem {
   }
 
   sample2Callback(event) {
-    console.log('sample2Callback() called:', event.detail.value);
+    console.log('sample2Callback() called');
 
     if (event.detail) {
         let selectedValue = event.detail.value;         
-        console.log('Selected value:', selectedValue); 
+        console.log('sample2Callback() / Selected value:', selectedValue); 
 
         this.selectedSample = selectedValue; //this.availableSampleItems.find(x => x.id == selectedValue);
-        this.selectedLocationItems = [this.selectedSample.sampleCity.id];
+
+        let selectedType = this.availableSampleTypeItems.find(x => x.text.toUpperCase() == selectedValue.sampleType.toUpperCase());
+
+        if (selectedType) {
+          console.log('Found the selected type match:', selectedType);
+          this.selectedSampleTypeItems = [selectedType.id];
+        }
+
+        this.selectedLocationItems = [this.selectedSample.sampleCity.id];        
         this.showSampleEdit = (this.selectedSample !== null);
     }
   }
