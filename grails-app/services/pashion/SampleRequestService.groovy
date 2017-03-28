@@ -86,7 +86,6 @@ class SampleRequestService {
         
         sr.dateRequested = new Date()
         sr.save(failOnError : true, flush: true)
-        cacheInvalidationService.sampleRequests() //RM TBD
         sr
     }
 

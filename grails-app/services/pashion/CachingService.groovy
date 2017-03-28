@@ -26,7 +26,6 @@ class CachingService implements JsonViewTest {
     def themes
     String connections = null
 
-
     Pubnub pubnub = null
 
     @PostConstruct
@@ -44,6 +43,14 @@ class CachingService implements JsonViewTest {
         log.info "send invalidate in cachingService:invalidateConnectionsPubNub on:" + channel
         pubnub.publish(channel, "connections" , callback)
 
+    }
+
+    @Selector('sampleRequestCacheInvalidate')
+    void sampleRequestCacheInvalidate(Object data){
+        Callback callback=new Callback() {}
+        def channel = 'brand:'+data.brand+'press:'+data.press + '_cacheInvalidate'
+        log.info "send invalidate in cachingService:invalidateConnectionsPubNub on:" + channel
+        pubnub.publish(channel, "connections" , callback)
     }
 
     @Selector('connectionsUpdateNoPubNub')

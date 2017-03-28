@@ -10,7 +10,6 @@ import grails.converters.JSON
 class SampleRequestController {
 
     def sampleRequestService
-    def cacheInvalidationService
     def stuartService
 
     String dateFormatString = "yyyy-M-d"
@@ -37,6 +36,8 @@ class SampleRequestController {
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Denied']
         render sent as JSON
+        def pressHouse = sampleRequest.pressHouse?.name ?: ""
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse]
     }
 
     
@@ -64,6 +65,8 @@ class SampleRequestController {
         sr.save(flush:true)
         def sent = [message:'Sample Request Approved']
         render sent as JSON
+        def pressHouse = sr.pressHouse?.name ?: ""
+        notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse]
     }
     def brandSend(){
 
@@ -84,6 +87,8 @@ class SampleRequestController {
         }
         def sent = [message:'Sample Request Waiting to be Picked Up']
         render sent as JSON
+        def pressHouse = sr.pressHouse?.name ?: ""
+        notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse]
     }
 
     
@@ -94,6 +99,8 @@ class SampleRequestController {
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Marked Picked Up']
         render sent as JSON
+        def pressHouse = sampleRequest.pressHouse?.name ?: ""
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse]
     }
     def brandMarkReturned(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
@@ -102,6 +109,8 @@ class SampleRequestController {
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Marked Returned']
         render sent as JSON
+        def pressHouse = sampleRequest.pressHouse?.name ?: ""
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse]
     }
     def brandRestocked(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
@@ -110,6 +119,8 @@ class SampleRequestController {
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Marked ReStocked']
         render sent as JSON
+        def pressHouse = sampleRequest.pressHouse?.name ?: ""
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse]
     }
     def brandMarkDeleted(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
@@ -118,6 +129,8 @@ class SampleRequestController {
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Deleted']
         render sent as JSON
+        def pressHouse = sampleRequest.pressHouse?.name ?: ""
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse]
     }
     //Press only methods
 
@@ -128,6 +141,8 @@ class SampleRequestController {
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request In House']
         render sent as JSON
+        def pressHouse = sampleRequest.pressHouse?.name ?: ""
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse]
     }
     def pressDelete(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
@@ -136,6 +151,8 @@ class SampleRequestController {
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Closed']
         render sent as JSON
+        def pressHouse = sampleRequest.pressHouse?.name ?: ""
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse]
     }
     def pressShip(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
@@ -144,6 +161,8 @@ class SampleRequestController {
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Picking Up']
         render sent as JSON
+        def pressHouse = sampleRequest.pressHouse?.name ?: ""
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse]
     }
     
     def pressMarkPickedUp(){
@@ -153,6 +172,8 @@ class SampleRequestController {
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Picking Up']
         render sent as JSON
+        def pressHouse = sampleRequest.pressHouse?.name ?: ""
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse]
     }
 
     
@@ -167,7 +188,9 @@ class SampleRequestController {
         render sent as JSON
         if(sr.emailNotification)
             notify "sampleRequestEmail", sr
-
+        
+        def pressHouse = sr.pressHouse?.name ?: ""
+        notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse]
     }
 
     def updatejson(){
@@ -176,6 +199,8 @@ class SampleRequestController {
         
         def sent = [message:'Sample Request Updated']
         render sent as JSON
+        def pressHouse = sr.pressHouse?.name ?: ""
+        notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse]
     }
 
 
