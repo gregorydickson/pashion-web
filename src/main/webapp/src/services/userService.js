@@ -161,31 +161,47 @@ export class UserService {
     }
 
     update(updateUser) {
+        // this is for ANY user not necessarily the current user as can come from admin page (any user) or dialogEditcontact (current user)
+        //if add fields to either need to update here
         console.log("UserService.update, incoming user:" + updateUser.id + " " + updateUser.name + " using /user/updatejson");
-        // if we are updating the current login user then need to set local 
-        // and add the extra stuff for the current user??
-        this.user = updateUser;
-        if (updateUser.brand!=null) {
-            this.user["type"] = 'brand';
-            this.user["companyId"] = updateUser.brand.id;
-        } else if (updateUser.pressHouse!=null) {
-            this.user["type"] = 'press';
-            this.user["companyId"] = updateUser.pressHouse.id;
-        } else if (updateUser.prAgency!=null) {
-            this.user["type"] = 'prAgency';
-            this.user["companyId"] = updateUser.prAgency.id;
-        } else {
-            this.user["type"] = 'nosession';
-        }
+
+
+        // update the info into a full record
+        var tempNewUser = this.users[updateUser.id-1];
+        if (updateUser.address) tempNewUser.address = updateUser.address;
+        if (updateUser.name) tempNewUser.name = updateUser.name;
+        if (updateUser.surname) tempNewUser.surname = updateUser.surname;
+        if (updateUser.password) tempNewUser["password"] = updateUser.password;
+        if (updateUser.title) tempNewUser["title"] = updateUser.title;
+        if (updateUser.phone) tempNewUser["phone"] = updateUser.phone;
+
         // now write it out
         var promise = new Promise((resolve, reject) => {
-            this.http.fetch('/user/updatejson/' + updateUser.id + ".json", {
+            this.http.fetch('/user/updatejson/' + tempNewUser.id + ".json", {
                     method: 'post',
-                    body: json(updateUser)
+                    body: json(tempNewUser)
                 })
                 .then(response => response.json())
                 .then(result => {resolve(result)}).catch(err => reject(err));
         });
+
+        // if we are updating the current login user then need to set local 
+        if (this.user.id == updateUser.id) {
+            //add the extra stuff
+            if (tempNewUser.brand!=null) {
+                tempNewUser["type"] = 'brand';
+                tempNewUser["companyId"] = tempNewUser.brand.id;
+            } else if (tempNewUser.pressHouse!=null) {
+                tempNewUser["type"] = 'press';
+                tempNewUser["companyId"] = tempNewUser.pressHouse.id;
+            } else if (tempNewUser.prAgency!=null) {
+                tempNewUser["type"] = 'prAgency';
+                tempNewUser["companyId"] = tempNewUser.prAgency.id;
+            } else {
+                tempNewUser["type"] = 'nosession';
+            } 
+            this.user = tempNewUser;
+        }
 
     }
 

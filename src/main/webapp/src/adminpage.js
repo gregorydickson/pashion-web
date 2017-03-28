@@ -15,10 +15,10 @@ import {CityService} from 'services/cityService';
 export class Adminpage{
 	  
 
-  currentUser = {};
+  //currentUser = {};
   users = [];
   addresses = [];
-  currentAddress = {};
+  //currentAddress = {};
   company = {};
   cities = [];
 
@@ -152,7 +152,8 @@ export class Adminpage{
   }
 
   updateUser(){
-    console.log("updating user");
+    console.log("adminPage.updateUser");
+    // fill out the rest of the details for the user (done in userService)
     this.userService.update(this.currentUser);
   }
 
