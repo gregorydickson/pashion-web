@@ -19,7 +19,7 @@
                     <select value.bind="selectval" change.trigger="userActions()" name="NotUSed" id="headerModeSelect" class="nav-label-header top-menu-modifier" style="max-width:150px;">
                         <option value="no">${user.name}</option>
                         <option value= "logout">LOGOUT</option>
-                        <option value= "edit">EDIT PROFILE</option>
+                        <option if.bind="(currentRoute != 'index')" value= "edit">EDIT PROFILE</option>
                     </select> 
 
                         <!-- filter mode 

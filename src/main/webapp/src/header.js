@@ -10,6 +10,7 @@ import {DialogService} from 'aurelia-dialog';
 export class Header {
 
 	//user = {};
+  currentRoute = '';
 
   constructor(http,userService,router, dialogService) {
     http.configure(config => {
@@ -61,10 +62,10 @@ export class Header {
       if(this.selectval == "DASHBOARD") {
         this.userService.getUser().then(user => this.user = user);
       }
-      var currentRoute = this.theRouter.currentInstruction.config.name;
-      if (currentRoute == 'index') this.theRouter.navigate("adminpage");
-      if (currentRoute == 'requestman') this.theRouter.navigate("adminpage");
-      if (currentRoute == 'adminpage') this.theRouter.navigate("/");
+      this.currentRoute = this.theRouter.currentInstruction.config.name;
+      if (this.currentRoute == 'index') this.theRouter.navigate("adminpage");
+      if (this.currentRoute == 'requestman') this.theRouter.navigate("adminpage");
+      if (this.currentRoute == 'adminpage') this.theRouter.navigate("/");
   }
     
 }
