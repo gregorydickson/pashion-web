@@ -45,7 +45,7 @@ export class Adminpage{
                 if (this.user.type === 'brand') {
                     this.brandService.getBrandAddresses(this.user.brand.id)
                         .then(addresses=>{this.addresses = addresses});
-                    console.log(JSON.stringify(this.user.brand));
+                    //console.log(JSON.stringify(this.user.brand));
                     this.company = this.user.brand;
                 } else if (this.user.type === 'press') {
                     this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
