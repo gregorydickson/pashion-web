@@ -1,6 +1,7 @@
 import {inject,bindable, bindingMode } from 'aurelia-framework';
 import {UserService} from './services/userService';
 import {SampleRequestService} from './services/sampleRequestService';
+import { PubNubService } from './services/pubNubService';
 import {DialogService} from 'aurelia-dialog';
 import {CreateDialogNewContact} from './contacts/dialogNewContact';
 import {CreateDialogImportContacts} from './contacts/dialogImportContacts';
@@ -11,7 +12,7 @@ import { HttpClient } from 'aurelia-fetch-client';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import {PDFService} from './services/PDFService';
 
-@inject(HttpClient, DialogService, UserService, PDFService, SampleRequestService,busy, EventAggregator)
+@inject(HttpClient, DialogService, UserService, PDFService, SampleRequestService,busy, EventAggregator, PubNubService)
 export class Requestman{
 	  
   @bindable({defaultBindingMode: bindingMode.twoWay}) bookings = [];
@@ -32,7 +33,7 @@ export class Requestman{
 
 
 
-  constructor(http,dialogService,userService,pDFService, sampleRequestService,busy,eventAggregator) {
+  constructor(http,dialogService,userService,pDFService, sampleRequestService,busy,eventAggregator,pubNubService) {
     http.configure(config => {
             config
                 .useStandardConfiguration();
@@ -45,6 +46,7 @@ export class Requestman{
     this.busy = busy;
     this.ea = eventAggregator;
     this.pDFService = pDFService;
+    this.pubNubService = pubNubService;
 
   }
 
@@ -57,9 +59,8 @@ export class Requestman{
       return this.bookings = this.sampleRequestService.getSampleRequests()
         .then(bookings => {
           this.bookings = bookings;
-          console.log("bookings:");
-          console.log(bookings.length);
         });
+
   }
 
   attached() {
@@ -118,6 +119,7 @@ export class Requestman{
                 this.filterChangeDates(); */
 
         });
+        this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub())
   }
 
 /*    orderChange(event) {
@@ -318,69 +320,81 @@ export class Requestman{
   }
 
   alertP (message){
+      this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000} }).then(response => {});
+  }
 
-        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000} }).then(response => {});
-    }
+  /*
+   *  Listen on channel for press or brand name
+   *  for the current user, then reload bookings.
+   * 
+  */
+  listenForBookingsCacheInvalidation(pubNub){
+      console.log("listen for bookings cache invalidate - requestman.js");
+      
+      let company = this.user.company;
+      let channel = company +'_cacheInvalidate';
+      console.log("listening on channel:"+channel);
+      var bookings = this.bookings;
+      var sampleRequestService = this.sampleRequestService;
+      
+      pubNub.addListener({
+          message: function(message) {
+              console.log("requestman message in bookings");
+              console.log(JSON.stringify(message));
+              var channelName = message.channel;
+              if(channelName === channel)
+                  sampleRequestService.getSampleRequests().then(response => bookings = response);
+          }
+      })  
+      pubNub.subscribe({
+          channels: [channel],
+          withPresence: false 
+      })
+  }
 
   editSampleRequest(itemId) {
-    //let menu = document.getElementById("requestManTest"+itemId);
-    
     this.closeSampleRequestMenu(itemId);
     this.dialogService.open({viewModel: EditSampleRequest, model: itemId })
       .then(response => {
-          if (response.wasCancelled) {
-          } else {
-              this.reloadBookings();
-          }
+          
       });
   }
-  reloadBookings(){
-    this.sampleRequestService.getSampleRequests().then(bookings => {
-      this.bookings = bookings;
-      this.busy.off();
-    });
-  }
+  
 
   denySampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.denySampleRequest(id).then(message =>{
       this.alertP(message.message);
-      this.reloadBookings();
     });
   }
   approveSampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.approveSampleRequest(id).then(message =>{
       this.alertP(message.message);
-      this.reloadBookings();
     });
   }
   sendSampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.sendSampleRequest(id).then(message =>{
       this.alertP(message.message);
-      this.reloadBookings();
     });
   }
   markPickedUpSampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.markPickedUpSampleRequest(id).then(message =>{
       this.alertP(message.message);
-      this.reloadBookings();
     });
   }
   markReturnedSampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.markReturnedSampleRequest(id).then(message =>{
       this.alertP(message.message);
-      this.reloadBookings();
     });
   }
   restockedSampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.restockedSampleRequest(id).then(message =>{
       this.alertP(message.message);
-      this.reloadBookings();
     });
   }
 
@@ -410,7 +424,6 @@ export class Requestman{
     this.delete(id);
     
     this.sampleRequestService.deleteSampleRequest(id).then(message =>{
-      this.reloadBookings();
     });
     this.closeExpanded();
   }
@@ -420,14 +433,12 @@ export class Requestman{
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.pressMarkReceivedSampleRequest(id).then(message =>{
       this.alertP(message.message);
-      this.reloadBookings();
     });
   }
   pressShipSampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.pressShipSampleRequest(id).then(message =>{
       this.alertP(message.message);
-      this.reloadBookings();
     });
     
   }
@@ -435,14 +446,12 @@ export class Requestman{
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.pressMarkPickedUpSampleRequest(id).then(message =>{
       this.alertP(message.message);
-      this.reloadBookings();
     });
   }
   pressDeleteSampleRequest(id){
     this.closeSampleRequestMenu(id);
     this.sampleRequestService.pressDeleteSampleRequest(id).then(message =>{
       this.alertP(message.message);
-      this.reloadBookings();
     });
   }
     

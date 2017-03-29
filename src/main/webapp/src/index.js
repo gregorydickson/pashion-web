@@ -772,8 +772,8 @@ export class Index {
      * 
     */
     listenForBookingsCacheInvalidation(pubNub){
-        console.log("listen for bookings cache invalidate");
-        console.log(JSON.stringify(this.user));
+        console.log("listen for bookings cache invalidate - index.js");
+        
         let company = this.user.company;
         let channel = company +'_cacheInvalidate';
         console.log("listening on channel:"+channel);
@@ -782,7 +782,7 @@ export class Index {
         
         pubNub.addListener({
             message: function(message) {
-                console.log("message in bookings");
+                console.log("index message in bookings");
                 console.log(JSON.stringify(message));
                 var channelName = message.channel;
                 if(channelName === channel)
