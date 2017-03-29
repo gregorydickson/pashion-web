@@ -126,7 +126,7 @@ export class EditSearchableItem {
         this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Edit", message:message, timeout:5000} }).then(response => {});
     }
 
-  colorAdd (sample) {
+  colorAdd (sample) {    
     if (!this.addColor) return;
     if (this.addColor=='') return;
     sample.color = sample.color + " " + this.addColor;
@@ -169,7 +169,7 @@ export class EditSearchableItem {
 
         if (selectedMaterial) {
           console.log('Found a match for material:', selectedMaterial);
-          this.selectedMaterialItems = [selectedMaterial.id];      
+          //this.selectedMaterialItems = [selectedMaterial.id];      
         }
 
         if (selectedLocation) {
@@ -199,10 +199,21 @@ export class EditSearchableItem {
           let selectedValue = event.detail.value;         
           console.log('Selected value:', selectedValue);      
 
-          this.selectedSample.color = selectedValue;
+          this.addColor = selectedValue;
       }
   }
-  
+
+  onMaterialChangeCallback(event) {   
+      console.log('onMaterialChangeCallback() called:', event.detail.value);
+
+      if (event.detail) {
+          let selectedValue = event.detail.value;         
+          console.log('Selected value:', selectedValue);      
+
+          this.addMaterial = selectedValue;
+      }
+  }
+
   filterChangeType(event) {
     //console.log("Filter Change changing Type");
     if (event)

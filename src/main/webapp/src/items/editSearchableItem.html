@@ -198,7 +198,8 @@
                             <span class="slim-text-box-label">New Material</span>
 
                             <select-control ref="materialSelectControl" name="material"
-                                class="to-u-c"                                                   
+                                class="to-u-c"                   
+                                change.delegate="onMaterialChangeCallback($event)"                                  
                                 selected.bind="selectedMaterialItems" 
                                 options.bind="availableMaterialItems" 
                                 placeholder="Select one" 

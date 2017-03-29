@@ -25,11 +25,20 @@ export class CustomSelect {
         $(this.element).find('select')
             .select2({
                 minimumResultsForSearch: 15,
-                sorter: function(data) {          
-                    return data.sort(function(a, b) {               
+                sorter: function(data) {
+                    // Let's remove the placeholder from the list of options
+                    let index = data.findIndex(x => x.id == "");     
+                    data.splice(index, 1);
+
+                    return data.sort(function(a, b) {                          
                         return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
                     });
-                }})
+                }
+            })
+            .on('select2:opening', (event) => {
+                let element = event.params.data.element;
+                let $element = $(element);                
+            })
             .on('change', (event) => {
                 let changeEvent;
 
