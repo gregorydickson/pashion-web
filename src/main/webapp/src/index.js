@@ -1,8 +1,10 @@
+// AURELIA
 import { inject } from 'aurelia-framework';
 import { HttpClient } from 'aurelia-fetch-client';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { DialogService } from 'aurelia-dialog';
 import 'fetch';
+// DIALOGS
 import { CreateSampleRequest } from './sample_request/createSampleRequest';
 import { CreateSampleRequestBrand } from './sample_request/createSampleRequestBrand';
 import { EditSampleRequest } from './sample_request/editSampleRequest';
@@ -11,16 +13,21 @@ import { CheckAvailability } from './items/checkAvailability';
 import { SetAvailability } from './items/setAvailability';
 import { Introduction } from './hello/introduction';
 import { Zoom } from './zoom/zoom';
-import { SampleRequestService } from './services/sampleRequestService';
-import { UserService } from './services/userService';
-import { BrandService } from './services/brandService';
 import { AddFilesDialog } from './add_files/add_files';
 import { ErrorDialogSample } from './error_dialog/error_dialog_sample';
 import { CreateDialogAlert } from './common/dialogAlert';
-import {busy} from './services/busy';
+// SERVICES
+import { SampleRequestService } from './services/sampleRequestService';
+import { UserService } from './services/userService';
+import { BrandService } from './services/brandService';
+import { PubNubService } from './services/pubNubService';
+import { busy } from './services/busy';
 
 
-@inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, busy)
+
+
+
+@inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, busy,PubNubService)
 export class Index {
     user = {};
     bookings = [];
@@ -47,6 +54,26 @@ export class Index {
     busy;
     ordering = 'bookingStartDate';
     filtering = 'ALL REQUESTS';
+
+    constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, busy,pubNubService) {
+        http.configure(config => {
+            config
+                .useStandardConfiguration();
+        });
+        this.ea = eventAggregator;
+        this.http = http;
+        this.boundHandler = this.handleKeyInput.bind(this);
+        this.dialogService = dialogService;
+        this.sampleRequestService = sampleRequestService;
+        this.userService = userService;
+        this.brandService = brandService;
+        this.pubNubService = pubNubService;
+        this.busy = busy;
+        this.maxRReached = false;
+        this.numberImages = 0;
+    }
+    
+
 
 
     filterFunc(searchExpression, value, filter, user,seasons){
@@ -88,13 +115,12 @@ export class Index {
         }
 
         return (searchVal && filterVal); 
+    }
 
-      }
 
-
-  filterChange(event){
-    this.closeAllOpenRequestRows();
-      console.log("changing filter: ");
+    filterChange(event){
+        this.closeAllOpenRequestRows();
+        console.log("changing filter: ");
           if (event)
             if (event.detail)
                 if (event.detail.value) {
@@ -105,7 +131,7 @@ export class Index {
                     if (event.detail.value == 'CLOSED REQUESTS') this.filtering = 'CLOSED REQUESTS'; 
                     console.log("value:" + event.detail.value + " filtering: " +this.filtering);
                 } 
-  }
+    }
 
     filterChangeSearch(event) {
         this.busy.on();
@@ -443,7 +469,7 @@ export class Index {
         ;
     }
   
-  orderChange(event) {
+    orderChange(event) {
         this.closeAllOpenRequestRows();
         console.log("Order changed ");
         if (event)
@@ -460,28 +486,10 @@ export class Index {
                 }          
     }
 
-    constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, busy) {
-        http.configure(config => {
-            config
-                .useStandardConfiguration();
-        });
-        this.ea = eventAggregator;
-        this.http = http;
-        this.boundHandler = this.handleKeyInput.bind(this);
-        this.dialogService = dialogService;
-        this.sampleRequestService = sampleRequestService;
-        this.userService = userService;
-        this.brandService = brandService;
-        this.busy = busy;
-        this.maxRReached = false;
-        this.numberImages = 0;
-
-    }
+    
 
     //activate() is called before attached()
     activate() {
-
-
         return Promise.all([
             this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
             this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes),
@@ -585,7 +593,7 @@ export class Index {
         //document.getElementById('search-images').addEventListener('keypress', this.boundHandler, false);
 
         //Set height of scrollable list of looks 
-      function mainScrollWindowHeight() {
+        function mainScrollWindowHeight() {
             if ($('.cards-list-wrap').offset()) {
                 var emptySpace = 0;
                 var setHeight = $(window).height() - $('.footer').outerHeight() - $('.cards-list-wrap').offset().top - emptySpace;
@@ -596,7 +604,9 @@ export class Index {
         $(window).resize(function() {
             mainScrollWindowHeight();
         });
-                    this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
+        this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
+        
+        this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub());
     }
 
 
@@ -650,10 +660,7 @@ export class Index {
         // this.lookMenu(itemId);
         this.dialogService.open({ viewModel: CreateSampleRequest, model: itemId })
             .then(response => {
-                if (response.wasCancelled) {
-                } else {
-                    this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
-                }
+                
             });
     }
 
@@ -661,10 +668,7 @@ export class Index {
         // this.lookMenu(itemId);
         this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: itemId })
             .then(response => {
-                if (response.wasCancelled) {
-                } else {
-                    this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
-                }
+                
             });
     }
 
@@ -702,10 +706,6 @@ export class Index {
         this.closeSampleRequestMenu(id);
         this.dialogService.open({ viewModel: EditSampleRequest, model: id })
             .then(response => {
-                if (response.wasCancelled) {
-                } else {
-                    this.reloadBookings();
-                }
                 
             });
     }
@@ -721,53 +721,82 @@ export class Index {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.denySampleRequest(id).then(message => {
             this.alertP(message.message);
-            this.reloadBookings();
+            
         });
     }
     approveSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.approveSampleRequest(id).then(message => {
             this.alertP(message.message);
-            this.reloadBookings();
+            
         });
     }
     sendSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.sendSampleRequest(id).then(message => {
             this.alertP(message.message);
-            this.reloadBookings();
+            
         });
     }
     markPickedUpSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.markPickedUpSampleRequest(id).then(message => {
             this.alertP(message.message);
-            this.reloadBookings();
+            
         });
     }
     markReturnedSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.markReturnedSampleRequest(id).then(message => {
             this.alertP(message.message);
-            this.reloadBookings();
+            
         });
     }
     restockedSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.restockedSampleRequest(id).then(message => {
             this.alertP(message.message);
-            this.reloadBookings();
+            
         });
     }
     deleteSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.deleteSampleRequest(id).then(message => {
             this.alertP(message.message);
-            this.reloadBookings();
+            
         });
+    }
+    /*
+     *  Listen on channel for press or brand name
+     *  for the current user, then reload bookings.
+     * 
+    */
+    listenForBookingsCacheInvalidation(pubNub){
+        console.log("listen for bookings cache invalidate");
+        console.log(JSON.stringify(this.user));
+        let company = this.user.company;
+        let channel = company +'_cacheInvalidate';
+        console.log("listening on channel:"+channel);
+        var bookings = this.bookings;
+        var sampleRequestService = this.sampleRequestService;
+        
+        pubNub.addListener({
+            message: function(message) {
+                console.log("message in bookings");
+                console.log(JSON.stringify(message));
+                var channelName = message.channel;
+                if(channelName === channel)
+                    sampleRequestService.getSampleRequests().then(response => bookings = response);
+            }
+        })  
+        pubNub.subscribe({
+            channels: [channel],
+            withPresence: false 
+        })
     }
 
     reloadBookings() {
+        console.log("*******  RELOADING BOOKINGS *************");
         this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
     }
 
@@ -776,28 +805,28 @@ export class Index {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.pressMarkReceivedSampleRequest(id).then(message => {
             this.alertP(message.message);
-            this.reloadBookings();
+            
         });
     }
     pressShipSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.pressShipSampleRequest(id).then(message => {
             this.alertP(message.message);
-            this.reloadBookings();
+            
         });
     }
     pressMarkPickedUpSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.pressMarkPickedUpSampleRequest(id).then(message => {
             this.alertP(message.message);
-            this.reloadBookings();
+            
         });
     }
     pressDeleteSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.pressDeleteSampleRequest(id).then(message => {
             this.alertP(message.message);
-            this.reloadBookings();
+            
         });
     }
 

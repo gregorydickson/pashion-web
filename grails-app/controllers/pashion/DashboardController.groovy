@@ -42,21 +42,25 @@ class DashboardController {
         
         def type
         def companyId
+        def company = ""
         if(user.brand){
             type = 'brand'
             companyId = user.brand.id
+            company = user.brand.name
         } else if (user.pressHouse) {
             type = 'press'
             companyId = user.pressHouse.id
+            company = user.pressHouse.name
         } else if (user.prAgency) {
             type = 'prAgency'
             companyId = user.prAgency.id
+            company = user.prAgency.name
         } else {
             type = 'guest'
         }
         //creating a map is more simple than a bunch of marshalling code
         def avatar = User.findById(user.id).avatar
-        def userInfo = [email:user.email,id:user.id, type:type,companyId:companyId, name:user.name,surname:user.surname, avatar:avatar] as JSON
+        def userInfo = [email:user.email,id:user.id, type:type,companyId:companyId,company:company, name:user.name,surname:user.surname, avatar:avatar] as JSON
         render userInfo
     }
 

@@ -548,8 +548,8 @@ export class UserService {
                 console.log("UserService.getUser, no user variable, fetch json /dashboard/user");
                 this.http.fetch('/dashboard/user')
                     .then(response => response.json())
-                    .then(result => {
-                        this.getUserDetails(result.id).then(user => {
+                    .then(dashBoardUser => {
+                        this.getUserDetails(dashBoardUser.id).then(user => {
                             // this is the extra stuff created in groovy for the login user that is now relied upon
                             //RM should weed out the places that rely on this and create specific functions here
                             this.user = user;
@@ -566,6 +566,7 @@ export class UserService {
                             } else {
                                 this.user["type"] = 'nosession';
                             }
+                            this.user["company"] = dashBoardUser.company;
                             resolve(this.user);
                         })
                     }).catch(err => reject(err));
