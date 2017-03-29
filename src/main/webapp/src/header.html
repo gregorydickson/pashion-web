@@ -16,7 +16,7 @@
 
 
 
-                    <select value.bind="selectval" change.trigger="userActions()" name="NotUSed" id="headerModeSelect" class="nav-label-header top-menu-modifier" style="max-width:150px;">
+                    <select value.bind="selectval1" change.trigger="userActions()" name="NotUSed" id="headerModeSelect" class="nav-label-header top-menu-modifier" style="max-width:150px;">
                         <option value="no">${user.name}</option>
                         <option value= "logout">LOGOUT</option>
                         <option if.bind="(currentRoute != 'index')" value= "edit">EDIT PROFILE</option>
@@ -36,9 +36,10 @@
                     <li></li>
                     <li></li>
                     <li style="flex: none;">
-                        <select value.bind="selectval" change.trigger="admin()" id="headerAdminSelect" class="nav-label-header top-menu-modifier" style="max-width:200px; width:200px;margin-right:35px; ">
-                            <option>DASHBOARD</option>
-                            <option>ADMIN</option>
+                        <select value.one-way="theRouter.currentInstruction.config.name" change.trigger="admin()" id="headerAdminSelect" class="nav-label-header top-menu-modifier" style="max-width:200px; width:200px;margin-right:35px; ">
+                            <option repeat.for="option of navOptions" model.bind="option.value">${option.name}</option>
+                            <!-- debug <option>${theRouter.currentInstruction.config.name}</option> -->
+
                            <!--  <option>TREND ANALYSIS</option> -->
                         </select>
                     </li>

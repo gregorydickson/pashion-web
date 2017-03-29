@@ -12,6 +12,8 @@ export class Header {
 	//user = {};
   currentRoute = '';
 
+  navOptions = [ {value: "index", name: "DASHBOARD"}, {value: "adminpage", name: "ADMIN"}];
+
   constructor(http,userService,router, dialogService) {
     http.configure(config => {
       config
@@ -46,9 +48,9 @@ export class Header {
 
   userActions(){
   		//console.log("header action: " + this.selectval);
-  		if (this.selectval=="logout") window.location.href = '/user/logout';
-      if (this.selectval=="edit") {
-        this.selectval = ""; // changes selectval back to name, not sure why As should be 2 way binding
+  		if (this.selectval1=="logout") window.location.href = '/user/logout';
+      if (this.selectval1=="edit") {
+        this.selectval1 = ""; // changes selectval back to name, not sure why As should be 2 way binding
         this.dialogService.open({viewModel: CreateDialogEditContact, model: 0 })
           .then(response => {
             this.userService.getUser().then(user => this.user = user);
@@ -57,15 +59,17 @@ export class Header {
 
   }
 
-    admin(){
-      console.log("admin: " + this.selectval);
-      if(this.selectval == "DASHBOARD") {
-        this.userService.getUser().then(user => this.user = user);
-      }
+    admin(){   
       this.currentRoute = this.theRouter.currentInstruction.config.name;
-      if (this.currentRoute == 'index') this.theRouter.navigate("adminpage");
-      if (this.currentRoute == 'requestman') this.theRouter.navigate("adminpage");
-      if (this.currentRoute == 'adminpage') this.theRouter.navigate("/");
+      console.log("admin, currentRoute: " + this.currentRoute);
+      if (this.currentRoute == 'index') { this.theRouter.navigate("adminpage"); }
+      if (this.currentRoute == 'requestman') { this.theRouter.navigate("adminpage"); }
+      if (this.currentRoute == 'adminpage') { this.theRouter.navigate("/"); }
+
+      if (this.currentRoute == "adminpage") {
+        this.userService.getUser().then(user => this.user = user);
+        console.log("admin, getUser()");
+      }
   }
     
 }
