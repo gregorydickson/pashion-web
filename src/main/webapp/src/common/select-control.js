@@ -11,6 +11,10 @@ export class SelectControl {
     selectDefaultOptions = { 
         minimumResultsForSearch: 15,
         sorter: function(data) {          
+            // Let's remove the placeholder from the list of options
+            let index = data.findIndex(x => x.id == "");     
+            data.splice(index, 1);
+
             return data.sort(function(a, b) {               
                 return a.text.toUpperCase() < b.text.toUpperCase() ? -1 : a.text.toUpperCase() > b.text.toUpperCase() ? 1 : 0;
             });
