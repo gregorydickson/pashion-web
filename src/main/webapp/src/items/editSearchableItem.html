@@ -229,7 +229,8 @@
                             <span class="slim-text-box-label">Location</span>
 
                             <select-control ref="locationSelectControl" name="location"
-                                class="to-u-c"      
+                                class="to-u-c"
+                                change.delegate="onLocationChangeCallback($event)"     
                                 selected.bind="selectedLocationItems" 
                                 options.bind="availableLocationItems" 
                                 placeholder="Select one" 

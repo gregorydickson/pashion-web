@@ -214,6 +214,16 @@ export class EditSearchableItem {
       }
   }
 
+  onLocationChangeCallback(event) {   
+      console.log('onLocationChangeCallback() called:', event.detail.value);
+      if (event.detail) {
+          let selectedValue = event.detail.value;         
+          console.log('Selected location value:', selectedValue);     
+
+          this.selectedSample.sampleCity.id = selectedValue; 
+      }
+  }
+
   onNewColorChangeCallback(event) {   
       console.log('onNewColorChangeCallback() called:', event.detail.value);
 
