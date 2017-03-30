@@ -16,6 +16,7 @@ export class CreateSampleRequestBrand {
   currentItem = {};
   startCalendar = {};
   endCalendar = {};
+  isLoading = true;
 
 
   selectAll = true;
@@ -23,9 +24,9 @@ export class CreateSampleRequestBrand {
   @bindable deliverTo = [];
 
   availableDeliverToItems = [];
-  selectedDeliverToItems = [];
+  selectedDeliverToItems = [''];
   availableReturnToItems = [];
-  selectedReturnToItems = [];
+  selectedReturnToItems = [''];
   
 
   brand = [];
@@ -64,91 +65,88 @@ export class CreateSampleRequestBrand {
   activate(item){
     var queryString = DateFormat.urlString(0, 2)+'&searchType=brand';
   
-    this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+item.id)
-      .then(response => response.json())
-        .then(calendar => {
-              this.startCalendar = calendar;
-              this.endCalendar = calendar;
-          });
-        
+    Promise.all([
+      this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+item.id)
+        .then(response => response.json())
+          .then(calendar => {
+                this.startCalendar = calendar;
+                this.endCalendar = calendar;
+      }),
 
-    this.http.fetch('/dashboard/required').then(response => response.json()).then(required => {
-      this.required = required;
-      this.sampleRequest.requiredBy ="12:00";
-    });
+      this.http.fetch('/dashboard/required').then(response => response.json()).then(required => {
+        this.required = required;
+        this.sampleRequest.requiredBy ="12:00";
+      }),
 
-    this.http.fetch('/dashboard/returnBy').then(response => response.json()).then(returnBy => {
-      this.returnBy = returnBy;
-      this.sampleRequest.returnBy = "Afternoon";
-    });
-    this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => {
-      this.courier = courier;
-      this.sampleRequest.courierOut = "Scooter";
-      this.sampleRequest.courierReturn = "Scooter";
+      this.http.fetch('/dashboard/returnBy').then(response => response.json()).then(returnBy => {
+        this.returnBy = returnBy;
+        this.sampleRequest.returnBy = "Afternoon";
+      }),
+      this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => {
+        this.courier = courier;
+        this.sampleRequest.courierOut = "Scooter";
+        this.sampleRequest.courierReturn = "Scooter";
 
-    });
-    
-    this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => {
-      this.payment = payment;
-      this.sampleRequest.paymentOut = "50/50";
-      this.sampleRequest.paymentReturn = "50/50";
-    });  
+      }),
+      
+      this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => {
+        this.payment = payment;
+        this.sampleRequest.paymentOut = "50/50";
+        this.sampleRequest.paymentReturn = "50/50";
+      }), 
 
-    this.http.fetch('/searchableItems/'+item.id+'.json')
-      .then(response => response.json())
-      .then(item => {
-          this.currentItem = item;   
+      this.http.fetch('/searchableItems/'+item.id+'.json')
+        .then(response => response.json())
+        .then(item => {
+            this.currentItem = item;   
 
-          this.http.fetch('/dashboard/deliverToBrand/'+item.brand.id).then(response => response.json()).then(deliverTo =>{ 
-            this.deliverTo = deliverTo;
+            this.http.fetch('/dashboard/deliverToBrand/'+item.brand.id).then(response => response.json()).then(deliverTo =>{ 
+              this.deliverTo = deliverTo;
 
-            deliverTo.forEach(item => {
-              if(item.surname){
-                this.availableDeliverToItems.push({
-                  id: item.id,
-                  text: item.name + " " + item.surname
-                });
-              } else {
-                this.availableDeliverToItems.push({
+              deliverTo.forEach(item => {
+                if(item.surname){
+                  this.availableDeliverToItems.push({
+                    id: item.id,
+                    text: item.name + " " + item.surname
+                  });
+                } else {
+                  this.availableDeliverToItems.push({
+                    id: item.id,
+                    text: item.name
+                  });
+                }
+              });
+              
+            }),
+
+            this.brandService.getBrandAddresses(item.brand.id).then(addresses => {
+              this.returnTo = addresses;            
+
+              addresses.forEach(item => {
+                this.availableReturnToItems.push({
                   id: item.id,
                   text: item.name
                 });
-              }
-            });
-
-            this.selectedDeliverToItems = [50];
-
-            
-          });
-
-          this.brandService.getBrandAddresses(item.brand.id).then(addresses => {
-            this.returnTo = addresses;
-
-            addresses.forEach(item => {
-              this.availableReturnToItems.push({
-                id: item.id,
-                text: item.name
               });
-            });
 
-          });
-          
-          this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);
-          this.sampleRequest.samples = [];
-          var ids = this.sampleRequest.samples;
-          item.samples.forEach(function(item){
-            ids.push(item.id);
-          })
-          
-        }
-      ) 
-   
+            }),
+            
+            this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);
+            this.sampleRequest.samples = [];
+            var ids = this.sampleRequest.samples;
+            item.samples.forEach(function(item){
+              ids.push(item.id);
+            })
+            
+          }
+        ) 
+    ]).then(() => this.isLoading = false);
   } 
 
   onDeliverToChangeCallback(event) {   
       console.log('onDeliverToChangeCallback() called:', event.detail.value);
 
-      if (event.detail) {
+      if (event.detail.value) {
           let selectedDeliverToId = event.detail.value;
           let selectedDeliverTo = this.deliverTo.find(item => item.id == selectedDeliverToId);
           console.log('Selected deliverTo:', selectedDeliverTo);
@@ -161,7 +159,7 @@ export class CreateSampleRequestBrand {
   onReturnToChangeCallback(event) {   
       console.log('onReturnToChangeCallback() called:', event.detail.value);
 
-      if (event.detail) {
+      if (event.detail.value) {
           let selectedReturnToId = event.detail.value;
           let selectedReturnTo = this.returnTo.find(item => item.id == selectedReturnToId);
           console.log('Selected returnTo:',selectedReturnTo);
