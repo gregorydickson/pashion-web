@@ -86,9 +86,9 @@ export class ContactsList {
                       parent.fetchGetUserUsersFromServer(); //update data structure from JSON in contact list
                       // nothing for now as appears on own local window, now remote, could be a bugtoastr.info('User Changes'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);    
                     }     
-                    if (receivedMessage == "requests") {
-                      toastr.info('Requests Update'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);    
-                    }               
+                    //if (receivedMessage == "requests") {
+                    //  toastr.info('Requests Update'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);    
+                    //}               
                  }
             },
             status: function(s) {

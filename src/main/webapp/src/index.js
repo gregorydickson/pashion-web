@@ -787,6 +787,7 @@ export class Index {
                 var channelName = message.channel;
                 if(channelName === channel)
                     sampleRequestService.getSampleRequests().then(response => bookings = response);
+                    toastr.info('Requests Update'); 
             }
         })  
         pubNub.subscribe({
