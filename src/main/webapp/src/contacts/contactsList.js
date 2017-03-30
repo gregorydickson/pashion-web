@@ -9,10 +9,11 @@ import {CreateDialogConfirmDelete} from './dialogConfirmDelete';
 import {UserService} from 'services/userService';
 import {CommsHeader} from 'comms/commsHeader';
 import {EventAggregator} from 'aurelia-event-aggregator';
+import { PubNubService } from 'services/pubNubService';
 // import {Messages} from 'messages/messages';
 
 
-@inject(HttpClient, DialogController, DialogService, UserService, CommsHeader,EventAggregator) //, Messages)
+@inject(HttpClient, DialogController, DialogService, UserService, CommsHeader,EventAggregator,PubNubService) //, Messages)
 export class ContactsList {
 	static inject = [DialogController];
 
@@ -23,11 +24,9 @@ export class ContactsList {
   connectString ="connect";
   currentPNTime;
   filterDirection = 'ascending';
-  
-  //pubnub
-    pubnub;
+  pubnub;
 
-  constructor(http, controller, dialogService, userService, commsHeader, eventAggregator){ //} messages){
+  constructor(http, controller, dialogService, userService, commsHeader, eventAggregator, pubNubService){ //} messages){
 	    this.controller = controller;
 	    http.configure(config => {
 	      config
@@ -38,19 +37,15 @@ export class ContactsList {
     	this.userService = userService;
     	this.commsHeader = commsHeader;
       this.ea = eventAggregator;
+      this.pubNubService = pubNubService;
      // this.messages = messages;
-
-          // pubnub
-      this.pubnub = new PubNub({
-          subscribeKey: "sub-c-dd158aea-b76b-11e6-b38f-02ee2ddab7fe",
-          publishKey: "pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73",
-          ssl: true
-      });
       
 	}
 
   attached() {
 
+
+        this.pubnub = this.pubNubService.getPubNub();
         var parent = this;
         this.pubnub.time(function(status, response) {
             if (status.error) {
@@ -61,6 +56,7 @@ export class ContactsList {
                 parent.currentPNTime = response.timetoken;
             }
         });
+
 
         this.pubnub.addListener({
 

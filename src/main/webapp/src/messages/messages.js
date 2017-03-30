@@ -5,8 +5,9 @@ import { DateFormat } from 'common/dateFormat';
 import { UserService } from 'services/userService';
 import { singleton } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
+import { PubNubService } from 'services/pubNubService';
 
-@inject(HttpClient, UserService, EventAggregator) 
+@inject(HttpClient, UserService, EventAggregator, PubNubService) 
 @singleton()
 export class Messages {
 
@@ -18,19 +19,14 @@ export class Messages {
     //pubnub
     pubnub;
 
-    constructor(http, userService, eventAggregator) {  
+    constructor(http, userService, eventAggregator, pubNubService) {  
       this.http = http;
       this.userService = userService;
       this.user = this.userService.getUser().then(user => this.user = user);
       this.ea = eventAggregator;
       this.boundHandlerComms = this.handleKeyInput.bind(this);
+      this.pubNubService = pubNubService;
 
-      // pubnub
-      this.pubnub = new PubNub({
-          subscribeKey: "sub-c-dd158aea-b76b-11e6-b38f-02ee2ddab7fe",
-          publishKey: "pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73",
-          ssl: true
-      });
     }
 
     activate () {
@@ -49,8 +45,10 @@ export class Messages {
                 this.currentContact = contact;
             });
         });
-        
 
+
+        this.pubnub = this.pubNubService.getPubNub();
+        
         var parent = this;
 
         //pubnub messages listener
