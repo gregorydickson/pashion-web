@@ -604,8 +604,12 @@ export class Index {
         $(window).resize(function() {
             mainScrollWindowHeight();
         });
-        this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
-        
+        this.sampleRequestService.getSampleRequests().then(bookings => {
+            bookings.forEach(item => {
+                this.bookings.push(item);
+            });
+        });
+    
         this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub());
     }
 
@@ -768,7 +772,7 @@ export class Index {
     }
     /*
      *  Listen on channel for press or brand name
-     *  for the current user, then reload bookings.
+     *   then reload bookings.
      * 
     */
     listenForBookingsCacheInvalidation(pubNub){
@@ -777,18 +781,25 @@ export class Index {
         let company = this.user.company;
         let channel = company +'_cacheInvalidate';
         console.log("listening on channel:"+channel);
-        var bookings = this.bookings;
-        var sampleRequestService = this.sampleRequestService;
+        let bookingsToUpdate = this.bookings;
+        let sampleRequestService = this.sampleRequestService;
         
         pubNub.addListener({
-            message: function(message) {
-                console.log("index message in bookings");
-                console.log(JSON.stringify(message));
+            message: function updateBookingsIndex(message) {
+                
                 var channelName = message.channel;
-                if(channelName === channel)
-                    sampleRequestService.getSampleRequests().then(response => bookings = response);
+                if(channelName === channel){
+                    sampleRequestService.getSampleRequests().then(newBookings => { 
+                        while(bookingsToUpdate.length > 0) {
+                            bookingsToUpdate.pop();
+                        }
+                        newBookings.forEach(item => {
+                            bookingsToUpdate.push(item);
+                        });
+                    });
                     toastr.options.preventDuplicates = true;
                     toastr.info('Request ' + message.message + " updated"); 
+                }
             }
         })  
         pubNub.subscribe({
@@ -799,7 +810,7 @@ export class Index {
 
     reloadBookings() {
         console.log("*******  RELOADING BOOKINGS *************");
-        this.bookings = this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
+        this.sampleRequestService.getSampleRequests().then(bookings => this.bookings = bookings);
     }
 
     //Press Workflow Functions
