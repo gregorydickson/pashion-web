@@ -16,7 +16,7 @@ export class SelectControl {
             data.splice(index, 1);
 
             return data.sort(function(a, b) {               
-                return a.text.toUpperCase() < b.text.toUpperCase() ? -1 : a.text.toUpperCase() > b.text.toUpperCase() ? 1 : 0;
+                return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
             });
         }
     };

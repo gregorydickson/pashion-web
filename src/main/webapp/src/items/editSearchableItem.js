@@ -158,24 +158,34 @@ export class EditSearchableItem {
 
         this.selectedSample = selectedSample; //this.availableSampleItems.find(x => x.id == selectedSample);
 
-        let selectedSampleType = this.availableSampleTypeItems.find(x => x.text.toUpperCase() == selectedSample.sampleType.toUpperCase());
-        let selectedMaterial = this.availableMaterialItems.find(x => x.text.toUpperCase() == selectedSample.material.toUpperCase())
-        let selectedLocation = this.selectedSample.sampleCity || null;
-
-        if (selectedSampleType) {
-          console.log('Found a match for sample type:', selectedSampleType);
-          this.selectedSampleTypeItems = [selectedSampleType.id];
+        // Sample type
+        if (selectedSample.sampleType) {
+          let selectedSampleType = this.availableSampleTypeItems.find(x => x.text.toUpperCase() == selectedSample.sampleType.toUpperCase());
+          
+          if (selectedSampleType) {
+            console.log('Found a match for sample type:', selectedSampleType);
+            this.selectedSampleTypeItems = [selectedSampleType.id];
+          }
         }
 
-        if (selectedMaterial) {
-          console.log('Found a match for material:', selectedMaterial);
-          //this.selectedMaterialItems = [selectedMaterial.id];      
+        // Material
+        if (selectedSample.material) {
+          let selectedMaterial = this.availableMaterialItems.find(x => x.text.toUpperCase() == selectedSample.material.toUpperCase())
+          
+          if (selectedMaterial) {
+            console.log('Found a match for material:', selectedMaterial);              
+          }
         }
 
-        if (selectedLocation) {
-          console.log('Found a match for location:', selectedLocation);
-          this.selectedLocationItems = [selectedLocation.id];      
-        }
+        // Location
+        if (selectedSample.sampleCity) {
+          let selectedLocation = this.selectedSample.sampleCity;
+
+          if (selectedLocation) {
+            console.log('Found a match for location:', selectedLocation);
+            this.selectedLocationItems = [selectedLocation.id];      
+          }
+        }          
          
         this.showSampleEdit = (this.selectedSample !== null);
     }
