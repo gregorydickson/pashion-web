@@ -154,7 +154,7 @@
                         <span class="inline-label">
                             <span class="slim-text-box-label">Colour</span>
                             <div>
-                                <input type="text" class="slim-text-box to-u-c" disabled value.bind="selectedSample.color">
+                                <input type="text" class="slim-text-box to-u-c" disabled value.bind="selectedSample.color | cleanup">
                             </div>
                             <a style= "width: 30px; margin-left: 1rem; padding-bottom: 6px;" click.delegate="colorClear(selectedSample)">Clear</a>
                         </span>
