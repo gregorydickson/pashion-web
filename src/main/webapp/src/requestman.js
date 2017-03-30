@@ -329,30 +329,37 @@ export class Requestman{
    * 
   */
   listenForBookingsCacheInvalidation(pubNub){
-      console.log("listen for bookings cache invalidate - requestman.js");
-      
-      let company = this.user.company;
-      let channel = company +'_cacheInvalidate';
-      console.log("listening on channel:"+channel);
-      var bookings = this.bookings;
-      var sampleRequestService = this.sampleRequestService;
-      
-      pubNub.addListener({
-          message: function(message) {
-              console.log("requestman message in bookings");
-              console.log(JSON.stringify(message));
-              var channelName = message.channel;
-              if(channelName === channel)
-                  sampleRequestService.getSampleRequests().then(response => bookings = response);
-                  toastr.options.preventDuplicates = true;
-                  toastr.info('Request ' + message.message + " updated");  
-          }
-      })  
-      pubNub.subscribe({
-          channels: [channel],
-          withPresence: false 
-      })
-  }
+        console.log("listen for bookings cache invalidate - requestman.js");
+        
+        let company = this.user.company;
+        let channel = company +'_cacheInvalidate';
+        console.log("listening on cache channel in requestman:"+channel);
+        let bookingsToUpdate = this.bookings;
+        let sampleRequestService = this.sampleRequestService;
+        
+        pubNub.addListener({
+            message: function updateBookingsIndex(message) {
+                
+                var channelName = message.channel;
+                if(channelName === channel){
+                    sampleRequestService.getSampleRequests().then(newBookings => { 
+                        while(bookingsToUpdate.length > 0) {
+                            bookingsToUpdate.pop();
+                        }
+                        newBookings.forEach(item => {
+                            bookingsToUpdate.push(item);
+                        });
+                    });
+                    toastr.options.preventDuplicates = true;
+                    toastr.info('Request ' + message.message + " updated"); 
+                }
+            }
+        })  
+        pubNub.subscribe({
+            channels: [channel],
+            withPresence: false 
+        })
+    }
 
   editSampleRequest(itemId) {
     this.closeSampleRequestMenu(itemId);

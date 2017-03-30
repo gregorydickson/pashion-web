@@ -217,7 +217,7 @@ class SampleRequestController {
             
         } else {
             results = sampleRequestService.listByUserOrganization(user)
-            //log.info "sample requests count:"+results.size()
+            log.info "sample requests count:"+results.size()
         }
         long endTime = System.currentTimeMillis()
         long duration = (endTime - startTime)

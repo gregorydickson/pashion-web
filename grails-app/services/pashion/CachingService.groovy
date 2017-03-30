@@ -47,6 +47,7 @@ class CachingService implements JsonViewTest {
 
     @Selector('sampleRequestCacheInvalidate')
     void sampleRequestCacheInvalidate(Object data){
+        Thread.sleep(2000);
         try{
             Callback callback=new Callback() {}
             def channel
@@ -74,9 +75,6 @@ class CachingService implements JsonViewTest {
 
     }
 
-
-
-    
     def connections(){
         log.info "connections() checking connections:"
         if(connections == null){

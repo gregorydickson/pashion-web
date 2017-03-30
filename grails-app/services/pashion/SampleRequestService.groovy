@@ -33,67 +33,77 @@ class SampleRequestService {
         SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
         log.info "initial save sample request:"+jsonObject
         def sr = new SampleRequest()
-        if(jsonObject.emailNotification)
-            sr.emailNotification = jsonObject.emailNotification
-        sr.bookingStartDate = dateFormat.parse(jsonObject.startDate)
-
-        sr.bookingEndDate = dateFormat.parse(jsonObject.endDate)
-        sr.requiredBy = jsonObject.requiredBy
         
-        sr.returnToAddress = Address.get(jsonObject.returnToAddress.toInteger())
-        if(jsonObject?.deliverTo?.surname != null) {
-            def aUser = User.get(jsonObject.deliverTo.id.toInteger())
-            if(aUser.pressHouse) {
-                sr.pressHouse = aUser.pressHouse
-                sr.addressDestination = Address.findByPressHouseAndDefaultAddress(sr.pressHouse, true)
-            } else{
-                sr.addressDestination = aUser.address
-            }
-            sr.deliverTo = aUser
-        } else{
-            sr.addressDestination = Address.get(jsonObject.deliverTo.id.toInteger())
-        }
-        sr.returnBy = jsonObject.returnBy
-
-        sr.requestStatusBrand = "Pending"
-        sr.requestStatusPress = "Pending"
-     
-
-        SearchableItem item
-
-        jsonObject.samples.each{
-            item = SearchableItem.get(it)
-            log.info "sample request item:"+item
-            if(!sr.brand) sr.brand = item.brand
-            if(!sr.image) sr.image = item.look.image
-            if(!sr.season) sr.season = item.season.name
-            if(!sr.look) sr.look = item.look.name
-            sr.addToSearchableItemsProposed(item)
-            def status = new BookingStatus()
-            status.itemId = item.id
-            status.status = "Requested"
+        SampleRequest.withTransaction { transactionStatus ->
             
-            sr.addToSearchableItemsStatus(status)
-        } 
-        sr.shippingOut = new ShippingEvent(courier:jsonObject.courier,status:'Proposed').save(failOnError:true)
-        sr.shippingReturn = new ShippingEvent(status:'Proposed').save(failOnError:true)
-        sr.paymentOut = jsonObject.paymentOut
-        sr.paymentReturn = jsonObject.paymentReturn
-        sr.courierOut = jsonObject.courierOut
-        sr.courierReturn = jsonObject.courierReturn
-        sr.requestingUser = requestingUser
         
-        
-        sr.dateRequested = new Date()
-        sr.save(failOnError : true, flush: true)
+            if(jsonObject.emailNotification)
+                sr.emailNotification = jsonObject.emailNotification
+            sr.bookingStartDate = dateFormat.parse(jsonObject.startDate)
+
+            sr.bookingEndDate = dateFormat.parse(jsonObject.endDate)
+            sr.requiredBy = jsonObject.requiredBy
+            
+            sr.returnToAddress = Address.get(jsonObject.returnToAddress.toInteger())
+            if(jsonObject?.deliverTo?.surname != null) {
+                def aUser = User.get(jsonObject.deliverTo.id.toInteger())
+                if(aUser.pressHouse) {
+                    sr.pressHouse = aUser.pressHouse
+                    sr.addressDestination = Address.findByPressHouseAndDefaultAddress(sr.pressHouse, true)
+                } else{
+                    sr.addressDestination = aUser.address
+                }
+                sr.deliverTo = aUser
+            } else{
+                sr.addressDestination = Address.get(jsonObject.deliverTo.id.toInteger())
+            }
+            sr.returnBy = jsonObject.returnBy
+
+            sr.requestStatusBrand = "Pending"
+            sr.requestStatusPress = "Pending"
+         
+
+            SearchableItem item
+
+            jsonObject.samples.each{
+                item = SearchableItem.get(it)
+                log.info "sample request item:"+item
+                if(!sr.brand) sr.brand = item.brand
+                if(!sr.image) sr.image = item.look.image
+                if(!sr.season) sr.season = item.season.name
+                if(!sr.look) sr.look = item.look.name
+                sr.addToSearchableItemsProposed(item)
+                def status = new BookingStatus()
+                status.itemId = item.id
+                status.status = "Requested"
+                
+                sr.addToSearchableItemsStatus(status)
+            } 
+            sr.shippingOut = new ShippingEvent(courier:jsonObject.courier,status:'Proposed').save(failOnError:true)
+            sr.shippingReturn = new ShippingEvent(status:'Proposed').save(failOnError:true)
+            sr.paymentOut = jsonObject.paymentOut
+            sr.paymentReturn = jsonObject.paymentReturn
+            sr.courierOut = jsonObject.courierOut
+            sr.courierReturn = jsonObject.courierReturn
+            sr.requestingUser = requestingUser
+            
+            
+            sr.dateRequested = new Date()
+            sr.save(failOnError : true, flush: true)
+            log.info "SAVED SAMPLE REQUEST:"+sr.id
+        }
         sr
     }
 
     def updateSampleRequest(JSONObject jsonObject){
-            SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
-            SimpleDateFormat dateTimeFormat =  new SimpleDateFormat(dateTimeFormatString, Locale.US)
-            log.info "update json:"+jsonObject
-            SampleRequest sr = SampleRequest.get(jsonObject.id)
+        SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
+        SimpleDateFormat dateTimeFormat =  new SimpleDateFormat(dateTimeFormatString, Locale.US)
+        log.info "update json:"+jsonObject
+        SampleRequest sr = SampleRequest.get(jsonObject.id)
+        
+
+        SampleRequest.withTransaction { status ->
+
             sr.editorialName = jsonObject.editorialName
             sr.editorialWho = jsonObject.editorialWho
             if(jsonObject.editorialWhen) 
@@ -143,6 +153,9 @@ class SampleRequestService {
                 }
             }
             
-            sr.save(failOnError:true)
+            sr.save(failOnError:true,flush:true)
+            log.info "UPDATED SAMPLE REQUEST:"+sr.id
+        }
+        sr
     }
 }
