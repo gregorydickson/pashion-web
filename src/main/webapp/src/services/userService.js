@@ -297,7 +297,7 @@ export class UserService {
         var i;
         for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
             if (this.users[this.user.id - 1].connections[i].connectedUserId == fromUserId) {
-                console.log("UserService.addMessgeCount actually added to users from: " + fromUserId + " to: " + this.user.id);
+                console.log("UserService.addMessgeCount 1 actually added from: " + fromUserId + " to: " + this.user.id);
                 this.users[this.user.id - 1].connections[i].numberNewMessages++;
                 connectionId = this.users[this.user.id - 1].connections[i].id;
                 break;
