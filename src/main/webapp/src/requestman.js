@@ -344,7 +344,8 @@ export class Requestman{
               var channelName = message.channel;
               if(channelName === channel)
                   sampleRequestService.getSampleRequests().then(response => bookings = response);
-                  toastr.info('Requests Update'); 
+                  toastr.options.preventDuplicates = true;
+                  toastr.info('Request ' + message.message + " updated");  
           }
       })  
       pubNub.subscribe({

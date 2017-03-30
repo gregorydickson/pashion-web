@@ -37,7 +37,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request Denied']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse]
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, booking:sampleRequest.id]
     }
 
     
@@ -66,10 +66,10 @@ class SampleRequestController {
         def sent = [message:'Sample Request Approved']
         render sent as JSON
         def pressHouse = sr.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse]
+        notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse, booking:sr.id]
     }
     def brandSend(){
-
+        
         SampleRequest.withTransaction { status ->
             
         
@@ -87,8 +87,11 @@ class SampleRequestController {
         }
         def sent = [message:'Sample Request Waiting to be Picked Up']
         render sent as JSON
-        def pressHouse = sr.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse]
+
+
+        def sr2 = SampleRequest.get(params.id.toInteger()) //RM not sure if this is overkill or if it works GD plese check
+        def pressHouse = sr2.pressHouse?.name ?: ""
+        notify "sampleRequestCacheInvalidate",[brand:sr2.brand.name,press: pressHouse, booking:sr2.id]
     }
 
     
@@ -100,7 +103,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request Marked Picked Up']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse]
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, booking:sampleRequest.id]
     }
     def brandMarkReturned(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
@@ -110,7 +113,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request Marked Returned']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse]
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, booking:sampleRequest.id]
     }
     def brandRestocked(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
@@ -120,7 +123,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request Marked ReStocked']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse]
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, booking:sampleRequest.id]
     }
     def brandMarkDeleted(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
@@ -130,7 +133,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request Deleted']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse]
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, booking:sampleRequest.id]
     }
     //Press only methods
 
@@ -142,7 +145,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request In House']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse]
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, booking:sampleRequest.id]
     }
     def pressDelete(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
@@ -152,7 +155,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request Closed']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse]
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, booking:sampleRequest.id]
     }
     def pressShip(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
@@ -162,7 +165,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request Picking Up']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse]
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, booking:sampleRequest.id]
     }
     
     def pressMarkPickedUp(){
@@ -173,7 +176,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request Picking Up']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse]
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, booking:sampleRequest.id]
     }
 
     
@@ -190,7 +193,7 @@ class SampleRequestController {
             notify "sampleRequestEmail", sr
         
         def pressHouse = sr.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse]
+        notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse, booking:sr.id]
     }
 
     def updatejson(){
@@ -200,7 +203,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request Updated']
         render sent as JSON
         def pressHouse = sr.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse]
+        notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse, booking:sr.id]
     }
 
 

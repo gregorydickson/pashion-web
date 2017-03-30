@@ -77,6 +77,7 @@ export class ContactsList {
                     // try some toast
                     toastr.options.timeOut = 5000;
                     toastr.options.closeButton = false;
+                    toastr.options.preventDuplicates = true;
                     if (receivedMessage == "connections") {
                       parent.fetchGetUserUsersFromServer(); //update data structure from JSON in contact list
                       toastr.info('Connections Update'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);    
