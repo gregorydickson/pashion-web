@@ -119,6 +119,7 @@ export class Requestman{
                 this.filterChangeDates(); */
 
         });
+
         this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub())
   }
 
@@ -337,7 +338,7 @@ export class Requestman{
         let bookingsToUpdate = this.bookings;
         let sampleRequestService = this.sampleRequestService;
         
-        pubNub.addListener({
+        var requestmanListener = {
             message: function updateBookingsIndex(message) {
                 
                 var channelName = message.channel;
@@ -354,11 +355,20 @@ export class Requestman{
                     toastr.info('Request ' + message.message + " updated"); 
                 }
             }
-        })  
+        }
+        pubNub.addListener(requestmanListener);
+        this.pubNubService.addRequestmanListener(requestmanListener);
         pubNub.subscribe({
             channels: [channel],
             withPresence: false 
         })
+    }
+
+    unbind(){
+        console.log("UNBIND requestman ******* ")
+        this.pubNubService.removeRequestmanListener();
+        this.pubNubService.unSubscribe();
+
     }
 
   editSampleRequest(itemId) {

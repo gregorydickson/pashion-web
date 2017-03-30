@@ -12,9 +12,34 @@ export class PubNubService {
           publishKey: "pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73",
           ssl: true
       });
-
-
     }
+
+    indexListener = null;
+    addIndexListener(listener){
+      this.indexListener = listener;
+    }
+    getIndexListener(){
+      return this.indexListener;
+    }
+    removeIndexListener(){
+      this.pubnub.removeListener(this.indexListener)
+    }
+    
+    requestManListener = null;
+    addRequestmanListener(listener){
+      this.requestManListener = listener;
+    }
+    getRequestmanListener(){
+      return this.requestManListener;
+    }
+    removeRequestmanListener(){
+      this.pubnub.removeListener(this.requestManListener)
+    }
+
+    unSubscribe(){
+      this.pubnub.unsubscribeAll();
+    }
+
 
     getPubNub() {
         return this.pubnub;

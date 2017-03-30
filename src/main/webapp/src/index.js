@@ -784,7 +784,7 @@ export class Index {
         let bookingsToUpdate = this.bookings;
         let sampleRequestService = this.sampleRequestService;
         
-        pubNub.addListener({
+        var indexListener = {
             message: function updateBookingsIndex(message) {
                 
                 var channelName = message.channel;
@@ -801,11 +801,20 @@ export class Index {
                     toastr.info('Request ' + message.message + " updated"); 
                 }
             }
-        })  
+        }
+        pubNub.addListener(indexListener);
+        this.pubNubService.addIndexListener(indexListener);
         pubNub.subscribe({
             channels: [channel],
             withPresence: false 
         })
+    }
+
+    unbind(){
+        console.log("UNBIND INDEX ******* ")
+        this.pubNubService.removeIndexListener();
+        this.pubNubService.unSubscribe();
+
     }
 
     reloadBookings() {
