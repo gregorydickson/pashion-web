@@ -367,8 +367,6 @@ export class Requestman{
     unbind(){
         console.log("UNBIND requestman ******* ")
         this.pubNubService.removeRequestmanListener();
-        this.pubNubService.unSubscribe();
-
     }
 
   editSampleRequest(itemId) {

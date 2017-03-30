@@ -813,7 +813,6 @@ export class Index {
     unbind(){
         console.log("UNBIND INDEX ******* ")
         this.pubNubService.removeIndexListener();
-        this.pubNubService.unSubscribe();
 
     }
 
