@@ -295,7 +295,7 @@ export class EditSearchableItem {
           });
     
     this.alertP("Updated");
-    
+    this.controller.close();
   }
 
   close(){
