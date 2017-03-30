@@ -60,7 +60,7 @@ export class Messages {
                 var channelGroup = m.subscription; // The channel group or wildcard subscription match (if exists)
                 var pubTT = m.timetoken; // Publish timetoken
                 var receivedMessage = m.message; // The Payload
-                console.log("pubnub new nessage in messages:", receivedMessage);
+                console.log("pubnub new nessage in messages on " + m.channel + " > " + m.message);
 
                     parent.messages.push({ // unshift?
                         text: receivedMessage.text,

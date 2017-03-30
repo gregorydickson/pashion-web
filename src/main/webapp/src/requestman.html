@@ -144,32 +144,32 @@
                         <!--Header -->
                         
                             <div if.bind="user.type === 'brand'"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
-                                <table class="big-accordion" style="table-layout: fixed;">
+                                <table class="big-accordion"  cellspacing="2"  style="table-layout: fixed;">
                                     <tr>
                                         <td class="accordion-underline w3"></td>
                                         <td class="accordion-underline w6">ID</td>
                                         <td class="accordion-underline w7">LOOK</td>
                                         <td class="accordion-underline w13">DUE DATE</td>
                                         <td class="accordion-underline w14">COMPANY</td>
-                                        <td class="accordion-underline w20">EDITORIAL</td>
-                                        <td class="accordion-underline w13">WHO</td>
-                                        <td class="accordion-underline w5">#</td>
+                                        <td class="accordion-underline w16">EDITORIAL</td>
+                                        <td class="accordion-underline w20">WHO</td>
+                                        <td class="accordion-underline w2">#</td>
                                         <td class="accordion-underline w14">STATUS</td>
                                         <td class="accordion-underline w5"></td>
                                     </tr>
                                 </table>
                             </div>
                             <div if.bind="(user.type === 'press') || (user.type === 'agency')"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
-                                <table class="big-accordion" style="table-layout: fixed;">
+                                <table class="big-accordion"  cellspacing="2"  style="table-layout: fixed;">
                                     <tr>
                                         <td class="accordion-underline w3"></td>
                                         <td class="accordion-underline w6">ID</td>
                                         <td class="accordion-underline w7">LOOK</td>
                                         <td class="accordion-underline w13">REQUESTED</td>
                                         <td class="accordion-underline w14">BRAND</td>
-                                        <td class="accordion-underline w20">EDITORIAL</td>
-                                        <td class="accordion-underline w13">OWNER</td>
-                                        <td class="accordion-underline w5">#</td>
+                                        <td class="accordion-underline w16">EDITORIAL</td>
+                                        <td class="accordion-underline w20">OWNER</td>
+                                        <td class="accordion-underline w2">#</td>
                                         <td class="accordion-underline w14">STATUS</td>
                                         <td class="accordion-underline w5"></td>
                                     </tr>
@@ -181,7 +181,7 @@
                                 
                                 <div repeat.for="booking of bookings | sort:ordering:'ascending' | filter:searchTextReqMan:filterFunc:filtering:user:seasons
                                 | range:searchFrom:searchTo:filterRangeFunc">
-                                    <table  class="big-accordion" style="table-layout: fixed;">
+                                    <table  class="big-accordion" cellspacing="2" style="table-layout: fixed;">
                                         <tr class="brandGridContent">
                                             <td class="accordion-grey w3">
                                                 <button id="button${$index}" class="accordion" click.delegate="closeExpand($index,booking)"></button>
@@ -192,20 +192,20 @@
 
                                             <td class="col3 accordion-grey w13">${booking.bookingStartDate | viewDateFormat}</td>
 
-                                            <td if.bind="(user.type === 'press') || (user.type === 'agency')" class="col4 accordion-grey w14">${booking.brand.name}</td>
-                                            <td if.bind="user.type === 'brand'" class="col4 accordion-grey w14">${booking.pressHouse.name}</td>
+                                            <td if.bind="(user.type === 'press') || (user.type === 'agency')" class="col4 accordion-grey w14 variable-padding">${booking.brand.name}</td>
+                                            <td if.bind="user.type === 'brand'" class="col4 accordion-grey w14 variable-padding">${booking.pressHouse.name}</td>
 
-                                            <td if.bind="booking.editorialName" class="col5 accordion-grey w20">${booking.editorialName}</td>
-                                            <td if.bind="!booking.editorialName" class="col5 accordion-grey w20">n/a</td>
+                                            <td if.bind="booking.editorialName" class="col5 accordion-grey w16 variable-padding">${booking.editorialName}</td>
+                                            <td if.bind="!booking.editorialName" class="col5 accordion-grey w16 variable-padding">n/a</td>
 
-                                            <td class="col6 accordion-grey w13">${booking.requestingUser.name} ${booking.requestingUser.surname}</td>
+                                            <td class="col6 accordion-grey w20 variable-padding">${booking.requestingUser.name} ${booking.requestingUser.surname}</td>
 
-                                            <td class="col7 accordion-grey w5">${booking.searchableItems.length}</td>
+                                            <td class="col7 accordion-grey w2">${booking.searchableItems.length}</td>
 
                                             <td if.bind="(user.type === 'press') || (user.type === 'agency')" class.bind="(booking.requestStatusPress=='Pending') ? 'col8 accordion-grey ui-text-label-m-blue w14 to-u-c' :'col8 accordion-grey w14 to-u-c'">${booking.requestStatusPress}</td>
                                             <td if.bind="user.type === 'brand'" class.bind="(booking.requestStatusBrand=='Pending') ? 'col8 accordion-grey ui-text-label-m-blue w14 to-u-c' :'col8 accordion-grey w14 to-u-c'" >${booking.requestStatusBrand}</td>
 
-                                            <td class="accordion-grey w5"> 
+                                            <td class="accordion-grey w5" style="overflow:visible;"> 
                                                 <div class="look-menu-absolute-wrap">
                                                     <span class="edit-box" ><a href="#" click.delegate="lookEditMenu(booking.id)">...</a></span>
                                                     <!-- edit request modal popup -->

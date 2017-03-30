@@ -86,6 +86,7 @@ div.panel.show {
 td.accordion {
     text-align: left; 
     text-overflow: ellipsis;
+    overflow:hidden;
     white-space: nowrap;
     // font-weight:300;
     line-height:1.6rem;
@@ -94,6 +95,7 @@ td.accordion {
 td.accordion-underline {
     text-align: left; 
     text-overflow: ellipsis;
+    overflow:hidden;
     white-space: nowrap;
     font-weight:300;
     overflow: hidden;
@@ -103,6 +105,7 @@ td.accordion-underline {
 th.accordion {
     text-align:left; 
     text-overflow: ellipsis;
+    overflow:hidden;
     white-space: nowrap;
     font-weight: 300;
     overflow: hidden;
@@ -112,6 +115,7 @@ th.accordion {
 td.accordion-grey {
     text-align: left; 
     text-overflow: ellipsis;
+    overflow:hidden;
     white-space: nowrap;
     //font-weight:300;
     background-color:$white-two;
@@ -121,6 +125,10 @@ td.sample-padding {
     // padding-left: 1rem;
     padding-right: 1.5rem;
     //vertical-align:top;
+}
+
+td.variable-padding {
+    padding-right: 7px;
 }
 
 

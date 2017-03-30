@@ -66,7 +66,7 @@ export class ContactsList {
                 var channelGroup = m.subscription; // The channel group or wildcard subscription match (if exists)
                 var pubTT = m.timetoken; // Publish timetoken
                 var receivedMessage = m.message; // The Payload
-                console.log("pubnub new nessage in contactList: ", receivedMessage);
+                console.log("pubnub new nessage in contactList on " + m.channel + " > " + m.message);
 
                if (channelName == parent.user.email + "_cacheInvalidate") {
                     console.log ("cache invalidate for user:"+ parent.user.email + " message " + receivedMessage);
