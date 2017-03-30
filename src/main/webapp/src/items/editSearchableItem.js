@@ -65,7 +65,7 @@ export class EditSearchableItem {
       cities.forEach(item => {
           this.availableLocationItems.push({
             id: item.id,
-            text: item.name
+            text: item.name.toUpperCase()
           });
         });
     });
