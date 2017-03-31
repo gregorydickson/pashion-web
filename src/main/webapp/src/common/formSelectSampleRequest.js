@@ -44,8 +44,10 @@ export class FormSelectSampleRequest {
     // to happenings within the DOM itself
     setup() {
         var el = $(this.element).find('select');
-        this.sel = el.select2({minimumResultsForSearch: 15 // only allow terms up to n characters long
-                        });
+        this.sel = el.select2({
+          width: '110px',
+          minimumResultsForSearch: 15 // only allow terms up to n characters long
+            });
 
         // preload selected values
         this.sel.val(this.selected).trigger('change');
