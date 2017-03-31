@@ -24,6 +24,7 @@ export class CustomSelect {
         var vm = this;
         $(this.element).find('select')
             .select2({
+                width: '120px',
                 minimumResultsForSearch: 15,
                 sorter: function(data) {
                     // Let's remove the placeholder from the list of options
