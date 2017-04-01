@@ -64,13 +64,17 @@ class CalendarController {
                                              params.offset.toInteger(),
                                              params.months.toInteger())
         
-        log.debug "Calendar Controller - Searchable Item Picker"
-        log.debug "brand:"+theItem.brand
-        log.debug "params:"+params
+        log.debug "searchableItemPicker"
+        log.debug "brand :"+theItem.brand
+        log.debug "params: "+params
         if(params.searchType == "brand" || theItem.brand.hideCalendar == false){
             aCalendar = calendarService.availableDaysInMonth(theItem,localDate,aCalendar)
-            log.debug "show the brand availability"
-        } 
+            log.debug "searchableItemPicker, show the brand availability"
+        } else {
+            aCalendar = calendarService.availableDaysInMonthSetTodayOnly(theItem, localDate,aCalendar)
+
+            log.debug "searchableItemPicker, set today only"
+        }
         
         render aCalendar as JSON
 
@@ -90,7 +94,7 @@ class CalendarController {
                                              params.offset.toInteger(),
                                              params.months.toInteger())
         
-        log.debug "Calendar Controller - Searchable Item Picker"
+        log.debug "datePickerNoAvailability"
         render aCalendar as JSON
     }
 
@@ -115,7 +119,7 @@ class CalendarController {
                                              request.locale.toString(),
                                              params.offset.toInteger(),
                                              params.months.toInteger())
-        log.debug "showing availability for Look and Samples"
+        log.debug "showAvailabilityLookAndSamples"
         if(params.searchType == "brand" || samples[0].look.brand.hideCalendar == false){
             aCalendar = calendarService.availableDaysForALook(samples[0].look,aCalendar)
             aCalendar = calendarService.availableDaysForSamples(samples,localDate,aCalendar)
@@ -142,7 +146,7 @@ class CalendarController {
                                              request.locale.toString(),
                                              params.offset.toInteger(),
                                              params.months.toInteger())
-        log.debug "showing availability for Samples"
+        log.debug "showAvailabilitySamples"
         if(params.searchType == "brand" || samples[0].look.brand.hideCalendar == false)
             aCalendar = calendarService.availableDaysForSamples(samples,localDate,aCalendar)
         render aCalendar as JSON

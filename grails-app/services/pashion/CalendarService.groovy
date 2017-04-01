@@ -12,6 +12,7 @@ class CalendarService {
 
     PashionCalendar pastNotAvailable( LocalDate localDate,
                                          PashionCalendar pashionCalendar){
+        log.debug "pastNotAvailable"
 	   LocalDate now = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
        if(pashionCalendar.calendarMonths[0].beforeThisMonth(now)){
             pashionCalendar = monthNotAvailable(pashionCalendar)
@@ -19,6 +20,7 @@ class CalendarService {
         }
         if(pashionCalendar.calendarMonths[0].sameMonth(now)){
             pashionCalendar.calendarMonths[0].days[now.getDayOfMonth()].event = pashionCalendar.calendarMonths[0].days[now.getDayOfMonth()].event + " today"
+            log.debug "pastNotAvailbe, today set here"
             
             IntRange range
             if(now.getDayOfMonth() > 1){
@@ -33,17 +35,29 @@ class CalendarService {
     //Shows availability for a Look and all its Samples
     PashionCalendar availableDaysInMonth(SearchableItem look, LocalDate localDate,
     							         PashionCalendar pashionCalendar){
-    	log.info "Calendar Service - available Days in Month"
+    	log.info "availableDaysInMonth"
     	pashionCalendar = look.bookedDaysInMonth(localDate, pashionCalendar)
 
     }
+    //Sets today only
+    PashionCalendar  availableDaysInMonthSetTodayOnly(SearchableItem look, LocalDate localDate,
+                                         PashionCalendar pashionCalendar){
+        log.info "availableDaysInMonthSetTodayOnly"
+        pashionCalendar = look.bookedDaysInMonthTodayOnly(localDate, pashionCalendar)
+
+    }
+
+
+
     //Used for just the Look
     PashionCalendar availableDaysForALook(SearchableItem look, PashionCalendar pashionCalendar){
         pashionCalendar = look.availableDaysInMonth(pashionCalendar)
+        log.info "availableDaysForALook"
     }
     //Used for Specific Samples - Not all samples in a Look
     PashionCalendar availableDaysForSamples(List samples, LocalDate localDate,
     							            PashionCalendar pashionCalendar) {
+        log.info "availaleDaysForSamples"
     	samples.each{
     		pashionCalendar = it.bookedDaysInMonth(localDate,pashionCalendar)
     	}
@@ -51,12 +65,14 @@ class CalendarService {
     	if(pashionCalendar.calendarMonths[0].sameMonth(now)){
 				pashionCalendar.calendarMonths[0].days[now.getDayOfMonth()].event =
 					pashionCalendar.calendarMonths[0].days[now.getDayOfMonth()].event + " today"
+                    log.info "availableDaysForSamples, today set here"
 			}
     	pashionCalendar
     }
 
 
     PashionCalendar monthNotAvailable(PashionCalendar pashionCalendar){
+        log.debug "monthNotAvailable"
         IntRange range = 1..pashionCalendar.calendarMonths[0].numberOfDays
         range.each{
             log.info "month not available"

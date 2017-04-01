@@ -539,7 +539,7 @@ class SearchableItemController {
 
 
     def show(SearchableItem searchableItem) {
-        log.info "SHOW"
+        log.info "show"
         respond searchableItem
     }
 
