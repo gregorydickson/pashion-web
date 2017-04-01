@@ -167,6 +167,7 @@ export class CreateSampleRequestBrand {
 
           
       }
+      this.enableCheck();
   }
 
 
@@ -338,6 +339,7 @@ export class CreateSampleRequestBrand {
        (this.sampleRequest.startDate == '') ||
        (this.sampleRequest.endDate === undefined) ||
        (this.selectedAddress === undefined) ||
+       (this.sampleRequest.returnToAddress === undefined) ||
        (this.sampleRequest.endDate == '')){
           document.getElementById("CreateSampleRequestButton").disabled = true;
           console.log("button DIS abled");
