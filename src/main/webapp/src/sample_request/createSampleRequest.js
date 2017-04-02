@@ -118,14 +118,26 @@ export class CreateSampleRequest {
     console.log("startDay: " + this.startDay);
     if (this.endDay !='') console.log("enddate: " + enddate); else console.log("no endDay set")
     console.log("endDay: " + this.endDay);
-    if (startdate <= today) { console.log ("day is before today or is today, exit"); this.startDay = ''; return; }
+    if (startdate <= today) { 
+      console.log ("day is before today or is today, exit"); 
+      this.startDay = '';
+      this.sampleRequest.startDate = '';
+      this.sampleRequestStartMonth = '';
+      this.sampleRequestStartDay = ''; 
+      this.enableCheck();
+      return; 
+    }
     console.log ("day is in the future");
     
     if(this.endDay != ''){
       console.log("setting start date END DATE not empty");
       if( enddate < startdate ){
         console.log("setting start date AND it is after end date");
-        this.endDay = ''
+        this.endDay = '';
+        this.sampleRequest.endDate = '';
+        this.sampleRequestEndDay = '';
+        this.sampleRequestEndMonth = '';
+        this.enableCheck();
         //let element = event.srcElement.parentElement;
         //let document = element.ownerDocument;
         //let elems = document.querySelectorAll(".end-selected");
@@ -141,8 +153,8 @@ export class CreateSampleRequest {
     //var element = event.srcElement.parentElement;
     //var document = element.ownerDocument;
     //var elems = document.querySelectorAll(".start-selected");
-    this.sampleRequestStartMonth = '';
-    this.sampleRequestStartDay = '';
+    //this.sampleRequestStartMonth = '';
+    //this.sampleRequestStartDay = '';
     //[].forEach.call(elems, function(el) {
      // el.classList.remove("start-selected");
     //});
@@ -173,16 +185,37 @@ export class CreateSampleRequest {
     var today = new Date();
 
     console.log("today: " + today);
-    if (this.startDay != '') console.log("startDay: " + this.startDay); else { console.log("no startDay set, exit"); this.endDay = ''; return;}
+    if (this.startDay != '') console.log("startDay: " + this.startDay); 
+    else { 
+      console.log("no startDay set, exit"); 
+      this.endDay = '';
+      this.sampleRequest.endDate = '';
+      this.sampleRequestEndDay = '';
+      this.sampleRequestEndMonth = '';
+      this.enableCheck(); 
+      return;
+    }
     console.log("startdate: " + startdate); 
     console.log("enddate: " + enddate);
     console.log("endDay: " + this.endDay);
-    if (enddate <= today) { console.log ("day is before today or is today, exit"); this.endDay = ''; return; }
+    if (enddate <= today) { 
+      console.log ("day is before today or is today, exit"); 
+      this.endDay = ''; 
+      this.sampleRequest.endDate = '';
+      this.sampleRequestEndDay = '';
+      this.sampleRequestEndMonth = '';
+      this.enableCheck();
+      return; 
+    }
     console.log ("day is in the future");
 
     if(this.startDay === '' || enddate < startdate || enddate.getTime() == startdate.getTime()){
       console.log (" empty, reverse or time clash");
       this.endDay = '';
+      this.sampleRequest.endDate = '';
+      this.sampleRequestEndDay = '';
+      this.sampleRequestEndMonth = '';
+      this.enableCheck();
       return;
     }
     
@@ -210,6 +243,8 @@ export class CreateSampleRequest {
        (this.sampleRequest.startDate === undefined) ||
        (this.sampleRequest.startDate == '') ||
        (this.sampleRequest.endDate === undefined) ||
+       (this.sampleRequest.deliverTo === undefined) ||
+       (this.sampleRequest.returnToAddress === undefined) ||
        (this.sampleRequest.endDate == '')){
           document.getElementById("CreateSampleRequestButton").disabled = true;
           console.log("button DIS abled");
