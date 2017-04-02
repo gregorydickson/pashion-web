@@ -65,7 +65,7 @@
                                <!--  <td if.bind="startCalendar.calendarMonths[0].monthNumber == sampleRequestStartMonth" class="start-selected"  repeat.for="cell of row">
                                 <td if.bind="startCalendar.calendarMonths[0].monthNumber != sampleRequestStartMonth" class=""  repeat.for="cell of row"> -->
                                 <td   class= "${cell.event}" repeat.for="cell of row">
-                                    <a  class=" ${(computedClass && (cell.dayString === sampleRequestStartDay)) ? 'start-selected' : ''} " href="#" click.delegate="setStartDate($event,cell.dayString)">
+                                    <a  class=" ${(computedClass && (cell.dayString === sampleRequestStartDay)) ? 'start-selected' : ''} " href="#" click.delegate="setStartDate($event,cell.event,cell.dayString)">
                                         ${cell.dayString}
                                     </a>
                                 </td>
@@ -234,7 +234,7 @@
                                     </a>
                                 </td> -->
                                 <td   class= "${cell.event}" repeat.for="cell of row">
-                                    <a  class=" ${(computedClassEnd && (cell.dayString === sampleRequestEndDay)) ? 'end-selected' : ''} " href="#" click.delegate="setEndDate($event,cell.dayString)">
+                                    <a  class=" ${(computedClassEnd && (cell.dayString === sampleRequestEndDay)) ? 'end-selected' : ''} " href="#" click.delegate="setEndDate($event,cell.event,cell.dayString)">
                                         ${cell.dayString}
                                     </a>
                                 </td>

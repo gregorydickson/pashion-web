@@ -101,7 +101,7 @@ export class CreateSampleRequest {
         this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000} }).then(response => {});
     }
 
-  setStartDate(event,day){
+  setStartDate(event,dayEvent,day){
     console.log("set start date: "+event);
     console.log("parameterday: "+day);
 
@@ -124,10 +124,32 @@ export class CreateSampleRequest {
       this.sampleRequest.startDate = '';
       this.sampleRequestStartMonth = '';
       this.sampleRequestStartDay = ''; 
+      // also clear end date
+      this.endDay = '';
+      this.sampleRequest.endDate = '';
+      this.sampleRequestEndDay = '';
+      this.sampleRequestEndMonth = '';
       this.enableCheck();
       return; 
     }
     console.log ("day is in the future");
+
+    //check availability
+    var dayIsNotAvailable = dayEvent.indexOf("not-available")>=0;
+    console.log ("setStartDate, calendar day contains unavailable: " + dayIsNotAvailable);
+    if (dayIsNotAvailable) {
+      this.startDay = '';
+      this.sampleRequest.startDate = '';
+      this.sampleRequestStartMonth = '';
+      this.sampleRequestStartDay = '';
+      // also clear end date
+      this.endDay = '';
+      this.sampleRequest.endDate = '';
+      this.sampleRequestEndDay = '';
+      this.sampleRequestEndMonth = ''; 
+      this.enableCheck();
+      return;  
+    }
     
     if(this.endDay != ''){
       console.log("setting start date END DATE not empty");
@@ -177,7 +199,7 @@ export class CreateSampleRequest {
     if (this.endCalendar.calendarMonths[0].monthNumber == this.sampleRequestEndMonth) return true
   }
 
-  setEndDate(event, day){
+  setEndDate(event, dayEvent, day){
     this.endDay = day;
     var startdate = '';
     let enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber-1,day);
@@ -217,6 +239,18 @@ export class CreateSampleRequest {
       this.sampleRequestEndMonth = '';
       this.enableCheck();
       return;
+    }
+
+    //check availability
+    var dayIsNotAvailable = dayEvent.indexOf("not-available")>=0;
+    console.log ("setEndDate, calendar day contains unavailable: " + dayIsNotAvailable);
+    if (dayIsNotAvailable) {
+      this.endDay = '';
+      this.sampleRequest.endDate = '';
+      this.sampleRequestEndDay = '';
+      this.sampleRequestEndMonth = ''; 
+      this.enableCheck();
+      return;  
     }
     
     console.log("end date"+event);
