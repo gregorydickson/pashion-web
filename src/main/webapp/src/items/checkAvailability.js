@@ -72,7 +72,7 @@ export class CheckAvailability {
   	var queryString = DateFormat.urlString(++this.offset,1);
     if (this.user.type === "brand")
         queryString = queryString+'&searchType=brand';
-    this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
+    this.http.fetch('/calendar/showAvailabilitySamples'+queryString, {
             method: 'post',
             body: json(this.selectedProductIds)
           })
@@ -87,7 +87,7 @@ export class CheckAvailability {
     if (this.user.type === "brand")
       queryString = queryString + '&searchType=brand';
 
-    this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
+    this.http.fetch('/calendar/showAvailabilitySamples'+queryString, {
             method: 'post',
             body: json(this.selectedProductIds)
           })
