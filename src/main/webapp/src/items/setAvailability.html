@@ -38,11 +38,16 @@
                         </thead>
                         <tbody>
                             <tr repeat.for="row of calendar.calendarMonths[0].rows">
-                                <td class="${cell.event}" repeat.for="cell of row">
+                                <!-- <td class="${cell.event}" repeat.for="cell of row">
                                     <a href="#" click.delegate="setStartDate($event,cell.dayString)">
                                     ${cell.dayString}
                                     </a>
-                                </td>
+                                </td> -->
+                                <td class= "${cell.event}" repeat.for="cell of row">
+                                  <a  class=" ${(computedClass && (cell.dayString === sampleRequestStartDay)) ? 'end-selected' : ''} " href="#" click.delegate="setStartDate($event,cell.event,cell.dayString)">
+                                      ${cell.dayString}
+                                  </a>
+                            </td>
                             </tr>
                         </tbody>
                     </table>
@@ -58,7 +63,7 @@
       </ai-dialog-body>
       <ai-dialog-footer>
         <button click.trigger="cancel()">Cancel</button>
-        <button click.trigger="submit()">Set</button>
+        <button id="SetAvailabilityRequestButton" click.trigger="submit()">Set</button>
       </ai-dialog-footer>
    </ai-dialog>
 </template>
