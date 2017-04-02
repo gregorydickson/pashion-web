@@ -8,6 +8,7 @@ import {DialogService} from 'aurelia-dialog';
 import { CreateDialogAlert } from 'common/dialogAlert';
 import {NewAddress} from './newAddress';
 import $ from 'jquery';
+import {computedFrom} from 'aurelia-framework';
 
 
 @inject(HttpClient, DialogController, BrandService, DialogService)
@@ -27,6 +28,10 @@ export class CreateSampleRequestBrand {
   selectedDeliverToItems = [''];
   availableReturnToItems = [];
   selectedReturnToItems = [''];
+  sampleRequestStartMonth = '';
+  sampleRequestStartDay = '';
+  sampleRequestEndMonth = '';
+  sampleRequestEndDay = '';
   
 
   brand = [];
@@ -271,29 +276,45 @@ export class CreateSampleRequestBrand {
       if( enddate < startdate ){
         console.log("setting start date AND it is after end date");
         this.endDay = ''
-        let element = event.srcElement.parentElement;
-        let document = element.ownerDocument;
-        let elems = document.querySelectorAll(".end-selected");
-        var redraw = this.redraw;
-        [].forEach.call(elems, function(el) {
-          if(el.classList.contains("end-selected")){
-            el.classList.remove("end-selected");
-            redraw(el);
-          }
-        });
+        //let element = event.srcElement.parentElement;
+        //let document = element.ownerDocument;
+        //let elems = document.querySelectorAll(".end-selected");
+        //var redraw = this.redraw;
+        //[].forEach.call(elems, function(el) {
+        //  if(el.classList.contains("end-selected")){
+         //   el.classList.remove("end-selected");
+         //   redraw(el);
+         // }
+        //});
       }
     }
-    var element = event.srcElement.parentElement;
-    var document = element.ownerDocument;
-    var elems = document.querySelectorAll(".start-selected");
-    [].forEach.call(elems, function(el) {
-      el.classList.remove("start-selected");
-    });
-    element.className += " start-selected";
-    this.redraw(element);
+    //var element = event.srcElement;
+    //console.log ("createSampleRequestBrand: " + element);
+    //var document = element.ownerDocument;
+    //var elems = document.querySelectorAll(".start-selected");
+    this.sampleRequestStartMonth = '';
+    this.sampleRequestStartDay = '';
+    //[].forEach.call(elems, function(el) {
+    //  el.classList.remove("start-selected");
+    //});
+    //element.className = " start-selected";
+    //this.redraw(element);
     this.sampleRequest.startDate = this.startCalendar.calendarMonths[0].year+"-"+this.startCalendar.calendarMonths[0].monthNumber+"-"+day;
+    this.sampleRequestStartMonth = this.startCalendar.calendarMonths[0].monthNumber;
+    this.sampleRequestStartDay = day;
     this.enableCheck();
   }
+
+  @computedFrom('startCalendar.calendarMonths[0].monthNumber', 'sampleRequestStartMonth')
+  get computedClass () { 
+    if (this.startCalendar.calendarMonths[0].monthNumber == this.sampleRequestStartMonth) return true
+  }
+
+ @computedFrom('endCalendar.calendarMonths[0].monthNumber', 'sampleRequestEndMonth')
+  get computedClassEnd () { 
+    if (this.endCalendar.calendarMonths[0].monthNumber == this.sampleRequestEndMonth) return true
+  }
+
 
   setEndDate(event, day){
     this.endDay = day;
@@ -318,15 +339,17 @@ export class CreateSampleRequestBrand {
     
     console.log("end date"+event);
     console.log("day"+day);
-    let element = event.srcElement.parentElement;
-    let document = element.ownerDocument;
-    let elems = document.querySelectorAll(".end-selected");
-    [].forEach.call(elems, function(el) {
-      el.classList.remove("end-selected");
-    });
-    element.className += " end-selected";
-    this.redraw(element);
+    //let element = event.srcElement.parentElement;
+    //let document = element.ownerDocument;
+    //let elems = document.querySelectorAll(".end-selected");
+    //[].forEach.call(elems, function(el) {
+      //el.classList.remove("end-selected");
+    //});
+    //element.className += " end-selected";
+    //this.redraw(element);
     this.sampleRequest.endDate = this.endCalendar.calendarMonths[0].year+"-"+this.endCalendar.calendarMonths[0].monthNumber+"-"+day;
+    this.sampleRequestEndMonth = this.endCalendar.calendarMonths[0].monthNumber;
+    this.sampleRequestEndDay = day;
     this.enableCheck();
     
   }

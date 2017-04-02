@@ -1,9 +1,25 @@
+//td.au-target.start-selected {
+//	border: 2px solid $flat-blue;
+//}
+
+a.start-selected {
+	border: 2px solid $flat-blue;
+	padding: 4px;
+}
+
+a.end-selected {
+	border: 2px solid $flat-blue;
+	padding:4px;
+}
+
 td.au-target.start-selected {
 	border: 2px solid $flat-blue;
+	//padding: 4px;
 }
 
 td.au-target.end-selected {
 	border: 2px solid $flat-blue;
+	//padding:4px;
 }
 
 td.au-target.available {
@@ -19,7 +35,7 @@ td.au-target.today {
 }
 
 td.au-target.not-available {
-	background-color: white; 
+	//background-color: white; 
 
 	> a {
 		color: $warm-grey;

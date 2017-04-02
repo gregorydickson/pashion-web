@@ -4,6 +4,7 @@ import 'fetch';
 import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import moment from 'moment';
+import {computedFrom} from 'aurelia-framework';
 
 @inject(HttpClient, DialogController)
 export class SetAvailability {
@@ -14,6 +15,8 @@ export class SetAvailability {
   calendar = {};
   offset = 0;
   newDate = '';
+  sampleRequestStartMonth = '';
+  sampleRequestStartDay = '';
   
 
   constructor(http, controller){
@@ -44,20 +47,25 @@ export class SetAvailability {
 
   setStartDate(event,day){
 
-  	var element = event.srcElement.parentElement;
-  	var document = element.ownerDocument;
-  	var elems = document.querySelectorAll(".start-selected");
-  	[].forEach.call(elems, function(el) {
-    	el.classList.remove("start-selected");
-	  });
-  	element.className += " start-selected";
-  	this.redraw(element);
+  	//var element = event.srcElement.parentElement;
+  	//var document = element.ownerDocument;
+  	//var elems = document.querySelectorAll(".start-selected");
+  	//[].forEach.call(elems, function(el) {
+    //	el.classList.remove("start-selected");
+	  //});
+  	//element.className += " start-selected";
+  	//this.redraw(element);
     //this.newDate = this.calendar.calendarMonths[0].year+"-"+this.calendar.calendarMonths[0].monthNumber+"-"+day;
     // needs to be in "dd-M-yy" format for external consumption
     //RM tested. but unsure if we need to propergate other format changes
     this.newDate = moment(day+"-"+this.calendar.calendarMonths[0].monthNumber+"-"+this.calendar.calendarMonths[0].year,"D-M-YYYY" ,false).format('DD-MMM-YYYY');
+    this.sampleRequestStartMonth = this.calendar.calendarMonths[0].monthNumber;
+    this.sampleRequestStartDay = day;
+  }
 
-
+  @computedFrom('calendar.calendarMonths[0].monthNumber', 'sampleRequestStartMonth')
+  get computedClass () { 
+    if (this.calendar.calendarMonths[0].monthNumber == this.sampleRequestStartMonth) return true
   }
   
 

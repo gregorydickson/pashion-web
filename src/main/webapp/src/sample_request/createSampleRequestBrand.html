@@ -59,8 +59,13 @@
                         </thead>
                         <tbody>
                             <tr repeat.for="row of startCalendar.calendarMonths[0].rows">
-                                <td class="${cell.event}"  repeat.for="cell of row">
-                                    <a href="#" click.delegate="setStartDate($event,cell.dayString)">
+                                <!-- <td class.bind="startCalendar.calendarMonths[0].monthNumber == sampleRequestStartMonth ? 'start-selected' : '' "  repeat.for="cell of row"> -->
+                                <!-- <td class.bind="sampleRequestStartDay == cell.dayNumber ? computedClass : '' "  repeat.for="cell of row"> -->
+                                <!-- <td class=" ${cell.event==' today' ? ' today' : ''} ${computedClass ? 'start-selected' : 'start-not-selected' }" repeat.for="cell of row"> -->
+                               <!--  <td if.bind="startCalendar.calendarMonths[0].monthNumber == sampleRequestStartMonth" class="start-selected"  repeat.for="cell of row">
+                                <td if.bind="startCalendar.calendarMonths[0].monthNumber != sampleRequestStartMonth" class=""  repeat.for="cell of row"> -->
+                                <td   class= "${cell.event}" repeat.for="cell of row">
+                                    <a  class=" ${(computedClass && (cell.dayString === sampleRequestStartDay)) ? 'start-selected' : ''} " href="#" click.delegate="setStartDate($event,cell.dayString)">
                                         ${cell.dayString}
                                     </a>
                                 </td>
@@ -223,8 +228,13 @@
                         </thead>
                         <tbody>
                             <tr repeat.for="row of endCalendar.calendarMonths[0].rows">
-                                <td class="${cell.event}"  repeat.for="cell of row">
+                               <!-- <td class="${cell.event}"  repeat.for="cell of row">
                                     <a href="#" click.delegate="setEndDate($event,cell.dayString)">
+                                        ${cell.dayString}
+                                    </a>
+                                </td> -->
+                                <td   class= "${cell.event}" repeat.for="cell of row">
+                                    <a  class=" ${(computedClassEnd && (cell.dayString === sampleRequestEndDay)) ? 'end-selected' : ''} " href="#" click.delegate="setEndDate($event,cell.dayString)">
                                         ${cell.dayString}
                                     </a>
                                 </td>
