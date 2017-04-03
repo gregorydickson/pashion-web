@@ -55,7 +55,8 @@ class EmailService {
             messageTxt = messageTxt + "<b>Start Date: </b>" +sr.bookingStartDate?.format('yyyy-MMM-dd')+"<br/>"
             messageTxt = messageTxt + "<b>End Date: </b>" +sr.bookingEndDate?.format('yyyy-MMM-dd')+"<br/>"
             messageTxt = messageTxt + "<b>Required By: </b>" +sr.requiredBy+"<br/>"
-            messageTxt = messageTxt + "<b>Deliver To: </b>" +sr.deliverTo?.name + " " + sr.deliverTo?.surname +"<br/>"
+            if (sr.deliverTo.name)
+                 messageTxt = messageTxt + "<b>Deliver To: </b>" +sr.deliverTo?.name + " " + sr.deliverTo?.surname +"<br/>"
             messageTxt = messageTxt + "<b>Courier Out: </b>" +sr.courierOut +"<br/>"
             messageTxt = messageTxt + "<b>Payment: </b>" +sr.paymentOut +"<br/>"
             messageTxt = messageTxt + "<b>To be Returned By: </b>" +sr.returnBy +"<br/>"

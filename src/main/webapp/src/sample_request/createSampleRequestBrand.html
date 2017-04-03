@@ -36,14 +36,14 @@
                     <span class="calendarnav ui-text-label-m-blue" style="text-align:center;">START BOOKING</span>
                 </div>
                 <div class="grid-block calendar-header-align">
-                     <span class="calendarnav prev">
-                     <a click.delegate="startPrevious()">
-                        <img src="/assets/calendar/prev.png"  />
-                     </a>
+                     <span click.delegate="startPrevious()" class="calendarnav prev">
+                        <a><img src="/assets/calendar/prev.png"  /></a>
                      </span>
-                     <span class="calendarnav calendar-title"><a id="titlelink" click.delegate="startReset()">TODAY</a></span>
-                     <span class="calendarnav next">
-                     <a click.delegate="startNext()"><img src="/assets/calendar/next.png" /></a>
+                     <span class="calendarnav calendar-title">
+                        <a id="titlelink" click.delegate="startReset()">TODAY</a>
+                     </span>
+                     <span  click.delegate="startNext()" class="calendarnav next">
+                        <a><img src="/assets/calendar/next.png" /></a>
                      </span>
                 </div>
                 <div class="grid-block calendar-header-align">
@@ -205,14 +205,12 @@
                     <span class="calendarnav ui-text-label-m-blue" style="text-align:center;">END BOOKING</span>
                 </div>
                <div class="grid-block shrink calendar-header-align" >
-                  <span class="calendarnav prev">
-                     <a click.delegate="endPrevious()">
-                        <img src="/assets/calendar/prev.png"  />
-                     </a>
+                  <span click.delegate="endPrevious()" class="calendarnav prev">
+                     <a ><img src="/assets/calendar/prev.png"  /></a>
                   </span>
                   <span class="calendarnav calendar-title"><a id="titlelink" click.delegate="endReset()">TODAY</a></span>
-                  <span class="calendarnav next">
-                     <a click.delegate="endNext()"><img src="/assets/calendar/next.png" /></a>
+                  <span click.delegate="endNext()" class="calendarnav next">
+                     <a ><img src="/assets/calendar/next.png" /></a>
                   </span>
                </div>
                 <div class="grid-block shrink calendar-header-align">
