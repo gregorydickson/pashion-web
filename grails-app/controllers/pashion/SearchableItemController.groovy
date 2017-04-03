@@ -431,7 +431,7 @@ class SearchableItemController {
     @Transactional
     def savejson(){
         def jsonObject = request.JSON
-        
+        log.info "save item:"+jsonObject
 
         def item =  SearchableItem.get(jsonObject.id)
         item.name = jsonObject.name
@@ -456,7 +456,7 @@ class SearchableItemController {
             sample.name = it.name
             sample.size = it.size
             sample.material = it.material
-            sample.sampleCity = City.get(it.sampleCity.id.toInteger())
+            sample.sampleCity = City.get(it.sampleCity?.id?.toInteger())
             
             sample.description = it.description
             sample.attributes = it.attributes

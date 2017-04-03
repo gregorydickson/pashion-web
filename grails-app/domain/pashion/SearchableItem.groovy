@@ -68,7 +68,7 @@ class SearchableItem {
 		name nullable:true
 		city nullable:true
 		sampleCity nullable:true
-		description nullable:true, maxSize: 1000
+		description nullable:true, maxSize: 4000
 		brand nullable: true
 		sex nullable:true
 		type nullable: true
@@ -90,7 +90,7 @@ class SearchableItem {
 	 	lookSeason nullable: true
 	 	decade nullable: true
 
-	 	attributes nullable:true, maxSize: 1000
+	 	attributes nullable:true, maxSize: 4000
 
 	 	path nullable:true
 

@@ -12,7 +12,7 @@ import { CreateDialogAlert } from 'common/dialogAlert';
 export class EditSearchableItem {
   static inject = [DialogController];
   isLoading = true;
-
+  newSampleId = 0;
   currentItem = {};
   result = {};
 
@@ -153,14 +153,15 @@ export class EditSearchableItem {
     console.log('sample2Callback() called');
 
     if (event.detail) {
-        let selectedSample = event.detail.value;         
-        console.log('sample2Callback() / Selected value:', selectedSample); 
+        console.log('sample2 value:'+event.detail.value)
+        let selectedSampleId = event.detail.value;         
+        console.log('sample2Callback() / Selected value:', selectedSampleId); 
 
-        this.selectedSample = selectedSample; //this.availableSampleItems.find(x => x.id == selectedSample);
+        this.selectedSample = this.currentItem.samples.find(x => x.id == selectedSampleId);
 
         // Sample type
-        if (selectedSample.sampleType) {
-          let selectedSampleType = this.availableSampleTypeItems.find(x => x.text.toUpperCase() == selectedSample.sampleType.toUpperCase());
+        if (this.selectedSample.sampleType) {
+          let selectedSampleType = this.availableSampleTypeItems.find(x => x.text.toUpperCase() == this.selectedSample.sampleType.toUpperCase());
           
           if (selectedSampleType) {
             console.log('Found a match for sample type:', selectedSampleType);
@@ -169,8 +170,8 @@ export class EditSearchableItem {
         }
 
         // Material
-        if (selectedSample.material) {
-          let selectedMaterial = this.availableMaterialItems.find(x => x.text.toUpperCase() == selectedSample.material.toUpperCase())
+        if (this.selectedSample.material) {
+          let selectedMaterial = this.availableMaterialItems.find(x => x.text.toUpperCase() == this.selectedSample.material.toUpperCase())
           
           if (selectedMaterial) {
             console.log('Found a match for material:', selectedMaterial);              
@@ -178,7 +179,7 @@ export class EditSearchableItem {
         }
 
         // Location
-        if (selectedSample.sampleCity) {
+        if (this.selectedSample.sampleCity) {
           let selectedLocation = this.selectedSample.sampleCity;
 
           if (selectedLocation) {
@@ -198,7 +199,9 @@ export class EditSearchableItem {
           let selectedValue = event.detail.value;         
           console.log('Selected value:', selectedValue);    
 
+          
           this.selectedSample =  this.availableSampleItems.find(x => x.id == selectedValue);
+
           this.showSampleEdit = (this.selectedSample !== null);   
       }
   }
@@ -217,10 +220,12 @@ export class EditSearchableItem {
   onLocationChangeCallback(event) {   
       console.log('onLocationChangeCallback() called:', event.detail.value);
       if (event.detail) {
-          let selectedValue = event.detail.value;         
-          console.log('Selected location value:', selectedValue);     
+          if(event.detail.value){
+            let selectedValue = event.detail.value;         
+            console.log('Selected location value:', selectedValue);     
 
-          this.selectedSample.sampleCity.id = selectedValue; 
+            this.selectedSample.sampleCity.id = selectedValue; 
+          }
       }
   }
 
@@ -261,15 +266,25 @@ export class EditSearchableItem {
   newsample(){
     if (!this.createdNew) {
       this.createdNew = true;
+      this.newSampleId = this.newSampleId - 1;
       var newsample = {};
       newsample.name = "NEW";
       newsample.description = "NEW";
       newsample.attributes = "NEW";
+      newsample.id = this.newSampleId;
+      newsample.sampleCity = {}
+      newsample.sampleCity.id = this.availableLocationItems[0].id;
+      this.selectedLocationItems = this.availableLocationItems[0];
+      newsample.type = this.selectedSampleTypeItems[0];
+      console.log("new sample city:"+newsample.sampleCity.id);
+      console.log("new sample type:"+newsample.type);
+
       this.currentItem.samples.push(newsample);    
-      this.selectedSample = newsample;
       
-      this.availableSampleItems.push({ id: 0, text: newsample.attributes });
-      this.selectedSampleItems.push({ id: 0, text: newsample.attributes });
+      
+      this.availableSampleItems.push({ id: this.newSampleId , text: "NEW" });
+      this.selectedSampleItems = [this.newSampleId]
+      this.selectedSample = this.currentItem.samples.find(x => x.id == this.newSampleId);
     }
   }
  
