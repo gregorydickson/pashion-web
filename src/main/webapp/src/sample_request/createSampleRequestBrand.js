@@ -485,6 +485,7 @@ export class CreateSampleRequestBrand {
 
   }
   startReset(){
+    this.startOffset = 0;
     var queryString = DateFormat.urlString(0,1)+'&searchType=brand';
     return this.http.fetch('/calendar/searchableItemPicker' + queryString+
                  '&item='+this.currentItem.id)
@@ -516,6 +517,7 @@ export class CreateSampleRequestBrand {
 
   }
   endReset(){
+    this.endOffset = 0;
     var queryString = DateFormat.urlString(0,1)+'&searchType=brand';
     return this.http.fetch('/calendar/searchableItemPicker' + queryString+
                  '&item='+this.currentItem.id)

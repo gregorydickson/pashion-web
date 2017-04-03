@@ -97,6 +97,7 @@ export class CheckAvailability {
   }
 
   reset(){
+    this.offset=0;
   	var queryString = DateFormat.urlString(0,1);
     if (this.user.type === "brand")
       queryString = queryString + '&searchType=brand';
