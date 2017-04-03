@@ -59,33 +59,13 @@
                     <!-- First Column -->
                     <!-- -->
                     <div id="left-panel" class="vertical grid-block noscroll">
-                        <!-- Calendar -->
-                       <!-- <div class="grid-block shrink">
-                            <compose view-model="calendars/requestCalendar"></compose>
-                        </div> -->
-                        <!-- Image holder -->
-                        <div class="request-image-fix " style="
-                              background-image: url('${image}');
-                              background-position: center top;
-                              min-width:258px;
-                              max-width:258px;
-                              min-height:400px;
-                              max-height:400px;">
-                        </div>
-                        <!-- Image information holder -->
-                        <div class="request-image-info-fix" style="
-                                    text-align: center;
-                                    overflow: hidden;
-                                    margin-top:5px;
-                                    min-width:290px;
-                                    max-width:290px;
-                                    min-height:100px;
-                                    max-height:100px;">
-                            <span if.bind="brand" class="accordion-grey" style="font-size: 1.1rem; font-weight: 500;">${brand} Look ${look}</span>
-                            <br>
-                            <span class="accordion-grey">${season}</span>
-                            <br>
-                        </div>
+                        <figure style=" display: inline-block; vertical-align: top; text-align:center; " >
+                            <img class="request-image-fix" src="${image}">
+                            <figcaption style="display:block;margin-top:1rem;">
+                                <span if.bind="brand" class="accordion-grey" style="font-size: 1.1rem; font-weight: 500;">${brand} Look ${look}</span><br>
+                                <span class="accordion-grey">${season}</span><br>
+                            </figcaption>                           
+                        </figure>
                     </div>
                     <!-- spacers -->
                     <div class="grid-block shrink spa-h-spacer">
