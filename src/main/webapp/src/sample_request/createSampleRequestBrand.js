@@ -27,15 +27,11 @@ export class CreateSampleRequestBrand {
   availableDeliverToItems = [];
   selectedDeliverToItems = [''];
   availableReturnToItems = [];
-<<<<<<< HEAD
-  selectedReturnToItems = [];
-=======
   selectedReturnToItems = [''];
   sampleRequestStartMonth = '';
   sampleRequestStartDay = '';
   sampleRequestEndMonth = '';
   sampleRequestEndDay = '';
->>>>>>> master
   
 
   brand = [];
