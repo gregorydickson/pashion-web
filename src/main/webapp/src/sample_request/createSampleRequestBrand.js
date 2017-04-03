@@ -140,12 +140,13 @@ export class CreateSampleRequestBrand {
               });
 
               let defaultAddress = addresses.find(item => item.defaultAddress == true);
-              let selectedReturnTo = availableReturnToItems.find(item => item.id == defaultAddress.id);
-              console.log('**** DEFAULT returnTo ID:',selectedReturnTo.id);
-              sampleRequest.returnToAddress = selectedReturnTo.id;
-              this.selectedReturnToItems = [selectedReturnTo.id];
-              console.log("pushed default return To address");
-              console.log("another statement");
+              if(defaultAddress){
+                let selectedReturnTo = availableReturnToItems.find(item => item.id == defaultAddress.id);
+                sampleRequest.returnToAddress = selectedReturnTo.id;
+                this.selectedReturnToItems = [selectedReturnTo.id];
+              }
+              
+              
 
             }),
             
