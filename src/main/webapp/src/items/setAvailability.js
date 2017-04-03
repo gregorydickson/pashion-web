@@ -127,6 +127,7 @@ export class SetAvailability {
   }
 
   reset(){
+    this.offset=0;
   	var queryString = DateFormat.urlString(0,1);
     return this.http.fetch('/calendar/pastNotAvailable' + queryString)
           .then(response => response.json())
