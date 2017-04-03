@@ -26,6 +26,7 @@ class CalendarService {
             if(now.getDayOfMonth() > 1){
                 range = 1..(now.getDayOfMonth()-1)
                 range.each{
+                    log.info "Day Not Available:"+it
                     pashionCalendar.calendarMonths[0].days[it].event =  "not-available"
                 }
             }

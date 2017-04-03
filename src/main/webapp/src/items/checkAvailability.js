@@ -46,25 +46,24 @@ export class CheckAvailability {
           item.samples.forEach(function(item){
             ids.push(item.id);
           })
-        }
-      );
 
-    this.userService.getUser().then(user => {
-      this.user = user;
-      var queryString = DateFormat.urlString(0, 1);
-      if (this.user.type === "brand")
-        queryString = queryString+'&searchType=brand';
-      this.http.fetch('/calendar/searchableItemPicker' +queryString+"&item="+itemId)
-        .then(response => response.json())
-        .then(calendar => {
+
+          this.userService.getUser().then(user => {
+            this.user = user;
+            var queryString = DateFormat.urlString(0, 1);
+            if (this.user.type === "brand")
+              queryString = queryString + '&searchType=brand';
+            this.http.fetch('/calendar/showAvailabilitySamples'+queryString, {
+              method: 'post',
+              body: json(this.selectedProductIds)
+            })
+            .then(response => response.json())
+            .then(calendar => {
               this.calendar = calendar;
-      });
+            });
+          });
               
-    });
-
-
-    
-
+      });
     
   }
 
