@@ -69,7 +69,12 @@ export class CreateSampleRequestBrand {
 
   activate(item){
     var queryString = DateFormat.urlString(0, 2)+'&searchType=brand';
-  
+    
+    let sampleRequest = this.sampleRequest;
+    let availableReturnToItems = this.availableReturnToItems;
+    let deliverTo = this.deliverTo;
+    
+    
     Promise.all([
       this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+item.id)
         .then(response => response.json())
@@ -134,6 +139,15 @@ export class CreateSampleRequestBrand {
                 });
               });
 
+              let defaultAddress = addresses.find(item => item.defaultAddress == true);
+              if(defaultAddress){
+                let selectedReturnTo = availableReturnToItems.find(item => item.id == defaultAddress.id);
+                sampleRequest.returnToAddress = selectedReturnTo.id;
+                this.selectedReturnToItems = [selectedReturnTo.id];
+              }
+              
+              
+
             }),
             
             this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);
@@ -145,8 +159,14 @@ export class CreateSampleRequestBrand {
             
           }
         ) 
-    ]).then(() => this.isLoading = false);
+    ]).then(() => {
+      this.isLoading = false
+      
+      
+    });
   } 
+
+
 
   onDeliverToChangeCallback(event) {   
       console.log('onDeliverToChangeCallback() called:', event.detail.value);
@@ -187,6 +207,7 @@ export class CreateSampleRequestBrand {
   }
   attached(){
     document.getElementById("CreateSampleRequestButton").disabled = true;
+    
   }
 
   alertP (message){
@@ -426,7 +447,7 @@ export class CreateSampleRequestBrand {
        (this.sampleRequest.startDate === undefined) ||
        (this.sampleRequest.startDate == '') ||
        (this.sampleRequest.endDate === undefined) ||
-       (this.selectedAddress === undefined) ||
+       (this.selectedAddress.name === undefined) ||
        (this.sampleRequest.returnToAddress === undefined) ||
        (this.sampleRequest.endDate == '')){
           document.getElementById("CreateSampleRequestButton").disabled = true;
