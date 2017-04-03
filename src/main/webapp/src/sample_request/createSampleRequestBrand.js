@@ -69,7 +69,7 @@ export class CreateSampleRequestBrand {
 
   activate(item){
     var queryString = DateFormat.urlString(0, 2)+'&searchType=brand';
-    let selectedReturnToItems = this.selectedReturnToItems;
+    
     let sampleRequest = this.sampleRequest;
     let availableReturnToItems = this.availableReturnToItems;
     let deliverTo = this.deliverTo;
@@ -141,9 +141,9 @@ export class CreateSampleRequestBrand {
 
               let defaultAddress = addresses.find(item => item.defaultAddress == true);
               let selectedReturnTo = availableReturnToItems.find(item => item.id == defaultAddress.id);
-              console.log('**** DEFAULT returnTo:',selectedReturnTo);
+              console.log('**** DEFAULT returnTo ID:',selectedReturnTo.id);
               sampleRequest.returnToAddress = selectedReturnTo.id;
-              selectedReturnToItems.push(selectedReturnTo);
+              this.selectedReturnToItems = [selectedReturnTo.id];
               console.log("pushed default return To address");
               console.log("another statement");
 
