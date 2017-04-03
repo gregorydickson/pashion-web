@@ -12,7 +12,7 @@ import { CreateDialogAlert } from 'common/dialogAlert';
 export class EditSearchableItem {
   static inject = [DialogController];
   isLoading = true;
-
+  newSampleId = 0;
   currentItem = {};
   result = {};
 
@@ -220,10 +220,12 @@ export class EditSearchableItem {
   onLocationChangeCallback(event) {   
       console.log('onLocationChangeCallback() called:', event.detail.value);
       if (event.detail) {
-          let selectedValue = event.detail.value;         
-          console.log('Selected location value:', selectedValue);     
+          if(event.detail.value){
+            let selectedValue = event.detail.value;         
+            console.log('Selected location value:', selectedValue);     
 
-          this.selectedSample.sampleCity.id = selectedValue; 
+            this.selectedSample.sampleCity.id = selectedValue; 
+          }
       }
   }
 
@@ -264,17 +266,25 @@ export class EditSearchableItem {
   newsample(){
     if (!this.createdNew) {
       this.createdNew = true;
+      this.newSampleId = this.newSampleId - 1;
       var newsample = {};
       newsample.name = "NEW";
       newsample.description = "NEW";
       newsample.attributes = "NEW";
+      newsample.id = this.newSampleId;
+      newsample.sampleCity = {}
+      newsample.sampleCity.id = this.availableLocationItems[0].id;
+      this.selectedLocationItems = this.availableLocationItems[0];
+      newsample.type = this.selectedSampleTypeItems[0];
+      console.log("new sample city:"+newsample.sampleCity.id);
+      console.log("new sample type:"+newsample.type);
 
       this.currentItem.samples.push(newsample);    
       
       
-      this.availableSampleItems.push({ id: 0, text: "NEW" });
-      this.selectedSampleItems = [0]
-      this.selectedSample = this.currentItem.samples.find(x => x.id == 0);
+      this.availableSampleItems.push({ id: this.newSampleId , text: "NEW" });
+      this.selectedSampleItems = [this.newSampleId]
+      this.selectedSample = this.currentItem.samples.find(x => x.id == this.newSampleId);
     }
   }
  
