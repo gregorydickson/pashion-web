@@ -6,6 +6,7 @@ import {DateFormat} from 'common/dateFormat';
 import { BrandService } from 'services/brandService';
 import { CreateDialogAlert } from 'common/dialogAlert';
 import {DialogService} from 'aurelia-dialog';
+import {computedFrom} from 'aurelia-framework';
 
 @inject(HttpClient, DialogController, BrandService ,DialogService)
 export class CreateSampleRequest {
@@ -24,6 +25,10 @@ export class CreateSampleRequest {
   courier = [];
   payment = [];
  // seasons = [];
+  sampleRequestStartMonth = '';
+  sampleRequestStartDay = '';
+  sampleRequestEndMonth = '';
+  sampleRequestEndDay = '';
 
 
   sampleRequest = {requiredBy:"12:00", courierOut:"Scooter",paymentOut:"50/50", returnBy:"Afternoon",courierReturn:"Scooter",paymentReturn:"50/50"};
@@ -96,7 +101,7 @@ export class CreateSampleRequest {
         this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000} }).then(response => {});
     }
 
-  setStartDate(event,day){
+  setStartDate(event,dayEvent,day){
     console.log("set start date: "+event);
     console.log("parameterday: "+day);
 
@@ -113,39 +118,88 @@ export class CreateSampleRequest {
     console.log("startDay: " + this.startDay);
     if (this.endDay !='') console.log("enddate: " + enddate); else console.log("no endDay set")
     console.log("endDay: " + this.endDay);
-    if (startdate <= today) { console.log ("day is before today or is today, exit"); this.startDay = ''; return; }
+    if (startdate <= today) { 
+      console.log ("day is before today or is today, exit"); 
+      this.startDay = '';
+      this.sampleRequest.startDate = '';
+      this.sampleRequestStartMonth = '';
+      this.sampleRequestStartDay = ''; 
+      // also clear end date
+      this.endDay = '';
+      this.sampleRequest.endDate = '';
+      this.sampleRequestEndDay = '';
+      this.sampleRequestEndMonth = '';
+      this.enableCheck();
+      return; 
+    }
     console.log ("day is in the future");
+
+    //check availability
+    var dayIsNotAvailable = dayEvent.indexOf("not-available")>=0;
+    console.log ("setStartDate, calendar day contains unavailable: " + dayIsNotAvailable);
+    if (dayIsNotAvailable) {
+      this.startDay = '';
+      this.sampleRequest.startDate = '';
+      this.sampleRequestStartMonth = '';
+      this.sampleRequestStartDay = '';
+      // also clear end date
+      this.endDay = '';
+      this.sampleRequest.endDate = '';
+      this.sampleRequestEndDay = '';
+      this.sampleRequestEndMonth = ''; 
+      this.enableCheck();
+      return;  
+    }
     
     if(this.endDay != ''){
       console.log("setting start date END DATE not empty");
       if( enddate < startdate ){
         console.log("setting start date AND it is after end date");
-        this.endDay = ''
-        let element = event.srcElement.parentElement;
-        let document = element.ownerDocument;
-        let elems = document.querySelectorAll(".end-selected");
-        var redraw = this.redraw;
-        [].forEach.call(elems, function(el) {
-          if(el.classList.contains("end-selected")){
-            el.classList.remove("end-selected");
-            redraw(el);
-          }
-        });
+        this.endDay = '';
+        this.sampleRequest.endDate = '';
+        this.sampleRequestEndDay = '';
+        this.sampleRequestEndMonth = '';
+        this.enableCheck();
+        //let element = event.srcElement.parentElement;
+        //let document = element.ownerDocument;
+        //let elems = document.querySelectorAll(".end-selected");
+        //var redraw = this.redraw;
+        //[].forEach.call(elems, function(el) {
+          //if(el.classList.contains("end-selected")){
+         //   el.classList.remove("end-selected");
+          //  redraw(el);
+         // }
+        //});
       }
     }
-    var element = event.srcElement.parentElement;
-    var document = element.ownerDocument;
-    var elems = document.querySelectorAll(".start-selected");
-    [].forEach.call(elems, function(el) {
-      el.classList.remove("start-selected");
-    });
-    element.className += " start-selected";
-    this.redraw(element);
+    //var element = event.srcElement.parentElement;
+    //var document = element.ownerDocument;
+    //var elems = document.querySelectorAll(".start-selected");
+    //this.sampleRequestStartMonth = '';
+    //this.sampleRequestStartDay = '';
+    //[].forEach.call(elems, function(el) {
+     // el.classList.remove("start-selected");
+    //});
+    //element.className += " start-selected";
+    //this.redraw(element);
     this.sampleRequest.startDate = this.startCalendar.calendarMonths[0].year+"-"+this.startCalendar.calendarMonths[0].monthNumber+"-"+day;
+    this.sampleRequestStartMonth = this.startCalendar.calendarMonths[0].monthNumber;
+    this.sampleRequestStartDay = day;
     this.enableCheck();
   }
 
-  setEndDate(event, day){
+
+  @computedFrom('startCalendar.calendarMonths[0].monthNumber', 'sampleRequestStartMonth')
+  get computedClass () { 
+    if (this.startCalendar.calendarMonths[0].monthNumber == this.sampleRequestStartMonth) return true
+  }
+
+ @computedFrom('endCalendar.calendarMonths[0].monthNumber', 'sampleRequestEndMonth')
+  get computedClassEnd () { 
+    if (this.endCalendar.calendarMonths[0].monthNumber == this.sampleRequestEndMonth) return true
+  }
+
+  setEndDate(event, dayEvent, day){
     this.endDay = day;
     var startdate = '';
     let enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber-1,day);
@@ -153,30 +207,65 @@ export class CreateSampleRequest {
     var today = new Date();
 
     console.log("today: " + today);
-    if (this.startDay != '') console.log("startDay: " + this.startDay); else { console.log("no startDay set, exit"); this.endDay = ''; return;}
+    if (this.startDay != '') console.log("startDay: " + this.startDay); 
+    else { 
+      console.log("no startDay set, exit"); 
+      this.endDay = '';
+      this.sampleRequest.endDate = '';
+      this.sampleRequestEndDay = '';
+      this.sampleRequestEndMonth = '';
+      this.enableCheck(); 
+      return;
+    }
     console.log("startdate: " + startdate); 
     console.log("enddate: " + enddate);
     console.log("endDay: " + this.endDay);
-    if (enddate <= today) { console.log ("day is before today or is today, exit"); this.endDay = ''; return; }
+    if (enddate <= today) { 
+      console.log ("day is before today or is today, exit"); 
+      this.endDay = ''; 
+      this.sampleRequest.endDate = '';
+      this.sampleRequestEndDay = '';
+      this.sampleRequestEndMonth = '';
+      this.enableCheck();
+      return; 
+    }
     console.log ("day is in the future");
 
     if(this.startDay === '' || enddate < startdate || enddate.getTime() == startdate.getTime()){
       console.log (" empty, reverse or time clash");
       this.endDay = '';
+      this.sampleRequest.endDate = '';
+      this.sampleRequestEndDay = '';
+      this.sampleRequestEndMonth = '';
+      this.enableCheck();
       return;
+    }
+
+    //check availability
+    var dayIsNotAvailable = dayEvent.indexOf("not-available")>=0;
+    console.log ("setEndDate, calendar day contains unavailable: " + dayIsNotAvailable);
+    if (dayIsNotAvailable) {
+      this.endDay = '';
+      this.sampleRequest.endDate = '';
+      this.sampleRequestEndDay = '';
+      this.sampleRequestEndMonth = ''; 
+      this.enableCheck();
+      return;  
     }
     
     console.log("end date"+event);
     console.log("day"+day);
-    let element = event.srcElement.parentElement;
-    let document = element.ownerDocument;
-    let elems = document.querySelectorAll(".end-selected");
-    [].forEach.call(elems, function(el) {
-      el.classList.remove("end-selected");
-    });
-    element.className += " end-selected";
-    this.redraw(element);
+    //let element = event.srcElement.parentElement;
+    //let document = element.ownerDocument;
+    //let elems = document.querySelectorAll(".end-selected");
+    //[].forEach.call(elems, function(el) {
+    //  el.classList.remove("end-selected");
+    //});
+    //element.className += " end-selected";
+    //this.redraw(element);
     this.sampleRequest.endDate = this.endCalendar.calendarMonths[0].year+"-"+this.endCalendar.calendarMonths[0].monthNumber+"-"+day;
+    this.sampleRequestEndMonth = this.endCalendar.calendarMonths[0].monthNumber;
+    this.sampleRequestEndDay = day;
     this.enableCheck();
     
   }
@@ -188,6 +277,8 @@ export class CreateSampleRequest {
        (this.sampleRequest.startDate === undefined) ||
        (this.sampleRequest.startDate == '') ||
        (this.sampleRequest.endDate === undefined) ||
+       (this.sampleRequest.deliverTo === undefined) ||
+       (this.sampleRequest.returnToAddress === undefined) ||
        (this.sampleRequest.endDate == '')){
           document.getElementById("CreateSampleRequestButton").disabled = true;
           console.log("button DIS abled");
