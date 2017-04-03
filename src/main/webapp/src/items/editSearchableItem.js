@@ -153,14 +153,15 @@ export class EditSearchableItem {
     console.log('sample2Callback() called');
 
     if (event.detail) {
-        let selectedSample = event.detail.value;         
-        console.log('sample2Callback() / Selected value:', selectedSample); 
+        console.log('sample2 value:'+event.detail.value)
+        let selectedSampleId = event.detail.value;         
+        console.log('sample2Callback() / Selected value:', selectedSampleId); 
 
-        this.selectedSample = selectedSample; //this.availableSampleItems.find(x => x.id == selectedSample);
+        this.selectedSample = this.currentItem.samples.find(x => x.id == selectedSampleId);
 
         // Sample type
-        if (selectedSample.sampleType) {
-          let selectedSampleType = this.availableSampleTypeItems.find(x => x.text.toUpperCase() == selectedSample.sampleType.toUpperCase());
+        if (this.selectedSample.sampleType) {
+          let selectedSampleType = this.availableSampleTypeItems.find(x => x.text.toUpperCase() == this.selectedSample.sampleType.toUpperCase());
           
           if (selectedSampleType) {
             console.log('Found a match for sample type:', selectedSampleType);
@@ -169,8 +170,8 @@ export class EditSearchableItem {
         }
 
         // Material
-        if (selectedSample.material) {
-          let selectedMaterial = this.availableMaterialItems.find(x => x.text.toUpperCase() == selectedSample.material.toUpperCase())
+        if (this.selectedSample.material) {
+          let selectedMaterial = this.availableMaterialItems.find(x => x.text.toUpperCase() == this.selectedSample.material.toUpperCase())
           
           if (selectedMaterial) {
             console.log('Found a match for material:', selectedMaterial);              
@@ -178,7 +179,7 @@ export class EditSearchableItem {
         }
 
         // Location
-        if (selectedSample.sampleCity) {
+        if (this.selectedSample.sampleCity) {
           let selectedLocation = this.selectedSample.sampleCity;
 
           if (selectedLocation) {
@@ -198,7 +199,9 @@ export class EditSearchableItem {
           let selectedValue = event.detail.value;         
           console.log('Selected value:', selectedValue);    
 
+          
           this.selectedSample =  this.availableSampleItems.find(x => x.id == selectedValue);
+
           this.showSampleEdit = (this.selectedSample !== null);   
       }
   }
@@ -265,11 +268,13 @@ export class EditSearchableItem {
       newsample.name = "NEW";
       newsample.description = "NEW";
       newsample.attributes = "NEW";
+
       this.currentItem.samples.push(newsample);    
-      this.selectedSample = newsample;
       
-      this.availableSampleItems.push({ id: 0, text: newsample.attributes });
-      this.selectedSampleItems.push({ id: 0, text: newsample.attributes });
+      
+      this.availableSampleItems.push({ id: 0, text: "NEW" });
+      this.selectedSampleItems = [0]
+      this.selectedSample = this.currentItem.samples.find(x => x.id == 0);
     }
   }
  
