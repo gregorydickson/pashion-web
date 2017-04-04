@@ -113,7 +113,7 @@ https://github.com/stormpath/stormpath-sdk-java/issues/17
 1. Open Google Sheet.
 2. Verify Path (Column AJ) is in the correct form: /sonia-rykiel/2017/spring/ready-to-wear/ and exists for all looks.
 3. File > Download As > Comma Separated Values (.csv current sheet)
-4. In a running instance of the application. (run with `grails>prod run` or at browse.pashiontool.com) go to /upload/ (http://browse.pashiontool.com/upload/ or http://localhost:8080/upload/)
+4. In a running instance of the application. (run with `grails>prod run` or at browse.pashiontool.com) go to /upload/ (http://browse.pashiontool.com/upload/newformat or http://localhost:8080/upload/newformat)
 5. Choose the City for the collection, then drag the CSV file to the 'Drop files here to Upload' area. The file will upload. You can view the command line to view debugging information on the upload. The code for this upload is in UploadController.groovy index() method.
 6. You may verify the data by connecting to the database with Sequel Pro.
 7. To prepare for the next upload, refresh the /upload/ screen in the browser.

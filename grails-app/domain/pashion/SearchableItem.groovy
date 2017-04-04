@@ -151,7 +151,7 @@ class SearchableItem {
 			println "searchableItem.bookedDaysInMonth - Im a sample:"+id+" - going through my sample requests"
 			//log.info "sample requests:"+ sampleRequests
 			sampleRequests.each{
-				println "searchableItem.nookedDaysInMonth a sample request"
+				// println "searchableItem.nookedDaysInMonth a sample request"
 				pashionCalendar = it.checkMonthForEvents(monthToCheck,pashionCalendar)
 			}
 			
