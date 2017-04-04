@@ -7,7 +7,9 @@ import java.time.ZoneId
  * A Searchable Item is the main domain object for Pashion's image search
  * a searchable item can be a Look, Sample, or Runway photo. 
  * a Look (a type of SearchableItem) will probably have samples (another type
- * of Searchable Item) associated with it.
+ * of Searchable Item) associated with it. Hence the look attribute where
+ * a Searchable Item can be self-referencing. Several data associations are
+ * de-normalized to have the data directly on this object.
  */
 class SearchableItem {
 
@@ -26,6 +28,7 @@ class SearchableItem {
 	Boolean isBookable = false
 	Boolean isPrivate = false
 	String imageProvider
+	String imageProviderFileName
 	
 	// Start of searchable attributes
 	String color
@@ -75,6 +78,7 @@ class SearchableItem {
 		image nullable:true
 
 		imageProvider nullable:true
+		imageProviderFileName nullable:true
 
 		color nullable: true
 		material nullable: true
