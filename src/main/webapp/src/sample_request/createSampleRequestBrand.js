@@ -552,7 +552,7 @@ export class CreateSampleRequestBrand {
     } else {
 
       var queryString = DateFormat.urlString(this.endOffset,1)+'&searchType=brand';
-      this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
+      this.http.fetch('/calendar/showAvailabilitySamples'+queryString, {
               method: 'post',
               body: json(this.sampleRequest.samples)
             })
@@ -562,7 +562,7 @@ export class CreateSampleRequestBrand {
             });
 
       queryString = DateFormat.urlString(this.startOffset,1)+'&searchType=brand';
-      this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
+      this.http.fetch('/calendar/showAvailabilitySamples'+queryString, {
               method: 'post',
               body: json(this.sampleRequest.samples)
             })
