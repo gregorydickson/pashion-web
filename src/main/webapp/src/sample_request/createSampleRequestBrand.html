@@ -33,7 +33,7 @@
             <!--Start Left column -->
             <div class="vertical grid-block">
                  <div class="grid-block">
-                    <span class="calendarnav ui-text-label-m-blue" style="text-align:center;">START BOOKING</span>
+                    <span class="calendarnav ui-text-label-m-blue ${sampleRequest.startDate ? '' : 'red-deco'}" style="text-align:center;">START BOOKING</span>
                 </div>
                 <div class="grid-block calendar-header-align">
                      <span click.delegate="startPrevious()" class="calendarnav prev">
@@ -112,7 +112,7 @@
                 <!-- Name-->
                 <div class="grid-content shrink">
                     <span class="inline-label" style="margin-bottom: 0px;">
-                        <span class="slim-text-box-label" style="">Attention</span>
+                        <span class="slim-text-box-label ${selectedAddress.name ? '' : 'red-deco' }" style="">Attention</span>
                         <div>
                             <input type="text" class="slim-text-box" value.bind="selectedAddress.name">
                         </div>
@@ -202,7 +202,7 @@
             <!--Start Right column -->
             <div class="vertical grid-block">
                 <div class="grid-block shrink">
-                    <span class="calendarnav ui-text-label-m-blue" style="text-align:center;">END BOOKING</span>
+                    <span class="calendarnav ui-text-label-m-blue ${sampleRequest.endDate ? '' : 'red-deco'}" style="text-align:center;">END BOOKING</span>
                 </div>
                <div class="grid-block shrink calendar-header-align" >
                   <span click.delegate="endPrevious()" class="calendarnav prev">
@@ -305,8 +305,8 @@
         <div class="grid-content accordion" if.bind="!isLoading">
             <table class="" style="margin-bottom:4px; table-layout:fixed;">
                     <tr>
-                        <td class="accordion" style="width:100px;">SELECT SAMPLES</td>
-                        <td class="accordion" style="width:473px;text-align:right; padding-right: 0.5rem;" >Select All</td>
+                        <td class="accordion ${(sampleRequest.samples.length == 0) ? 'red-deco' : ''}" style="width:100px;">SELECT SAMPLES</td>
+                        <td class="accordion" style="width:411px;text-align:right; padding-right: 0.5rem;" >Select All</td>
                         <td class="accordion" style="width:10px;">
                             <input type="checkbox" checked.bind="selectAll" change.delegate="allsamples($event)">
                         </td>
