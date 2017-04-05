@@ -81,6 +81,18 @@ export class CreateDialogUpdatePhoto {
   close(){
     this.controller.close();
   }
+
+  delete (){
+    // clear user.avatar
+    // save null to user record
+    this.userService.getUser().then(user => {
+        this.user = user;
+        this.user.avatar = '';
+        this.userService.clearAvatar(user);
+        this.close();
+      })
+  }
+
 clearMessage () {
   this.flashMessage ='';
   console.log("flashMessage cleared");
