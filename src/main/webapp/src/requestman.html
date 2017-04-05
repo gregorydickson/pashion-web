@@ -232,9 +232,13 @@
                                             <span class="to-u-c">${booking.shippingOut.status}</span>
                                             <span> for ${booking.bookingStartDate | viewDateFormat} ${booking.requiredBy} by ${booking.courierOut} (${booking.paymentOut})</span> 
                                             <span if.bind="(booking.deliverTo.pressHouse.name || booking.deliverTo.prAgency.name || booking.deliverTo.brand.name)"> to ${booking.deliverTo.pressHouse.name} ${booking.deliverTo.prAgency.name} ${booking.deliverTo.brand.name} </span>
-                                            <span> at ${booking.addressDestination.address1}, ${booking.addressDestination.address2}, ${booking.addressDestination.city}, ${booking.addressDestination.postalCode} </span>
-                                            <span if.bind="booking.pickedupAt.addressDestination.name"> (${booking.addressDestination.name)</span> 
-                                            <span if.bind="booking.pickedupAt"> at ${booking.pickedupAt} signed ${booking.signedBy} </span>
+                                            <span if.bind="booking.addressDestination.address1"> at ${booking.addressDestination.address1}, </span>
+                                            <span if.bind="booking.addressDestination.address2"> ${booking.addressDestination.address2}, </span>
+                                            <span if.bind="booking.addressDestination.city"> ${booking.addressDestination.city}, </span>
+                                            <span if.bind="booking.addressDestination.postalCode"> ${booking.addressDestination.postalCode} </span>
+                                            <span if.bind="booking.addressDestination.name"> (${booking.addressDestination.name})</span> 
+                                            <span if.bind="booking.pickedupAt"> at ${booking.pickedupAt} </span>
+                                            <span if.bind="booking.signedBy"> signed by ${booking.signedBy} </span>
                                         </div>
                                         <div class="grid-content" style="margin-top:1rem;">
                                             <span class="ui-text-label-m-blue">Return:</span><span style="margin-left:0.5rem;"> ${booking.shippingReturn.id} ${booking.shippingReturn.tracking}</span>
