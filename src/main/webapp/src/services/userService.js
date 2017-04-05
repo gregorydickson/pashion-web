@@ -228,7 +228,7 @@ export class UserService {
     clearAvatar (user){
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/user/clearAvatar/' + user.id, {
-                    method: 'post'
+                    method: 'get'
                 })
                 .then(response => response.json())
                 .then(data => {

@@ -306,7 +306,13 @@ class UserController {
     }
 
     def clearAvatar(User user){
-        println "add code to remove avatar for: " + user
+        log.debug "add code to remove avatar for: " + user?.id
+        
+        user.avatar = null
+        user.save(flush:true, failOnError:true)
+
+        response.status = 200
+        render([status: 'deleted'] as JSON)
     }
 
     protected void notFound() {
