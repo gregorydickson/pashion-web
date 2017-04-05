@@ -42,7 +42,8 @@ export class CreateDialogUpdatePhoto {
                 current.userService.uploadAvatar(current.user, data)
                     .then(data => {
                     console.log('URL ' + data.url);
-                    $('.avatar-container').html('<div class="avatar-img-cover" style="height: 45px;border-radius: 100%;overflow:hidden;background: url('+data.url+'?_='+new Date().getTime()+');background-repeat: no-repeat;background-size: cover;background-position: center;display: block;width: 45px;"></div>');
+                    $('.avatar-container')
+                    .html('<div class="avatar-img-cover" style="height: 45px;border-radius: 100%;overflow:hidden;background: url('+data.url+'?_='+new Date().getTime()+');background-repeat: no-repeat;background-size: cover;background-position: center;display: block;width: 45px;"></div>');
 
                 current.controller.close();
             }).catch(function (err) {
