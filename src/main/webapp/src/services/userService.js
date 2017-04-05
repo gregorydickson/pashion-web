@@ -225,6 +225,22 @@ export class UserService {
         return promise;
     }
 
+    clearAvatar (user){
+        var promise = new Promise((resolve, reject) => {
+            this.http.fetch('/user/clearAvatar/' + user.id, {
+                    method: 'post'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log();
+                    resolve();
+                })
+                .catch(err => reject(err));
+        });
+
+        return promise;
+    }
+
     // Build new connection
     addContactRequest(idIn) {
 

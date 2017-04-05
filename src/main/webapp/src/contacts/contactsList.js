@@ -192,7 +192,7 @@ export class ContactsList {
 */
 
   // Create dialog update photo
-  CreateDialogUpdatePhoto(id) {
+ /* CreateDialogUpdatePhoto(id) {
     var menu = document.getElementById(id); 
     menu.classList.toggle("look-menu-show");
     this.dialogService.open({viewModel: CreateDialogUpdatePhoto, model: 0 })
@@ -204,7 +204,7 @@ export class ContactsList {
     this.dialogService.open({viewModel: CreateDialogUpdatePhoto, model: 0 })
       .then(response => {});
   }
-
+*/
   initiateMessage (userId) { // id not email
     console.log("initiate message for current contact: " + userId);
     // clear unread messages

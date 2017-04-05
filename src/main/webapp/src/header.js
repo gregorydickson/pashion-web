@@ -5,6 +5,7 @@ import {Router} from 'aurelia-router';
 import {UserService} from './services/userService';
 import {CreateDialogEditContact} from './contacts/dialogEditContact';
 import {DialogService} from 'aurelia-dialog';
+import {CreateDialogUpdatePhoto} from './contacts/dialogUpdatePhoto';
 
 @inject(HttpClient,UserService,Router, DialogService)
 export class Header {
@@ -70,6 +71,20 @@ export class Header {
         this.userService.getUser().then(user => this.user = user);
         console.log("admin, getUser()");
       }
+  }
+
+    // Create dialog update photo
+  CreateDialogUpdatePhoto(id) {
+    var menu = document.getElementById(id); 
+    menu.classList.toggle("look-menu-show");
+    this.dialogService.open({viewModel: CreateDialogUpdatePhoto, model: 0 })
+      .then(response => {});
+  }
+
+    // Create dialog update photo
+  updatePhoto() {
+    this.dialogService.open({viewModel: CreateDialogUpdatePhoto, model: 0 })
+      .then(response => {});
   }
     
 }

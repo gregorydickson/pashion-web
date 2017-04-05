@@ -305,6 +305,10 @@ class UserController {
 
     }
 
+    def clearAvatar(User user){
+        println "add code to remove avatar for: " + user
+    }
+
     protected void notFound() {
         request.withFormat {
             form multipartForm {
