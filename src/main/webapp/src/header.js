@@ -78,7 +78,11 @@ export class Header {
     var menu = document.getElementById(id); 
     menu.classList.toggle("look-menu-show");
     this.dialogService.open({viewModel: CreateDialogUpdatePhoto, model: 0 })
-      .then(response => {});
+      .then(response => {
+        if (!response.wasCancelled && response == 'delete') {
+          console.log("avatar deleted")
+        }
+      });
   }
 
     // Create dialog update photo
