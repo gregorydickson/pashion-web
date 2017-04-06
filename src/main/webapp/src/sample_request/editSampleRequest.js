@@ -19,6 +19,8 @@ export class EditSampleRequest {
   user = {};
   brandUsers = [];
   //seasons = [];
+  courier = [];
+  payment = [];
 
   constructor(sampleRequestService,controller,userService,http, DialogService){
     http.configure(config => {
@@ -37,6 +39,16 @@ export class EditSampleRequest {
       
       return Promise.all ([
         this.sampleRequestService.getSampleRequest(requestId).then(sampleRequest => {this.sampleRequest = sampleRequest;}),
+        this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => {
+          this.courier = courier;
+          this.sampleRequest.courierOut = "They Book"; //RM Defaults not working
+          this.sampleRequest.courierReturn = "Pashion Courier";  //RM defaults not working
+          }),
+        this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => {
+          this.payment = payment;
+          this.sampleRequest.paymentOut = "50/50";
+          this.sampleRequest.paymentReturn = "50/50";
+        }), 
         this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons)]);
     
   }
@@ -54,8 +66,24 @@ export class EditSampleRequest {
 
   }
 
+  bookOut(){
+    // initiate stuart booking
+    // if fail dialog box
+    // if succeed, populate ID field
+    console.log ("Initiate Stuart booking from editSampleRequest Out");
+    this.alertP("Booking out messages");
+  }
+
+  bookReturn(){
+    // initiate stuart booking
+    // if fail dialog box
+    // if succeed, populate ID field
+    console.log ("Initiate Stuart booking from editSampleRequest Return");
+    this.alertP("Booking return messages");
+  }
+
   alertP (message){
-        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Edit", message:message, timeout:5000} }).then(response => {});
+        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Edit Request", message:message, timeout:5000} }).then(response => {});
     }
 
   removeSample(id,index){

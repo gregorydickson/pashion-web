@@ -6,6 +6,7 @@
     <require from="calendars/datepicker"></require>
     <require from="common/seasonAbbreviationFormatter"></require>
     <require from="calendars/datetimepicker"></require>
+    <require from="common/formSelectSampleRequest"></require>
     <ai-dialog style="width: auto;"> <!-- Based on the design. would prefer to be flexible, but postpone this -->
         
         <!-- header -->
@@ -116,10 +117,27 @@
                             <span class="title-form">RETURN DETAILS</span>
                         </div>
 
+                        <!-- Courier Section -->
+                        <div class="grid-block shrink" style="margin-bottom:0.5rem;">
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">Courier</span>
+                                <form-select-sr class="to-u-c" name="courierOut" selected.two-way="sampleRequest.courierOut" options.bind="courier" ></form-select-sr>
+                            </span>
+                             <span if.bind="sampleRequest.courierOut=='Pashion Courier'" class="slim-text-box-label" style="text-align:left; margin-left:10px;"><a click.delegate="bookOut()" style="">Book</a></span>
+                        </div>
+
+                       <!--  split -->
+                        <div class="grid-block shrink" style="margin-bottom:0.5rem;">
+                            <span class="inline-label">
+                                <span class=" slim-text-box-label">Split</span>
+                                <form-select-sr class="to-u-c" name="paymentOut" selected.two-way="sampleRequest.paymentOut" options.bind="payment" ></form-select-sr>
+                            </span>
+                        </div> 
+
                         <!-- ID -->
                         <div class="grid-block shrink">                       
-                            <span class="inline-label slim-text-box-label">ID:</span>
-                            <span class="slim-text-box">
+                            <span class="inline-label slim-text-box-label">ID</span>
+                            <span>
                                 <input type="text"  class="slim-text-box" value.bind="sampleRequest.shippingReturn.tracking">
                             </span>
                         </div>
@@ -127,8 +145,8 @@
 
                         <!-- Arrives -->
                         <div class="grid-block shrink">
-                            <span class="inline-label slim-text-box-label">Arrives:</span>
-                            <span class="slim-text-box">
+                            <span class="inline-label slim-text-box-label">Arrives</span>
+                            <span >
                                 <input type="text" timething class="slim-text-box" value.bind="sampleRequest.shippingReturn.endDate">
                             </span>
                         </div>
@@ -147,17 +165,34 @@
                             <span class="title-form">DELIVERY DETAILS</span>
                         </div>
 
+                        <!-- Courier Section -->
+                        <div class="grid-block shrink" style="margin-bottom:0.5rem;">
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">Courier</span>
+                                <form-select-sr class="to-u-c" name="courierReturn" selected.two-way="sampleRequest.courierReturn" options.bind="courier" ></form-select-sr>
+                            </span>
+                            <span if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="slim-text-box-label" style="text-align:left; margin-left:10px;"><a click.delegate="bookReturn()" style="">Book</a></span>
+                        </div>
+
+                       <!--  split -->
+                        <div class="grid-block shrink" style="margin-bottom:0.5rem;">
+                            <span class="inline-label">
+                                <span class=" slim-text-box-label">Split</span>
+                                <form-select-sr class="to-u-c" name="paymentReturn" selected.two-way="sampleRequest.paymentReturn" options.bind="payment" ></form-select-sr>
+                            </span>
+                        </div> 
+
                         <!-- ID -->
                         <div class="grid-block ">
-                            <span class="inline-label slim-text-box-label">ID:</span>
-                            <span class="slim-text-box">
+                            <span class="inline-label slim-text-box-label">ID</span>
+                            <span >
                                 <input type="text" class="slim-text-box" value.bind="sampleRequest.shippingOut.tracking">
                             </span>
                         </div>
                         <!-- Pickup -->
                         <div class="grid-block ">
-                            <span class="inline-label slim-text-box-label">Pickup:</span>
-                            <span class="slim-text-box">
+                            <span class="inline-label slim-text-box-label">Pickup</span>
+                            <span >
                                 <input timething type="text" class="slim-text-box" value.bind="sampleRequest.shippingOut.startDate">
                             </span>
                         </div>

@@ -94,8 +94,8 @@ export class CreateSampleRequestBrand {
       }),
       this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => {
         this.courier = courier;
-        this.sampleRequest.courierOut = "Scooter";
-        this.sampleRequest.courierReturn = "Scooter";
+        this.sampleRequest.courierOut = "Pashion Courier";
+        this.sampleRequest.courierReturn = "They Book";
 
       }),
       
