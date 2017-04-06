@@ -1,72 +1,42 @@
 import {DialogController} from 'aurelia-dialog';
-import {HttpClient,json} from 'aurelia-fetch-client';
 import 'fetch';
 import {inject,bindable} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import { UserService } from 'services/userService';
 
-@inject(HttpClient, DialogController, UserService)
+@inject(DialogController, UserService)
 export class CreateDialogUpdatePhoto {
-  static inject = [DialogController];
 
   flashMessage = '';
   @bindable avatar = null;
+  reader = null;
+  @bindable avatar = null;
 
-  constructor(http, controller, userService){
+  constructor(controller, userService){
     this.controller = controller;
     this.userService = userService;
-
-    http.configure(config => {
-      config
-        .useStandardConfiguration();
-    });
-    this.http = http;
   }
 
   
   uploadAvatar() {
-      var data = '';
-      var current = this;
-      var controller = this.controller;
-      this.flashMessage = '';
+      
+    let flashMessage = this.flashMessage;
+    let avatar = this.avatar;
+    let reader = this.reader;
 
-    if(this.avatar){
-        console.log("this has an avatar");
-        if(this.avatar[0].type.indexOf('image/')!=-1){
-          console.log("the file type of avatar is image");
-          var reader = new FileReader();
-          reader.readAsDataURL(this.avatar[0]);
-           
-          reader.onload = function () {
-                
-                data = reader.result;
-                
-                current.userService.uploadAvatar(data)
-                  .then(data => {
-                    console.log('URL ' + data.url);
-                    console.log("close controller");
-                    controller.close();
-                  }).catch(function (err) {
-                    console.log(err);
-                    current.flashMessage = 'Incompatible File Type'
-                    var parent = current;
-                    setTimeout(function() { parent.flashMessage=''; }, 5000)
-                  });
-          }
-            
-          
-          reader.onerror = function (error) {
-              console.log('Error: ', error);
-          };
-          console.log('waiting');
-        } else{
-            //this.alertP('Sorry, we only can accept images files');
-            // alert('Sorry, we only can accept images files');
-            this.flashMessage = 'Image Files Only'
-            var parent = this;
-            setTimeout(function() { parent.flashMessage=''; }, 5000)
-        }
-
+    if(avatar && reader){
+      console.log("this has an avatar:"+avatar);
+      if(avatar[0].type.indexOf('image/')!=-1){
+        console.log("the file type of avatar is image");
+        
+        reader.readAsDataURL(avatar[0]);
+        this.avatar = null;
+        console.log('waiting');
+      } else{
+          this.flashMessage = 'Image Files Only'
+          var parent = this;
+          setTimeout(function() { parent.flashMessage=''; }, 5000)
+      }
 
     } else {
       console.log('Selected image successfully');
@@ -85,7 +55,6 @@ export class CreateDialogUpdatePhoto {
         this.user = user;
         this.user.avatar = '';
         this.userService.clearAvatar(user);
-        this.close();
       })
   }
 
@@ -95,6 +64,35 @@ export class CreateDialogUpdatePhoto {
   }
 
   attached() {
+    console.log("dialog update photo attached");
+    this.reader = new FileReader();
+    let flashMessage = this.flashMessage;
+    let userService = this.userService;
+    let controller = this.controller;
+    let reader = this.reader;
+    let avatar = this.avatar;
+    this.reader.onload = function () {
+                
+      var data = reader.result;
+      
+      userService.uploadAvatar(data)
+        .then(data => {
+          console.log('URL ' + data.url);
+          avatar = '';
+          
+        }).catch(function (err) {
+          console.log(err);
+          flashMessage = 'Incompatible File Type'
+          
+          setTimeout(function() { flashMessage=''; }, 5000)
+        });
+    }
+            
+    this.reader.onerror = function (error) {
+        console.log('Error: ', error);
+    };
+
+
     
     var inputs = document.querySelectorAll( '.input-file' );
     Array.prototype.forEach.call( inputs, function(input) {
@@ -123,13 +121,8 @@ export class CreateDialogUpdatePhoto {
 
           // Make width of file input and label the same
             input.style.width = label.offsetWidth + "px";
-    
         });
-
-
     });
-
-
 
   }
   
