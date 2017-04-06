@@ -1,7 +1,7 @@
 import {DialogController} from 'aurelia-dialog';
 import {HttpClient,json} from 'aurelia-fetch-client';
 import 'fetch';
-import {inject} from 'aurelia-framework';
+import {inject,bindable} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import { UserService } from 'services/userService';
 
@@ -10,6 +10,7 @@ export class CreateDialogUpdatePhoto {
   static inject = [DialogController];
 
   flashMessage = '';
+  @bindable avatar = null;
 
   constructor(http, controller, userService){
     this.controller = controller;
@@ -26,21 +27,25 @@ export class CreateDialogUpdatePhoto {
   uploadAvatar() {
       var data = '';
       var current = this;
+      var controller = this.controller;
       this.flashMessage = '';
 
-    if(this.avatar != undefined){
-
+    if(this.avatar){
+        console.log("this has an avatar");
         if(this.avatar[0].type.indexOf('image/')!=-1){
-          $('#button-accept')[0].disabled = true;
+          console.log("the file type of avatar is image");
           var reader = new FileReader();
           reader.readAsDataURL(this.avatar[0]);
+           
           reader.onload = function () {
+                
                 data = reader.result;
                 
-                current.userService.uploadAvatar( data)
+                current.userService.uploadAvatar(data)
                   .then(data => {
                     console.log('URL ' + data.url);
-                    current.controller.close();
+                    console.log("close controller");
+                    controller.close();
                   }).catch(function (err) {
                     console.log(err);
                     current.flashMessage = 'Incompatible File Type'
@@ -68,12 +73,6 @@ export class CreateDialogUpdatePhoto {
     }    
   }
 
-  activate(itemId){
-   /* this.http.fetch('/searchableItems/'+itemId+'.json')
-         .then(response => response.json())
-         .then(item => {}
-         );*/
-  }
 
   close(){
     this.controller.close();
@@ -90,12 +89,13 @@ export class CreateDialogUpdatePhoto {
       })
   }
 
-clearMessage () {
-  this.flashMessage ='';
-  console.log("flashMessage cleared");
-}
+  clearMessage () {
+    this.flashMessage ='';
+    console.log("flashMessage cleared");
+  }
+
   attached() {
- 
+    
     var inputs = document.querySelectorAll( '.input-file' );
     Array.prototype.forEach.call( inputs, function(input) {
       var label  = input.nextElementSibling,
@@ -108,10 +108,6 @@ clearMessage () {
         input.addEventListener( 'change', function(e) {
 
 
-          //parent.flashMessage = '';
-          //var fm = document.getElementById("flashmessage");
-          //if (fm) fm.set
-          // Add to styled file input count feature
             var fileName = '';
             if( this.files && this.files.length > 1 )
               fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
@@ -119,8 +115,9 @@ clearMessage () {
               fileName = e.target.value.split( '\\' ).pop();
 
             if( fileName ){
+              console.log("disable bind with filename");
               label.querySelector( 'span' ).innerHTML = fileName;
-              document.getElementById("button-accept").disabled = false;
+              
             }else
               label.innerHTML = labelVal;
 
