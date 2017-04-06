@@ -206,9 +206,9 @@ export class UserService {
 
     }
 
-    uploadAvatar (user, data){
+    uploadAvatar (data){
         var promise = new Promise((resolve, reject) => {
-            this.http.fetch('/user/uploadAvatar/' + user.id + ".json", {
+            this.http.fetch('/user/uploadAvatar/' + this.user.id + ".json", {
                     method: 'post',
                     body: JSON.stringify({
                             data:data
@@ -217,6 +217,7 @@ export class UserService {
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
+                    this.user.avatar = data.url;
                     resolve(data);
                 })
                 .catch(err => reject(err));
@@ -225,9 +226,10 @@ export class UserService {
         return promise;
     }
 
-    clearAvatar (user){
+    clearAvatar (){
+        this.user.avatar = null;
         var promise = new Promise((resolve, reject) => {
-            this.http.fetch('/user/clearAvatar/' + user.id, {
+            this.http.fetch('/user/clearAvatar/' + this.user.id, {
                     method: 'get'
                 })
                 .then(response => response.json())

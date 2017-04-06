@@ -32,31 +32,28 @@ export class CreateDialogUpdatePhoto {
 
         if(this.avatar[0].type.indexOf('image/')!=-1){
           $('#button-accept')[0].disabled = true;
-            var reader = new FileReader();
-            reader.readAsDataURL(this.avatar[0]);
-            reader.onload = function () {
+          var reader = new FileReader();
+          reader.readAsDataURL(this.avatar[0]);
+          reader.onload = function () {
                 data = reader.result;
-                current.userService.getUser()
-                    .then(user => {
-                    current.user = user;
-                current.userService.uploadAvatar(current.user, data)
-                    .then(data => {
+                
+                current.userService.uploadAvatar( data)
+                  .then(data => {
                     console.log('URL ' + data.url);
-                    $('.avatar-container').html('<div class="avatar-img-cover" style="height: 45px;border-radius: 100%;overflow:hidden;background: url('+data.url+'?_='+new Date().getTime()+');background-repeat: no-repeat;background-size: cover;background-position: center;display: block;width: 45px;"></div>');
-
-                current.controller.close();
-            }).catch(function (err) {
+                    current.controller.close();
+                  }).catch(function (err) {
                     console.log(err);
                     current.flashMessage = 'Incompatible File Type'
                     var parent = current;
                     setTimeout(function() { parent.flashMessage=''; }, 5000)
-                });
-            });
-            };
-            reader.onerror = function (error) {
-                console.log('Error: ', error);
-            };
-            console.log('waiting');
+                  });
+          }
+            
+          
+          reader.onerror = function (error) {
+              console.log('Error: ', error);
+          };
+          console.log('waiting');
         } else{
             //this.alertP('Sorry, we only can accept images files');
             // alert('Sorry, we only can accept images files');
