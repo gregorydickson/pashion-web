@@ -41,7 +41,7 @@
 <!-- Calendar + Request  Panel -->
 <!-- -->
 
-            <div id="left-panel" class="vertical grid-block grid-block-vertical-shadow">
+            <div if.bind="imagePanelSize <= 2" id="left-panel" class="vertical grid-block grid-block-vertical-shadow">
                 <!-- header -->
                 <div class="grid-block tool-header shrink">
                     <div class="grid-block align-left tool-header tool-header-spacer">
@@ -274,7 +274,12 @@
                    </div>
                     <div class="grid-block align-right tool-header-spacer">
                         <span class="expando">
-                      <a route-href="route: requestman;"><img  src="/assets/nav/collapso.png" /></a>
+                      <!-- <a route-href="route: requestman;"><img  src="/assets/nav/collapso.png" /></a> -->
+                      <a click.delegate="imageExpando()">
+                        <img if.bind="imagePanelSize==3" src="/assets/nav/collapso.png" />
+                        <img if.bind="imagePanelSize==1" src="/assets/nav/expando.png" />
+                        <img if.bind="imagePanelSize==2" src="/assets/nav/expando.png" />
+                      </a>
                     </span>
                     </div>
                 </div>

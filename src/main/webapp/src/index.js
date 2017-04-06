@@ -72,6 +72,7 @@ export class Index {
         this.busy = busy;
         this.maxRReached = false;
         this.numberImages = 0;
+        this.imagePanelSize = 2; //  1 = small, 2 = mid, 3 = large
     }
     
 
@@ -79,6 +80,12 @@ export class Index {
         var computedDate =     new Date(booking);
         // console.log("computedOverdue function, booking: " + booking + " today: " + this.today + " computed: " +  computedDate + " overdue: " + (this.today > computedDate));
         return this.today > computedDate;
+    }
+
+    imageExpando() {
+        if (this.imagePanelSize == 1 ) {this.imagePanelSize = 2; return} // no way to get here yet
+        if (this.imagePanelSize == 2 ) {this.imagePanelSize = 3; return}
+        if (this.imagePanelSize == 3 ) {this.imagePanelSize = 2; return}
     }
 
     filterFunc(searchExpression, value, filter, user,seasons){
