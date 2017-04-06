@@ -41,7 +41,7 @@
 <!-- Calendar + Request  Panel -->
 <!-- -->
 
-            <div id="left-panel" class="vertical grid-block grid-block-vertical-shadow">
+            <div if.bind="imagePanelSize <= 2" id="left-panel" class="vertical grid-block grid-block-vertical-shadow">
                 <!-- header -->
                 <div class="grid-block tool-header shrink">
                     <div class="grid-block align-left tool-header tool-header-spacer">
@@ -107,8 +107,10 @@
                                     <button id="button${booking.id}" class="accordion requestButton" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
                                 <td class="accordion w18">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
-                                <td class="accordion w35">${booking.bookingStartDate | viewDateFormat}</td>
-                                <td class.bind="(booking.requestStatusBrand=='Pending') ? 'accordion ui-text-label-m-blue w30 to-u-c' :'accordion w30 to-u-c'">${booking.requestStatusBrand}</td>
+                                <td class="accordion w35 
+                                           ${computedOverdue(booking.bookingStartDate) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
+                                <td class="accordion w30 to-u-c 
+                                           ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" >${booking.requestStatusBrand}</td>
                                 <td class="accordion w10" style="overflow:visible;">
                                     <div class="look-menu-absolute-wrap">
                                         <span class="edit-box" ><a href="#" click.delegate="sampleRequestMenu(booking.id)">...</a></span>
@@ -168,7 +170,7 @@
                                     <button id="button${booking.id}" class="accordion requestButton" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
                                 <td class="accordion w15">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
-                                <td class="accordion w35">${booking.bookingStartDate | viewDateFormat}</td>
+                                <td class="accordion w35 ${computedOverdue(booking.bookingStartDate) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
                                 <td class.bind="(booking.requestStatusPress=='Pending') ? 'accordion ui-text-label-m-blue w30 to-u-c' :'accordion w30 to-u-c'" >${booking.requestStatusPress}</td>
                                 <td class="accordion w10">
                                     <div class="look-menu-absolute-wrap">
@@ -272,7 +274,12 @@
                    </div>
                     <div class="grid-block align-right tool-header-spacer">
                         <span class="expando">
-                      <a route-href="route: requestman;"><img  src="/assets/nav/collapso.png" /></a>
+                      <!-- <a route-href="route: requestman;"><img  src="/assets/nav/collapso.png" /></a> -->
+                      <a click.delegate="imageExpando()">
+                        <img if.bind="imagePanelSize==3" src="/assets/nav/collapso.png" />
+                        <img if.bind="imagePanelSize==1" src="/assets/nav/expando.png" />
+                        <img if.bind="imagePanelSize==2" src="/assets/nav/expando.png" />
+                      </a>
                     </span>
                     </div>
                 </div>

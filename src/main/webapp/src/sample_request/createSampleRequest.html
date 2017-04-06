@@ -21,7 +21,7 @@
                 <!--Start Left column -->
                 <div class="vertical grid-block">
                     <div class="grid-block">
-                        <span class="calendarnav ui-text-label-m-blue" style="text-align:center;">START BOOKING</span>
+                        <span class="calendarnav ui-text-label-m-blue ${sampleRequest.startDate ? '' : 'red-deco'}" style="text-align:center;">START BOOKING</span>
                     </div>
                     <div class="grid-block calendar-header-align">
                         <span click.delegate="startPrevious()" class="calendarnav prev">
@@ -66,7 +66,7 @@
                     <!-- Deliver To-->
                     <div class="grid-content shrink">
                         <span class="inline-label">
-                            <span class="slim-text-box-label">Deliver To</span>
+                            <span class="slim-text-box-label ${sampleRequest.deliverTo ? '' : red-deco'}">Deliver To</span>
                         <select name="" id="" value.bind="sampleRequest.deliverTo">
                             <option repeat.for="person of deliverTo" model.bind="person">${person.name} ${person.surname}, ${person.brand.name}${person.pressHouse.name}${person.prAgency.name}</option>
                         </select>
@@ -98,7 +98,7 @@
                 <!--Start Right column -->
                 <div class="vertical grid-block">
                     <div class="grid-block">
-                        <span class="calendarnav ui-text-label-m-blue" style="text-align:center;">END BOOKING</span>
+                        <span class="calendarnav ui-text-label-m-blue ${sampleRequest.endDate ? '' : 'red-deco'}" style="text-align:center;">END BOOKING</span>
                     </div>
                     <div class="grid-block calendar-header-align">
                         <span click.delegate="endPrevious()" class="calendarnav prev">
@@ -134,7 +134,7 @@
                     <!-- Return By Time -->
                     <div class="grid-content shrink" style="margin-top: 1rem;">
                         <span class="inline-label">
-                            <span class="slim-text-box-label">Return By</span>
+                            <span class="slim-text-box-label ">Return By</span>
                         <select name="" id="" value.bind="sampleRequest.returnBy">
                             <option repeat.for="item of returnBy" model.bind="item">${item}</option>
                         </select>
@@ -143,7 +143,7 @@
                     <!-- Return To-->
                     <div class="grid-content shrink">
                         <span class="inline-label">
-                            <span class="slim-text-box-label">Return To</span>
+                            <span class="slim-text-box-label ${sampleRequest.returnToAddress ? '' : 'red-deco'}">Return To</span>
                         <select name="" id="" value.bind="sampleRequest.returnToAddress">
                             <option value="0" selected>The Sender</option>
                             <option repeat.for="address of brandAddresses" model.bind="address.id">${address.name}</option>
@@ -180,7 +180,7 @@
             <div if.bind="(currentItem.samples.length>0)" class="grid-content accordion">
                 <table class="" style="margin-bottom:4px; table-layout:fixed;">
                     <tr>
-                        <td class="accordion" style="width:100px;">SELECT SAMPLES</td>
+                        <td class="accordion ${(sampleRequest.samples.length == 0) ? 'red-deco' : ''}" style="width:100px;">SELECT SAMPLES</td>
                         <td class="accordion" style="width:473px;text-align:right; padding-right: 0.5rem;">Select All</td>
                         <td class="accordion" style="width:10px;">
                             <input type="checkbox" checked.bind="selectAll" change.delegate="allsamples($event)">

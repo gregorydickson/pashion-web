@@ -170,7 +170,7 @@
                                             <td if.bind="user.type === 'brand'" class="col2 accordion-grey w7">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
                                             <td if.bind="(user.type === 'press') || (user.type === 'agency')" class="col2 accordion-grey w7">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
 
-                                            <td class="col3 accordion-grey w13">${booking.bookingStartDate | viewDateFormat}</td>
+                                            <td class="col3 accordion-grey w13 ${computedOverdue(booking.bookingStartDate) ? 'red-deco' : ''} ">${booking.bookingStartDate | viewDateFormat}</td>
 
                                             <td if.bind="(user.type === 'press') || (user.type === 'agency')" class="col4 accordion-grey w14 variable-padding">${booking.brand.name}</td>
                                             <td if.bind="user.type === 'brand'" class="col4 accordion-grey w14 variable-padding">${booking.pressHouse.name}</td>
@@ -182,8 +182,15 @@
 
                                             <td class="col7 accordion-grey w2">${booking.searchableItems.length}</td>
 
-                                            <td if.bind="(user.type === 'press') || (user.type === 'agency')" class.bind="(booking.requestStatusPress=='Pending') ? 'col8 accordion-grey ui-text-label-m-blue w14 to-u-c' :'col8 accordion-grey w14 to-u-c'">${booking.requestStatusPress}</td>
-                                            <td if.bind="user.type === 'brand'" class.bind="(booking.requestStatusBrand=='Pending') ? 'col8 accordion-grey ui-text-label-m-blue w14 to-u-c' :'col8 accordion-grey w14 to-u-c'" >${booking.requestStatusBrand}</td>
+                                            <td if.bind="(user.type === 'press') || (user.type === 'agency')" 
+                                                class="col8 accordion-grey w14 to-u-c 
+                                                    ${(booking.requestStatusPress=='Pending') ? 'ui-text-label-m-blue' : ''}">
+                                                    ${booking.requestStatusPress}</td>
+
+                                            <td if.bind="user.type === 'brand'" 
+                                                class="col8 accordion-grey w14 to-u-c 
+                                                     ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}">
+                                                     ${booking.requestStatusBrand}</td>
 
                                             <td class="accordion-grey w5" style="overflow:visible;"> 
                                                 <div class="look-menu-absolute-wrap">
@@ -232,9 +239,13 @@
                                             <span class="to-u-c">${booking.shippingOut.status}</span>
                                             <span> for ${booking.bookingStartDate | viewDateFormat} ${booking.requiredBy} by ${booking.courierOut} (${booking.paymentOut})</span> 
                                             <span if.bind="(booking.deliverTo.pressHouse.name || booking.deliverTo.prAgency.name || booking.deliverTo.brand.name)"> to ${booking.deliverTo.pressHouse.name} ${booking.deliverTo.prAgency.name} ${booking.deliverTo.brand.name} </span>
-                                            <span> at ${booking.addressDestination.address1}, ${booking.addressDestination.address2}, ${booking.addressDestination.city}, ${booking.addressDestination.postalCode} </span>
-                                            <span if.bind="booking.pickedupAt.addressDestination.name"> (${booking.addressDestination.name)</span> 
-                                            <span if.bind="booking.pickedupAt"> at ${booking.pickedupAt} signed ${booking.signedBy} </span>
+                                            <span if.bind="booking.addressDestination.address1"> at ${booking.addressDestination.address1}, </span>
+                                            <span if.bind="booking.addressDestination.address2"> ${booking.addressDestination.address2}, </span>
+                                            <span if.bind="booking.addressDestination.city"> ${booking.addressDestination.city}, </span>
+                                            <span if.bind="booking.addressDestination.postalCode"> ${booking.addressDestination.postalCode} </span>
+                                            <span if.bind="booking.addressDestination.name"> (${booking.addressDestination.name})</span> 
+                                            <span if.bind="booking.pickedupAt"> at ${booking.pickedupAt} </span>
+                                            <span if.bind="booking.signedBy"> signed by ${booking.signedBy} </span>
                                         </div>
                                         <div class="grid-content" style="margin-top:1rem;">
                                             <span class="ui-text-label-m-blue">Return:</span><span style="margin-left:0.5rem;"> ${booking.shippingReturn.id} ${booking.shippingReturn.tracking}</span>

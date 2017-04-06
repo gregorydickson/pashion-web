@@ -31,7 +31,7 @@ export class CreateSampleRequest {
   sampleRequestEndDay = '';
 
 
-  sampleRequest = {requiredBy:"12:00", courierOut:"Scooter",paymentOut:"50/50", returnBy:"Afternoon",courierReturn:"Scooter",paymentReturn:"50/50"};
+  sampleRequest = {requiredBy:"12:00", courierOut:"They Book",paymentOut:"50/50", returnBy:"Afternoon",courierReturn:"Pashion Courier",paymentReturn:"50/50"};
   startOffset = 0;
   endOffset = 0;
 

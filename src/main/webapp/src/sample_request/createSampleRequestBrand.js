@@ -94,8 +94,8 @@ export class CreateSampleRequestBrand {
       }),
       this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => {
         this.courier = courier;
-        this.sampleRequest.courierOut = "Scooter";
-        this.sampleRequest.courierReturn = "Scooter";
+        this.sampleRequest.courierOut = "Pashion Courier";
+        this.sampleRequest.courierReturn = "They Book";
 
       }),
       
@@ -552,7 +552,7 @@ export class CreateSampleRequestBrand {
     } else {
 
       var queryString = DateFormat.urlString(this.endOffset,1)+'&searchType=brand';
-      this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
+      this.http.fetch('/calendar/showAvailabilitySamples'+queryString, {
               method: 'post',
               body: json(this.sampleRequest.samples)
             })
@@ -562,7 +562,7 @@ export class CreateSampleRequestBrand {
             });
 
       queryString = DateFormat.urlString(this.startOffset,1)+'&searchType=brand';
-      this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
+      this.http.fetch('/calendar/showAvailabilitySamples'+queryString, {
               method: 'post',
               body: json(this.sampleRequest.samples)
             })

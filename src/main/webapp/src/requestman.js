@@ -30,6 +30,7 @@ export class Requestman{
   searchTextReqMan = '';
   ordering ='bookingStartDate';
   filtering = ''; // IE all
+  today = new Date(); // Do we have a problem with freshness of this variable, say login at 11:59PM?
 
 
 
@@ -135,6 +136,12 @@ export class Requestman{
                     console.log("value:" + event.detail.value + "ordering: " +this.ordering);
                 }          
     } */
+
+    computedOverdue(booking) {   
+        var computedDate =     new Date(booking);
+        //console.log("computedOverdue function, booking: " + booking + " today: " + this.today + " computed: " +  computedDate + " overdue: " + (this.today > computedDate));
+        return this.today > computedDate;
+    }
 
     createPDFDialog() {
       //container = document.getElementsByClassName ('brandGridContent');
