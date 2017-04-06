@@ -54,6 +54,7 @@ export class Index {
     busy;
     ordering = 'bookingStartDate';
     filtering = 'ALL REQUESTS';
+    today = new Date(); // Do we have a problem with freshness of this variable, say login at 11:59PM?
 
     constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, busy,pubNubService) {
         http.configure(config => {
@@ -74,7 +75,11 @@ export class Index {
     }
     
 
-
+    computedOverdue(booking) {   
+        var computedDate =     new Date(booking);
+        // console.log("computedOverdue function, booking: " + booking + " today: " + this.today + " computed: " +  computedDate + " overdue: " + (this.today > computedDate));
+        return this.today > computedDate;
+    }
 
     filterFunc(searchExpression, value, filter, user,seasons){
         var searchVal = true;
