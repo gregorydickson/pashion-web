@@ -133,8 +133,8 @@
                                         <td class="accordion-underline w14">COMPANY</td>
                                         <td class="accordion-underline w16">EDITORIAL</td>
                                         <td class="accordion-underline w20">WHO</td>
-                                        <td class="accordion-underline w2">#</td>
-                                        <td class="accordion-underline w14">STATUS</td>
+                                        <td class="accordion-underline w3">#</td>
+                                        <td class="accordion-underline w13">STATUS</td>
                                         <td class="accordion-underline w5"></td>
                                     </tr>
                                 </table>
@@ -149,8 +149,8 @@
                                         <td class="accordion-underline w14">BRAND</td>
                                         <td class="accordion-underline w16">EDITORIAL</td>
                                         <td class="accordion-underline w20">OWNER</td>
-                                        <td class="accordion-underline w2">#</td>
-                                        <td class="accordion-underline w14">STATUS</td>
+                                        <td class="accordion-underline w3">#</td>
+                                        <td class="accordion-underline w13">STATUS</td>
                                         <td class="accordion-underline w5"></td>
                                     </tr>
                                 </table>
@@ -180,15 +180,15 @@
 
                                             <td class="col6 accordion-grey w20 variable-padding">${booking.requestingUser.name} ${booking.requestingUser.surname}</td>
 
-                                            <td class="col7 accordion-grey w2">${booking.searchableItems.length}</td>
+                                            <td class="col7 accordion-grey w3">${booking.searchableItems.length}</td>
 
                                             <td if.bind="(user.type === 'press') || (user.type === 'agency')" 
-                                                class="col8 accordion-grey w14 to-u-c 
+                                                class="col8 accordion-grey w13 to-u-c 
                                                     ${(booking.requestStatusPress=='Pending') ? 'ui-text-label-m-blue' : ''}">
                                                     ${booking.requestStatusPress}</td>
 
                                             <td if.bind="user.type === 'brand'" 
-                                                class="col8 accordion-grey w14 to-u-c 
+                                                class="col8 accordion-grey w13 to-u-c 
                                                      ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}">
                                                      ${booking.requestStatusBrand}</td>
 
@@ -224,7 +224,7 @@
                                     </table>
 
                                     <!-- expanding data -->
-                                    <div id="panel${$index}" class="panel grid-block vertical" style="margin-left: 0.5rem; margin-top:0.5rem;">
+                                    <div id="panel${$index}" class="panel grid-block vertical" style="margin-left: 0.5rem; margin-top:1rem;">
                                         <div class="grid-content">
                                             <span class="ui-text-label-m-blue">Editorial</span>
                                         </div>
