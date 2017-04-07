@@ -48,6 +48,18 @@
   //font-weight: 500;
 }
 
+img.expandoHover {
+  opacity:0.85;
+}
+
+img.expandoHover:hover {
+  opacity:0.50;
+}
+
+img.expandoHover:active {
+  opacity:0.20;
+}
+
 .request {
   border: 2px solid lightgrey;
 }
