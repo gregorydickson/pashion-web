@@ -13,8 +13,11 @@ export class SelectControl {
         width: '110px',
         sorter: function(data) {          
             // Let's remove the placeholder from the list of options
-            let index = data.findIndex(x => x.id == "");     
-            data.splice(index, 1);
+            let index = data.findIndex(x => x.id == "");    
+
+            if (index > -1) { 
+                data.splice(index, 1);
+            }
 
             return data.sort(function(a, b) {               
                 return a.text < b.text ? -1 : a.text > b.text ? 1 : 0;
