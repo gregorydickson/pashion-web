@@ -13,6 +13,8 @@ export class CreateDialogEditContact {
     static inject = [DialogController];
 
     lUser = {};
+    availableLocationItems = [];
+    selectedLocationItems = [];
 
     constructor(http, controller, userService, brandService, prAgencyService, pressHouseService) {
         this.controller = controller;
@@ -33,22 +35,40 @@ export class CreateDialogEditContact {
         this.userService.getUser()
             .then(user => {
                 //this.lUser = user;
-
-                
                 this.lUser = clone(user);
 
-                        if (this.lUser.brand != null)
-                            this.brandService.getBrandAddresses(this.lUser.brand.id)
-                                .then(addresses=>this.addresses = addresses)
-                        if (this.lUser.pressHouse != null)
-                            this.pressHouseService.getPressHouseAddresses(this.lUser.pressHouse.id)
-                                .then(addresses=>this.addresses = addresses)
-                        if (this.lUser.prAgency != null)
-                            this.prAgencyService.getPRAgencyAddresses(this.lUser.PRAgency.id)
-                                .then(addresses=>this.addresses = addresses)
+                if (!this.lUser.address) {
+                    this.lUser.address = { id: ''};
+                }
 
-                      })
+                this.getAddresses().then(addresses => {
+                    console.log(addresses)
+                    addresses.forEach(item => {
+                        this.availableLocationItems.push({
+                            id: item.id,
+                            text: item.name
+                        });
+                    });                   
+
+                    this.selectedLocationItems = [`${this.lUser.address.id}`];
+                });              
+
+            });
         }
+
+    getAddresses() {
+        return new Promise((resolve) => {
+            if (this.lUser.brand != null)
+                return this.brandService.getBrandAddresses(this.lUser.brand.id)
+                    .then(addresses=> { this.addresses = addresses; resolve(addresses)})
+            if (this.lUser.pressHouse != null)
+                return this.pressHouseService.getPressHouseAddresses(this.lUser.pressHouse.id)
+                    .then(addresses=> { this.addresses = addresses; resolve(addresses)})
+            if (this.lUser.prAgency != null)
+                return this.prAgencyService.getPRAgencyAddresses(this.lUser.PRAgency.id)
+                    .then(addresses=> { this.addresses = addresses; resolve(addresses)})
+        });
+    }
 
    save(){
     console.log("CreateDialogEditContact.save, updating user:"+this.lUser.id + " name: " + this.lUser.name)
@@ -60,7 +80,17 @@ export class CreateDialogEditContact {
     this.controller.close();
   }
 
+    onLocationChangeCallback(event) {   
+        console.log('onLocationChangeCallback() called:', event.detail.value);
 
+        if (event.detail) {
+            let selectedValue = event.detail.value;         
+            console.log('Selected value:', selectedValue);    
+            
+            //let selectedLocation = this.availableLocationItems.find(x => x.id == selectedValue);
+            this.lUser.address.id = selectedValue;
+        }
+    }
 
 }
 
