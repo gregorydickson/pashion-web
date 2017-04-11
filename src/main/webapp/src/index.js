@@ -78,7 +78,7 @@ export class Index {
 
     computedOverdue(booking) {   
         var computedDate =     new Date(booking);
-        // console.log("computedOverdue function, booking: " + booking + " today: " + this.today + " computed: " +  computedDate + " overdue: " + (this.today > computedDate));
+        //console.log("computedOverdue function, booking: " + booking + " today: " + this.today + " computed: " +  computedDate + " overdue: " + (this.today > computedDate));
         return this.today > computedDate;
     }
 
@@ -114,8 +114,11 @@ export class Index {
           filterVal = (value.requestingUser.id == user.id);
         }
         if (filter == 'OVERDUE REQUESTS') {
-            if (user.type == "brand" || user.type == "prAgency") filterVal = (value.requestStatusBrand == 'Overdue');
-            if (user.type == "press" )  filterVal = (value.requestStatusPress == 'Overdue');
+            //console.log ("Overdue request: date: " + var computedDate =     new Date(booking););
+            var computedDate = new Date(value.bookingStartDate);
+            var today = new Date();
+            if (user.type == "brand" || user.type == "prAgency") filterVal =  (today > computedDate);
+            if (user.type == "press" )  filterVal = (today > computedDate);
         }
         if (filter == 'OPEN REQUESTS') {
             if (user.type == "brand" || user.type == "prAgency") filterVal = (value.requestStatusBrand != 'Closed');

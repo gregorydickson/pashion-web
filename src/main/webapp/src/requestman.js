@@ -256,8 +256,10 @@ export class Requestman{
       filterVal = (value.requestingUser.id == user.id);
     }
     if (filter == 'OVERDUE REQUESTS') {
-      if (user.type == "brand" || user.type == "prAgency") filterVal = (value.requestStatusBrand == 'Overdue');
-      if (user.type == "press" ) filterVal = (value.requestStatusPress == 'Overdue');
+      var computedDate = new Date(value.bookingStartDate);
+      var today = new Date();
+      if (user.type == "brand" || user.type == "prAgency") filterVal =  (today > computedDate);
+      if (user.type == "press" )  filterVal = (today > computedDate);
     }
     if (filter == 'OPEN REQUESTS') {
       if (user.type == "brand"  || user.type == "prAgency") filterVal = (value.requestStatusBrand != 'Closed');
