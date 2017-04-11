@@ -41,7 +41,7 @@ class EmailService {
             def messageTxt = "<br/>" 
             log.info "email notificaiton start message: " + sr
             messageTxt = messageTxt + '<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center">'
-            messageTxt = messageTxt + '<br/><img src="https://app.pashiontool.com/assets/PashionRMPlainBlackTag.png" style="max-width:350px;">'
+            messageTxt = messageTxt + '<br/><img src="https://app.pashiontool.com/assets/PashionRMPlainBlack.png" style="max-width:350px;">'
             messageTxt = messageTxt + "<br/><br/>"
             messageTxt = messageTxt + "Booking confirmation of samples from <b>" + sr.brand.name+ "</b> Look "+sr.look+"<br/><br/><br/>" 
 
@@ -63,8 +63,9 @@ class EmailService {
                 if (sr.deliverTo.name) {
                     messageTxt = messageTxt + "<b>Deliver To: </b>" +sr.deliverTo?.name + " " + sr.deliverTo?.surname +"<br/>"
                     log.info "sr.deliverTo.name OK"
+            
                 }
-             }
+            }
             else log.info "sr.deliverTo MISSING"
 
             messageTxt = messageTxt + "<b>Courier Out: </b>" +sr.courierOut +"<br/>"
@@ -87,7 +88,9 @@ class EmailService {
             messageTxt = messageTxt + "<b>Payment: </b>" +sr.paymentReturn+"<br/><br/><br/>"
 
             messageTxt = messageTxt + '<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center">'
-            messageTxt = messageTxt + "Thanks from the team. <br/> http://www.pashiontool.com <br/>"          
+            messageTxt = messageTxt + 'Thanks from the team. <br/> http://www.pashiontool.com <br/><br/>' 
+            messageTxt = messageTxt + '<em> Work Visually. Share Effectively. Communicate Faster. </em><br/><br/><br/><br/>'  
+            messageTxt = messageTxt + '<small>Image copyright Indigital Images and Pashion Limited</small>'          
             messageTxt = messageTxt + '</td> </tr></table>'
 
             log.info "created message text"
