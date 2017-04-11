@@ -1,5 +1,6 @@
-
 <template>
+    <require from="./../common/select-control"></require>
+
     <ai-dialog style="width: auto;">
         
         <!-- header -->
@@ -67,9 +68,18 @@
                                 <span class="inline-label">
                                     <span class="slim-text-box-label">Location</span>
                                 </span>
-                                <select name="" id="" class="slim-text-box" value.bind="lUser.address.id">
+                                <select-control ref="LocationSelectControl" name="location"
+                                    class="to-u-c" 
+                                    change.delegate="onLocationChangeCallback($event) & debounce:250"                      
+                                    selected.bind="selectedLocationItems" 
+                                    options.bind="availableLocationItems" 
+                                    placeholder="SELECT LOCATION" 
+                                    allow_clear="true" style="min-width:200px;">
+                                </select-control>
+                                
+                                <!--<select name="" id="" class="slim-text-box" value.bind="lUser.address.id">
                                     <option model.bind="address.id" repeat.for="address of addresses">${address.name}</option>
-                                </select>
+                                </select>-->
                         </div> 
 
                         <!-- Address 1
