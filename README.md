@@ -3,7 +3,7 @@
 * Layout file - grails-app/assets/views/layouts/pashion.gsp
 * Login page - grails-app/views/user/login.gsp
 * The web page hosting the Aurelia Application - grails-app/views/dashboard/index.gsp
-* Aurelia src/main/webapp/
+* Aurelia (the single page application) root: src/main/webapp/
 
 # Testing
 
@@ -128,7 +128,7 @@ https://github.com/stormpath/stormpath-sdk-java/issues/17
 
 
 # Brand Onboarding
- * Brand probably already has a Brand record in the database, if not, create a Brand in database at /brand 
+ * Brand probably already has a Brand record in the database, if not, create a Brand in database at https://app.pashiontool.com/brand or http://localhost:8080/brand
  * upload Looks will create a Brand if none exists
  * Create a Directory in StormPath (stormpath tenant: zippy-lizard1) for the Brand, put directory URI in the Brand's record in the database.
  * In Stormpath admin console, create a Group for the user type (brand_users). Put the Brand's name in the group description.

@@ -57,7 +57,7 @@ export class Requestman{
         this.user = user;
         // if (this.user.type ==="guest") window.location.href = '/user/login';
       });
-      return this.bookings = this.sampleRequestService.getSampleRequests()
+      this.sampleRequestService.getSampleRequests()
         .then(bookings => {
           this.bookings = bookings;
         });
