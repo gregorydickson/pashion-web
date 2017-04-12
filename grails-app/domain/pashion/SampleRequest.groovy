@@ -76,8 +76,7 @@ class SampleRequest {
 		requestStatusPress nullable: true
 		userCreatedId nullable: true
 		brand nullable:true
-		returnToAddress nullable: true
-		addressDestination nullable:true
+		
 		deliverTo nullable:true
 
 		pressHouse nullable: true
