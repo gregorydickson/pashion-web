@@ -1,5 +1,5 @@
 <!-- Note same layout for Press and Brand, only content and Titles change -->
-<!-- Currently this static template is setup for Press -->
+
 <template>
     <require from="common/viewDateFormatter"></require>
    <!-- <require from="common/dateTimeFormatter"></require> -->
@@ -7,7 +7,7 @@
     <require from="common/seasonAbbreviationFormatter"></require>
     <require from="calendars/datetimepicker"></require>
     <require from="common/formSelectSampleRequest"></require>
-    <ai-dialog style="width: auto;"> <!-- Based on the design. would prefer to be flexible, but postpone this -->
+    <ai-dialog style="width: auto;"> 
         
         <!-- header -->
         <ai-dialog-header>
@@ -109,13 +109,10 @@
                         </div>
 
 
-                        <!-- Press: DELIVERY DETAILS, Brand: RETURN DETAILS -->
-                        <div if.bind="user.type === 'press'" class="grid-block vertical">
+                        <div  class="grid-block vertical">
                             <span class="title-form">DELIVERY DETAILS</span>
                         </div>
-                        <div if.bind="user.type === 'brand'" class="grid-block vertical">           
-                            <span class="title-form">RETURN DETAILS</span>
-                        </div>
+
 
                         <!-- Courier Section -->
                         <div class="grid-block shrink" style="margin-bottom:0.5rem;">
@@ -124,6 +121,13 @@
                                 <form-select-sr class="to-u-c" name="courierOut" selected.two-way="sampleRequest.courierOut" options.bind="courier" ></form-select-sr>
                             </span>
                              <span if.bind="sampleRequest.courierOut=='Pashion Courier'" class="slim-text-box-label" style="text-align:left; margin-left:10px;"><a click.delegate="bookOut()" style="">Book</a></span>
+                        </div>
+                        <!-- Pickup -->
+                        <div if.bind="sampleRequest.courierOut=='Pashion Courier'" class="grid-block ">
+                            <span class="inline-label slim-text-box-label">Pickup</span>
+                            <span >
+                                <input timething type="text" class="slim-text-box" value.bind="sampleRequest.shippingOut.startDate">
+                            </span>
                         </div>
 
                        <!--  split -->
@@ -156,15 +160,11 @@
                     <!-- Column Two -->
                     <div class="grid-block vertical medium-6 align-right slim-form-wrap">
                      <!-- to make it LOOK balanced -->
-
-                        <!-- Press: RETURN DETAILS, Brand: DELIVERY DETAILS -->
-                        <div if.bind="user.type === 'press'" class="grid-block ">
+                        
+                        <div class="grid-block ">
                             <span class="title-form">RETURN DETAILS</span>
                         </div>
-                        <div if.bind="user.type === 'brand'" class="grid-block ">           
-                            <span class="title-form">DELIVERY DETAILS</span>
-                        </div>
-
+                        
                         <!-- Courier Section -->
                         <div class="grid-block shrink" style="margin-bottom:0.5rem;">
                             <span class="inline-label">
@@ -189,17 +189,11 @@
                                 <input type="text" class="slim-text-box" value.bind="sampleRequest.shippingOut.tracking">
                             </span>
                         </div>
-                        <!-- Pickup -->
-                        <div class="grid-block ">
-                            <span class="inline-label slim-text-box-label">Pickup</span>
-                            <span >
-                                <input timething type="text" class="slim-text-box" value.bind="sampleRequest.shippingOut.startDate">
-                            </span>
-                        </div>
+                        
 
-                        <!-- Destination -->
+                        <!-- Return To -->
                         <div class="grid-block " >                                   
-                            <span class="inline-label slim-text-box-label">Destination</span>
+                            <span class="inline-label slim-text-box-label">Return To</span>
                             <select class="slim-text-box" name="" id="" value.bind="sampleRequest.returnToAddress.id">
                             <option repeat.for="address of brandAddresses" model.bind="address.id">${address.name}</option>
                             <option> Other</option>
