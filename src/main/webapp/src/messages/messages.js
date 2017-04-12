@@ -210,9 +210,11 @@ export class Messages {
                 meta: { "cool": "meta" } // publish extra meta with the request
             },
             function(status, response) {
-                if (response) console.log("pubhub publish error? " + status.error + " timestamp:" + response.timetoken);
+                console.log("sendMessage pubhub publish error? " + status.error + ", code: " + status.statusCode);
+                if (response) console.log("sendMessage pubhub publish error? timestamp:" + response.timetoken);
                 // status error analyze and respond accordingly
-                else console.log("pubhub publish error? " + status.error + " timestamp:  missing response");
+                // not a very coherent error code system so hard to do
+                else console.log("sendMessage pubhub publish error? errorData: " + status.errorData);
             }
         );
         this.pubnub.publish({
@@ -223,9 +225,10 @@ export class Messages {
                 meta: { "cool": "meta" } // publish extra meta with the request
             },
             function(status, response) {
-                if (response) console.log("pubhub publish error? " + status.error + " timestamp:" + response.timetoken);
+                console.log("sendMessage pubhub publish error? " + status.error + ", code: " + status.statusCode);
+                if (response) console.log("sendMessage pubhub publish error? timestamp:" + response.timetoken);
                 // status error analyze and respond accordingly
-                else console.log("pubhub publish error? " + status.error + " timestamp:  missing response");
+                else console.log("sendMessage pubhub publish error? errorData: " + status.errorData);
             }
         );
         window.setTimeout(function () {
