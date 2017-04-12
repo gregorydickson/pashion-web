@@ -117,6 +117,45 @@ export class ContactsList {
     ]);
 	}
 
+  //keep track of new messages
+  messagesYes (numberNewMessages) {
+    // console.log ("messageYes called");
+    return (numberNewMessages !=0 && numberNewMessages<100); 
+  }
+  messagesYes100 (numberNewMessages) {
+     return (numberNewMessages>99); 
+  }
+
+  //keep track of new messages
+  messagesYesNew (numberNewMessages) {
+    var newMsg = (numberNewMessages !=0 && numberNewMessages<100);
+    console.log ("messageYesNew called newMsg " + newMsg);
+    return newMsg; 
+  }
+  messagesYesNew100 (numberNewMessages) {
+    var newMsg = (numberNewMessages>99);
+    console.log ("messageYesNew100 called newMsg " + newMsg);
+    return newMsg; 
+  }
+
+  resetCount(connections) {
+    //this.newMessageCount = 0;
+    //console.log ("resetCount: " + this.newMessageCount);
+    var resetNewMessages = (connections!=null);
+    return resetNewMessages;
+  }
+
+  incrementCount (numberNewMessages, connectingStatus) {
+    var increment = ((numberNewMessages!=0) && (connectingStatus=='Accepted'));
+   /* if (increment) {
+      this.newMessageCount = this.newMessageCount +1;
+    }
+    console.log ("incrementCount: " + this.newMessageCount);
+    */
+    return increment;
+  }
+
+
   //RM test button & pubnub message cache invalidate response target
   fetchGetUserUsersFromServer () {
     this.userService.getUsers(true).then(users => this.users = users)

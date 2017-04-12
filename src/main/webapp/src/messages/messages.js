@@ -90,6 +90,7 @@ export class Messages {
                         // try some toast
                         toastr.options.timeOut = 5000;
                         toastr.options.closeButton = false;
+                        toastr.options.preventDuplicates = true;
                         toastr.info('New Message from ' + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);
                         }
                     $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
@@ -205,7 +206,9 @@ export class Messages {
                 meta: { "cool": "meta" } // publish extra meta with the request
             },
             function(status, response) {
-                console.log("pubhub error?" + status.error + " timestamp:" + response.timetoken);
+                if (response) console.log("pubhub publish error? " + status.error + " timestamp:" + response.timetoken);
+                // status error analyze and respond accordingly
+                else console.log("pubhub publish error? " + status.error + " timestamp:  missing response");
             }
         );
         this.pubnub.publish({
@@ -216,7 +219,9 @@ export class Messages {
                 meta: { "cool": "meta" } // publish extra meta with the request
             },
             function(status, response) {
-                console.log("pubhub publish error?" + status.error + " timestamp:" + response.timetoken);
+                if (response) console.log("pubhub publish error? " + status.error + " timestamp:" + response.timetoken);
+                // status error analyze and respond accordingly
+                else console.log("pubhub publish error? " + status.error + " timestamp:  missing response");
             }
         );
         window.setTimeout(function () {

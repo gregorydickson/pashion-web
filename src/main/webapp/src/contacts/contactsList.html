@@ -107,11 +107,11 @@
                     </td>
                     <td class="accordion-grey" style="width:35px; overflow: hidden;">
                         <span class="accordion-grey"
-                        if.bind="(users[user.id -1].connections!=null)"
+                        if.bind="(resetCount(users[user.id -1].connections))"
                         repeat.for="connectionC of users[user.id -1].connections">
 
                         <button click.delegate="closeExpand(1213)" class="accordionNew"
-                        if.bind="((connectionC.numberNewMessages!=0) && (connectionC.connectingStatus=='Accepted'))" style="color: white; font-weight: 500; background: #3971b1;">NEW&nbsp;</button>
+                        if.bind="(incrementCount(connectionC.numberNewMessages, connectionC.connectingStatus))" style="color: white; font-weight: 500; background: #3971b1;">NEW&nbsp;</button>
 
                         </span>                        
                     </td>
@@ -143,8 +143,8 @@
                         </td>
                         <td class="align-top con-td-3">
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
-                                <span if.bind="(connection.numberNewMessages !=0 && connection.numberNewMessages<100)" class="alert-box">${connection.numberNewMessages}</span>
-                                <span if.bind="(connection.numberNewMessages>99)" class="alert-box">99</span>
+                                <span if.bind="messagesYesNew(connection.numberNewMessages)" class="alert-box">${connection.numberNewMessages}</span>
+                                <span if.bind="messagesYesNew100(connection.numberNewMessages)" class="alert-box">99</span>
                             </a>
                         </td>
                         <td class="align-top con-td-4">
@@ -229,8 +229,8 @@
                         </td>
                         <td class="align-top con-td-3">
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
-                                <span if.bind="connection.numberNewMessages!=0 && connection.numberNewMessages<100" class="alert-box">${connection.numberNewMessages}</span>
-                                <span if.bind="connection.numberNewMessages>99" class="alert-box">99</span>
+                                <span if.bind="messagesYes(connection.numberNewMessages)" class="alert-box">${connection.numberNewMessages}</span>
+                                <span if.bind="messagesYes100(connection.numberNewMessages)" class="alert-box">99</span>
                             </a>
                         </td>
                         <td class="align-top con-td-4">
