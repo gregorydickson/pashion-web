@@ -17,19 +17,11 @@
                         </div>
                     
 
-                    <select-control ref="userActionSelectControl" name="userAction" id="headerModeSelect"                       
-                        change.delegate="onUserActionCallback($event) & debounce:250"   
-                        options.bind="availableUserItems" 
-                        selected.bind="selectedUserItems" 
-                        placeholder.bind="userActionsPlaceholder" 
-                        allow_clear="true" style="max-width:200px;margin-top:17px;">
-                    </select-control>
-
-                    <!--<select value.bind="selectval1" change.trigger="userActions()" name="NotUSed" id="headerModeSelect" class="nav-label-header top-menu-modifier" style="max-width:150px;">
+                   <select value.bind="selectval1" change.trigger="userActions()" name="NotUSed" id="headerModeSelect" class="nav-label-header top-menu-modifier" style="max-width:150px;">
                         <option value="no">${user.name}</option>
                         <option value= "logout">LOGOUT</option>
                         <option if.bind="(currentRoute != 'index')" value= "edit">EDIT PROFILE</option>
-                    </select> -->
+                    </select> 
 
                         <!-- filter mode 
                         <span class="inline-label" style="width:150px; margin-bottom: 0px; margin-top:1.5rem;">
@@ -45,16 +37,9 @@
                     <li></li>
                     <li></li>
                     <li style="flex: none;">
-                        <select-control ref="navOptionsSelectControl" name="navAction" id="headerAdminSelect"                        
-                            style="width:200px;position:relative;top:17px;right:15px;" 
-                            change.trigger="onNavOptionCallback($event) & debounce:250"   
-                            options.bind="availableNavItems" 
-                            selected.bind="selectedNavItems" 
-                            allow_clear="true">
-                        </select-control>                        
-                        <!--<select value.one-way="theRouter.currentInstruction.config.name" change.trigger="admin()" id="headerAdminSelect" class="nav-label-header top-menu-modifier" style="max-width:200px; width:200px;margin-right:35px; ">
+                       <select value.one-way="theRouter.currentInstruction.config.name" change.trigger="admin()" id="headerAdminSelect" class="nav-label-header top-menu-modifier" style="max-width:200px; width:200px;margin-right:35px; ">
                             <option repeat.for="option of navOptions" model.bind="option.value">${option.name}</option>                           
-                         </select>-->
+                         </select>
                     </li>
                 
             </ul>
