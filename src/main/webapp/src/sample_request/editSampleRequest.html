@@ -266,7 +266,7 @@
                         <tr>
                             <!-- <td class="accordion w3">${$index+1}</td> -->
                             <td class="accordion" style="width:50px; max-width:50px;">${sampleRequest.season | seasonAbbreviation:seasons}${sampleRequest.look}.${$index+1}</td>
-                            <td class="accordion to-u-c" style="width:335px; max-width:335px; overflow:hidden;">[${sample.clientID}] : ${sample.attributes}</td>
+                            <td class="accordion to-u-c" style="width:335px; max-width:335px; overflow:hidden; padding-right:10px;">[${sample.clientID}] : ${sample.attributes}</td>
                             <td class="accordion" style="width:60px; max-width:60px;">                            
                                 <span style="margin-bottom:0px;">${sample.status.status}</span>
                                 
@@ -292,7 +292,7 @@
                         <tr>
                            <!--  <td class="accordion w3">${$index+1}</td> -->
                             <td class="accordion" style="width:50px; max-width:50px;">${sampleRequest.season | seasonAbbreviation:seasons}${sampleRequest.look}.${$index+1} :</td>
-                            <td class="accordion to-u-c" style="width:355px; max-width:355px; overflow:hidden;">${sample.attributes}</td>
+                            <td class="accordion to-u-c" style="width:355px; max-width:355px; overflow:hidden;padding-right:10px;">${sample.attributes}</td>
                             <td class="accordion" style="width:60px; max-width:60px;">
                                 <span style="margin-bottom:0px;">${sample.status.brandStatus}</span>
                                 <span if.bind="(!sample.status.brandStatus)" style="margin-bottom:0px;">Pending</span>
