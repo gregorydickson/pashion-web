@@ -45,7 +45,13 @@ define(['exports', './dialog-options', 'aurelia-pal', 'aurelia-dependency-inject
       this.dialogControllers = [];
 
       this.escapeKeyEvent = function (e) {
-        
+        //console.log("escape key in ai-dialog")
+         if (e.keyCode === 27) {
+           var top = _this.dialogControllers[_this.dialogControllers.length - 1];
+           if (top && top.settings.lock !== true) {
+             top.cancel();
+           }
+        }
       };
 
       this.defaultSettings = _dialogOptions.dialogOptions;
@@ -70,6 +76,13 @@ define(['exports', './dialog-options', 'aurelia-pal', 'aurelia-dependency-inject
 
       this.stopPropagation = function (e) {
         e._aureliaDialogHostClicked = true;
+      };
+      this.closeModalClick = function (e) {
+        if (!settings.lock && !e._aureliaDialogHostClicked) {
+          dialogController.cancel();
+        } else {
+          return false;
+        }
       };
       
 

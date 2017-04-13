@@ -27,7 +27,7 @@ export class CommsFooter {
     // Create dialog edit contact 
 
   createDialogNewContact(itemId) {
-    this.dialogService.open({viewModel: DialogRequestContact, model: itemId })
+    this.dialogService.open({viewModel: DialogRequestContact, model: itemId, lock:true })
       .then(response => {});
   }
 
@@ -35,7 +35,7 @@ export class CommsFooter {
   // Create dialog import contacts 
 
   CreateDialogImportContacts(itemId) {
-    this.dialogService.open({viewModel: CreateDialogImportContacts, model: itemId })
+    this.dialogService.open({viewModel: CreateDialogImportContacts, model: itemId, lock:true })
       .then(response => {});
   }
 /*

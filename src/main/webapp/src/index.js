@@ -554,7 +554,7 @@ export class Index {
         });
         let show = this.userService.show();
         if (show) {
-            this.dialogService.open({ viewModel: Introduction, model: "no-op" }).then(response => {
+            this.dialogService.open({ viewModel: Introduction, model: "no-op", lock: false }).then(response => {
                 this.userService.introShown();
             });
         }
@@ -634,7 +634,7 @@ export class Index {
     }
 
     handleKeyInput(event) {
-        //console.log(event);
+        console.log(event);
         if (event.which == 13 && event.srcElement.id === 'search-images') {
             console.log("user hit enter");
             //this.filterChangeSearch(event);
@@ -677,7 +677,7 @@ export class Index {
 
     createSampleRequest(itemId) {
         // this.lookMenu(itemId);
-        this.dialogService.open({ viewModel: CreateSampleRequest, model: itemId })
+        this.dialogService.open({ viewModel: CreateSampleRequest, model: itemId, lock: true })
             .then(response => {
                 
             });
@@ -685,7 +685,7 @@ export class Index {
 
     createSampleRequestBrand(itemId) {
         // this.lookMenu(itemId);
-        this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: itemId })
+        this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: itemId, lock: true })
             .then(response => {
                 
             });
@@ -693,20 +693,20 @@ export class Index {
 
     checkAvailabilitySearchableItem(itemId) {
         //this.lookMenu(itemId);
-        this.dialogService.open({ viewModel: CheckAvailability, model: itemId })
+        this.dialogService.open({ viewModel: CheckAvailability, model: itemId, lock: false })
             .then(response => {});
     }
 
     setAvailabilitySearchableItem(item) {
         //this.lookMenu(itemId);
-        this.dialogService.open({ viewModel: SetAvailability, model: item })
+        this.dialogService.open({ viewModel: SetAvailability, model: item, lock: true })
             .then(response => {
             });
     }
 
     editSearchableItem(itemId) {
         //this.lookMenu(itemId);
-        this.dialogService.open({ viewModel: EditSearchableItem, model: itemId })
+        this.dialogService.open({ viewModel: EditSearchableItem, model: itemId, lock: true })
             .then(response => {});
     }
 
@@ -723,7 +723,7 @@ export class Index {
 
     editSampleRequest(id) {
         this.closeSampleRequestMenu(id);
-        this.dialogService.open({ viewModel: EditSampleRequest, model: id })
+        this.dialogService.open({ viewModel: EditSampleRequest, model: id, lock: true })
             .then(response => {
                 
             });
@@ -732,7 +732,7 @@ export class Index {
 
     alertP (message){
 
-        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000} }).then(response => {});
+        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000}, lock: false }).then(response => {});
     }
 
     //Brand Workflow Functions
@@ -869,8 +869,8 @@ export class Index {
 
 
     createZoomDialog(item, rowNumber, itemNumber) {
-        console.log("item number :" + itemNumber);
-        console.log("item  :" + item);
+        console.log("createZoomDialog item number :" + itemNumber);
+        console.log("createZoomDialog item  :" + item);
         let menu = document.getElementById("card-" + item.id);
 
         menu.classList.toggle("blue-image");
@@ -879,7 +879,7 @@ export class Index {
         zoomModel.rows = this.rows;
         zoomModel.itemNumber = itemNumber;
         zoomModel.rowNumber = rowNumber;
-        this.dialogService.open({ viewModel: Zoom, model: zoomModel })
+        this.dialogService.open({ viewModel: Zoom, model: zoomModel , lock:false})
             .then(response => {
                 menu.classList.toggle("blue-image");
             });
@@ -887,13 +887,13 @@ export class Index {
 
     // Add files (Add images) dialog
     createAddfilesDialog() {
-        this.dialogService.open({ viewModel: AddFilesDialog, model: null })
+        this.dialogService.open({ viewModel: AddFilesDialog, model: null, lock:true })
             .then(response => {});
     }
 
     // Create error dialog sample
     createErrorDialogSample() {
-        this.dialogService.open({ viewModel: ErrorDialogSample, model: "no-op" })
+        this.dialogService.open({ viewModel: ErrorDialogSample, model: "no-op", lock:false })
             .then(response => {});
     }
 

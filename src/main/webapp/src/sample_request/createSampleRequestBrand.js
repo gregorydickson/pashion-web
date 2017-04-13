@@ -211,13 +211,13 @@ export class CreateSampleRequestBrand {
   }
 
   alertP (message){
-      this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000} }).then(response => {});
+      this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000}, lock:false }).then(response => {});
   }
 
   addAdHoc () {
     console.log ("ad hoc");
     var newAddressModel = {addresses:this.deliverTo, newAddress:{}}
-    this.dialogService.open({ viewModel: NewAddress, model: newAddressModel })
+    this.dialogService.open({ viewModel: NewAddress, model: newAddressModel, lock:true })
             .then(response => {
               if (!response.wasCancelled) {
                 this.deliverTo = response.output;

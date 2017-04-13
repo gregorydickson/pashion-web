@@ -153,7 +153,7 @@ class ConnectionController {
         def connection = Connection.get(params.id.toInteger())
         
         def jsonObject = request.JSON
-        //log.info "server side: zeroMessage count for: " + params.id.toInteger() + " json:"+jsonObject
+        log.info "server side: zeroMessage count for: " + params.id.toInteger() + " json:"+jsonObject
         connection.numberNewMessages = 0
         Connection.withTransaction { status ->
             connection.save(failOnError : true, flush: true)

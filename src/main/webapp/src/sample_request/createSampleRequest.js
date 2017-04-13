@@ -98,7 +98,7 @@ export class CreateSampleRequest {
 
   alertP (message){
 
-        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000} }).then(response => {});
+        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000}, lock:false }).then(response => {});
     }
 
   setStartDate(event,dayEvent,day){

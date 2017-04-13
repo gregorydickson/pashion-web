@@ -35,8 +35,8 @@ export class Zoom {
     this.user = this.userService.getUser().then(user => {
                 this.user = user;
             })
-    console.log("row number :"+zoomModel.rowNumber);
-    console.log("item number :"+zoomModel.itemNumber);
+    console.log("zoom.js row number :"+zoomModel.rowNumber);
+    console.log("zoom.js item number :"+zoomModel.itemNumber);
     //console.log("rows  :"+zoomModel.rows);
     console.log("item  :"+zoomModel.item);
     console.log("image:"+zoomModel.item.image);

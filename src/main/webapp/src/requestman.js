@@ -330,7 +330,7 @@ export class Requestman{
   }
 
   alertP (message){
-      this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000} }).then(response => {});
+      this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000}, lock:false }).then(response => {});
   }
 
   /*
@@ -380,7 +380,7 @@ export class Requestman{
 
   editSampleRequest(itemId) {
     this.closeSampleRequestMenu(itemId);
-    this.dialogService.open({viewModel: EditSampleRequest, model: itemId })
+    this.dialogService.open({viewModel: EditSampleRequest, model: itemId, lock:true })
       .then(response => {
           
       });

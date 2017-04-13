@@ -76,7 +76,7 @@ export class Header {
         this.selectval1 = ""; // changes selectval back to name, not sure why As should be 2 way binding
         // Remove the edit profile option while they're on it        
         this.availableUserItems = [];
-        this.dialogService.open({viewModel: CreateDialogEditContact, model: 0 })
+        this.dialogService.open({viewModel: CreateDialogEditContact, model: 0, lock:true })
           .then(response => {
             this.userService.getUser().then(user => {
               this.user = user;
@@ -144,7 +144,7 @@ export class Header {
   CreateDialogUpdatePhoto(id) {
     var menu = document.getElementById(id); 
     menu.classList.toggle("look-menu-show");
-    this.dialogService.open({viewModel: CreateDialogUpdatePhoto, model: 0 })
+    this.dialogService.open({viewModel: CreateDialogUpdatePhoto, model: 0, lock:true })
       .then(response => {
         if (!response.wasCancelled && response == 'delete') {
           console.log("avatar deleted")
@@ -154,7 +154,7 @@ export class Header {
 
     // Create dialog update photo
   updatePhoto() {
-    this.dialogService.open({viewModel: CreateDialogUpdatePhoto, model: 0 })
+    this.dialogService.open({viewModel: CreateDialogUpdatePhoto, model: 0, lock:true })
       .then(response => {});
   }
     
