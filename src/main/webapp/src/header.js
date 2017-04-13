@@ -8,18 +8,9 @@ import {DialogService} from 'aurelia-dialog';
 import {CreateDialogUpdatePhoto} from './contacts/dialogUpdatePhoto';
 
 @inject(HttpClient,UserService,Router, DialogService)
-export class Header {  
-  availableUserItems = [
-      { id: 'logout', text: 'LOGOUT' },
-      { id: 'edit', text: 'EDIT PROFILE' },
-  ];
+export class Header {
 
-  availableNavItems = [
-    { id: 'index', text: 'DASHBOARD' }, 
-    { id: 'adminpage', text: 'ADMIN' }
-  ];
-
-	//user = {};
+  //user = {};
   currentRoute = '';
 
   navOptions = [ {value: "index", name: "DASHBOARD"}, {value: "adminpage", name: "ADMIN"}];
@@ -36,19 +27,9 @@ export class Header {
   }
 
 
-	activate() {
-      return this.userService.getUser().then(user => {        
-        this.user = user;
-        this.userActionsPlaceholder = user.name;        
-      });     
-  }
+  activate() {
 
-  attached() {
-    switch (this.theRouter.currentInstruction.config.name) {
-      case 'adminpage':
-        this.selectedNavItems = ['adminpage'];
-        break;
-    }
+      this.userService.getUser().then(user => this.user = user);
   }
 
   filterMode(event) {
@@ -66,67 +47,20 @@ export class Header {
 
 
 
-  userActions(selected){
-    if (selected) {
-      this.selectval1 = selected;
-    }
-  		//console.log("header action: " + this.selectval);
-  		if (this.selectval1=="logout") window.location.href = '/user/logout';
+  userActions(){
+      //console.log("header action: " + this.selectval);
+      if (this.selectval1=="logout") window.location.href = '/user/logout';
       if (this.selectval1=="edit") {
         this.selectval1 = ""; // changes selectval back to name, not sure why As should be 2 way binding
-        // Remove the edit profile option while they're on it        
-        this.availableUserItems = [];
         this.dialogService.open({viewModel: CreateDialogEditContact, model: 0 })
           .then(response => {
-            this.userService.getUser().then(user => {
-              this.user = user;
-
-              // Add back in the available options
-              this.availableUserItems = [
-                { id: 'logout', text: 'LOGOUT' },
-                { id: 'edit', text: 'EDIT PROFILE' },
-              ];
-            });
-          
-            
-          });          
+            this.userService.getUser().then(user => this.user = user);
+          });
       };
 
-  }  
-
-  onUserActionCallback(event) {   
-      console.log('onUserActionCallback() called:', event.detail.value);
-
-      if (event.detail) {
-          let selectedValue = event.detail.value;         
-          console.log('Selected value:', selectedValue);             
-          this.userActions(selectedValue);       
-      }
   }
 
-  onNavOptionCallback(event) {   
-      console.log('onNavOptionCallback() called:', event.detail.value);
-
-      if (event.detail) {
-          let selectedValue = event.detail.value;         
-          console.log('Selected value:', selectedValue);    
-          
-          this.admin(selectedValue);
-      }
-  }
-
-  admin(route){     
-      this.theRouter.navigateToRoute(route);
-      
-      if (this.currentRoute == "adminpage") {
-         console.log("admin, getUser()");
-         this.userService.getUser().then(user => this.user = user);       
-      }
-  }
-
-  /* NOTE: Leaving previous admin() method in the event some of 
-           this extra logic is needed for some reason. 
-  admin(){   
+    admin(){   
       this.currentRoute = this.theRouter.currentInstruction.config.name;
       console.log("admin, currentRoute: " + this.currentRoute);
       if (this.currentRoute == 'index') { this.theRouter.navigate("adminpage"); }
@@ -138,7 +72,6 @@ export class Header {
         console.log("admin, getUser()");
       }
   }
-  */
 
     // Create dialog update photo
   CreateDialogUpdatePhoto(id) {
