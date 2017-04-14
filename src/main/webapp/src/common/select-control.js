@@ -9,8 +9,7 @@ import 'select2';
 @inject(Element, TaskQueue)
 export class SelectControl { 
     selectDefaultOptions = { 
-        minimumResultsForSearch: 15,
-        width: '110px',
+        minimumResultsForSearch: 15,      
         sorter: function(data) {          
             // Let's remove the placeholder from the list of options
             let index = data.findIndex(x => x.id == "");    
@@ -32,6 +31,7 @@ export class SelectControl {
     @bindable allow_clear = false;
     @bindable selectOptions;
     @bindable grouping = false;
+    @bindable width = '100%';
 
     constructor(element, taskQueue) {
         this.element = element;
@@ -72,6 +72,8 @@ export class SelectControl {
     }
 
     create() {
+        this.selectDefaultOptions.width = this.width;
+        
         let el = $(this.element).find('select');
         let sel = el.select2(this.selectDefaultOptions);
 
