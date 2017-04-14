@@ -139,7 +139,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div if.bind="(user.type === 'press') || (user.type === 'agency')"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
+                            <div if.bind="(user.type === 'press') || (user.type === 'prAgency')"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
                                 <table class="big-accordion"  cellspacing="2"  style="table-layout: fixed;">
                                     <tr>
                                         <td class="accordion-underline w3"></td>
@@ -168,11 +168,13 @@
                                             </td>
                                             <td class="col1 accordion-grey w6">${booking.id}</td>
                                             <td if.bind="user.type === 'brand'" class="col2 accordion-grey w7">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
-                                            <td if.bind="(user.type === 'press') || (user.type === 'agency')" class="col2 accordion-grey w7">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
+                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="col2 accordion-grey w7">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
 
-                                            <td class="col3 accordion-grey w13 ${computedOverdue(booking.bookingStartDate) ? 'red-deco' : ''} ">${booking.bookingStartDate | viewDateFormat}</td>
+                                            <td if.bind="user.type === 'brand'" class="col3 accordion-grey w13 ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''} ">${booking.bookingStartDate | viewDateFormat}</td>
 
-                                            <td if.bind="(user.type === 'press') || (user.type === 'agency')" class="col4 accordion-grey w14 variable-padding">${booking.brand.name}</td>
+                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="col3 accordion-grey w13 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''} ">${booking.bookingStartDate | viewDateFormat}</td>
+
+                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="col4 accordion-grey w14 variable-padding">${booking.brand.name}</td>
                                             <td if.bind="user.type === 'brand'" class="col4 accordion-grey w14 variable-padding">${booking.pressHouse.name}</td>
 
                                             <td if.bind="booking.editorialName" class="col5 accordion-grey w16 variable-padding">${booking.editorialName}</td>
@@ -182,7 +184,7 @@
 
                                             <td class="col7 accordion-grey w3">${booking.searchableItems.length}</td>
 
-                                            <td if.bind="(user.type === 'press') || (user.type === 'agency')" 
+                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" 
                                                 class="col8 accordion-grey w13 to-u-c 
                                                     ${(booking.requestStatusPress=='Pending') ? 'ui-text-label-m-blue' : ''}">
                                                     ${booking.requestStatusPress}</td>
@@ -209,7 +211,7 @@
                                                             <li class="look-menu-item"><a click.delegate="deleteSampleRequest($index,booking.id)" href="#" class="look-menu-link">Delete Request</a></li>
                                                         </ul>
 
-                                                        <ul if.bind="(user.type === 'press') || (user.type === 'agency')" class="look-menu-list">
+                                                        <ul if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="look-menu-list">
                                                             <li class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id)" class="look-menu-link">Edit</a></li>
                                                             <li class="look-menu-item"><a href="#" click.delegate="pressMarkReceivedSampleRequest(booking.id)" class="look-menu-link">Mark Received</a></li>
                                                             <li class="look-menu-item"><a href="#" click.delegate="pressShipSampleRequest(booking.id)"  class="look-menu-link">Ship</a></li>
@@ -279,7 +281,7 @@
                                                 <tr style="height:1rem;" repeat.for="item of booking.searchableItems" >
                                                     <td if.bind="(user.type === 'brand') && !(item.clientID)" class="accordion sample-padding to-u-c"> ${booking.season | seasonAbbreviation:seasons }${look}.${$index+1} : ${item.status.status} : <span class="to-l-c">${item.attributes}</span></td>
                                                     <td if.bind="(user.type === 'brand') && (item.clientID)" class="accordion sample-padding to-u-c"> ${booking.season | seasonAbbreviation:seasons }${look}.${$index+1} [ ${item.clientID} ] : ${item.status.status} : <span class="to-l-c">${item.attributes}</span></td>
-                                                    <td if.bind="(user.type === 'press') || (user.type === 'agency')"  class="accordion sample-padding to-u-c">${look}.${$index+1} : ${item.status.status} : ${item.attributes}</td>
+                                                    <td if.bind="(user.type === 'press') || (user.type === 'prAgency')"  class="accordion sample-padding to-u-c">${look}.${$index+1} : ${item.status.status} : ${item.attributes}</td>
                                                 </tr>
                                             </table>
 
