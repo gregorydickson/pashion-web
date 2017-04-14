@@ -172,7 +172,8 @@
                                 <td class="accordion w15">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
                                 <td class="accordion w35 ${computedOverdue(booking.bookingStartDate) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
                                 <td class.bind="(booking.requestStatusPress=='Pending') ? 'accordion ui-text-label-m-blue w30 to-u-c' :'accordion w30 to-u-c'" >${booking.requestStatusPress}</td>
-                                <td class="accordion w10">
+
+                                <td class="accordion w10" style="overflow:visible;">
                                     <div class="look-menu-absolute-wrap">
                                         <span class="edit-box" ><a href="#" click.delegate="sampleRequestMenu(booking.id)">...</a></span>
                                         <!-- edit request modal PRESS popup -->
