@@ -77,7 +77,7 @@
                         <div class="grid-block shrink" style="margin-left: 1rem; margin-right: 1rem; margin-top:1.5rem;">
                             <div class="grid-block">
                                 <!-- Search requests -->
-                                <input type="search" value.two-way="searchTextReqMan" class="search-box" id="search-requests" placeholder="Search for look number, id, text..." onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search for look number, id, text...'">
+                                <input type="search" value.two-way="searchTextReqMan" class="search-box expandoHover" id="search-requests" placeholder="Search for look number, id, text..." onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search for look number, id, text...'">
                             </div>
                             <div class="grid-block align-center">
                                 <!-- filter requests
@@ -133,8 +133,8 @@
                                         <td class="accordion-underline w14">COMPANY</td>
                                         <td class="accordion-underline w16">EDITORIAL</td>
                                         <td class="accordion-underline w20">WHO</td>
-                                        <td class="accordion-underline w3">#</td>
-                                        <td class="accordion-underline w13">STATUS</td>
+                                        <td class="accordion-underline w3"><img src="/assets/shoppingcart60x47.png" height=47 width=60></img></td>
+                                        <td class="accordion-underline w13" style="padding-left:7px;">STATUS</td>
                                         <td class="accordion-underline w5"></td>
                                     </tr>
                                 </table>
@@ -149,8 +149,8 @@
                                         <td class="accordion-underline w14">BRAND</td>
                                         <td class="accordion-underline w16">EDITORIAL</td>
                                         <td class="accordion-underline w20">OWNER</td>
-                                        <td class="accordion-underline w3">#</td>
-                                        <td class="accordion-underline w13">STATUS</td>
+                                        <td class="accordion-underline w3"><img src="/assets/shoppingcart60x47.png" height=47 width=60></img></td>
+                                        <td class="accordion-underline w13" style="padding-left:10px;">STATUS</td>
                                         <td class="accordion-underline w5"></td>
                                     </tr>
                                 </table>
@@ -164,7 +164,7 @@
                                     <table  class="big-accordion" cellspacing="2" style="table-layout: fixed;">
                                         <tr class="brandGridContent">
                                             <td class="accordion-grey w3">
-                                                <button id="button${$index}" class="accordion" click.delegate="closeExpand($index,booking)"></button>
+                                                <button id="button${$index}" class="accordion expandoHover" click.delegate="closeExpand($index,booking)"></button>
                                             </td>
                                             <td class="col1 accordion-grey w6">${booking.id}</td>
                                             <td if.bind="user.type === 'brand'" class="col2 accordion-grey w7">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
@@ -182,21 +182,21 @@
 
                                             <td class="col6 accordion-grey w20 variable-padding">${booking.requestingUser.name} ${booking.requestingUser.surname}</td>
 
-                                            <td class="col7 accordion-grey w3">${booking.searchableItems.length}</td>
+                                            <td class="col7 accordion-grey w3" style="padding-left:9px;">${booking.searchableItems.length}</td>
 
                                             <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" 
                                                 class="col8 accordion-grey w13 to-u-c 
-                                                    ${(booking.requestStatusPress=='Pending') ? 'ui-text-label-m-blue' : ''}">
+                                                    ${(booking.requestStatusPress=='Pending') ? 'ui-text-label-m-blue' : ''}" style="padding-left:11px;">
                                                     ${booking.requestStatusPress}</td>
 
                                             <td if.bind="user.type === 'brand'" 
                                                 class="col8 accordion-grey w13 to-u-c 
-                                                     ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}">
+                                                     ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" style="padding-left:11px;">
                                                      ${booking.requestStatusBrand}</td>
 
                                             <td class="accordion-grey w5" style="overflow:visible;"> 
                                                 <div class="look-menu-absolute-wrap">
-                                                    <span class="edit-box" ><a href="#" click.delegate="lookEditMenu(booking.id)">...</a></span>
+                                                    <span class="edit-box" ><a href="#" class="expandoHover" click.delegate="lookEditMenu(booking.id)">...</a></span>
                                                     <!-- edit request modal popup -->
                                                      <div class="look-menu-absolute" id="requestManTest${booking.id}">
                                                         <span class="look-menu-heading">REQUEST ${booking.id}</span>
