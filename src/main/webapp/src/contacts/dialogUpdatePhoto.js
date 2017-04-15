@@ -32,6 +32,7 @@ export class CreateDialogUpdatePhoto {
         reader.readAsDataURL(avatar[0]);
         this.avatar = null;
         console.log('waiting');
+        this.close();
       } else{
           this.flashMessage = 'Image Files Only'
           var parent = this;
@@ -55,6 +56,7 @@ export class CreateDialogUpdatePhoto {
         this.user = user;
         this.user.avatar = '';
         this.userService.clearAvatar(user);
+        this.close();
       })
   }
 
