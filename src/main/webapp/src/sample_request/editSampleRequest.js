@@ -21,6 +21,7 @@ export class EditSampleRequest {
   //seasons = [];
   courier = [];
   payment = [];
+  times = [];
 
   constructor(sampleRequestService,controller,userService,http, DialogService){
     http.configure(config => {
@@ -38,7 +39,10 @@ export class EditSampleRequest {
     
       
       return Promise.all ([
-        this.sampleRequestService.getSampleRequest(requestId).then(sampleRequest => {this.sampleRequest = sampleRequest;}),
+        this.sampleRequestService.getSampleRequest(requestId).then(sampleRequest => {
+          this.sampleRequest = sampleRequest;
+          console.log(JSON.stringify(sampleRequest));
+        }),
         this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => {
           this.courier = courier;
           this.sampleRequest.courierOut = "They Book"; //RM Defaults not working
@@ -49,7 +53,9 @@ export class EditSampleRequest {
           this.sampleRequest.paymentOut = "50/50";
           this.sampleRequest.paymentReturn = "50/50";
         }), 
-        this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons)]);
+        this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
+        this.http.fetch('/dashboard/times').then(response => response.json()).then(times => this.times = times)
+        ]);
     
   }
 

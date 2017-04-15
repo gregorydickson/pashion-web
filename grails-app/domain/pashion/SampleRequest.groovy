@@ -39,9 +39,13 @@ class SampleRequest {
 
 	String overview
 	
-	String pickupId
+	
+	// Pickup Date is the Date for the courier pickup
 	Date pickupDate
-	String pickupDestination
+	Date pickupDateReturn
+	String pickupTime
+	String pickupTimeReturn
+	
 
 	String editorialName
 	String editorialWho
@@ -87,9 +91,12 @@ class SampleRequest {
 
 		overview nullable:true
 
-		pickupId nullable: true
+		
 		pickupDate nullable: true
-	 	pickupDestination nullable: true
+		pickupTime nullable: true
+		pickupDateReturn nullable: true
+		pickupTimeReturn nullable: true
+	 	
 
 		editorialName nullable: true 
 		editorialWho nullable: true 

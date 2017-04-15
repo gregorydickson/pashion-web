@@ -138,7 +138,10 @@ class StuartService {
 		return shippingEvent
 	}
 
-	
+	/*
+
+	*	The sample request's pickup date is used to schedule the Stuart courier
+	*/
 	def createJob(Address fromAddress, Address toAddress, ShippingEvent shippingEvent){
 		log.info "stuart service create job"
 		if(token == null)
