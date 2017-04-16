@@ -38,6 +38,8 @@ class SampleRequest {
 	String requiredBy
 
 	String overview
+
+	String message
 	
 	
 	// Pickup Date is the Date for the courier pickup
@@ -82,6 +84,8 @@ class SampleRequest {
 		brand nullable:true
 		
 		deliverTo nullable:true
+
+		message nullable:true
 
 		pressHouse nullable: true
 		courierOut nullable: true

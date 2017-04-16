@@ -9,6 +9,7 @@ import grails.converters.JSON
 class StuartController {
 
 	def stuartService
+	def sampleRequestService
 
 	def index(){
 		Address address1 = Address.get(61)
@@ -58,9 +59,25 @@ class StuartController {
 		response.status = 200
 		render([status: 'updated'] as JSON)
 
-
-		
-
 	}
+
+	def bookOut(){
+        def sr = sampleRequestService.updateSampleRequest(request.JSON)
+        sr.message = "Messenger Booked"
+        response.status = 200
+        render sr as JSON
+	}
+
+	def bookReturn(){
+		def sr = sampleRequestService.updateSampleRequest(request.JSON)
+		sr.message = "Messenger Booked"
+		response.status = 200
+		render sr as JSON
+	}
+
+
+
+
+
 
 }

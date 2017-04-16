@@ -157,6 +157,8 @@ class SampleRequestService {
 
             if(jsonObject.pickupDate){
                 sr.pickupDate = dfEn.parse(jsonObject.pickupDate)
+                log.info "pickup date:"+jsonObject.pickupDate
+                log.info "pickup date sample request:"+sr.pickupDate
             }
             if(jsonObject.pickupDateReturn){
                 sr.pickupDateReturn = dfEn.parse(jsonObject.pickupDateReturn)

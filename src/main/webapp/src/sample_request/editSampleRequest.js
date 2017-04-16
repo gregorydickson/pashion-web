@@ -77,7 +77,11 @@ export class EditSampleRequest {
     // if fail dialog box
     // if succeed, populate ID field
     console.log ("Initiate Stuart booking from editSampleRequest Out");
-    this.alertP("Booking out messages");
+    this.sampleRequestService.bookOutSampleRequest(this.sampleRequest).then(sr => {
+      this.sampleRequest = sr;
+      this.alertP(sr.message);
+    });
+    
   }
 
   bookReturn(){
@@ -85,12 +89,16 @@ export class EditSampleRequest {
     // if fail dialog box
     // if succeed, populate ID field
     console.log ("Initiate Stuart booking from editSampleRequest Return");
-    this.alertP("Booking return messages");
+    this.sampleRequestService.bookReturnSampleRequest(this.sampleRequest).then(sr => {
+      this.sampleRequest = sr;
+      this.alertP(sr.message);
+    });
+    
   }
 
   alertP (message){
-        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Edit Request", message:message, timeout:5000} }).then(response => {});
-    }
+    this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Edit Request", message:message, timeout:5000} }).then(response => {});
+  }
 
   removeSample(id,index){
     let sr = this.sampleRequest;
@@ -143,14 +151,15 @@ export class EditSampleRequest {
 
   }
 
+
   update(){
     console.log("Update: submitting Sample Request");
     let sr = this.sampleRequest;
-    if(sr.shippingOut.startDate)
+    /*if(sr.shippingOut.startDate)
       sr.shippingOut.startDate = moment(sr.shippingOut.startDate).format('YYYY-MM-DD hh:mm')
     if(sr.shippingReturn.endDate)
       sr.shippingReturn.endDate = moment(sr.shippingReturn.endDate).format('YYYY-MM-DD hh:mm')
-
+    */
     this.sampleRequestService.updateSampleRequest(sr).then(message => {
       this.controller.close();
     });

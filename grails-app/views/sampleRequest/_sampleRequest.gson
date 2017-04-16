@@ -8,9 +8,9 @@ log.info "render a sample request"
 
 json g.render(sampleRequest,[expand:['searchableItemsStatus','searchableItemsProposed','searchableItems','returnToAddress','shippingOut','shippingReturn','addressDestination'],excludes:['brand','shippingOut','shippingReturn','requestingUser','deliverTo']]){
 	
-	pickupDate sampleRequest.pickupDate?.format('yyyy-MMM-dd')
+	pickupDate sampleRequest.pickupDate?.format('dd-MMM-yyyy')
 	pickupTime sampleRequest.pickupTime
-	pickupDateReturn sampleRequest.pickupDateReturn?.format('yyyy-MMM-dd')
+	pickupDateReturn sampleRequest.pickupDateReturn?.format('dd-MMM-yyyy')
 	pickupTimeReturn sampleRequest.pickupTimeReturn
 	brand{
 		name sampleRequest.brand.name

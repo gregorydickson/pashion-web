@@ -135,7 +135,7 @@
                         <div if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="grid-block ">
                             <span class="inline-label slim-text-box-label">Pickup Date</span>
                             <span >
-                                <input datepicker type="text" class="slim-text-box" value.bind="sampleRequest.pickupDateReturn">
+                                <input datepicker type="text" class="slim-text-box" value.bind="sampleRequest.pickupDateReturn  | viewDateFormat">
                             </span>
                         </div>
                         <div if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="grid-block ">
@@ -186,7 +186,7 @@
                         <div if.bind="sampleRequest.courierOut=='Pashion Courier'" class="grid-block ">
                             <span class="inline-label slim-text-box-label">Pickup Date</span>
                             <span >
-                                <input datepicker type="text" class="slim-text-box" value.bind="sampleRequest.pickupDate">
+                                <input datepicker type="text" class="slim-text-box" value.bind="sampleRequest.pickupDate | viewDateFormat">
                             </span>
                         </div>
                         <div if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="grid-block ">

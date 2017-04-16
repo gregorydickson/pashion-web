@@ -267,6 +267,45 @@ export class SampleRequestService{
       return promise;
     }
 
+    bookOutSampleRequest(sr){
+      console.log("book out sample request");
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/stuart/bookOut', {
+              method: 'post',
+              body: json(sr)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if(result.session == 'invalid'){
+                    window.location.href = '/user/login';
+                    return;
+                }
+                resolve(result);
+            });
+      });
+      return promise;
+
+    }
+
+    bookReturnSampleRequest(sr){
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/stuart/bookReturn', {
+              method: 'post',
+              body: json(sr)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if(result.session == 'invalid'){
+                    window.location.href = '/user/login';
+                    return;
+                }
+                resolve(result);
+            });
+      });
+      return promise;
+
+    }
+
   
 
     
