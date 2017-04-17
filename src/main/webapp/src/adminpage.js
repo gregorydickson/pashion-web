@@ -91,7 +91,7 @@ export class Adminpage{
   CreateDialogNewUser() {
     console.log("cities:");
     console.log(JSON.stringify(this.cities));
-    this.dialogService.open({viewModel: CreateDialogNewUser, model:this.cities })
+    this.dialogService.open({viewModel: CreateDialogNewUser, model:this.cities, lock:true })
       .then(response => {
 
         console.log("user created:"+response);
@@ -103,7 +103,7 @@ export class Adminpage{
     // Create dialog IMPORT USERS
 
   CreateDialogImportUsers() {
-    this.dialogService.open({viewModel: CreateDialogImportUsers, model: "no-op" })
+    this.dialogService.open({viewModel: CreateDialogImportUsers, model: "no-op", lock:true })
       .then(response => {});
   }
 
@@ -111,7 +111,7 @@ export class Adminpage{
     // Create dialog NEW OFFICE
 
   CreateDialogNewOffice(user) {
-    this.dialogService.open({viewModel: CreateDialogNewOffice, model: this.user })
+    this.dialogService.open({viewModel: CreateDialogNewOffice, model: this.user , lock:true})
       .then(response => {
         if (this.user.brand != null){
             this.brandService.getBrandAddresses(this.user.brand.id)
@@ -129,7 +129,7 @@ export class Adminpage{
   deleteUser(id, userName){
     console.log("deleting:"+id);
 
-      this.dialogService.open({viewModel: CreateDialogConfirmDelete, model: userName })
+      this.dialogService.open({viewModel: CreateDialogConfirmDelete, model: userName, lock:true })
                 .then(response => {
 
                   console.log("confirm dialog was cancelled: " + response.wasCancelled);

@@ -31,7 +31,7 @@ export class CreateAddress {
 
   alertP (message){
 
-        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Address", message:message, timeout:5000} }).then(response => {});
+        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Address", message:message, timeout:5000}, lock:false }).then(response => {});
     }
 
   submit(){

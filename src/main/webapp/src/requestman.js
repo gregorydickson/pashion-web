@@ -137,10 +137,12 @@ export class Requestman{
                 }          
     } */
 
-    computedOverdue(booking) {   
-        var computedDate =     new Date(booking);
+    computedOverdue(booking, status) {   
+        var computedDate = new Date(booking);
+        var overdue = this.today > computedDate;
+        overdue = (overdue && (status == 'Pending'))
         //console.log("computedOverdue function, booking: " + booking + " today: " + this.today + " computed: " +  computedDate + " overdue: " + (this.today > computedDate));
-        return this.today > computedDate;
+        return overdue;
     }
 
     createPDFDialog() {
@@ -258,8 +260,8 @@ export class Requestman{
     if (filter == 'OVERDUE REQUESTS') {
       var computedDate = new Date(value.bookingStartDate);
       var today = new Date();
-      if (user.type == "brand" || user.type == "prAgency") filterVal =  (today > computedDate);
-      if (user.type == "press" )  filterVal = (today > computedDate);
+        if (user.type == "brand" || user.type == "prAgency") filterVal =  ((today > computedDate) && (value.requestStatusBrand == 'Pending'));
+        if (user.type == "press" )  filterVal = ((today > computedDate) && (value.requestStatusPress == 'Pending'));
     }
     if (filter == 'OPEN REQUESTS') {
       if (user.type == "brand"  || user.type == "prAgency") filterVal = (value.requestStatusBrand != 'Closed');
@@ -330,7 +332,7 @@ export class Requestman{
   }
 
   alertP (message){
-      this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000} }).then(response => {});
+      this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000}, lock:false }).then(response => {});
   }
 
   /*
@@ -380,7 +382,7 @@ export class Requestman{
 
   editSampleRequest(itemId) {
     this.closeSampleRequestMenu(itemId);
-    this.dialogService.open({viewModel: EditSampleRequest, model: itemId })
+    this.dialogService.open({viewModel: EditSampleRequest, model: itemId, lock:true })
       .then(response => {
           
       });

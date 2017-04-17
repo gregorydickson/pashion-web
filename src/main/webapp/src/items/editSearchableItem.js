@@ -123,7 +123,7 @@ export class EditSearchableItem {
 
 
   alertP (message){
-        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Edit", message:message, timeout:5000} }).then(response => {});
+        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Edit", message:message, timeout:5000}, lock:false }).then(response => {});
     }
 
   colorAdd (sample) {    

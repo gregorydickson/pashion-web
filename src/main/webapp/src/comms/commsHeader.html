@@ -14,7 +14,7 @@
                         <span class="ui-text-label-m-broad tool-header-selected">MESSAGES</span>
                     </div>
                     <div class="grid-block tool-header tool-header-spacer">
-                        <span class="ui-text-label-m-broad "><a href="#" click.delegate="setStatusTab('contacts')">CONTACTS</span>
+                        <span class="ui-text-label-m-broad expandoHover"><a href="#" click.delegate="setStatusTab('contacts')">CONTACTS</span>
                     <!--    <span if.bind="(contactActivity)" class="alert-box-small"></span> -->
                     </div>
                     <div id="comms_panel" class="grid-block align-right tool-header tool-header-spacer">
@@ -34,7 +34,7 @@
                 <div class="grid-block tool-header shrink">
                     <div class="grid-block align-left tool-header tool-header-spacer">
                         <span if.bind="(currentContact==null)" class="ui-text-label-m-broad tool-header-greyed-out">MESSAGES</span>
-                        <span  if.bind="(currentContact!=null)" class="ui-text-label-m-broad "><a href="#" class= "" click.delegate="setStatusTab('messages')">MESSAGES</a></span>
+                        <span  if.bind="(currentContact!=null)" class="ui-text-label-m-broad expandoHover"><a href="#" class= "" click.delegate="setStatusTab('messages')">MESSAGES</a></span>
                     </div>
                     <div class="grid-block tool-header tool-header-spacer">
                         <span class="ui-text-label-m-broad tool-header-selected">CONTACTS</span>

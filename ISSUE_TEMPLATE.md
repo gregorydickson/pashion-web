@@ -1,3 +1,5 @@
-1. Brand or Press user
-2. login id
-3. Collection / Look ID / Sample Name used
+- [ ] Brand
+- [ ] Press
+* login id:
+* Collection / Look ID / Sample Name used:
+* Build Number:

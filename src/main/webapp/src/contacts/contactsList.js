@@ -191,7 +191,7 @@ export class ContactsList {
 
   deleteContact(userId,id,deleteEmail) {
 
-      this.dialogService.open({viewModel: CreateDialogConfirmDelete, model: deleteEmail })
+      this.dialogService.open({viewModel: CreateDialogConfirmDelete, model: deleteEmail, lock:true })
           .then(response => {
                              console.log("confirm dialog was cancelled: " + response.wasCancelled);
                              if (response.wasCancelled) return false ;
@@ -225,7 +225,7 @@ export class ContactsList {
   createDialogEditContact(id) {
     var menu = document.getElementById(id); 
     menu.classList.toggle("look-menu-show");
-    this.dialogService.open({viewModel: CreateDialogEditContact, model: 0 })
+    this.dialogService.open({viewModel: CreateDialogEditContact, model: 0 , lock:true})
       .then(response => {});
   }
 */
@@ -234,13 +234,13 @@ export class ContactsList {
  /* CreateDialogUpdatePhoto(id) {
     var menu = document.getElementById(id); 
     menu.classList.toggle("look-menu-show");
-    this.dialogService.open({viewModel: CreateDialogUpdatePhoto, model: 0 })
+    this.dialogService.open({viewModel: CreateDialogUpdatePhoto, model: 0, lock:true })
       .then(response => {});
   }
 
     // Create dialog update photo
   updatePhoto() {
-    this.dialogService.open({viewModel: CreateDialogUpdatePhoto, model: 0 })
+    this.dialogService.open({viewModel: CreateDialogUpdatePhoto, model: 0, lock:true })
       .then(response => {});
   }
 */

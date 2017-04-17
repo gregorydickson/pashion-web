@@ -14,7 +14,7 @@ launchChat () {
 }
 
 showLegal (){
-	this.dialogService.open({viewModel: LegalText })
+	this.dialogService.open({viewModel: LegalText , lock:false})
 }
     
 }

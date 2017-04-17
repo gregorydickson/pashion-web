@@ -126,8 +126,9 @@ export class EditSampleRequest {
   }
 
   alertP (message){
-    this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Edit Request", message:message, timeout:5000} }).then(response => {});
-  }
+
+        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Edit Request", message:message, timeout:5000}, lock:false }).then(response => {});
+    }
 
   removeSample(id,index){
     let sr = this.sampleRequest;

@@ -1,14 +1,12 @@
 <template>
     <require from="./dashboard_filters/filters-mode"></require>
-    <require from="./common/select-control"></require>
-
-    <!--header.html-->
+<!--header.html-->
         <div class="">
             <ul class="menu-bar" style="background: #ebebeb">
                 <li style="display:flex; max-width:250px;">
                     
                     
-                        <div class="avatar-container" style="margin-right: 1rem; margin-left:1rem; margin-top:0.5rem;">
+                        <div class="avatar-container expandoHover" style="margin-right: 1rem; margin-left:1rem; margin-top:0.5rem;">
                             <a click.delegate="updatePhoto()">
                                 <div show.bind="(user.avatar)" class="avatar-img-cover" style="height: 45px;border-radius: 100%;overflow:hidden;background: url(${user.avatar});background-repeat: no-repeat;background-size: cover;background-position: center;display: block;width: 45px;"></div>
                                 <div show.bind="(!user.avatar)"  class="avatar-circle avatar-text ">${user.name.charAt(0)}</div>
@@ -17,7 +15,9 @@
                         </div>
                     
 
-                   <select value.bind="selectval1" change.trigger="userActions()" name="NotUSed" id="headerModeSelect" class="nav-label-header top-menu-modifier" style="max-width:150px;">
+
+
+                    <select value.bind="selectval1" change.trigger="userActions()" name="NotUSed" id="headerModeSelect" class="nav-label-header top-menu-modifier" style="max-width:150px;">
                         <option value="no">${user.name}</option>
                         <option value= "logout">LOGOUT</option>
                         <option if.bind="(currentRoute != 'index')" value= "edit">EDIT PROFILE</option>
@@ -37,9 +37,12 @@
                     <li></li>
                     <li></li>
                     <li style="flex: none;">
-                       <select value.one-way="theRouter.currentInstruction.config.name" change.trigger="admin()" id="headerAdminSelect" class="nav-label-header top-menu-modifier" style="max-width:200px; width:200px;margin-right:35px; ">
-                            <option repeat.for="option of navOptions" model.bind="option.value">${option.name}</option>                           
-                         </select>
+                        <select value.one-way="theRouter.currentInstruction.config.name" change.trigger="admin()" id="headerAdminSelect" class="nav-label-header top-menu-modifier" style="max-width:200px; width:200px;margin-right:35px; ">
+                            <option repeat.for="option of navOptions" model.bind="option.value">${option.name}</option>
+                            <!-- debug <option>${theRouter.currentInstruction.config.name}</option> -->
+
+                           <!--  <option>TREND ANALYSIS</option> -->
+                        </select>
                     </li>
                 
             </ul>

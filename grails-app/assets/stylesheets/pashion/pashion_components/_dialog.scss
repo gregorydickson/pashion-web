@@ -173,5 +173,10 @@ ai-dialog-header .tool-header {
   white-space: nowrap;
 }
 .dialog-header-content .align-center {
+  // margin-left: 32px;
+}
+
+// for dialogs with an X
+.fix-align-header {
   margin-left: 32px;
 }

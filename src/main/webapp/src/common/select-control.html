@@ -8,10 +8,10 @@
         size="1"
         >
         <optgroup label.bind="group.text" repeat.for="group of options" if.bind="grouping">
-            <option repeat.for="option of group.children" value.bind="option.id">${option.text}</option>
+            <option repeat.for="option of group.children" value.bind="option.id">${option.text.substr(0,25)}</option>
         </optgroup>   
          <option if.bind="placeholder" value="">${placeholder}</option>
-        <option repeat.for="option of options" value.bind="option.id" if.bind="!grouping">${option.text}</option>
+        <option repeat.for="option of options" value.bind="option.id" if.bind="!grouping">${option.text.substr(0,25)}</option>
     </select>
 
     <!-- multiple/tag mode requires Select2 4.0+ -->
