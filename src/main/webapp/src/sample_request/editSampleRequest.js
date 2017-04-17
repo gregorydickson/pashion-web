@@ -8,9 +8,10 @@ import {UserService} from 'services/userService';
 import { CreateDialogAlert } from 'common/dialogAlert';
 import {DialogService} from 'aurelia-dialog';
 import moment from 'moment'
+import { busy } from 'services/busy';
 
 
-@inject(SampleRequestService, DialogController,UserService, HttpClient, DialogService)
+@inject(SampleRequestService, DialogController,UserService, HttpClient, DialogService,busy)
 export class EditSampleRequest {
 	static inject = [DialogController];
 
@@ -21,8 +22,9 @@ export class EditSampleRequest {
   //seasons = [];
   courier = [];
   payment = [];
+  times = [];
 
-  constructor(sampleRequestService,controller,userService,http, DialogService){
+  constructor(sampleRequestService,controller,userService,http, DialogService,busy){
     http.configure(config => {
       config
         .useStandardConfiguration();
@@ -32,13 +34,17 @@ export class EditSampleRequest {
     this.sampleRequestService = sampleRequestService;
     this.userService = userService;
     this.dialogService = DialogService;
+    this.busy = busy;
   }
 
   activate(requestId){
     
       
       return Promise.all ([
-        this.sampleRequestService.getSampleRequest(requestId).then(sampleRequest => {this.sampleRequest = sampleRequest;}),
+        this.sampleRequestService.getSampleRequest(requestId).then(sampleRequest => {
+          this.sampleRequest = sampleRequest;
+          console.log(JSON.stringify(sampleRequest));
+        }),
         this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => {
           this.courier = courier;
           this.sampleRequest.courierOut = "They Book"; //RM Defaults not working
@@ -49,7 +55,9 @@ export class EditSampleRequest {
           this.sampleRequest.paymentOut = "50/50";
           this.sampleRequest.paymentReturn = "50/50";
         }), 
-        this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons)]);
+        this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
+        this.http.fetch('/dashboard/times').then(response => response.json()).then(times => this.times = times)
+        ]);
     
   }
 
@@ -70,19 +78,55 @@ export class EditSampleRequest {
     // initiate stuart booking
     // if fail dialog box
     // if succeed, populate ID field
+    if(!(this.sampleRequest.pickupDate) ||
+     !(this.sampleRequest.pickupTime)){
+      this.alertP("Please pick a Date and Time");
+      return
+    }
+    this.busy.on();
     console.log ("Initiate Stuart booking from editSampleRequest Out");
-    this.alertP("Booking out messages");
+    document.getElementById('bookOut').style.visibility = 'hidden';
+    this.sampleRequestService.bookOutSampleRequest(this.sampleRequest).then(sr => {
+      this.sampleRequestService.getSampleRequest(this.sampleRequest.id).then(sampleRequest => {
+          this.sampleRequest = sampleRequest;
+          this.busy.off();
+          this.alertP(sr.message);
+          document.getElementById('bookOut').style.visibility = 'visible';
+      });
+      
+      
+      
+    });
+    
   }
 
   bookReturn(){
     // initiate stuart booking
     // if fail dialog box
     // if succeed, populate ID field
+    if(!(this.sampleRequest.pickupDateReturn) ||
+     !(this.sampleRequest.pickupTimeReturn)){
+      this.alertP("Please pick a Date and Time");
+      return
+    }
+    this.busy.on();
+    document.getElementById('bookReturn').style.visibility = 'hidden';
     console.log ("Initiate Stuart booking from editSampleRequest Return");
-    this.alertP("Booking return messages");
+    this.sampleRequestService.bookReturnSampleRequest(this.sampleRequest).then(sr => {
+      this.sampleRequestService.getSampleRequest(requestId).then(sampleRequest => {
+          this.sampleRequest = sampleRequest;
+          this.busy.off();
+          this.alertP(sr.message);
+          document.getElementById('bookReturn').style.visibility = 'visible';
+      });
+      
+
+    });
+    
   }
 
   alertP (message){
+
         this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Edit Request", message:message, timeout:5000}, lock:false }).then(response => {});
     }
 
@@ -137,14 +181,15 @@ export class EditSampleRequest {
 
   }
 
+
   update(){
     console.log("Update: submitting Sample Request");
     let sr = this.sampleRequest;
-    if(sr.shippingOut.startDate)
+    /*if(sr.shippingOut.startDate)
       sr.shippingOut.startDate = moment(sr.shippingOut.startDate).format('YYYY-MM-DD hh:mm')
     if(sr.shippingReturn.endDate)
       sr.shippingReturn.endDate = moment(sr.shippingReturn.endDate).format('YYYY-MM-DD hh:mm')
-
+    */
     this.sampleRequestService.updateSampleRequest(sr).then(message => {
       this.controller.close();
     });

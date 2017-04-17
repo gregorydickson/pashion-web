@@ -38,10 +38,16 @@ class SampleRequest {
 	String requiredBy
 
 	String overview
+
+	String message
 	
-	String pickupId
+	
+	// Pickup Date is the Date for the courier pickup
 	Date pickupDate
-	String pickupDestination
+	Date pickupDateReturn
+	String pickupTime
+	String pickupTimeReturn
+	
 
 	String editorialName
 	String editorialWho
@@ -79,6 +85,8 @@ class SampleRequest {
 		
 		deliverTo nullable:true
 
+		message nullable:true
+
 		pressHouse nullable: true
 		courierOut nullable: true
 		courierReturn nullable: true
@@ -87,9 +95,12 @@ class SampleRequest {
 
 		overview nullable:true
 
-		pickupId nullable: true
+		
 		pickupDate nullable: true
-	 	pickupDestination nullable: true
+		pickupTime nullable: true
+		pickupDateReturn nullable: true
+		pickupTimeReturn nullable: true
+	 	
 
 		editorialName nullable: true 
 		editorialWho nullable: true 

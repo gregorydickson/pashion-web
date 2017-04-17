@@ -9,6 +9,7 @@ class SampleRequestService {
 
     String dateFormatString = "yyyy-M-d"
     String dateTimeFormatString = "yyyy-MM-dd HH:mm"
+    String dateTimeMonthFormatString = "yyyy-MMM-dd HH:mm"
     def cacheInvalidationService
 
     def listByUserOrganization(User user) {
@@ -98,6 +99,7 @@ class SampleRequestService {
     def updateSampleRequest(JSONObject jsonObject){
         SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
         SimpleDateFormat dateTimeFormat =  new SimpleDateFormat(dateTimeFormatString, Locale.US)
+        SimpleDateFormat dfEn = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
         log.info "update json:"+jsonObject
         SampleRequest sr = SampleRequest.get(jsonObject.id)
         
@@ -152,6 +154,22 @@ class SampleRequestService {
                     statusObject.save(failOnError:true)
                 }
             }
+
+            if(jsonObject.pickupDate){
+                sr.pickupDate = dfEn.parse(jsonObject.pickupDate)
+                log.info "pickup date:"+jsonObject.pickupDate
+                log.info "pickup date sample request:"+sr.pickupDate
+            }
+            if(jsonObject.pickupDateReturn){
+                sr.pickupDateReturn = dfEn.parse(jsonObject.pickupDateReturn)
+            }
+            sr.pickupTime = jsonObject.pickupTime
+            sr.pickupTimeReturn = jsonObject.pickupTimeReturn
+
+            sr.paymentOut = jsonObject.paymentOut
+            sr.paymentReturn = jsonObject.paymentReturn
+            sr.courierOut = jsonObject.courierOut
+            sr.courierReturn = jsonObject.courierReturn
             
             sr.save(failOnError:true,flush:true)
             log.info "UPDATED SAMPLE REQUEST:"+sr.id

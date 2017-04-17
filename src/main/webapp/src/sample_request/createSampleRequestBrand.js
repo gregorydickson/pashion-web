@@ -115,6 +115,7 @@ export class CreateSampleRequestBrand {
 
               deliverTo.forEach(item => {
                 if(item.surname){
+                  if(item.city) item.surname = item.surname + "  (" + item.city + " Office)"
                   this.availableDeliverToItems.push({
                     id: item.id,
                     text: item.name + " " + item.surname

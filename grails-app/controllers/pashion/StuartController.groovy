@@ -3,12 +3,14 @@ package pashion
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.converters.JSON
+import groovy.time.*
 
 
 @Transactional(readOnly = true)
 class StuartController {
 
 	def stuartService
+	def sampleRequestService
 
 	def index(){
 		Address address1 = Address.get(61)
@@ -19,6 +21,8 @@ class StuartController {
 
 		render 'done'
 	}
+
+
 	/*
 		Webhook update data:
 
@@ -58,9 +62,75 @@ class StuartController {
 		response.status = 200
 		render([status: 'updated'] as JSON)
 
-
-		
-
 	}
+
+	def bookOut(){
+		def message
+        def sr = sampleRequestService.updateSampleRequest(request.JSON)
+        def shippingEvent = sr.shippingOut
+        shippingEvent = stuartService.createJobQuote(sr.returnToAddress,
+        							sr.addressDestination,shippingEvent,"Scooter")
+        log.info "quote:"+shippingEvent
+        if(shippingEvent.hasProperty("error")){
+        	message = [message:shippingEvent.error]
+        	render message as JSON
+        	return
+        }
+
+        Date theDate
+        def theTime
+        use (TimeCategory) {
+        	theDate = sr.pickupDate.clearTime()
+        	theTime = sr.pickupTime.split(":")
+        	theDate = theDate + theTime[0].toInteger().hours
+        	theDate = theDate + theTime[1].toInteger().minutes
+        }
+
+		shippingEvent = stuartService.createJob(theDate,sr.returnToAddress,sr.addressDestination,shippingEvent)
+        if(shippingEvent.hasProperty("message")){
+        	message = [message:shippingEvent.message]
+        }else{
+        	message = [message:"Messenger Booked"]
+        	response.status = 200
+        }
+        render message as JSON
+	}
+
+	def bookReturn(){
+		def message
+		def sr = sampleRequestService.updateSampleRequest(request.JSON)
+        def shippingEvent = sr.shippingReturn
+        shippingEvent = stuartService.createJobQuote(sr.addressDestination,
+        								sr.returnToAddress,shippingEvent,"Scooter")
+        log.info "quote:"+shippingEvent
+        if(shippingEvent.hasProperty("error")){
+        	message = [message:shippingEvent.error]
+        	render message as JSON
+        	return
+        }
+
+        Date theDate
+        def theTime
+        use (TimeCategory) {
+        	theDate = sr.pickupDate.clearTime()
+        	theTime = sr.pickupTime.split(":")
+        	theDate = theDate + theTime[0].toInteger().hours
+        	theDate = theDate + theTime[1].toInteger().minutes
+        }
+
+		shippingEvent = stuartService.createJob(theDate,sr.addressDestination,sr.returnToAddress,shippingEvent)
+        if(shippingEvent.hasProperty("message")){
+        	message = [message:shippingEvent.message]
+        }else{
+        	message = [message:"Messenger Booked"]
+        	response.status = 200
+        }
+        render message as JSON
+	}
+
+
+
+
+
 
 }
