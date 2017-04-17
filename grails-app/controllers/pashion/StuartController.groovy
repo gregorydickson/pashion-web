@@ -70,7 +70,7 @@ class StuartController {
         shippingEvent = stuartService.createJobQuote(sr.returnToAddress,
         							sr.addressDestination,shippingEvent,"Scooter")
         log.info "quote:"+shippingEvent
-        if(shippingEvent.error){
+        if(shippingEvent.hasProperty(error)){
         	sr.message = shippingEvent.error
         	render sr as JSON
         	return
@@ -86,7 +86,7 @@ class StuartController {
         }
 
 		shippingEvent = stuartService.createJob(theDate,sr.returnToAddress,sr.addressDestination,shippingEvent)
-        if(shippingEvent.message){
+        if(shippingEvent.hasProperty(message)){
         	sr.message = shippingEvent.message
         }else{
         	sr.message = "Messenger Booked"

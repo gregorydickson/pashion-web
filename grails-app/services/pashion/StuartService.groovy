@@ -41,8 +41,9 @@ class StuartService {
 			}
 			log.info "response:"+ newToken
 
-			current.itemValue = token
+			current.itemValue = newToken
 			current.save(failOnError: true, flush:true)
+			log.info "saved new stuart key:"+current.itemValue
 		}
 		token = newToken
 		newToken
