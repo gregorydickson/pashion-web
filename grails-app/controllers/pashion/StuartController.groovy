@@ -65,14 +65,15 @@ class StuartController {
 	}
 
 	def bookOut(){
+		def message
         def sr = sampleRequestService.updateSampleRequest(request.JSON)
         def shippingEvent = sr.shippingOut
         shippingEvent = stuartService.createJobQuote(sr.returnToAddress,
         							sr.addressDestination,shippingEvent,"Scooter")
         log.info "quote:"+shippingEvent
         if(shippingEvent.hasProperty("error")){
-        	sr.message = shippingEvent.error
-        	render sr as JSON
+        	message = [message:shippingEvent.error]
+        	render message as JSON
         	return
         }
 
@@ -87,23 +88,24 @@ class StuartController {
 
 		shippingEvent = stuartService.createJob(theDate,sr.returnToAddress,sr.addressDestination,shippingEvent)
         if(shippingEvent.hasProperty("message")){
-        	sr.message = shippingEvent.message
+        	message = [message:shippingEvent.message]
         }else{
-        	sr.message = "Messenger Booked"
+        	message = [message:"Messenger Booked"]
         	response.status = 200
         }
-        render sr as JSON
+        render message as JSON
 	}
 
 	def bookReturn(){
+		def message
 		def sr = sampleRequestService.updateSampleRequest(request.JSON)
         def shippingEvent = sr.shippingReturn
         shippingEvent = stuartService.createJobQuote(sr.addressDestination,
         								sr.returnToAddress,shippingEvent,"Scooter")
         log.info "quote:"+shippingEvent
         if(shippingEvent.hasProperty("error")){
-        	sr.message = shippingEvent.error
-        	render sr as JSON
+        	message = [message:shippingEvent.error]
+        	render message as JSON
         	return
         }
 
@@ -118,12 +120,12 @@ class StuartController {
 
 		shippingEvent = stuartService.createJob(theDate,sr.addressDestination,sr.returnToAddress,shippingEvent)
         if(shippingEvent.hasProperty("message")){
-        	sr.message = shippingEvent.message
+        	message = [message:shippingEvent.message]
         }else{
-        	sr.message = "Messenger Booked"
+        	message = [message:"Messenger Booked"]
         	response.status = 200
         }
-        render sr as JSON
+        render message as JSON
 	}
 
 

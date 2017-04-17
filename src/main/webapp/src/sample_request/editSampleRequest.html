@@ -129,7 +129,7 @@
                                 <span class="slim-text-box-label">Courier</span>
                                 <form-select-sr class="to-u-c" name="courierOut" selected.two-way="sampleRequest.courierReturn" options.bind="courier" ></form-select-sr>
                             </span>
-                             <span if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="slim-text-box-label" style="text-align:left; margin-left:10px;"><a click.delegate="bookOut()" style="">Book</a></span>
+                             <span if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="slim-text-box-label" style="text-align:left; margin-left:10px;"><a click.delegate="bookReturn()" style="">Book</a></span>
                         </div>
                         <!-- Pickup Date for Stuart -->
                         <div if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="grid-block ">
@@ -179,7 +179,7 @@
                                 <span class="slim-text-box-label">Courier</span>
                                 <form-select-sr class="to-u-c" name="courierReturn" selected.two-way="sampleRequest.courierOut" options.bind="courier" ></form-select-sr>
                             </span>
-                            <span if.bind="sampleRequest.courierOut=='Pashion Courier'" class="slim-text-box-label" style="text-align:left; margin-left:10px;"><a click.delegate="bookOut()" style="">Book</a></span>
+                            <span id="bookOut" if.bind="sampleRequest.courierOut=='Pashion Courier'" class="slim-text-box-label" style="text-align:left; margin-left:10px;"><a click.delegate="bookOut()" style="">Book</a></span>
                         </div>
 
                         <!-- Pickup Time for Stuart -->
@@ -189,7 +189,7 @@
                                 <input datepicker type="text" class="slim-text-box" value.bind="sampleRequest.pickupDate | viewDateFormat">
                             </span>
                         </div>
-                        <div if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="grid-block ">
+                        <div if.bind="sampleRequest.courierOut=='Pashion Courier'" class="grid-block ">
                             <span class="inline-label">
                                 <span class=" slim-text-box-label">Pickup Time</span>
                                 <form-select-sr class="to-u-c" name="pickupTime" selected.two-way="sampleRequest.pickupTime" options.bind="times" ></form-select-sr>
