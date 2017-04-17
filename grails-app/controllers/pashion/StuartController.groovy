@@ -3,6 +3,7 @@ package pashion
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.converters.JSON
+import groovy.time.*
 
 
 @Transactional(readOnly = true)
@@ -20,6 +21,8 @@ class StuartController {
 
 		render 'done'
 	}
+
+
 	/*
 		Webhook update data:
 
@@ -63,8 +66,32 @@ class StuartController {
 
 	def bookOut(){
         def sr = sampleRequestService.updateSampleRequest(request.JSON)
-        sr.message = "Messenger Booked"
-        response.status = 200
+        def shippingEvent = sr.shippingOut
+        shippingEvent = stuartService.createJobQuote(sr.returnToAddress,
+        							sr.addressDestination,shippingEvent,"Scooter")
+        log.info "quote:"+shippingEvent
+        if(shippingEvent.error){
+        	sr.message = shippingEvent.error
+        	render sr as JSON
+        	return
+        }
+
+        Date theDate
+        def theTime
+        use (TimeCategory) {
+        	theDate = sr.pickupDate.clearTime()
+        	theTime = sr.pickupTime.split(":")
+        	theDate = theDate + theTime[0].toInteger().hours
+        	theDate = theDate + theTime[1].toInteger().minutes
+        }
+
+		shippingEvent = stuartService.createJob(theDate,sr.returnToAddress,sr.addressDestination,shippingEvent)
+        if(shippingEvent.message){
+        	sr.message = shippingEvent.message
+        }else{
+        	sr.message = "Messenger Booked"
+        	response.status = 200
+        }
         render sr as JSON
 	}
 
