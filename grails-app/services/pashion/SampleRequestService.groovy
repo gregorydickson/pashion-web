@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat
 class SampleRequestService {
 
     String dateFormatString = "yyyy-M-d"
-    String dateTimeFormatString = "yyyy-MM-dd HH:mm"
+    String dateTimeFormatString = "yyyy-MMM-dd HH:mm"
     String dateTimeMonthFormatString = "yyyy-MMM-dd HH:mm"
     def cacheInvalidationService
 
