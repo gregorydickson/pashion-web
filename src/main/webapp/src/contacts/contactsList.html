@@ -7,25 +7,24 @@
             <input type="search" value.two-way="searchTerm" class="search-box" id="search-contacts" placeholder="Search Contacts" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Contacts'">
         </div>
         <!-- -->
-        <!-- connection requests -->
+        <!-- Connection outgoing requests -->
         <!-- -->
         <div class="grid-block shrink" style="margin-left:1rem; margin-bottom:1rem;">
             <table style="table-layout:fixed;" class="big-accordion">
                 <tr>
                     <td class="accordion-grey" style="width:20px;">
-                        <button id="button1111" class="accordion expandoHover" click.delegate="closeExpand(1111)"></button>
+                        <button id="button1211" class="accordion expandoHover" click.delegate="closeExpand(1211)"></button>
                     </td>
                     <td class="accordion-grey">
-                        <span>CONNECTION REQUESTS</span>
+                        <span>MY CONNECTION REQUESTS</span>
                     </td>
                     <td class="accordion-grey" style="width:35px; overflow: hidden;">
                         <span class="accordion-grey"
                         if.bind="(users[user.id -1].connections!=null)"
                         repeat.for="connectionC of users[user.id -1].connections">
 
-                        <button click.delegate="closeExpand(1111)" class="accordionNew expandoHover"
-                        if.bind="(connectionC.connectingStatus=='PendingIn' ||
-                                        connectionC.connectingStatus=='PendingOut')"  style="color: white; font-weight: 500; background: #3971b1;">NEW&nbsp;</button>
+                        <button click.delegate="closeExpand(1211)" class="accordionNew expandoHover"
+                        if.bind="(connectionC.connectingStatus=='PendingOut')"  style="color: white; font-weight: 500; background: #3971b1;">NEW&nbsp;</button>
 
                         </span>                        
                     </td>
@@ -33,41 +32,11 @@
                 </tr>
             </table>
         </div>
-        <div id="panel1111" class="panel grid-block vertical " style="overflow-y:auto;">
+        <div id="panel1211" class="panel grid-block vertical " style="overflow-y:auto;">
             <div id="contacts-inside-top2" if.bind="(users[user.id -1].connections!=null)" repeat.for="connectionC of users[user.id -1].connections" class="" style="width:255px; overflow: visible;margin-left: 1rem;">
-                <!-- in coming -->
-                <!-- RM check the user still exists -->
-                <div if.bind="(connectionC.connectingStatus=='PendingIn' && users[connectionC.connectedUserId -1].email)" style="">
-                    <span class="look-menu-heading paragraph-5" style="outline: 1px solid lightgray; width: 250px; background: white;">Incoming Request</span>
-                    <table class="width100" style="table-layout: fixed;">
-                        <tr>
-                            <td class="con-td-1">
-                                <div class="">
-                                    <img if.bind="(users[connectionC.connectedUserId -1].avatar)" src=${users[connectionC.connectedUserId-1].avatar} class="clip-circle contact-entry" />
-                                    <div if.bind="(!users[connectionC.connectedUserId -1].avatar)" style="" class="avatar-circle avatar-text "> ${users[connectionC.connectedUserId -1].name.charAt(0)}</div>
-                                </div>
-                            </td>
-                            <td class="con-td-2">
-                                <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connectionC.connectedUserId -1].name} ${users[connectionC.connectedUserId -1].surname}</div>
-                                <!--     <div class="ui-text-label-s-left paragraph-5 contact-box">${connection.brand.name} ${connection.pressHouse.name}</div> -->
-                                <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connectionC.connectedUserId -1].email}</div>
-                            </td>
-                            <td class="align-top con-td-3">
-                            </td>
-                            <td class="align-top con-td-4">
-                            </td>
-                        </tr>
-                    </table>
-                    <div class="grid-block align-center shrink">
-                        <!--  <a class="hollow button" click.delegate="declineContact(connectionC.user.id,connectionC.id) ">Decline</a> //RM no deny, just delete, more permissive -->
-                        <a class="hollow button" click.delegate="deleteConnection(user.id,connectionC.id) ">Decline</a>
-                        <a class="button" href="#" click.delegate="acceptContact(user.id,connectionC.id)">Accept</a>
-                    </div>
-                </div>
                 <!-- out going -->
                 <!-- RM check the user still exists -->
                 <div if.bind="(connectionC.connectingStatus=='PendingOut' && users[connectionC.connectedUserId -1].email)" style="">
-                    <span class="look-menu-heading paragraph-5" style="outline: 1px solid lightgray; width: 250px; background: white;">Outgoing Request</span>
                     <table class="width100" style="table-layout: fixed;">
                         <tr>
                             <td class="con-td-1">
@@ -93,6 +62,79 @@
                 </div>
             </div>
         </div>
+
+
+        <!-- -->
+        <!-- Connection incoing requests -->
+        <!-- -->
+        <div class="grid-block shrink" style="margin-left:1rem; margin-bottom:1rem;">
+            <table style="table-layout:fixed;" class="big-accordion">
+                <tr>
+                    <td class="accordion-grey" style="width:20px;">
+                        <button id="button1111" class="accordion expandoHover" click.delegate="closeExpand(1111)"></button>
+                    </td>
+                    <td class="accordion-grey">
+                        <span>REQUESTS TO CONNECT</span>
+                    </td>
+                    <td class="accordion-grey" style="width:35px; overflow: hidden;">
+                        <span class="accordion-grey"
+                        if.bind="(users[user.id -1].connections!=null)"
+                        repeat.for="connectionC of users[user.id -1].connections">
+
+                        <button click.delegate="closeExpand(1111)" class="accordionNew expandoHover"
+                        if.bind="(connectionC.connectingStatus=='PendingIn')"  style="color: white; font-weight: 500; background: #3971b1;">NEW&nbsp;</button>
+
+                        </span>                        
+                    </td>
+                    <td class="accordion-grey" style="width:15px;"></td>
+                </tr>
+            </table>
+        </div>
+        <div id="panel1111" class="panel grid-block vertical " style="overflow-y:auto;">
+            <div id="contacts-inside-top2" if.bind="(users[user.id -1].connections!=null)" repeat.for="connectionC of users[user.id -1].connections" class="" style="width:255px; overflow: visible;margin-left: 1rem;">
+                <!-- in coming -->
+                <!-- RM check the user still exists -->
+                <div if.bind="(connectionC.connectingStatus=='PendingIn' && users[connectionC.connectedUserId -1].email)" style="">
+                    <table class="width100" style="table-layout: fixed;">
+                        <tr>
+                            <td class="con-td-1">
+                                <div class="">
+                                    <img if.bind="(users[connectionC.connectedUserId -1].avatar)" src=${users[connectionC.connectedUserId-1].avatar} class="clip-circle contact-entry" />
+                                    <div if.bind="(!users[connectionC.connectedUserId -1].avatar)" style="" class="avatar-circle avatar-text "> ${users[connectionC.connectedUserId -1].name.charAt(0)}</div>
+                                </div>
+                            </td>
+                            <td class="con-td-2">
+                                <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connectionC.connectedUserId -1].name} ${users[connectionC.connectedUserId -1].surname}</div>
+                                <!--     <div class="ui-text-label-s-left paragraph-5 contact-box">${connection.brand.name} ${connection.pressHouse.name}</div> -->
+                                <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connectionC.connectedUserId -1].email}</div>
+                            </td>
+                            <td class="align-top con-td-3">
+                            </td>
+                            <td class="align-top con-td-4">
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="grid-block align-center shrink">
+                        <!--  <a class="hollow button" click.delegate="declineContact(connectionC.user.id,connectionC.id) ">Decline</a> //RM no deny, just delete, more permissive -->
+                        <a class="hollow button" click.delegate="deleteConnection(user.id,connectionC.id) ">Decline</a>
+                        <a class="button" href="#" click.delegate="acceptContact(user.id,connectionC.id)">Accept</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <!-- -->
         <!-- Recent activity lists-->
