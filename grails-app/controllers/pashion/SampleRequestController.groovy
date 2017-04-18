@@ -31,8 +31,8 @@ class SampleRequestController {
                 status.save(failOnError:true)
                 
         }
-        sampleRequest.requestStatusBrand = "Closed"
-        sampleRequest.requestStatusPress = "Refused"
+        sampleRequest.requestStatusBrand = "Denied"
+        sampleRequest.requestStatusPress = "Denied"
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Denied']
         render sent as JSON
@@ -127,8 +127,8 @@ class SampleRequestController {
     }
     def brandMarkDeleted(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
-        sampleRequest.requestStatusBrand = "Closed"
-        sampleRequest.requestStatusPress = "Refused"
+        sampleRequest.requestStatusBrand = "Deleted"
+        sampleRequest.requestStatusPress = "Deleted"
         sampleRequest.save(flush:true)
         def sent = [message:'Sample Request Deleted']
         render sent as JSON
@@ -149,10 +149,10 @@ class SampleRequestController {
     }
     def pressDelete(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
-        sampleRequest.requestStatusBrand = "Closed"
-        sampleRequest.requestStatusPress = "Closed"
+        sampleRequest.requestStatusBrand = "Withdrawn"
+        sampleRequest.requestStatusPress = "Withdrawn"
         sampleRequest.save(flush:true)
-        def sent = [message:'Sample Request Closed']
+        def sent = [message:'Sample Request Withdrawn']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""
         notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, booking:sampleRequest.id]
