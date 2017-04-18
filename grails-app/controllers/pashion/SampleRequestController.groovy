@@ -89,7 +89,7 @@ class SampleRequestController {
         render sent as JSON
 
 
-        def sr2 = SampleRequest.get(params.id.toInteger()) //RM not sure if this is overkill or if it works GD plese check
+        def sr2 = SampleRequest.get(params.id.toInteger()) 
         def pressHouse = sr2.pressHouse?.name ?: ""
         notify "sampleRequestCacheInvalidate",[brand:sr2.brand.name,press: pressHouse, booking:sr2.id]
     }
