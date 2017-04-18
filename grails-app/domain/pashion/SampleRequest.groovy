@@ -67,49 +67,7 @@ class SampleRequest {
 
 	static constraints = {
 		
-		season nullable:true
-		image nullable: true
-		look nullable:true
-		searchableItems nullable:true
-		searchableItemsProposed nullable: true
-		idString nullable: true
-		dateRequested nullable: true
-		emailNotification nullable: true
-
-		bookingStartDate nullable: true
-	    bookingEndDate nullable: true
-		requestStatusBrand nullable: true 
-		requestStatusPress nullable: true
-		userCreatedId nullable: true
-		brand nullable:true
 		
-		deliverTo nullable:true
-
-		message nullable:true
-
-		pressHouse nullable: true
-		courierOut nullable: true
-		courierReturn nullable: true
-		receivingUser nullable:true
-		requestingUser nullable: true 
-
-		overview nullable:true
-
-		
-		pickupDate nullable: true
-		pickupTime nullable: true
-		pickupDateReturn nullable: true
-		pickupTimeReturn nullable: true
-	 	
-
-		editorialName nullable: true 
-		editorialWho nullable: true 
-		editorialWhen nullable: true 
-
-		shippingOut nullable: true 
-		shippingReturn nullable: true
-
-		searchableItemsStatus nullable:true
 		
 	}
 
