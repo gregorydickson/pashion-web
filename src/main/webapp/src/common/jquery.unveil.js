@@ -57,7 +57,7 @@
       images = images.not(loaded);
     }
 
-    $(window).on("resize.unveil lookup.unveil", unveil);
+    $(window).on("resize.unveil lookup.unveil focus.unveil", unveil);
     $("#mainScrollWindow").on("scroll.unveil resize.unveil lookup.unveil", unveil);
 
     //$("div.cards-list-wrap").scroll(function(){unveil();});
