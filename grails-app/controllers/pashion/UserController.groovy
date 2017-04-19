@@ -49,7 +49,7 @@ class UserController {
                             con.name = connection.name
                             con.save(flush:true,failOnError:true)
                         } catch(Exception econ){
-                            log.error "exception updating connection:"connection.id.toInteger()
+                            log.error "exception updating connection:"+connection?.id
                         }
                     }
                 }
