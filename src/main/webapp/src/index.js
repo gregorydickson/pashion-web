@@ -128,6 +128,7 @@ export class Index {
                 (value.requestStatusBrand != 'Denied') &&
                 (value.requestStatusBrand != 'Refused') &&
                 (value.requestStatusBrand != 'Restocked') &&
+                (value.requestStatusBrand != 'Withdrawn') &&
                 (value.requestStatusBrand != 'Deleted') 
                 );
             if (user.type == "press" ) filterVal = (
@@ -145,6 +146,7 @@ export class Index {
                 (value.requestStatusBrand == 'Denied') ||
                 (value.requestStatusBrand == 'Refused') ||
                 (value.requestStatusBrand == 'Restocked') ||
+                (value.requestStatusBrand == 'Withdrawn') ||
                 (value.requestStatusBrand == 'Deleted') 
 
                 );

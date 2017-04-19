@@ -269,6 +269,7 @@ export class Requestman{
                 (value.requestStatusBrand != 'Denied') &&
                 (value.requestStatusBrand != 'Refused') &&
                 (value.requestStatusBrand != 'Restocked') &&
+                (value.requestStatusBrand != 'Withdrawn') &&
                 (value.requestStatusBrand != 'Deleted') 
                 );
             if (user.type == "press" ) filterVal = (
@@ -286,6 +287,7 @@ export class Requestman{
                 (value.requestStatusBrand == 'Denied') ||
                 (value.requestStatusBrand == 'Refused') ||
                 (value.requestStatusBrand == 'Restocked') ||
+                (value.requestStatusBrand == 'Withdrawn') ||
                 (value.requestStatusBrand == 'Deleted') 
 
                 );
