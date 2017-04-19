@@ -112,7 +112,7 @@ export class EditSearchableItem {
           item.samples.forEach(item => {
             this.availableSampleItems.push({
               id: item.id,
-              text: item.attributes
+              text: item.attributes.substr(0,30)
             });
           });
           
