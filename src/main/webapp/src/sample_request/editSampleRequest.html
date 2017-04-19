@@ -129,7 +129,7 @@
                                 <span class="slim-text-box-label">Courier</span>
                                 <form-select-sr class="to-u-c" name="courierOut" selected.two-way="sampleRequest.courierReturn" options.bind="courier" ></form-select-sr>
                             </span>
-                             <span if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="slim-text-box-label" style="text-align:left; margin-left:10px;"><a click.delegate="bookReturn()" style="">Book</a></span>
+                             <span id="bookReturn" if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="slim-text-box-label" style="text-align:left; margin-left:10px;"><a click.delegate="bookReturn()" style="">Book</a></span>
                         </div>
                         <!-- Pickup Date for Stuart -->
                         <div if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="grid-block ">
