@@ -93,8 +93,8 @@ export class Requestman{
         });
 
         this.subscriber = this.ea.subscribe('datepicker', response => {
-            //console.log("datepicker event: " + response.elementId + " : " + response.elementValue);
-            this.closeExpanded ();
+            console.log("datepicker event: " + response.elementId + " : " + response.elementValue);
+            //this.closeExpanded (); //RM not do it here, push to filter change
             var fireChange = false;
             if (response.elementId === 'datepickersearchto') {
                   this.searchTo = response.elementValue;
