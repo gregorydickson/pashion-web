@@ -76,8 +76,6 @@ export class EditSampleRequest {
 
   bookOut(){
     // initiate stuart booking
-    // if fail dialog box
-    // if succeed, populate ID field
     if(!(this.sampleRequest.pickupDate) ||
      !(this.sampleRequest.pickupTime)){
       this.alertP("Please pick a Date and Time");
@@ -93,17 +91,12 @@ export class EditSampleRequest {
           this.alertP(sr.message);
           document.getElementById('bookOut').style.visibility = 'visible';
       });
-      
-      
-      
     });
     
   }
 
   bookReturn(){
     // initiate stuart booking
-    // if fail dialog box
-    // if succeed, populate ID field
     if(!(this.sampleRequest.pickupDateReturn) ||
      !(this.sampleRequest.pickupTimeReturn)){
       this.alertP("Please pick a Date and Time");
@@ -113,22 +106,19 @@ export class EditSampleRequest {
     document.getElementById('bookReturn').style.visibility = 'hidden';
     console.log ("Initiate Stuart booking from editSampleRequest Return");
     this.sampleRequestService.bookReturnSampleRequest(this.sampleRequest).then(sr => {
-      this.sampleRequestService.getSampleRequest(requestId).then(sampleRequest => {
+      this.sampleRequestService.getSampleRequest(this.sampleRequest.id).then(sampleRequest => {
           this.sampleRequest = sampleRequest;
           this.busy.off();
           this.alertP(sr.message);
           document.getElementById('bookReturn').style.visibility = 'visible';
       });
-      
-
     });
     
   }
 
   alertP (message){
-
-        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Edit Request", message:message, timeout:5000}, lock:false }).then(response => {});
-    }
+    this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Edit Request", message:message, timeout:5000}, lock:false }).then(response => {});
+  }
 
   removeSample(id,index){
     let sr = this.sampleRequest;
