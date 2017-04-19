@@ -250,7 +250,8 @@ export class ContactsList {
     var parent = this;  
     this.ea.publish('setCurrentContact', {userId: userId});
     this.commsHeader.setStatusTab(this.commsHeader.statusValues.messages);
-    this.userService.clearUnreadMessages(userId).then (response => {
+    this.userService.clearUnreadMessages(userId);
+    //.then (response => {
 
         this.pubnub.time(function(status, response) {
                 if (status.error) {
@@ -260,7 +261,7 @@ export class ContactsList {
                     console.log(response.timetoken);
                     parent.userService.saveMostRecentRead (userId, response.timetoken); // save now
                 }
-            });
+       //     });
     });
       
   }

@@ -153,10 +153,10 @@ export class Messages {
                     }
                 }
                 // do separate server update of message count to prevent overload fetch posts
-                parent.userService.flushConnectionsData().then( returnedBoolean  => { 
+              //  parent.userService.flushConnectionsData().then( returnedBoolean  => { 
                 // recursive call of anon function until all messages retrieved
                     if (response.messages.length==100) getAllMessages(response.endTimeToken);
-                });
+               // });
             }
           );
         }

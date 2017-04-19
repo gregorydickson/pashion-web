@@ -324,7 +324,7 @@ export class UserService {
 
 
         /* Not sure if we have to save new messages to the server or not, as it is a transient value used in a local session and filterd on date.
-         if we do, then make sure all users of addMessageCount (message.js) have .then pattern */
+         if we do, then make sure all users of addMessageCount (message.js) have .then pattern 
 
         // save out using connection id
         if (pushToServer && (connectionId != -1)) {
@@ -340,6 +340,7 @@ export class UserService {
             });
             return promise;
         }
+        */
     }
 
     clearAllUnreadMessagesForTheCurrentUser() {
@@ -368,7 +369,7 @@ export class UserService {
         /*
         Not sure if we have to save new messages to the server or not, as it is a transient value used in a local session and filterd on date. 
         if we do then make sure all users of clearUnreadMessages (message.js) have .then pattern
-        */
+        
 
         // save out
         var promise = new Promise((resolve, reject) => {
@@ -382,6 +383,7 @@ export class UserService {
                 }).catch(err => reject(err));
         });
         return promise;
+        */
 
     }
 

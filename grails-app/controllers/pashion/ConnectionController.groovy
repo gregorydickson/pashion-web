@@ -134,16 +134,17 @@ class ConnectionController {
 
     @Transactional 
     def saveMostRecentRead(){
-        def connection = Connection.get(params.id.toInteger())
-        
-        def jsonObject = request.JSON
-        //log.info "saveMostRecentRead for: " + params.id.toInteger() + " json:"+jsonObject
-        connection.mostRecentRead = jsonObject.mostRecentRead
-        //log.info "saveMostRecentRead input as: " + connection.mostRecentRead
         Connection.withTransaction { status ->
-            connection.save(failOnError : true, flush: true)
-        }
-        
+            def connection = Connection.get(params.id.toInteger())
+            
+            def jsonObject = request.JSON
+            //log.info "saveMostRecentRead for: " + params.id.toInteger() + " json:"+jsonObject
+            connection.mostRecentRead = jsonObject.mostRecentRead
+            //log.info "saveMostRecentRead input as: " + connection.mostRecentRead
+            
+                connection.save(failOnError : true, flush: true)
+            }
+            
         notify "connectionsUpdateNoPubNub","connections"
         def connectionString  = 'saveMostRecentRead success'
         def sent = [message:connectionString]
