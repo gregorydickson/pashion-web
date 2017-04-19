@@ -114,16 +114,18 @@ class ConnectionController {
 
     @Transactional 
     def addMessageCount(){
-        def connection = Connection.get(params.id.toInteger())
-        
-        def jsonObject = request.JSON
-        connection.numberNewMessages = connection.numberNewMessages + 1   
-        log.info "addMessageCount for: " + params.id.toInteger() + " json:"+jsonObject + ' to ' + connection.numberNewMessages
+        def connection
         Connection.withTransaction { status ->
-            def success = connection.save(failOnError : true, flush: true)
+            connection = Connection.get(params.id.toInteger())
+            
+            def jsonObject = request.JSON
+            connection.numberNewMessages = connection.numberNewMessages + 1   
+            log.info "addMessageCount for: " + params.id.toInteger() + " json:"+jsonObject + ' to ' + connection.numberNewMessages
+        
+           connection.save(failOnError : true, flush: true)
         }
         
-        connection.errors.each {log.info "addMessageCount errors: " + it}
+        
         def connectionString  = 'message numbers count updated for: ' + connection
         notify "connectionsUpdateNoPubNub","connections"
         def sent = [message:connectionString]

@@ -31,26 +31,31 @@ class UserController {
         log.info 'updateConnections() called' 
         //log.info "json:"+request.JSON
         def jsonObject = request.JSON
-        try{
+        
+        Connection.withTransaction { status ->
+            
             jsonObject.each{ user ->
                 
                 user.connections.each{ connection ->
-                    //log.info "connection:"+connection
+                    
+                    log.info "connection:"+connection
                     Connection con = Connection.get(connection.id.toInteger())
-                    con.connectedUserId = connection.connectedUserId
-                    con.connectingStatus = connection.connectingStatus
-                    con.numberNewMessages = connection.numberNewMessages
-                    con.mostRecentRead = connection.mostRecentRead
-                    con.name = connection.name
-                    con.save(flush:true,failOnError:true)
+                    if(con){
+                        try{
+                            con.connectedUserId = connection.connectedUserId
+                            con.connectingStatus = connection.connectingStatus
+                            con.numberNewMessages = connection.numberNewMessages
+                            con.mostRecentRead = connection.mostRecentRead
+                            con.name = connection.name
+                            con.save(flush:true,failOnError:true)
+                        } catch(Exception econ){
+                            log.error "exception updating connection:"connection.id.toInteger()
+                        }
+                    }
                 }
             }
-        } catch(Exception e){
-            log.error "updateConnections() Error"+e.message
-            def error = [message:e.message]
-            render error as JSON
-            return
         }
+        
         notify "connectionsUpdateNoPubNub","connections"
         log.info "updateConnections() OK"
         def sent = [message:'Connection Data Updated']
