@@ -150,12 +150,13 @@ class ConnectionController {
 
     @Transactional 
     def clearUnreadMessages(){
-        def connection = Connection.get(params.id.toInteger())
-        
-        def jsonObject = request.JSON
-        log.info "server side: zeroMessage count for: " + params.id.toInteger() + " json:"+jsonObject
-        connection.numberNewMessages = 0
         Connection.withTransaction { status ->
+            def connection = Connection.get(params.id.toInteger())
+        
+            def jsonObject = request.JSON
+            log.info "server side: zeroMessage count for: " + params.id.toInteger() + " json:"+jsonObject
+            connection.numberNewMessages = 0
+        
             connection.save(failOnError : true, flush: true)
         }
         
