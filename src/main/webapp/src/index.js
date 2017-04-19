@@ -835,7 +835,7 @@ export class Index {
                 
                 var channelName = message.channel;
                 if(channelName === channel){
-                    sampleRequestService.getSampleRequests().then(newBookings => { 
+                    sampleRequestService.getSampleRequests(true).then(newBookings => { 
                         while(bookingsToUpdate.length > 0) {
                             bookingsToUpdate.pop();
                         }
