@@ -33,8 +33,10 @@
             <div class="grid-block tool-header shrink" style="padding-left:1rem;">
                 <div class="grid-block tool-header shrink">
                     <div class="grid-block align-left tool-header tool-header-spacer">
-                        <span if.bind="(currentContact==null)" class="ui-text-label-m-broad tool-header-greyed-out">MESSAGES</span>
-                        <span  if.bind="(currentContact!=null)" class="ui-text-label-m-broad expandoHover"><a href="#" class= "" click.delegate="setStatusTab('messages')">MESSAGES</a></span>
+                    <!-- Remove ability to go to messages with a 'current contact' -->
+                       <!--  <span if.bind="(currentContact==null)" class="ui-text-label-m-broad tool-header-greyed-out">MESSAGES</span>
+                        <span  if.bind="(currentContact!=null)" class="ui-text-label-m-broad expandoHover"><a href="#" class= "" click.delegate="setStatusTab('messages')">MESSAGES</a></span> -->
+                        <span class="ui-text-label-m-broad tool-header-greyed-out">MESSAGES</span>
                     </div>
                     <div class="grid-block tool-header tool-header-spacer">
                         <span class="ui-text-label-m-broad tool-header-selected">CONTACTS</span>
