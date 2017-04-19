@@ -122,13 +122,40 @@ export class Index {
             if (user.type == "brand" || user.type == "prAgency") filterVal =  ((today > computedDate) && (value.requestStatusBrand == 'Pending'));
             if (user.type == "press" )  filterVal = ((today > computedDate) && (value.requestStatusPress == 'Pending'));
         }
-        if (filter == 'OPEN REQUESTS') {
-            if (user.type == "brand" || user.type == "prAgency") filterVal = (value.requestStatusBrand != 'Closed');
-            if (user.type == "press" ) filterVal = (value.requestStatusPress != 'Closed');
+        if (filter == 'ACTIVE REQUESTS') {
+            if (user.type == "brand" || user.type == "prAgency") filterVal = (
+                (value.requestStatusBrand != 'Closed') && 
+                (value.requestStatusBrand != 'Denied') &&
+                (value.requestStatusBrand != 'Refused') &&
+                (value.requestStatusBrand != 'Restocked') &&
+                (value.requestStatusBrand != 'Deleted') 
+                );
+            if (user.type == "press" ) filterVal = (
+                (value.requestStatusPress != 'Closed') &&
+                (value.requestStatusPress != 'Denied') &&
+                (value.requestStatusPress != 'Refused') &&
+                (value.requestStatusPress != 'Returned') &&
+                (value.requestStatusPress != 'Deleted') &&
+                (value.requestStatusPress != 'Withdrawn')
+                );
         }
-        if (filter == 'CLOSED REQUESTS') {
-            if (user.type == "brand" || user.type == "prAgency") filterVal = (value.requestStatusBrand == 'Closed');
-            if (user.type == "press") filterVal = (value.requestStatusPress == 'Closed');
+        if (filter == 'INACTIVE REQUESTS') {
+            if (user.type == "brand" || user.type == "prAgency") filterVal = (
+                (value.requestStatusBrand == 'Closed') || 
+                (value.requestStatusBrand == 'Denied') ||
+                (value.requestStatusBrand == 'Refused') ||
+                (value.requestStatusBrand == 'Restocked') ||
+                (value.requestStatusBrand == 'Deleted') 
+
+                );
+            if (user.type == "press") filterVal = (
+                (value.requestStatusPress == 'Closed') ||
+                (value.requestStatusPress == 'Denied') ||
+                (value.requestStatusPress == 'Refused') ||
+                (value.requestStatusPress == 'Returned') ||
+                (value.requestStatusPress == 'Deleted') ||
+                (value.requestStatusPress == 'Withdrawn') 
+                );
         }
 
         return (searchVal && filterVal); 
@@ -144,8 +171,8 @@ export class Index {
                     if (event.detail.value == 'ALL REQUESTS') this.filtering = '';
                     if (event.detail.value == 'MY REQUESTS') this.filtering = 'MY REQUESTS'; 
                     if (event.detail.value == 'OVERDUE REQUESTS') this.filtering = 'OVERDUE REQUESTS';  
-                    if (event.detail.value == 'OPEN REQUESTS') this.filtering = 'OPEN REQUESTS'; 
-                    if (event.detail.value == 'CLOSED REQUESTS') this.filtering = 'CLOSED REQUESTS'; 
+                    if (event.detail.value == 'ACTIVE REQUESTS') this.filtering = 'ACTIVE REQUESTS'; 
+                    if (event.detail.value == 'INACTIVE REQUESTS') this.filtering = 'INACTIVE REQUESTS'; 
                     console.log("value:" + event.detail.value + " filtering: " +this.filtering);
                 } 
     }
