@@ -112,8 +112,8 @@ class StuartController {
         Date theDate
         def theTime
         use (TimeCategory) {
-        	theDate = sr.pickupDate.clearTime()
-        	theTime = sr.pickupTime.split(":")
+        	theDate = sr.pickupDateReturn.clearTime()
+        	theTime = sr.pickupTimeReturn.split(":")
         	theDate = theDate + theTime[0].toInteger().hours
         	theDate = theDate + theTime[1].toInteger().minutes
         }
