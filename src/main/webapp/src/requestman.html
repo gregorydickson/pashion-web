@@ -117,7 +117,7 @@
                                 <filters-search-to></filters-search-to>
                             </div>
                             <div class="grid-content shrink">
-                                    <button id="btn-pdf" class="small button hollow" click.delegate="createPDFDialog()">Create PDF</button>
+                                    <button disabled.bind="!(aBooking)" id="btn-pdf" class="small button hollow" click.delegate="createPDFDialog()">Create PDF</button>
                             </div> 
                         </div>
                         <!-- Accordion -->
@@ -161,7 +161,7 @@
                                 
                                 <div repeat.for="booking of bookings | sort:ordering:'ascending' | filter:searchTextReqMan:filterFunc:filtering:user:seasons
                                 | range:searchFrom:searchTo:filterRangeFunc">
-                                    <table  class="big-accordion" cellspacing="2" style="table-layout: fixed;">
+                                    <table ref="aBooking"  class="big-accordion" cellspacing="2" style="table-layout: fixed;">
                                         <tr class="brandGridContent">
                                             <td class="accordion-grey w3">
                                                 <button id="button${$index}" class="accordion expandoHover" click.delegate="closeExpand($index,booking)"></button>
