@@ -109,7 +109,7 @@ class SampleRequestService {
             sr.editorialName = jsonObject.editorialName
             sr.editorialWho = jsonObject.editorialWho
             if(jsonObject.editorialWhen) 
-                sr.editorialWhen = dateFormat.parse(jsonObject.editorialWhen)
+                sr.editorialWhen = dfEn.parse(jsonObject.editorialWhen)
             sr.deliverTo = User.get(jsonObject.deliverTo.id)
 
             sr.shippingOut.tracking = jsonObject.shippingOut.tracking
