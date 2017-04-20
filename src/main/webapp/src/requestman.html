@@ -196,27 +196,115 @@
 
                                             <td class="accordion-grey w5" style="overflow:visible;"> 
                                                 <div class="look-menu-absolute-wrap">
-                                                    <span class="edit-box" ><a href="#" class="expandoHover" click.delegate="lookEditMenu(booking.id)">...</a></span>
+                                                    <span if.bind="((user.type === 'brand') && (booking.requestStatusBrand == 'Deleted'))" class="edit-box disabled" >...</span>
+                                                    <span if.bind="((user.type === 'brand') && (booking.requestStatusBrand != 'Deleted'))" class="edit-box" ><a href="#" class="expandoHover" click.delegate="lookEditMenu(booking.id)">...</a></span>
+                                                    <span if.bind="(((user.type === 'press') || (user.type === 'prAgency')) && 
+                                                            (booking.requestStatusPress == 'Denied') ||
+                                                            (booking.requestStatusPress == 'Deleted') ||
+                                                            (booking.requestStatusPress == 'Returned') ||
+                                                            (booking.requestStatusPress == 'Picked Up') ||
+                                                            (booking.requestStatusPress == 'Withdrawn') 
+                                                            )" class="edit-box disabled" >...</span>
+                                                    <span if.bind="(((user.type === 'press') || (user.type === 'prAgency')) && 
+                                                            (booking.requestStatusPress != 'Denied') &&
+                                                            (booking.requestStatusPress != 'Deleted') &&
+                                                            (booking.requestStatusPress != 'Returned') &&
+                                                            (booking.requestStatusPress != 'Picked Up') &&
+                                                            (booking.requestStatusPress != 'Withdrawn') 
+                                                            )" class="edit-box" ><a href="#" class="expandoHover" click.delegate="lookEditMenu(booking.id)">...</a></span>
                                                     <!-- edit request modal popup -->
                                                      <div class="look-menu-absolute" id="requestManTest${booking.id}">
                                                         <span class="look-menu-heading">REQUEST ${booking.id}</span>
                                                         <ul if.bind="user.type === 'brand'"  class="look-menu-list">
-                                                            <li class="look-menu-item"><a click.delegate="editSampleRequest(booking.id)" href="#" class="look-menu-link">Edit</a></li>
-                                                            <li if.bind="booking.requestStatusBrand === 'Pending'" class="look-menu-item"><a click.delegate="denySampleRequest(booking.id)" href="#" class="look-menu-link">Deny</a></li>                                            
-                                                            <li if.bind="booking.requestStatusBrand === 'Pending'" class="look-menu-item"><a click.delegate="approveSampleRequest(booking.id)" href="#" class="look-menu-link">Approve</a></li>
-                                                            <li class="look-menu-item"><a click.delegate="sendSampleRequest(booking.id)" href="#" class="look-menu-link">Send</a></li>
-                                                            <li class="look-menu-item"><a click.delegate="markPickedUpSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Picked Up</a></li>
-                                                            <li class="look-menu-item"><a click.delegate="markReturnedSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Returned</a></li>
-                                                            <li class="look-menu-item"><a click.delegate="restockedSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Restocked</a></li>
+
+                                                            <!-- Edit -->
+                                                            <li if.bind="(
+                                                                (booking.requestStatusBrand == 'Pending') ||
+                                                                (booking.requestStatusBrand == 'Approved') ||
+                                                                (booking.requestStatusBrand == 'Returning') ||
+                                                                (booking.requestStatusBrand == 'Out') ||
+                                                                (booking.requestStatusBrand == 'Picked Up')
+                                                            )" 
+                                                            class="look-menu-item"><a click.delegate="editSampleRequest(booking.id)" href="#" class="look-menu-link">Edit</a></li>
+
+                                                            <!--Deny -->
+                                                            <li if.bind="(
+                                                                (booking.requestStatusBrand == 'Pending') ||
+                                                                (booking.requestStatusBrand == 'Approved') 
+                                                            )"
+                                                            class="look-menu-item"><a click.delegate="denySampleRequest(booking.id)" href="#" class="look-menu-link">Deny</a></li>    
+
+                                                            <!-- Approve -->
+                                                            <li if.bind="(
+                                                                (booking.requestStatusBrand == 'Pending')
+                                                            )"
+                                                            class="look-menu-item"><a click.delegate="approveSampleRequest(booking.id)" href="#" class="look-menu-link">Approve</a></li>
+
+                                                            <!-- Send 
+                                                            <li class="look-menu-item"><a click.delegate="sendSampleRequest(booking.id)" href="#" class="look-menu-link">Send</a></li> -->
+
+                                                            <!-- Picking Up :: Does not exist now, as no "Ship" and too many states
+                                                            <li if.bind="(
+                                                                (booking.requestStatusBrand == 'Approved') 
+                                                            )"
+                                                            class="look-menu-item"><a click.delegate="markPickingUpSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Picking Up</a></li> -->
+
+                                                            <!-- Picked Up -->
+                                                            <li if.bind="(
+                                                                (booking.requestStatusBrand == 'Approved')  
+                                                            )"
+                                                            class="look-menu-item"><a click.delegate="markPickedUpSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Picked Up</a></li>
+
+                                                            <!-- Returned -->
+                                                            <li if.bind="(
+                                                                (booking.requestStatusBrand == 'Out') ||
+                                                                (booking.requestStatusBrand == 'Picked Up')||
+                                                                (booking.requestStatusBrand == 'Returning')
+                                                            )"
+                                                            class="look-menu-item"><a click.delegate="markReturnedSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Returned</a></li>
+
+                                                            <!-- Restocked -->
+                                                            <li if.bind="(
+                                                                (booking.requestStatusBrand == 'Returned')
+                                                            )"
+                                                            class="look-menu-item"><a click.delegate="restockedSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Restocked</a></li>
+
+                                                            <!-- Delete -->
                                                             <li class="look-menu-item"><a click.delegate="deleteSampleRequest($index,booking.id)" href="#" class="look-menu-link">Delete Request</a></li>
                                                         </ul>
 
                                                         <ul if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="look-menu-list">
-                                                            <li class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id)" class="look-menu-link">Edit</a></li>
-                                                            <li class="look-menu-item"><a href="#" click.delegate="pressMarkReceivedSampleRequest(booking.id)" class="look-menu-link">Mark Received</a></li>
+                                                            <!-- Edit -->
+                                                            <li if.bind="(
+                                                                (booking.requestStatusPress == 'Pending') ||
+                                                                (booking.requestStatusPress == 'In House')||
+                                                                (booking.requestStatusPress == 'Approved')
+                                                            )"
+                                                            class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id)" class="look-menu-link">Edit</a></li>
+
+                                                            <!-- Received -->
+                                                            <li if.bind="(
+                                                                (booking.requestStatusPress == 'Approved') ||
+                                                                (booking.requestStatusPress == 'Delivering')
+                                                            )"
+                                                            class="look-menu-item"><a href="#" click.delegate="pressMarkReceivedSampleRequest(booking.id)" class="look-menu-link">Mark Received</a></li>
+
+                                                            <!-- Ship :: no longer valid with Stuart changes to edit dialog
                                                             <li class="look-menu-item"><a href="#" click.delegate="pressShipSampleRequest(booking.id)"  class="look-menu-link">Ship</a></li>
-                                                            <li class="look-menu-item"><a href="#" click.delegate="pressMarkPickedUpSampleRequest(booking.id)"  class="look-menu-link">Mark Picked Up</a></li>
-                                                            <li class="look-menu-item"><a href="#" click.delegate="pressDeleteSampleRequest(booking.id)"  class="look-menu-link">Withdraw Request</a></li>
+                                                            -->
+
+                                                            <!-- Picked Up -->
+                                                            <li if.bind="(
+                                                                (booking.requestStatusPress == 'In House') 
+                                                            )"
+                                                            class="look-menu-item"><a href="#" click.delegate="pressMarkPickedUpSampleRequest(booking.id)"  class="look-menu-link">Mark Picked Up</a></li>
+
+                                                            <!-- Withdraw -->
+                                                            <li if.bind="(
+                                                                (booking.requestStatusPress == 'Pending') ||                                                   
+                                                                (booking.requestStatusPress == 'Approved')
+                                                            )"
+                                                            class="look-menu-item"><a href="#" click.delegate="pressDeleteSampleRequest(booking.id)"  class="look-menu-link">Withdraw Request</a></li>
                                                         </ul>
                                                     </div>
                                                 </div>
