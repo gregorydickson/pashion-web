@@ -51,7 +51,6 @@ class SampleRequest {
 
 	String editorialName
 	String editorialWho
-	Date editorialWhen
 
 	//auto fields
 	Date dateCreated
