@@ -120,7 +120,7 @@ class SampleRequestController {
         sampleRequest.requestStatusBrand = "Restocked"
         
         sampleRequest.save(flush:true)
-        def sent = [message:'Sample Request Marked ReStocked']
+        def sent = [message:'Sample Request Marked Restocked']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""
         notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, booking:sampleRequest.id]
