@@ -153,6 +153,7 @@ class UserController {
 
         user = userService.createUser(params, owner, inNetwork)
         
+        notify "connectionsUpdate","connections"
         
         request.withFormat {
             form multipartForm {
@@ -160,6 +161,7 @@ class UserController {
                 redirect user
             }
             '*' { respond user, [status: CREATED] }
+
         }
     }
 
