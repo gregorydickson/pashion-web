@@ -45,7 +45,6 @@ System.config({
     "jquery-datetimepicker": "npm:jquery-datetimepicker@2.5.4",
     "jquery-ui": "github:components/jqueryui@1.12.1",
     "moment": "npm:moment@2.15.1",
-    "nodep-date-input-polyfill": "npm:nodep-date-input-polyfill@4.0.6",
     "select2": "github:select2/select2@3.5.4",
     "text": "github:systemjs/plugin-text@0.0.8",
     "github:components/jqueryui@1.12.1": {
