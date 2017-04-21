@@ -37,6 +37,326 @@
 
         <div class="grid-block spa-background" style="overflow:visible;">
 
+
+
+
+<!-- -->
+<!-- Image Grid Large Panel-->
+<!-- -->
+
+            <div id="looks" class="vertical grid-block grid-block-vertical-shadow" style="overflow:hidden;">
+                <!-- Header -->
+                <div class="grid-block tool-header shrink ">
+                    <div class="grid-block align-left tool-header tool-header-spacer">
+                    </div>
+                    <div id="comms_panel" class="grid-block align-left tool-header tool-header-spacer shrink">
+
+                        <!-- Header for 'press'-->
+                        <span if.bind="user.type == 'press'">
+                            <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
+                            <span if.bind="maxRReached" class="ui-text-label-m-broad"> > </span>
+                            <span class="ui-text-label-m-broad">${numberImages} Results )</span>
+                        </span> 
+                        <!-- Header for 'brand'-->
+                        <span if.bind="user.type == 'brand'">
+                            <span class="ui-text-label-m-broad">MANAGE IMAGES (</span>
+                            <span class="ui-text-label-m-broad">${numberImages} Results )</span>
+                        </span> 
+                        <!-- Header for 'prAgency'-->
+                        <span if.bind="user.type == 'prAgency'">
+                            <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
+                            <span if.bind="maxRReached" class="ui-text-label-m-broad"> > </span>
+                            <span class="ui-text-label-m-broad">${numberImages} Results )</span>
+                        </span> 
+
+                        <!-- Header for 'brand'
+                        <!-- if.bind bug here, only for brand have to remove '>' -->
+                        <!-- <select if.bind="user.type == 'brand'" class="select-transparent" name="" id="imagesFunctionality">
+                            <option value="optionSearchImages"> 
+                                <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
+                                <span class="ui-text-label-m-broad">${numberImages} Results )</span>
+                            </option>
+                            <option value="optionManageImages">
+                                <span class="ui-text-label-m-broad">MANAGE IMAGES (</span>
+                                <span class="ui-text-label-m-broad">${numberImages} Results )</span>
+                            </option>
+                        </select>-->
+                       
+                        <!-- Header for 'agency 
+                        <select if.bind="user.type == 'agency'" class="select-transparent" name="" id="imagesFunctionality">
+                            <option value="optionSearchImages"> 
+                                <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
+                                <span if.bind="maxRReached" class="ui-text-label-m-broad"> > </span>
+                                <span class="ui-text-label-m-broad">${numberImages} Results )</span>
+                            </option>
+                            <option value="optionManageImages">
+                                <span class="ui-text-label-m-broad">MANAGE IMAGES (</span>
+                                <span if.bind="maxRReached" class="ui-text-label-m-broad"> > </span>
+                                <span class="ui-text-label-m-broad">${numberImages} Results )</span>
+                            </option>
+                        </select> -->
+                       
+                   </div>
+                    <div class="grid-block align-right tool-header-spacer" style="padding-right:7px;">
+                        <span class="expando">
+                      <!-- <a route-href="route: requestman;"><img  src="/assets/nav/collapso.png" /></a> -->
+                      <a click.delegate="imageExpando()">
+                        <img class="expandoHover"  if.bind="imagePanelSize==3" src="/assets/nav/collapso16.png" />
+                        <img class="expandoHover"  if.bind="imagePanelSize==1" src="/assets/nav/expando16.png" />
+                        <img class="expandoHover"  if.bind="imagePanelSize==2" src="/assets/nav/expando16.png" />
+                      </a>
+                    </span>
+                    </div>
+                </div>
+                <!-- search / filter area -->
+
+                <div class="index-filters">
+                    <!-- PRESS filters BEGIN -->
+                            <div if.bind="user.type === 'press'">
+                                    <!-- top row -->
+                                    <div class="grid-row">
+                                        <!-- <div class="grid-row-col" style="margin-top: 0.5rem;">
+                                            <input id="checkbox-search" type="checkbox" checked>
+                                        </div> -->
+                                        <!-- change to UI, use "All" for each filter instead -->
+                                        <!-- Search -->
+                                        <div class="grid-row-col">
+                                            <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search">
+                                            <!-- <filters-search change.delegate="filterChangeSearch($event)"></filters-search> -->
+                                        </div>
+                                        <!-- Trending -->
+                                        <!--<div class="grid-row-col" >
+                                            <input id="checkbox-trending" type="checkbox"><label for="checkbox-trending">Trending</label>
+                                        </div> -->
+                                        <!-- Trending postponed until later release -->
+                                        <!-- Latest -->
+                                        <!-- <div class="grid-row-col" >
+                                           <input id="checkbox-latest" type="checkbox"><label for="checkbox-latest">Latest</label>
+                                        </div> -->
+                                        <!-- Latest postponed until later release -->
+                                        <!-- Available -->
+                                        <!-- end date -->
+                                        <div class="grid-row-col grid-row-date-start">
+                                            <filters-available-from></filters-available-from>
+                                        </div>
+                                        <!-- end date -->
+                                        <div class="grid-row-col grid-row-date-end">
+                                            <filters-available-to></filters-available-to>
+                                        </div>
+                                        <!-- theme -->
+                                        <div class="grid-row-col">
+                                            <filters-theme change.delegate="filterChangeTheme($event)"></filters-theme>
+                                        </div>
+                                    </div>
+                                    <!-- 2nd row -->
+                                    <div class="grid-row">
+                                        <!-- <div class="grid-content shrink" style="margin-top: 0.5rem;">
+                                                <input id="checkbox-brand" type="checkbox">
+                                        </div> -->
+                                        <!-- Brand -->
+                                        <div class="grid-row-col">
+                                            <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>
+                                        </div>
+                                        <!-- Seasons -->
+                                        <div class="grid-row-col">
+                                            <filters-season-press season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season-press>
+                                        </div>
+                                        <!-- Type
+                                        <div class="grid-row-col">
+                                            <filters-type></filters-type>
+                                        </div> -->
+                                        <!--- Color -->
+                                        <div class="grid-row-col">
+                                           <filters-color change.delegate="filterChangeColor($event)"></filters-color>
+                                        </div>
+                                    </div>
+                            </div>
+                    <!-- PRESS filters END -->
+
+                    <!-- BRAND filters BEGIN -->
+                    <div if.bind="user.type === 'brand'">
+                        <!--<div class="blockSearchImages">
+                            <div class="grid-row">
+                                <div class="grid-row-col">
+                                    <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search Text">
+                                    <!-- <filters-search></filters-search> 
+                                </div>
+                                <div class="grid-row-col">
+                                    <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
+                                </div>
+                                <!--<div class="grid-row-col">
+                                    <filters-color change.delegate="filterChangeColor($event)"></filters-color>
+                                </div>
+                                <div class="grid-row-col">
+                                    <filters-city change.delegate="filterChangeCity($event)"></filters-city>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="">
+                            <div class="grid-row">
+                                <div class="grid-row-col">
+                                    <input type="search" value.bind="searchText" class="search-box" id="search-images2" placeholder="Search">
+                                    <!-- <filters-search></filters-search> -->
+                                </div>
+                                <div class="grid-row-col">
+                                    <filters-season change.delegate="filterChangeSeason($event)"></filters-season>
+                                </div>                    
+                                <div class="grid-row-col">
+                                    <filters-city change.delegate="filterChangeCity($event)"></filters-city>
+                                </div>
+                                <div class="grid-row-col"></div>
+                            </div>
+                            <div class="grid-row">
+                                <div class="grid-content shrink">
+                                    <button id="btn-add-files" class="small button hollow" click.delegate="createAddfilesDialog()">Add Images</button>
+                                    <button class="small button hollow disabled">Delete Season</button>
+                                </div>              
+                            </div>
+                        </div>
+                    </div>
+                    <!-- BRAND filters END -->
+
+
+                    <!-- AGENCY filters BEGIN -->
+                    <div if.bind="user.type === 'prAgency'">
+                        <div class="blockSearchImages">
+                            <div class="grid-row">
+                                <div class="grid-row-col">
+                                    <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search">
+                                    <!-- <filters-search></filters-search> -->
+                                </div>
+                                <div class="grid-row-col">
+                                    <filters-available-from></filters-available-from>
+                                </div>
+                                <div class="grid-row-col">
+                                    <filters-available-to></filters-available-to>
+                                </div>
+                                <div class="grid-row-col">
+                                    <filters-city change.delegate="filterChangeCity($event)"></filters-city>
+                                </div>
+                            </div>
+                            <div class="grid-row">
+                                <div class="grid-row-col">
+                                    <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>
+                                </div>
+                                <div class="grid-row-col">
+                                    <filters-season-press season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season-press>
+                                </div>
+                                <div class="grid-row-col">
+                                    <filters-color change.delegate="filterChangeColor($event)"></filters-color>
+                                </div>
+                                <div class="grid-row-col"></div>
+                            </div>
+                        </div>
+                        <div class="blockManageImages">
+                            <div class="grid-row">
+                                <div class="grid-row-col">
+                                    <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search">
+                                    <!-- <filters-search></filters-search> -->
+                                </div>
+                                <div class="grid-row-col">
+                                    <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>
+                                </div>
+                                <div class="grid-row-col">
+                                    <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
+                                </div>                    
+                                <div class="grid-row-col"></div>            
+                            </div>
+                            <div class="grid-row">
+                                <div class="grid-content shrink">
+                                    <button id="btn-add-files" class="small button hollow" click.delegate="createAddfilesDialog()">Add Images</button>
+                                    <button class="small button hollow">Delete Season</button>
+                                </div>              
+                            </div>
+                        </div>
+                    </div>
+                <!-- AGENCY filters END --> 
+                </div>
+                <!-- -->
+                <!-- Images/Looks -->
+                <!-- -->
+
+                <div id="mainScrollWindow" class="cards-list-wrap">
+                
+                        <div class="cards-list" repeat.for="row of rows" >
+
+                            <div class="card" repeat.for="i of row.numberImagesThisRow" css="width: ${row.numberImagesThisRowPC}%;">
+                                <!-- Three dots menu press -->
+                                <div if.bind="user.type === 'press'" class="look-menu-absolute-wrap">
+                                    <a href="#" class="look-menu-click " click.delegate="createSampleRequest(row.items[i].id )">
+                                        <div class=menu-stripe></div>
+                                    </a>
+                                </div>
+                                <!-- Three dots menu brand and prAgency-->
+                                <div if.bind="user.type !== 'press'" class="look-menu-absolute-wrap">
+                                    <a href="#" class="look-menu-click " click.delegate="lookMenu(row.items[i].id)">
+                                        <div class="menu-stripe"></div>
+                                    </a>
+
+                                    <!-- Menu on image when three dots clicked -->                            
+                                    <div class="look-menu-absolute" id="look-${row.items[i].id}">
+                                        <div class="look-menu-wrap">
+                                            <div class="look-menu-heading">
+                                                LOOK ${row.items[i].name} <!-- ${i} ${row.numberImagesThisRow} -->
+                                            </div>
+
+                                            <!-- brand -->
+                                            <ul if.bind="user.type === 'brand'" class="look-menu-list">                                        
+                                                <li class="pure-menu-item"><a href="#" click.delegate="editSearchableItem(row.items[i].id)" class="look-menu-link">Edit</a></li>
+
+                                                <li class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.items[i])" class="look-menu-link">Set Initial Availability</a></li>
+
+                                                <li class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
+                                                <li class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Booking &nbsp;</a></li>
+                                            </ul>
+                                            <!-- agency -->
+                                            <ul if.bind="user.type === 'prAgency'" class="look-menu-list">
+
+                                                <li class="pure-menu-item"><a href="#" click.delegate="editSearchableItem(row.items[i].id)" class="look-menu-link">Edit</a></li>
+                                                
+                                                <li class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Set Initial Availability</a></li>
+
+                                                <li class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div> 
+
+                                <!-- Main image -->
+                                <div id="card-${row.items[i].id}" class="card-image">
+                                    
+                                    <img if.bind="user.type == 'brand'" src.bind="row.items[i].image" ref="image" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"/>
+
+                                    <img if.bind="user.type != 'brand'" class="lazy" src="/assets/bg.jpg" data-src.bind="row.items[i].image" ref="image" 
+                                     click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"/> 
+
+                                   <!-- <div if.bind="user.type === 'brand'" class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div> -->
+
+                                    <!-- lower corner look number -->
+                                    <div if.bind="user.type === 'brand'" class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
+                                    
+                                    <!-- hover stuff -->
+                                    <div class="card-look-number-name" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
+                                    <div if.bind="user.type === 'brand'" class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].season}</div>
+                                    <div if.bind="user.type === 'press'" class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].brand} <br> ${row.items[i].season}</div>
+                                    <div if.bind="user.type === 'prAgency'" class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].brand} <br> ${row.items[i].season}</div>
+
+
+                                    <img if.bind="row.items[i].imageProvider=='indigital'" src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align"/> 
+
+                                    <div class="card-hover-overlay" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"></div>
+
+                                </div>  
+                        </div>                  
+                    </div>
+                </div>
+                <!-- white lip at bottom of scroll region -->
+                <div class="grid-content shrink scrolling-lip">
+                </div>
+            </div>
+            <!-- spacer -->
+            <div class="grid-block shrink spa-h-spacer">
+            </div>
 <!-- -->
 <!-- Calendar + Request  Panel -->
 <!-- -->
@@ -314,324 +634,8 @@
                 <div class="grid-content shrink scrolling-lip">
                 </div>
             </div>
-            <!-- spacer -->
-            <div class="grid-block shrink spa-h-spacer">
-            </div>
-
-<!-- -->
-<!-- Image Grid Large Panel-->
-<!-- -->
-
-            <div id="looks" class="vertical grid-block grid-block-vertical-shadow" style="overflow:hidden;">
-                <!-- Header -->
-                <div class="grid-block tool-header shrink ">
-                    <div class="grid-block align-left tool-header tool-header-spacer">
-                    </div>
-                    <div id="comms_panel" class="grid-block align-left tool-header tool-header-spacer shrink">
-
-                        <!-- Header for 'press'-->
-                        <span if.bind="user.type == 'press'">
-                            <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
-                            <span if.bind="maxRReached" class="ui-text-label-m-broad"> > </span>
-                            <span class="ui-text-label-m-broad">${numberImages} Results )</span>
-                        </span> 
-                        <!-- Header for 'brand'-->
-                        <span if.bind="user.type == 'brand'">
-                            <span class="ui-text-label-m-broad">MANAGE IMAGES (</span>
-                            <span class="ui-text-label-m-broad">${numberImages} Results )</span>
-                        </span> 
-                        <!-- Header for 'prAgency'-->
-                        <span if.bind="user.type == 'prAgency'">
-                            <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
-                            <span if.bind="maxRReached" class="ui-text-label-m-broad"> > </span>
-                            <span class="ui-text-label-m-broad">${numberImages} Results )</span>
-                        </span> 
-
-                        <!-- Header for 'brand'
-                        <!-- if.bind bug here, only for brand have to remove '>' -->
-                        <!-- <select if.bind="user.type == 'brand'" class="select-transparent" name="" id="imagesFunctionality">
-                            <option value="optionSearchImages"> 
-                                <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
-                                <span class="ui-text-label-m-broad">${numberImages} Results )</span>
-                            </option>
-                            <option value="optionManageImages">
-                                <span class="ui-text-label-m-broad">MANAGE IMAGES (</span>
-                                <span class="ui-text-label-m-broad">${numberImages} Results )</span>
-                            </option>
-                        </select>-->
-                       
-                        <!-- Header for 'agency 
-                        <select if.bind="user.type == 'agency'" class="select-transparent" name="" id="imagesFunctionality">
-                            <option value="optionSearchImages"> 
-                                <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
-                                <span if.bind="maxRReached" class="ui-text-label-m-broad"> > </span>
-                                <span class="ui-text-label-m-broad">${numberImages} Results )</span>
-                            </option>
-                            <option value="optionManageImages">
-                                <span class="ui-text-label-m-broad">MANAGE IMAGES (</span>
-                                <span if.bind="maxRReached" class="ui-text-label-m-broad"> > </span>
-                                <span class="ui-text-label-m-broad">${numberImages} Results )</span>
-                            </option>
-                        </select> -->
-                       
-                   </div>
-                    <div class="grid-block align-right tool-header-spacer" style="padding-right:7px;">
-                        <span class="expando">
-                      <!-- <a route-href="route: requestman;"><img  src="/assets/nav/collapso.png" /></a> -->
-                      <a click.delegate="imageExpando()">
-                        <img class="expandoHover"  if.bind="imagePanelSize==3" src="/assets/nav/collapso16.png" />
-                        <img class="expandoHover"  if.bind="imagePanelSize==1" src="/assets/nav/expando16.png" />
-                        <img class="expandoHover"  if.bind="imagePanelSize==2" src="/assets/nav/expando16.png" />
-                      </a>
-                    </span>
-                    </div>
-                </div>
-                <!-- search / filter area -->
-
-                <div class="index-filters">
-                    <!-- PRESS filters BEGIN -->
-                            <div if.bind="user.type === 'press'">
-                                    <!-- top row -->
-                                    <div class="grid-row">
-                                        <!-- <div class="grid-row-col" style="margin-top: 0.5rem;">
-                                            <input id="checkbox-search" type="checkbox" checked>
-                                        </div> -->
-                                        <!-- change to UI, use "All" for each filter instead -->
-                                        <!-- Search -->
-                                        <div class="grid-row-col">
-                                            <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search">
-                                            <!-- <filters-search change.delegate="filterChangeSearch($event)"></filters-search> -->
-                                        </div>
-                                        <!-- Trending -->
-                                        <!--<div class="grid-row-col" >
-                                            <input id="checkbox-trending" type="checkbox"><label for="checkbox-trending">Trending</label>
-                                        </div> -->
-                                        <!-- Trending postponed until later release -->
-                                        <!-- Latest -->
-                                        <!-- <div class="grid-row-col" >
-                                           <input id="checkbox-latest" type="checkbox"><label for="checkbox-latest">Latest</label>
-                                        </div> -->
-                                        <!-- Latest postponed until later release -->
-                                        <!-- Available -->
-                                        <!-- end date -->
-                                        <div class="grid-row-col grid-row-date-start">
-                                            <filters-available-from></filters-available-from>
-                                        </div>
-                                        <!-- end date -->
-                                        <div class="grid-row-col grid-row-date-end">
-                                            <filters-available-to></filters-available-to>
-                                        </div>
-                                        <!-- theme -->
-                                        <div class="grid-row-col">
-                                            <filters-theme change.delegate="filterChangeTheme($event)"></filters-theme>
-                                        </div>
-                                    </div>
-                                    <!-- 2nd row -->
-                                    <div class="grid-row">
-                                        <!-- <div class="grid-content shrink" style="margin-top: 0.5rem;">
-                                                <input id="checkbox-brand" type="checkbox">
-                                        </div> -->
-                                        <!-- Brand -->
-                                        <div class="grid-row-col">
-                                            <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>
-                                        </div>
-                                        <!-- Seasons -->
-                                        <div class="grid-row-col">
-                                            <filters-season-press season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season-press>
-                                        </div>
-                                        <!-- Type
-                                        <div class="grid-row-col">
-                                            <filters-type></filters-type>
-                                        </div> -->
-                                        <!--- Color -->
-                                        <div class="grid-row-col">
-                                           <filters-color change.delegate="filterChangeColor($event)"></filters-color>
-                                        </div>
-                                    </div>
-                            </div>
-                    <!-- PRESS filters END -->
-
-                    <!-- BRAND filters BEGIN -->
-                    <div if.bind="user.type === 'brand'">
-                        <!--<div class="blockSearchImages">
-                            <div class="grid-row">
-                                <div class="grid-row-col">
-                                    <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search Text">
-                                    <!-- <filters-search></filters-search> 
-                                </div>
-                                <div class="grid-row-col">
-                                    <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
-                                </div>
-                                <!--<div class="grid-row-col">
-                                    <filters-color change.delegate="filterChangeColor($event)"></filters-color>
-                                </div>
-                                <div class="grid-row-col">
-                                    <filters-city change.delegate="filterChangeCity($event)"></filters-city>
-                                </div>
-                            </div>
-                        </div> -->
-                        <div class="">
-                            <div class="grid-row">
-                                <div class="grid-row-col">
-                                    <input type="search" value.bind="searchText" class="search-box" id="search-images2" placeholder="Search">
-                                    <!-- <filters-search></filters-search> -->
-                                </div>
-                                <div class="grid-row-col">
-                                    <filters-season change.delegate="filterChangeSeason($event)"></filters-season>
-                                </div>                    
-                                <div class="grid-row-col">
-                                    <filters-city change.delegate="filterChangeCity($event)"></filters-city>
-                                </div>
-                                <div class="grid-row-col"></div>
-                            </div>
-                            <div class="grid-row">
-                                <div class="grid-content shrink">
-                                    <button id="btn-add-files" class="small button hollow" click.delegate="createAddfilesDialog()">Add Images</button>
-                                    <button class="small button hollow disabled">Delete Season</button>
-                                </div>              
-                            </div>
-                        </div>
-                    </div>
-                    <!-- BRAND filters END -->
 
 
-                    <!-- AGENCY filters BEGIN -->
-                    <div if.bind="user.type === 'prAgency'">
-                        <div class="blockSearchImages">
-                            <div class="grid-row">
-                                <div class="grid-row-col">
-                                    <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search">
-                                    <!-- <filters-search></filters-search> -->
-                                </div>
-                                <div class="grid-row-col">
-                                    <filters-available-from></filters-available-from>
-                                </div>
-                                <div class="grid-row-col">
-                                    <filters-available-to></filters-available-to>
-                                </div>
-                                <div class="grid-row-col">
-                                    <filters-city change.delegate="filterChangeCity($event)"></filters-city>
-                                </div>
-                            </div>
-                            <div class="grid-row">
-                                <div class="grid-row-col">
-                                    <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>
-                                </div>
-                                <div class="grid-row-col">
-                                    <filters-season-press season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season-press>
-                                </div>
-                                <div class="grid-row-col">
-                                    <filters-color change.delegate="filterChangeColor($event)"></filters-color>
-                                </div>
-                                <div class="grid-row-col"></div>
-                            </div>
-                        </div>
-                        <div class="blockManageImages">
-                            <div class="grid-row">
-                                <div class="grid-row-col">
-                                    <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search">
-                                    <!-- <filters-search></filters-search> -->
-                                </div>
-                                <div class="grid-row-col">
-                                    <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>
-                                </div>
-                                <div class="grid-row-col">
-                                    <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
-                                </div>                    
-                                <div class="grid-row-col"></div>            
-                            </div>
-                            <div class="grid-row">
-                                <div class="grid-content shrink">
-                                    <button id="btn-add-files" class="small button hollow" click.delegate="createAddfilesDialog()">Add Images</button>
-                                    <button class="small button hollow">Delete Season</button>
-                                </div>              
-                            </div>
-                        </div>
-                    </div>
-                <!-- AGENCY filters END --> 
-                </div>
-<!-- -->
-<!-- Images/Looks -->
-<!-- -->
-
-                <div id="mainScrollWindow" class="cards-list-wrap">
-                
-                        <div class="cards-list" repeat.for="row of rows" >
-
-                            <div class="card" repeat.for="i of row.numberImagesThisRow" css="width: ${row.numberImagesThisRowPC}%;">
-                                <!-- Three dots menu press -->
-                                <div if.bind="user.type === 'press'" class="look-menu-absolute-wrap">
-                                    <a href="#" class="look-menu-click " click.delegate="createSampleRequest(row.items[i].id )">
-                                        <div class=menu-stripe></div>
-                                    </a>
-                                </div>
-                                <!-- Three dots menu brand and prAgency-->
-                                <div if.bind="user.type !== 'press'" class="look-menu-absolute-wrap">
-                                    <a href="#" class="look-menu-click " click.delegate="lookMenu(row.items[i].id)">
-                                        <div class="menu-stripe"></div>
-                                    </a>
-
-                                    <!-- Menu on image when three dots clicked -->                            
-                                    <div class="look-menu-absolute" id="look-${row.items[i].id}">
-                                        <div class="look-menu-wrap">
-                                            <div class="look-menu-heading">
-                                                LOOK ${row.items[i].name} <!-- ${i} ${row.numberImagesThisRow} -->
-                                            </div>
-
-                                            <!-- brand -->
-                                            <ul if.bind="user.type === 'brand'" class="look-menu-list">                                        
-                                                <li class="pure-menu-item"><a href="#" click.delegate="editSearchableItem(row.items[i].id)" class="look-menu-link">Edit</a></li>
-
-                                                <li class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.items[i])" class="look-menu-link">Set Initial Availability</a></li>
-
-                                                <li class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
-                                                <li class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Booking &nbsp;</a></li>
-                                            </ul>
-                                            <!-- agency -->
-                                            <ul if.bind="user.type === 'prAgency'" class="look-menu-list">
-
-                                                <li class="pure-menu-item"><a href="#" click.delegate="editSearchableItem(row.items[i].id)" class="look-menu-link">Edit</a></li>
-                                                
-                                                <li class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Set Initial Availability</a></li>
-
-                                                <li class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div> 
-
-                                <!-- Main image -->
-                                <div id="card-${row.items[i].id}" class="card-image">
-                                    
-                                    <img if.bind="user.type == 'brand'" src.bind="row.items[i].image" ref="image" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"/>
-
-                                    <img if.bind="user.type != 'brand'" class="lazy" src="/assets/bg.jpg" data-src.bind="row.items[i].image" ref="image" 
-                                     click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"/> 
-
-                                   <!-- <div if.bind="user.type === 'brand'" class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div> -->
-
-                                    <!-- lower corner look number -->
-                                    <div if.bind="user.type === 'brand'" class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
-                                    
-                                    <!-- hover stuff -->
-                                    <div class="card-look-number-name" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
-                                    <div if.bind="user.type === 'brand'" class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].season}</div>
-                                    <div if.bind="user.type === 'press'" class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].brand} <br> ${row.items[i].season}</div>
-                                    <div if.bind="user.type === 'prAgency'" class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].brand} <br> ${row.items[i].season}</div>
-
-
-                                    <img if.bind="row.items[i].imageProvider=='indigital'" src="/assets/LOGO_indigitalimagesRM.png" class="indigital-and-align"/> 
-
-                                    <div class="card-hover-overlay" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"></div>
-
-                                </div>  
-                        </div>                  
-                    </div>
-                </div>
-                <!-- white lip at bottom of scroll region -->
-                <div class="grid-content shrink scrolling-lip">
-                </div>
-            </div>
         </div>
 
 </template>

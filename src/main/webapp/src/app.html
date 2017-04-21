@@ -11,18 +11,6 @@
         <!-- main body block -->
         <div id="visNeeded" class="grid-block IEVisibility"> <!-- RM changed from visible to hidden to get guest page to work -->
         <!-- RM hack for IE not constraining grid frame -->
-            <!-- Main Body -->
-            
-
-            <router-view class="grid-block " style="overflow:visible;"></router-view> 
-
-
-            <!-- spacer -->
-            <div class="grid-block shrink spa-h-spacer">
-            </div>
-            <!-- Communications Panel  -->
-            <!-- -->
-            <!-- -->
             <!-- Communications Panel  -->
             <!-- -->
             <div if.bind="(((user.type== 'press') || (user.type=='brand')) && (user.type)) " id="message-container-mum" class="vertical grid-block grid-block-vertical-shadow right-panel" style="overflow:hidden;">
@@ -38,6 +26,11 @@
                 <div class="grid-content shrink scrolling-lip">
                 </div>
             </div>
+            <!-- spacer -->
+            <div class="grid-block shrink spa-h-spacer">
+            </div>
+            <!-- Main Body -->
+            <router-view class="grid-block " style="overflow:visible;"></router-view> 
         </div>
         <!-- spacer -->
         <div class="grid-content shrink spa-v-spacer">
