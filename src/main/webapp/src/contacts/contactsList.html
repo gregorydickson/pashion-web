@@ -178,7 +178,7 @@
                         <td class="con-td-2">
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
                                 <div>
-                                    <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connection.connectedUserId -1].name} ${users[connection.connectedUserId -1].surname}</div>
+                                    <div class="ui-text-label-me-left paragraph-5 contact-box ${messagesYes(connection.numberNewMessages) ? 'ui-text-bolder' : ''}">${users[connection.connectedUserId -1].name} ${users[connection.connectedUserId -1].surname}</div>
                                     <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connection.connectedUserId -1].brand.name}${users[connection.connectedUserId -1].pressHouse.name}${users[connection.connectedUserId -1].prAgency.name}</div>
                                 </div>
                             </a>
@@ -263,8 +263,8 @@
                         </td>
                         <td class="con-td-2">
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
-                                <div>
-                                    <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connection.connectedUserId -1].name} ${users[connection.connectedUserId -1].surname}</div>
+                                <div class="">
+                                    <div class="ui-text-label-me-left paragraph-5 contact-box ${messagesYes(connection.numberNewMessages) ? 'ui-text-bolder' : ''}">${users[connection.connectedUserId -1].name} ${users[connection.connectedUserId -1].surname}</div>
                                     <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connection.connectedUserId -1].brand.name}${users[connection.connectedUserId -1].pressHouse.name}${users[connection.connectedUserId -1].prAgency.name}</div>
                                 </div>
                             </a>
