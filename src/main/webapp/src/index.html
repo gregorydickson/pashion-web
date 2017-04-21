@@ -111,11 +111,13 @@
                                            ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
                                 <td class="accordion w30 to-u-c 
                                            ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" >${booking.requestStatusBrand}</td>
+                                <!-- ... disabled  -->
                                 <td if.bind="(booking.requestStatusBrand == 'Deleted')" class="accordion w10" style="overflow:visible;">
                                     <div class="look-menu-absolute-wrap">
                                         <span class="edit-box disabled" >...</span>
                                     </div>
                                 </td>
+                                <!-- ... not disabled -->
                                 <td if.bind="(booking.requestStatusBrand != 'Deleted')" class="accordion w10" style="overflow:visible;">
                                     <div class="look-menu-absolute-wrap">
                                         <span class="edit-box" ><a href="#" class="expandoHover" click.delegate="sampleRequestMenu(booking.id)">...</a></span>
@@ -165,6 +167,7 @@
                                                 <li if.bind="(
                                                     (booking.requestStatusBrand == 'Out') ||
                                                     (booking.requestStatusBrand == 'Picked Up')||
+                                                    (booking.requestStatusBrand == 'Picking Up')||
                                                     (booking.requestStatusBrand == 'Returning')
                                                 )"
                                                 class="look-menu-item"><a click.delegate="markReturnedSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Returned</a></li>
