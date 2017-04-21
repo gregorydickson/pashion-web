@@ -3,13 +3,13 @@
     <require from="./filter"></require>
     <div class="grid-block vertical shrink" style="width:100%; margin-top:1rem;">
         <!-- Search contacts -->
-        <div class="grid-block shrink" style="margin-left:1rem; width:255px;">
+        <div class="grid-block shrink" style="margin-left:1rem; width:257px;">
             <input type="search" value.two-way="searchTerm" class="search-box" id="search-contacts" placeholder="Search Contacts" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Contacts'">
         </div>
         <!-- -->
         <!-- Connection outgoing requests -->
         <!-- -->
-        <div class="grid-block shrink" style="margin-left:1rem; margin-bottom:1rem;">
+        <div class="grid-block shrink" style="margin-left:1rem; margin-bottom:1rem; margin-right:1rem;">
             <table style="table-layout:fixed;" class="big-accordion">
                 <tr>
                     <td class="accordion-grey" style="width:20px;">
@@ -24,7 +24,7 @@
                         repeat.for="connectionC of users[user.id -1].connections">
 
                         <button click.delegate="closeExpand(1211)" class="accordionNew expandoHover"
-                        if.bind="(connectionC.connectingStatus=='PendingOut')"  style="color: white; font-weight: 500; background: #3971b1;">NEW&nbsp;</button>
+                        if.bind="(connectionC.connectingStatus=='PendingOut')"  style="color: #3971b1; font-weight: 500; background: #f7f7f7;">NEW&nbsp;</button>
 
                         </span>                        
                     </td>
@@ -33,7 +33,7 @@
             </table>
         </div>
         <div id="panel1211" class="panel grid-block vertical " style="overflow-y:auto;">
-            <div id="contacts-inside-top2" if.bind="(users[user.id -1].connections!=null)" repeat.for="connectionC of users[user.id -1].connections" class="" style="width:255px; overflow: visible;margin-left: 1rem;">
+            <div id="contacts-inside-top2" if.bind="(users[user.id -1].connections!=null)" repeat.for="connectionC of users[user.id -1].connections" class="" style="width:255px; overflow: visible;margin-left: 1rem; ">
                 <!-- out going -->
                 <!-- RM check the user still exists -->
                 <div if.bind="(connectionC.connectingStatus=='PendingOut' && users[connectionC.connectedUserId -1].email)" style="">
@@ -67,7 +67,7 @@
         <!-- -->
         <!-- Connection incoing requests -->
         <!-- -->
-        <div class="grid-block shrink" style="margin-left:1rem; margin-bottom:1rem;">
+        <div class="grid-block shrink" style="margin-left:1rem; margin-bottom:1rem; margin-right:1rem;">
             <table style="table-layout:fixed;" class="big-accordion">
                 <tr>
                     <td class="accordion-grey" style="width:20px;">
@@ -82,7 +82,7 @@
                         repeat.for="connectionC of users[user.id -1].connections">
 
                         <button click.delegate="closeExpand(1111)" class="accordionNew expandoHover"
-                        if.bind="(connectionC.connectingStatus=='PendingIn')"  style="color: white; font-weight: 500; background: #3971b1;">NEW&nbsp;</button>
+                        if.bind="(connectionC.connectingStatus=='PendingIn')"  style="color: #3971b1; font-weight: 500; background: #f7f7f7;">NEW&nbsp;</button>
 
                         </span>                        
                     </td>
@@ -123,23 +123,10 @@
             </div>
         </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-      <!-- -->
+        <!-- -->
         <!-- Recent activity lists-->
         <!-- -->
-        <div class="grid-block shrink" style="margin-left:1rem; margin-bottom:1rem;">
+        <div class="grid-block shrink" style="margin-left:1rem; margin-bottom:1rem; margin-right:1rem;">
             <table style="table-layout:fixed;" class="big-accordion">
                 <tr>
                     <td class="accordion-grey" style="width:20px;">
@@ -152,8 +139,8 @@
                         if.bind="(resetCount(users[user.id -1].connections))"
                         repeat.for="connectionC of users[user.id -1].connections">
 
-                        <button click.delegate="closeExpand(1213)" class="accordionNew"
-                        if.bind="(incrementCount(connectionC.numberNewMessages, connectionC.connectingStatus))" style="color: white; font-weight: 500; background: #3971b1;">NEW&nbsp;</button>
+                        <button click.delegate="closeExpand(1213)" class="accordionNew expandoHover"
+                        if.bind="(incrementCount(connectionC.numberNewMessages, connectionC.connectingStatus))" style="color: #3971b1; font-weight: 500; background: #f7f7f7;">NEW&nbsp;</button>
 
                         </span>                        
                     </td>
@@ -206,7 +193,7 @@
         <!-- -->
         <!-- Contact lists-->
         <!-- -->
-        <div class="grid-block shrink" style="margin-left:1rem; margin-bottom:1rem;">
+        <div class="grid-block shrink" style="margin-left:1rem; margin-bottom:1rem; margin-right:1rem;">
             <table style="table-layout:fixed;" class="big-accordion">
                 <tr>
                     <td class="accordion-grey" style="width:20px;">
