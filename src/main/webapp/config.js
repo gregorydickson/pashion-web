@@ -38,7 +38,6 @@ System.config({
     "aurelia-templating-router": "npm:aurelia-templating-router@1.1.0",
     "bluebird": "npm:bluebird@3.4.1",
     "bootstrap": "github:twbs/bootstrap@3.3.7",
-    "bootstrap-datepicker": "npm:bootstrap-datepicker@1.6.4",
     "fetch": "github:github/fetch@1.0.0",
     "font-awesome": "npm:font-awesome@4.6.3",
     "jquery": "npm:jquery@3.1.1",
@@ -217,11 +216,6 @@ System.config({
       "regenerator-runtime": "npm:regenerator-runtime@0.9.5"
     },
     "npm:bluebird@3.4.1": {
-      "process": "github:jspm/nodelibs-process@0.1.2"
-    },
-    "npm:bootstrap-datepicker@1.6.4": {
-      "fs": "github:jspm/nodelibs-fs@0.1.2",
-      "jquery": "npm:jquery@3.1.1",
       "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:buffer@3.6.0": {
