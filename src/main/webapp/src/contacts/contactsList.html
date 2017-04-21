@@ -4,7 +4,7 @@
     <div class="grid-block vertical shrink" style="width:100%; margin-top:1rem;">
         <!-- Search contacts -->
         <div class="grid-block shrink" style="margin-left:1rem; width:257px;">
-            <input type="search" value.two-way="searchTerm" class="search-box" id="search-contacts" placeholder="Search Contacts" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search Contacts'">
+            <input type="search" value.two-way="searchTerm" class="search-box" id="search-contacts" placeholder="Search" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search'">
         </div>
         <!-- -->
         <!-- Connection outgoing requests -->
@@ -37,7 +37,7 @@
                 <!-- out going -->
                 <!-- RM check the user still exists -->
                 <div if.bind="(connectionC.connectingStatus=='PendingOut' && users[connectionC.connectedUserId -1].email)" style="">
-                    <table class="width100" style="table-layout: fixed;">
+                    <table class="width100" style="table-layout: fixed; margin-bottom: 10px; ">
                         <tr>
                             <td class="con-td-1">
                                 <div class="">
@@ -53,12 +53,19 @@
                             <td class="align-top con-td-3">
                             </td>
                             <td class="align-top con-td-4">
+                                <div class="look-menu-absolute-wrap">
+                                    <a href="#" click.delegate="deleteConnection(user.id,connectionC.id)">
+                                        <span class="edit-box" style="font-size: 20px; margin-left: 11px; margin-right: 0px; margin-top: 6px; height:16px;width:16px;">
+                                        <img style="vertical-align: center;" class="expandoHover"  src="../../assets/ximg.png"  /> 
+                                        </span>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     </table>
-                    <div class="grid-block align-center shrink">
+                   <!-- <div class="grid-block align-center shrink">
                         <a class="hollow button" click.delegate="deleteConnection(user.id,connectionC.id) ">Delete</a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -95,7 +102,7 @@
                 <!-- in coming -->
                 <!-- RM check the user still exists -->
                 <div if.bind="(connectionC.connectingStatus=='PendingIn' && users[connectionC.connectedUserId -1].email)" style="">
-                    <table class="width100" style="table-layout: fixed;">
+                    <table class="width100" style="table-layout: fixed; margin-bottom: 10px; ">
                         <tr>
                             <td class="con-td-1">
                                 <div class="">
@@ -109,16 +116,29 @@
                                 <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connectionC.connectedUserId -1].email}</div>
                             </td>
                             <td class="align-top con-td-3">
+                                <div class="look-menu-absolute-wrap">
+                                    <a href="#" click.delegate="acceptContact(user.id,connectionC.id)">
+                                        <span class="edit-box" style="font-size: 20px; margin-left: 11px; margin-right: 0px; margin-top: 6px; height:16px;width:16px;">
+                                        <img style="vertical-align: center;" class="expandoHover"  src="../../assets/timg.png"  /> 
+                                        </span>
+                                    </a>
+                                </div>
                             </td>
                             <td class="align-top con-td-4">
+                                <div class="look-menu-absolute-wrap">
+                                    <a href="#" click.delegate="deleteConnection(user.id,connectionC.id) ">
+                                        <span class="edit-box" style="font-size: 20px; margin-left: 11px; margin-right: 0px; margin-top: 6px; height:16px;width:16px;">
+                                        <img style="vertical-align: center;" class="expandoHover"  src="../../assets/ximg.png"  /> 
+                                        </span>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     </table>
-                    <div class="grid-block align-center shrink">
-                        <!--  <a class="hollow button" click.delegate="declineContact(connectionC.user.id,connectionC.id) ">Decline</a> //RM no deny, just delete, more permissive -->
+                   <!--  <div class="grid-block align-center shrink">
                         <a class="hollow button" click.delegate="deleteConnection(user.id,connectionC.id) ">Decline</a>
                         <a class="button" href="#" click.delegate="acceptContact(user.id,connectionC.id)">Accept</a>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
