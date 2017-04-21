@@ -559,11 +559,16 @@
                         <div class="cards-list" repeat.for="row of rows" >
 
                             <div class="card" repeat.for="i of row.numberImagesThisRow" css="width: ${row.numberImagesThisRowPC}%;">
-                            
-                                <!-- Three dots menu -->
-                                <div class="look-menu-absolute-wrap">
-                                    <a href="#" class="look-menu-click " click.delegate="lookMenu(row.items[i].id)">
+                                <!-- Three dots menu press -->
+                                <div if.bind="user.type === 'press'" class="look-menu-absolute-wrap">
+                                    <a href="#" class="look-menu-click " click.delegate="createSampleRequest(row.items[i].id )">
                                         <div class=menu-stripe></div>
+                                    </a>
+                                </div>
+                                <!-- Three dots menu brand and prAgency-->
+                                <div if.bind="user.type !== 'press'" class="look-menu-absolute-wrap">
+                                    <a href="#" class="look-menu-click " click.delegate="lookMenu(row.items[i].id)">
+                                        <div class="menu-stripe"></div>
                                     </a>
 
                                     <!-- Menu on image when three dots clicked -->                            
@@ -572,36 +577,6 @@
                                             <div class="look-menu-heading">
                                                 LOOK ${row.items[i].name} <!-- ${i} ${row.numberImagesThisRow} -->
                                             </div>
-
-                                            <!-- different actions for roles:
-                                            press:
-                                            book
-                                            details
-                                            check next availability
-                                            add to lightbox
-                                            share
-                                            chat to desinger
-                                            Favourite
-
-                                            brand / agency
-                                            book
-                                            edit
-                                            details
-                                            set initial availability
-                                            check availability
-                                            delete -->
-
-                                            <!-- press -->
-                                            <ul if.bind="user.type === 'press'" class="look-menu-list">
-                                                <li class="look-menu-item"><a href="#" click.delegate="createSampleRequest(row.items[i].id )" class="look-menu-link">Booking &nbsp;</a></li>
-                                               <!--  <li class="look-menu-item"><a href="#" class="look-menu-link">Details</a></li> -->
-                                                
-
-                                                <!-- if.bind="! ?.hideCalendar" -->
-
-
-                                                <li class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
-                                            </ul>
 
                                             <!-- brand -->
                                             <ul if.bind="user.type === 'brand'" class="look-menu-list">                                        
