@@ -367,7 +367,7 @@
                     <div class="grid-block align-left tool-header tool-header-spacer">
                     </div>
                     <div class="grid-block align-left tool-header-spacer">
-                        <span class="ui-text-label-m-broad ">REQUEST MANAGER</span>
+                        <span class="ui-text-label-m-broad ">REQUEST MANAGER (${numberOfRequests})</span>
                         <!-- <span class="alert-box">3</span> -->
                     </div>
                     <div class="grid-block align-right tool-header-spacer" style="padding-right:7px;">
@@ -422,7 +422,7 @@
                     <!-- row with button -->
                     <div repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user:seasons">
                         <table class="accordion">
-                            <tr>
+                            <tr class="indexReqRow">
                                 <td class="accordion w7">
                                     <button id="button${booking.id}" class="accordion requestButton expandoHover" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
@@ -539,7 +539,7 @@
                     <!-- row with button -->
                     <div repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user:seasons">
                         <table class="accordion">
-                            <tr>
+                            <tr class="indexReqRow">
                                 <td class="accordion w10">
                                     <button id="button${booking.id}" class="accordion requestButton expandoHover" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>

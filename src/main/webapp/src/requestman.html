@@ -46,7 +46,7 @@
                     <div style="margin-left:34px;" class="grid-block tool-header tool-header-spacer"> 
                     </div>
                     <div class="grid-block align-left tool-header-spacer">
-                        <span class="ui-text-label-m-broad ">REQUEST MANAGER</span>
+                        <span class="ui-text-label-m-broad ">REQUEST MANAGER (${numberOfRequests})</span>
                        <!-- <span class="alert-box">3</span> -->
                     </div>
                     <div class="grid-block align-right tool-header-spacer shrink" style="padding-right:7px;">
@@ -117,7 +117,7 @@
                                 <filters-search-to></filters-search-to>
                             </div>
                             <div class="grid-content shrink">
-                                    <button id="btn-pdf" class="small button hollow" click.delegate="createPDFDialog()">Create PDF</button>
+                                    <button disabled.bind="(numberOfRequests <= 0)" class="small button hollow" click.delegate="createPDFDialog()">Create PDF</button>
                             </div> 
                         </div>
                         <!-- Accordion -->
@@ -156,13 +156,13 @@
                                 </table>
                             </div>                            
                             <!-- Content Container-->
-                            <!-- Rows of content BRAND View-->
+                            <!-- Rows of content View-->
                             <div  class="grid-content" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left: 1rem; margin-right: 1rem;">
                                 
                                 <div repeat.for="booking of bookings | sort:ordering:'ascending' | filter:searchTextReqMan:filterFunc:filtering:user:seasons
                                 | range:searchFrom:searchTo:filterRangeFunc">
                                     <table ref="aBooking"  class="big-accordion" cellspacing="2" style="table-layout: fixed;">
-                                        <tr class="brandGridContent">
+                                        <tr class="brandGridContent indexReqRow">
                                             <td class="accordion-grey w3">
                                                 <button id="button${$index}" class="accordion expandoHover" click.delegate="closeExpand($index,booking)"></button>
                                             </td>

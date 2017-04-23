@@ -75,6 +75,9 @@ export class Index {
         this.imagePanelSize = 2; //  1 = small, 2 = mid, 3 = large
     }
     
+    get numberOfRequests (){
+        return document.getElementsByClassName("indexReqRow").length;
+    }
 
     computedOverdue(booking, status) {   
         var computedDate = new Date(booking);
