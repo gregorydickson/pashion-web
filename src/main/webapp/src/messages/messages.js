@@ -168,7 +168,7 @@ export class Messages {
                     //console.log("getMostRecentRead: " + parent.userService.getMostRecentRead (response.messages[i].entry.fromId));
                       // console.log("response timestamp: "+ parseInt(response.messages[i].timetoken));
                       if (parseInt(response.messages[i].timetoken) > parseInt(parent.userService.getMostRecentRead (response.messages[i].entry.fromId))) {
-                            console.log("response timestamp > mostrecent read stamp");
+                            //console.log("response timestamp > mostrecent read stamp");
                             // do not push to server, use flushConnectionsData instead
                             parent.userService.addMessageCount(response.messages[i].entry.fromId, false);
                       }

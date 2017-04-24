@@ -310,12 +310,12 @@ export class UserService {
         // get id for email;
         var fromUserId = this.checkValidUser(fromEmail);
         var connectionId = -1;
-        console.log("UserService.addMessgeCount, update message count from:" + fromEmail + " id:" + fromUserId + ' pushToServer: ' + pushToServer);
+        // console.log("UserService.addMessgeCount, update message count from:" + fromEmail + " id:" + fromUserId + ' pushToServer: ' + pushToServer);
 
         var i;
         for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
             if (this.users[this.user.id - 1].connections[i].connectedUserId == fromUserId) {
-                console.log("UserService.addMessgeCount 1 actually added from: " + fromUserId + " to: " + this.user.id);
+                // console.log("UserService.addMessgeCount 1 actually added from: " + fromUserId + " to: " + this.user.id);
                 this.users[this.user.id - 1].connections[i].numberNewMessages++;
                 connectionId = this.users[this.user.id - 1].connections[i].id;
                 break;
@@ -396,7 +396,7 @@ export class UserService {
         var i;
         for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
             if (this.users[this.user.id - 1].connections[i].connectedUserId == withUserId) {
-                console.log("UserService.getMostRecentRead, from: " + withUserId + " on id: " + " stamp: " + this.users[this.user.id - 1].connections[i].mostRecentRead);
+                // console.log("UserService.getMostRecentRead, from: " + withUserId + " on id: " + " stamp: " + this.users[this.user.id - 1].connections[i].mostRecentRead);
                 return (this.users[this.user.id - 1].connections[i].mostRecentRead);
             }
         }
