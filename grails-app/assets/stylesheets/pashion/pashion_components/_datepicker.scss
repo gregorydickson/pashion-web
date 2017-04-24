@@ -100,9 +100,10 @@
 	background: #f3f3f3;
 }
 .ui-datepicker-calendar .ui-state-active {
-	background: #f3f3f3;
+	// background: #f3f3f3;
 	position: relative;
 	font-weight: bold;
+	border: 2px solid #3971b1;
 }
 .ui-datepicker-unselectable .ui-state-default {
 	background: #f4f4f4;
@@ -127,7 +128,7 @@
 }
 
 .ui-datepicker-buttonpane {
-	margin: 1rem 0;
+	margin: 15px 0 15px 77px;
 }
 .ui-datepicker-buttonpane button{
 	border: 1px solid #ebebeb;
@@ -137,4 +138,10 @@
     padding: 0.4em 1em;
     
     margin: 0 1rem 0 0;
+}
+
+.ui-datepicker-buttonpane button:hover{
+	border-color: #cccccc;
+    background: #f7f7f7;
+    color: #383838;
 }
