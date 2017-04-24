@@ -520,6 +520,10 @@
                             </table>
                         </div>
                     </div>
+                    <!-- Empty notice -->
+                    <div if.bind="(numberOfRequests == 0)">
+                        <span style="margin-top: 2rem; display:block; text-align:center;"> - No Requests Match Your Search - </span>
+                    </div>
                      
                 </div>
                
@@ -627,7 +631,10 @@
                             </table>
                         </div>
                     </div>
-                         
+                    <!-- Empty notice -->
+                    <div if.bind="(numberOfRequests == 0)">
+                        <span style="margin-top: 2rem; display:block; text-align:center;"> - No Requests Match Your Search - </span>
+                    </div>  
                 
                 </div>
                 <!-- white lip at bottom of scroll region -->
