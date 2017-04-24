@@ -46,7 +46,7 @@
                     <div style="margin-left:34px;" class="grid-block tool-header tool-header-spacer"> 
                     </div>
                     <div class="grid-block align-left tool-header-spacer">
-                        <span class="ui-text-label-m-broad ">REQUEST MANAGER</span>
+                        <span class="ui-text-label-m-broad ">REQUEST MANAGER (${numberOfRequests})</span>
                        <!-- <span class="alert-box">3</span> -->
                     </div>
                     <div class="grid-block align-right tool-header-spacer shrink" style="padding-right:7px;">
@@ -117,7 +117,9 @@
                                 <filters-search-to></filters-search-to>
                             </div>
                             <div class="grid-content shrink">
-                                    <button disabled.bind="!(aBooking)" id="btn-pdf" class="small button hollow" click.delegate="createPDFDialog()">Create PDF</button>
+
+                                    <button disabled.bind="(numberOfRequests <= 0)" class="small button hollow" click.delegate="createPDFDialog()">Create PDF</button>
+
                             </div> 
                         </div>
                         <!-- Accordion -->
@@ -133,7 +135,7 @@
                                         <td class="accordion-underline w14">COMPANY</td>
                                         <td class="accordion-underline w16">EDITORIAL</td>
                                         <td class="accordion-underline w20">WHO</td>
-                                        <td class="accordion-underline w3"><img style="width:25px;" src="/assets/shoppingcart60x47.png" height=47 width=60></img></td>
+                                        <td class="accordion-underline w3"><img style="width:19px;" src="/assets/shoppingcart60x47.png" height=47 width=60></img></td>
                                         <td class="accordion-underline w13" style="padding-left:7px;">STATUS</td>
                                         <td class="accordion-underline w5"></td>
                                     </tr>
@@ -156,13 +158,13 @@
                                 </table>
                             </div>                            
                             <!-- Content Container-->
-                            <!-- Rows of content BRAND View-->
+                            <!-- Rows of content View-->
                             <div  class="grid-content" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left: 1rem; margin-right: 1rem;">
                                 
                                 <div repeat.for="booking of bookings | sort:ordering:'ascending' | filter:searchTextReqMan:filterFunc:filtering:user:seasons
                                 | range:searchFrom:searchTo:filterRangeFunc">
                                     <table ref="aBooking"  class="big-accordion" cellspacing="2" style="table-layout: fixed;">
-                                        <tr class="brandGridContent">
+                                        <tr class="brandGridContent indexReqRow">
                                             <td class="accordion-grey w3">
                                                 <button id="button${$index}" class="accordion expandoHover" click.delegate="closeExpand($index,booking)"></button>
                                             </td>
@@ -380,6 +382,10 @@
                                     </div>
                                 </div>  
                                 
+                                <!-- Empty notice -->
+                                <div if.bind="(numberOfRequests == 0)">
+                                    <span style="margin-top: 2rem; display:block; text-align:center;"> - No Requests Match Your Search - </span>
+                                </div>
                             </div>
                        
                     </div>

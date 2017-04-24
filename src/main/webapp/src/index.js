@@ -15,7 +15,6 @@ import { Introduction } from './hello/introduction';
 import { Zoom } from './zoom/zoom';
 import { AddFilesDialog } from './add_files/add_files';
 import { ErrorDialogSample } from './error_dialog/error_dialog_sample';
-import { CreateDialogAlert } from './common/dialogAlert';
 // SERVICES
 import { SampleRequestService } from './services/sampleRequestService';
 import { UserService } from './services/userService';
@@ -75,6 +74,9 @@ export class Index {
         this.imagePanelSize = 2; //  1 = small, 2 = mid, 3 = large
     }
     
+    get numberOfRequests() {
+        return document.getElementsByClassName("indexReqRow").length;
+    }
 
     computedOverdue(booking, status) {   
         var computedDate = new Date(booking);

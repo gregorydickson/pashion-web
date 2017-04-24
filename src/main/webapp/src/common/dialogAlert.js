@@ -25,14 +25,21 @@ export class CreateDialogAlert  {
          .then(response => response.json())
          .then(item => {}
          ); */
-  this.alertTitle = "Information";
-  if (inputs.title != '') this.alertTitle=inputs.title;
-  this.alertMessage=inputs.message;
-  this.timeOutMSecs = 5000;
-  if (!inputs.timeout && inputs.timeout != '') this.timeOutMSecs = inputs.timeout;
-
-  var parent = this;
-  setTimeout(function() { parent.controller.close(false) }, this.timeOutMSecs);
+    this.alertTitle = "Information";
+    if (inputs.title != '') this.alertTitle=inputs.title;
+    this.alertMessage=inputs.message;
+    //this.timeOutMSecs = 5000;
+    if (inputs.timeout && inputs.timeout == 'none') {}
+    else {
+      if (inputs.timeout && inputs.timeout != ''){
+        var parent = this;
+        setTimeout(function() { parent.controller.close(false) }, inputs.timeout);
+      }
+      if (!inputs.timeout){
+        var parent = this;
+        setTimeout(function() { parent.controller.close(false) }, 5000);
+      }
+    }
 
   }
 

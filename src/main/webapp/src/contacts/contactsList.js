@@ -156,6 +156,19 @@ export class ContactsList {
   }
 
 
+  get numberOfMyConnections() {
+      return document.getElementsByClassName("indexMyConnections").length;
+  }
+
+  get numberOfRequestsToConnect() {
+      return document.getElementsByClassName("indexRequestsToConnect").length;
+  }
+
+  get numberOfNewMessages() {
+      return document.getElementsByClassName("indexNewMessages").length;
+  }
+
+
   //RM test button & pubnub message cache invalidate response target
   fetchGetUserUsersFromServer () {
     this.userService.getUsers(true).then(users => this.users = users)

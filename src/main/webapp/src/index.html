@@ -37,286 +37,8 @@
 
         <div class="grid-block spa-background" style="overflow:visible;">
 
-<!-- -->
-<!-- Calendar + Request  Panel -->
-<!-- -->
 
-            <div if.bind="imagePanelSize <= 2" id="left-panel" class="vertical grid-block grid-block-vertical-shadow">
-                <!-- header -->
-                <div class="grid-block tool-header shrink">
-                    <div class="grid-block align-left tool-header tool-header-spacer">
-                    </div>
-                    <div class="grid-block align-left tool-header-spacer">
-                        <span class="ui-text-label-m-broad ">REQUEST MANAGER</span>
-                        <!-- <span class="alert-box">3</span> -->
-                    </div>
-                    <div class="grid-block align-right tool-header-spacer" style="padding-right:7px;">
-                        <span class="expando">
-                      <a route-href="route: requestman;"><img class="expandoHover" src="/assets/nav/expando16.png" /></a>
-                    </span>
-                    </div>
-                </div>
-                <!-- Calendar // Remove for beta release
-                <div class="grid-block shrink">
-                    <compose view-model="calendar"></compose>
-                </div> -->
-                <!-- search and filter requests -->
-                <div class="vertical grid-block shrink" style="margin-left: 1rem; margin-right: 1rem;">
-                    <form style="margin-top:1rem;">
-                        <!-- Search requests -->
-                        <input type="search" value.two-way="searchTextRequests" class="search-box" id="search-requests" placeholder="Search" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search'">
-                        <!-- filter requests -->
-                        <span class="inline-label" style="width:258px; margin-bottom: 0px; margin-top:1.5rem;">
-                            <filters-filterrequests change.delegate="filterChange($event)" style="width:258px;"></filters-filterrequests> 
-                        </span>
-                        <!-- ORDER -->     
-                        <span class="inline-label" style="margin-top:1rem; width:258px; margin-top:0.5rem;">
-                            <filters-order change.delegate="orderChange($event)" style="width:259px;"></filters-order> 
-                        </span>
-                       <!--  <span class="form-label" style="font-weight:500;">ORDER</span>
-                        <select name="" id="">
-                            <option>By Date</option>
-                            <option>By Person</option>
-                            <option>By Request Number</option>
-                        </select>
-                        </span> -->
-                    </form>
-                </div>
-                <!-- Accordion -->
-                
-                <!-- row button + content -->
-               
-                <div if.bind="user.type === 'brand'" class="vertical grid-content grid-content-column accordion">
-                    <!--header -->
-                    <div style="margin-bottom:5px;">
-                        <table class="accordion">
-                            <tr> 
-                                <th class="accordion w5"></th>
-                                <th class="accordion w20">LOOK</th>
-                                <th class="accordion w35">OUT</th>
-                                <th class="accordion w30">STATUS</th>
-                                <th class="accordion w10"></th>
-                            </tr>
-                        </table>
-                    </div>
-                    <!-- row with button -->
-                    <div repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user:seasons">
-                        <table class="accordion">
-                            <tr>
-                                <td class="accordion w7">
-                                    <button id="button${booking.id}" class="accordion requestButton expandoHover" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
-                                </td>
-                                <td class="accordion w18">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
-                                <td class="accordion w35 
-                                           ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
-                                <td class="accordion w30 to-u-c 
-                                           ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" >${booking.requestStatusBrand}</td>
-                                <!-- ... disabled  -->
-                                <td if.bind="(booking.requestStatusBrand == 'Deleted')" class="accordion w10" style="overflow:visible;">
-                                    <div class="look-menu-absolute-wrap">
-                                        <span class="edit-box disabled" >...</span>
-                                    </div>
-                                </td>
-                                <!-- ... not disabled -->
-                                <td if.bind="(booking.requestStatusBrand != 'Deleted')" class="accordion w10" style="overflow:visible;">
-                                    <div class="look-menu-absolute-wrap">
-                                        <span class="edit-box" ><a href="#" class="expandoHover" click.delegate="sampleRequestMenu(booking.id)">...</a></span>
-                                        <!-- edit request modal BRAND popup -->
-                                         <div class="look-menu-absolute" id="requestTest${booking.id}">
-                                            <span class="look-menu-heading">REQUEST ${booking.id}</span>
-                                            <ul class="look-menu-list">
-                                                <!-- Edit -->
-                                                <li if.bind="(
-                                                    (booking.requestStatusBrand == 'Pending') ||
-                                                    (booking.requestStatusBrand == 'Approved') ||
-                                                    (booking.requestStatusBrand == 'Returning') ||
-                                                    (booking.requestStatusBrand == 'Out') ||
-                                                    (booking.requestStatusBrand == 'Picked Up')
-                                                )" 
-                                                class="look-menu-item"><a click.delegate="editSampleRequest(booking.id)" href="#" class="look-menu-link">Edit</a></li>
 
-                                                <!--Deny -->
-                                                <li if.bind="(
-                                                    (booking.requestStatusBrand == 'Pending') ||
-                                                    (booking.requestStatusBrand == 'Approved') 
-                                                )"
-                                                class="look-menu-item"><a click.delegate="denySampleRequest(booking.id)" href="#" class="look-menu-link">Deny</a></li>    
-
-                                                <!-- Approve -->
-                                                <li if.bind="(
-                                                    (booking.requestStatusBrand == 'Pending')
-                                                )"
-                                                class="look-menu-item"><a click.delegate="approveSampleRequest(booking.id)" href="#" class="look-menu-link">Approve</a></li>
-
-                                                <!-- Send 
-                                                <li class="look-menu-item"><a click.delegate="sendSampleRequest(booking.id)" href="#" class="look-menu-link">Send</a></li> -->
-
-                                                <!-- Picking Up :: Does not exist now, as no "Ship" and too many states
-                                                <li if.bind="(
-                                                    (booking.requestStatusBrand == 'Approved') 
-                                                )"
-                                                class="look-menu-item"><a click.delegate="markPickingUpSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Picking Up</a></li> -->
-
-                                                <!-- Picked Up -->
-                                                <li if.bind="(
-                                                    (booking.requestStatusBrand == 'Approved')  
-                                                )"
-                                                class="look-menu-item"><a click.delegate="markPickedUpSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Picked Up</a></li>
-
-                                                <!-- Returned -->
-                                                <li if.bind="(
-                                                    (booking.requestStatusBrand == 'Out') ||
-                                                    (booking.requestStatusBrand == 'Picked Up')||
-                                                    (booking.requestStatusBrand == 'Picking Up')||
-                                                    (booking.requestStatusBrand == 'Returning')
-                                                )"
-                                                class="look-menu-item"><a click.delegate="markReturnedSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Returned</a></li>
-
-                                                <!-- Restocked -->
-                                                <li if.bind="(
-                                                    (booking.requestStatusBrand == 'Returned')
-                                                )"
-                                                class="look-menu-item"><a click.delegate="restockedSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Restocked</a></li>
-
-                                                <!-- Delete -->
-                                                <li class="look-menu-item"><a click.delegate="deleteSampleRequest(booking.id)" href="#" class="look-menu-link">Delete Request</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>    
-                                </td>
-                            </tr>
-                        </table>
-
-                        <!-- expanding data -->
-                        <div id="panel${booking.id}" class="panel requestPanel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
-                            <table class="accordion expanded" style="table-layout:fixed;">
-                                <tr >
-                                    <td class="accordion" style="width:65px; max-width:65px; padding-top:10px;padding-left:10px; padding-bottom:3px;">${booking.pressHouse.name}</td>
-                                </tr>
-                                <tr style="padding-top: 7px;" repeat.for="sample of booking.searchableItems">
-                                    <td class="accordion" style="width:60px; max-width:60px; padding-left:10px; padding-bottom:7px;"> ${booking.season | seasonAbbreviation:seasons }${booking.look}.${$index+1} :</td>
-                                    <td class="accordion to-u-c" style="width:142px; max-width:142px; overflow: hidden; padding-right:10px; padding-bottom:7px;"> ${sample.attributes}</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                     
-                </div>
-               
-                <div if.bind="(user.type === 'press') || (user.type === 'prAgency')"  class="vertical grid-content grid-content-column accordion">
-                    <!--header -->
-                    <div style="margin-bottom:5px;">
-                        <table class="accordion" >
-                            <tr>
-                                <th class="accordion w10"></th>
-                                <th class="accordion w15">ID</th>
-                                <th class="accordion w35">DUE</th>
-                                <th class="accordion w30">STATUS</th>
-                                <th class="accordion w10"></th>
-                            </tr>
-                        </table>
-                    </div>
-                    <!-- row with button -->
-                    <div repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user:seasons">
-                        <table class="accordion">
-                            <tr>
-                                <td class="accordion w10">
-                                    <button id="button${booking.id}" class="accordion requestButton expandoHover" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
-                                </td>
-                                <td class="accordion w15">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
-                                <td class="accordion w35 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
-                                <td class.bind="(booking.requestStatusPress=='Pending') ? 'accordion ui-text-label-m-blue w30 to-u-c' :'accordion w30 to-u-c'" >${booking.requestStatusPress}</td>
-
-                                <td if.bind="(
-                                    (booking.requestStatusPress == 'Denied') ||
-                                    (booking.requestStatusPress == 'Deleted') ||
-                                    (booking.requestStatusPress == 'Returned') ||
-                                    (booking.requestStatusPress == 'Picked Up') ||
-                                    (booking.requestStatusPress == 'Withdrawn') 
-                                    )"
-
-                                class="accordion w10" style="overflow:visible;"> 
-                                    <div class="look-menu-absolute-wrap">
-                                        <span class="edit-box disabled" >...</span>
-                                    </div>
-                                </td>
-
-                                <td if.bind="(
-                                    (booking.requestStatusPress != 'Denied') &&
-                                    (booking.requestStatusPress != 'Deleted') &&
-                                    (booking.requestStatusPress != 'Returned') &&
-                                    (booking.requestStatusPress != 'Picked Up') &&
-                                    (booking.requestStatusPress != 'Withdrawn') 
-                                    )"
-
-                                class="accordion w10" style="overflow:visible;"> 
-                                    <div class="look-menu-absolute-wrap">
-                                        <span class="edit-box" ><a href="#" class="expandoHover"  click.delegate="sampleRequestMenu(booking.id)">...</a></span>
-                                        <!-- edit request modal PRESS popup -->
-                                         <div class="look-menu-absolute" id="requestTest${booking.id}">
-                                            <span class="look-menu-heading">REQUEST ${booking.id}</span>
-                                            <ul class="look-menu-list">
-                                                <!-- Edit -->
-                                                <li if.bind="(
-                                                    (booking.requestStatusPress == 'Pending') ||
-                                                    (booking.requestStatusPress == 'In House')||
-                                                    (booking.requestStatusPress == 'Approved')
-                                                )"
-                                                class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id)" class="look-menu-link">Edit</a></li>
-
-                                                <!-- Received -->
-                                                <li if.bind="(
-                                                    (booking.requestStatusPress == 'Approved') ||
-                                                    (booking.requestStatusPress == 'Delivering')
-                                                )"
-                                                class="look-menu-item"><a href="#" click.delegate="pressMarkReceivedSampleRequest(booking.id)" class="look-menu-link">Mark Received</a></li>
-
-                                                <!-- Ship :: no longer valid with Stuart changes to edit dialog
-                                                <li class="look-menu-item"><a href="#" click.delegate="pressShipSampleRequest(booking.id)"  class="look-menu-link">Ship</a></li>
-                                                -->
-
-                                                <!-- Picked Up -->
-                                                <li if.bind="(
-                                                    (booking.requestStatusPress == 'In House') 
-                                                )"
-                                                class="look-menu-item"><a href="#" click.delegate="pressMarkPickedUpSampleRequest(booking.id)"  class="look-menu-link">Mark Picked Up</a></li>
-
-                                                <!-- Withdraw -->
-                                                <li if.bind="(
-                                                    (booking.requestStatusPress == 'Pending') ||                                                   
-                                                    (booking.requestStatusPress == 'Approved')
-                                                )"
-                                                class="look-menu-item"><a href="#" click.delegate="pressDeleteSampleRequest(booking.id)"  class="look-menu-link">Withdraw Request</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-
-                        <!-- expanding data -->
-                        <div id="panel${booking.id}" class="panel requestPanel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
-                            <table class="accordion expanded" style="table-layout:fixed;">
-                                <tr >
-                                    <td class="accordion" style="width:65px; max-width:65px; padding-top:10px;padding-left:10px; padding-bottom:5px;">${booking.brand.name}</td>
-                                </tr>
-                                <tr style="padding-bottom:7px;" repeat.for="sample of booking.searchableItems">
-                                    <td class="accordion" style="width:60px; max-width:60px; padding-left: 10px; padding-bottom:7px;"">${booking.season | seasonAbbreviation:seasons }${booking.look}.${$index+1}</td>
-                                    <td class="accordion to-u-c" style="width:142px; max-width:142px; overflow: hidden; padding-right:10px; padding-bottom:3px;""> ${sample.attributes}</td>
-                                </tr>
-                            </table>
-                        </div>
-                    </div>
-                         
-                
-                </div>
-                <!-- white lip at bottom of scroll region -->
-                <div class="grid-content shrink scrolling-lip">
-                </div>
-            </div>
-            <!-- spacer -->
-            <div class="grid-block shrink spa-h-spacer">
-            </div>
 
 <!-- -->
 <!-- Image Grid Large Panel-->
@@ -550,20 +272,25 @@
                     </div>
                 <!-- AGENCY filters END --> 
                 </div>
-<!-- -->
-<!-- Images/Looks -->
-<!-- -->
+                <!-- -->
+                <!-- Images/Looks -->
+                <!-- -->
 
                 <div id="mainScrollWindow" class="cards-list-wrap">
                 
                         <div class="cards-list" repeat.for="row of rows" >
 
                             <div class="card" repeat.for="i of row.numberImagesThisRow" css="width: ${row.numberImagesThisRowPC}%;">
-                            
-                                <!-- Three dots menu -->
-                                <div class="look-menu-absolute-wrap">
-                                    <a href="#" class="look-menu-click " click.delegate="lookMenu(row.items[i].id)">
+                                <!-- Three dots menu press -->
+                                <div if.bind="user.type === 'press'" class="look-menu-absolute-wrap">
+                                    <a href="#" class="look-menu-click " click.delegate="createSampleRequest(row.items[i].id )">
                                         <div class=menu-stripe></div>
+                                    </a>
+                                </div>
+                                <!-- Three dots menu brand and prAgency-->
+                                <div if.bind="user.type !== 'press'" class="look-menu-absolute-wrap">
+                                    <a href="#" class="look-menu-click " click.delegate="lookMenu(row.items[i].id)">
+                                        <div class="menu-stripe"></div>
                                     </a>
 
                                     <!-- Menu on image when three dots clicked -->                            
@@ -572,36 +299,6 @@
                                             <div class="look-menu-heading">
                                                 LOOK ${row.items[i].name} <!-- ${i} ${row.numberImagesThisRow} -->
                                             </div>
-
-                                            <!-- different actions for roles:
-                                            press:
-                                            book
-                                            details
-                                            check next availability
-                                            add to lightbox
-                                            share
-                                            chat to desinger
-                                            Favourite
-
-                                            brand / agency
-                                            book
-                                            edit
-                                            details
-                                            set initial availability
-                                            check availability
-                                            delete -->
-
-                                            <!-- press -->
-                                            <ul if.bind="user.type === 'press'" class="look-menu-list">
-                                                <li class="look-menu-item"><a href="#" click.delegate="createSampleRequest(row.items[i].id )" class="look-menu-link">Booking &nbsp;</a></li>
-                                               <!--  <li class="look-menu-item"><a href="#" class="look-menu-link">Details</a></li> -->
-                                                
-
-                                                <!-- if.bind="! ?.hideCalendar" -->
-
-
-                                                <li class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
-                                            </ul>
 
                                             <!-- brand -->
                                             <ul if.bind="user.type === 'brand'" class="look-menu-list">                                        
@@ -657,6 +354,295 @@
                 <div class="grid-content shrink scrolling-lip">
                 </div>
             </div>
+            <!-- spacer -->
+            <div class="grid-block shrink spa-h-spacer">
+            </div>
+<!-- -->
+<!-- Calendar + Request  Panel -->
+<!-- -->
+
+            <div if.bind="imagePanelSize <= 2" id="left-panel" class="vertical grid-block grid-block-vertical-shadow">
+                <!-- header -->
+                <div class="grid-block tool-header shrink">
+                    <div class="grid-block align-left tool-header tool-header-spacer">
+                    </div>
+                    <div class="grid-block align-left tool-header-spacer">
+                        <span class="ui-text-label-m-broad ">REQUEST MANAGER (${numberOfRequests})</span>
+                        <!-- <span class="alert-box">3</span> -->
+                    </div>
+                    <div class="grid-block align-right tool-header-spacer" style="padding-right:7px;">
+                        <span class="expando">
+                      <a route-href="route: requestman;"><img class="expandoHover" src="/assets/nav/expando16.png" /></a>
+                    </span>
+                    </div>
+                </div>
+                <!-- Calendar // Remove for beta release
+                <div class="grid-block shrink">
+                    <compose view-model="calendar"></compose>
+                </div> -->
+                <!-- search and filter requests -->
+                <div class="vertical grid-block shrink" style="margin-left: 1rem; margin-right: 1rem;">
+                    <form style="margin-top:1rem;">
+                        <!-- Search requests -->
+                        <input type="search" value.two-way="searchTextRequests" class="search-box" id="search-requests" placeholder="Search" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Search'">
+                        <!-- filter requests -->
+                        <span class="inline-label" style="width:258px; margin-bottom: 0px; margin-top:1.5rem;">
+                            <filters-filterrequests change.delegate="filterChange($event)" style="width:258px;"></filters-filterrequests> 
+                        </span>
+                        <!-- ORDER -->     
+                        <span class="inline-label" style="margin-top:1rem; width:258px; margin-top:0.5rem;">
+                            <filters-order change.delegate="orderChange($event)" style="width:259px;"></filters-order> 
+                        </span>
+                       <!--  <span class="form-label" style="font-weight:500;">ORDER</span>
+                        <select name="" id="">
+                            <option>By Date</option>
+                            <option>By Person</option>
+                            <option>By Request Number</option>
+                        </select>
+                        </span> -->
+                    </form>
+                </div>
+                <!-- Accordion -->
+                
+                <!-- row button + content -->
+               
+                <div if.bind="user.type === 'brand'" class="vertical grid-content grid-content-column accordion">
+                    <!--header -->
+                    <div style="margin-bottom:5px;">
+                        <table class="accordion">
+                            <tr> 
+                                <th class="accordion w5"></th>
+                                <th class="accordion w20">LOOK</th>
+                                <th class="accordion w35">OUT</th>
+                                <th class="accordion w30">STATUS</th>
+                                <th class="accordion w10"></th>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- row with button -->
+                    <div repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user:seasons">
+                        <table class="accordion">
+                            <tr class="indexReqRow">
+                                <td class="accordion w7">
+                                    <button id="button${booking.id}" class="accordion requestButton expandoHover" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
+                                </td>
+                                <td class="accordion w18">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
+                                <td class="accordion w35 
+                                           ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
+                                <td class="accordion w30 to-u-c 
+                                           ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" >${booking.requestStatusBrand}</td>
+                                <!-- ... disabled  -->
+                                <td if.bind="(booking.requestStatusBrand == 'Deleted')" class="accordion w10" style="overflow:visible;">
+                                    <div class="look-menu-absolute-wrap">
+                                        <span class="edit-box disabled" >...</span>
+                                    </div>
+                                </td>
+                                <!-- ... not disabled -->
+                                <td if.bind="(booking.requestStatusBrand != 'Deleted')" class="accordion w10" style="overflow:visible;">
+                                    <div class="look-menu-absolute-wrap">
+                                        <span class="edit-box" ><a href="#" class="expandoHover" click.delegate="sampleRequestMenu(booking.id)">...</a></span>
+                                        <!-- edit request modal BRAND popup -->
+                                         <div class="look-menu-absolute" id="requestTest${booking.id}">
+                                            <span class="look-menu-heading">REQUEST ${booking.id}</span>
+                                            <ul class="look-menu-list">
+                                                <!-- Edit -->
+                                                <li if.bind="(
+                                                    (booking.requestStatusBrand == 'Pending') ||
+                                                    (booking.requestStatusBrand == 'Approved') ||
+                                                    (booking.requestStatusBrand == 'Returning') ||
+                                                    (booking.requestStatusBrand == 'Out') ||
+                                                    (booking.requestStatusBrand == 'Picked Up')
+                                                )" 
+                                                class="look-menu-item"><a click.delegate="editSampleRequest(booking.id)" href="#" class="look-menu-link">Edit</a></li>
+
+                                                <!--Deny -->
+                                                <li if.bind="(
+                                                    (booking.requestStatusBrand == 'Pending') ||
+                                                    (booking.requestStatusBrand == 'Approved') 
+                                                )"
+                                                class="look-menu-item"><a click.delegate="denySampleRequest(booking.id)" href="#" class="look-menu-link">Deny</a></li>    
+
+                                                <!-- Approve -->
+                                                <li if.bind="(
+                                                    (booking.requestStatusBrand == 'Pending')
+                                                )"
+                                                class="look-menu-item"><a click.delegate="approveSampleRequest(booking.id)" href="#" class="look-menu-link">Approve</a></li>
+
+                                                <!-- Send 
+                                                <li class="look-menu-item"><a click.delegate="sendSampleRequest(booking.id)" href="#" class="look-menu-link">Send</a></li> -->
+
+                                                <!-- Picking Up :: Does not exist now, as no "Ship" and too many states
+                                                <li if.bind="(
+                                                    (booking.requestStatusBrand == 'Approved') 
+                                                )"
+                                                class="look-menu-item"><a click.delegate="markPickingUpSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Picking Up</a></li> -->
+
+                                                <!-- Picked Up -->
+                                                <li if.bind="(
+                                                    (booking.requestStatusBrand == 'Approved')  
+                                                )"
+                                                class="look-menu-item"><a click.delegate="markPickedUpSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Picked Up</a></li>
+
+                                                <!-- Returned -->
+                                                <li if.bind="(
+                                                    (booking.requestStatusBrand == 'Out') ||
+                                                    (booking.requestStatusBrand == 'Picked Up')||
+                                                    (booking.requestStatusBrand == 'Picking Up')||
+                                                    (booking.requestStatusBrand == 'Returning')
+                                                )"
+                                                class="look-menu-item"><a click.delegate="markReturnedSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Returned</a></li>
+
+                                                <!-- Restocked -->
+                                                <li if.bind="(
+                                                    (booking.requestStatusBrand == 'Returned')
+                                                )"
+                                                class="look-menu-item"><a click.delegate="restockedSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Restocked</a></li>
+
+                                                <!-- Delete -->
+                                                <li class="look-menu-item"><a click.delegate="deleteSampleRequest(booking.id)" href="#" class="look-menu-link">Delete Request</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>    
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- expanding data -->
+                        <div id="panel${booking.id}" class="panel requestPanel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
+                            <table class="accordion expanded" style="table-layout:fixed;">
+                                <tr >
+                                    <td class="accordion" style="width:65px; max-width:65px; padding-top:10px;padding-left:10px; padding-bottom:3px;">${booking.pressHouse.name}</td>
+                                </tr>
+                                <tr style="padding-top: 7px;" repeat.for="sample of booking.searchableItems">
+                                    <td class="accordion" style="width:60px; max-width:60px; padding-left:10px; padding-bottom:7px;"> ${booking.season | seasonAbbreviation:seasons }${booking.look}.${$index+1} :</td>
+                                    <td class="accordion to-u-c" style="width:142px; max-width:142px; overflow: hidden; padding-right:10px; padding-bottom:7px;"> ${sample.attributes}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- Empty notice -->
+                    <div if.bind="(numberOfRequests == 0)">
+                        <span style="margin-top: 2rem; display:block; text-align:center;"> - No Requests Match Your Search - </span>
+                    </div>
+                     
+                </div>
+               
+                <div if.bind="(user.type === 'press') || (user.type === 'prAgency')"  class="vertical grid-content grid-content-column accordion">
+                    <!--header -->
+                    <div style="margin-bottom:5px;">
+                        <table class="accordion" >
+                            <tr>
+                                <th class="accordion w10"></th>
+                                <th class="accordion w15">ID</th>
+                                <th class="accordion w35">DUE</th>
+                                <th class="accordion w30">STATUS</th>
+                                <th class="accordion w10"></th>
+                            </tr>
+                        </table>
+                    </div>
+                    <!-- row with button -->
+                    <div repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user:seasons">
+                        <table class="accordion">
+                            <tr class="indexReqRow">
+                                <td class="accordion w10">
+                                    <button id="button${booking.id}" class="accordion requestButton expandoHover" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
+                                </td>
+                                <td class="accordion w15">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
+                                <td class="accordion w35 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
+                                <td class.bind="(booking.requestStatusPress=='Pending') ? 'accordion ui-text-label-m-blue w30 to-u-c' :'accordion w30 to-u-c'" >${booking.requestStatusPress}</td>
+
+                                <td if.bind="(
+                                    (booking.requestStatusPress == 'Denied') ||
+                                    (booking.requestStatusPress == 'Deleted') ||
+                                    (booking.requestStatusPress == 'Returned') ||
+                                    (booking.requestStatusPress == 'Picked Up') ||
+                                    (booking.requestStatusPress == 'Withdrawn') 
+                                    )"
+
+                                class="accordion w10" style="overflow:visible;"> 
+                                    <div class="look-menu-absolute-wrap">
+                                        <span class="edit-box disabled" >...</span>
+                                    </div>
+                                </td>
+
+                                <td if.bind="(
+                                    (booking.requestStatusPress != 'Denied') &&
+                                    (booking.requestStatusPress != 'Deleted') &&
+                                    (booking.requestStatusPress != 'Returned') &&
+                                    (booking.requestStatusPress != 'Picked Up') &&
+                                    (booking.requestStatusPress != 'Withdrawn') 
+                                    )"
+
+                                class="accordion w10" style="overflow:visible;"> 
+                                    <div class="look-menu-absolute-wrap">
+                                        <span class="edit-box" ><a href="#" class="expandoHover"  click.delegate="sampleRequestMenu(booking.id)">...</a></span>
+                                        <!-- edit request modal PRESS popup -->
+                                         <div class="look-menu-absolute" id="requestTest${booking.id}">
+                                            <span class="look-menu-heading">REQUEST ${booking.id}</span>
+                                            <ul class="look-menu-list">
+                                                <!-- Edit -->
+                                                <li if.bind="(
+                                                    (booking.requestStatusPress == 'Pending') ||
+                                                    (booking.requestStatusPress == 'In House')||
+                                                    (booking.requestStatusPress == 'Approved')
+                                                )"
+                                                class="look-menu-item"><a href="#" click.delegate="editSampleRequest(booking.id)" class="look-menu-link">Edit</a></li>
+
+                                                <!-- Received -->
+                                                <li if.bind="(
+                                                    (booking.requestStatusPress == 'Approved') ||
+                                                    (booking.requestStatusPress == 'Delivering')
+                                                )"
+                                                class="look-menu-item"><a href="#" click.delegate="pressMarkReceivedSampleRequest(booking.id)" class="look-menu-link">Mark Received</a></li>
+
+                                                <!-- Ship :: no longer valid with Stuart changes to edit dialog
+                                                <li class="look-menu-item"><a href="#" click.delegate="pressShipSampleRequest(booking.id)"  class="look-menu-link">Ship</a></li>
+                                                -->
+
+                                                <!-- Picked Up -->
+                                                <li if.bind="(
+                                                    (booking.requestStatusPress == 'In House') 
+                                                )"
+                                                class="look-menu-item"><a href="#" click.delegate="pressMarkPickedUpSampleRequest(booking.id)"  class="look-menu-link">Mark Picked Up</a></li>
+
+                                                <!-- Withdraw -->
+                                                <li if.bind="(
+                                                    (booking.requestStatusPress == 'Pending') ||                                                   
+                                                    (booking.requestStatusPress == 'Approved')
+                                                )"
+                                                class="look-menu-item"><a href="#" click.delegate="pressDeleteSampleRequest(booking.id)"  class="look-menu-link">Withdraw Request</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- expanding data -->
+                        <div id="panel${booking.id}" class="panel requestPanel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
+                            <table class="accordion expanded" style="table-layout:fixed;">
+                                <tr >
+                                    <td class="accordion" style="width:65px; max-width:65px; padding-top:10px;padding-left:10px; padding-bottom:5px;">${booking.brand.name}</td>
+                                </tr>
+                                <tr style="padding-bottom:7px;" repeat.for="sample of booking.searchableItems">
+                                    <td class="accordion" style="width:60px; max-width:60px; padding-left: 10px; padding-bottom:7px;"">${booking.season | seasonAbbreviation:seasons }${booking.look}.${$index+1}</td>
+                                    <td class="accordion to-u-c" style="width:142px; max-width:142px; overflow: hidden; padding-right:10px; padding-bottom:3px;""> ${sample.attributes}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- Empty notice -->
+                    <div if.bind="(numberOfRequests == 0)">
+                        <span style="margin-top: 2rem; display:block; text-align:center;"> - No Requests Match Your Search - </span>
+                    </div>  
+                
+                </div>
+                <!-- white lip at bottom of scroll region -->
+                <div class="grid-content shrink scrolling-lip">
+                </div>
+            </div>
+
+
         </div>
 
 </template>

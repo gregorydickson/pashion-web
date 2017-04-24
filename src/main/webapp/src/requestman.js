@@ -124,6 +124,10 @@ export class Requestman{
         this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub())
   }
 
+      get numberOfRequests (){
+        return document.getElementsByClassName("indexReqRow").length;
+    }
+
 /*    orderChange(event) {
         console.log("Order changed: ");
         this.closeExpanded ();
