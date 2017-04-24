@@ -15,7 +15,6 @@ import { Introduction } from './hello/introduction';
 import { Zoom } from './zoom/zoom';
 import { AddFilesDialog } from './add_files/add_files';
 import { ErrorDialogSample } from './error_dialog/error_dialog_sample';
-import { CreateDialogAlert } from './common/dialogAlert';
 // SERVICES
 import { SampleRequestService } from './services/sampleRequestService';
 import { UserService } from './services/userService';

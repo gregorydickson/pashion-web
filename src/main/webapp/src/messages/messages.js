@@ -6,8 +6,10 @@ import { UserService } from 'services/userService';
 import { singleton } from 'aurelia-framework';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { PubNubService } from 'services/pubNubService';
+import { DialogService } from 'aurelia-dialog';
+import { CreateDialogAlert } from 'common/dialogAlert';
 
-@inject(HttpClient, UserService, EventAggregator, PubNubService) 
+@inject(HttpClient, UserService, EventAggregator, PubNubService, DialogService) 
 @singleton()
 export class Messages {
 
@@ -19,23 +21,32 @@ export class Messages {
     //pubnub
     pubnub;
 
-    constructor(http, userService, eventAggregator, pubNubService) {  
+    constructor(http, userService, eventAggregator, pubNubService, dialogService) {  
       this.http = http;
       this.userService = userService;
       this.user = this.userService.getUser().then(user => this.user = user);
       this.ea = eventAggregator;
       this.boundHandlerComms = this.handleKeyInput.bind(this);
       this.pubNubService = pubNubService;
+      this.dialogService = dialogService;
 
     }
 
-    activate () {
-
-    }
-
-      detached() {
+    detached() {
         window.removeEventListener('keypress', this.boundHandlerComms);
-      }
+    }
+
+    alertHold (message){
+
+        this.dialogService.openAndYieldController({ viewModel: CreateDialogAlert, model: {title:"NO NETWORK", message:message, timeout:'none'}, lock: true }).then(controller => {
+            this.controller = controller;
+        });
+    }
+
+    alertHoldOff (message) {
+        this.controller.cancel();
+        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"NETWORK UP", message:message, timeout:5000}, lock: false });
+    }
 
     attached() {
         document.getElementById("msgInput").addEventListener('keypress', this.boundHandlerComms, false);
@@ -102,6 +113,17 @@ export class Messages {
             },
             status: function(s) {
                 console.log("pubnub callback status in messages:", s);
+                if (s.category) {
+                    if (s.category== 'PNNetworkDownCategory') {
+                        console.log("pubnub network DOWN");
+                        parent.alertHold("No internet connection");
+
+                    }
+                    if (s.category== 'PNNetworkUpCategory') {
+                        console.log("pubnub network UP");
+                        parent.alertHoldOff("Internet connection restored");
+                    }
+                }
             }
         });
 
@@ -166,6 +188,7 @@ export class Messages {
         getAllMessages(0); 
  
     }
+
 
     handleKeyInput(event) {
         //console.log(event);
