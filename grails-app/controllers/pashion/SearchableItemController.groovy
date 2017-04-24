@@ -167,7 +167,7 @@ class SearchableItemController {
             keywords = URLDecoder.decode(params.searchtext)
             keywords = keywords.split(" ")
         }
-        log.info "*****************************  A SEARCH **********************"
+        log.info "**********************  A Press availability SEARCH **********************"
         log.info "Brand:"+brand
         log.info "keywords:"+keywords
         log.info "season:"+season
@@ -182,7 +182,6 @@ class SearchableItemController {
         
         List results = criteria.listDistinct () {
 
-                log.info "image:"+'image'
                 isNotNull('image')
                 eq('isPrivate',false)
                 if(brand) eq('brand', brand)
@@ -194,13 +193,15 @@ class SearchableItemController {
                 if(type) eq('type',type)
                 if(city) eq('city',city)
                 if(color) ilike('color',"%${color}%")
-                if(availableFrom && availableTo) sampleRequests{
-                    and{
-                        not{
-                            between('bookingStartDate', availableFrom, availableTo)
-                        }
-                        not{
-                            between('bookingEndDate', availableFrom, availableTo)
+                if(availableFrom && availableTo) samples{ 
+                    sampleRequests{
+                        and{
+                            not{
+                                between('bookingStartDate', availableFrom, availableTo)
+                            }
+                            not{
+                                between('bookingEndDate', availableFrom, availableTo)
+                            }
                         }
                     }
                 }
