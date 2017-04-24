@@ -13,15 +13,18 @@
         <!-- RM hack for IE not constraining grid frame -->
             <!-- Communications Panel  -->
             <!-- -->
-            <div if.bind="(((user.type== 'press') || (user.type=='brand')) && (user.type)) " id="message-container-mum" class="vertical grid-block grid-block-vertical-shadow right-panel" style="overflow:hidden;">
+            <div if.bind="(((user.type== 'press') || (user.type=='brand') || (user.type=='prAgency')) && (user.type)) " id="message-container-mum" class="vertical grid-block grid-block-vertical-shadow right-panel" style="overflow:hidden;">
                 <!-- <div>${user.type}<div> debug statement -->
                 <compose if.bind="user.type === 'brand'" id="right-panel-header" class="grid-block shrink right-panel" view-model="comms/commsHeader"></compose>
                 <compose if.bind="user.type === 'press'" id="right-panel-header" class="grid-block shrink right-panel" view-model="comms/commsHeader"></compose>
+                <compose if.bind="user.type === 'prAgency'" id="right-panel-header" class="grid-block shrink right-panel" view-model="comms/commsHeader"></compose>
                 <compose if.bind="user.type === 'brand'" id="right-panel-body" class="grid-block right-panel" view-model="comms/commsBody"></compose>
                 <compose if.bind="user.type === 'press'" id="right-panel-body" class="grid-block right-panel" view-model="comms/commsBody"></compose>
+                <compose if.bind="user.type === 'prAgency'" id="right-panel-body" class="grid-block right-panel" view-model="comms/commsBody"></compose>
                 <!-- <div id="bottom-spacer-contents" class="grid-block "></div> <!-- spacer to fix items to the bottom-->
                 <compose if.bind="user.type === 'brand'" id="right-panel-footer" class="grid-block shrink right-panel" view-model="comms/commsFooter"></compose>
                 <compose if.bind="user.type === 'press'" id="right-panel-footer" class="grid-block shrink right-panel" view-model="comms/commsFooter"></compose>
+                <compose if.bind="user.type === 'prAgency'" id="right-panel-footer" class="grid-block shrink right-panel" view-model="comms/commsFooter"></compose>
                 <!-- white lip at bottom of scroll region -->
                 <div class="grid-content shrink scrolling-lip">
                 </div>
