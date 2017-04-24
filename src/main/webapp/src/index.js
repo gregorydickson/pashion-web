@@ -54,6 +54,7 @@ export class Index {
     ordering = 'bookingStartDate';
     filtering = 'ALL REQUESTS';
     today = new Date(); // Do we have a problem with freshness of this variable, say login at 11:59PM?
+    firstTime=true;
 
     constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, busy,pubNubService) {
         http.configure(config => {
@@ -263,11 +264,24 @@ export class Index {
                 }
             })
 
-        .then(anything => { 
-                setTimeout(function() { $("img.lazy").unveil(); }, 1000);
-                setTimeout(function() { $("img.lazy").unveil(); }, 10000);} ) // initial unveil of first images on load
-            .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
-        ;
+            .then(anything => { 
+                if (this.firstTime) {
+                    $("img.lazy").unveil(0,
+                        function() 
+                        {
+                            this.onload=function() 
+                            {
+                                var msw = document.getElementById("mainScrollWindow");
+                                if (msw) msw.style.visibility="visible";
+                            };
+                        }); 
+                    this.firstTime = false;
+                }
+                else {
+                    setTimeout(function() { $("img.lazy").unveil(); }, 500);  
+                }
+                setTimeout(function() { $("img.lazy").unveil(); }, 10000);}) // initial unveil of first images on load
+            .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')); // scroll to top
     }
 
     seasonNameFromId(id) {
