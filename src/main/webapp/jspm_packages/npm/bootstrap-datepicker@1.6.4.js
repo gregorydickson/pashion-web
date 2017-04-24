@@ -1,1 +1,0 @@
-module.exports = require("npm:bootstrap-datepicker@1.6.4/dist/js/bootstrap-datepicker.js");
