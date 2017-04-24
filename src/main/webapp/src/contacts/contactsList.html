@@ -13,18 +13,15 @@
             <table style="table-layout:fixed;" class="big-accordion">
                 <tr>
                     <td class="accordion-grey" style="width:20px;">
-                        <button id="button1211" class="accordion expandoHover" click.delegate="closeExpand(1211)"></button>
+                        <button disabled.bind="(numberOfMyConnections ==0)" id="buttonMCR" class="accordion {(numberOfMyConnections ==0) ? '' : 'expandoHover'}" click.delegate="closeExpand('MCR')"></button>
                     </td>
                     <td class="accordion-grey">
                         <span>MY CONNECTION REQUESTS</span>
                     </td>
                     <td class="accordion-grey" style="width:35px; overflow: hidden;">
-                        <span class="accordion-grey"
-                        if.bind="(users[user.id -1].connections!=null)"
-                        repeat.for="connectionC of users[user.id -1].connections">
+                        <span class="accordion-grey" if.bind="(numberOfMyConnections !=0)">
 
-                        <button click.delegate="closeExpand(1211)" class="accordionNew expandoHover"
-                        if.bind="(connectionC.connectingStatus=='PendingOut')"  style="color: #3971b1; font-weight: 500; background: #f7f7f7;">NEW&nbsp;</button>
+                            <button click.delegate="closeExpand('MCR')" class="accordionNew expandoHover"  style="color: #3971b1; font-weight: 500; background: #f7f7f7;">NEW&nbsp;</button>
 
                         </span>                        
                     </td>
@@ -32,12 +29,12 @@
                 </tr>
             </table>
         </div>
-        <div id="panel1211" class="panel grid-block vertical " style="overflow-y:auto;">
+        <div id="panelMCR" class="panel grid-block vertical " style="overflow-y:auto;">
             <div id="contacts-inside-top2" if.bind="(users[user.id -1].connections!=null)" repeat.for="connectionC of users[user.id -1].connections" class="" style="width:255px; overflow: visible;margin-left: 1rem; ">
                 <!-- out going -->
                 <!-- RM check the user still exists -->
                 <div if.bind="(connectionC.connectingStatus=='PendingOut' && users[connectionC.connectedUserId -1].email)" style="">
-                    <table class="width100" style="table-layout: fixed; margin-bottom: 10px; ">
+                    <table class="width100 indexMyConnections" style="table-layout: fixed; margin-bottom: 10px; ">
                         <tr>
                             <td class="con-td-1">
                                 <div class="">
@@ -78,18 +75,15 @@
             <table style="table-layout:fixed;" class="big-accordion">
                 <tr>
                     <td class="accordion-grey" style="width:20px;">
-                        <button id="button1111" class="accordion expandoHover" click.delegate="closeExpand(1111)"></button>
+                        <button disabled.bind="(numberOfRequestsToConnect ==0)" id="buttonRTC" class="accordion ${(numberOfRequestsToConnect ==0) ? '' : 'expandoHover'}" click.delegate="closeExpand('RTC')"></button>
                     </td>
                     <td class="accordion-grey">
                         <span>REQUESTS TO CONNECT</span>
                     </td>
                     <td class="accordion-grey" style="width:35px; overflow: hidden;">
-                        <span class="accordion-grey"
-                        if.bind="(users[user.id -1].connections!=null)"
-                        repeat.for="connectionC of users[user.id -1].connections">
+                        <span class="accordion-grey" if.bind="(numberOfRequestsToConnect !=0)">
 
-                        <button click.delegate="closeExpand(1111)" class="accordionNew expandoHover"
-                        if.bind="(connectionC.connectingStatus=='PendingIn')"  style="color: #3971b1; font-weight: 500; background: #f7f7f7;">NEW&nbsp;</button>
+                            <button click.delegate="closeExpand('RTC')" class="accordionNew expandoHover"  style="color: #3971b1; font-weight: 500; background: #f7f7f7;">NEW&nbsp;</button>
 
                         </span>                        
                     </td>
@@ -97,12 +91,12 @@
                 </tr>
             </table>
         </div>
-        <div id="panel1111" class="panel grid-block vertical " style="overflow-y:auto;">
+        <div id="panelRTC" class="panel grid-block vertical " style="overflow-y:auto;">
             <div id="contacts-inside-top2" if.bind="(users[user.id -1].connections!=null)" repeat.for="connectionC of users[user.id -1].connections" class="" style="width:255px; overflow: visible;margin-left: 1rem;">
                 <!-- in coming -->
                 <!-- RM check the user still exists -->
                 <div if.bind="(connectionC.connectingStatus=='PendingIn' && users[connectionC.connectedUserId -1].email)" style="">
-                    <table class="width100" style="table-layout: fixed; margin-bottom: 10px; ">
+                    <table class="width100 indexRequestsToConnect" style="table-layout: fixed; margin-bottom: 10px; ">
                         <tr>
                             <td class="con-td-1">
                                 <div class="">
@@ -150,17 +144,14 @@
             <table style="table-layout:fixed;" class="big-accordion">
                 <tr>
                     <td class="accordion-grey" style="width:20px;">
-                        <button id="button1213" class="accordion expandoHover" click.delegate="closeExpand(1213)"></button>
+                        <button disabled.bind="(numberOfNewMessages ==0)" id="buttonNM" class="accordion ${(numberOfNewMessages ==0) ? '' : 'expandoHover'}" click.delegate="closeExpand('NM')"></button>
                     </td>
                     <td class="accordion-grey"> <span>NEW MESSAGES</span>
                     </td>
                     <td class="accordion-grey" style="width:35px; overflow: hidden;">
-                        <span class="accordion-grey"
-                        if.bind="(resetCount(users[user.id -1].connections))"
-                        repeat.for="connectionC of users[user.id -1].connections">
+                        <span class="accordion-grey" if.bind="(numberOfNewMessages !=0)">
 
-                        <button click.delegate="closeExpand(1213)" class="accordionNew expandoHover"
-                        if.bind="(incrementCount(connectionC.numberNewMessages, connectionC.connectingStatus))" style="color: #3971b1; font-weight: 500; background: #f7f7f7;">NEW&nbsp;</button>
+                            <button click.delegate="closeExpand('NM')" class="accordionNew expandoHover" style="color: #3971b1; font-weight: 500; background: #f7f7f7;">NEW&nbsp;</button>
 
                         </span>                        
                     </td>
@@ -168,12 +159,12 @@
                 </tr>
             </table>
         </div>
-        <div id="panel1213" class="panel grid-block vertical scroll" style="overflow-y:auto;">
+        <div id="panelNM" class="panel grid-block vertical scroll" style="overflow-y:auto;">
             <!-- main list -->
             <div id="contacts-inside-top" if.bind="(users[user.id -1].connections!=null)" repeat.for="connection of users[user.id -1].connections | filter:searchTerm:filterFunc:'null':'null' " class="" style="width:255px; overflow: visible;margin-left: 1rem;">
                 <!-- check the connection is completed and the user still exists -->
                 <table   if.bind="(connection.connectingStatus=='Accepted' && users[connection.connectedUserId -1].email && connection.numberNewMessages!=0)" class="width100" style="margin-bottom: 10px; table-layout: fixed;">
-                    <tr>
+                    <tr class="indexNewMessages">
                         <td class="con-td-1">
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
                                 <div class="expandoHover">
@@ -217,17 +208,17 @@
             <table style="table-layout:fixed;" class="big-accordion">
                 <tr>
                     <td class="accordion-grey" style="width:20px;">
-                        <button id="button1212" class="accordion active expandoHover" click.delegate="closeExpand(1212)"></button>
+                        <button id="buttonAC" class="accordion active expandoHover" click.delegate="closeExpand('AC')"></button>
                     </td>
                     <td class="accordion-grey"> <span>ALL CONTACTS</span>
                     </td>
                     <td class="accordion-grey" style="width: 49px; padding-top: 1px;">
-                        <button id="button1221" class="accordionAZ active expandoHover" click.delegate="switchAlpha(1221)"></button>
+                        <button id="buttonAZ" class="accordionAZ active expandoHover" click.delegate="switchAlpha('AZ')"></button>
                     </td>
                 </tr>
             </table>
         </div>
-        <div id="panel1212" class="panel grid-block vertical scroll show" style="overflow-y:auto;">
+        <div id="panelAC" class="panel grid-block vertical scroll show" style="overflow-y:auto;">
             <!-- ME -->
           <!--  <div id="contacts-inside-top-me" style="width:255px; overflow: visible;margin-left: 1rem; margin-bottom:1.5rem; border-bottom: 1px solid #e7e7e7; padding-bottom: 9px;">
                 <table class="width100" style="table-layout: fixed;">
