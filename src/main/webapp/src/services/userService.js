@@ -356,7 +356,7 @@ export class UserService {
         for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
             if (this.users[this.user.id - 1].connections[i].connectedUserId == fromUserId) {
                 this.users[this.user.id - 1].connections[i].lastMessage=message;
-                console.log("UserService.updateLastMessage from: " + fromUserId + " to: " + this.user.id + " message: " + message);
+                //console.log("UserService.updateLastMessage from: " + fromUserId + " to: " + this.user.id + " message: " + message);
                 connectionId = this.users[this.user.id - 1].connections[i].id;
                 break;
             }
