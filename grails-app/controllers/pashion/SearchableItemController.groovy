@@ -182,6 +182,7 @@ class SearchableItemController {
 
         def criteria = SearchableItem.createCriteria()
         
+        // http://stackoverflow.com/questions/17083204/criteria-uses-inner-join-instead-left-join-approach-by-default-making-my-que
         List results = criteria.listDistinct () {
             
             createAlias('samples','s',CriteriaSpecification.LEFT_JOIN)
