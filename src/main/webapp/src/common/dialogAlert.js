@@ -9,6 +9,7 @@ export class CreateDialogAlert  {
   static inject = [DialogController];
 
   userForDeletion = '';
+  redText = false;
 
   constructor(http, controller){
     this.controller = controller;
@@ -28,6 +29,7 @@ export class CreateDialogAlert  {
     this.alertTitle = "Information";
     if (inputs.title != '') this.alertTitle=inputs.title;
     this.alertMessage=inputs.message;
+    if(inputs.redText) this.redText = true;
     //this.timeOutMSecs = 5000;
     if (inputs.timeout && inputs.timeout == 'none') {}
     else {
