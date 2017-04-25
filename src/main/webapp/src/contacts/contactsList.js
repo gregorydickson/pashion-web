@@ -25,6 +25,7 @@ export class ContactsList {
   currentPNTime;
   filterDirection = 'ascending';
   pubnub;
+  favicon = 0;
 
   constructor(http, controller, dialogService, userService, commsHeader, eventAggregator, pubNubService){ //} messages){
 	    this.controller = controller;
@@ -165,7 +166,32 @@ export class ContactsList {
   }
 
   get numberOfNewMessages() {
-      return document.getElementsByClassName("indexNewMessages").length;
+    var numberMsg = document.getElementsByClassName("indexNewMessages").length;
+    if ((numberMsg == 0) && (this.favicon != 0)) {
+      //chage to empty
+      this.change_favicon("/assets/PashionIcoNoBluepsd.ico");
+      this.favicon = 0;
+    }
+    else if ((numberMsg != 0) && (this.favicon == 0)) {
+      //chage to some
+      this.change_favicon("/assets/PashionIcoBluepsd.ico");
+      this.favicon = 1;
+    } 
+    return numberMsg;
+  }
+
+  change_favicon(img) {
+    var favicon = document.querySelector('link[rel="shortcut icon"]');
+
+    if (!favicon) {
+        favicon = document.createElement('link');
+        favicon.setAttribute('rel', 'shortcut icon');
+        var head = document.querySelector('head');
+        head.appendChild(favicon);
+    }
+
+    favicon.setAttribute('type', 'image/png');
+    favicon.setAttribute('href', img);
   }
 
 
