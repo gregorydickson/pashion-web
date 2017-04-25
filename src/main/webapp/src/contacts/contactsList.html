@@ -21,11 +21,11 @@
                     <td class="accordion-grey" style="width:35px; overflow: hidden;">
                         <span class="accordion-grey" if.bind="(numberOfMyConnections !=0)">
 
-                            <button click.delegate="closeExpand('MCR')" class="accordionNew expandoHover"  style="color: #3971b1; font-weight: 500; background: #f7f7f7;">NEW&nbsp;</button>
+                            <button click.delegate="closeExpand('MCR')" class="accordionNew expandoHover alert-number">${numberOfMyConnections}</button>
 
                         </span>                        
                     </td>
-                    <td class="accordion-grey" style="width:15px;"></td>
+                    <td class="accordion-grey" style="width:5px;"></td>
                 </tr>
             </table>
         </div>
@@ -83,11 +83,11 @@
                     <td class="accordion-grey" style="width:35px; overflow: hidden;">
                         <span class="accordion-grey" if.bind="(numberOfRequestsToConnect !=0)">
 
-                            <button click.delegate="closeExpand('RTC')" class="accordionNew expandoHover"  style="color: #3971b1; font-weight: 500; background: #f7f7f7;">NEW&nbsp;</button>
+                            <button click.delegate="closeExpand('RTC')" class="accordionNew expandoHover alert-number">${numberOfRequestsToConnect}</button>
 
                         </span>                        
                     </td>
-                    <td class="accordion-grey" style="width:15px;"></td>
+                    <td class="accordion-grey" style="width:5px;"></td>
                 </tr>
             </table>
         </div>
@@ -146,16 +146,17 @@
                     <td class="accordion-grey" style="width:20px;">
                         <button disabled.bind="(numberOfNewMessages ==0)" id="buttonNM" class="accordion ${(numberOfNewMessages ==0) ? '' : 'expandoHover'}" click.delegate="closeExpand('NM')"></button>
                     </td>
-                    <td class="accordion-grey"> <span>NEW MESSAGES</span>
+                    <td class="accordion-grey"> <span>NEW</span>
                     </td>
                     <td class="accordion-grey" style="width:35px; overflow: hidden;">
                         <span class="accordion-grey" if.bind="(numberOfNewMessages !=0)">
 
-                            <button click.delegate="closeExpand('NM')" class="accordionNew expandoHover" style="color: #3971b1; font-weight: 500; background: #f7f7f7;">NEW&nbsp;</button>
+                            <button click.delegate="closeExpand('NM')" class="accordionNew expandoHover alert-number">${numberOfNewMessages}</button>
+                            <!-- <button click.delegate="closeExpand('NM')" class="accordionNew expandoHover alert-number">18</button> -->
 
                         </span>                        
                     </td>
-                    <td class="accordion-grey" style="width:15px;"></td>
+                    <td class="accordion-grey" style="width:5px;"></td>
                 </tr>
             </table>
         </div>

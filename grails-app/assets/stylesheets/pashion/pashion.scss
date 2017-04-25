@@ -157,6 +157,14 @@
   overflow: visible;
 }
 
+.alert-number {
+  color: $flat-blue; 
+  font-weight: 700; 
+  font-size: $font-size-large; 
+  background: #f7f7f7;
+  margin-left: 19px;
+  padding-left: 0px;
+}
 .alert-box {
   min-width: 17px;
   height: 17px;
