@@ -177,7 +177,7 @@
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
                                 <div>
                                     <div class="ui-text-label-me-left paragraph-5 contact-box ${messagesYes(connection.numberNewMessages) ? 'ui-text-bolder' : ''}">${users[connection.connectedUserId -1].name} ${users[connection.connectedUserId -1].surname}</div>
-                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connection.connectedUserId -1].brand.name}${users[connection.connectedUserId -1].pressHouse.name}${users[connection.connectedUserId -1].prAgency.name}</div>
+                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${connection.lastMessage}</div>
                                 </div>
                             </a>
                         </td>
@@ -263,7 +263,7 @@
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
                                 <div class="">
                                     <div class="ui-text-label-me-left paragraph-5 contact-box ${messagesYes(connection.numberNewMessages) ? 'ui-text-bolder' : ''}">${users[connection.connectedUserId -1].name} ${users[connection.connectedUserId -1].surname}</div>
-                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connection.connectedUserId -1].brand.name}${users[connection.connectedUserId -1].pressHouse.name}${users[connection.connectedUserId -1].prAgency.name}</div>
+                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${connection.lastMessage}</div>
                                 </div>
                             </a>
                         </td>
