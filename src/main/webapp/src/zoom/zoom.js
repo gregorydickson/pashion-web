@@ -120,7 +120,7 @@ export class Zoom {
 
       let arow = this.rows[this.rowNumber];
       if(arow){
-        
+        numberThisRow = arow.numberImagesThisRow;
         this.itemNumber = numberThisRow-1;
         let items = arow.items;
         let item = items[this.itemNumber];
