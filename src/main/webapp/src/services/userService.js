@@ -343,6 +343,46 @@ export class UserService {
         */
     }
 
+        // from pubnub real-time only and not history
+    // history sets pushToServer as false and uses flushConnectionsData
+    // only messages to or from this email user are sent.
+    updateLastMessage(fromEmail, message, pushToServer) { // add 1 to the count
+        // get id for email;
+        var fromUserId = this.checkValidUser(fromEmail);
+        var connectionId = -1;
+        // console.log("UserService.addMessgeCount, update message count from:" + fromEmail + " id:" + fromUserId + ' pushToServer: ' + pushToServer);
+
+        var i;
+        for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
+            if (this.users[this.user.id - 1].connections[i].connectedUserId == fromUserId) {
+                this.users[this.user.id - 1].connections[i].lastMessage=message;
+                console.log("UserService.updateLastMessage from: " + fromUserId + " to: " + this.user.id + " message: " + message);
+                connectionId = this.users[this.user.id - 1].connections[i].id;
+                break;
+            }
+        }
+
+
+        /* Not sure if we have to save new messages to the server or not, as it is a transient value used in a local session and filterd on date.
+         if we do, then make sure all users of addMessageCount (message.js) have .then pattern 
+
+        // save out using connection id
+        if (pushToServer && (connectionId != -1)) {
+            console.log("UserService.addMessgeCount, pushing message count to server for: " + fromEmail + " user id: " + fromUserId + " in connections id: " + connectionId);
+            var promise = new Promise((resolve, reject) => {
+                this.http.fetch('/connection/addMessageCount/' + connectionId, {
+                        method: 'post'
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        console.log("UserService.addMessgeCount json addMessageCount result:" + result.message);
+                    }).catch(err => reject(err));
+            });
+            return promise;
+        }
+        */
+    }
+
     clearAllUnreadMessagesForTheCurrentUser() {
         if (this.users[this.user.id - 1] == 'undefined') return;
         var i;

@@ -21,11 +21,11 @@
                     <td class="accordion-grey" style="width:35px; overflow: hidden;">
                         <span class="accordion-grey" if.bind="(numberOfMyConnections !=0)">
 
-                            <button click.delegate="closeExpand('MCR')" class="accordionNew expandoHover"  style="color: #3971b1; font-weight: 500; background: #f7f7f7;">NEW&nbsp;</button>
+                            <button click.delegate="closeExpand('MCR')" class="accordionNew expandoHover alert-number">${numberOfMyConnections}</button>
 
                         </span>                        
                     </td>
-                    <td class="accordion-grey" style="width:15px;"></td>
+                    <td class="accordion-grey" style="width:5px;"></td>
                 </tr>
             </table>
         </div>
@@ -83,11 +83,11 @@
                     <td class="accordion-grey" style="width:35px; overflow: hidden;">
                         <span class="accordion-grey" if.bind="(numberOfRequestsToConnect !=0)">
 
-                            <button click.delegate="closeExpand('RTC')" class="accordionNew expandoHover"  style="color: #3971b1; font-weight: 500; background: #f7f7f7;">NEW&nbsp;</button>
+                            <button click.delegate="closeExpand('RTC')" class="accordionNew expandoHover alert-number">${numberOfRequestsToConnect}</button>
 
                         </span>                        
                     </td>
-                    <td class="accordion-grey" style="width:15px;"></td>
+                    <td class="accordion-grey" style="width:5px;"></td>
                 </tr>
             </table>
         </div>
@@ -146,16 +146,17 @@
                     <td class="accordion-grey" style="width:20px;">
                         <button disabled.bind="(numberOfNewMessages ==0)" id="buttonNM" class="accordion ${(numberOfNewMessages ==0) ? '' : 'expandoHover'}" click.delegate="closeExpand('NM')"></button>
                     </td>
-                    <td class="accordion-grey"> <span>NEW MESSAGES</span>
+                    <td class="accordion-grey"> <span>NEW</span>
                     </td>
                     <td class="accordion-grey" style="width:35px; overflow: hidden;">
                         <span class="accordion-grey" if.bind="(numberOfNewMessages !=0)">
 
-                            <button click.delegate="closeExpand('NM')" class="accordionNew expandoHover" style="color: #3971b1; font-weight: 500; background: #f7f7f7;">NEW&nbsp;</button>
+                            <button click.delegate="closeExpand('NM')" class="accordionNew expandoHover alert-number">${numberOfNewMessages}</button>
+                            <!-- <button click.delegate="closeExpand('NM')" class="accordionNew expandoHover alert-number">18</button> -->
 
                         </span>                        
                     </td>
-                    <td class="accordion-grey" style="width:15px;"></td>
+                    <td class="accordion-grey" style="width:5px;"></td>
                 </tr>
             </table>
         </div>
@@ -177,7 +178,7 @@
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
                                 <div>
                                     <div class="ui-text-label-me-left paragraph-5 contact-box ${messagesYes(connection.numberNewMessages) ? 'ui-text-bolder' : ''}">${users[connection.connectedUserId -1].name} ${users[connection.connectedUserId -1].surname}</div>
-                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connection.connectedUserId -1].brand.name}${users[connection.connectedUserId -1].pressHouse.name}${users[connection.connectedUserId -1].prAgency.name}</div>
+                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${connection.lastMessage}</div>
                                 </div>
                             </a>
                         </td>
@@ -263,7 +264,7 @@
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
                                 <div class="">
                                     <div class="ui-text-label-me-left paragraph-5 contact-box ${messagesYes(connection.numberNewMessages) ? 'ui-text-bolder' : ''}">${users[connection.connectedUserId -1].name} ${users[connection.connectedUserId -1].surname}</div>
-                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${users[connection.connectedUserId -1].brand.name}${users[connection.connectedUserId -1].pressHouse.name}${users[connection.connectedUserId -1].prAgency.name}</div>
+                                    <div class="ui-text-label-s-left paragraph-5 contact-box">${connection.lastMessage}</div>
                                 </div>
                             </a>
                         </td>
