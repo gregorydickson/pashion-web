@@ -198,8 +198,7 @@ class SearchableItemController {
             if(city) eq('city',city)
             if(color) ilike('color',"%${color}%")
                
-            if(availableFrom && availableTo) 
-            or {
+            if(availableFrom && availableTo) or {
                 isNull('s.id')
                 sizeEq('s.sampleRequests', 0)
                 and{
