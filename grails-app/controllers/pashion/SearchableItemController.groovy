@@ -23,7 +23,7 @@ class SearchableItemController {
         
         Brand brand = null
         SearchableItemType type = null
-        Season seasonIn = null
+        Season season = null
         City city = null
         List results = null
         def keywords = null
@@ -35,7 +35,7 @@ class SearchableItemController {
         }
         
         if(params.season != "" && params.season != null)
-            seasonIn = Season.findByName(URLDecoder.decode(params.season))
+            season = Season.findByName(URLDecoder.decode(params.season))
 
         if(params.searchtext != null && params.searchtext != "" && params.searchtext != "undefined"){
             keywords = URLDecoder.decode(params.searchtext)
@@ -49,7 +49,7 @@ class SearchableItemController {
             log.info "*****************************  A BRAND CITY SEARCH **********************"
             log.info "Brand:"+brand
             log.info "keywords:"+keywords
-            log.info "season:"+seasonIn
+            log.info "season:"+season
             log.info "type:"+type
             
             log.info "city:"+ params.city + " (" + city + ")"
@@ -63,12 +63,11 @@ class SearchableItemController {
                     if(keywords) and {
                         keywords.each {  ilike('attributes', "%${it}%") }
                     }
-                    if(seasonIn) eq('season',seasonIn)
+                    if(season) eq('season',season)
                     if(type) eq('type',type)
                     if(city) eq('sampleCity',city)
-                    // RM
-                    season{ order('order','desc') }
-                    // RM
+                    
+                    
                     cache true
             } 
             log.info "brand results count:"+results.size()
@@ -76,7 +75,7 @@ class SearchableItemController {
             results.collect{ids << it.look.id }
             ids.unique()
             if(ids.size()>0){
-                results = SearchableItem.getAll(ids)
+                results = SearchableItem.findAllByIdInList(ids)
             } else{
                 results = []
             }
@@ -84,7 +83,7 @@ class SearchableItemController {
             log.info "*****************************  A BRAND NON-CITY SEARCH **********************"
             log.info "Brand:"+brand
             log.info "keywords:"+keywords
-            log.info "season:"+seasonIn
+            log.info "season:"+season
             log.info "type:"+type
 
             results = criteria.listDistinct () {
@@ -93,10 +92,7 @@ class SearchableItemController {
                 if(keywords) and {
                     keywords.each {  ilike('attributes', "%${it}%") }
                 }
-                if(seasonIn) eq('season',seasonIn)
-                // RM
-                season{ order('order','desc') }
-                // RM
+                if(season) eq('season',season)
                 cache true
             } 
 
@@ -132,7 +128,7 @@ class SearchableItemController {
         Date availableTo = null
         Brand brand = null
         SearchableItemType type = null
-        Season seasonIn = null
+        Season season = null
         def keywords = null
         def theme = null
         def color = null
@@ -159,14 +155,13 @@ class SearchableItemController {
         }
 
         if(params.season != "" && params.season != null)
-            seasonIn = Season.findByName(URLDecoder.decode(params.season))
-
-        
+            season = Season.findByName(URLDecoder.decode(params.season))
+                   
         log.debug "availableFrom param:"+params.availableFrom
         if(params.availableFrom != null && params.availableFrom != "" )
             availableFrom = dateFormat.parse(params.availableFrom)
 
-        log.debug "availableFrom param:"+params.availableTo
+        log.debug "availableTo param:"+params.availableTo
         if(params.availableTo != null && params.availableTo != "")   
             availableTo = dateFormat.parse(params.availableTo)
         
@@ -177,19 +172,20 @@ class SearchableItemController {
         
         log.info "Brand:"+brand
         log.info "keywords:"+keywords
-        log.info "season:"+seasonIn
+        log.info "season:"+season
         log.info "type:"+type
         log.info "theme:"+theme
         log.info "availableFrom:"+availableFrom
         log.info "availableTo:"+ availableTo
-        log.info "city:"+ params.city + " (" + city + ")"
+        log.info "city param:"+ params.city
+        log.info "city:" + city
         log.info "color:"+color
 
         def criteria = SearchableItem.createCriteria()
         
         
         List results = criteria.listDistinct () {
-
+            fetchMode 'brand', FM.JOIN
             fetchMode 'samples', FM.JOIN
             fetchMode 'samples.sampleRequests', FM.JOIN
             
@@ -200,18 +196,14 @@ class SearchableItemController {
             if(keywords) and {
                 keywords.each {  ilike('attributes', "%${it}%") }
             }
-            if(seasonIn) eq('season',seasonIn)
+            if(season) eq('season',season)
             if(type) eq('type',type)
             if(city) eq('city',city)
             if(color) ilike('color',"%${color}%")
                
             maxResults(500)
-            // RM
-            season{ order('order','desc') }
-            // RM
             cache true
         }
-
 
         if(availableFrom && availableTo)
             results = filterOnDates(results, availableFrom, availableTo)
@@ -250,8 +242,8 @@ class SearchableItemController {
             it.samples.each{
                 def booked = false
                 it.sampleRequests.each{
-                    //log.debug "start date"+it.bookingStartDate
-                    //log.debug "end date"+it.bookingEndDate
+                    log.debug "start date"+it.bookingStartDate
+                    log.debug "end date"+it.bookingEndDate
                     if ( 
                         (
                              (it.bookingStartDate.after(availableFrom) ||
@@ -279,13 +271,13 @@ class SearchableItemController {
             }
             log.debug "count:"+count
             log.debug "samples size:"+it.samples.size()
-            if(count == it.samples.size()) {
+            if(count == it.samples.size() && !(it.brand.hideCalendar)) {
                 log.debug "removing"
                 remove = true
             }
             remove
         }
-        log.debug "filtered results:"+results.size()
+        log.info "filtered results:"+results.size()
 
         results
     }
@@ -343,6 +335,8 @@ class SearchableItemController {
         }
         resultList
     }
+
+
 
     def index(Integer max) {
         long startTime = System.currentTimeMillis()
