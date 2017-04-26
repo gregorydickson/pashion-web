@@ -53,13 +53,13 @@ class CachingService implements JsonViewTest {
             def channel
             if(data.brand){
                 channel = data.brand+'_cacheInvalidate'
-                log.info "send Bookings Cache invalidate in cachingService:" + channel
-                pubnub.publish(channel,data.booking , callback)
+                log.info "send Bookings Cache invalidate in cachingService:" + channel + " data > " + data
+                pubnub.publish(channel,data.booking + " (look " + data.look + ")", callback)
             }
             if(data.press){
                 channel = data.press+'_cacheInvalidate'
-                log.info "send Bookings Cache invalidate in cachingService:" + channel
-                pubnub.publish(channel,data.booking, callback)
+                log.info "send Bookings Cache invalidate in cachingService:" + channel + " data > " + data
+                pubnub.publish(channel,data.booking + " (look " + data.look + ")", callback)
             }
         } catch(Exception e){
             log.error "Exception in CachingService - sample Request Cache Invalidate"
