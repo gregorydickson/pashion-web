@@ -6,7 +6,7 @@
         <g:layoutTitle default="Grails" />
     </title>
     <g:layoutHead/>
-    <link rel='shortcut icon' type='image/x-icon' href='${createLinkTo(dir:'images',file:'pashion.ico')}' />
+    <link rel='shortcut icon' type='image/x-icon' href='${createLinkTo(dir:'images',file:'PashionIcoNoBluepsd.ico')}' />
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
