@@ -76,7 +76,7 @@ class SearchableItemController {
             results.collect{ids << it.look.id }
             ids.unique()
             if(ids.size()>0){
-                results = SearchableItem.findAllByIdInList(ids)
+                results = SearchableItem.getAll(ids)
             } else{
                 results = []
             }
