@@ -66,7 +66,10 @@ class SampleRequestController {
         def sent = [message:'Sample Request Approved']
         render sent as JSON
         def pressHouse = sr.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse, booking:sr.id, look:sr.look] // add season abbrev to methods
+        def lookSeason = Season.findByName(sr.season.trim()).abbreviation + sr.look
+        //sr.searchableItems[0].look.season.abbreviation
+        log.info "Setting look with season in cache invalidate:"+lookSeason
+        notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse, booking:sr.id, look:lookSeason] // add season abbrev to methods
     }
     def brandSend(){
         
