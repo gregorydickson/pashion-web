@@ -276,7 +276,7 @@
                 <!-- Images/Looks -->
                 <!-- -->
 
-                <div id="mainScrollWindow" class="cards-list-wrap">
+                <div id="mainScrollWindow" class="cards-list-wrap" style="visibility: hidden;"> <!-- only for the firsttime around -->
                 
                         <div class="cards-list" repeat.for="row of rows" >
 
@@ -284,12 +284,12 @@
                                 <!-- Three dots menu press -->
                                 <div if.bind="user.type === 'press'" class="look-menu-absolute-wrap">
                                     <a href="#" class="look-menu-click " click.delegate="createSampleRequest(row.items[i].id )">
-                                        <div class=menu-stripe></div>
+                                        <div class="menu-stripe" ></div>
                                     </a>
                                 </div>
                                 <!-- Three dots menu brand and prAgency-->
-                                <div if.bind="user.type !== 'press'" class="look-menu-absolute-wrap">
-                                    <a href="#" class="look-menu-click " click.delegate="lookMenu(row.items[i].id)">
+                                <div if.bind="user.type !== 'press'" class="look-menu-absolute-wrap" >
+                                    <a href="#" class="look-menu-click" click.delegate="lookMenu(row.items[i].id)" >
                                         <div class="menu-stripe"></div>
                                     </a>
 
@@ -317,6 +317,8 @@
                                                 <li class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Set Initial Availability</a></li>
 
                                                 <li class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
+                                                
+                                                <li class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Booking &nbsp;</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -325,9 +327,9 @@
                                 <!-- Main image -->
                                 <div id="card-${row.items[i].id}" class="card-image">
                                     
-                                    <img if.bind="user.type == 'brand'" src.bind="row.items[i].image" ref="image" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"/>
+                                    <!-- <img if.bind="user.type == 'brand'" src.bind="row.items[i].image" ref="image" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"/> -->
 
-                                    <img if.bind="user.type != 'brand'" class="lazy" src="/assets/bg.jpg" data-src.bind="row.items[i].image" ref="image" 
+                                    <img class="lazy" src="/assets/bgGrey.jpg" data-src.bind="row.items[i].image" ref="image" 
                                      click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"/> 
 
                                    <!-- <div if.bind="user.type === 'brand'" class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div> -->
@@ -509,12 +511,11 @@
 
                         <!-- expanding data -->
                         <div id="panel${booking.id}" class="panel requestPanel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
-                            <table class="accordion expanded" style="table-layout:fixed;">
-                                <tr >
-                                    <td class="accordion" style="width:65px; max-width:65px; padding-top:10px;padding-left:10px; padding-bottom:3px;">${booking.pressHouse.name}</td>
-                                </tr>
+                            <span class="accordion expanded" style="background-color: #f7f7f7; width:100%; padding-top:7px; padding-left:10px; padding-bottom:7px;">Request: ${booking.id}</span>
+                            <span if.bind="booking.pressHouse.name" class="accordion expanded" style="background-color: #f7f7f7;width:100%; padding-left:10px; padding-bottom:7px;">Press House: ${booking.pressHouse.name}</span>
+                            <table class="accordion expanded" style="table-layout:fixed;">                          
                                 <tr style="padding-top: 7px;" repeat.for="sample of booking.searchableItems">
-                                    <td class="accordion" style="width:60px; max-width:60px; padding-left:10px; padding-bottom:7px;"> ${booking.season | seasonAbbreviation:seasons }${booking.look}.${$index+1} :</td>
+                                    <td class="accordion" style="width:65px; max-width:65px; padding-left:10px; padding-bottom:7px;"> ${booking.season | seasonAbbreviation:seasons }${booking.look}.${$index+1} :</td>
                                     <td class="accordion to-u-c" style="width:142px; max-width:142px; overflow: hidden; padding-right:10px; padding-bottom:7px;"> ${sample.attributes}</td>
                                 </tr>
                             </table>
@@ -620,10 +621,9 @@
 
                         <!-- expanding data -->
                         <div id="panel${booking.id}" class="panel requestPanel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
+                            <span class="accordion expanded" style="background-color: #f7f7f7; width:100%; padding-top:7px; padding-left:10px; padding-bottom:7px;">Request: ${booking.id}</span>
+                            <span if.bind="booking.brand.name" class="accordion expanded" style="background-color: #f7f7f7;width:100%; padding-left:10px; padding-bottom:7px;">Brand: ${booking.brand.name}</span>
                             <table class="accordion expanded" style="table-layout:fixed;">
-                                <tr >
-                                    <td class="accordion" style="width:65px; max-width:65px; padding-top:10px;padding-left:10px; padding-bottom:5px;">${booking.brand.name}</td>
-                                </tr>
                                 <tr style="padding-bottom:7px;" repeat.for="sample of booking.searchableItems">
                                     <td class="accordion" style="width:60px; max-width:60px; padding-left: 10px; padding-bottom:7px;"">${booking.season | seasonAbbreviation:seasons }${booking.look}.${$index+1}</td>
                                     <td class="accordion to-u-c" style="width:142px; max-width:142px; overflow: hidden; padding-right:10px; padding-bottom:3px;""> ${sample.attributes}</td>

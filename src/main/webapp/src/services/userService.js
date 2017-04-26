@@ -251,12 +251,12 @@ export class UserService {
         var nameString1 = this.users[this.user.id - 1].name + ' '+this.users[this.user.id - 1].surname + this.users[this.user.id - 1].email; // spaces to match name display and prvent run on match for the other fields
         if (this.users[this.user.id - 1].brand) nameString1 += this.users[this.user.id - 1].brand.name;
         if (this.users[this.user.id - 1].pressHouse) nameString1 += this.users[this.user.id - 1].pressHouse.name;
-        if (this.users[this.user.id - 1].prAgency) nameString1 += this.users[this.user.id - 1].agency.name;
+        if (this.users[this.user.id - 1].prAgency) nameString1 += this.users[this.user.id - 1].prAgency.name;
 
         var nameString2 = this.users[idIn - 1].name +  ' ' + this.users[idIn - 1].surname + this.users[idIn - 1].email;
         if (this.users[idIn - 1].brand) nameString2 += this.users[idIn - 1].brand.name;
         if (this.users[idIn - 1].pressHouse) nameString2 += this.users[idIn - 1].pressHouse.name;
-        if (this.users[idIn - 1].prAgency) nameString2 += this.users[idIn - 1].agency.name;
+        if (this.users[idIn - 1].prAgency) nameString2 += this.users[idIn - 1].prAgency.name;
         var conn1 = {
             user: {
                 id: this.user.id
@@ -310,13 +310,53 @@ export class UserService {
         // get id for email;
         var fromUserId = this.checkValidUser(fromEmail);
         var connectionId = -1;
-        console.log("UserService.addMessgeCount, update message count from:" + fromEmail + " id:" + fromUserId + ' pushToServer: ' + pushToServer);
+        // console.log("UserService.addMessgeCount, update message count from:" + fromEmail + " id:" + fromUserId + ' pushToServer: ' + pushToServer);
 
         var i;
         for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
             if (this.users[this.user.id - 1].connections[i].connectedUserId == fromUserId) {
-                console.log("UserService.addMessgeCount 1 actually added from: " + fromUserId + " to: " + this.user.id);
+                // console.log("UserService.addMessgeCount 1 actually added from: " + fromUserId + " to: " + this.user.id);
                 this.users[this.user.id - 1].connections[i].numberNewMessages++;
+                connectionId = this.users[this.user.id - 1].connections[i].id;
+                break;
+            }
+        }
+
+
+        /* Not sure if we have to save new messages to the server or not, as it is a transient value used in a local session and filterd on date.
+         if we do, then make sure all users of addMessageCount (message.js) have .then pattern 
+
+        // save out using connection id
+        if (pushToServer && (connectionId != -1)) {
+            console.log("UserService.addMessgeCount, pushing message count to server for: " + fromEmail + " user id: " + fromUserId + " in connections id: " + connectionId);
+            var promise = new Promise((resolve, reject) => {
+                this.http.fetch('/connection/addMessageCount/' + connectionId, {
+                        method: 'post'
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        console.log("UserService.addMessgeCount json addMessageCount result:" + result.message);
+                    }).catch(err => reject(err));
+            });
+            return promise;
+        }
+        */
+    }
+
+        // from pubnub real-time only and not history
+    // history sets pushToServer as false and uses flushConnectionsData
+    // only messages to or from this email user are sent.
+    updateLastMessage(fromEmail, message, pushToServer) { // add 1 to the count
+        // get id for email;
+        var fromUserId = this.checkValidUser(fromEmail);
+        var connectionId = -1;
+        // console.log("UserService.addMessgeCount, update message count from:" + fromEmail + " id:" + fromUserId + ' pushToServer: ' + pushToServer);
+
+        var i;
+        for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
+            if (this.users[this.user.id - 1].connections[i].connectedUserId == fromUserId) {
+                this.users[this.user.id - 1].connections[i].lastMessage=message;
+                //console.log("UserService.updateLastMessage from: " + fromUserId + " to: " + this.user.id + " message: " + message);
                 connectionId = this.users[this.user.id - 1].connections[i].id;
                 break;
             }
@@ -396,7 +436,7 @@ export class UserService {
         var i;
         for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
             if (this.users[this.user.id - 1].connections[i].connectedUserId == withUserId) {
-                console.log("UserService.getMostRecentRead, from: " + withUserId + " on id: " + " stamp: " + this.users[this.user.id - 1].connections[i].mostRecentRead);
+                // console.log("UserService.getMostRecentRead, from: " + withUserId + " on id: " + " stamp: " + this.users[this.user.id - 1].connections[i].mostRecentRead);
                 return (this.users[this.user.id - 1].connections[i].mostRecentRead);
             }
         }

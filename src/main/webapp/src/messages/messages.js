@@ -38,7 +38,7 @@ export class Messages {
 
     alertHold (message){
 
-        this.dialogService.openAndYieldController({ viewModel: CreateDialogAlert, model: {title:"NO NETWORK", message:message, timeout:'none'}, lock: true }).then(controller => {
+        this.dialogService.openAndYieldController({ viewModel: CreateDialogAlert, model: {title:"NO NETWORK", message:message, timeout:'none', redText:true}, lock: true }).then(controller => {
             this.controller = controller;
         });
     }
@@ -103,6 +103,7 @@ export class Messages {
                         toastr.options.closeButton = false;
                         toastr.options.preventDuplicates = true;
                         toastr.info('New Message from ' + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);
+                        parent.userService.updateLastMessage(receivedMessage.fromId, receivedMessage.text, false);
                         }
 
                     window.setTimeout(function () {
@@ -163,12 +164,13 @@ export class Messages {
                         fromMe: (response.messages[i].entry.fromId == parent.user.email)
                   });
 
-                  // get messages count on history 
+                  // get messages count + lastmessage on history 
                   if (response.messages[i].entry.toId == parent.user.email) {
                     //console.log("getMostRecentRead: " + parent.userService.getMostRecentRead (response.messages[i].entry.fromId));
                       // console.log("response timestamp: "+ parseInt(response.messages[i].timetoken));
+                      parent.userService.updateLastMessage(response.messages[i].entry.fromId, response.messages[i].entry.text, false);
                       if (parseInt(response.messages[i].timetoken) > parseInt(parent.userService.getMostRecentRead (response.messages[i].entry.fromId))) {
-                            console.log("response timestamp > mostrecent read stamp");
+                            //console.log("response timestamp > mostrecent read stamp");
                             // do not push to server, use flushConnectionsData instead
                             parent.userService.addMessageCount(response.messages[i].entry.fromId, false);
                       }

@@ -25,6 +25,10 @@ export class ContactsList {
   currentPNTime;
   filterDirection = 'ascending';
   pubnub;
+  numberMCR = 0;
+  numberRTC = 0;
+  numberNew = 0;
+  favicon = 0;
 
   constructor(http, controller, dialogService, userService, commsHeader, eventAggregator, pubNubService){ //} messages){
 	    this.controller = controller;
@@ -157,15 +161,48 @@ export class ContactsList {
 
 
   get numberOfMyConnections() {
-      return document.getElementsByClassName("indexMyConnections").length;
+    this.numberMCR = document.getElementsByClassName("indexMyConnections").length;
+    this.checkAndChangeFavicon();
+    return this.numberMCR;    
   }
 
   get numberOfRequestsToConnect() {
-      return document.getElementsByClassName("indexRequestsToConnect").length;
+    this.numberRTC = document.getElementsByClassName("indexRequestsToConnect").length;
+    this.checkAndChangeFavicon();
+    return this.numberRTC;
   }
 
   get numberOfNewMessages() {
-      return document.getElementsByClassName("indexNewMessages").length;
+    this.numberNew = document.getElementsByClassName("indexNewMessages").length;  
+    this.checkAndChangeFavicon();
+    return this.numberNew;
+  }
+
+  checkAndChangeFavicon (){
+    if ((this.numberMCR + this.numberRTC + this.numberNew == 0) && (this.favicon != 0)) {
+      //chage to empty
+      this.changeFavicon("/assets/PashionIcoNoBluepsd.ico");
+      this.favicon = 0;
+    }
+    else if ((this.numberMCR + this.numberRTC + this.numberNew !=0 ) && (this.favicon == 0)) {
+      //chage to some
+      this.changeFavicon("/assets/PashionIcoBluepsd.ico");
+      this.favicon = 1;
+    } 
+  }
+
+  changeFavicon(img) {
+    var favicon = document.querySelector('link[rel="shortcut icon"]');
+
+    if (!favicon) {
+        favicon = document.createElement('link');
+        favicon.setAttribute('rel', 'shortcut icon');
+        var head = document.querySelector('head');
+        head.appendChild(favicon);
+    }
+
+    favicon.setAttribute('type', 'image/png');
+    favicon.setAttribute('href', img);
   }
 
 
