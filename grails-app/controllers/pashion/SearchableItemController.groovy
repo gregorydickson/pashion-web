@@ -185,10 +185,10 @@ class SearchableItemController {
         
         
         List results = criteria.listDistinct () {
-            if(availableFrom && availableTo){
-                fetchMode 'samples', FM.JOIN
-                fetchMode 'samples.sampleRequests', FM.JOIN
-            }
+
+            fetchMode 'samples', FM.JOIN
+            fetchMode 'samples.sampleRequests', FM.JOIN
+            
             isNotNull('image')
             eq('isPrivate',false)
             if(brand) eq('brand', brand)
@@ -234,22 +234,28 @@ class SearchableItemController {
 
     def filterOnDates(results, availableFrom, availableTo){
         log.debug "availability filter"
+        log.debug "availableFrom:"+availableFrom
+        log.debug "availableTo:"+availableTo
         results.removeAll {
             def remove = false
             def count = 0
             it.samples.each{
                 def booked = false
                 it.sampleRequests.each{
-                    if( ((it.bookingStartDate > availableFrom) &&
-                         (it.bookingStartDate < availableTo)) 
-                        ||
-                        ((it.bookingEndDate > availableFrom) &&
-                        (it.bookingEndDate < availableTo))
+                    log.debug "start date"+it.bookingStartDate
+                    log.debug "end date"+it.bookingEndDate
+                    if ( 
+                        (
+                            (it.bookingStartDate.after(availableFrom)) && (it.bookingStartDate.before(availableTo)) 
+                            ||
+                            (it.bookingEndDate.after(availableFrom)) && (it.bookingEndDate.before(availableTo))
+                        )
                         &&
                         (it.requestStatusBrand == 'Approved' ||
                         it.requestStatusBrand == 'Picked Up' ||
                         it.requestStatusBrand == 'Returning')
                     ){
+                        log.debug "booked true"
                         booked = true
                     }
                 }       
