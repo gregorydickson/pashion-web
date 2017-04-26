@@ -21,10 +21,7 @@ import { UserService } from './services/userService';
 import { BrandService } from './services/brandService';
 import { PubNubService } from './services/pubNubService';
 import { busy } from './services/busy';
-
-
-
-
+import { CreateDialogAlert } from './common/dialogAlert';
 
 @inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, busy,PubNubService)
 export class Index {
