@@ -9,7 +9,7 @@ import {DialogService} from 'aurelia-dialog';
 import {computedFrom} from 'aurelia-framework';
 
 @inject(HttpClient, DialogController, BrandService ,DialogService)
-export class CreateSampleRequest {
+export class CreateSampleRequestPress {
   static inject = [DialogController];
   currentItem = {};
   startCalendar = {};
