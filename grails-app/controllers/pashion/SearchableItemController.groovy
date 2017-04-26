@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat
 import org.springframework.web.multipart.MultipartFile
 import org.hibernate.criterion.CriteriaSpecification
 import static org.hibernate.sql.JoinType.*
+import org.hibernate.FetchMode as FM
 
 @Transactional(readOnly = false)
 class SearchableItemController {
@@ -182,11 +183,12 @@ class SearchableItemController {
 
         def criteria = SearchableItem.createCriteria()
         
-        // http://stackoverflow.com/questions/17083204/criteria-uses-inner-join-instead-left-join-approach-by-default-making-my-que
+        
         List results = criteria.listDistinct () {
-            
-            createAlias('samples','s',CriteriaSpecification.LEFT_JOIN)
-            createAlias('s.sampleRequests', 'sr', CriteriaSpecification.LEFT_JOIN)
+            if(availableFrom && availableTo){
+                fetchMode 'samples', FM.JOIN
+                fetchMode 'samples.sampleRequests', FM.JOIN
+            }
             isNotNull('image')
             eq('isPrivate',false)
             if(brand) eq('brand', brand)
@@ -199,23 +201,15 @@ class SearchableItemController {
             if(city) eq('city',city)
             if(color) ilike('color',"%${color}%")
                
-            if(availableFrom && availableTo) or {
-                isNull('s.id')
-                sizeEq('s.sampleRequests', 0)
-                and{
-                    not{
-                        between('sr.bookingStartDate', availableFrom, availableTo)
-                    }
-                    not{
-                        between('sr.bookingEndDate', availableFrom, availableTo)
-                    }
-                }
-                    
-            }
-            maxResults(maxRInt)
+            maxResults(500)
             cache true
         }
 
+        if(availableFrom && availableTo)
+            results = filterOnDates(results, availableFrom, availableTo)
+
+        results.take(maxRInt)
+        
         long endTime = System.currentTimeMillis()
         long duration = (endTime - startTime)
         log.info "search duration:"+duration
@@ -236,6 +230,42 @@ class SearchableItemController {
         log.info "**************************************************************"
         
         
+    }
+
+    def filterOnDates(results, availableFrom, availableTo){
+        log.debug "availability filter"
+        results.removeAll {
+            def remove = false
+            def count = 0
+            it.samples.each{
+                def booked = false
+                it.sampleRequests.each{
+                    if( ((it.bookingStartDate > availableFrom) &&
+                         (it.bookingStartDate < availableTo)) 
+                        ||
+                        ((it.bookingEndDate > availableFrom) &&
+                        (it.bookingEndDate < availableTo))
+                        &&
+                        (it.requestStatusBrand == 'Approved' ||
+                        it.requestStatusBrand == 'Picked Up' ||
+                        it.requestStatusBrand == 'Returning')
+                    ){
+                        booked = true
+                    }
+                }       
+                if(booked) ++count     
+            }
+            log.debug "count:"+count
+            log.debug "samples size:"+it.samples.size()
+            if(count == it.samples.size()) {
+                log.debug "removing"
+                remove = true
+            }
+            remove
+        }
+        log.info "filtered results:"+results.size()
+
+        results
     }
 
     def collectItems(results){
