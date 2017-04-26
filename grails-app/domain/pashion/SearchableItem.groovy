@@ -66,53 +66,34 @@ class SearchableItem {
 	SearchableItem look //if this is a sample, then it has a Look
 	User owner
 
+	static belongsTo = [brandCollection: BrandCollection]
+	
+	static hasMany = [ permissions:Permission, sampleRequests:SampleRequest, samples:SearchableItem]
+
+	static mapping = {
+
+		brand index: 'brand_idx'
+		theme index: 'theme_idx'
+		fromDate index: 'fromDate_idx'
+		toDate index: 'toDate_idx'
+		attributes index: 'attributes_idx'
+		season index: 'season_idx'
+
+		sampleRequests lazy: false
+		samples lazy:false
+		type lazy:false
+		brandCollection lazy:false
+		city lazy:false
+
+		description type: 'text'
+
+		cache true
+		isBookable  defaultValue: false
+	}
+
 	static constraints = {
-		clientID nullable:true
-		name nullable:true
-		city nullable:true
-		sampleCity nullable:true
-		description nullable:true, maxSize: 4000
-		brand nullable: true
-		sex nullable:true
-		type nullable: true
-		image nullable:true
-
-		imageProvider nullable:true
-		imageProviderFileName nullable:true
-
-		color nullable: true
-		material nullable: true
-		itemsInLook nullable: true
-		sampleType nullable:true
-		shape nullable: true
-	 	accessories nullable: true
-	 	occasion nullable: true
-	 	style nullable: true
-	 	motif nullable: true
-	 	theme nullable: true
-	 	culture nullable: true
-	 	lookSeason nullable: true
-	 	decade nullable: true
-
-	 	attributes nullable:true, maxSize: 4000
-
-	 	path nullable:true
-
-		size nullable: true
-		theme nullable:true
-
-		fromDate nullable:true
-		
-		look nullable: true 
-		owner nullable:true
-		
-		userCreatedId nullable:true
-		lastModifiedUserId nullable:true
-
-		brandCollection nullable: true
-		permissions nullable:true
-		sampleRequests nullable:true
-		samples nullable:true
+		description maxSize: 4000
+	 	attributes  maxSize: 4000
 	}
 
 	String toString(){
@@ -285,34 +266,5 @@ class SearchableItem {
 		pashionCalendar
 	}
 
-	
-	
-	static belongsTo = [brandCollection: BrandCollection]
-	
-
-	static hasMany = [ permissions:Permission, sampleRequests:SampleRequest, samples:SearchableItem]
-
-	
-	static mapping = {
-
-		brand index: 'brand_idx'
-		theme index: 'theme_idx'
-		fromDate index: 'fromDate_idx'
-		toDate index: 'toDate_idx'
-
-		attributes index: 'attributes_idx'
-		season index: 'season_idx'
-
-		sampleRequests lazy: true
-		samples lazy:true
-		type lazy:false
-		brandCollection lazy:false
-		city lazy:false
-
-		description type: 'text'
-
-		cache true
-		isBookable  defaultValue: false
-	}
 
 }

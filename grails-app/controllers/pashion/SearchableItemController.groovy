@@ -5,6 +5,9 @@ import grails.transaction.Transactional
 import grails.converters.JSON
 import java.text.SimpleDateFormat
 import org.springframework.web.multipart.MultipartFile
+import org.hibernate.criterion.CriteriaSpecification
+import static org.hibernate.sql.JoinType.*
+import org.hibernate.FetchMode as FM
 
 @Transactional(readOnly = false)
 class SearchableItemController {
@@ -167,7 +170,7 @@ class SearchableItemController {
             keywords = URLDecoder.decode(params.searchtext)
             keywords = keywords.split(" ")
         }
-        log.info "*****************************  A SEARCH **********************"
+        log.info "**********************  A Press availability SEARCH **********************"
         log.info "Brand:"+brand
         log.info "keywords:"+keywords
         log.info "season:"+season
@@ -180,39 +183,38 @@ class SearchableItemController {
 
         def criteria = SearchableItem.createCriteria()
         
+        
         List results = criteria.listDistinct () {
 
-                log.info "image:"+'image'
-                isNotNull('image')
-                eq('isPrivate',false)
-                if(brand) eq('brand', brand)
-                if(theme) ilike('attributes', "%${theme}%")
-                if(keywords) and {
-                    keywords.each {  ilike('attributes', "%${it}%") }
-                }
-                if(season) eq('season',season)
-                if(type) eq('type',type)
-                if(city) eq('city',city)
-                if(color) ilike('color',"%${color}%")
-                if(availableFrom && availableTo) sampleRequests{
-                    and{
-                        not{
-                            between('bookingStartDate', availableFrom, availableTo)
-                        }
-                        not{
-                            between('bookingEndDate', availableFrom, availableTo)
-                        }
-                    }
-                }
-                maxResults(maxRInt)
-                cache true
-            } 
+            fetchMode 'samples', FM.JOIN
+            fetchMode 'samples.sampleRequests', FM.JOIN
+            
+            isNotNull('image')
+            eq('isPrivate',false)
+            if(brand) eq('brand', brand)
+            if(theme) ilike('attributes', "%${theme}%")
+            if(keywords) and {
+                keywords.each {  ilike('attributes', "%${it}%") }
+            }
+            if(season) eq('season',season)
+            if(type) eq('type',type)
+            if(city) eq('city',city)
+            if(color) ilike('color',"%${color}%")
+               
+            maxResults(500)
+            cache true
+        }
 
+        if(availableFrom && availableTo)
+            results = filterOnDates(results, availableFrom, availableTo)
+
+        results.take(maxRInt)
+        
         long endTime = System.currentTimeMillis()
         long duration = (endTime - startTime)
         log.info "search duration:"+duration
         startTime = System.currentTimeMillis()
-        
+        log.info "Number of Looks:"+results.size()
         def resultList = collectItems(results)
 
         endTime = System.currentTimeMillis()
@@ -228,6 +230,48 @@ class SearchableItemController {
         log.info "**************************************************************"
         
         
+    }
+
+    def filterOnDates(results, availableFrom, availableTo){
+        log.debug "availability filter"
+        log.debug "availableFrom:"+availableFrom
+        log.debug "availableTo:"+availableTo
+        results.removeAll {
+            def remove = false
+            def count = 0
+            it.samples.each{
+                def booked = false
+                it.sampleRequests.each{
+                    log.debug "start date"+it.bookingStartDate
+                    log.debug "end date"+it.bookingEndDate
+                    if ( 
+                        (
+                            (it.bookingStartDate.after(availableFrom)) && (it.bookingStartDate.before(availableTo)) 
+                            ||
+                            (it.bookingEndDate.after(availableFrom)) && (it.bookingEndDate.before(availableTo))
+                        )
+                        &&
+                        (it.requestStatusBrand == 'Approved' ||
+                        it.requestStatusBrand == 'Picked Up' ||
+                        it.requestStatusBrand == 'Returning')
+                    ){
+                        log.debug "booked true"
+                        booked = true
+                    }
+                }       
+                if(booked) ++count     
+            }
+            log.debug "count:"+count
+            log.debug "samples size:"+it.samples.size()
+            if(count == it.samples.size()) {
+                log.debug "removing"
+                remove = true
+            }
+            remove
+        }
+        log.info "filtered results:"+results.size()
+
+        results
     }
 
     def collectItems(results){
@@ -285,123 +329,6 @@ class SearchableItemController {
     }
 
 
-    def browseSearch(){
-        
-        long startTime = System.currentTimeMillis()
-        
-        int maxRInt = params.maxR.toInteger()
-        SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
-        
-        Brand brand = null
-
-        Season season = null
-        def keywords = null
-        def theme = null
-        
-        if(params.theme != null && params.theme != "")
-            theme = params.theme
-        
-        if(params.brand && params.brand != '' && params.brand.trim() != 'All'){
-            brand = Brand.get(params.brand.trim())
-        }
-        
-        if(params.season != "")
-            season = Season.findByName(URLDecoder.decode(params.season))
-        
-        if(params.searchtext != null && params.searchtext != "" && params.searchtext != "undefined"){
-            keywords = URLDecoder.decode(params.searchtext)
-            keywords = keywords.split(" ")
-        }
-        log.info "**************************  BROWSE SEARCH **********************"
-        log.info "Brand:"+brand
-        log.info "keywords:"+keywords
-        log.info "season:"+season
-        log.info "theme:"+theme
-
-        def criteria = SearchableItem.createCriteria()
-        
-        List results = criteria.list() {
-
-                isNotNull('image')
-                eq('isPrivate',false)
-                if(brand) eq('brand', brand)
-                if(theme) ilike('theme', "%${theme}%")
-                if(keywords) and {
-                    keywords.each {  ilike('attributes', "%${it}%") }
-                }
-                if(season) eq('season',season)
-                maxResults(maxRInt)
-                cache true
-            } 
-
-        long endTime = System.currentTimeMillis()
-        long duration = (endTime - startTime)
-        log.info "search duration:"+duration
-        startTime = System.currentTimeMillis()
-
-        def fixImagesPerRow = 5 
-        if(fixImagesPerRow > 5) fixImagesPerRow = 5
-        if(fixImagesPerRow < 3) fixImagesPerRow = 3
-        
-        Integer resultsSize = results.size()
-        log.info "results:"+resultsSize
-        
-        Integer rows = resultsSize/fixImagesPerRow  
-        
-        if(resultsSize % fixImagesPerRow > 0)
-            rows = rows + 1
-        List resultList = []
-        log.info "rows:"+rows
-        
-        def j = 0
-        for(def i=1; i<=rows; i++){
-
-            def arow = [:]
-            def item = []
-
-            arow.numberImagesThisRowPC = 100/fixImagesPerRow
-            if(j < resultsSize){
-                arow.numberImages = resultsSize
-                arow.numberImagesThisRow = 1
-                item << results[j]
-                j = j + 1
-            }
-            if(j < resultsSize ){
-                arow.numberImagesThisRow = 2
-                item << results[j]
-                j = j + 1
-            }
-            if(j < resultsSize && fixImagesPerRow >= 3){
-                arow.numberImagesThisRow = 3
-                item << results[j]
-                j = j + 1
-            }
-            if(j < resultsSize && fixImagesPerRow >= 4){
-                arow.numberImagesThisRow = 4
-                item << results[j]
-                j = j + 1
-            }
-            if(j < resultsSize && fixImagesPerRow >= 5) {
-                arow.numberImagesThisRow = 5
-                item << results[j]
-                j = j + 1
-            }
-            arow.items = item
-            resultList << arow
-        }
-        endTime = System.currentTimeMillis()
-        duration = (endTime - startTime)
-        log.info "collect results duration:"+duration
-        
-        startTime = System.currentTimeMillis()
-        render resultList as JSON
-        endTime = System.currentTimeMillis()
-        duration = (endTime - startTime)
-        log.info "JSON render duration:"+duration
-        log.info "**************************************************************"
-        
-        
-    }
 
     def index(Integer max) {
         long startTime = System.currentTimeMillis()
