@@ -20,7 +20,7 @@ class SearchableItemController {
         
         Brand brand = null
         SearchableItemType type = null
-        Season season = null
+        Season seasonIn = null
         City city = null
         List results = null
         def keywords = null
@@ -32,7 +32,7 @@ class SearchableItemController {
         }
         
         if(params.season != "" && params.season != null)
-            season = Season.findByName(URLDecoder.decode(params.season))
+            seasonIn = Season.findByName(URLDecoder.decode(params.season))
 
         if(params.searchtext != null && params.searchtext != "" && params.searchtext != "undefined"){
             keywords = URLDecoder.decode(params.searchtext)
@@ -46,7 +46,7 @@ class SearchableItemController {
             log.info "*****************************  A BRAND CITY SEARCH **********************"
             log.info "Brand:"+brand
             log.info "keywords:"+keywords
-            log.info "season:"+season
+            log.info "season:"+seasonIn
             log.info "type:"+type
             
             log.info "city:"+ params.city + " (" + city + ")"
@@ -60,11 +60,12 @@ class SearchableItemController {
                     if(keywords) and {
                         keywords.each {  ilike('attributes', "%${it}%") }
                     }
-                    if(season) eq('season',season)
+                    if(seasonIn) eq('season',seasonIn)
                     if(type) eq('type',type)
                     if(city) eq('sampleCity',city)
-                    
-                    
+                    // RM
+                    season{ order('order','desc') }
+                    // RM
                     cache true
             } 
             log.info "brand results count:"+results.size()
@@ -80,7 +81,7 @@ class SearchableItemController {
             log.info "*****************************  A BRAND NON-CITY SEARCH **********************"
             log.info "Brand:"+brand
             log.info "keywords:"+keywords
-            log.info "season:"+season
+            log.info "season:"+seasonIn
             log.info "type:"+type
 
             results = criteria.listDistinct () {
@@ -89,7 +90,10 @@ class SearchableItemController {
                 if(keywords) and {
                     keywords.each {  ilike('attributes', "%${it}%") }
                 }
-                if(season) eq('season',season)
+                if(seasonIn) eq('season',seasonIn)
+                // RM
+                season{ order('order','desc') }
+                // RM
                 cache true
             } 
 
@@ -123,7 +127,7 @@ class SearchableItemController {
         Date availableTo = null
         Brand brand = null
         SearchableItemType type = null
-        Season season = null
+        Season seasonIn = null
         def keywords = null
         def theme = null
         def color = null
@@ -151,7 +155,7 @@ class SearchableItemController {
         
 
         if(params.season != "" && params.season != null)
-            season = Season.findByName(URLDecoder.decode(params.season))
+            seasonIn = Season.findByName(URLDecoder.decode(params.season))
                    
         
         log.info "availableFrom:"+availableFrom
@@ -170,7 +174,7 @@ class SearchableItemController {
         log.info "*****************************  A SEARCH **********************"
         log.info "Brand:"+brand
         log.info "keywords:"+keywords
-        log.info "season:"+season
+        log.info "season:"+seasonIn
         log.info "type:"+type
         log.info "theme:"+theme
         log.info "availableFrom:"+availableFrom
@@ -190,7 +194,7 @@ class SearchableItemController {
                 if(keywords) and {
                     keywords.each {  ilike('attributes', "%${it}%") }
                 }
-                if(season) eq('season',season)
+                if(seasonIn) eq('season',seasonIn)
                 if(type) eq('type',type)
                 if(city) eq('city',city)
                 if(color) ilike('color',"%${color}%")
@@ -205,6 +209,9 @@ class SearchableItemController {
                     }
                 }
                 maxResults(maxRInt)
+                // RM
+                season{ order('order','desc') }
+                // RM
                 cache true
             } 
 
@@ -294,7 +301,7 @@ class SearchableItemController {
         
         Brand brand = null
 
-        Season season = null
+        Season seasonIn = null
         def keywords = null
         def theme = null
         
@@ -306,7 +313,7 @@ class SearchableItemController {
         }
         
         if(params.season != "")
-            season = Season.findByName(URLDecoder.decode(params.season))
+            seasonIn = Season.findByName(URLDecoder.decode(params.season))
         
         if(params.searchtext != null && params.searchtext != "" && params.searchtext != "undefined"){
             keywords = URLDecoder.decode(params.searchtext)
@@ -315,7 +322,7 @@ class SearchableItemController {
         log.info "**************************  BROWSE SEARCH **********************"
         log.info "Brand:"+brand
         log.info "keywords:"+keywords
-        log.info "season:"+season
+        log.info "season:"+seasonIn
         log.info "theme:"+theme
 
         def criteria = SearchableItem.createCriteria()
@@ -329,8 +336,11 @@ class SearchableItemController {
                 if(keywords) and {
                     keywords.each {  ilike('attributes', "%${it}%") }
                 }
-                if(season) eq('season',season)
+                if(seasonIn) eq('season',seasonIn)
                 maxResults(maxRInt)
+                // RM
+                season{ order('order','desc') }
+                // RM
                 cache true
             } 
 
