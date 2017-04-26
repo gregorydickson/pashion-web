@@ -121,7 +121,9 @@ class SearchableItemController {
     }
     def filterSearch(){
         long startTime = System.currentTimeMillis()
+        log.info "**********************  A Press availability SEARCH **********************"
         SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"))
         Date availableFrom = null
         Date availableTo = null
         Brand brand = null
@@ -147,30 +149,27 @@ class SearchableItemController {
         if(params.city != null && params.city != "")
             city = City.findByName(URLDecoder.decode(params.city))
 
-        log.info "brand param:"+params.brand
+        log.debug "brand param:"+params.brand
         if(params.brand && params.brand != '' && params.brand.trim() != 'All'){
             brand = Brand.get(params.brand.trim())
         }
-        
 
         if(params.season != "" && params.season != null)
-            season = Season.findByName(URLDecoder.decode(params.season))
-                   
+            season = Season.findByName(URLDecoder.decode(params.season))   
         
-        log.info "availableFrom:"+availableFrom
+        log.debug "availableFrom param:"+params.availableFrom
         if(params.availableFrom != null && params.availableFrom != "" )
             availableFrom = dateFormat.parse(params.availableFrom)
 
-
+        log.debug "availableFrom param:"+params.availableTo
         if(params.availableTo != null && params.availableTo != "")   
             availableTo = dateFormat.parse(params.availableTo)
         
-
         if(params.searchtext != null && params.searchtext != "" && params.searchtext != "undefined"){
             keywords = URLDecoder.decode(params.searchtext)
             keywords = keywords.split(" ")
         }
-        log.info "**********************  A Press availability SEARCH **********************"
+        
         log.info "Brand:"+brand
         log.info "keywords:"+keywords
         log.info "season:"+season
@@ -242,13 +241,21 @@ class SearchableItemController {
             it.samples.each{
                 def booked = false
                 it.sampleRequests.each{
-                    log.debug "start date"+it.bookingStartDate
-                    log.debug "end date"+it.bookingEndDate
+                    //log.debug "start date"+it.bookingStartDate
+                    //log.debug "end date"+it.bookingEndDate
                     if ( 
                         (
-                            (it.bookingStartDate.after(availableFrom)) && (it.bookingStartDate.before(availableTo)) 
-                            ||
-                            (it.bookingEndDate.after(availableFrom)) && (it.bookingEndDate.before(availableTo))
+                             (it.bookingStartDate.after(availableFrom) ||
+                             it.bookingStartDate.equals(availableFrom))
+                             &&
+                             (it.bookingStartDate.before(availableTo) ||
+                             it.bookingStartDate.equals(availableTo)) 
+                          ||
+                             (it.bookingEndDate.after(availableFrom) ||
+                             it.bookingEndDate.equals(availableFrom))
+                             && 
+                             (it.bookingEndDate.before(availableTo) ||
+                             it.bookingEndDate.equals(availableTo))
                         )
                         &&
                         (it.requestStatusBrand == 'Approved' ||
@@ -269,7 +276,7 @@ class SearchableItemController {
             }
             remove
         }
-        log.info "filtered results:"+results.size()
+        log.debug "filtered results:"+results.size()
 
         results
     }
