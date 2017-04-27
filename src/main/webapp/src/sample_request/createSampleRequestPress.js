@@ -382,7 +382,7 @@ export class CreateSampleRequestPress {
     } else {
 
       var queryString = DateFormat.urlString(this.endOffset,1);
-      this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
+      this.http.fetch('/calendar/showAvailabilitySamples'+queryString, {
               method: 'post',
               body: json(this.sampleRequest.samples)
             })
@@ -392,7 +392,7 @@ export class CreateSampleRequestPress {
             });
 
       queryString = DateFormat.urlString(this.startOffset,1);
-      this.http.fetch('/calendar/showAvailabilityLookAndSamples'+queryString, {
+      this.http.fetch('/calendar/showAvailabilitySamples'+queryString, {
               method: 'post',
               body: json(this.sampleRequest.samples)
             })
