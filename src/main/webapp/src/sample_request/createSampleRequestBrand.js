@@ -466,66 +466,27 @@ export class CreateSampleRequestBrand {
     element.style.display='';
   }
   startNext(){
-    var queryString = DateFormat.urlString(++this.startOffset,1)+'&searchType=brand';
-    return this.http.fetch('/calendar/searchableItemPicker' + queryString+
-                 '&item='+this.currentItem.id)
-          .then(response => response.json())
-          .then(calendar => {
-              this.startCalendar = calendar;
-          })
-
+    ++this.startOffset;
   }
   startPrevious(){
-    var queryString = DateFormat.urlString(--this.startOffset,1)+'&searchType=brand';
-    return this.http.fetch('/calendar/searchableItemPicker' +queryString+
-                 '&item='+this.currentItem.id)
-          .then(response => response.json())
-          .then(calendar => {
-              this.startCalendar = calendar;
-          })
-
+    --this.startOffset;
+    this.updateAvailability();
   }
   startReset(){
     this.startOffset = 0;
-    var queryString = DateFormat.urlString(0,1)+'&searchType=brand';
-    return this.http.fetch('/calendar/searchableItemPicker' + queryString+
-                 '&item='+this.currentItem.id)
-          .then(response => response.json())
-          .then(calendar => {
-              this.startCalendar = calendar;
-          })
-
+    this.updateAvailability();
   }
-
   endNext(){
-    var queryString = DateFormat.urlString(++this.endOffset,1)+'&searchType=brand';
-    return this.http.fetch('/calendar/searchableItemPicker' + queryString+
-                 '&item='+this.currentItem.id)
-          .then(response => response.json())
-          .then(calendar => {
-              this.endCalendar = calendar;
-          })
-
+    ++this.endOffset;
+    this.updateAvailability();
   }
   endPrevious(){
-    var queryString = DateFormat.urlString(--this.endOffset,1)+'&searchType=brand';
-    return this.http.fetch('/calendar/searchableItemPicker' +queryString+
-                 '&item='+this.currentItem.id)
-          .then(response => response.json())
-          .then(calendar => {
-              this.endCalendar = calendar;
-          });
-
+    --this.endOffset;
+    this.updateAvailability();
   }
   endReset(){
     this.endOffset = 0;
-    var queryString = DateFormat.urlString(0,1)+'&searchType=brand';
-    return this.http.fetch('/calendar/searchableItemPicker' + queryString+
-                 '&item='+this.currentItem.id)
-          .then(response => response.json())
-          .then(calendar => {
-              this.endCalendar = calendar;
-          });
+    this.updateAvailability();
   }
 
   allsamples(event){
