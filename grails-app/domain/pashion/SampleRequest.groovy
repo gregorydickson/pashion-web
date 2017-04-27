@@ -119,29 +119,41 @@ class SampleRequest {
 	PashionCalendar inSameMonth(PashionCalendar pashionCalendar, LocalDate start,
 									LocalDate end){
 		log.info "Sample Request - In Same Month"
-		IntRange range = start.getDayOfMonth()..end.getDayOfMonth()
-		range.each{
-			pashionCalendar.calendarMonths[0].days[it].event = 
-					pashionCalendar.calendarMonths[0].days[it].event + " not-available"
+		if(requestStatusBrand == 'Approved' || 
+			requestStatusBrand == 'Picked Up' || 
+			requestStatusBrand == 'Returning'){
+			IntRange range = start.getDayOfMonth()..end.getDayOfMonth()
+			range.each{
+				pashionCalendar.calendarMonths[0].days[it].event = 
+						pashionCalendar.calendarMonths[0].days[it].event + " not-available"
+			}
 		}
 		pashionCalendar
 
 	}
 
 	PashionCalendar startInSameMonth(PashionCalendar pashionCalendar, LocalDate start){
-		IntRange range = start.getDayOfMonth()..pashionCalendar.calendarMonths[0].numberOfDays
-		range.each{
-			pashionCalendar.calendarMonths[0].days[it].event = 
-						pashionCalendar.calendarMonths[0].days[it].event + " not-available"
+		if(requestStatusBrand == 'Approved' || 
+			requestStatusBrand == 'Picked Up' || 
+			requestStatusBrand == 'Returning'){
+			IntRange range = start.getDayOfMonth()..pashionCalendar.calendarMonths[0].numberOfDays
+			range.each{
+				pashionCalendar.calendarMonths[0].days[it].event = 
+							pashionCalendar.calendarMonths[0].days[it].event + " not-available"
+			}
 		}
 		pashionCalendar
 	}
 
 	PashionCalendar endInSameMonth(PashionCalendar pashionCalendar, LocalDate end){
-		IntRange range = 1..end.getDayOfMonth()
-		range.each{
-			pashionCalendar.calendarMonths[0].days[it].event = 
-						pashionCalendar.calendarMonths[0].days[it].event + " not-available"
+		if(requestStatusBrand == 'Approved' || 
+			requestStatusBrand == 'Picked Up' || 
+			requestStatusBrand == 'Returning'){
+			IntRange range = 1..end.getDayOfMonth()
+			range.each{
+				pashionCalendar.calendarMonths[0].days[it].event = 
+							pashionCalendar.calendarMonths[0].days[it].event + " not-available"
+			}
 		}
 		pashionCalendar
 	}

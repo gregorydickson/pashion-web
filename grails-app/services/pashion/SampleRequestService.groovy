@@ -87,6 +87,8 @@ class SampleRequestService {
             sr.courierOut = jsonObject.courierOut
             sr.courierReturn = jsonObject.courierReturn
             sr.requestingUser = requestingUser
+            sr.editorialName = jsonObject.editorialName
+            sr.editorialWho = jsonObject.editorialWho
             
             
             sr.dateRequested = new Date()

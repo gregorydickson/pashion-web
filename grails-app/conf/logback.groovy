@@ -25,7 +25,7 @@ root(ERROR, ['STDOUT', 'LE'])
 
 //logger("org.quartz", INFO, ['STDOUT','LE'], false)
 logger("grails.app.services", INFO, ['STDOUT','LE'], false)
-logger("grails.app.controllers", DEBUG, ['STDOUT','LE'], false)
+logger("grails.app.controllers", INFO, ['STDOUT','LE'], false)
 //logger("grails.app.domain", DEBUG, ['STDOUT','LE'], false)
 //logger("asset.pipeline.jsass", INFO, ['STDOUT'], false)
 //logger("asset.pipeline", INFO, ['STDOUT'], false)
