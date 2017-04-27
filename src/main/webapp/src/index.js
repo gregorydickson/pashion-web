@@ -225,6 +225,7 @@ export class Index {
 
     filterChangeBrand(event) {
         this.busy.on();
+        //this.rows = []; //RM can do this to prevent the loading over existing images, but have to deal with detritus 
         console.log("Filter Change changing Brand");
         if (this.user.type === "brand") this.selectedBrand = this.user.companyId; 
         else this.selectedBrand = '';
@@ -263,21 +264,24 @@ export class Index {
 
             .then(anything => { 
                 if (this.firstTime) {
-                    $("img.lazy").unveil(0,
-                        function() 
+                    ///console.log ("first time unveil");
+                    $(document).ready (function() 
                         {
-                            this.onload=function() 
-                            {
-                                var msw = document.getElementById("mainScrollWindow");
-                                if (msw) msw.style.visibility="visible";
-                            };
-                        }); 
+                            $("img.lazy").unveil();
+                        });
                     this.firstTime = false;
+                    setTimeout(function() { 
+                        var msw = document.getElementById("mainScrollWindow");
+                        if (msw) { 
+                                msw.style.visibility="visible";
+                                //console.log("setting MSW visibility to visible");
+                                };}
+                        , 1000); //wait to set visibile after hiding ugly loading detritus
                 }
                 else {
-                    setTimeout(function() { $("img.lazy").unveil(); }, 500);  
-                }
-                setTimeout(function() { $("img.lazy").unveil(); }, 10000);}) // initial unveil of first images on load
+                    //console.log ("NOT first time unveil");
+                    $("img.lazy").unveil();                 
+                   }})
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')); // scroll to top
     }
 
@@ -614,6 +618,7 @@ export class Index {
             });
         }
 
+        // load initial iamges. NOTE special code in filterChangeBrand for first time loading - move this if change this line
         this.filterChangeBrand();
         var parent = this;
 

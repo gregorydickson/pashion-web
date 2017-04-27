@@ -32,7 +32,10 @@
     });
 
     function unveil() {
-      //console.log("Unveil called w images: " + images.length);
+      //console.log("Window in focus: " + !document.hidden);
+      //console.log("Unveil called wit h images: " + images.length);
+      //console.log("Unveil called with lazies jquery: " + $("img.lazy").length);
+      //console.log ("Unveil MSW visibility: "+ document.getElementById("mainScrollWindow").style.visibility);
       var inview = images.filter(function() {
         var $e = $(this);
 
@@ -46,24 +49,27 @@
             eb = et + $e.height();
 
         //console.log("unveil invew, wt:"+ wt + " wb:" + wb +" et:" + et + " eb:" +eb);
-
         //console.log("unveil invew: " + (eb >= wt - th && et <= wb + th));
         return eb >= wt - th && et <= wb + th;
       });
 
       //console.log("images: " + images.length);
       loaded = inview.trigger("unveil");
-      //console.log("loaded: " + loaded.length);
+      //console.log("loaded(IE inview): " + loaded.length);
       images = images.not(loaded);
+      //console.log("iamges(IE not loaded): " + images.length);
     }
 
-    $(window).on("resize.unveil lookup.unveil focus.unveil", unveil);
-    $("#mainScrollWindow").on("scroll.unveil resize.unveil lookup.unveil", unveil);
+    $(window).on("resize.unveil", unveil);
+    $("#mainScrollWindow").on("scroll.unveil resize.unveil", unveil);
 
-    //$("div.cards-list-wrap").scroll(function(){unveil();});
-    //$w.scroll(function(){unveil();});
+    $(window).focus(function(){
+      //console.log("focused :" + !document.hidden + " " + $("img.lazy").length);
+      setTimeout (function() {$("img.lazy").unveil();}, 3000); //RM instantiate *if not already* on tab but wait to settle
+    });
 
-    unveil();
+    //RM don't instantiate unveil if browser tab is not visible
+    if (!document.hidden) unveil();
 
     return this;
 
