@@ -39,12 +39,12 @@ export class Messages {
     alertHold (message){
 
         this.dialogService.openAndYieldController({ viewModel: CreateDialogAlert, model: {title:"NO NETWORK", message:message, timeout:'none', redText:true}, lock: true }).then(controller => {
-            this.controller = controller;
+        this.controller = controller;
         });
     }
 
     alertHoldOff (message) {
-        this.controller.cancel();
+        if (this.controller) this.controller.cancel();
         this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"NETWORK UP", message:message, timeout:5000}, lock: false });
     }
 
