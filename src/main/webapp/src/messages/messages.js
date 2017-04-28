@@ -37,14 +37,23 @@ export class Messages {
     }
 
     alertHold (message){
-
-        this.dialogService.openAndYieldController({ viewModel: CreateDialogAlert, model: {title:"NO NETWORK", message:message, timeout:'none', redText:true}, lock: true }).then(controller => {
-        this.controller = controller;
-        });
+        console.log ("Messages alertHold before: this.controller: " + this.controller);
+        if (this.controller) {
+            this.controller.cancel();
+            this.controller = null;
+        }
+        this.dialogService.openAndYieldController({ viewModel: CreateDialogAlert, model: {title:"NO NETWORK", message:message, timeout:'none', redText:true}, lock: false }).then(controller => {
+            this.controller = controller;
+            console.log ("Messages alertHold then after: this.controller: " + this.controller);
+            });
     }
 
     alertHoldOff (message) {
-        if (this.controller) this.controller.cancel();
+        console.log ("Messages alertHoldOff: this controller: " + this.controller);
+        if (this.controller) {
+            this.controller.cancel();
+            this.controller = null;
+        }
         this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"NETWORK UP", message:message, timeout:5000}, lock: false });
     }
 
@@ -116,12 +125,12 @@ export class Messages {
                 console.log("pubnub callback status in messages:", s);
                 if (s.category) {
                     if (s.category== 'PNNetworkDownCategory') {
-                        console.log("pubnub network DOWN");
+                        //console.log("pubnub network DOWN");
                         parent.alertHold("No internet connection");
 
                     }
                     if (s.category== 'PNNetworkUpCategory') {
-                        console.log("pubnub network UP");
+                        //console.log("pubnub network UP");
                         parent.alertHoldOff("Internet connection restored");
                     }
                 }
