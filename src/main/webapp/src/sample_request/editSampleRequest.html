@@ -24,7 +24,7 @@
                 <div class="grid-block row">
 
                     <!-- Column One -->
-                    <div class="grid-block vertical medium-6 align-left slim-form-wrap">  
+                    <div class="grid-block vertical slim-form-wrap">  
 
                         <!-- OVERVIEW -->                
                         <div class="grid-block vertical"> 
@@ -157,10 +157,10 @@
 
 
     <!-- ***********  Column Two **********  -->
-                    <div class="grid-block vertical medium-6 align-right slim-form-wrap">
+                    <div class="grid-block vertical slim-form-wrap">
                      <!-- to make it LOOK balanced -->
                         
-                        <div class="grid-block ">
+                        <div class="grid-block shrink">
                             <span class="title-form">DELIVERY DETAILS</span>
                         </div>
                         
@@ -174,13 +174,13 @@
                         </div>
 
                         <!-- Pickup Time for Stuart -->
-                        <div if.bind="sampleRequest.courierOut=='Pashion Courier'" class="grid-block ">
+                        <div if.bind="sampleRequest.courierOut=='Pashion Courier'" class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Pickup Date</span>
                             <span >
                                 <input datepicker type="text" class="slim-text-box" value.bind="sampleRequest.pickupDate | viewDateFormat">
                             </span>
                         </div>
-                        <div if.bind="sampleRequest.courierOut=='Pashion Courier'" class="grid-block ">
+                        <div if.bind="sampleRequest.courierOut=='Pashion Courier'" class="grid-block shrink">
                             <span class="inline-label">
                                 <span class=" slim-text-box-label">Pickup Time</span>
                                 <form-select-sr class="to-u-c" name="pickupTime" selected.two-way="sampleRequest.pickupTime" options.bind="times" ></form-select-sr>
@@ -196,74 +196,68 @@
                         </div> 
 
                         <!-- ID -->
-                        <div class="grid-block ">
+                        <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">ID</span>
-                            <span >
+                            <span>
                                 <input type="text" class="slim-text-box" value.bind="sampleRequest.shippingOut.stuartJobId">
                             </span>
                         </div>
-     
+
                         <!-- Attention  -->
-                        <div class="grid-block ">
+                        <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Attention</span>
-                            <span class="slim-text-box">
-                                 ${sampleRequest.addressDestination.name}
+                            <span>
+                                <input type="text" class="slim-text-box" value.bind="sampleRequest.addressDestination.name">
                             </span>
                         </div>
+
                         <!-- Contact Phone  -->
-                        <div class="grid-block ">
+                        <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Phone</span>
-                            <span class="slim-text-box">
-                                 ${sampleRequest.addressDestination.contactPhone}
+                            <span>
+                                <input type="text" class="slim-text-box" value.bind="sampleRequest.addressDestination.contactPhone">
                             </span>
                         </div>
+
                         <!-- Company -->
-                        <div class="grid-block ">
+                        <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Company</span>
-                            <span class="slim-text-box">
-                                 ${sampleRequest.addressDestination.company}
+                            <span>
+                                <input type="text" class="slim-text-box" value.bind="sampleRequest.addressDestination.company">
                             </span>
                         </div>
 
                         <!-- Address 1 -->
-                        <div class="grid-block ">
+                        <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Address 1</span>
-
-                            <span class="slim-text-box">
-                                 ${sampleRequest.addressDestination.address1}
+                            <span>
+                                <input type="text" class="slim-text-box" value.bind="sampleRequest.addressDestination.address1">
                             </span>
                         </div>
+
                         <!-- City -->
-                        <div class="grid-block ">
+                        <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">City</span>
-
-                            <span class="slim-text-box">
-                                 ${sampleRequest.addressDestination.city}
+                            <span>
+                                <input type="text" class="slim-text-box" value.bind="sampleRequest.addressDestination.city">
                             </span>
                         </div>
+
                         <!-- Country -->
-                        <div class="grid-block ">
+                        <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Country</span>
-
-                            <span class="slim-text-box">
-                                 ${sampleRequest.addressDestination.country}
+                            <span>
+                                <input type="text" class="slim-text-box" value.bind="sampleRequest.addressDestination.country">
                             </span>
                         </div>
+
                         <!-- Postal Code -->
-                        <div class="grid-block ">
+                        <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Postal Code</span>
-
-                            <span class="slim-text-box">
-                                 ${sampleRequest.addressDestination.postalCode}
+                            <span>
+                                <input type="text" class="slim-text-box" value.bind="sampleRequest.addressDestination.postalCode">
                             </span>
                         </div>
-
-                        
-
-                        
-
-                        
-
                     </div>                    
                 </div>
                 <!-- Bottom Row -->
