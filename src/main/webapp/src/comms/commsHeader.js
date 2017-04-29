@@ -83,12 +83,13 @@ export class CommsHeader {
       if (this.comms.status != this.statusValues.messages)
          $("#right-panel-body").scrollTop(this.rememberScroll);
       // Scroll messages to the end
-      if (this.comms.status == this.statusValues.messages)
+      if (this.comms.status == this.statusValues.messages)       
+        $('#msgInput').val('');
         window.setTimeout(function () {
             // $("#messages-inside-top").height($("#messages-inside-top").height()+500); // RM kludge to redraw flex box with new elements
             $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight"));
             $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
-          },1500); // major kludge to scroll messages
+          },2500); // major kludge to scroll messages
 
     }
   }

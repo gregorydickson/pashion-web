@@ -137,8 +137,18 @@ $message-box-width: 215px;
 
 .message-new-message-box {
   //RM need to properly create a text entry method for this type of box //
-  text-align: right;
+  //text-align: right;
   width: 100%;
+  font-size: $font-size-medium;
+  color: $black;
+  min-height: 25px;
+  //background-color: #fafafa;
+  height: auto;
+  overflow: hidden;
+}
+
+textarea[name=newmessage] {
+  resize:none;
 }
 
 /*

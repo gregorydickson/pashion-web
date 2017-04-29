@@ -21,8 +21,13 @@ export class CommsFooter {
     });
     this.http = http;
     this.messages = messages;
- 
   }
+
+  attached() {
+    //document.getElementById("msgInput").onkeyup = this.autoGrow(document.getElementById("msgInput"));
+  }
+
+
 
     // Create dialog edit contact 
 
