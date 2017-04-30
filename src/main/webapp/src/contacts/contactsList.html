@@ -37,10 +37,12 @@
                     <table class="width100 indexMyConnections" style="table-layout: fixed; margin-bottom: 10px; ">
                         <tr>
                             <td class="con-td-1">
+
                                 <div class="">
-                                    <img if.bind="(users[connectionC.connectedUserId -1].avatar)" src=${users[connectionC.connectedUserId-1].avatar} class="clip-circle contact-entry" />
-                                    <div if.bind="(!users[connectionC.connectedUserId -1].avatar)" style="" class="avatar-circle avatar-text "> ${users[connectionC.connectedUserId -1].name.charAt(0)}</div>
+                                    <div show.bind="(users[connectionC.connectedUserId -1].avatar)" class="avatar-img-cover" style="height: 45px;border-radius: 100%;overflow:hidden;background: url(${users[connectionC.connectedUserId-1].avatar});background-repeat: no-repeat;background-size: cover;background-position: center;display: block;width: 45px;"></div>
+                                    <div show.bind="(!users[connectionC.connectedUserId -1].avatar)"  class="avatar-circle avatar-text ">${users[connectionC.connectedUserId -1].name.charAt(0)}</div>
                                 </div>
+
                             </td>
                             <td class="con-td-2">
                                 <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connectionC.connectedUserId -1].name} ${users[connectionC.connectedUserId -1].surname}</div>
@@ -99,10 +101,13 @@
                     <table class="width100 indexRequestsToConnect" style="table-layout: fixed; margin-bottom: 10px; ">
                         <tr>
                             <td class="con-td-1">
+
                                 <div class="">
-                                    <img if.bind="(users[connectionC.connectedUserId -1].avatar)" src=${users[connectionC.connectedUserId-1].avatar} class="clip-circle contact-entry" />
-                                    <div if.bind="(!users[connectionC.connectedUserId -1].avatar)" style="" class="avatar-circle avatar-text "> ${users[connectionC.connectedUserId -1].name.charAt(0)}</div>
+                                    <div show.bind="(users[connectionC.connectedUserId -1].avatar)" class="avatar-img-cover" style="height: 45px;border-radius: 100%;overflow:hidden;background: url(${users[connectionC.connectedUserId-1].avatar});background-repeat: no-repeat;background-size: cover;background-position: center;display: block;width: 45px;"></div>
+                                    <div show.bind="(!users[connectionC.connectedUserId -1].avatar)"  class="avatar-circle avatar-text ">${users[connection.connectedUserId -1].name.charAt(0)}</div>
                                 </div>
+
+
                             </td>
                             <td class="con-td-2">
                                 <div class="ui-text-label-me-left paragraph-5 contact-box">${users[connectionC.connectedUserId -1].name} ${users[connectionC.connectedUserId -1].surname}</div>
@@ -169,8 +174,8 @@
                         <td class="con-td-1">
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
                                 <div class="expandoHover">
-                                    <img if.bind="(users[connection.connectedUserId -1].avatar)" src=${users[connection.connectedUserId-1].avatar} class="clip-circle contact-entry" />
-                                    <div if.bind="(!users[connection.connectedUserId -1].avatar)" style="" class="avatar-circle avatar-text">${users[connection.connectedUserId -1].name.charAt(0)}</div>
+                                    <div show.bind="(users[connection.connectedUserId -1].avatar)" class="avatar-img-cover" style="height: 45px;border-radius: 100%;overflow:hidden;background: url(${users[connection.connectedUserId-1].avatar});background-repeat: no-repeat;background-size: cover;background-position: center;display: block;width: 45px;"></div>
+                                    <div show.bind="(!users[connection.connectedUserId -1].avatar)"  class="avatar-circle avatar-text ">${users[connection.connectedUserId -1].name.charAt(0)}</div>
                                 </div>
                             </a>
                         </td>
@@ -253,12 +258,20 @@
                 <table if.bind="(connection.connectingStatus=='Accepted' && users[connection.connectedUserId -1].email)" class="width100" style="margin-bottom: 10px; table-layout: fixed;" >
                     <tr>
                         <td class="con-td-1">
-                            <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
+                           <!--  <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
                                 <div class="expandoHover">
                                     <img if.bind="(users[connection.connectedUserId -1].avatar)" src=${users[connection.connectedUserId-1].avatar} class="clip-circle contact-entry" />
                                     <div if.bind="(!users[connection.connectedUserId -1].avatar)" class="avatar-circle avatar-text">${users[connection.connectedUserId -1].name.charAt(0)}</div>
                                 </div>
+                            </a> -->
+
+                            <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
+                                <div class="expandoHover">
+                                    <div show.bind="(users[connection.connectedUserId -1].avatar)" class="avatar-img-cover" style="height: 45px;border-radius: 100%;overflow:hidden;background: url(${users[connection.connectedUserId-1].avatar});background-repeat: no-repeat;background-size: cover;background-position: center;display: block;width: 45px;"></div>
+                                    <div show.bind="(!users[connection.connectedUserId -1].avatar)"  class="avatar-circle avatar-text ">${users[connection.connectedUserId -1].name.charAt(0)}</div>
+                                </div>
                             </a>
+
                         </td>
                         <td class="con-td-2">
                             <a href="#" click.delegate="initiateMessage(connection.connectedUserId)">
