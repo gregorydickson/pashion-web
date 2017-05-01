@@ -33,32 +33,32 @@
 
                         <!-- Requested -->
                         <div class="grid-block shrink">                       
-                            <span class="inline-label slim-text-box-label">Requested:</span>
+                            <span class="inline-label slim-text-box-label">Start</span>
                             <span class="slim-text-box">
-                                ${sampleRequest.dateRequested | viewDateFormat}
+                                ${sampleRequest.bookingStartDate | viewDateFormat}
                             </span>
                         </div>
 
 
                         <!-- Due -->
                         <div class="grid-block shrink">
-                            <span class="inline-label slim-text-box-label">Due:</span>
+                            <span class="inline-label slim-text-box-label">End</span>
                             <span class="slim-text-box">
-                                 ${sampleRequest.bookingStartDate | viewDateFormat}
+                                 ${sampleRequest.bookingEndDate | viewDateFormat}
                             </span>
                         </div>
 
                         <!-- Company -->
                         <div class="grid-block shrink">        
                                 <span class="inline-label">
-                                        <span class="slim-text-box-label">Company:</span>
+                                        <span class="slim-text-box-label">Company</span>
                                         <span class="slim-text-box">${sampleRequest.brand.name}</span>
                                 </span>
                         </div>
 
                         <!-- Owner -->
                         <div class="grid-block shrink">
-                            <span class="inline-label slim-text-box-label">Owner:</span>
+                            <span class="inline-label slim-text-box-label">Owner</span>
                             <span class="slim-text-box">
                                 ${sampleRequest.requestingUser.name} ${sampleRequest.requestingUser.surname}
 
@@ -67,7 +67,7 @@
 
                         <!-- Items -->
                         <div class="grid-block shrink">
-                            <span class="inline-label slim-text-box-label">Samples:</span>
+                            <span class="inline-label slim-text-box-label">Samples</span>
                             <span class="slim-text-box">
                                 ${sampleRequest.searchableItems.length}
                             </span>
