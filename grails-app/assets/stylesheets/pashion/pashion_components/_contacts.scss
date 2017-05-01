@@ -1,10 +1,12 @@
 
 .contact-entry {
-  height: 44px;
-  width: 44px;
+  height: auto;
+  width: auto;
+  max-height: 44px;
+  max-width: 44px;
   display: block;
   // margin-right: 10px;
-position:relative;
+  position:relative;
 }
 //contact entry table layouts
 .con-td-1{
@@ -23,8 +25,10 @@ position:relative;
 .contact-entry > img{
 	border-radius: 50%;
 	-webkit-border-radius: 50%;
-  height: 44px;
-  width: 44px;
+  max-height: 44px;
+  max-width: 44px;
+  width: auto;
+  height: auto;
   display: block;
 	
 }

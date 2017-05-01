@@ -2,7 +2,7 @@
 @import "../compass/compass/css3";
 
 button.accordionNew {
-    background-color: $white-two;
+    background-color: $white-one;
     cursor: pointer;
     min-width: 9px;
     border: none;
@@ -12,7 +12,7 @@ button.accordionNew {
 }
 
 button.accordion {
-    background-color: $white-two;
+    background-color: $white-one;
     // cursor: pointer;
     min-width: 9px;
     border: none;
@@ -41,7 +41,7 @@ button.accordion.active:before {
 
 
 button.accordionAZ {
-    background-color: $white-two;
+    background-color: $white-one;
     cursor: pointer;
     min-width: 9px;
     border: none;
@@ -118,7 +118,7 @@ td.accordion-grey {
     overflow:hidden;
     white-space: nowrap;
     //font-weight:300;
-    background-color:$white-two;
+    background-color:$white-one;
 }
 
 td.sample-padding {
@@ -140,11 +140,10 @@ table.accordion {
 table.big-accordion {
     width: 100%;
     table-layout:auto;
-
 }
 
 table.accordion.expanded {
-    background-color: $white-two;
+    background-color: $white-one;
 }
 
 th.w2 , td.w2 {width:2%;}

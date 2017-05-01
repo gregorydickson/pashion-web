@@ -26,14 +26,15 @@ export class Messages {
       this.userService = userService;
       this.user = this.userService.getUser().then(user => this.user = user);
       this.ea = eventAggregator;
-      this.boundHandlerComms = this.handleKeyInput.bind(this);
+      //this.boundHandlerComms = this.handleKeyInput.bind(this);
       this.pubNubService = pubNubService;
       this.dialogService = dialogService;
 
     }
 
     detached() {
-        window.removeEventListener('keypress', this.boundHandlerComms);
+        console.log("detached messages");
+        //window.removeEventListener('keypress', this.boundHandlerComms);
     }
 
     alertHold (message){
@@ -57,8 +58,31 @@ export class Messages {
         this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"NETWORK UP", message:message, timeout:5000}, lock: false });
     }
 
+
+    handleKeyInput(event) {
+        // console.log(event);
+        if(event.keyCode == 13) {
+            //console.log("user hit enter in comms");
+            this.sendMessage();
+            // clear the input field and reset the size
+            $("#msgInput").val('');
+            $("#msgInput").height('19px');
+            return false; // don't bubble the CR
+        }
+        this.elementMsgInput.style.height = "1px";
+        var sh = this.elementMsgInput.scrollHeight;
+        this.elementMsgInput.style.height = (sh+2)+"px";
+        if (sh > 67) $("#messages-inside-top").animate({scrollTop: $("#messages-inside-top").prop("scrollHeight")}, 250);
+        return true; // bubble the characters
+    }
+
     attached() {
-        document.getElementById("msgInput").addEventListener('keypress', this.boundHandlerComms, false);
+
+        this.elementMsgInput = document.getElementById("msgInput");
+        //this.elementMsgInput.addEventListener('keypress', this.boundHandlerComms, false);
+        //this.elementMsgInput.addEventListener('keypress', this.handleKeyInput(e), false);
+        var parent = this;
+        $("#msgInput").keypress(function (e) {return parent.handleKeyInput(e);});
 
         this.subscriber = this.ea.subscribe('setCurrentContact', response => {
             this.userService.getUserDetails(response.userId).then(contact => {
@@ -201,24 +225,19 @@ export class Messages {
     }
 
 
-    handleKeyInput(event) {
-        //console.log(event);
-        if(event.which == 13 && event.srcElement.id === 'msgInput') {
-          console.log("user hit enter in comms");
-          this.sendMessage();
-        }
-    }
-
     isDateToday(dateIn) {
         var timeNow = new Date();
         var dateDateIn = new Date (dateIn);
         return (dateDateIn.getDate() == timeNow.getDate());
     }
 
+
     sendMessage() {
         //console.log("Sendmessage from my id:" + this.user.id + " email:" + this.user.email +
           //  " TO id:" + this.currentContact.id + " email:" + this.currentContact.email);
-          if ($("#msgInput").val()=='')  return;
+        //console.log ("Message Text>" + $("#msgInput").val() +"<");
+        var msgIn = $("#msgInput").val().replace(/\n/g, "");
+        if (msgIn =='')  return;
         var message = {
             fromId: this.user.email,
             fromName: this.user.name,
@@ -226,14 +245,12 @@ export class Messages {
             toId: this.currentContact.email,
             toName: this.currentContact.name,
             toSurname: this.currentContact.surname,
-            text: $("#msgInput").val(),
+            text: msgIn,
             sentAt: new Date(),
             toMe: false,
             fromMe: false
         };
 
-        // clear the input field
-        $('#msgInput').val("");
 
         //pubnub to user and contact user's channels
         this.pubnub.publish({

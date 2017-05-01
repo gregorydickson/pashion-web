@@ -80,9 +80,9 @@ export class Adminpage{
     });
   }
 
-  hideCalendar(){
-    console.log("hideCalendar");
-    this.brandService.hideCalendar(this.company.id).then(brand =>this.company=brand);
+  hideCalendar(){ //RM switch returning a boolean not the brand
+    console.log("hideCalendar: calendar: " + this.company.hideCalendar);
+    this.brandService.hideCalendar(this.company.id).then(brand =>this.company.hideCalendar=brand);
   }
 
 

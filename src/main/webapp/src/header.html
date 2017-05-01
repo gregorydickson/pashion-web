@@ -1,50 +1,184 @@
 <template>
-    <require from="./dashboard_filters/filters-mode"></require>
-<!--header.html-->
-        <div class="">
-            <ul class="menu-bar" style="background: #ebebeb">
-                <li style="display:flex; max-width:250px;">
-                    
-                    
-                        <div class="avatar-container expandoHover" style="margin-right: 1rem; margin-left:1rem; margin-top:0.5rem;">
-                            <a click.delegate="updatePhoto()">
-                                <div show.bind="(user.avatar)" class="avatar-img-cover" style="height: 45px;border-radius: 100%;overflow:hidden;background: url(${user.avatar});background-repeat: no-repeat;background-size: cover;background-position: center;display: block;width: 45px;"></div>
-                                <div show.bind="(!user.avatar)"  class="avatar-circle avatar-text ">${user.name.charAt(0)}</div>
-                            </a>
-                            
-                        </div>
-                    
+	<require from="./dashboard_filters/filters-mode"></require>
+	<require from="./common/select-control"></require>
 
+	<style>
+        /* NOTE: These styles should probably be moved to the stylesheet
+                 but I wasn't sure where exactly you wanted it.
+        */
+		.nav {
+			display: block;
+			text-transform: uppercase;
+			margin: 0;
+			padding: 0;
+			margin-top: 15px;
+			font-size: 1rem;
+			font-weight: 300;
+		}
 
+        .nav li {
+            display: block;
+            list-style: none;
+        }
 
-                    <select value.bind="selectval1" change.trigger="userActions()" name="NotUSed" id="headerModeSelect" class="nav-label-header top-menu-modifier" style="max-width:150px;">
+        .nav .button-dropdown {
+            position: relative;
+        }
+
+        .nav li a {
+            display: block;
+            color: #000;
+            padding: 5px 10px;
+            text-decoration: none;
+        }
+
+        .nav.nav-right li {
+            text-align:right;
+        }
+
+        .nav li a.dropdown-toggle {
+            font-size: 1.27rem;
+            letter-spacing: 3px;          
+            color:#383838;
+        }
+
+        .nav li a span {
+            display: inline-block;
+            margin-left: 5px;
+            color: #9b9b9b;
+            font-size:1rem;
+        }
+
+        .nav li a.dropdown-toggle.active {
+            background: transparent;
+        }
+
+        .nav li .dropdown-menu a:hover {
+            background: whitesmoke;
+            color: #000;
+        }
+
+        .nav li a:hover span, .nav li a.dropdown-toggle.active span {
+            color: #ccc;
+        }
+
+        .nav li .dropdown-menu {
+            display: none;
+            position: fixed;
+            top: 40px;
+            z-index: 2;
+            padding: 4px;
+            background: white;
+            margin: 0;
+            margin-top: 3px;
+            text-align: left;
+            border: 0.5px solid #cccccc;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .nav li .dropdown-menu.drop-left {
+            right: 20px;
+        }
+
+        .nav li .dropdown-menu.drop-left li {
+            text-align: left;
+        }
+
+        .nav li .dropdown-menu.active {
+            display: block;
+        }
+
+        .nav li .dropdown-menu.drop-left a {
+            padding: 5px 0 5px 6px;
+        }
+
+        .nav li .dropdown-menu a {
+            width: 120px;
+            padding: 5px 0 5px 6px;
+        }
+
+        .nav li .dropdown-menu li {
+            background-color: white;
+        }
+
+        .option1 > li:first-child {
+            display:flex;
+            max-width:240px; 
+            min-width:240px;
+        }
+
+        .option2 > li:first-child {
+            display:flex;
+        }
+
+        @media (max-width: 670px) {
+            .option2 > li:first-child,
+            .option2 > li:nth-child(2),
+            .option2 > li:nth-child(3) {
+                display:none;
+            } 
+            
+            .option2 > li.brand {                
+                flex:1 1 0;
+                margin-left:20px;
+            }
+        }
+	</style>
+
+	<!--header.html-->
+	<div class="">
+		<ul class="menu-bar option1" style="background: #ebebeb">
+			<li>
+				<div class="avatar-container" style="margin-right: 1rem; margin-left:1rem; margin-top:0.5rem;">
+					<a click.delegate="updatePhoto()">
+						<div show.bind="(user.avatar)" class="avatar-img-cover" style="height: 45px;border-radius: 100%;overflow:hidden;background: url(${user.avatar});background-repeat: no-repeat;background-size: cover;background-position: center;display: block;width: 45px;"></div>
+						<div show.bind="(!user.avatar)" class="avatar-circle avatar-text ">${user.name.charAt(0)}</div>
+					</a>
+				</div>
+
+                <!--<select value.bind="selectval1" change.trigger="userActions()" name="NotUSed" id="headerModeSelect" class="nav-label-header top-menu-modifier" style="max-width:150px;">
                         <option value="no">${user.name}</option>
                         <option value= "logout">LOGOUT</option>
                         <option if.bind="(currentRoute != 'index')" value= "edit">EDIT PROFILE</option>
-                    </select> 
+                    </select>-->
 
-                        <!-- filter mode 
-                        <span class="inline-label" style="width:150px; margin-bottom: 0px; margin-top:1.5rem;">
-                            <filters-mode change.delegate="filterMode($event)" style="width:150px;"></filters-mode> 
-                        </span> -->
+				<ul class="nav">
+					<li class="button-dropdown">
+						<a href="javascript:void(0)" class="dropdown-toggle">
+							${user.name} <span>▼</span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a click.delegate="userActions('logout')">LOGOUT</a></li>
+							<li if.bind="(currentRoute != 'index')"><a click.delegate="userActions('edit')">EDIT PROFILE</a></li>
+						</ul>
+					</li>
+				</ul>
 
-                </li>
-                    <li></li>
-                    <li></li>
-                    <li>
-                        <a href="http://www.pashiontool.com" target="_blank"><img src="/assets/PashionRMPlainBlack.png" style="max-width:131px; " /></a>
+				<!-- filter mode
+				<span class="inline-label" style="width:150px; margin-bottom: 0px; margin-top:1.5rem;">
+					<filters-mode change.delegate="filterMode($event)" style="width:150px;"></filters-mode>
+				</span> -->
+
+			</li>
+			<li></li>
+			<li></li>
+			<li class="brand">
+				<a href="http://www.pashiontool.com" target="_blank"><img src="/assets/PashionRMPlainBlack.png" style="max-width:131px; " /></a>
+			</li>
+			<li></li>
+			<li></li>
+			<li style="flex: none;">               
+                <ul class="nav nav-right" style="width:200px">
+                    <li class="button-dropdown">
+                        <a href="javascript:void(0)" class="dropdown-toggle">
+                            ${theRouter.currentInstruction.config.title} <span>▼</span>
+                        </a>
+                        <ul class="dropdown-menu drop-left">
+                            <li repeat.for="option of navOptions"><a click.delegate="admin(option.value)">${option.name}</a></li>
+                        </ul>
                     </li>
-                    <li></li>
-                    <li></li>
-                    <li style="flex: none;">
-                        <select value.one-way="theRouter.currentInstruction.config.name" change.trigger="admin()" id="headerAdminSelect" class="nav-label-header top-menu-modifier" style="max-width:200px; width:200px;margin-right:35px; ">
-                            <option repeat.for="option of navOptions" model.bind="option.value">${option.name}</option>
-                            <!-- debug <option>${theRouter.currentInstruction.config.name}</option> -->
-
-                           <!--  <option>TREND ANALYSIS</option> -->
-                        </select>
-                    </li>
-                
-            </ul>
-        </div>
+                </ul>	                		
+			</li>
+		</ul>
+	</div>
 </template>

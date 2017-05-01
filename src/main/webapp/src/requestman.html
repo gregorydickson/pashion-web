@@ -58,20 +58,6 @@
                 <div class="grid-block">
                     <!-- First Column -->
                     <!-- -->
-                    <div id="left-panel" class="vertical grid-block noscroll">
-                        <figure style=" display: inline-block; vertical-align: top; text-align:center; " >
-                            <img class="request-image-fix" src="${image}">
-                            <figcaption style="display:block;margin-top:1rem;">
-                                <span if.bind="brand" class="accordion-grey" style="font-size: 1.1rem; font-weight: 500;">${brand} Look ${look}</span><br>
-                                <span class="accordion-grey">${season}</span><br>
-                            </figcaption>                           
-                        </figure>
-                    </div>
-                    <!-- spacers -->
-                    <div class="grid-block shrink spa-h-spacer">
-                    </div>
-                    <!-- 2nd Column -->
-                    <!-- -->
                     <div class="grid-block vertical">
                         <!-- search and filter requests -->
                         <div class="grid-block shrink" style="margin-left: 1rem; margin-right: 1rem; margin-top:1.5rem;">
@@ -389,6 +375,22 @@
                             </div>
                        
                     </div>
+                    <!-- spacers -->
+                    <div class="grid-block shrink spa-h-spacer">
+                    </div>
+                    <!-- 2nd Column -->
+                    <!-- -->
+                    <div id="left-panel" class="vertical grid-block noscroll">
+                        <figure style=" display: inline-block; vertical-align: top; text-align:center; margin-top:129px; margin-right: 42px; margin-left: 0px;" >
+                            <img class="request-image-fix" src="${image}">
+                            <figcaption style="display:block;margin-top:1rem;">
+                                <span if.bind="brand" class="accordion-grey" style="font-size: 1.1rem; font-weight: 500;">${brand} Look ${look}</span><br>
+                                <span class="accordion-grey">${season}</span><br>
+                            </figcaption>                           
+                        </figure>
+                    </div>
+
+
                 </div>
                 <!-- white lip at bottom of scroll region -->
                 <div class="grid-content shrink scrolling-lip">

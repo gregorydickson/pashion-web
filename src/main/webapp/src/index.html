@@ -511,8 +511,8 @@
 
                         <!-- expanding data -->
                         <div id="panel${booking.id}" class="panel requestPanel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
-                            <span class="accordion expanded" style="background-color: #f7f7f7; width:100%; padding-top:7px; padding-left:10px; padding-bottom:7px;">Request: ${booking.id}</span>
-                            <span if.bind="booking.pressHouse.name" class="accordion expanded" style="background-color: #f7f7f7;width:100%; padding-left:10px; padding-bottom:7px;">Press House: ${booking.pressHouse.name}</span>
+                            <span class="accordion expanded" style="background-color: #fafafa; width:100%; padding-top:7px; padding-left:10px; padding-bottom:7px;">Request: ${booking.id}</span>
+                            <span if.bind="booking.pressHouse.name" class="accordion expanded" style="background-color: #fafafa;width:100%; padding-left:10px; padding-bottom:7px;">Press House: ${booking.pressHouse.name}</span>
                             <table class="accordion expanded" style="table-layout:fixed;">                          
                                 <tr style="padding-top: 7px;" repeat.for="sample of booking.searchableItems">
                                     <td class="accordion" style="width:65px; max-width:65px; padding-left:10px; padding-bottom:7px;"> ${booking.season | seasonAbbreviation:seasons }${booking.look}.${$index+1} :</td>
@@ -621,8 +621,8 @@
 
                         <!-- expanding data -->
                         <div id="panel${booking.id}" class="panel requestPanel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
-                            <span class="accordion expanded" style="background-color: #f7f7f7; width:100%; padding-top:7px; padding-left:10px; padding-bottom:7px;">Request: ${booking.id}</span>
-                            <span if.bind="booking.brand.name" class="accordion expanded" style="background-color: #f7f7f7;width:100%; padding-left:10px; padding-bottom:7px;">Brand: ${booking.brand.name}</span>
+                            <span class="accordion expanded" style="background-color: #fafafa; width:100%; padding-top:7px; padding-left:10px; padding-bottom:7px;">Request: ${booking.id}</span>
+                            <span if.bind="booking.brand.name" class="accordion expanded" style="background-color: #fafafa;width:100%; padding-left:10px; padding-bottom:7px;">Brand: ${booking.brand.name}</span>
                             <table class="accordion expanded" style="table-layout:fixed;">
                                 <tr style="padding-bottom:7px;" repeat.for="sample of booking.searchableItems">
                                     <td class="accordion" style="width:60px; max-width:60px; padding-left: 10px; padding-bottom:7px;"">${booking.season | seasonAbbreviation:seasons }${booking.look}.${$index+1}</td>
