@@ -83,6 +83,7 @@ class BrandController {
 
     def toggleCalendar(){
         Brand brand = Brand.get(params.id)
+        log.info "brand in toggle calendar: " + brand
 
         if(brand.hideCalendar == false){
             brand.hideCalendar = true
@@ -90,8 +91,11 @@ class BrandController {
 
             brand.hideCalendar = false
         }
+
+        log.info "brand in toggle calendar: " + brand
         brand.save(failOnError:true,flush:true)
-        respond brand, [status: OK] 
+        // respond brand, [status: OK] 
+        render brand.hideCalendar // RM switch to return a boolean not the brand
 
     }
 
