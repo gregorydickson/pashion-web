@@ -264,10 +264,21 @@ export class Index {
             .then(anything => { 
                 if (this.firstTime) {
                     ///console.log ("first time unveil");
-                    $(document).ready (function() 
-                        {
-                            $("img.lazy").unveil();
-                        });
+                    
+                    $("img.lazy").unveil();
+                    $(window).on("resize.unveil", function(){
+                        $("img.lazy").unveil();
+                    });
+                    $("#mainScrollWindow").on("scroll.unveil", function(){
+                        $(window).off("unveil");
+                        $("img.lazy").unveil();
+                    });
+
+                    $(window).focus(function(){
+          
+                        setTimeout (function() {$("img.lazy").unveil();}, 3000); //RM instantiate *if not already* on tab but wait to settle
+                    });
+                    
                     this.firstTime = false;
                     setTimeout(function() { 
                         var msw = document.getElementById("mainScrollWindow");
@@ -680,6 +691,7 @@ export class Index {
         });
     
         this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub());
+        
     }
 
 

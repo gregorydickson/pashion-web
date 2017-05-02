@@ -60,13 +60,7 @@
       //console.log("iamges(IE not loaded): " + images.length);
     }
 
-    $(window).on("resize.unveil", unveil);
-    $("#mainScrollWindow").on("scroll.unveil", unveil);
-
-    $(window).focus(function(){
-      //console.log("focused :" + !document.hidden + " " + $("img.lazy").length);
-      setTimeout (function() {$("img.lazy").unveil();}, 3000); //RM instantiate *if not already* on tab but wait to settle
-    });
+    
 
     //RM don't instantiate unveil if browser tab is not visible
     //if (!document.hidden) 
