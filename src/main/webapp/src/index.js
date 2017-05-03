@@ -713,6 +713,8 @@ export class Index {
         var panelChoice = document.getElementById("panel" + buttonNumber);
         buttonChoice.classList.toggle("active");
         panelChoice.classList.toggle("show");
+        //menu.scrollIntoView({block: "end", behavior: "smooth"});
+        menu.scrollIntoViewIfNeeded();
     }
 
     closeAllOpenRequestRows () {
@@ -737,6 +739,8 @@ export class Index {
     lookMenu(id) {
         var menu = document.getElementById("look-" + id);
         menu.classList.toggle("look-menu-show");
+        //menu.scrollIntoView({block: "end", behavior: "smooth"});
+        menu.scrollIntoViewIfNeeded();
     }
 
 
@@ -779,6 +783,8 @@ export class Index {
     sampleRequestMenu(id) {
         var menu = document.getElementById("requestTest" + id);
         menu.classList.toggle("look-menu-show");
+        //menu.scrollIntoView({block: "end", behavior: "smooth"});
+        menu.scrollIntoViewIfNeeded();
 
     }
 
