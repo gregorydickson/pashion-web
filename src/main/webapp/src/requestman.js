@@ -339,6 +339,7 @@ export class Requestman{
       this.look = sampleRequest.look;
       this.closed = false;
       this.opened = buttonNumber; 
+      panelChoice.scrollIntoViewIfNeeded();
     }
     else { 
       if(this.opened != buttonNumber) {
@@ -351,7 +352,8 @@ export class Requestman{
         this.season = sampleRequest.season;
         this.look = sampleRequest.look;
         this.closed = false;
-        this.opened = buttonNumber
+        this.opened = buttonNumber;
+        panelChoice.scrollIntoViewIfNeeded();
       }
       else {
         this.brand = '';
@@ -520,6 +522,8 @@ export class Requestman{
   lookEditMenu(id){
     var menu = document.getElementById("requestManTest"+id);
     menu.classList.toggle("look-menu-show");
+    //menu.scrollIntoView({block: "end", behavior: "smooth"});
+    menu.scrollIntoViewIfNeeded();
   }
 
 
