@@ -203,7 +203,7 @@ class SampleRequestController {
 
 
     // Only for initial creation
-    //Create a Sample Request - for a Press User
+    //Create a Sample Request - for a Press or Brand User
     def savejson(){
         def requestingUser = session.user
         def sr = sampleRequestService.initialSaveSampleRequest(request.JSON,requestingUser)
