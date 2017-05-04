@@ -7,8 +7,9 @@ import { UserService } from 'services/userService';
 import { BrandService } from 'services/brandService';
 import { PressHouseService } from 'services/pressHouseService';
 import { PRAgencyService } from 'services/PRAgencyService';
+import { DS } from 'datastores/ds';
 
-@inject(HttpClient, DialogController, UserService, BrandService ,PRAgencyService,PressHouseService)
+@inject(HttpClient, DialogController, UserService, BrandService, PRAgencyService, PressHouseService, DS)
 export class CreateDialogEditContact {
     static inject = [DialogController];
 
@@ -16,7 +17,7 @@ export class CreateDialogEditContact {
     availableLocationItems = [];
     selectedLocationItems = [];
 
-    constructor(http, controller, userService, brandService, prAgencyService, pressHouseService) {
+    constructor(http, controller, userService, brandService, prAgencyService, pressHouseService, DS) {
         this.controller = controller;
         http.configure(config => {
             config
@@ -27,66 +28,63 @@ export class CreateDialogEditContact {
         this.brandService = brandService;
         this.pressHouseService = pressHouseService;
         this.prAgencyService = prAgencyService;
-
+        this.ds = DS;
     }
 
 
     activate() {
-        this.userService.getUser()
-            .then(user => {
-                //this.lUser = user;
-                this.lUser = clone(user);
+        //this.lUser = user;
+        this.lUser = clone(this.ds.user.user);
 
-                if (!this.lUser.address) {
-                    this.lUser.address = { id: ''};
-                }
-
-                this.getAddresses().then(addresses => {
-                    console.log(addresses)
-                    addresses.forEach(item => {
-                        this.availableLocationItems.push({
-                            id: item.id,
-                            text: item.name
-                        });
-                    });                   
-
-                    this.selectedLocationItems = [`${this.lUser.address.id}`];
-                });              
-
-            });
+        if (!this.lUser.address) {
+            this.lUser.address = { id: '' };
         }
+
+        this.getAddresses().then(addresses => {
+            console.log(addresses)
+            addresses.forEach(item => {
+                this.availableLocationItems.push({
+                    id: item.id,
+                    text: item.name
+                });
+            });
+
+            this.selectedLocationItems = [`${this.lUser.address.id}`];
+        });
+
+    }
 
     getAddresses() {
         return new Promise((resolve) => {
             if (this.lUser.brand != null)
                 return this.brandService.getBrandAddresses(this.lUser.brand.id)
-                    .then(addresses=> { this.addresses = addresses; resolve(addresses)})
+                    .then(addresses => { this.addresses = addresses; resolve(addresses) })
             if (this.lUser.pressHouse != null)
                 return this.pressHouseService.getPressHouseAddresses(this.lUser.pressHouse.id)
-                    .then(addresses=> { this.addresses = addresses; resolve(addresses)})
+                    .then(addresses => { this.addresses = addresses; resolve(addresses) })
             if (this.lUser.prAgency != null)
                 return this.prAgencyService.getPRAgencyAddresses(this.lUser.PRAgency.id)
-                    .then(addresses=> { this.addresses = addresses; resolve(addresses)})
+                    .then(addresses => { this.addresses = addresses; resolve(addresses) })
         });
     }
 
-   save(){
-    console.log("CreateDialogEditContact.save, updating user:"+this.lUser.id + " name: " + this.lUser.name)
-    this.userService.update(this.lUser);
-    this.controller.close();
-   }
+    save() {
+        console.log("CreateDialogEditContact.save, updating user:" + this.lUser.id + " name: " + this.lUser.name)
+        this.userService.update(this.lUser);
+        this.controller.close();
+    }
 
-  close() {
-    this.controller.close();
-  }
+    close() {
+        this.controller.close();
+    }
 
-    onLocationChangeCallback(event) {   
+    onLocationChangeCallback(event) {
         console.log('onLocationChangeCallback() called:', event.detail.value);
 
         if (event.detail) {
-            let selectedValue = event.detail.value;         
-            console.log('Selected value:', selectedValue);    
-            
+            let selectedValue = event.detail.value;
+            console.log('Selected value:', selectedValue);
+
             //let selectedLocation = this.availableLocationItems.find(x => x.id == selectedValue);
             this.lUser.address.id = selectedValue;
         }

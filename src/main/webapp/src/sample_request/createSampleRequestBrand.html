@@ -4,6 +4,7 @@
 <require from="../common/formSelectSample"></require>
 <require from="../common/formSelectObject"></require>
 <require from="../common/select-control"></require>
+<require from="../address/selectAddress"></require>
     
    <ai-dialog>
         <ai-dialog-header>
@@ -81,106 +82,13 @@
                     </span>
                 </div>
 
-
                 <!-- Deliver To-->
-                <div class="grid-content shrink">
-                    <span class="inline-label" style="">
-                        <span class="slim-text-box-label">Deliver To</span>
+                <select-address
+                    change.delegate="onSelectAddressChangeCallback($event)"
+                    selected-address.bind="selectedAddress"
+                    css='grid-content shrink'>
+                </select-address>
 
-                        <select-control ref="selectControl" name="deliverTo"
-                            change.delegate="onDeliverToChangeCallback($event)"                      
-                            selected.bind="selectedDeliverToItems" 
-                            options.bind="availableDeliverToItems" 
-                            placeholder="SELECT ONE" 
-                            allow_clear="true" >
-                        </select-control>
-
-                        <!--<form-select-sr class="slim-box" 
-                        name="deliverTo" 
-                        id="" 
-                        selected.two-way="selectedAddress" 
-                        options.bind="deliverTo" 
-                        change.delegate="deliverToCallback($event)">-->
-                            
-                        
-                        <span class="slim-text-box-label" style="text-align:left"><a click.delegate="addAdHoc()" style="">Add</a></span>
-                    </span>
-                </div>
- 
-
-
-                <!-- Name-->
-                <div class="grid-content shrink">
-                    <span class="inline-label" style="margin-bottom: 0px;">
-                        <span class="slim-text-box-label ${selectedAddress.name ? '' : 'red-deco' }" style="">Attention</span>
-                        <div>
-                            <input type="text" class="slim-text-box" value.bind="selectedAddress.name">
-                        </div>
-                    </span>
-                </div>
-                <!-- Company-->
-                <div class="grid-content shrink">
-                    <span class="inline-label" style="margin-bottom: 0px;">
-                        <span class="slim-text-box-label" style="">Phone</span>
-                        <div>
-                            <input type="text" class="slim-text-box" value.bind="selectedAddress.contactPhone">
-                        </div>
-                    </span>
-                </div>
-                <!-- Company-->
-                <div class="grid-content shrink">
-                    <span class="inline-label" style="margin-bottom: 0px;">
-                        <span class="slim-text-box-label" style="">Company</span>
-                        <div>
-                            <input type="text" class="slim-text-box" value.bind="selectedAddress.company">
-                        </div>
-                    </span>
-                </div>
-                <!-- Address 1 -->
-                <div class="grid-content shrink">
-                    <span class="inline-label" style="margin-bottom: 0px;">
-                        <span class="slim-text-box-label" style="">Address 1</span>
-                        <div>
-                            <input type="text" class="slim-text-box" value.bind="selectedAddress.address1">
-                        </div>
-                    </span>
-                </div>
-                <!-- City -->
-                <div class="grid-content shrink">
-                    <span class="inline-label" style="margin-bottom: 0px;">
-                        <span class="slim-text-box-label" style="">City</span>
-                        <div>
-                            <input type="text" class="slim-text-box" value.bind="selectedAddress.city">
-                            </div>
-                    </span>
-                </div>
-                <!-- Country -->
-                <div class="grid-content shrink">
-                    <span class="inline-label" style="margin-bottom: 0px;">
-                        <span class="slim-text-box-label" style="">Country</span>
-                        <div>
-                            <input type="text" class="slim-text-box" value.bind="selectedAddress.country">
-                        </div>
-                    </span>
-                </div>
-                <!-- Postal Code -->
-                <div class="grid-content shrink">
-                    <span class="inline-label" style="margin-bottom: 0px;">
-                        <span class="slim-text-box-label">Postal Code</span>
-                        <div> 
-                            <input type="text" class="slim-text-box" value.bind="selectedAddress.postalCode">
-                        </div>
-                    </span>
-                </div>
-                <!-- Comment  -->
-                <div class="grid-content shrink">
-                    <span class="inline-label" style="margin-bottom: 0px;">
-                        <span class="slim-text-box-label">Comment</span>
-                        <div> 
-                            <input type="text" class="slim-text-box" value.bind="selectedAddress.comment">
-                        </div>
-                    </span>
-                </div>
                 <!-- Courier Section -->
                 <div class="grid-content shrink">
                     <span class="inline-label">

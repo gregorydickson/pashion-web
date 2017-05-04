@@ -8,8 +8,9 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 import { PubNubService } from 'services/pubNubService';
 import { DialogService } from 'aurelia-dialog';
 import { CreateDialogAlert } from 'common/dialogAlert';
+import { DS } from 'datastores/ds';
 
-@inject(HttpClient, UserService, EventAggregator, PubNubService, DialogService) 
+@inject(HttpClient, UserService, EventAggregator, PubNubService, DialogService, DS) 
 @singleton()
 export class Messages {
 
@@ -21,15 +22,15 @@ export class Messages {
     //pubnub
     pubnub;
 
-    constructor(http, userService, eventAggregator, pubNubService, dialogService) {  
+    constructor(http, userService, eventAggregator, pubNubService, dialogService, DS) {  
       this.http = http;
       this.userService = userService;
-      this.user = this.userService.getUser().then(user => this.user = user);
       this.ea = eventAggregator;
       //this.boundHandlerComms = this.handleKeyInput.bind(this);
       this.pubNubService = pubNubService;
       this.dialogService = dialogService;
-
+      this.ds = DS;
+      this.user = this.ds.user.user;
     }
 
     detached() {

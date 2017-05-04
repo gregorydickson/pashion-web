@@ -5,34 +5,34 @@ import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import {AddressService} from 'services/addressService'
 
-@inject(DialogController,AddressService)
+@inject(DialogController, AddressService)
 export class NewAddress {
   static inject = [DialogController];
 
   newAddress = {};
   addresses = [];
 
-  constructor(controller,addressService){
+  constructor(controller, addressService) {
     this.controller = controller;
     this.addressService = addressService;
   }
 
-  close(){
+  close() {
     this.controller.close();
   }
 
-  activate(model){
+  activate(model) {
     this.addresses = model.addresses;
     this.newAddress = model.newAddress;
   }
-  
-  createAddress(){
-    
+
+  createAddress() {
+
     this.addressService.createAdHoc(this.newAddress)
-      .then(response =>{
+      .then(response => {
         // This should probably return the new address and not the list of all 
         this.controller.ok(response);
-      }); 
+      });
   }
 
 

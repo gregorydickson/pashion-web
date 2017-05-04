@@ -2,47 +2,45 @@ import { inject } from 'aurelia-framework';
 import { HttpClient } from 'aurelia-fetch-client';
 import 'fetch';
 import { Router } from 'aurelia-router';
-import { UserService } from './services/userService';
+import { DS } from './datastores/ds';
 import { CreateDialogEditContact } from './contacts/dialogEditContact';
 import { DialogService } from 'aurelia-dialog';
 import { CreateDialogUpdatePhoto } from './contacts/dialogUpdatePhoto';
 
-@inject(HttpClient, UserService, Router, DialogService)
+@inject(HttpClient, DS, Router, DialogService)
 export class Header {
     //user = {};
     currentRoute = '';
 
     navOptions = [{ value: "index", name: "DASHBOARD" }, { value: "adminpage", name: "ADMIN" }];
 
-    constructor(http, userService, router, dialogService) {
+    constructor(http, DS, router, dialogService) {
         http.configure(config => {
             config
                 .useStandardConfiguration();
         });
         this.http = http;
-        this.userService = userService;
+        this.ds = DS;
         this.theRouter = router;
         this.dialogService = dialogService;
     }
 
     activate() {
-        return this.userService.getUser().then(user => {
-            this.user = user;
-            this.userActionsPlaceholder = user.name;
-        });
+        this.user = this.ds.user.user;
+        this.userActionsPlaceholder = this.ds.user.user.name;
     }
 
     attached() {
-      this.wireMenus();
+        this.wireMenus();
     }
-  
+
     wireMenus() {
         // The DOM is already initialized because this is being called from
         // the attach() method, but, we need an instance of the document
         // so let's just use the jquery DOM ready wrapper     
         jQuery(document).ready(function (e) {
             function t(t) {
-                e(t).bind('click', function (t) {                    
+                e(t).bind('click', function (t) {
                     t.preventDefault();
                     e(this).parent().fadeOut();
                 })
@@ -55,15 +53,15 @@ export class Header {
 
                 if (t) {
                     e(this).parents('.button-dropdown')
-                      .children('.dropdown-menu')
-                      .toggle()
-                      .parents('.button-dropdown')
-                      .children('.dropdown-toggle')
-                      .addClass('active');
+                        .children('.dropdown-menu')
+                        .toggle()
+                        .parents('.button-dropdown')
+                        .children('.dropdown-toggle')
+                        .addClass('active');
                 }
             });
 
-            e(document).find('.dropdown-menu a').click(function(event) {
+            e(document).find('.dropdown-menu a').click(function (event) {
                 e('.button-dropdown .dropdown-menu').hide();
                 e('.button-dropdown .dropdown-toggle').removeClass('active');
             });
@@ -71,8 +69,8 @@ export class Header {
             e(document).bind('click', function (t) {
                 let n = e(t.target);
 
-                if (!n.parents().hasClass('button-dropdown')) {                  
-                  e('.button-dropdown .dropdown-menu').hide();
+                if (!n.parents().hasClass('button-dropdown')) {
+                    e('.button-dropdown .dropdown-menu').hide();
                 }
             });
 
@@ -80,7 +78,7 @@ export class Header {
                 let n = e(t.target);
 
                 if (!n.parents().hasClass('button-dropdown')) {
-                  e('.button-dropdown .dropdown-toggle').removeClass('active');
+                    e('.button-dropdown .dropdown-toggle').removeClass('active');
                 }
             });
         });
@@ -110,16 +108,12 @@ export class Header {
             this.availableUserItems = [];
             this.dialogService.open({ viewModel: CreateDialogEditContact, model: 0 })
                 .then(response => {
-                    this.userService.getUser().then(user => {
-                        this.user = user;
-
-                        // Add back in the available options
-                        this.availableUserItems = [
-                            { id: 'logout', text: 'LOGOUT' },
-                            { id: 'edit', text: 'EDIT PROFILE' },
-                        ];
-                    });
-
+                    this.user = this.ds.user.user;
+                    // Add back in the available options
+                    this.availableUserItems = [
+                        { id: 'logout', text: 'LOGOUT' },
+                        { id: 'edit', text: 'EDIT PROFILE' },
+                    ];
 
                 });
         };
@@ -131,7 +125,7 @@ export class Header {
 
         if (this.currentRoute == "adminpage") {
             console.log("admin, getUser()");
-            this.userService.getUser().then(user => this.user = user);
+            this.user = this.ds.user.user;
         }
     }
 

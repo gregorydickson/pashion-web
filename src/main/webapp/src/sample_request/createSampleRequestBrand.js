@@ -1,17 +1,17 @@
-import {DialogController} from 'aurelia-dialog';
-import {HttpClient,json} from 'aurelia-fetch-client';
+import { DialogController } from 'aurelia-dialog';
+import { HttpClient, json } from 'aurelia-fetch-client';
 import 'fetch';
-import {inject,bindable} from 'aurelia-framework';
-import {DateFormat} from 'common/dateFormat';
+import { inject, bindable } from 'aurelia-framework';
+import { DateFormat } from 'common/dateFormat';
 import { BrandService } from 'services/brandService';
-import {DialogService} from 'aurelia-dialog';
+import { DialogService } from 'aurelia-dialog';
 import { CreateDialogAlert } from 'common/dialogAlert';
-import {NewAddress} from './newAddress';
 import $ from 'jquery';
-import {computedFrom} from 'aurelia-framework';
+import { computedFrom } from 'aurelia-framework';
+import { DS } from '../datastores/ds';
 
 
-@inject(HttpClient, DialogController, BrandService, DialogService)
+@inject(HttpClient, DialogController, BrandService, DialogService, DS)
 export class CreateSampleRequestBrand {
   static inject = [DialogController];
   currentItem = {};
@@ -22,29 +22,26 @@ export class CreateSampleRequestBrand {
 
   selectAll = true;
   required = [];
-  @bindable deliverTo = [];
 
-  availableDeliverToItems = [];
-  selectedDeliverToItems = [''];
   availableReturnToItems = [];
   selectedReturnToItems = [''];
   sampleRequestStartMonth = '';
   sampleRequestStartDay = '';
   sampleRequestEndMonth = '';
   sampleRequestEndDay = '';
-  
+
 
   brand = [];
-  
+
   returnBy = [];
-  
+
   courier = [];
   payment = [];
 
   emailOptions = ['EMAIL'];
   email = null;
-  
-  @bindable selectedAddress = {};
+
+  selectedAddress = {};
   returnToAddress = null;
 
 
@@ -55,7 +52,7 @@ export class CreateSampleRequestBrand {
   startDay = '';
   endDay = '';
 
-  constructor(http, controller, brandService, dialogService){
+  constructor(http, controller, brandService, dialogService, DS) {
     this.controller = controller;
     console.log("createSampleRequestBrand");
     http.configure(config => {
@@ -65,27 +62,26 @@ export class CreateSampleRequestBrand {
     this.http = http;
     this.brandService = brandService;
     this.dialogService = dialogService;
+    this.ds = DS;
   }
 
-  activate(item){
-    var queryString = DateFormat.urlString(0, 2)+'&searchType=brand';
-    
+  activate(item) {
+    var queryString = DateFormat.urlString(0, 2) + '&searchType=brand';
+
     let sampleRequest = this.sampleRequest;
     let availableReturnToItems = this.availableReturnToItems;
-    let deliverTo = this.deliverTo;
-    
-    
+
     Promise.all([
-      this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+item.id)
+      this.http.fetch('/calendar/searchableItemPicker' + queryString + '&item=' + item.id)
         .then(response => response.json())
-          .then(calendar => {
-                this.startCalendar = calendar;
-                this.endCalendar = calendar;
-      }),
+        .then(calendar => {
+          this.startCalendar = calendar;
+          this.endCalendar = calendar;
+        }),
 
       this.http.fetch('/dashboard/required').then(response => response.json()).then(required => {
         this.required = required;
-        this.sampleRequest.requiredBy ="12:00";
+        this.sampleRequest.requiredBy = "12:00";
       }),
 
       this.http.fetch('/dashboard/returnBy').then(response => response.json()).then(returnBy => {
@@ -98,217 +94,122 @@ export class CreateSampleRequestBrand {
         this.sampleRequest.courierReturn = "They Book";
 
       }),
-      
+
       this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => {
         this.payment = payment;
         this.sampleRequest.paymentOut = "50/50";
         this.sampleRequest.paymentReturn = "50/50";
-      }), 
+      }),
 
-      this.http.fetch('/searchableItems/'+item.id+'.json')
+      this.http.fetch('/searchableItems/' + item.id + '.json')
         .then(response => response.json())
         .then(item => {
-            this.currentItem = item;   
+          this.currentItem = item;
 
-            this.http.fetch('/dashboard/deliverToBrand/'+item.brand.id).then(response => response.json()).then(deliverTo =>{ 
-              this.deliverTo = deliverTo;
+          this.brandService.getBrandAddresses(item.brand.id).then(addresses => {
+            this.returnTo = addresses;
 
-              deliverTo.forEach(item => {
-                if(item.surname){
-                  if(item.city) item.surname = item.surname + "  (" + item.city + " Office)"
-                  this.availableDeliverToItems.push({
-                    id: item.id,
-                    text: item.name + " " + item.surname
-                  });
-                } else {
-                  this.availableDeliverToItems.push({
-                    id: item.id,
-                    text: item.name
-                  });
-                }
-              });
-              
-            }),
-
-            this.brandService.getBrandAddresses(item.brand.id).then(addresses => {
-              this.returnTo = addresses;            
-
-              addresses.forEach(item => {
-                this.availableReturnToItems.push({
-                  id: item.id,
-                  text: item.name
-                });
-              });
-
-              let defaultAddress = addresses.find(item => item.defaultAddress == true);
-              if(defaultAddress){
-                let selectedReturnTo = availableReturnToItems.find(item => item.id == defaultAddress.id);
-                sampleRequest.returnToAddress = selectedReturnTo.id;
-                this.selectedReturnToItems = [selectedReturnTo.id];
-              }
-              
-              
-
-            }),
-            
-            this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);
-            this.sampleRequest.samples = [];
-            var ids = this.sampleRequest.samples;
-            item.samples.forEach(function(item){
-              ids.push(item.id);
-            })
-            
-          }
-        ) 
-    ]).then(() => {
-      this.isLoading = false
-      
-      
-    });
-  } 
-
-
-
-  onDeliverToChangeCallback(event) {   
-      console.log('onDeliverToChangeCallback() called:', event.detail.value);
-
-      if (event.detail.value) {
-          let selectedDeliverToId = event.detail.value;
-          let selectedDeliverTo = this.deliverTo.find(item => item.id == selectedDeliverToId);
-          console.log('Selected deliverTo:', selectedDeliverTo);
-
-          this.selectedAddress = selectedDeliverTo;
-      }
-      this.enableCheck();
-  }
-
-  onReturnToChangeCallback(event) {   
-      console.log('onReturnToChangeCallback() called:', event.detail.value);
-
-      if (event.detail.value) {
-          let selectedReturnToId = event.detail.value;
-          let selectedReturnTo = this.returnTo.find(item => item.id == selectedReturnToId);
-          console.log('Selected returnTo:',selectedReturnTo);
-          this.sampleRequest.returnToAddress = selectedReturnToId;
-
-          
-      }
-      this.enableCheck();
-  }
-
-
-  deliverToCallback(evt) {
-    console.log("deliver To Callback");
-    console.log(JSON.stringify(evt))
-    if (evt.detail) {
-        this.selectedAddress = evt.detail.value;
-        
-    }
-
-  }
-  attached(){
-    document.getElementById("CreateSampleRequestButton").disabled = true;
-    
-  }
-
-  alertP (message){
-      this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000}, lock:false }).then(response => {});
-  }
-
-  addAdHoc () {
-    console.log ("ad hoc");
-    var newAddressModel = {addresses:this.deliverTo, newAddress:{}}
-    this.dialogService.open({ viewModel: NewAddress, model: newAddressModel, lock:true })
-            .then(response => {
-              if (!response.wasCancelled) {
-                this.deliverTo = response.output;
-                this.selectedAddress = newAddressModel.newAddress;
-                console.log('good - ', response.output, newAddressModel);
-
-                // Grab the latest deliver to items
-                // This value is returned from the modal I think
-                // but that may be changed to just return the newly added item
-                // only or it's ID so let's use a separate call for now.
-                this.loadDeliverTos().then(() => {
-                  // Get the latest item based on the id
-                  let newestDeliverTo = this.availableDeliverToItems.reduce(function(max, x) {
-                      return x.id > max.id ? x : max;
-                  });
-
-                  console.log('Newest deliver to:', newestDeliverTo);
-                  
-                  this.selectedDeliverToItems = [newestDeliverTo.id];
-                });
-
-              } else {
-                console.log('bad');
-              }
-               
-            });
-  }
-
-  loadDeliverTos() {
-    let item = this.currentItem;
-
-    return this.http.fetch('/dashboard/deliverToBrand/'+item.brand.id).then(response => response.json())
-      .then(deliverTo =>{ 
-          this.deliverTo = deliverTo;
-          this.availableDeliverToItems = [];
-          this.selectedDeliverToItems = [];
-
-          deliverTo.forEach(item => {
-            if(item.surname){
-              this.availableDeliverToItems.push({
-                id: item.id,
-                text: item.name + " " + item.surname
-              });
-            } else {
-              this.availableDeliverToItems.push({
+            addresses.forEach(item => {
+              this.availableReturnToItems.push({
                 id: item.id,
                 text: item.name
               });
+            });
+
+            let defaultAddress = addresses.find(item => item.defaultAddress == true);
+            if (defaultAddress) {
+              let selectedReturnTo = availableReturnToItems.find(item => item.id == defaultAddress.id);
+              sampleRequest.returnToAddress = selectedReturnTo.id;
+              this.selectedReturnToItems = [selectedReturnTo.id];
             }
-          });
+
+
+
+          }),
+
+            this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);
+          this.sampleRequest.samples = [];
+          var ids = this.sampleRequest.samples;
+          item.samples.forEach(function (item) {
+            ids.push(item.id);
+          })
+
+        }
+        )
+    ]).then(() => {
+      this.isLoading = false
+
+
     });
-   
   }
 
-  setStartDate(event,dayEvent,day){
-    console.log("set start date: "+event);
-    console.log("parameterday: "+day);
+  onSelectAddressChangeCallback(event) {
+    console.log('onSelectAddressChangeCallback() called:', event.detail.value);
+    if (event.detail.value.selectedAddress) {
+      this.selectedAddress = event.detail.value.selectedAddress;
+    }
+    this.enableCheck();
+  }
+
+  onReturnToChangeCallback(event) {
+    console.log('onReturnToChangeCallback() called:', event.detail.value);
+
+    if (event.detail.value) {
+      let selectedReturnToId = event.detail.value;
+      let selectedReturnTo = this.returnTo.find(item => item.id == selectedReturnToId);
+      console.log('Selected returnTo:', selectedReturnTo);
+      this.sampleRequest.returnToAddress = selectedReturnToId;
+
+
+    }
+    this.enableCheck();
+  }
+
+
+  attached() {
+    document.getElementById("CreateSampleRequestButton").disabled = true;
+  }
+
+  alertP(message) {
+    this.dialogService.open({ viewModel: CreateDialogAlert, model: { title: "Booking", message: message, timeout: 5000 }, lock: false }).then(response => { });
+  }
+
+  setStartDate(event, dayEvent, day) {
+    console.log("set start date: " + event);
+    console.log("parameterday: " + day);
 
     var today = new Date();
     this.startDay = day;
     var enddate = '';
-    if (this.endDay !='') enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber-1,this.endDay);
-    let startdate = new Date(this.startCalendar.calendarMonths[0].year,this.startCalendar.calendarMonths[0].monthNumber-1,day);
+    if (this.endDay != '') enddate = new Date(this.endCalendar.calendarMonths[0].year, this.endCalendar.calendarMonths[0].monthNumber - 1, this.endDay);
+    let startdate = new Date(this.startCalendar.calendarMonths[0].year, this.startCalendar.calendarMonths[0].monthNumber - 1, day);
 
     // quit if in the past
     // could also add in here, any business logic about if we want to book +1 day out?
     console.log("today: " + today);
     console.log("startdate: " + startdate);
     console.log("startDay: " + this.startDay);
-    if (this.endDay !='') console.log("enddate: " + enddate); else console.log("no endDay set")
+    if (this.endDay != '') console.log("enddate: " + enddate); else console.log("no endDay set")
     console.log("endDay: " + this.endDay);
-    if (startdate <= today) { 
-      console.log ("day is before today or is today, exit"); 
+    if (startdate <= today) {
+      console.log("day is before today or is today, exit");
       this.startDay = '';
       this.sampleRequest.startDate = '';
       this.sampleRequestStartMonth = '';
-      this.sampleRequestStartDay = ''; 
+      this.sampleRequestStartDay = '';
       // also clear end date
       this.endDay = '';
       this.sampleRequest.endDate = '';
       this.sampleRequestEndDay = '';
       this.sampleRequestEndMonth = '';
       this.enableCheck();
-      return; 
+      return;
     }
-    console.log ("day is in the future");
+    console.log("day is in the future");
 
     //check availability
-    var dayIsNotAvailable = dayEvent.indexOf("not-available")>=0;
-    console.log ("setStartDate, calendar day contains unavailable: " + dayIsNotAvailable);
+    var dayIsNotAvailable = dayEvent.indexOf("not-available") >= 0;
+    console.log("setStartDate, calendar day contains unavailable: " + dayIsNotAvailable);
     if (dayIsNotAvailable) {
       this.startDay = '';
       this.sampleRequest.startDate = '';
@@ -318,14 +219,14 @@ export class CreateSampleRequestBrand {
       this.endDay = '';
       this.sampleRequest.endDate = '';
       this.sampleRequestEndDay = '';
-      this.sampleRequestEndMonth = ''; 
+      this.sampleRequestEndMonth = '';
       this.enableCheck();
-      return;  
+      return;
     }
-    
-    if(this.endDay != ''){
+
+    if (this.endDay != '') {
       console.log("setting start date END DATE not empty");
-      if( enddate < startdate ){
+      if (enddate < startdate) {
         console.log("setting start date AND it is after end date");
         this.endDay = '';
         this.sampleRequest.endDate = '';
@@ -338,9 +239,9 @@ export class CreateSampleRequestBrand {
         //var redraw = this.redraw;
         //[].forEach.call(elems, function(el) {
         //  if(el.classList.contains("end-selected")){
-         //   el.classList.remove("end-selected");
-         //   redraw(el);
-         // }
+        //   el.classList.remove("end-selected");
+        //   redraw(el);
+        // }
         //});
       }
     }
@@ -353,57 +254,57 @@ export class CreateSampleRequestBrand {
     //});
     //element.className = " start-selected";
     //this.redraw(element);
-    this.sampleRequest.startDate = this.startCalendar.calendarMonths[0].year+"-"+this.startCalendar.calendarMonths[0].monthNumber+"-"+day;
+    this.sampleRequest.startDate = this.startCalendar.calendarMonths[0].year + "-" + this.startCalendar.calendarMonths[0].monthNumber + "-" + day;
     this.sampleRequestStartMonth = this.startCalendar.calendarMonths[0].monthNumber;
     this.sampleRequestStartDay = day;
     this.enableCheck();
   }
 
   @computedFrom('startCalendar.calendarMonths[0].monthNumber', 'sampleRequestStartMonth')
-  get computedClass () { 
+  get computedClass() {
     if (this.startCalendar.calendarMonths[0].monthNumber == this.sampleRequestStartMonth) return true
   }
 
- @computedFrom('endCalendar.calendarMonths[0].monthNumber', 'sampleRequestEndMonth')
-  get computedClassEnd () { 
+  @computedFrom('endCalendar.calendarMonths[0].monthNumber', 'sampleRequestEndMonth')
+  get computedClassEnd() {
     if (this.endCalendar.calendarMonths[0].monthNumber == this.sampleRequestEndMonth) return true
   }
 
 
-  setEndDate(event, dayEvent,day){
+  setEndDate(event, dayEvent, day) {
     this.endDay = day;
     var startdate = '';
-    let enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber-1,day);
-    if (this.startDay != '') startdate = new Date(this.startCalendar.calendarMonths[0].year,this.startCalendar.calendarMonths[0].monthNumber-1,this.startDay);
+    let enddate = new Date(this.endCalendar.calendarMonths[0].year, this.endCalendar.calendarMonths[0].monthNumber - 1, day);
+    if (this.startDay != '') startdate = new Date(this.startCalendar.calendarMonths[0].year, this.startCalendar.calendarMonths[0].monthNumber - 1, this.startDay);
     var today = new Date();
 
     console.log("today: " + today);
-    if (this.startDay != '') console.log("startDay: " + this.startDay); 
-    else { 
-      console.log("no startDay set, exit"); 
+    if (this.startDay != '') console.log("startDay: " + this.startDay);
+    else {
+      console.log("no startDay set, exit");
       this.endDay = '';
       this.sampleRequest.endDate = '';
       this.sampleRequestEndDay = '';
       this.sampleRequestEndMonth = '';
-      this.enableCheck(); 
+      this.enableCheck();
       return;
     }
-    console.log("startdate: " + startdate); 
+    console.log("startdate: " + startdate);
     console.log("enddate: " + enddate);
     console.log("endDay: " + this.endDay);
-    if (enddate <= today) { 
-      console.log ("day is before today or is today, exit"); 
-      this.endDay = ''; 
+    if (enddate <= today) {
+      console.log("day is before today or is today, exit");
+      this.endDay = '';
       this.sampleRequest.endDate = '';
       this.sampleRequestEndDay = '';
       this.sampleRequestEndMonth = '';
       this.enableCheck();
-      return; 
+      return;
     }
-    console.log ("day is in the future");
+    console.log("day is in the future");
 
-    if(this.startDay === '' || enddate < startdate || enddate.getTime() == startdate.getTime()){
-      console.log (" empty, reverse or time clash");
+    if (this.startDay === '' || enddate < startdate || enddate.getTime() == startdate.getTime()) {
+      console.log(" empty, reverse or time clash");
       this.endDay = '';
       this.sampleRequest.endDate = '';
       this.sampleRequestEndDay = '';
@@ -413,127 +314,127 @@ export class CreateSampleRequestBrand {
     }
 
     //check availability
-    var dayIsNotAvailable = dayEvent.indexOf("not-available")>=0;
-    console.log ("setEndDate, calendar day contains unavailable: " + dayIsNotAvailable);
+    var dayIsNotAvailable = dayEvent.indexOf("not-available") >= 0;
+    console.log("setEndDate, calendar day contains unavailable: " + dayIsNotAvailable);
     if (dayIsNotAvailable) {
       this.endDay = '';
       this.sampleRequest.endDate = '';
       this.sampleRequestEndDay = '';
-      this.sampleRequestEndMonth = ''; 
+      this.sampleRequestEndMonth = '';
       this.enableCheck();
-      return;  
+      return;
     }
-    
-    console.log("end date"+event);
-    console.log("day"+day);
+
+    console.log("end date" + event);
+    console.log("day" + day);
     //let element = event.srcElement.parentElement;
     //let document = element.ownerDocument;
     //let elems = document.querySelectorAll(".end-selected");
     //[].forEach.call(elems, function(el) {
-      //el.classList.remove("end-selected");
+    //el.classList.remove("end-selected");
     //});
     //element.className += " end-selected";
     //this.redraw(element);
-    this.sampleRequest.endDate = this.endCalendar.calendarMonths[0].year+"-"+this.endCalendar.calendarMonths[0].monthNumber+"-"+day;
+    this.sampleRequest.endDate = this.endCalendar.calendarMonths[0].year + "-" + this.endCalendar.calendarMonths[0].monthNumber + "-" + day;
     this.sampleRequestEndMonth = this.endCalendar.calendarMonths[0].monthNumber;
     this.sampleRequestEndDay = day;
     this.enableCheck();
-    
+
   }
 
-  enableCheck(){
-    
-    if((this.sampleRequest.samples === undefined) ||
-       (this.sampleRequest.samples.length == 0) ||
-       (this.sampleRequest.startDate === undefined) ||
-       (this.sampleRequest.startDate == '') ||
-       (this.sampleRequest.endDate === undefined) ||
-       (this.selectedAddress.name === undefined) ||
-       (this.sampleRequest.returnToAddress === undefined) ||
-       (this.sampleRequest.endDate == '')){
-          document.getElementById("CreateSampleRequestButton").disabled = true;
-          console.log("button DIS abled");
-    } else{
-      document.getElementById("CreateSampleRequestButton").disabled = false; 
+  enableCheck() {
+
+    if ((this.sampleRequest.samples === undefined) ||
+      (this.sampleRequest.samples.length == 0) ||
+      (this.sampleRequest.startDate === undefined) ||
+      (this.sampleRequest.startDate == '') ||
+      (this.sampleRequest.endDate === undefined) ||
+      (this.selectedAddress.name === undefined) ||
+      (this.sampleRequest.returnToAddress === undefined) ||
+      (this.sampleRequest.endDate == '')) {
+      document.getElementById("CreateSampleRequestButton").disabled = true;
+      console.log("button DIS abled");
+    } else {
+      document.getElementById("CreateSampleRequestButton").disabled = false;
       console.log("button ENabled");
     }
   }
-  
 
-  redraw(element){
-    element.style.display='none';
-    element.offsetHeight; 
-    element.style.display='';
+
+  redraw(element) {
+    element.style.display = 'none';
+    element.offsetHeight;
+    element.style.display = '';
   }
-  startNext(){
+  startNext() {
     ++this.startOffset;
   }
-  startPrevious(){
+  startPrevious() {
     --this.startOffset;
     this.updateAvailability();
   }
-  startReset(){
+  startReset() {
     this.startOffset = 0;
     this.updateAvailability();
   }
-  endNext(){
+  endNext() {
     ++this.endOffset;
     this.updateAvailability();
   }
-  endPrevious(){
+  endPrevious() {
     --this.endOffset;
     this.updateAvailability();
   }
-  endReset(){
+  endReset() {
     this.endOffset = 0;
     this.updateAvailability();
   }
 
-  allsamples(event){
-    console.log("all samples"+event.srcElement.checked);
-    if(event.srcElement.checked) {
+  allsamples(event) {
+    console.log("all samples" + event.srcElement.checked);
+    if (event.srcElement.checked) {
       for (var i = 0, len = this.currentItem.samples.length; i < len; i++) {
-        if(!(this.sampleRequest.samples.includes(this.currentItem.samples[i].id))){
+        if (!(this.sampleRequest.samples.includes(this.currentItem.samples[i].id))) {
           this.sampleRequest.samples.push(this.currentItem.samples[i].id);
         }
       }
-      
-    }else{
+
+    } else {
       this.sampleRequest.samples = [];
-      document.getElementById("CreateSampleRequestButton").disabled = true;  
+      document.getElementById("CreateSampleRequestButton").disabled = true;
     }
     this.enableCheck();
   }
 
 
-  updateAvailability(){
+  updateAvailability() {
     this.allSamplesSelected();
-    if(this.sampleRequest.samples.length == 0) {
+    if (this.sampleRequest.samples.length == 0) {
       console.log("no samples");
       document.getElementById("CreateSampleRequestButton").disabled = true;
     } else {
 
-      var queryString = DateFormat.urlString(this.endOffset,1)+'&searchType=brand';
-      this.http.fetch('/calendar/showAvailabilitySamples'+queryString, {
-              method: 'post',
-              body: json(this.sampleRequest.samples)
-            })
-            .then(response => response.json())
-            .then(calendar => {
-                this.endCalendar = calendar;
-            });
+      var queryString = DateFormat.urlString(this.endOffset, 1) + '&searchType=brand';
+      this.http.fetch('/calendar/showAvailabilitySamples' + queryString, {
+        method: 'post',
+        body: json(this.sampleRequest.samples)
+      })
+        .then(response => response.json())
+        .then(calendar => {
+          this.endCalendar = calendar;
+        });
 
-      queryString = DateFormat.urlString(this.startOffset,1)+'&searchType=brand';
-      this.http.fetch('/calendar/showAvailabilitySamples'+queryString, {
-              method: 'post',
-              body: json(this.sampleRequest.samples)
-            })
-            .then(response => response.json())
-            .then(calendar => {
-                this.startCalendar = calendar;
-            });
+      queryString = DateFormat.urlString(this.startOffset, 1) + '&searchType=brand';
+      this.http.fetch('/calendar/showAvailabilitySamples' + queryString, {
+        method: 'post',
+        body: json(this.sampleRequest.samples)
+      })
+        .then(response => response.json())
+        .then(calendar => {
+          this.startCalendar = calendar;
+        });
     }
-    
+
   }
 
   allSamplesSelected() {
@@ -550,25 +451,25 @@ export class CreateSampleRequestBrand {
     this.enableCheck();
   }
 
-  submit(){
+  submit() {
 
     this.sampleRequest.deliverTo = this.selectedAddress;
     console.log("submitting Sample Request: " + JSON.stringify(this.sampleRequest));
     this.http.fetch('/sampleRequest/savejson', {
-            method: 'post',
-            body: json(this.sampleRequest)
-          })
-          .then(response => response.json())
-          .then(result => {
-              this.result = result;
-              this.alertP('Request Sent');
-              this.controller.ok();
+      method: 'post',
+      body: json(this.sampleRequest)
+    })
+      .then(response => response.json())
+      .then(result => {
+        this.result = result;
+        this.alertP('Request Sent');
+        this.controller.ok();
 
-          });
-    
+      });
+
   }
 
-  close(){
+  close() {
     this.controller.close();
   }
 
