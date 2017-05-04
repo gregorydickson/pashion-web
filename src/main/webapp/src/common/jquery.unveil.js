@@ -33,7 +33,7 @@
 
     function unveil() {
       //console.log("Window in focus: " + !document.hidden);
-      //console.log("Unveil called wit h images: " + images.length);
+      console.log("Unveil called wit h images: " + images.length);
       //console.log("Unveil called with lazies jquery: " + $("img.lazy").length);
       //console.log ("Unveil MSW visibility: "+ document.getElementById("mainScrollWindow").style.visibility);
       var inview = images.filter(function() {
@@ -60,16 +60,11 @@
       //console.log("iamges(IE not loaded): " + images.length);
     }
 
-    $(window).on("resize.unveil", unveil);
-    $("#mainScrollWindow").on("scroll.unveil resize.unveil", unveil);
-
-    $(window).focus(function(){
-      //console.log("focused :" + !document.hidden + " " + $("img.lazy").length);
-      setTimeout (function() {$("img.lazy").unveil();}, 3000); //RM instantiate *if not already* on tab but wait to settle
-    });
+    
 
     //RM don't instantiate unveil if browser tab is not visible
-    if (!document.hidden) unveil();
+    //if (!document.hidden) 
+      unveil();
 
     return this;
 

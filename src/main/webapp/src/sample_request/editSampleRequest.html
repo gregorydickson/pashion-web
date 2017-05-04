@@ -34,18 +34,18 @@
 
                         <!-- Requested -->
                         <div class="grid-block shrink">                       
-                            <span class="inline-label slim-text-box-label">Requested:</span>
+                            <span class="inline-label slim-text-box-label">Start:</span>
                             <span class="slim-text-box">
-                                ${sampleRequest.dateRequested | viewDateFormat}
+                                ${sampleRequest.bookingStartDate | viewDateFormat}
                             </span>
                         </div>
 
 
                         <!-- Due -->
                         <div class="grid-block shrink">
-                            <span class="inline-label slim-text-box-label">Due:</span>
+                            <span class="inline-label slim-text-box-label">End:</span>
                             <span class="slim-text-box">
-                                 ${sampleRequest.bookingStartDate | viewDateFormat}
+                                 ${sampleRequest.bookingEndDate | viewDateFormat}
                             </span>
                         </div>
 

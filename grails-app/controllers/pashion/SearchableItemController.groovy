@@ -210,7 +210,7 @@ class SearchableItemController {
         if(availableFrom && availableTo)
             results = filterOnDates(results, availableFrom, availableTo)
 
-        results.take(maxRInt)
+        results = results.take(maxRInt)
         
         long endTime = System.currentTimeMillis()
         long duration = (endTime - startTime)

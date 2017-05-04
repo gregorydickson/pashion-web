@@ -219,10 +219,7 @@ export class Index {
                 }
             })
 
-            .then(anything => {
-                setTimeout(function () { $("img.lazy").unveil(); }, 1000);
-                setTimeout(function () { $("img.lazy").unveil(); }, 10000);
-            }) // initial unveil of first images on load
+        .then(anything =>  { setTimeout(function() { $("img.lazy").unveil(); }, 1000) ; }) // initial unveil of first images on load
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
             ;
     }
@@ -269,9 +266,21 @@ export class Index {
             .then(anything => {
                 if (this.firstTime) {
                     ///console.log ("first time unveil");
-                    $(document).ready(function () {
+                    
+                    $("img.lazy").unveil();
+                    $(window).on("resize.unveil", function(){
                         $("img.lazy").unveil();
                     });
+                    $("#mainScrollWindow").on("scroll.unveil", function(){
+                        $(window).off("unveil");
+                        $("img.lazy").unveil();
+                    });
+
+                    $(window).focus(function(){
+          
+                        setTimeout (function() {$("img.lazy").unveil();}, 3000); //RM instantiate *if not already* on tab but wait to settle
+                    });
+                    
                     this.firstTime = false;
                     setTimeout(function () {
                         var msw = document.getElementById("mainScrollWindow");
@@ -353,10 +362,7 @@ export class Index {
                 }
             })
 
-            .then(anything => {
-                setTimeout(function () { $("img.lazy").unveil(); }, 1000);
-                setTimeout(function () { $("img.lazy").unveil(); }, 10000);
-            }) // initial unveil of first images on load
+        .then(anything =>  {setTimeout(function() { $("img.lazy").unveil(); }, 1000);}) // initial unveil of first images on load
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
             ;
     }
@@ -401,10 +407,8 @@ export class Index {
                 }
             })
 
-            .then(anything => {
-                setTimeout(function () { $("img.lazy").unveil(); }, 1000);
-                setTimeout(function () { $("img.lazy").unveil(); }, 10000);
-            }) // initial unveil of first images on load
+        .then(anything => {
+                setTimeout(function() { $("img.lazy").unveil(); }, 1000);}) // initial unveil of first images on load
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
             ;
     }
@@ -449,10 +453,8 @@ export class Index {
                 }
             })
 
-            .then(anything => {
-                setTimeout(function () { $("img.lazy").unveil(); }, 1000);
-                setTimeout(function () { $("img.lazy").unveil(); }, 10000);
-            }) // initial unveil of first images on load
+        .then(anything => {
+                setTimeout(function() { $("img.lazy").unveil(); }, 1000);} ) // initial unveil of first images on load
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
             ;
     }
@@ -498,10 +500,8 @@ export class Index {
                 }
             })
 
-            .then(anything => {
-                setTimeout(function () { $("img.lazy").unveil(); }, 1000);
-                setTimeout(function () { $("img.lazy").unveil(); }, 10000);
-            }) // initial unveil of first images on load
+        .then(anything => {
+                setTimeout(function() { $("img.lazy").unveil(); }, 1000);} ) // initial unveil of first images on load
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
             ;
     }
@@ -546,10 +546,8 @@ export class Index {
                 }
             })
 
-            .then(anything => {
-                setTimeout(function () { $("img.lazy").unveil(); }, 1000);
-                setTimeout(function () { $("img.lazy").unveil(); }, 10000);
-            }) // initial unveil of first images on load
+        .then(anything => {
+                setTimeout(function() { $("img.lazy").unveil(); }, 1000);} ) // initial unveil of first images on load
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
             ;
     }
@@ -694,6 +692,7 @@ export class Index {
         });
 
         this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub());
+        
     }
 
 
@@ -715,6 +714,8 @@ export class Index {
         var panelChoice = document.getElementById("panel" + buttonNumber);
         buttonChoice.classList.toggle("active");
         panelChoice.classList.toggle("show");
+        //menu.scrollIntoView({block: "end", behavior: "smooth"});
+        menu.scrollIntoViewIfNeeded();
     }
 
     closeAllOpenRequestRows() {
@@ -739,6 +740,8 @@ export class Index {
     lookMenu(id) {
         var menu = document.getElementById("look-" + id);
         menu.classList.toggle("look-menu-show");
+        //menu.scrollIntoView({block: "end", behavior: "smooth"});
+        menu.scrollIntoViewIfNeeded();
     }
 
 
@@ -781,6 +784,8 @@ export class Index {
     sampleRequestMenu(id) {
         var menu = document.getElementById("requestTest" + id);
         menu.classList.toggle("look-menu-show");
+        //menu.scrollIntoView({block: "end", behavior: "smooth"});
+        menu.scrollIntoViewIfNeeded();
 
     }
 
