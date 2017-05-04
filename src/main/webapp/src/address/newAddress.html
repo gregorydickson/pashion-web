@@ -5,7 +5,7 @@
         <ai-dialog-header>
             <div class="grid-block align-center tool-header shrink ">
                 <div id="" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad">NEW DELIVERY ADDRESS</span>
+                    <span class="ui-text-label-m-broad">${editMode?'UPDATE':'NEW'} DELIVERY ADDRESS</span>
                 </div>
             </div>
         </ai-dialog-header>
@@ -76,7 +76,7 @@
         <ai-dialog-footer>
             <a class="hollow button" click.delegate="close()">Cancel</a>
             <button class.bind="(newAddress.name && newAddress.contactPhone && newAddress.address1 && newAddress.city && newAddress.country && newAddress.postalCode) ? 'button' : 'button disabled'"
-                click.delegate="createAddress()">Add Address</button>
+                click.delegate="createAddress()">${editMode?'Update':'Add'} Address</button>
 
         </ai-dialog-footer>
     </ai-dialog>

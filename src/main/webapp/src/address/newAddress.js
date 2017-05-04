@@ -11,6 +11,7 @@ export class NewAddress {
 
   newAddress = {};
   addresses = [];
+  editMode = false;
 
   constructor(controller, addressService) {
     this.controller = controller;
@@ -22,6 +23,7 @@ export class NewAddress {
   }
 
   activate(model) {
+    this.editMode = ((Object.keys(model.newAddress).length === 0 && model.newAddress.constructor === Object) ? false : true);
     this.addresses = model.addresses;
     this.newAddress = model.newAddress;
   }
@@ -31,6 +33,14 @@ export class NewAddress {
     this.addressService.createAdHoc(this.newAddress)
       .then(response => {
         // This should probably return the new address and not the list of all 
+        this.controller.ok(response);
+      });
+  }
+
+  updateAddress() {
+    this.addressService.update(this.newAddress)
+      .then(response => {
+        // I think we need to json the data then update the store.
         this.controller.ok(response);
       });
   }
