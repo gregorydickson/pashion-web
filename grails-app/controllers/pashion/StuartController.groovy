@@ -71,7 +71,7 @@ class StuartController {
         shippingEvent = stuartService.createJobQuote(sr.returnToAddress,
         							sr.addressDestination,shippingEvent,"Scooter")
         log.info "quote:"+shippingEvent
-        if(shippingEvent.error != null){
+        if(shippingEvent instanceof Map){
         	log.error "quote ERROR"
         	message = [message:shippingEvent.error]
         	render message as JSON
