@@ -122,7 +122,8 @@ class StuartService {
 
 		def destination = toAddress.address1 + " " + toAddress.postalCode + " " + toAddress.city
 		def origin = fromAddress.address1 + " " + fromAddress.postalCode + " " + fromAddress.city
-		
+		log.info "stuart quote destination:"+destination
+		log.info "stuart quote origin:"+origin
 		try{
 			def quote = http.post {
 				request.headers['Authorization'] = 'Bearer ' + token
@@ -140,6 +141,9 @@ class StuartService {
 	    			log.info "body:"+body[transport]
 	        		return body[transport]
 	    		}
+			}
+			if(quote.errors){
+				return [error:quote.errors.key]
 			}
 			log.info "quote id:"+quote.id
 			log.info "distance :"+quote.distance
