@@ -244,7 +244,7 @@
                   </div>
                   <!-- White list -->
                   <!-- -->         
-                  <div class="grid-block-row">
+                  <div if.bind="(user.type =='brand') || (user.type =='prAgency')"  class="grid-block-row">
                      <div class="ui-text-label-m-broad ">White list</div>
                      <div class="grid-block-row-body">
                         <!-- Name -->
@@ -264,7 +264,7 @@
                   </div>
                   <!-- Black ball -->
                   <!-- -->         
-                  <div class="grid-block-row">
+                  <div if.bind="(user.type =='brand') || (user.type =='prAgency')"  class="grid-block-row">
                      <div class="ui-text-label-m-broad ">Black ball</div>
                      <div class="grid-block-row-body">
                         <!-- Company -->
