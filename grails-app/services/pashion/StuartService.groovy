@@ -180,7 +180,8 @@ class StuartService {
 
 		def job
 		def message
-		def pickupAt = pickup.format("yyyy-MM-dd'T'HH:mm:ss'Z'", TimeZone.getTimeZone("UTC"))
+
+		def pickupAt = pickup.format("yyyy-MM-dd'T'HH:mm:ss'Z'")
 		def jobQuoteId = shippingEvent.stuartQuoteId
 		log.info "pickup at:"+pickupAt
 		log.info "quote id:"+jobQuoteId
@@ -219,36 +220,6 @@ class StuartService {
 		}
 	}
 
-
-	@Selector('shippingOut')
-    void shippingOut(Object id){
-    	
-    	try{
-	    	SampleRequest sr = SampleRequest.get(id) 
-	    	Address address1 = sr.returnToAddress
-	        Address address2 =  sr.addressDestination
-	        def shippingEvent = createJobQuote(address1,address2,sr.shippingOut,sr.courierOut)
-	        def response = createJob(address1,address2,shippingEvent)
-	        def result
-	    	switch (response) {
-		        case 'JOB_DELIVERIES_INVALID':
-		            //\that the delivery is invalid
-		            break
-		        case 'JOB_PICKUP_AT_INVALID':
-		        	// invalid time -after 
-		        	//email support
-		        	break
-		        case {it instanceof ShippingEvent}:
-		        	//do nothing??
-		        default:
-		            result = 'Default'
-		            break
-	    	} 
-	    } catch(Exception e){
-
-	    }
-    	
-    }
     
 
 }
