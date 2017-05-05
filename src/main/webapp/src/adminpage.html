@@ -231,9 +231,14 @@
                      <div class="ui-text-label-m-broad ">Privacy Settings</div>
                      <div class="grid-block-row-body">
                         <!-- Keep Booking Data Private-->
-                        <div class="inline-label" style="">
+                        <div class="inline-label" style="margin-bottom:0px;">
                             <span class="slim-text-box-label" style="width: 231px;">Keep Sample Availability Private</span>
                             <input style="margin-top: 8px; margin-left: 5px;" id="" name="privacyCalendar" type="checkbox" checked.bind="company.hideCalendar" change.delegate="hideCalendar()">
+                        </div>
+                        <!-- Enforce person to person booking -->
+                        <div class="inline-label" style="">
+                            <span class="slim-text-box-label" style="width: 231px;">Allow All Incoming Requests</span>
+                            <input style="margin-top: 8px; margin-left: 5px;" id="" name="allowAllRequests" type="checkbox" checked="checked" disabled change.delegate="allowAllRequests()">
                         </div>
                      </div>
                   </div>

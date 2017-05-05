@@ -85,6 +85,10 @@ export class Adminpage{
     this.brandService.hideCalendar(this.company.id).then(brand =>this.company.hideCalendar=brand);
   }
 
+  allowAllRequests() {
+    console.log("Should be disabled for now");
+  }
+
 
   // Create dialog NEW USER
 
