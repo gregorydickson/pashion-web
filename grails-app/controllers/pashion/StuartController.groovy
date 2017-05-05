@@ -71,7 +71,8 @@ class StuartController {
         shippingEvent = stuartService.createJobQuote(sr.returnToAddress,
         							sr.addressDestination,shippingEvent,"Scooter")
         log.info "quote:"+shippingEvent
-        if(shippingEvent.hasProperty("error")){
+        if(shippingEvent instanceof Map){
+        	log.error "quote ERROR"
         	message = [message:shippingEvent.error]
         	render message as JSON
         	return
@@ -88,7 +89,8 @@ class StuartController {
 
 		shippingEvent = stuartService.createJob(theDate,sr.returnToAddress,sr.addressDestination,shippingEvent)
         if(shippingEvent.hasProperty("message")){
-        	message = [message:shippingEvent.message]
+        	log.error "stuart error message:"+shippingEvent.message
+        	message = [message:message(shippingEvent.message)]
         }else{
         	message = [message:"Messenger Booked"]
         	response.status = 200
@@ -117,15 +119,40 @@ class StuartController {
         	theDate = theDate + theTime[0].toInteger().hours
         	theDate = theDate + theTime[1].toInteger().minutes
         }
-
+        
 		shippingEvent = stuartService.createJob(theDate,sr.addressDestination,sr.returnToAddress,shippingEvent)
         if(shippingEvent.hasProperty("message")){
-        	message = [message:shippingEvent.message]
+        	log.info "Stuart message"
+        	message = [message:message(shippingEvent.message)]
         }else{
         	message = [message:"Messenger Booked"]
         	response.status = 200
         }
         render message as JSON
+	}
+
+
+	def message(response){
+		def result
+		switch (response) {
+	        case 'JOB_DELIVERIES_INVALID':
+	            //that the delivery is invalid
+	            log.error "JOB_DELIVERIES_INVALID"
+	            result = "JOB_DELIVERIES_INVALID"
+	            return result
+	            break
+	        case 'JOB_PICKUP_AT_INVALID':
+	        	log.error "Job PICKUP AT Invalid"
+	        	// invalid time -after 
+	        	//email support
+	        	result = "Invalid time"
+	        	return result
+	        	break
+	        default:
+	            result = response
+	            return result
+	            break
+	    } 
 	}
 
 

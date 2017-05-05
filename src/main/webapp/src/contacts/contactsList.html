@@ -16,7 +16,7 @@
                         <button disabled.bind="(numberOfMyConnections ==0)" id="buttonMCR" class="accordion {(numberOfMyConnections ==0) ? '' : 'expandoHover'}" click.delegate="closeExpand('MCR')"></button>
                     </td>
                     <td class="accordion-grey">
-                        <span>MY CONNECTION REQUESTS</span>
+                        <span>PENDING REQUESTS</span>
                     </td>
                     <td class="accordion-grey" style="width:35px; overflow: hidden;">
                         <span class="accordion-grey" if.bind="(numberOfMyConnections !=0)">
@@ -80,7 +80,7 @@
                         <button disabled.bind="(numberOfRequestsToConnect ==0)" id="buttonRTC" class="accordion ${(numberOfRequestsToConnect ==0) ? '' : 'expandoHover'}" click.delegate="closeExpand('RTC')"></button>
                     </td>
                     <td class="accordion-grey">
-                        <span>REQUESTS TO CONNECT</span>
+                        <span>INCOMING REQUESTS</span>
                     </td>
                     <td class="accordion-grey" style="width:35px; overflow: hidden;">
                         <span class="accordion-grey" if.bind="(numberOfRequestsToConnect !=0)">

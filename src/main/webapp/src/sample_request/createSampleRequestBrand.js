@@ -366,8 +366,10 @@ export class CreateSampleRequestBrand {
     element.offsetHeight;
     element.style.display = '';
   }
+
   startNext() {
     ++this.startOffset;
+    this.updateAvailability();
   }
   startPrevious() {
     --this.startOffset;
