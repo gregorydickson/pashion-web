@@ -1,23 +1,30 @@
-import { inject, singleton } from 'aurelia-framework';
+import { inject, singleton, observable } from 'aurelia-framework';
 import { AddressService } from '../services/addressService';
 import { UserDatastore } from './userDatastore';
+import { Helpers } from '../common/helpers';
 
-@inject(AddressService, UserDatastore)
+@inject(AddressService, UserDatastore, Helpers)
 @singleton()
 export class AddressDatastore {
     deliverTo = [];
     availableDeliverToItems = [];
     selectedDeliverToItems = [''];
     selectedDeliverToId = null;
-    selectedAddress = {};
+    @observable selectedAddress = {};
+    editMode = false;
 
-    constructor(AddressService, UserDatastore) {
+    constructor(AddressService, UserDatastore, Helpers) {
         this.userDatastore = UserDatastore;
         this.addressService = AddressService;
+        this.helpers = Helpers;
     }
 
     activate() {
         return this.reloadData();
+    }
+
+    selectedAddressChanged(newValue, oldValue){
+        this.editMode = !this.helpers.isEmptyObject(newValue);
     }
 
     // this will fetch addresses based on account.type 

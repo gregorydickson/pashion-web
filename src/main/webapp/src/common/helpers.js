@@ -24,4 +24,9 @@ export class Helpers {
 
         element.dispatchEvent(callbackEvent);
     }
+
+    // returns true if empy object
+    isEmptyObject(obj){
+        return ((Object.keys(obj).length === 0 && obj.constructor === Object) ? true : false)
+    }
 }

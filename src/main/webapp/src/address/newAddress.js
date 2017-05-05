@@ -1,21 +1,35 @@
-import {DialogController} from 'aurelia-dialog';
-import {HttpClient,json} from 'aurelia-fetch-client';
+import {
+  DialogController
+} from 'aurelia-dialog';
+import {
+  HttpClient,
+  json
+} from 'aurelia-fetch-client';
 import 'fetch';
-import {inject} from 'aurelia-framework';
-import {DateFormat} from 'common/dateFormat';
-import {AddressService} from 'services/addressService'
+import {
+  inject
+} from 'aurelia-framework';
+import {
+  DateFormat
+} from 'common/dateFormat';
+import {
+  AddressService
+} from 'services/addressService'
+import {
+  Helpers
+} from 'common/helpers';
 
-@inject(DialogController, AddressService)
+@inject(DialogController, AddressService, Helpers)
 export class NewAddress {
   static inject = [DialogController];
 
   newAddress = {};
-  addresses = [];
   editMode = false;
 
-  constructor(controller, addressService) {
+  constructor(controller, addressService, Helpers) {
     this.controller = controller;
     this.addressService = addressService;
+    this.helpers = Helpers;
   }
 
   close() {
@@ -23,8 +37,7 @@ export class NewAddress {
   }
 
   activate(model) {
-    this.editMode = ((Object.keys(model.newAddress).length === 0 && model.newAddress.constructor === Object) ? false : true);
-    this.addresses = model.addresses;
+    this.editMode = !this.helpers.isEmptyObject(model.newAddress);
     this.newAddress = model.newAddress;
   }
 

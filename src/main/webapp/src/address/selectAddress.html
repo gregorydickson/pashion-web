@@ -1,95 +1,38 @@
 <template>
     <require from="../common/select-control"></require>
-    <!--Start Module Here-->
-    
-    <!-- Deliver To-->
+
     <div class.bind="css">
         <span class="inline-label" style="">
             <span class="slim-text-box-label">Deliver To</span>
 
-            <select-control ref="selectControl" name="deliverTo"
-                change.delegate="onDeliverToChangeCallback($event)"                      
-                selected.bind="ds.address.selectedDeliverToItems" 
-                options.bind="ds.address.availableDeliverToItems" 
-                placeholder="SELECT ONE" 
-                allow_clear="true" >
-            </select-control>
+        <select-control ref="selectControl" name="deliverTo" change.delegate="onDeliverToChangeCallback($event)" selected.bind="ds.address.selectedDeliverToItems"
+            options.bind="ds.address.availableDeliverToItems" placeholder="SELECT ONE" allow_clear="true" style="width: 170px;">
+        </select-control>
 
-            <span class="slim-text-box-label" style="text-align:left"><a click.delegate="addAdHoc()" style="">Add</a></span>
-        </span>
-    </div>
-
-    <!-- Name-->
-    <div class.bind="css" if.bind="!hideName">
-        <span class="inline-label" style="margin-bottom: 0px;">
-            <span class="slim-text-box-label ${selectedAddress.name ? '' : 'red-deco' }" style="">Attention</span>
-            <div>
-                <input type="text" class="slim-text-box" value.bind="selectedAddress.name">
-            </div>
-        </span>
-    </div>
-    <!-- Contact Phone-->
-    <div class.bind="css" if.bind="!hideContactPhone">
-        <span class="inline-label" style="margin-bottom: 0px;">
-            <span class="slim-text-box-label" style="">Phone</span>
-            <div>
-                <input type="text" class="slim-text-box" value.bind="selectedAddress.contactPhone">
-            </div>
-        </span>
-    </div>
-    <!-- Company-->
-    <div class.bind="css" if.bind="!hideCompany">
-        <span class="inline-label" style="margin-bottom: 0px;">
-            <span class="slim-text-box-label" style="">Company</span>
-            <div>
-                <input type="text" class="slim-text-box" value.bind="selectedAddress.company">
-            </div>
-        </span>
-    </div>
-    <!-- Address 1 -->
-    <div class.bind="css" if.bind="!hideAddress">
-        <span class="inline-label" style="margin-bottom: 0px;">
-            <span class="slim-text-box-label" style="">Address 1</span>
-            <div>
-                <input type="text" class="slim-text-box" value.bind="selectedAddress.address1">
-            </div>
-        </span>
-    </div>
-    <!-- City -->
-    <div class.bind="css" if.bind="!hideCity">
-        <span class="inline-label" style="margin-bottom: 0px;">
-            <span class="slim-text-box-label" style="">City</span>
-            <div>
-                <input type="text" class="slim-text-box" value.bind="selectedAddress.city">
+        <!--<span class="slim-text-box-label" style="text-align:left"><a click.delegate="addAdHoc()" style="">Add</a></span>-->
+        <div class="look-menu-absolute-wrap">
+            <span class="edit-box">
+            <a href="#" class="expandoHover" click.delegate="toggleMenu()">...</a>
+            </span>
+            <!-- Menu on image when three dots clicked -->
+            <div class="look-menu-absolute" ref="menu">
+                <div class="look-menu-wrap">
+                    <div class="look-menu-heading">ADDRESS
+                    </div>
+                    <ul class="look-menu-list">
+                        <li class="pure-menu-item">
+                            <a href="#" click.delegate="add()" class="look-menu-link">Add</a>
+                        </li>
+                        <li class="pure-menu-item">
+                            <a disabled.bind="!ds.address.editMode" href="#" click.delegate="update()" class="look-menu-link">Update</a>
+                        </li>
+                        <li class="pure-menu-item">
+                            <a disabled.bind="!ds.address.editMode" href="#" click.delegate="delete()" class="look-menu-link">Delete</a>
+                        </li>
+                    </ul>
                 </div>
-        </span>
-    </div>
-    <!-- Country -->
-    <div class.bind="css" if.bind="!hideCountry">
-        <span class="inline-label" style="margin-bottom: 0px;">
-            <span class="slim-text-box-label" style="">Country</span>
-            <div>
-                <input type="text" class="slim-text-box" value.bind="selectedAddress.country">
             </div>
+        </div>
         </span>
     </div>
-    <!-- Postal Code -->
-    <div class.bind="css" if.bind="!hidePostalCode">
-        <span class="inline-label" style="margin-bottom: 0px;">
-            <span class="slim-text-box-label">Postal Code</span>
-            <div> 
-                <input type="text" class="slim-text-box" value.bind="selectedAddress.postalCode">
-            </div>
-        </span>
-    </div>
-    <!-- Comment  -->
-    <div class.bind="css" if.bind="!hideComment">
-        <span class="inline-label" style="margin-bottom: 0px;">
-            <span class="slim-text-box-label">Comment</span>
-            <div> 
-                <input type="text" class="slim-text-box" value.bind="selectedAddress.comment">
-            </div>
-        </span>
-    </div>
-    <!--Stop Module Here-->
 </template>
