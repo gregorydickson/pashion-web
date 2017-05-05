@@ -72,33 +72,7 @@ class SampleRequestController {
         //log.info "Setting look with season in cache invalidate:"+lookSeason
         notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse, booking:sr.id, look:lookSeason] // add season abbrev to methods
     }
-    def brandSend(){
-        
-        SampleRequest.withTransaction { status ->
-            
-        
-            def sr = SampleRequest.get(params.id.toInteger())
-
-            
-            sr.requestStatusBrand = "Picking Up"
-            
-            
-
-            if(sr.courierOut == 'Scooter' || sr.courierOut == 'Bike' || sr.courierOut == 'Car'){
-                notify "shippingOut",sr.id
-            }
-            sr.save(flush:true)
-        }
-
-        def lookSeason = Season.findByName(sr2.season.trim()).abbreviation + sr2.look
-        def sent = [message:'Sample Request ' + sr2.id + ' (look ' + lookSeason + ') is Waiting to be Picked Up']
-        render sent as JSON
-
-
-        def sr2 = SampleRequest.get(params.id.toInteger()) 
-        def pressHouse = sr2.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sr2.brand.name,press: pressHouse, booking:sr2.id, look:lookSeason]
-    }
+    
 
     
     def brandMarkPickedUp(){
