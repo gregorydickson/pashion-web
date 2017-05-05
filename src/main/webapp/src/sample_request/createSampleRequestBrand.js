@@ -367,7 +367,7 @@ export class CreateSampleRequestBrand {
     element.style.display = '';
   }
 
-  startNext() {
+  startNext(){
     ++this.startOffset;
     this.updateAvailability();
   }

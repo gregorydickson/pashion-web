@@ -87,6 +87,10 @@ export class Adminpage {
     console.log("Should be disabled for now");
   }
 
+  allowAllRequests() {
+    console.log("Should be disabled for now");
+  }
+
 
   // Create dialog NEW USER
 
