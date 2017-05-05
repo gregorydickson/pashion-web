@@ -26,7 +26,9 @@ class SampleRequest {
 	Address returnToAddress
 
 	String courierOut
+	Boolean courierOutNotification = false
 	String courierReturn
+	Boolean courierReturnNotification = false
 	String paymentOut
 	String paymentReturn
 	User receivingUser 
