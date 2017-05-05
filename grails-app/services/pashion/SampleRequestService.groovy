@@ -49,8 +49,13 @@ class SampleRequestService {
             if(jsonObject?.deliverTo?.surname != null) {
                 def aUser = User.get(jsonObject.deliverTo.id.toInteger())
                 if(aUser.pressHouse) {
+                    if(aUser.address) {
+                        sr.addressDestination = aUser.address
+                    } else {
+                        sr.addressDestination = Address.findByPressHouseAndDefaultAddress(sr.pressHouse, true)
+                    }
                     sr.pressHouse = aUser.pressHouse
-                    sr.addressDestination = Address.findByPressHouseAndDefaultAddress(sr.pressHouse, true)
+                    
                 } else{
                     sr.addressDestination = aUser.address
                 }
