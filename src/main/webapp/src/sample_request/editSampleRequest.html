@@ -7,6 +7,7 @@
     <require from="common/seasonAbbreviationFormatter"></require>
     <require from="calendars/datetimepicker"></require>
     <require from="common/formSelectSampleRequest"></require>
+    <require from="../address/selectAddress"></require>
     <ai-dialog style="width: auto;"> 
         
         <!-- header -->
@@ -203,6 +204,9 @@
                             </span>
                         </div>
      
+                        <select-address change.delegate="onSelectAddressChangeCallback($event)">
+                        </select-address>                        
+
                         <!-- Attention  -->
                         <div class="grid-block ">
                             <span class="inline-label slim-text-box-label">Attention</span>

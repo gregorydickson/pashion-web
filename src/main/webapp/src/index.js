@@ -22,8 +22,9 @@ import { BrandService } from './services/brandService';
 import { PubNubService } from './services/pubNubService';
 import { busy } from './services/busy';
 import { CreateDialogAlert } from './common/dialogAlert';
+import { DS } from './datastores/ds';
 
-@inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, busy,PubNubService)
+@inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, busy, PubNubService, DS)
 export class Index {
     user = {};
     bookings = [];
@@ -43,7 +44,7 @@ export class Index {
     availableFrom = '';
     availableTo = '';
     selectedSeason = '';
-    selectedTheme = ''; 
+    selectedTheme = '';
     maxR = 250;
     maxRReached = false;
     numberImages = 0;
@@ -51,9 +52,9 @@ export class Index {
     ordering = 'bookingStartDate';
     filtering = 'ALL REQUESTS';
     today = new Date(); // Do we have a problem with freshness of this variable, say login at 11:59PM?
-    firstTime=true;
+    firstTime = true;
 
-    constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, busy,pubNubService) {
+    constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, busy, pubNubService, DS) {
         http.configure(config => {
             config
                 .useStandardConfiguration();
@@ -70,13 +71,14 @@ export class Index {
         this.maxRReached = false;
         this.numberImages = 0;
         this.imagePanelSize = 2; //  1 = small, 2 = mid, 3 = large
+        this.ds = DS;
     }
-    
+
     get numberOfRequests() {
         return document.getElementsByClassName("indexReqRow").length;
     }
 
-    computedOverdue(booking, status) {   
+    computedOverdue(booking, status) {
         var computedDate = new Date(booking);
         var overdue = this.today > computedDate;
         overdue = (overdue && (status == 'Pending'))
@@ -85,21 +87,21 @@ export class Index {
     }
 
     imageExpando() {
-        if (this.imagePanelSize == 1 ) {this.imagePanelSize = 2; return} // no way to get here yet
-        if (this.imagePanelSize == 2 ) {this.imagePanelSize = 3; return}
-        if (this.imagePanelSize == 3 ) {this.imagePanelSize = 2; return}
+        if (this.imagePanelSize == 1) { this.imagePanelSize = 2; return } // no way to get here yet
+        if (this.imagePanelSize == 2) { this.imagePanelSize = 3; return }
+        if (this.imagePanelSize == 3) { this.imagePanelSize = 2; return }
     }
 
-    filterFunc(searchExpression, value, filter, user,seasons){
+    filterFunc(searchExpression, value, filter, user, seasons) {
         var searchVal = true;
         var filterVal = true;
         if (searchExpression == '' && filter == '') return true;
-        var itemValue ='';
+        var itemValue = '';
         if (value.pressHouse) itemValue = value.pressHouse.name;
-        if (value.brand)  itemValue = itemValue + ' ' + value.brand.name;
+        if (value.brand) itemValue = itemValue + ' ' + value.brand.name;
         if (value.prAgency) itemValue = itemValue + ' ' + value.prAgency.name;
         if (value.id) itemValue = itemValue + ' ' + value.id;
-            // Get season abbreviation
+        // Get season abbreviation
         var i;
         var abbrev = '';
         for (i = 0; i < seasons.length; i++) {
@@ -107,101 +109,101 @@ export class Index {
                 abbrev = seasons[i].abbreviation;
             }
         }
-        if (value.look && abbrev == '') itemValue = itemValue + ' ' +  value.look;//RM check added to index small request man
-        if (value.look && abbrev != '') itemValue = itemValue + ' ' + abbrev+value.look;//RM check added to index small request man
+        if (value.look && abbrev == '') itemValue = itemValue + ' ' + value.look;//RM check added to index small request man
+        if (value.look && abbrev != '') itemValue = itemValue + ' ' + abbrev + value.look;//RM check added to index small request man
         // console.log("Filter value: " + itemValue);
-        if(searchExpression && itemValue) searchVal = itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;    
+        if (searchExpression && itemValue) searchVal = itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;
 
         if (filter == 'MY REQUESTS') {
-          filterVal = (value.requestingUser.id == user.id);
+            filterVal = (value.requestingUser.id == user.id);
         }
         if (filter == 'OVERDUE REQUESTS') {
             //console.log ("Overdue request: date: " + var computedDate =     new Date(booking););
             var computedDate = new Date(value.bookingStartDate);
             var today = new Date();
-            if (user.type == "brand" || user.type == "prAgency") filterVal =  ((today > computedDate) && (value.requestStatusBrand == 'Pending'));
-            if (user.type == "press" )  filterVal = ((today > computedDate) && (value.requestStatusPress == 'Pending'));
+            if (user.type == "brand" || user.type == "prAgency") filterVal = ((today > computedDate) && (value.requestStatusBrand == 'Pending'));
+            if (user.type == "press") filterVal = ((today > computedDate) && (value.requestStatusPress == 'Pending'));
         }
         if (filter == 'ACTIVE REQUESTS') {
             if (user.type == "brand" || user.type == "prAgency") filterVal = (
-                (value.requestStatusBrand != 'Closed') && 
+                (value.requestStatusBrand != 'Closed') &&
                 (value.requestStatusBrand != 'Denied') &&
                 (value.requestStatusBrand != 'Refused') &&
                 (value.requestStatusBrand != 'Restocked') &&
                 (value.requestStatusBrand != 'Withdrawn') &&
-                (value.requestStatusBrand != 'Deleted') 
-                );
-            if (user.type == "press" ) filterVal = (
+                (value.requestStatusBrand != 'Deleted')
+            );
+            if (user.type == "press") filterVal = (
                 (value.requestStatusPress != 'Closed') &&
                 (value.requestStatusPress != 'Denied') &&
                 (value.requestStatusPress != 'Refused') &&
                 (value.requestStatusPress != 'Returned') &&
                 (value.requestStatusPress != 'Deleted') &&
                 (value.requestStatusPress != 'Withdrawn')
-                );
+            );
         }
         if (filter == 'INACTIVE REQUESTS') {
             if (user.type == "brand" || user.type == "prAgency") filterVal = (
-                (value.requestStatusBrand == 'Closed') || 
+                (value.requestStatusBrand == 'Closed') ||
                 (value.requestStatusBrand == 'Denied') ||
                 (value.requestStatusBrand == 'Refused') ||
                 (value.requestStatusBrand == 'Restocked') ||
                 (value.requestStatusBrand == 'Withdrawn') ||
-                (value.requestStatusBrand == 'Deleted') 
+                (value.requestStatusBrand == 'Deleted')
 
-                );
+            );
             if (user.type == "press") filterVal = (
                 (value.requestStatusPress == 'Closed') ||
                 (value.requestStatusPress == 'Denied') ||
                 (value.requestStatusPress == 'Refused') ||
                 (value.requestStatusPress == 'Returned') ||
                 (value.requestStatusPress == 'Deleted') ||
-                (value.requestStatusPress == 'Withdrawn') 
-                );
+                (value.requestStatusPress == 'Withdrawn')
+            );
         }
 
-        return (searchVal && filterVal); 
+        return (searchVal && filterVal);
     }
 
 
-    filterChange(event){
+    filterChange(event) {
         this.closeAllOpenRequestRows();
         console.log("changing filter: ");
-          if (event)
+        if (event)
             if (event.detail)
                 if (event.detail.value) {
                     if (event.detail.value == 'ALL REQUESTS') this.filtering = '';
-                    if (event.detail.value == 'MY REQUESTS') this.filtering = 'MY REQUESTS'; 
-                    if (event.detail.value == 'OVERDUE REQUESTS') this.filtering = 'OVERDUE REQUESTS';  
-                    if (event.detail.value == 'ACTIVE REQUESTS') this.filtering = 'ACTIVE REQUESTS'; 
-                    if (event.detail.value == 'INACTIVE REQUESTS') this.filtering = 'INACTIVE REQUESTS'; 
-                    console.log("value:" + event.detail.value + " filtering: " +this.filtering);
-                } 
+                    if (event.detail.value == 'MY REQUESTS') this.filtering = 'MY REQUESTS';
+                    if (event.detail.value == 'OVERDUE REQUESTS') this.filtering = 'OVERDUE REQUESTS';
+                    if (event.detail.value == 'ACTIVE REQUESTS') this.filtering = 'ACTIVE REQUESTS';
+                    if (event.detail.value == 'INACTIVE REQUESTS') this.filtering = 'INACTIVE REQUESTS';
+                    console.log("value:" + event.detail.value + " filtering: " + this.filtering);
+                }
     }
 
     filterChangeSearch(event) {
         this.busy.on();
         console.log("Filter Change changing search: search value:" + this.searchText);
         // this.searchText = '';
-       /* if (event)
-            if (event.detail)
-                if (event.detail.value) {
-                    this.searchText = event.detail.value;
-                    console.log("value:" + event.detail.value)
-                }*/
-                //console.log("Filter change called, SEARCH: " + this.searchText);
+        /* if (event)
+             if (event.detail)
+                 if (event.detail.value) {
+                     this.searchText = event.detail.value;
+                     console.log("value:" + event.detail.value)
+                 }*/
+        //console.log("Filter change called, SEARCH: " + this.searchText);
         this.numberImages = 0;
         this.maxRReached = false;
-        this.http.fetch('/searchableItem/'+this.searchType+'?searchtext=' + encodeURI(this.searchText) +
-                // '&itemType=' + this.selectedItemType + 
-                '&brand=' + this.selectedBrand +
-                '&season=' + encodeURI(this.selectedSeason) +
-                '&availableFrom=' + this.availableFrom +
-                '&availableTo=' + this.availableTo +
-                '&color=' + this.selectedColor +
-                '&theme=' + this.selectedTheme +
-                '&city=' + this.selectedCity +
-                '&maxR=' + this.maxR)
+        this.http.fetch('/searchableItem/' + this.searchType + '?searchtext=' + encodeURI(this.searchText) +
+            // '&itemType=' + this.selectedItemType + 
+            '&brand=' + this.selectedBrand +
+            '&season=' + encodeURI(this.selectedSeason) +
+            '&availableFrom=' + this.availableFrom +
+            '&availableTo=' + this.availableTo +
+            '&color=' + this.selectedColor +
+            '&theme=' + this.selectedTheme +
+            '&city=' + this.selectedCity +
+            '&maxR=' + this.maxR)
             .then(response => response.json())
             .then(rows => {
                 if (rows.session == 'invalid') {
@@ -219,14 +221,14 @@ export class Index {
 
         .then(anything =>  { setTimeout(function() { $("img.lazy").unveil(); }, 1000) ; }) // initial unveil of first images on load
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
-        ;
+            ;
     }
 
     filterChangeBrand(event) {
         this.busy.on();
         //this.rows = []; //RM can do this to prevent the loading over existing images, but have to deal with detritus 
         console.log("Filter Change changing Brand");
-        if (this.user.type === "brand") this.selectedBrand = this.user.companyId; 
+        if (this.user.type === "brand") this.selectedBrand = this.user.companyId;
         else this.selectedBrand = '';
         if (event)
             if (event.detail)
@@ -234,18 +236,18 @@ export class Index {
                     this.selectedBrand = event.detail.value;
                     console.log("value:" + event.detail.value)
                 }
-                //console.log("Filter change called, Brand: " + this.selectedBrand);
+        //console.log("Filter change called, Brand: " + this.selectedBrand);
         this.numberImages = 0;
         this.maxRReached = false;
-        this.http.fetch('/searchableItem/'+this.searchType+'?searchtext=' + encodeURI(this.searchText) +
-                '&brand=' + this.selectedBrand +
-                '&season=' + encodeURI(this.selectedSeason) +
-                '&availableFrom=' + this.availableFrom +
-                '&availableTo=' + this.availableTo +
-                '&theme=' + this.selectedTheme +
-                '&color=' + this.selectedColor +
-                '&city=' + this.selectedCity +
-                '&maxR=' + this.maxR)
+        this.http.fetch('/searchableItem/' + this.searchType + '?searchtext=' + encodeURI(this.searchText) +
+            '&brand=' + this.selectedBrand +
+            '&season=' + encodeURI(this.selectedSeason) +
+            '&availableFrom=' + this.availableFrom +
+            '&availableTo=' + this.availableTo +
+            '&theme=' + this.selectedTheme +
+            '&color=' + this.selectedColor +
+            '&city=' + this.selectedCity +
+            '&maxR=' + this.maxR)
             .then(response => response.json())
             .then(rows => {
                 if (rows.session == 'invalid') {
@@ -261,7 +263,7 @@ export class Index {
                 }
             })
 
-            .then(anything => { 
+            .then(anything => {
                 if (this.firstTime) {
                     ///console.log ("first time unveil");
                     
@@ -280,18 +282,20 @@ export class Index {
                     });
                     
                     this.firstTime = false;
-                    setTimeout(function() { 
+                    setTimeout(function () {
                         var msw = document.getElementById("mainScrollWindow");
-                        if (msw) { 
-                                msw.style.visibility="visible";
-                                //console.log("setting MSW visibility to visible");
-                                };}
+                        if (msw) {
+                            msw.style.visibility = "visible";
+                            //console.log("setting MSW visibility to visible");
+                        };
+                    }
                         , 1000); //wait to set visibile after hiding ugly loading detritus
                 }
                 else {
                     //console.log ("NOT first time unveil");
-                    $("img.lazy").unveil();                 
-                   }})
+                    $("img.lazy").unveil();
+                }
+            })
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')); // scroll to top
     }
 
@@ -328,21 +332,21 @@ export class Index {
                 if (event.detail.value) {
                     //RM change to seasons to be object
                     //using string here, could probably be better as id, but want to contain the changes 
-                    this.selectedSeason = this.seasonNameFromId (event.detail.value);
+                    this.selectedSeason = this.seasonNameFromId(event.detail.value);
                     console.log("value: " + event.detail.value + " selected: " + this.selectedSeason);
                 }
-                //console.log("Filter change called, Season: " + this.selectedSeason);
+        //console.log("Filter change called, Season: " + this.selectedSeason);
         this.numberImages = 0;
         this.maxRReached = false;
-        this.http.fetch('/searchableItem/'+this.searchType+'?searchtext=' + encodeURI(this.searchText) +
-                '&brand=' + this.selectedBrand +
-                '&season=' + encodeURI(this.selectedSeason) +
-                '&availableFrom=' + this.availableFrom +
-                '&availableTo=' + this.availableTo +
-                '&theme=' + this.selectedTheme +
-                '&color=' + this.selectedColor +
-                '&city=' + this.selectedCity +
-                '&maxR=' + this.maxR)
+        this.http.fetch('/searchableItem/' + this.searchType + '?searchtext=' + encodeURI(this.searchText) +
+            '&brand=' + this.selectedBrand +
+            '&season=' + encodeURI(this.selectedSeason) +
+            '&availableFrom=' + this.availableFrom +
+            '&availableTo=' + this.availableTo +
+            '&theme=' + this.selectedTheme +
+            '&color=' + this.selectedColor +
+            '&city=' + this.selectedCity +
+            '&maxR=' + this.maxR)
             .then(response => response.json())
             .then(rows => {
                 if (rows.session == 'invalid') {
@@ -360,7 +364,7 @@ export class Index {
 
         .then(anything =>  {setTimeout(function() { $("img.lazy").unveil(); }, 1000);}) // initial unveil of first images on load
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
-        ;
+            ;
     }
 
     filterChangeTheme(event) {
@@ -376,18 +380,18 @@ export class Index {
                     this.selectedTheme = event.detail.value;
                     console.log("value:" + event.detail.value)
                 }
-                //console.log("Filter change called, Theme: " + this.selectedTheme);
+        //console.log("Filter change called, Theme: " + this.selectedTheme);
         this.numberImages = 0;
         this.maxRReached = false;
-        this.http.fetch('/searchableItem/'+this.searchType+'?searchtext=' + encodeURI(this.searchText) +
-                '&brand=' + this.selectedBrand +
-                '&season=' + encodeURI(this.selectedSeason) +
-                '&availableFrom=' + this.availableFrom +
-                '&availableTo=' + this.availableTo +
-                '&theme=' + this.selectedTheme +
-                '&color=' + this.selectedColor +
-                '&city=' + this.selectedCity +
-                '&maxR=' + this.maxR)
+        this.http.fetch('/searchableItem/' + this.searchType + '?searchtext=' + encodeURI(this.searchText) +
+            '&brand=' + this.selectedBrand +
+            '&season=' + encodeURI(this.selectedSeason) +
+            '&availableFrom=' + this.availableFrom +
+            '&availableTo=' + this.availableTo +
+            '&theme=' + this.selectedTheme +
+            '&color=' + this.selectedColor +
+            '&city=' + this.selectedCity +
+            '&maxR=' + this.maxR)
             .then(response => response.json())
             .then(rows => {
                 if (rows.session == 'invalid') {
@@ -406,7 +410,7 @@ export class Index {
         .then(anything => {
                 setTimeout(function() { $("img.lazy").unveil(); }, 1000);}) // initial unveil of first images on load
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
-        ;
+            ;
     }
 
     filterChangeColor(event) {
@@ -422,18 +426,18 @@ export class Index {
                     this.selectedColor = event.detail.value;
                     console.log("value:" + event.detail.value)
                 }
-                //console.log("Filter change called, Color: " + this.selectedColor);
+        //console.log("Filter change called, Color: " + this.selectedColor);
         this.numberImages = 0;
         this.maxRReached = false;
-        this.http.fetch('/searchableItem/'+this.searchType+'?searchtext=' + encodeURI(this.searchText) +
-                '&brand=' + this.selectedBrand +
-                '&season=' + encodeURI(this.selectedSeason) +
-                '&availableFrom=' + this.availableFrom +
-                '&availableTo=' + this.availableTo +
-                '&theme=' + this.selectedTheme +
-                '&color=' + this.selectedColor +
-                '&city=' + this.selectedCity +
-                '&maxR=' + this.maxR)
+        this.http.fetch('/searchableItem/' + this.searchType + '?searchtext=' + encodeURI(this.searchText) +
+            '&brand=' + this.selectedBrand +
+            '&season=' + encodeURI(this.selectedSeason) +
+            '&availableFrom=' + this.availableFrom +
+            '&availableTo=' + this.availableTo +
+            '&theme=' + this.selectedTheme +
+            '&color=' + this.selectedColor +
+            '&city=' + this.selectedCity +
+            '&maxR=' + this.maxR)
             .then(response => response.json())
             .then(rows => {
                 if (rows.session == 'invalid') {
@@ -452,7 +456,7 @@ export class Index {
         .then(anything => {
                 setTimeout(function() { $("img.lazy").unveil(); }, 1000);} ) // initial unveil of first images on load
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
-        ;
+            ;
     }
 
     filterChangeDates(event) {
@@ -472,15 +476,15 @@ export class Index {
         */
         this.numberImages = 0;
         this.maxRReached = false;
-        this.http.fetch('/searchableItem/'+this.searchType+'?searchtext=' + encodeURI(this.searchText) +
-                '&brand=' + this.selectedBrand +
-                '&season=' + encodeURI(this.selectedSeason) +
-                '&availableFrom=' + this.availableFrom +
-                '&availableTo=' + this.availableTo +
-                '&theme=' + this.selectedTheme +
-                '&color=' + this.selectedColor +
-                '&city=' + this.selectedCity +
-                '&maxR=' + this.maxR)
+        this.http.fetch('/searchableItem/' + this.searchType + '?searchtext=' + encodeURI(this.searchText) +
+            '&brand=' + this.selectedBrand +
+            '&season=' + encodeURI(this.selectedSeason) +
+            '&availableFrom=' + this.availableFrom +
+            '&availableTo=' + this.availableTo +
+            '&theme=' + this.selectedTheme +
+            '&color=' + this.selectedColor +
+            '&city=' + this.selectedCity +
+            '&maxR=' + this.maxR)
             .then(response => response.json())
             .then(rows => {
                 if (rows.session == 'invalid') {
@@ -499,14 +503,14 @@ export class Index {
         .then(anything => {
                 setTimeout(function() { $("img.lazy").unveil(); }, 1000);} ) // initial unveil of first images on load
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
-        ;
+            ;
     }
 
     filterChangeCity(event) {
         this.busy.on();
         console.log("Filter Change changing Change City: from: " + this.selectedCity);
         this.selectedCity = '';
-         if (event)
+        if (event)
             if (event.detail)
                 if (event.detail.value) {
                     if (event.detail.value == 'All') event.detail.value = '';
@@ -515,18 +519,18 @@ export class Index {
                     this.selectedCity = event.detail.value;
                     console.log("value:" + event.detail.value)
                 }
-                //console.log("Filter change called, Color: " + this.selectedColor);       
+        //console.log("Filter change called, Color: " + this.selectedColor);       
         this.numberImages = 0;
         this.maxRReached = false;
-        this.http.fetch('/searchableItem/'+this.searchType+'?searchtext=' + encodeURI(this.searchText) +
-                '&brand=' + this.selectedBrand +
-                '&season=' + encodeURI(this.selectedSeason) +
-                '&availableFrom=' + this.availableFrom +
-                '&availableTo=' + this.availableTo +
-                '&theme=' + this.selectedTheme +
-                '&color=' + this.selectedColor +
-                '&city=' + this.selectedCity +
-                '&maxR=' + this.maxR)
+        this.http.fetch('/searchableItem/' + this.searchType + '?searchtext=' + encodeURI(this.searchText) +
+            '&brand=' + this.selectedBrand +
+            '&season=' + encodeURI(this.selectedSeason) +
+            '&availableFrom=' + this.availableFrom +
+            '&availableTo=' + this.availableTo +
+            '&theme=' + this.selectedTheme +
+            '&color=' + this.selectedColor +
+            '&city=' + this.selectedCity +
+            '&maxR=' + this.maxR)
             .then(response => response.json())
             .then(rows => {
                 if (rows.session == 'invalid') {
@@ -545,9 +549,9 @@ export class Index {
         .then(anything => {
                 setTimeout(function() { $("img.lazy").unveil(); }, 1000);} ) // initial unveil of first images on load
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
-        ;
+            ;
     }
-  
+
     orderChange(event) {
         this.closeAllOpenRequestRows();
         console.log("Order changed ");
@@ -558,31 +562,28 @@ export class Index {
                     if ((this.user.type == "brand") && (event.detail.value == 'BY NUMBER')) this.ordering = 'look'; //RM ditto below
                     if ((this.user.type == "prAgency") && (event.detail.value == 'BY NUMBER')) this.ordering = 'look'; //RM ditto below
                     if ((this.user.type == "press") && (event.detail.value == 'BY NUMBER')) this.ordering = 'look'; //RM changes needed here to properly order strings
-                    if ((this.user.type == "brand") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusBrand'; 
+                    if ((this.user.type == "brand") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusBrand';
                     if ((this.user.type == "prAgency") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusBrand'; //RM double check this
                     if ((this.user.type == "press") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusPress';
                     console.log("value:" + event.detail.value)
-                }          
+                }
     }
 
-    
+
 
     //activate() is called before attached()
     activate() {
+        this.user = this.ds.user.user;
+        if (this.user.type === "nosession") window.location.href = '/user/login';
+        if (this.user.type === "brand") { this.searchType = 'brandSearch'; this.company = this.user.brand; }
+        if (this.user.type === "press") { this.searchType = 'filterSearch'; this.company = this.user.pressHouse; }
+        if (this.user.type === "prAgency") { this.searchType = 'filterSearch'; this.company = this.user.prAgency; }
+
         return Promise.all([
             this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
             this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes),
             this.brandService.getBrands().then(brands => this.brands = brands),
             this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors),
-
-            this.user = this.userService.getUser().then(user => {
-                this.user = user;
-                if(this.user.type === "nosession") window.location.href = '/user/login';
-                if(this.user.type === "brand") { this.searchType = 'brandSearch'; this.company = user.brand;}
-                if(this.user.type === "press") { this.searchType = 'filterSearch'; this.company = user.pressHouse; }
-                if(this.user.type === "prAgency") { this.searchType = 'filterSearch'; this.company = user.prAgency; }
-            })
-
         ]);
     }
 
@@ -597,19 +598,19 @@ export class Index {
             console.log("datepicker event: " + response.elementId + " : " + response.elementValue);
             var fireChange = false;
             if (response.elementId === 'datepickerto') {
-                  if (this.availableFrom) {
+                if (this.availableFrom) {
                     this.fireChange = true;
                     this.availableTo = response.elementValue;
-                  }
-                  else document.getElementById('datepickerto').value = '';
                 }
+                else document.getElementById('datepickerto').value = '';
+            }
             if (response.elementId === 'datepickerfrom') {
-                 this.availableFrom = response.elementValue;
-                 this.fireChange = true;
-                 //  clear the to field as well
-                 this.availableTo = '';
-                 document.getElementById('datepickerto').value = ''
-               }
+                this.availableFrom = response.elementValue;
+                this.fireChange = true;
+                //  clear the to field as well
+                this.availableTo = '';
+                document.getElementById('datepickerto').value = ''
+            }
 
             if (this.fireChange) this.filterChangeDates();
             /*if ((this.availableTo && this.availableFrom) || (this.availableFrom))
@@ -631,25 +632,25 @@ export class Index {
         // search logic here
         // this function will be executed on click of X (clear button) + enter
 
-        $('#search-images').on('search', function() {
+        $('#search-images').on('search', function () {
             console.log("x hit/search in search-images call filterChangeSearch");
             parent.filterChangeSearch(event)
         });
-        $('#search-images2').on('search', function() {
+        $('#search-images2').on('search', function () {
             console.log("x hit/search in search-images2 call filterChangeSearch");
             parent.filterChangeSearch(event)
         });
-        $('#search-contacts').on('search', function() {
+        $('#search-contacts').on('search', function () {
             console.log("x hit/search in search-contacts -> does nothing")
         });
-        $('#search-requests').on('search', function() {
+        $('#search-requests').on('search', function () {
             console.log("x hit/search in search-requests -> does nothing")
         });
 
 
         // Three dots Menu dropdown close when click outside
-        $('body').click(function() {
-            $(".look-menu-absolute").each(function() {
+        $('body').click(function () {
+            $(".look-menu-absolute").each(function () {
                 $(this).removeClass("look-menu-show");
             });
         });
@@ -660,7 +661,7 @@ export class Index {
         $('.blockManageImages').hide();
 
         //Show/hide on select  
-        $('#imagesFunctionality').change(function() {
+        $('#imagesFunctionality').change(function () {
             if ($(this).val() == 'optionSearchImages') {
                 $('.blockSearchImages').show();
                 $('.blockManageImages').hide();
@@ -681,7 +682,7 @@ export class Index {
             }
         }
         mainScrollWindowHeight();
-        $(window).resize(function() {
+        $(window).resize(function () {
             mainScrollWindowHeight();
         });
         this.sampleRequestService.getSampleRequests().then(bookings => {
@@ -689,7 +690,7 @@ export class Index {
                 this.bookings.push(item);
             });
         });
-    
+
         this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub());
         
     }
@@ -717,20 +718,20 @@ export class Index {
         menu.scrollIntoViewIfNeeded();
     }
 
-    closeAllOpenRequestRows () {
+    closeAllOpenRequestRows() {
         var activeList = document.getElementsByClassName("active requestButton");
         var showList = document.getElementsByClassName("show requestPanel");
         var numberElements = 0;
         if (activeList) numberElements = activeList.length; // needed as activeList is dynamically updated HTMLLiveCollection
         var i;
         if (numberElements > 0) {
-            for (i=0; i < numberElements; i++){
+            for (i = 0; i < numberElements; i++) {
                 if (activeList) activeList[0].classList.toggle("active");
             }
         }
         if (showList) numberElements = showList.length;
         if (numberElements > 0) {
-            for (i=0; i < numberElements; i++){
+            for (i = 0; i < numberElements; i++) {
                 if (showList) showList[0].classList.toggle("show");
             }
         }
@@ -749,7 +750,7 @@ export class Index {
         // this.lookMenu(itemId);
         this.dialogService.open({ viewModel: CreateSampleRequestPress, model: itemId, lock: true })
             .then(response => {
-                
+
             });
     }
 
@@ -757,14 +758,14 @@ export class Index {
         // this.lookMenu(itemId);
         this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: itemId, lock: true })
             .then(response => {
-                
+
             });
     }
 
     checkAvailabilitySearchableItem(itemId) {
         //this.lookMenu(itemId);
         this.dialogService.open({ viewModel: CheckAvailability, model: itemId, lock: false })
-            .then(response => {});
+            .then(response => { });
     }
 
     setAvailabilitySearchableItem(item) {
@@ -777,7 +778,7 @@ export class Index {
     editSearchableItem(itemId) {
         //this.lookMenu(itemId);
         this.dialogService.open({ viewModel: EditSearchableItem, model: itemId, lock: true })
-            .then(response => {});
+            .then(response => { });
     }
 
     sampleRequestMenu(id) {
@@ -797,14 +798,14 @@ export class Index {
         this.closeSampleRequestMenu(id);
         this.dialogService.open({ viewModel: EditSampleRequest, model: id, lock: true })
             .then(response => {
-                
+
             });
     }
 
 
-    alertP (message){
+    alertP(message) {
 
-        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000}, lock: false }).then(response => {});
+        this.dialogService.open({ viewModel: CreateDialogAlert, model: { title: "Booking", message: message, timeout: 5000 }, lock: false }).then(response => { });
     }
 
     //Brand Workflow Functions
@@ -812,49 +813,49 @@ export class Index {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.denySampleRequest(id).then(message => {
             this.alertP(message.message);
-            
+
         });
     }
     approveSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.approveSampleRequest(id).then(message => {
             this.alertP(message.message);
-            
+
         });
     }
     sendSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.sendSampleRequest(id).then(message => {
             this.alertP(message.message);
-            
+
         });
     }
     markPickedUpSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.markPickedUpSampleRequest(id).then(message => {
             this.alertP(message.message);
-            
+
         });
     }
     markReturnedSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.markReturnedSampleRequest(id).then(message => {
             this.alertP(message.message);
-            
+
         });
     }
     restockedSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.restockedSampleRequest(id).then(message => {
             this.alertP(message.message);
-            
+
         });
     }
     deleteSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.deleteSampleRequest(id).then(message => {
             this.alertP(message.message);
-            
+
         });
     }
     /*
@@ -862,22 +863,22 @@ export class Index {
      *   then reload bookings.
      * 
     */
-    listenForBookingsCacheInvalidation(pubNub){
+    listenForBookingsCacheInvalidation(pubNub) {
         console.log("listen for bookings cache invalidate - index.js");
-        
+
         let company = this.user.company;
-        let channel = company +'_cacheInvalidate';
-        console.log("listening on channel:"+channel);
+        let channel = company + '_cacheInvalidate';
+        console.log("listening on channel:" + channel);
         let bookingsToUpdate = this.bookings;
         let sampleRequestService = this.sampleRequestService;
-        
+
         var indexListener = {
             message: function updateBookingsIndex(message) {
-                
+
                 var channelName = message.channel;
-                if(channelName === channel){
-                    sampleRequestService.getSampleRequests(true).then(newBookings => { 
-                        while(bookingsToUpdate.length > 0) {
+                if (channelName === channel) {
+                    sampleRequestService.getSampleRequests(true).then(newBookings => {
+                        while (bookingsToUpdate.length > 0) {
                             bookingsToUpdate.pop();
                         }
                         newBookings.forEach(item => {
@@ -885,7 +886,7 @@ export class Index {
                         });
                     });
                     toastr.options.preventDuplicates = true;
-                    toastr.info('Request ' + message.message + " updated"); 
+                    toastr.info('Request ' + message.message + " updated");
                 }
             }
         }
@@ -893,11 +894,11 @@ export class Index {
         this.pubNubService.addIndexListener(indexListener);
         pubNub.subscribe({
             channels: [channel],
-            withPresence: false 
+            withPresence: false
         })
     }
 
-    unbind(){
+    unbind() {
         console.log("UNBIND INDEX ******* ")
         this.pubNubService.removeIndexListener();
 
@@ -913,28 +914,28 @@ export class Index {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.pressMarkReceivedSampleRequest(id).then(message => {
             this.alertP(message.message);
-            
+
         });
     }
     pressShipSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.pressShipSampleRequest(id).then(message => {
             this.alertP(message.message);
-            
+
         });
     }
     pressMarkPickedUpSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.pressMarkPickedUpSampleRequest(id).then(message => {
             this.alertP(message.message);
-            
+
         });
     }
     pressDeleteSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.pressDeleteSampleRequest(id).then(message => {
             this.alertP(message.message);
-            
+
         });
     }
 
@@ -951,7 +952,7 @@ export class Index {
         zoomModel.rows = this.rows;
         zoomModel.itemNumber = itemNumber;
         zoomModel.rowNumber = rowNumber;
-        this.dialogService.open({ viewModel: Zoom, model: zoomModel , lock:false})
+        this.dialogService.open({ viewModel: Zoom, model: zoomModel, lock: false })
             .then(response => {
                 menu.classList.toggle("blue-image");
             });
@@ -959,14 +960,14 @@ export class Index {
 
     // Add files (Add images) dialog
     createAddfilesDialog() {
-        this.dialogService.open({ viewModel: AddFilesDialog, model: null, lock:true })
-            .then(response => {});
+        this.dialogService.open({ viewModel: AddFilesDialog, model: null, lock: true })
+            .then(response => { });
     }
 
     // Create error dialog sample
     createErrorDialogSample() {
-        this.dialogService.open({ viewModel: ErrorDialogSample, model: "no-op", lock:false })
-            .then(response => {});
+        this.dialogService.open({ viewModel: ErrorDialogSample, model: "no-op", lock: false })
+            .then(response => { });
     }
 
 

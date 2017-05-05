@@ -1,32 +1,29 @@
-import {DialogController} from 'aurelia-dialog';
-import {HttpClient,json} from 'aurelia-fetch-client';
+import { DialogController } from 'aurelia-dialog';
+import { HttpClient, json } from 'aurelia-fetch-client';
 import 'fetch';
-import {inject} from 'aurelia-framework';
-import {DateFormat} from 'common/dateFormat';
-import {UserService} from 'services/userService.js'
+import { inject } from 'aurelia-framework';
+import { DateFormat } from 'common/dateFormat';
+import { DS } from 'datastores/ds'
 
-@inject(DialogController, UserService)
+@inject(DialogController, DS)
 export class Introduction {
-  
+
   user = {};
 
-  constructor(controller,userService){
+  constructor(controller, DS) {
     this.controller = controller;
-    this.userService = userService;
+    this.ds = DS;
   }
 
-  activate(){
-  	return this.user = this.userService.getUser().then(user => {this.user = user;})
+  activate() {
+    this.user = this.ds.user.user;
   }
-  
-  
 
-  
 
-  close(){
+  close() {
 
     this.controller.close();
-    
+
   }
 
 

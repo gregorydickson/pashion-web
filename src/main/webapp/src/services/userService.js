@@ -1,9 +1,9 @@
-import { inject } from 'aurelia-framework';
-import { HttpClient, json } from 'aurelia-fetch-client';
-import { singleton } from 'aurelia-framework';
+import {    inject,    observable} from 'aurelia-framework';
+import {    HttpClient,    json} from 'aurelia-fetch-client';
+import {    singleton} from 'aurelia-framework';
 import 'fetch';
-
-@inject(HttpClient)
+import {    EventAggregator} from 'aurelia-event-aggregator';
+@inject(HttpClient, EventAggregator)
 @singleton()
 export class UserService {
 
@@ -11,16 +11,24 @@ export class UserService {
     // one each with a user set to each participant, with the other user set in connectedIUserd
 
     showIntro = true;
-    user = null;
-    constructor(http) {
+    @observable user = null;
+    constructor(http, EventAggregator) {
         http.configure(config => {
             config
                 .useStandardConfiguration();
         });
         this.http = http;
+        this.eventAggregator = EventAggregator;
     }
 
     activate() {}
+
+    // Lets keep the datastore user in sync with this local user
+    userChanged(newValue, oldValue) {
+        if (newValue) {
+            this.eventAggregator.publish('UserService.GetUser', newValue);
+        }
+    }
 
     // there are no calls to this function in this file. 
     // All access to users is via the implicit variable created at #36
@@ -62,16 +70,16 @@ export class UserService {
         } else {
             method = 'usersPRAgency';
             id = user.prAgency.id;
-        } 
-        console.log("UserService.getUsersByOrganization, method for org: "+method + " id:"+id);
+        }
+        console.log("UserService.getUsersByOrganization, method for org: " + method + " id:" + id);
         var promise = new Promise((resolve, reject) => {
             if ((!this.usersOrg) || forceGetFromServer) { // local storage if already loaded
                 console.log("UserService.getUsersByOrganization, getting users from /dashboard/" + method);
-                this.http.fetch('/dashboard/'+method+"/"+id)
+                this.http.fetch('/dashboard/' + method + "/" + id)
                     .then(response => response.json())
                     .then(users => {
                         this.usersOrg = users;
-                        console.log("UserService.getUsersByOrganization, users for an org:"+this.usersOrg);
+                        console.log("UserService.getUsersByOrganization, users for an org:" + this.usersOrg);
                         resolve(this.usersOrg);
                     }).catch(err => reject(err));
             } else {
@@ -142,7 +150,7 @@ export class UserService {
     getUserDetails(id) {
         // could replace this with users database I guess. RM for later...
         //console.log("UserService.getUserDetails, for: " + id);
-        if(!id) {
+        if (!id) {
             window.location.href = '/user/login';
             return
         }
@@ -151,7 +159,7 @@ export class UserService {
                 .then(response => response.json())
                 .then(currentContact => {
                     this.currentContact = currentContact;
-                    console.log ("UserService.getUserDetails, for: " + id + "returned: " +currentContact.name);
+                    console.log("UserService.getUserDetails, for: " + id + "returned: " + currentContact.name);
                     resolve(this.currentContact);
                 })
                 .catch(err => reject(err));
@@ -168,7 +176,7 @@ export class UserService {
 
         // update the info into a full record
         // json side can then decide what to update
-        var tempNewUser = this.users[updateUser.id-1];
+        var tempNewUser = this.users[updateUser.id - 1];
         if (updateUser.address) tempNewUser.address = updateUser.address;
         if (updateUser.name) tempNewUser.name = updateUser.name;
         if (updateUser.surname) tempNewUser.surname = updateUser.surname;
@@ -183,35 +191,37 @@ export class UserService {
                     body: json(tempNewUser)
                 })
                 .then(response => response.json())
-                .then(result => {resolve(result)}).catch(err => reject(err));
+                .then(result => {
+                    resolve(result)
+                }).catch(err => reject(err));
         });
 
         // if we are updating the current login user then need to set local 
         if (this.user.id == updateUser.id) {
             //add the extra stuff
-            if (tempNewUser.brand!=null) {
+            if (tempNewUser.brand != null) {
                 tempNewUser["type"] = 'brand';
                 tempNewUser["companyId"] = tempNewUser.brand.id;
-            } else if (tempNewUser.pressHouse!=null) {
+            } else if (tempNewUser.pressHouse != null) {
                 tempNewUser["type"] = 'press';
                 tempNewUser["companyId"] = tempNewUser.pressHouse.id;
-            } else if (tempNewUser.prAgency!=null) {
+            } else if (tempNewUser.prAgency != null) {
                 tempNewUser["type"] = 'prAgency';
                 tempNewUser["companyId"] = tempNewUser.prAgency.id;
             } else {
                 tempNewUser["type"] = 'nosession';
-            } 
+            }
             this.user = tempNewUser;
         }
 
     }
 
-    uploadAvatar (data){
+    uploadAvatar(data) {
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/user/uploadAvatar/' + this.user.id + ".json", {
                     method: 'post',
                     body: JSON.stringify({
-                            data:data
+                        data: data
                     })
                 })
                 .then(response => response.json())
@@ -226,7 +236,7 @@ export class UserService {
         return promise;
     }
 
-    clearAvatar (){
+    clearAvatar() {
         this.user.avatar = null;
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/user/clearAvatar/' + this.user.id, {
@@ -248,12 +258,12 @@ export class UserService {
 
         console.log("UserService.addContactRequest, for id: " + idIn);
         // first connection record
-        var nameString1 = this.users[this.user.id - 1].name + ' '+this.users[this.user.id - 1].surname + this.users[this.user.id - 1].email; // spaces to match name display and prvent run on match for the other fields
+        var nameString1 = this.users[this.user.id - 1].name + ' ' + this.users[this.user.id - 1].surname + this.users[this.user.id - 1].email; // spaces to match name display and prvent run on match for the other fields
         if (this.users[this.user.id - 1].brand) nameString1 += this.users[this.user.id - 1].brand.name;
         if (this.users[this.user.id - 1].pressHouse) nameString1 += this.users[this.user.id - 1].pressHouse.name;
         if (this.users[this.user.id - 1].prAgency) nameString1 += this.users[this.user.id - 1].prAgency.name;
 
-        var nameString2 = this.users[idIn - 1].name +  ' ' + this.users[idIn - 1].surname + this.users[idIn - 1].email;
+        var nameString2 = this.users[idIn - 1].name + ' ' + this.users[idIn - 1].surname + this.users[idIn - 1].email;
         if (this.users[idIn - 1].brand) nameString2 += this.users[idIn - 1].brand.name;
         if (this.users[idIn - 1].pressHouse) nameString2 += this.users[idIn - 1].pressHouse.name;
         if (this.users[idIn - 1].prAgency) nameString2 += this.users[idIn - 1].prAgency.name;
@@ -287,7 +297,11 @@ export class UserService {
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/addContactRequest/', {
                     method: 'post',
-                    body: json({ user1: conn1, user2: conn2, fromEmail: connectedEmail }) // 
+                    body: json({
+                        user1: conn1,
+                        user2: conn2,
+                        fromEmail: connectedEmail
+                    }) // 
                 })
                 .then(response => response.json())
                 .then(result => {
@@ -343,7 +357,7 @@ export class UserService {
         */
     }
 
-        // from pubnub real-time only and not history
+    // from pubnub real-time only and not history
     // history sets pushToServer as false and uses flushConnectionsData
     // only messages to or from this email user are sent.
     updateLastMessage(fromEmail, message, pushToServer) { // add 1 to the count
@@ -355,7 +369,7 @@ export class UserService {
         var i;
         for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
             if (this.users[this.user.id - 1].connections[i].connectedUserId == fromUserId) {
-                this.users[this.user.id - 1].connections[i].lastMessage=message;
+                this.users[this.user.id - 1].connections[i].lastMessage = message;
                 //console.log("UserService.updateLastMessage from: " + fromUserId + " to: " + this.user.id + " message: " + message);
                 connectionId = this.users[this.user.id - 1].connections[i].id;
                 break;
@@ -460,7 +474,9 @@ export class UserService {
 
         // save out using connection id
         if (connectionId1 != -1) {
-            var payload = { mostRecentRead: JSON.stringify(mostRecentDateStamp) };
+            var payload = {
+                mostRecentRead: JSON.stringify(mostRecentDateStamp)
+            };
             var promise = new Promise((resolve, reject) => {
                 this.http.fetch('/connection/saveMostRecentRead/' + connectionId1, {
                         method: 'post',
@@ -485,13 +501,13 @@ export class UserService {
     deleteContact(user, id) { // id=connection id 
         console.log("UserService.deleteContact, id: " + id + " from user " + user);
         // local
-        if (typeof(id) == 'undefined') {
-            console.log ("UserService.deleteContact, id undefined: " + id);
+        if (typeof (id) == 'undefined') {
+            console.log("UserService.deleteContact, id undefined: " + id);
             // pf = new Promise ();
             return Promise.reject(new Error('fail'));
         }
-        if (typeof(user) == 'undefined') {
-            console.log ("UserService.deleteContact, user undefined");
+        if (typeof (user) == 'undefined') {
+            console.log("UserService.deleteContact, user undefined");
             // pf = new Promise ();
             return Promise.reject(new Error('fail'));
         }
@@ -512,19 +528,23 @@ export class UserService {
         // make 2 calls because not sureif the standard delete should be used or not.
 
         console.log("UserService.deleteContact, delete connection 1, id: " + id + " fromEmail: " + connectedEmail);
-        var payload = { fromEmail: connectedEmail };
+        var payload = {
+            fromEmail: connectedEmail
+        };
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/delete/' + id, {
-                    method: 'post',
-                    body: json(payload)
-                })
-                //.then(response => response.json())
-                //  .then(result => resolve(result));
+                method: 'post',
+                body: json(payload)
+            })
+            //.then(response => response.json())
+            //  .then(result => resolve(result));
         });
         // 2nd fllipped 
         var id2;
         var email2 = null; //RM signal that for 2nd delete we do NOT want to send invalidate
-        payload = { fromEmail: email2 };
+        payload = {
+            fromEmail: email2
+        };
         for (i = 0; i < this.users[connectedUserId - 1].connections.length; i++) {
             if (this.users[connectedUserId - 1].connections[i].connectedUserId == user) {
                 id2 = this.users[connectedUserId - 1].connections[i].id;
@@ -537,32 +557,34 @@ export class UserService {
         console.log("UserService.deleteContact, delete connection 2, id: " + id2 + " fromEmail: " + email2);
         promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/delete/' + id2, {
-                    method: 'post',
-                    body: json(payload)
-                })
-                //.then(response => response.json())
-                //.then(result => resolve(result));
+                method: 'post',
+                body: json(payload)
+            })
+            //.then(response => response.json())
+            //.then(result => resolve(result));
         });
 
         // not sure if I should serilize the deletes, lest's assue not for now.
         return promise;
     }
 
-    delete(id){
+    delete(id) {
 
         var promise = new Promise((resolve, reject) => {
-            
-            this.http.fetch('/user/blank/'+id,{method:'delete'})
+
+            this.http.fetch('/user/blank/' + id, {
+                    method: 'delete'
+                })
                 .then(response => {
-                    if(response.ok) {
+                    if (response.ok) {
                         resolve(response);
                     } else {
                         console.log('UserService.deleteContact, Network response was not ok.');
                         reject("Not Deleted");
                     }
-            })
-            .catch(err => reject(err));
-            
+                })
+                .catch(err => reject(err));
+
         });
         return promise;
 
@@ -595,7 +617,10 @@ export class UserService {
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/acceptContact/' + id, {
                     method: 'post',
-                    body: json({ connectedConnId: connectedConnId, fromEmail: connectedEmail })
+                    body: json({
+                        connectedConnId: connectedConnId,
+                        fromEmail: connectedEmail
+                    })
                 }).then(response => response.json())
                 .then(result => resolve(result));
         });
@@ -614,13 +639,13 @@ export class UserService {
                             //RM should weed out the places that rely on this and create specific functions here
                             this.user = user;
                             console.log("userService.getUser, got user " + user.name)
-                            if (user.brand!=null) {
+                            if (user.brand != null) {
                                 this.user["type"] = 'brand';
                                 this.user["companyId"] = user.brand.id;
-                            } else if (user.pressHouse!=null) {
+                            } else if (user.pressHouse != null) {
                                 this.user["type"] = 'press';
                                 this.user["companyId"] = user.pressHouse.id;
-                            } else if (user.prAgency!=null) {
+                            } else if (user.prAgency != null) {
                                 this.user["type"] = 'prAgency';
                                 this.user["companyId"] = user.prAgency.id;
                             } else {
@@ -638,35 +663,35 @@ export class UserService {
         return promise;
     }
 
-    createUser(userToAdd){
-        console.log("UserService.createUser, "+userToAdd);
+    createUser(userToAdd) {
+        console.log("UserService.createUser, " + userToAdd);
         console.log(JSON.stringify(this.user));
         let currentUser = this.user;
-        
+
         if (currentUser.brand) {
             userToAdd.brand = currentUser.brand;
         } else if (currentUser.pressHouse) {
             userToAdd.pressHouse = currentUser.pressHouse.id;
-            console.log("UserService.createUser, user presshouse"+currentUser.pressHouse.id);
+            console.log("UserService.createUser, user presshouse" + currentUser.pressHouse.id);
         } else if (currentUser.prAgency) {
             userToAdd.prAgency = currentUser.prAgency.id;
         }
         var promise = new Promise((resolve, reject) => {
-            
-            this.http.fetch('/user/createjson/?format=json',{
-                method: 'post',
-                body: json(userToAdd)
-            })
+
+            this.http.fetch('/user/createjson/?format=json', {
+                    method: 'post',
+                    body: json(userToAdd)
+                })
                 .then(response => {
-                    if(response.ok) {
+                    if (response.ok) {
                         resolve(response);
                     } else {
                         console.log('UserService.createUser, Network response was not ok.');
                         reject("Not Created");
                     }
-            })
-            .catch(err => reject(err));
-            
+                })
+                .catch(err => reject(err));
+
         });
         return promise;
 

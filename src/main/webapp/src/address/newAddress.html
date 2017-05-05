@@ -1,12 +1,11 @@
-
 <template>
     <ai-dialog style="width: auto;">
-        
+
         <!-- header -->
         <ai-dialog-header>
             <div class="grid-block align-center tool-header shrink ">
                 <div id="" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad">NEW DELIVERY ADDRESS</span> 
+                    <span class="ui-text-label-m-broad">${editMode?'UPDATE':'NEW'} DELIVERY ADDRESS</span>
                 </div>
             </div>
         </ai-dialog-header>
@@ -17,7 +16,7 @@
                 <div class="grid-block">
 
                     <!-- Column One -->
-                    <div class="grid-block vertical align-left">  
+                    <div class="grid-block vertical align-left">
 
                         <!-- Who  -->
                         <div class="grid-block shrink">
@@ -65,18 +64,19 @@
                             <span class="inline-label slim-text-box-label">Comment</span>
                             <input type="text" class="slim-text-box" value.bind="newAddress.comment">
                         </div>
-                   
+
                     </div>
 
                 </div>
-              
+
             </div>
         </ai-dialog-body>
 
         <!-- Footer buttons -->
         <ai-dialog-footer>
-                    <a class="hollow button"  click.delegate="close()">Cancel</a>
-                    <button class.bind="(newAddress.name && newAddress.contactPhone && newAddress.address1 && newAddress.city && newAddress.country && newAddress.postalCode) ? 'button' : 'button disabled'" click.delegate="createAddress()">Add Address</button>
+            <a class="hollow button" click.delegate="close()">Cancel</a>
+            <button class.bind="(newAddress.name && newAddress.contactPhone && newAddress.address1 && newAddress.city && newAddress.country && newAddress.postalCode) ? 'button' : 'button disabled'"
+                click.delegate="createAddress()">${editMode?'Update':'Add'} Address</button>
 
         </ai-dialog-footer>
     </ai-dialog>
