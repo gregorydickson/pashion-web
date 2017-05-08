@@ -70,6 +70,10 @@ export class EditSampleRequest {
     this.http.fetch('/brand/users/' + this.sampleRequest.brand.id)
       .then(response => response.json())
       .then(brandUsers => this.brandUsers = brandUsers);
+    if(this.sampleRequest.shippingOut.stuartJobId)
+      document.getElementById('bookOut').style.visibility = 'hidden';
+    if(this.sampleRequest.shippingReturn.stuartJobId)
+      document.getElementById('bookReturn').style.visibility = 'hidden';
 
 
   }
@@ -84,8 +88,9 @@ export class EditSampleRequest {
   bookOut() {
     // initiate stuart booking
     if (!(this.sampleRequest.pickupDate) ||
-      !(this.sampleRequest.pickupTime)) {
-      this.alertP("Please pick a Date and Time");
+      !(this.sampleRequest.pickupTime) ||
+      !(this.sampleRequest.addressDestination)) {
+      this.alertP("Please pick a Date and Time and Address");
       return
     }
     this.busy.on();
@@ -104,8 +109,7 @@ export class EditSampleRequest {
 
   bookReturn() {
     // initiate stuart booking
-    if (!(this.sampleRequest.pickupDateReturn) ||
-      !(this.sampleRequest.pickupTimeReturn)) {
+    if (!(this.sampleRequest.pickupDateReturn) || !(this.sampleRequest.pickupTimeReturn)) {
       this.alertP("Please pick a Date and Time");
       return
     }

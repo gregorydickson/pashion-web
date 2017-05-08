@@ -45,24 +45,8 @@ class SampleRequestService {
             sr.bookingEndDate = dateFormat.parse(jsonObject.endDate)
             sr.requiredBy = jsonObject.requiredBy
             
-            sr.returnToAddress = Address.get(jsonObject.returnToAddress.toInteger())
-            if(jsonObject?.deliverTo?.surname != null) {
-                def aUser = User.get(jsonObject.deliverTo.id.toInteger())
-                if(aUser.pressHouse) {
-                    if(aUser.address) {
-                        sr.addressDestination = aUser.address
-                    } else {
-                        sr.addressDestination = Address.findByPressHouseAndDefaultAddress(sr.pressHouse, true)
-                    }
-                    sr.pressHouse = aUser.pressHouse
-                    
-                } else{
-                    sr.addressDestination = aUser.address
-                }
-                sr.deliverTo = aUser
-            } else{
-                sr.addressDestination = Address.get(jsonObject.deliverTo.id.toInteger())
-            }
+            
+            sr = addresses(sr,jsonObject)
             sr.returnBy = jsonObject.returnBy
 
             sr.requestStatusBrand = "Pending"
@@ -116,9 +100,10 @@ class SampleRequestService {
             sr.editorialName = jsonObject.editorialName
             sr.editorialWho = jsonObject.editorialWho
             
-            sr.deliverTo = User.get(jsonObject.deliverTo.id)
+            sr = addresses(sr,jsonObject)
 
             sr.shippingOut.tracking = jsonObject.shippingOut.tracking
+            
             if(jsonObject.shippingOut.startDate){
                 log.info "start date:"+jsonObject.shippingOut.startDate
                 sr.shippingOut.startDate = dateTimeFormat.parse(jsonObject.shippingOut.startDate)
@@ -181,5 +166,54 @@ class SampleRequestService {
             log.info "UPDATED SAMPLE REQUEST:"+sr.id
         }
         sr
+    }
+
+    //DeliverTo is a User which may not be set if the address
+    // is an ad-hoc address
+    def addresses(SampleRequest sr,JSONObject jsonObject){
+        log.info "sample request addresses"
+        if(jsonObject.returnToAddress)
+            sr.returnToAddress = Address.get(jsonObject.returnToAddress.toInteger())
+        
+        if(jsonObject.addressDestination){
+
+            if(jsonObject?.addressDestination?.surname != null) {
+                def aUser = User.get(jsonObject.addressDestination.id.toInteger())
+                if(aUser.pressHouse) {
+                    if(aUser.address) {
+                        sr.addressDestination = aUser.address
+                    } else {
+                        sr.addressDestination = Address.findByPressHouseAndDefaultAddress(sr.pressHouse, true)
+                    }
+                    sr.pressHouse = aUser.pressHouse
+                    
+                } else{
+                    sr.addressDestination = aUser.address
+                }
+                sr.deliverTo = aUser
+            } else{
+                sr.addressDestination = Address.get(jsonObject.addressDestination.id.toInteger())
+            }
+            
+        } else if(jsonObject?.deliverTo?.surname != null) {
+            def aUser = User.get(jsonObject.deliverTo.id.toInteger())
+            if(aUser.pressHouse) {
+                if(aUser.address) {
+                    sr.addressDestination = aUser.address
+                } else {
+                    sr.addressDestination = Address.findByPressHouseAndDefaultAddress(sr.pressHouse, true)
+                }
+                sr.pressHouse = aUser.pressHouse
+                
+            } else{
+                sr.addressDestination = aUser.address
+            }
+            sr.deliverTo = aUser
+        } else {
+            sr.addressDestination = Address.get(jsonObject.deliverTo.id.toInteger())
+        }
+
+        sr
+
     }
 }
