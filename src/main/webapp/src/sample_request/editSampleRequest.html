@@ -14,7 +14,7 @@
         <ai-dialog-header>
             <div class="grid-block align-center tool-header shrink ">
                 <div id="" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad">EDIT REQUEST ${sampleRequest.id} FOR LOOK ${sampleRequest.season | seasonAbbreviation:seasons}${sampleRequest.look}</span>
+                    <span class="ui-text-label-m-broad">EDIT REQUEST ${sampleRequest.id} FOR LOOK ${sampleRequest.season | seasonAbbreviation:seasons}.${sampleRequest.look}</span>
                 </div>
             </div>
         </ai-dialog-header>
@@ -281,8 +281,8 @@
                     <table repeat.for="sample of sampleRequest.searchableItemsProposed" class="" style="table-layout:fixed">
                         <tr>
                             <!-- <td class="accordion w3">${$index+1}</td> -->
-                            <td class="accordion" style="width:50px; max-width:50px;">${sampleRequest.season | seasonAbbreviation:seasons}${sampleRequest.look}.${$index+1}</td>
-                            <td class="accordion to-u-c" style="width:335px; max-width:335px; overflow:hidden; padding-right:10px;">[${sample.clientID}] : ${sample.attributes}</td>
+                            <td class="accordion" style="width:65px; max-width:65px;">${sampleRequest.season | seasonAbbreviation:seasons}.${sampleRequest.look}.${$index+1}</td>
+                            <td class="accordion to-u-c" style="width:320px; max-width:320px; overflow:hidden; padding-right:10px;">[${sample.clientID}] : ${sample.attributes}</td>
                             <td class="accordion" style="width:60px; max-width:60px;">                            
                                 <span style="margin-bottom:0px;">${sample.status.status}</span>
                                 
@@ -307,8 +307,8 @@
                     <table repeat.for="sample of sampleRequest.searchableItemsProposed" class="" style="margin-bottom:7px; table-layout:fixed">
                         <tr>
                            <!--  <td class="accordion w3">${$index+1}</td> -->
-                            <td class="accordion" style="width:50px; max-width:50px;">${sampleRequest.season | seasonAbbreviation:seasons}${sampleRequest.look}.${$index+1} :</td>
-                            <td class="accordion to-u-c" style="width:355px; max-width:355px; overflow:hidden;padding-right:10px;">${sample.attributes}</td>
+                            <td class="accordion" style="width:65px; max-width:65px;">${sampleRequest.season | seasonAbbreviation:seasons}.${sampleRequest.look}.${$index+1} :</td>
+                            <td class="accordion to-u-c" style="width:340px; max-width:340px; overflow:hidden;padding-right:10px;">${sample.attributes}</td>
                             <td class="accordion" style="width:60px; max-width:60px;">
                                 <span style="margin-bottom:0px;">${sample.status.brandStatus}</span>
                                 <span if.bind="(!sample.status.brandStatus)" style="margin-bottom:0px;">Pending</span>
