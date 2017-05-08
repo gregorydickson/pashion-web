@@ -6,6 +6,7 @@
 <require from="../common/formSelectObject"></require>
 <require from="../common/formSelectSample"></require>
 <require from="../common/select-control"></require>
+<require from="../common/seasonAbbreviationFormatter"></require>
 <!-- <require from="./set-attribute"></require> -->
 <!-- <require from="./truncate"></require> -->
     
@@ -15,7 +16,7 @@
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
                     <span class="ui-text-label-m-broad">EDIT LOOK &nbsp;</span>
-                    <span class="ui-text-label-m-broad">${currentItem.name}</span>
+                    <span class="ui-text-label-m-broad">${currentItem.brandCollection.season | seasonAbbreviation:seasons }.${currentItem.name}</span>
                 </div>
             </div>
         </ai-dialog-header>  

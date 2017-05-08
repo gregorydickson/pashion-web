@@ -1,12 +1,13 @@
 <template>
+
+<require from="../common/seasonAbbreviationFormatter"></require>
     
    <ai-dialog>
         <ai-dialog-header>
             <!-- header -->
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad">SET INITIAL AVAILABILITY LOOK ${id}</span>
-                    <span class="ui-text-label-m-broad"> ${currentItem.name}</span>
+                    <span class="ui-text-label-m-broad">SET INITIAL AVAILABILITY LOOK ${item.season | seasonAbbreviation:seasons }.${id}</span>
                 </div>
             </div>
         </ai-dialog-header>
