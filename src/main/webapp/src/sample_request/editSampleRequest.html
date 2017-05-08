@@ -287,7 +287,7 @@
 
                             <td if.bind="sampleRequest.requestStatusBrand == 'Pending'" class="accordion" style="text-align:right;width:70px; max-width:70px; padding-bottom:4px;">
 
-                                <select select2.bind='{ "placeholder": "Action",  "minimumResultsForSearch": -1}' value.bind="sample.status.status" style="margin:0;">
+                                <select select2.bind='{ "placeholder": "Action",  "minimumResultsForSearch": Infinity}' value.bind="sample.status.status" style="margin:0;">
                                     <option></option>
                                     <option value="Pending">Pending</option>
                                     <option value="Approved">Approve</option>
