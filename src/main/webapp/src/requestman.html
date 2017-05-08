@@ -185,15 +185,20 @@
                                             <td class="accordion-grey w5" style="overflow:visible;"> 
                                                 <div class="look-menu-absolute-wrap">
                                                     <!-- ... -->
-                                                    <span if.bind="((user.type === 'brand') && (booking.requestStatusBrand == 'Deleted'))" class="edit-box disabled" >...</span>
+                                                    <!-- disabled -->
+                                                    <span if.bind="((user.type === 'brand') && (booking.requestStatusBrand == 'Deleted'))" class="edit-box disabled" ></span>
+                                                    <!-- not disabled -->
                                                     <span if.bind="((user.type === 'brand') && (booking.requestStatusBrand != 'Deleted'))" class="edit-box" ><a href="#" class="expandoHover" click.delegate="lookEditMenu(booking.id)">...</a></span>
+
+                                                    <!-- ... disabled -->
                                                     <span if.bind="(((user.type === 'press') || (user.type === 'prAgency')) && 
                                                            ((booking.requestStatusPress == 'Denied') ||
                                                             (booking.requestStatusPress == 'Deleted') ||
                                                             (booking.requestStatusPress == 'Returned') ||
                                                             (booking.requestStatusPress == 'Picked Up') ||
                                                             (booking.requestStatusPress == 'Withdrawn') 
-                                                            ))" class="edit-box disabled" >...</span>
+                                                            ))" class="edit-box disabled" ></span>
+                                                    <!-- ... not disabled -->
                                                     <span if.bind="(((user.type === 'press') || (user.type === 'prAgency')) && 
                                                             ((booking.requestStatusPress != 'Denied') &&
                                                             (booking.requestStatusPress != 'Deleted') &&
