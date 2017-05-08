@@ -132,7 +132,7 @@ export class Requestman {
           if (event)
               if (event.detail)
                   if (event.detail.value) {
-                      if (event.detail.value == 'BY DATE') this.ordering = 'bookingStartDate';
+                      if (event.detail.value == 'BY START DATE') this.ordering = 'bookingStartDate';
                       if (event.detail.value == 'BY NUMBER') this.ordering = 'id'; 
                       if (event.detail.value == 'BY STATUS') this.ordering = 'requestStatusBrand';
                       console.log("value:" + event.detail.value + "ordering: " +this.ordering);
@@ -170,7 +170,7 @@ export class Requestman {
     if (event)
       if (event.detail)
         if (event.detail.value) {
-          if (event.detail.value == 'BY DATE') this.ordering = 'bookingStartDate';
+          if (event.detail.value == 'BY START DATE') this.ordering = 'bookingStartDate';
           if ((this.user.type == "brand") && (event.detail.value == 'BY NUMBER')) this.ordering = 'id'; //RM ditto below
           if ((this.user.type == "prAgency") && (event.detail.value == 'BY NUMBER')) this.ordering = 'id'; //RM ditto below
           if ((this.user.type == "press") && (event.detail.value == 'BY NUMBER')) this.ordering = 'id'; //RM changes needed here to properly order strings
