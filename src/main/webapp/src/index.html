@@ -436,7 +436,7 @@
                                 <!-- ... disabled  -->
                                 <td if.bind="(booking.requestStatusBrand == 'Deleted')" class="accordion w10" style="overflow:visible;">
                                     <div class="look-menu-absolute-wrap">
-                                        <span class="edit-box disabled" >...</span>
+                                        <span class="edit-box disabled" ></span>
                                     </div>
                                 </td>
                                 <!-- ... not disabled -->
@@ -552,6 +552,7 @@
                                 <td class="accordion w35 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
                                 <td class.bind="(booking.requestStatusPress=='Pending') ? 'accordion ui-text-label-m-blue w30 to-u-c' :'accordion w30 to-u-c'" >${booking.requestStatusPress}</td>
 
+                                <!-- ... disabled -->
                                 <td if.bind="(
                                     (booking.requestStatusPress == 'Denied') ||
                                     (booking.requestStatusPress == 'Deleted') ||
@@ -560,12 +561,14 @@
                                     (booking.requestStatusPress == 'Withdrawn') 
                                     )"
 
+
                                 class="accordion w10" style="overflow:visible;"> 
                                     <div class="look-menu-absolute-wrap">
-                                        <span class="edit-box disabled" >...</span>
+                                        <span class="edit-box disabled" ></span>
                                     </div>
                                 </td>
 
+                                <!-- ... not disabled -->
                                 <td if.bind="(
                                     (booking.requestStatusPress != 'Denied') &&
                                     (booking.requestStatusPress != 'Deleted') &&
