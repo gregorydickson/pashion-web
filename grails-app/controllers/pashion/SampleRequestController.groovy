@@ -34,7 +34,7 @@ class SampleRequestController {
         sampleRequest.requestStatusBrand = "Denied"
         sampleRequest.requestStatusPress = "Denied"
         sampleRequest.save(flush:true)
-        def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + sampleRequest.look
+        def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Denied']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""     
@@ -64,7 +64,7 @@ class SampleRequestController {
         
 
         sr.save(flush:true)
-        def lookSeason = Season.findByName(sr.season.trim()).abbreviation + sr.look
+        def lookSeason = Season.findByName(sr.season.trim()).abbreviation + '.' + sr.look
         def sent = [message:'Sample Request ' + sr.id + ' (look ' + lookSeason + ') Approved']
         render sent as JSON
         def pressHouse = sr.pressHouse?.name ?: ""
@@ -81,7 +81,7 @@ class SampleRequestController {
         sampleRequest.requestStatusPress = "Delivering"
         sampleRequest.save(flush:true)
 
-        def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + sampleRequest.look
+        def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Picked Up']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""
@@ -93,7 +93,7 @@ class SampleRequestController {
         sampleRequest.requestStatusPress = "Returned"
         sampleRequest.save(flush:true)
 
-        def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + sampleRequest.look
+        def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Returned']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""
@@ -104,7 +104,7 @@ class SampleRequestController {
         sampleRequest.requestStatusBrand = "Restocked"      
         sampleRequest.save(flush:true)
 
-        def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + sampleRequest.look
+        def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Restocked']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""
@@ -116,7 +116,7 @@ class SampleRequestController {
         sampleRequest.requestStatusPress = "Deleted"
         sampleRequest.save(flush:true)
 
-        def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + sampleRequest.look
+        def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Deleted']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""
@@ -130,7 +130,7 @@ class SampleRequestController {
         sampleRequest.requestStatusPress = "In House"
         sampleRequest.save(flush:true)
 
-        def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + sampleRequest.look
+        def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') is In House']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""
@@ -141,7 +141,7 @@ class SampleRequestController {
         sampleRequest.requestStatusBrand = "Withdrawn"
         sampleRequest.requestStatusPress = "Withdrawn"
         sampleRequest.save(flush:true)
-        def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + sampleRequest.look
+        def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Withdrawn']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""
@@ -153,7 +153,7 @@ class SampleRequestController {
         sampleRequest.requestStatusPress = "Picking Up"
         sampleRequest.save(flush:true)
 
-        def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + sampleRequest.look
+        def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Picking Up']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""
@@ -166,7 +166,7 @@ class SampleRequestController {
         sampleRequest.requestStatusPress = "Picked Up"
         sampleRequest.save(flush:true)
 
-        def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + sampleRequest.look
+        def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Picked Up']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""
@@ -182,7 +182,7 @@ class SampleRequestController {
         def requestingUser = session.user
         def sr = sampleRequestService.initialSaveSampleRequest(request.JSON,requestingUser)
 
-        def lookSeason = Season.findByName(sr.season.trim()).abbreviation + sr.look
+        def lookSeason = Season.findByName(sr.season.trim()).abbreviation + '.' + sr.look
         def sent = [message:'Sample Request ' + sr.id + ' (look ' + lookSeason + ') Sent']
         render sent as JSON
         if(sr.emailNotification)
@@ -196,7 +196,7 @@ class SampleRequestController {
         
         def sr = sampleRequestService.updateSampleRequest(request.JSON)
 
-        def lookSeason = Season.findByName(sr.season.trim()).abbreviation + sr.look
+        def lookSeason = Season.findByName(sr.season.trim()).abbreviation + '.' + sr.look
         def sent = [message:'Sample Request ' + sr.id + ' (look ' + lookSeason + ') Updated']
         render sent as JSON
         def pressHouse = sr.pressHouse?.name ?: ""
