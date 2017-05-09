@@ -1,12 +1,22 @@
-import { inject, singleton, observable } from 'aurelia-framework';
-import { AddressService } from '../services/addressService';
-import { UserDatastore } from './userDatastore';
-import { Helpers } from '../common/helpers';
+import {
+    inject,
+    singleton,
+    observable
+} from 'aurelia-framework';
+import {
+    AddressService
+} from '../services/addressService';
+import {
+    UserDatastore
+} from './userDatastore';
+import {
+    Helpers
+} from '../common/helpers';
 
 @inject(AddressService, UserDatastore, Helpers)
 @singleton()
 export class AddressDatastore {
-    deliverTo = [];
+    @observable deliverTo = [];
     availableDeliverToItems = [];
     selectedDeliverToItems = [''];
     selectedDeliverToId = null;
@@ -23,8 +33,29 @@ export class AddressDatastore {
         return this.reloadData();
     }
 
-    selectedAddressChanged(newValue, oldValue){
+    selectedAddressChanged(newValue, oldValue) {
         this.editMode = !this.helpers.isEmptyObject(newValue);
+    }
+
+    deliverToChanged() {
+        this.availableDeliverToItems = [];
+
+        this.deliverTo.forEach(item => {
+            if (item.surname) {
+                let text = `${item.name} ${item.surname}`;
+                if (item.city) text = text + `  (${item.city} Office)`;
+                
+                this.availableDeliverToItems.push({
+                    id: item.id,
+                    text: text
+                });
+            } else {
+                this.availableDeliverToItems.push({
+                    id: item.id,
+                    text: item.name
+                });
+            }
+        });
     }
 
     // this will fetch addresses based on account.type 
@@ -40,42 +71,28 @@ export class AddressDatastore {
     // we will allow for reloading without hitting the service
     loadData(data) {
         this.deliverTo = data;
-        this.availableDeliverToItems = [];
-
-        this.deliverTo.forEach(item => {
-            if (item.surname) {
-                if (item.city) item.surname = item.surname + "  (" + item.city + " Office)"
-                this.availableDeliverToItems.push({
-                    id: item.id,
-                    text: item.name + " " + item.surname
-                });
-            } else {
-                this.availableDeliverToItems.push({
-                    id: item.id,
-                    text: item.name
-                });
-            }
-        });
-
+        this.deliverToChanged();
         return Promise.resolve();
     }
 
     // set the selectedAddress and
     // the selectedDeliverToItems
     selectNewsetDeliverTo(selectedAddress) {
+        this.deliverToChanged();
         let newestDeliverTo = this.availableDeliverToItems.reduce(function (max, x) {
             return x.id > max.id ? x : max;
         });
 
         console.log('Newest deliver to:', newestDeliverTo);
 
-        this.selectedAddress = selectedAddress;
-        this.selectedDeliverToItems = [newestDeliverTo.id];
+        this.selectedAddress = this.deliverTo.find(item => item.id == newestDeliverTo.id);
+        this.selectedDeliverToId = newestDeliverTo.id;
+        this.selectedDeliverToItems = [this.selectedDeliverToId];
     }
 
     reset() {
         this.selectedDeliverToItems = [''];
         this.selectedDeliverToId = null;
-        this.selectedAddress = {};
+        // this.selectedAddress = {};
     }
 }

@@ -26,7 +26,10 @@ export class Helpers {
     }
 
     // returns true if empy object
-    isEmptyObject(obj){
+    isEmptyObject(obj) {
+        if (!obj)
+            return false;
+
         return ((Object.keys(obj).length === 0 && obj.constructor === Object) ? true : false)
     }
 }
