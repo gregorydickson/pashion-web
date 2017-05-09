@@ -76,6 +76,8 @@ export class EditSampleRequest {
       document.getElementById('bookReturn').style.visibility = 'hidden';
     if(this.sampleRequest.pickupTime == undefined)
       this.sampleRequest.pickupTime = '09:00';
+    if(this.sampleRequest.pickupTimeReturn == undefined)
+      this.sampleRequest.pickupTimeReturn = '09:00';
 
   }
 
