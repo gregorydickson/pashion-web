@@ -94,12 +94,21 @@ class StuartService {
 	*/
 	def createJobQuote(Address fromAddress, Address toAddress,
 					 ShippingEvent shippingEvent, String transport){
-		if(transport == 'Car')
+		if(fromAddress == null || toAddress == null)
+			return [error:"Address Missing"]
+
+
+		if(transport == 'Car'){
 			transport = '4'
-		if(transport == 'Bike')
+		} else if(transport == 'Bike'){
 			transport = '2'
-		if(transport == 'Scooter')
+		} else if(transport == 'Scooter'){
+		  	transport = '3'
+		} else {
 			transport = '3'
+		}
+
+
 
 		if(token == null)
 			token = KeyValue.findByItemKey("stuart")?.itemValue
@@ -112,7 +121,7 @@ class StuartService {
 		def lastName = ""
 
 		def nameArray 
-		if(toAddress.attention){
+		if(toAddress?.attention){
 			nameArray = toAddress.attention.split()
 			firstName = nameArray[0]
 		
