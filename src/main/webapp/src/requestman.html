@@ -121,8 +121,8 @@
                                         <td class="accordion-underline w14">COMPANY</td>
                                         <td class="accordion-underline w16">EDITORIAL</td>
                                         <td class="accordion-underline w20">WHO</td>
-                                        <td class="accordion-underline w3"><img style="width:19px;" src="/assets/shoppingcart60x47.png" height=47 width=60></img></td>
-                                        <td class="accordion-underline w13" style="padding-left:7px;">STATUS</td>
+                                        <td class="accordion-underline w5"><img style="width:19px;" src="/assets/shoppingcart60x47.png" height=47 width=60></img></td>
+                                        <td class="accordion-underline w11" style="padding-left:7px;">STATUS</td>
                                         <td class="accordion-underline w5"></td>
                                     </tr>
                                 </table>
@@ -137,8 +137,8 @@
                                         <td class="accordion-underline w14">BRAND</td>
                                         <td class="accordion-underline w16">EDITORIAL</td>
                                         <td class="accordion-underline w20">OWNER</td>
-                                        <td class="accordion-underline w3"><img style="width:25px;" src="/assets/shoppingcart60x47.png" height=47 width=60></img></td>
-                                        <td class="accordion-underline w13" style="padding-left:10px;">STATUS</td>
+                                        <td class="accordion-underline w5"><img style="width:25px;" src="/assets/shoppingcart60x47.png" height=47 width=60></img></td>
+                                        <td class="accordion-underline w11" style="padding-left:10px;">STATUS</td>
                                         <td class="accordion-underline w5"></td>
                                     </tr>
                                 </table>
@@ -170,15 +170,15 @@
 
                                             <td class="col6 accordion-grey w20 variable-padding">${booking.requestingUser.name} ${booking.requestingUser.surname}</td>
 
-                                            <td class="col7 accordion-grey w3" style="padding-left:11px;">${booking.searchableItems.length}</td>
+                                            <td class="col7 accordion-grey w5" style="padding-left:11px;">${booking.searchableItems.length}</td>
 
                                             <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" 
-                                                class="col8 accordion-grey w13 to-u-c 
+                                                class="col8 accordion-grey w11  
                                                     ${(booking.requestStatusPress=='Pending') ? 'ui-text-label-m-blue' : ''}" style="padding-left:11px;">
                                                     ${booking.requestStatusPress}</td>
 
                                             <td if.bind="user.type === 'brand'" 
-                                                class="col8 accordion-grey w13 to-u-c 
+                                                class="col8 accordion-grey w11  
                                                      ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" style="padding-left:11px;">
                                                      ${booking.requestStatusBrand}</td>
 
@@ -318,10 +318,10 @@
                                             <span if.bind="(!booking.editorialName && !booking.editorialWho && !booking.editorialWhen)">No details of editorial</span>
                                         </div>
                                         <div class="grid-content" style="margin-top:1rem;">
-                                            <span class="ui-text-label-m-blue">Shipping Out:</span><span style="margin-left:0.5rem;"> ${booking.shippingOut.id} ${booking.shippingOut.tracking}</span>
+                                            <span class="ui-text-label-m-blue">Delivery:</span><span style="margin-left:0.5rem;"> ${booking.shippingOut.id} ${booking.shippingOut.tracking}</span>
                                         </div>
                                         <div class="grid-content">
-                                            <span class="to-u-c">${booking.shippingOut.status}</span>
+                                            <span class="">${booking.shippingOut.status}</span>
                                             <span> for ${booking.bookingStartDate | viewDateFormat} ${booking.requiredBy} by ${booking.courierOut} (${booking.paymentOut})</span> 
                                             <span if.bind="(booking.deliverTo.pressHouse.name || booking.deliverTo.prAgency.name || booking.deliverTo.brand.name)"> to ${booking.deliverTo.pressHouse.name} ${booking.deliverTo.prAgency.name} ${booking.deliverTo.brand.name} </span>
                                             <span if.bind="booking.addressDestination.address1"> at ${booking.addressDestination.address1}, </span>
@@ -336,7 +336,7 @@
                                             <span class="ui-text-label-m-blue">Return:</span><span style="margin-left:0.5rem;"> ${booking.shippingReturn.id} ${booking.shippingReturn.tracking}</span>
                                         </div>
                                         <div class="grid-content">
-                                            <span class="to-u-c">${booking.shippingReturn.status}</span>
+                                            <span class="">${booking.shippingReturn.status}</span>
                                             <span>for ${booking.bookingEndDate | viewDateFormat} ${booking.returnBy} by ${booking.courierReturn} (${booking.paymentReturn}) </span>
                                             <span if.bind="booking.returnToAddress">coming back to ${booking.returnToAddress.name} </span>
                                             <span if.bind="!booking.returnToAddress">coming back to here</span>
@@ -362,9 +362,9 @@
                                             <!-- no images -->
                                             <table class="" style="table-layout:fixed;">
                                                 <tr style="height:1rem;" repeat.for="item of booking.searchableItems" >
-                                                    <td if.bind="(user.type === 'brand') && !(item.clientID)" class="accordion sample-padding to-u-c"> ${booking.season | seasonAbbreviation:seasons }.${look}.${$index+1} &nbsp; : &nbsp; ${item.status.status} &nbsp; :  &nbsp; <span class="to-l-c">${item.attributes}</span></td>
-                                                    <td if.bind="(user.type === 'brand') && (item.clientID)" class="accordion sample-padding to-u-c"> ${booking.season | seasonAbbreviation:seasons }.${look}.${$index+1} [ ${item.clientID} ] &nbsp; : &nbsp; ${item.status.status} &nbsp; : &nbsp; <span class="to-l-c">${item.attributes}</span></td>
-                                                    <td if.bind="(user.type === 'press') || (user.type === 'prAgency')"  class="accordion sample-padding to-u-c">${booking.season | seasonAbbreviation:seasons }.${look}.${$index+1} &nbsp;  : &nbsp;  ${item.status.status} &nbsp;  : &nbsp; ${item.attributes}</td>
+                                                    <td if.bind="(user.type === 'brand') && !(item.clientID)" class="accordion sample-padding"> ${booking.season | seasonAbbreviation:seasons }.${look}.${$index+1} &nbsp; : &nbsp; ${item.status.status} &nbsp; :  &nbsp; <span class="to-u-c">${item.attributes}</span></td>
+                                                    <td if.bind="(user.type === 'brand') && (item.clientID)" class="accordion sample-padding"> ${booking.season | seasonAbbreviation:seasons }.${look}.${$index+1} &nbsp; [ ${item.clientID} ] &nbsp; : &nbsp; ${item.status.status} &nbsp; : &nbsp; <span class="to-u-c">${item.attributes}</span></td>
+                                                    <td if.bind="(user.type === 'press') || (user.type === 'prAgency')"  class="accordion sample-padding">${booking.season | seasonAbbreviation:seasons }.${look}.${$index+1} &nbsp;  : &nbsp;  ${item.status.status} &nbsp;  : &nbsp; <span class="to-u-c">${item.attributes}</span></td>
                                                 </tr>
                                             </table>
 
