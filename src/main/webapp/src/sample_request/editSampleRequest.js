@@ -74,7 +74,8 @@ export class EditSampleRequest {
       document.getElementById('bookOut').style.visibility = 'hidden';
     if(this.sampleRequest.shippingReturn.stuartJobId)
       document.getElementById('bookReturn').style.visibility = 'hidden';
-
+    if(this.sampleRequest.pickupTime == undefined)
+      this.sampleRequest.pickupTime = '9:00';
 
   }
 
