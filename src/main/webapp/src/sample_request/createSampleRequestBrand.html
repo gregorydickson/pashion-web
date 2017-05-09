@@ -297,8 +297,8 @@
                     <table if.bind="currentItem.samples" class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples | sort: 'id': 'ascending'">
                         <tr>
 
-                            <td class="accordion" style="width:65px; max-width:65px;">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.name}.${$index+1} :&nbsp;</td>
-                            <td class="accordion to-u-c" style="width:359px; max-width:359px; overflow:hidden;">${sample.attributes}</td>
+                            <td class="accordion" style="width:70px; max-width:70px;">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.name}.${$index+1} :&nbsp;</td>
+                            <td class="accordion to-u-c" style="width:354px; max-width:354px; overflow:hidden;">${sample.attributes}</td>
                             <td class="accordion" style="width:10px; max-width:10px;">
                                 <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="sampleRequest.samples">
                             </td>
