@@ -22,8 +22,8 @@
                 style="margin:0; width:62px">
                 <option></option>
                 <option value="AddNew">Add New</option>
-                <option value="Update" disabled.bind="!ds.address.editMode">Update</option>
-                <option value="Delete" disabled.bind="!ds.address.editMode">Delete</option>
+                <option value="Update" if.bind="ds.address.editMode">Update</option>
+                <option value="Delete" if.bind="ds.address.editMode">Delete</option>
             </select>
         </template>
         </span>
