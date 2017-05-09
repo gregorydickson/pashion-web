@@ -15,9 +15,9 @@ export class App {
 		config.title = 'PASHION';
 		config.map([
 			// { route: ['', '/'],       name: 'index',       moduleId: 'index' },
-			{ route: ['', '/'], name: 'index', moduleId: 'index' },
-			{ route: 'requestman', name: 'requestman', moduleId: 'requestman' },
-			{ route: 'adminpage', name: 'adminpage', moduleId: 'adminpage' }
+			{ route: ['', '/'], name: 'index', moduleId: 'index',title:'Dashboard' },
+			{ route: 'requestman', name: 'requestman', moduleId: 'requestman',title:'Dashboard' },
+			{ route: 'adminpage', name: 'adminpage', moduleId: 'adminpage',title:'Admin' }
 
 		]);
 	}

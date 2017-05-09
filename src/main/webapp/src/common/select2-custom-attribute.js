@@ -1,10 +1,17 @@
-import {customAttribute, inject} from 'aurelia-framework';
+import {
+  customAttribute,
+  inject
+} from 'aurelia-framework';
+import {
+  Helpers
+} from './helpers';
 
 @customAttribute('select2')
-@inject(Element)
+@inject(Element, Helpers)
 export class Select2CustomAttribute {
-  constructor(element) {
+  constructor(element, Helpers) {
     this.element = element;
+    this.helpers = Helpers;
   }
 
   attached() {
@@ -13,8 +20,18 @@ export class Select2CustomAttribute {
         if (e.originalEvent) {
           return;
         }
-         this.element.dispatchEvent(new Event('change'));
+        this.helpers.dispatchEvent(this.element, 'change', e.target.value);
+        //  this.element.dispatchEvent(new Event('change'));
       });
+  }
+
+  reset() {
+    $(this.element).select2('val', "");
+  }
+
+  reload(){
+    this.detached();
+    this.attached();
   }
 
   detached() {

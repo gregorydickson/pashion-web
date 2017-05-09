@@ -75,7 +75,7 @@ export class EditSampleRequest {
     if(this.sampleRequest.shippingReturn.stuartJobId)
       document.getElementById('bookReturn').style.visibility = 'hidden';
     if(this.sampleRequest.pickupTime == undefined)
-      this.sampleRequest.pickupTime = '9:00';
+      this.sampleRequest.pickupTime = '09:00';
 
   }
 

@@ -37,7 +37,7 @@ export class AddressService {
 
         var promise = new Promise((resolve, reject) => {
 
-            this.http.fetch('/address/archive/' + id)
+            this.http.fetch(`/address/delete/${id}.json`)
                 .then(response => {
                     if (response.ok) {
                         resolve(response);
