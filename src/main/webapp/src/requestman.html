@@ -117,7 +117,7 @@
                                         <td class="accordion-underline w3"></td>
                                         <td class="accordion-underline w6">ID</td>
                                         <td class="accordion-underline w7">LOOK</td>
-                                        <td class="accordion-underline w13">DUE DATE</td>
+                                        <td class="accordion-underline w13">START DATE</td>
                                         <td class="accordion-underline w14">COMPANY</td>
                                         <td class="accordion-underline w16">EDITORIAL</td>
                                         <td class="accordion-underline w20">WHO</td>
@@ -133,7 +133,7 @@
                                         <td class="accordion-underline w3"></td>
                                         <td class="accordion-underline w6">ID</td>
                                         <td class="accordion-underline w7">LOOK</td>
-                                        <td class="accordion-underline w13">REQUESTED</td>
+                                        <td class="accordion-underline w13">START DATE</td>
                                         <td class="accordion-underline w14">BRAND</td>
                                         <td class="accordion-underline w16">EDITORIAL</td>
                                         <td class="accordion-underline w20">OWNER</td>
@@ -318,13 +318,14 @@
                                             <span if.bind="(!booking.editorialName && !booking.editorialWho && !booking.editorialWhen)">No details of editorial</span>
                                         </div>
                                         <div class="grid-content" style="margin-top:1rem;">
-                                            <span class="ui-text-label-m-blue">Delivery:</span><span style="margin-left:0.5rem;"> ${booking.shippingOut.id} ${booking.shippingOut.tracking}</span>
+                                            <span class="ui-text-label-m-blue">Delivery Pickup:</span><span style="margin-left:0.5rem;"> ${booking.shippingOut.id} ${booking.shippingOut.tracking}</span>
                                         </div>
                                         <div class="grid-content">
                                             <span class="">${booking.shippingOut.status}</span>
                                             <span> for ${booking.bookingStartDate | viewDateFormat} ${booking.requiredBy} by ${booking.courierOut} (${booking.paymentOut})</span> 
-                                            <span if.bind="(booking.deliverTo.pressHouse.name || booking.deliverTo.prAgency.name || booking.deliverTo.brand.name)"> to ${booking.deliverTo.pressHouse.name} ${booking.deliverTo.prAgency.name} ${booking.deliverTo.brand.name} </span>
-                                            <span if.bind="booking.addressDestination.address1"> at ${booking.addressDestination.address1}, </span>
+                                            <span> to </span>
+                                            <span if.bind="(booking.deliverTo.pressHouse.name || booking.deliverTo.prAgency.name || booking.deliverTo.brand.name)"> ${booking.deliverTo.pressHouse.name} ${booking.deliverTo.prAgency.name} ${booking.deliverTo.brand.name} at </span>
+                                            <span if.bind="booking.addressDestination.address1">${booking.addressDestination.address1}, </span>
                                             <span if.bind="booking.addressDestination.address2"> ${booking.addressDestination.address2}, </span>
                                             <span if.bind="booking.addressDestination.city"> ${booking.addressDestination.city}, </span>
                                             <span if.bind="booking.addressDestination.postalCode"> ${booking.addressDestination.postalCode} </span>
@@ -333,15 +334,15 @@
                                             <span if.bind="booking.signedBy"> signed by ${booking.signedBy} </span>
                                         </div>
                                         <div class="grid-content" style="margin-top:1rem;">
-                                            <span class="ui-text-label-m-blue">Return:</span><span style="margin-left:0.5rem;"> ${booking.shippingReturn.id} ${booking.shippingReturn.tracking}</span>
+                                            <span class="ui-text-label-m-blue">Return Pickup:</span><span style="margin-left:0.5rem;"> ${booking.shippingReturn.id} ${booking.shippingReturn.tracking}</span>
                                         </div>
                                         <div class="grid-content">
                                             <span class="">${booking.shippingReturn.status}</span>
                                             <span>for ${booking.bookingEndDate | viewDateFormat} ${booking.returnBy} by ${booking.courierReturn} (${booking.paymentReturn}) </span>
                                             <span if.bind="booking.returnToAddress">coming back to ${booking.returnToAddress.name} </span>
-                                            <span if.bind="!booking.returnToAddress">coming back to here</span>
+                                            <!-- <span if.bind="!booking.returnToAddress">coming back to here</span> -->
                                             <span if.bind="booking.returnToName"> to ${booking.returnToName} ${booking.returnToSurname}</span>
-                                            <span if.bind="!booking.returnToName"> to me</span>
+                                            <!-- <span if.bind="!booking.returnToName"> to me</span> -->
                                         </div>
                                         <div class="grid-content" style="margin-top:1rem;">
                                             <span class="ui-text-label-m-blue">Samples:</span><span style="margin-left:0.5rem;">${booking.searchableItems.length}</span>
