@@ -54,7 +54,7 @@ class StuartController {
 		if(request.JSON){
 			def update = request.JSON
 			ShippingEvent shippingEvent = ShippingEvent.findByStuartJobId(update.data.id)
-			shippingEvent.status = update.data.status
+			shippingEvent.status = update.data.status.capitalize()
 			shippingEvent.stuartStatus = update.data.status
 
 			shippingEvent.save(failOnError:true,flush:true)

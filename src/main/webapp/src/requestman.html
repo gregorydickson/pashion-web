@@ -322,7 +322,7 @@
                                         </div>
                                         <div class="grid-content">
                                             <span class="">${booking.shippingOut.status}</span>
-                                            <span> for ${booking.bookingStartDate | viewDateFormat} ${booking.requiredBy} by ${booking.courierOut} (${booking.paymentOut})</span> 
+                                            <span> for ${booking.pickupDate | viewDateFormat} ${booking.pickupTime} by ${booking.courierOut} (${booking.paymentOut})</span> 
                                             <span> to </span>
                                             <span if.bind="(booking.deliverTo.pressHouse.name || booking.deliverTo.prAgency.name || booking.deliverTo.brand.name)"> ${booking.deliverTo.pressHouse.name} ${booking.deliverTo.prAgency.name} ${booking.deliverTo.brand.name} at </span>
                                             <span if.bind="booking.addressDestination.address1">${booking.addressDestination.address1}, </span>
@@ -338,7 +338,7 @@
                                         </div>
                                         <div class="grid-content">
                                             <span class="">${booking.shippingReturn.status}</span>
-                                            <span>for ${booking.bookingEndDate | viewDateFormat} ${booking.returnBy} by ${booking.courierReturn} (${booking.paymentReturn}) </span>
+                                            <span>for ${booking.pickupDateReturn | viewDateFormat} ${booking.pickupTimeReturn} by ${booking.courierReturn} (${booking.paymentReturn}) </span>
                                             <span if.bind="booking.returnToAddress">coming back to ${booking.returnToAddress.name} </span>
                                             <!-- <span if.bind="!booking.returnToAddress">coming back to here</span> -->
                                             <span if.bind="booking.returnToName"> to ${booking.returnToName} ${booking.returnToSurname}</span>
