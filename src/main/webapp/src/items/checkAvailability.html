@@ -82,8 +82,8 @@
                     <table class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples | sort: 'id': 'ascending' ">
                                   <tr>
                                      <!-- <td class="accordion" style="width:15px; max-width:15px;">${$index + 1}</td> -->
-                                      <td class="accordion" style="width:50px; max-width:50px;">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.name}.${$index+1} :</td>
-                                      <td class="accordion to-u-c" style="width:205px; max-width:205px; overflow:hidden;">${sample.attributes}</td>
+                                      <td class="accordion" style="width:65px; max-width:65px;">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.name}.${$index+1} :</td>
+                                      <td class="accordion to-u-c" style="width:190px; max-width:190px; overflow:hidden;">${sample.attributes}</td>
                                       <td class="accordion" style="width:10px; max-width:10px;">
                               
                                <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="selectedProductIds" >

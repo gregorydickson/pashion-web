@@ -362,9 +362,9 @@
                                             <!-- no images -->
                                             <table class="" style="table-layout:fixed;">
                                                 <tr style="height:1rem;" repeat.for="item of booking.searchableItems" >
-                                                    <td if.bind="(user.type === 'brand') && !(item.clientID)" class="accordion sample-padding to-u-c"> ${booking.season | seasonAbbreviation:seasons }.${look}.${$index+1} : ${item.status.status} : <span class="to-l-c">${item.attributes}</span></td>
-                                                    <td if.bind="(user.type === 'brand') && (item.clientID)" class="accordion sample-padding to-u-c"> ${booking.season | seasonAbbreviation:seasons }.${look}.${$index+1} [ ${item.clientID} ] : ${item.status.status} : <span class="to-l-c">${item.attributes}</span></td>
-                                                    <td if.bind="(user.type === 'press') || (user.type === 'prAgency')"  class="accordion sample-padding to-u-c">${booking.season | seasonAbbreviation:seasons }.${look}.${$index+1} : ${item.status.status} : ${item.attributes}</td>
+                                                    <td if.bind="(user.type === 'brand') && !(item.clientID)" class="accordion sample-padding to-u-c"> ${booking.season | seasonAbbreviation:seasons }.${look}.${$index+1} &nbsp; : &nbsp; ${item.status.status} &nbsp; :  &nbsp; <span class="to-l-c">${item.attributes}</span></td>
+                                                    <td if.bind="(user.type === 'brand') && (item.clientID)" class="accordion sample-padding to-u-c"> ${booking.season | seasonAbbreviation:seasons }.${look}.${$index+1} [ ${item.clientID} ] &nbsp; : &nbsp; ${item.status.status} &nbsp; : &nbsp; <span class="to-l-c">${item.attributes}</span></td>
+                                                    <td if.bind="(user.type === 'press') || (user.type === 'prAgency')"  class="accordion sample-padding to-u-c">${booking.season | seasonAbbreviation:seasons }.${look}.${$index+1} &nbsp;  : &nbsp;  ${item.status.status} &nbsp;  : &nbsp; ${item.attributes}</td>
                                                 </tr>
                                             </table>
 
