@@ -175,11 +175,12 @@ class SampleRequestService {
         if(jsonObject.has('returnToAddress')){
             log.info "returnTo Address:"+jsonObject.returnToAddress
             def returnToAddress = jsonObject.returnToAddress
-            if(returnToAddress.has('id')){
-                log.info "returnto id"
-                sr.returnToAddress = Address.get(jsonObject.returnToAddress.id.toInteger())
-            } else {
+            
+            if(returnToAddress instanceof Integer){
+
                 sr.returnToAddress = Address.get(jsonObject.returnToAddress.toInteger())
+            } else {
+                sr.returnToAddress = Address.get(jsonObject.returnToAddress.id.toInteger())
             }
         }
         
