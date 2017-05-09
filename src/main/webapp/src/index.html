@@ -297,7 +297,7 @@
                                     <div class="look-menu-absolute" id="look-${row.items[i].id}">
                                         <div class="look-menu-wrap">
                                             <div class="look-menu-heading">
-                                                LOOK ${row.items[i].name} <!-- ${i} ${row.numberImagesThisRow} -->
+                                                LOOK ${row.items[i].season | seasonAbbreviation:seasons }.${row.items[i].name} <!-- ${i} ${row.numberImagesThisRow} -->
                                             </div>
 
                                             <!-- brand -->
@@ -397,7 +397,7 @@
                         </span>
                        <!--  <span class="form-label" style="font-weight:500;">ORDER</span>
                         <select name="" id="">
-                            <option>By Date</option>
+                            <option>By Start Date</option>
                             <option>By Person</option>
                             <option>By Request Number</option>
                         </select>
@@ -411,11 +411,11 @@
                 <div if.bind="user.type === 'brand'" class="vertical grid-content grid-content-column accordion">
                     <!--header -->
                     <div style="margin-bottom:5px;">
-                        <table class="accordion">
+                        <table class="accordion" style="table-layout:fixed;">
                             <tr> 
-                                <th class="accordion w5"></th>
-                                <th class="accordion w20">LOOK</th>
-                                <th class="accordion w35">OUT</th>
+                                <th class="accordion w7"></th>
+                                <th class="accordion w22">LOOK</th>
+                                <th class="accordion w31">OUT</th>
                                 <th class="accordion w30">STATUS</th>
                                 <th class="accordion w10"></th>
                             </tr>
@@ -423,20 +423,20 @@
                     </div>
                     <!-- row with button -->
                     <div repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user:seasons">
-                        <table class="accordion">
+                        <table class="accordion" style="table-layout:fixed;">
                             <tr class="indexReqRow">
                                 <td class="accordion w7">
                                     <button id="button${booking.id}" class="accordion requestButton expandoHover" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
-                                <td class="accordion w18">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
-                                <td class="accordion w35 
+                                <td class="accordion w22">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td>
+                                <td class="accordion w31 
                                            ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
                                 <td class="accordion w30 to-u-c 
                                            ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" >${booking.requestStatusBrand}</td>
                                 <!-- ... disabled  -->
                                 <td if.bind="(booking.requestStatusBrand == 'Deleted')" class="accordion w10" style="overflow:visible;">
                                     <div class="look-menu-absolute-wrap">
-                                        <span class="edit-box disabled" >...</span>
+                                        <span class="edit-box disabled" ></span>
                                     </div>
                                 </td>
                                 <!-- ... not disabled -->
@@ -515,7 +515,7 @@
                             <span if.bind="booking.pressHouse.name" class="accordion expanded" style="background-color: #fafafa;width:100%; padding-left:10px; padding-bottom:7px;">Press House: ${booking.pressHouse.name}</span>
                             <table class="accordion expanded" style="table-layout:fixed;">                          
                                 <tr style="padding-top: 7px;" repeat.for="sample of booking.searchableItems">
-                                    <td class="accordion" style="width:65px; max-width:65px; padding-left:10px; padding-bottom:7px;"> ${booking.season | seasonAbbreviation:seasons }${booking.look}.${$index+1} :</td>
+                                    <td class="accordion" style="width:65px; max-width:65px; padding-left:10px; padding-bottom:7px;"> ${booking.season | seasonAbbreviation:seasons }.${booking.look}.${$index+1} :</td>
                                     <td class="accordion to-u-c" style="width:142px; max-width:142px; overflow: hidden; padding-right:10px; padding-bottom:7px;"> ${sample.attributes}</td>
                                 </tr>
                             </table>
@@ -531,11 +531,11 @@
                 <div if.bind="(user.type === 'press') || (user.type === 'prAgency')"  class="vertical grid-content grid-content-column accordion">
                     <!--header -->
                     <div style="margin-bottom:5px;">
-                        <table class="accordion" >
+                        <table class="accordion" style="table-layout:fixed;">
                             <tr>
-                                <th class="accordion w10"></th>
-                                <th class="accordion w15">ID</th>
-                                <th class="accordion w35">DUE</th>
+                                <th class="accordion w7"></th>
+                                <th class="accordion w22">LOOK</th>
+                                <th class="accordion w31">START</th>
                                 <th class="accordion w30">STATUS</th>
                                 <th class="accordion w10"></th>
                             </tr>
@@ -543,15 +543,16 @@
                     </div>
                     <!-- row with button -->
                     <div repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user:seasons">
-                        <table class="accordion">
+                        <table class="accordion" style="table-layout:fixed;">
                             <tr class="indexReqRow">
-                                <td class="accordion w10">
+                                <td class="accordion w7">
                                     <button id="button${booking.id}" class="accordion requestButton expandoHover" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
-                                <td class="accordion w15">${booking.season | seasonAbbreviation:seasons }${booking.look}</td>
-                                <td class="accordion w35 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
+                                <td class="accordion w22">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td>
+                                <td class="accordion w31 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
                                 <td class.bind="(booking.requestStatusPress=='Pending') ? 'accordion ui-text-label-m-blue w30 to-u-c' :'accordion w30 to-u-c'" >${booking.requestStatusPress}</td>
 
+                                <!-- ... disabled -->
                                 <td if.bind="(
                                     (booking.requestStatusPress == 'Denied') ||
                                     (booking.requestStatusPress == 'Deleted') ||
@@ -560,12 +561,14 @@
                                     (booking.requestStatusPress == 'Withdrawn') 
                                     )"
 
+
                                 class="accordion w10" style="overflow:visible;"> 
                                     <div class="look-menu-absolute-wrap">
-                                        <span class="edit-box disabled" >...</span>
+                                        <span class="edit-box disabled" ></span>
                                     </div>
                                 </td>
 
+                                <!-- ... not disabled -->
                                 <td if.bind="(
                                     (booking.requestStatusPress != 'Denied') &&
                                     (booking.requestStatusPress != 'Deleted') &&
@@ -625,7 +628,7 @@
                             <span if.bind="booking.brand.name" class="accordion expanded" style="background-color: #fafafa;width:100%; padding-left:10px; padding-bottom:7px;">Brand: ${booking.brand.name}</span>
                             <table class="accordion expanded" style="table-layout:fixed;">
                                 <tr style="padding-bottom:7px;" repeat.for="sample of booking.searchableItems">
-                                    <td class="accordion" style="width:60px; max-width:60px; padding-left: 10px; padding-bottom:7px;"">${booking.season | seasonAbbreviation:seasons }${booking.look}.${$index+1}</td>
+                                    <td class="accordion" style="width:60px; max-width:60px; padding-left: 10px; padding-bottom:7px;"">${booking.season | seasonAbbreviation:seasons }.${booking.look}.${$index+1}</td>
                                     <td class="accordion to-u-c" style="width:142px; max-width:142px; overflow: hidden; padding-right:10px; padding-bottom:3px;""> ${sample.attributes}</td>
                                 </tr>
                             </table>

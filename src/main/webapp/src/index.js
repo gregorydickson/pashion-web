@@ -558,7 +558,7 @@ export class Index {
         if (event)
             if (event.detail)
                 if (event.detail.value) {
-                    if (event.detail.value == 'BY DATE') this.ordering = 'bookingStartDate';
+                    if (event.detail.value == 'BY START DATE') this.ordering = 'bookingStartDate';
                     if ((this.user.type == "brand") && (event.detail.value == 'BY NUMBER')) this.ordering = 'look'; //RM ditto below
                     if ((this.user.type == "prAgency") && (event.detail.value == 'BY NUMBER')) this.ordering = 'look'; //RM ditto below
                     if ((this.user.type == "press") && (event.detail.value == 'BY NUMBER')) this.ordering = 'look'; //RM changes needed here to properly order strings

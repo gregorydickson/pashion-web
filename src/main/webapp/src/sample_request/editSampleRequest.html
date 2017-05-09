@@ -7,14 +7,14 @@
     <require from="common/seasonAbbreviationFormatter"></require>
     <require from="calendars/datetimepicker"></require>
     <require from="common/formSelectSampleRequest"></require>
-    <require from="../address/selectAddress"></require>
+    <require from="common/select2-custom-attribute"></require>
     <ai-dialog style="width: auto;"> 
         
         <!-- header -->
         <ai-dialog-header>
             <div class="grid-block align-center tool-header shrink ">
                 <div id="" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad">EDIT REQUEST ${sampleRequest.id} FOR LOOK ${sampleRequest.season | seasonAbbreviation:seasons}${sampleRequest.look}</span>
+                    <span class="ui-text-label-m-broad">EDIT REQUEST ${sampleRequest.id} FOR LOOK ${sampleRequest.season | seasonAbbreviation:seasons}.${sampleRequest.look}</span>
                 </div>
             </div>
         </ai-dialog-header>
@@ -204,64 +204,61 @@
                             </span>
                         </div>
      
-                        <select-address change.delegate="onSelectAddressChangeCallback($event)">
-                        </select-address>                        
-
                         <!-- Attention  -->
-                        <div class="grid-block ">
+                        <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Attention</span>
-                            <span class="slim-text-box">
-                                 ${sampleRequest.addressDestination.name}
+                            <span>
+                                <input type="text" class="slim-text-box" value.bind="sampleRequest.addressDestination.name">
                             </span>
                         </div>
+
                         <!-- Contact Phone  -->
-                        <div class="grid-block ">
+                        <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Phone</span>
-                            <span class="slim-text-box">
-                                 ${sampleRequest.addressDestination.contactPhone}
+                            <span>
+                                <input type="text" class="slim-text-box" value.bind="sampleRequest.addressDestination.contactPhone">
                             </span>
                         </div>
+
                         <!-- Company -->
-                        <div class="grid-block ">
+                        <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Company</span>
-                            <span class="slim-text-box">
-                                 ${sampleRequest.addressDestination.company}
+                            <span>
+                                <input type="text" class="slim-text-box" value.bind="sampleRequest.addressDestination.company">
                             </span>
                         </div>
 
                         <!-- Address 1 -->
-                        <div class="grid-block ">
+                        <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Address 1</span>
-
-                            <span class="slim-text-box">
-                                 ${sampleRequest.addressDestination.address1}
+                            <span>
+                                <input type="text" class="slim-text-box" value.bind="sampleRequest.addressDestination.address1">
                             </span>
                         </div>
+
                         <!-- City -->
-                        <div class="grid-block ">
+                        <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">City</span>
-
-                            <span class="slim-text-box">
-                                 ${sampleRequest.addressDestination.city}
+                            <span>
+                                <input type="text" class="slim-text-box" value.bind="sampleRequest.addressDestination.city">
                             </span>
                         </div>
+
                         <!-- Country -->
-                        <div class="grid-block ">
+                        <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Country</span>
-
-                            <span class="slim-text-box">
-                                 ${sampleRequest.addressDestination.country}
+                            <span>
+                                <input type="text" class="slim-text-box" value.bind="sampleRequest.addressDestination.country">
                             </span>
                         </div>
+
                         <!-- Postal Code -->
-                        <div class="grid-block ">
+                        <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Postal Code</span>
-
-                            <span class="slim-text-box">
-                                 ${sampleRequest.addressDestination.postalCode}
+                            <span>
+                                <input type="text" class="slim-text-box" value.bind="sampleRequest.addressDestination.postalCode">
                             </span>
                         </div>
-
                         
 
                         
@@ -281,8 +278,11 @@
                     <table repeat.for="sample of sampleRequest.searchableItemsProposed" class="" style="table-layout:fixed">
                         <tr>
                             <!-- <td class="accordion w3">${$index+1}</td> -->
-                            <td class="accordion" style="width:50px; max-width:50px;">${sampleRequest.season | seasonAbbreviation:seasons}${sampleRequest.look}.${$index+1}</td>
-                            <td class="accordion to-u-c" style="width:335px; max-width:335px; overflow:hidden; padding-right:10px;">[${sample.clientID}] : ${sample.attributes}</td>
+                            <td class="accordion" style="width:65px; max-width:65px;">${sampleRequest.season | seasonAbbreviation:seasons}.${sampleRequest.look}.${$index+1}</td>
+
+                            <td if.bind="sample.clientID" class="accordion to-u-c" style="width:320px; max-width:320px; overflow:hidden; padding-right:10px;">[ ${sample.clientID} ] : ${sample.attributes}</td>
+                            <td if.bind="!sample.clientID" class="accordion to-u-c" style="width:320px; max-width:320px; overflow:hidden; padding-right:10px;">${sample.attributes}</td>
+
                             <td class="accordion" style="width:60px; max-width:60px;">                            
                                 <span style="margin-bottom:0px;">${sample.status.status}</span>
                                 
@@ -290,8 +290,8 @@
 
                             <td if.bind="sampleRequest.requestStatusBrand == 'Pending'" class="accordion" style="text-align:right;width:70px; max-width:70px; padding-bottom:4px;">
 
-                                <select value.bind="sample.status.status" style="margin:0;">
-                                    <option >Action</option>
+                                <select select2.bind='{ "placeholder": "Action",  "minimumResultsForSearch": Infinity}' value.bind="sample.status.status" style="margin:0;">
+                                    <option></option>
                                     <option value="Pending">Pending</option>
                                     <option value="Approved">Approve</option>
                                     <option value="Denied">Deny</option>
@@ -307,8 +307,8 @@
                     <table repeat.for="sample of sampleRequest.searchableItemsProposed" class="" style="margin-bottom:7px; table-layout:fixed">
                         <tr>
                            <!--  <td class="accordion w3">${$index+1}</td> -->
-                            <td class="accordion" style="width:50px; max-width:50px;">${sampleRequest.season | seasonAbbreviation:seasons}${sampleRequest.look}.${$index+1} :</td>
-                            <td class="accordion to-u-c" style="width:355px; max-width:355px; overflow:hidden;padding-right:10px;">${sample.attributes}</td>
+                            <td class="accordion" style="width:65px; max-width:65px;">${sampleRequest.season | seasonAbbreviation:seasons}.${sampleRequest.look}.${$index+1} :</td>
+                            <td class="accordion to-u-c" style="width:340px; max-width:340px; overflow:hidden;padding-right:10px;">${sample.attributes}</td>
                             <td class="accordion" style="width:60px; max-width:60px;">
                                 <span style="margin-bottom:0px;">${sample.status.brandStatus}</span>
                                 <span if.bind="(!sample.status.brandStatus)" style="margin-bottom:0px;">Pending</span>

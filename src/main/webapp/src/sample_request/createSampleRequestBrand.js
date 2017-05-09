@@ -101,6 +101,9 @@ export class CreateSampleRequestBrand {
         this.sampleRequest.paymentReturn = "50/50";
       }),
 
+
+      this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
+
       this.http.fetch('/searchableItems/' + item.id + '.json')
         .then(response => response.json())
         .then(item => {

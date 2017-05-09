@@ -103,6 +103,8 @@ export class EditSearchableItem {
           });
         });
     }),
+
+    this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
     this.http.fetch('/searchableItem/fetchdeep/'+itemId+'.json')
       .then(response => response.json())
       .then(item => {

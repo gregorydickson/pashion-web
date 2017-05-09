@@ -41,6 +41,7 @@ export class SetAvailability {
       .then(calendar => {
               this.calendar = calendar;
     });
+    this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
     
   }
 

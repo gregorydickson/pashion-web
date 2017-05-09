@@ -24,6 +24,12 @@ export class SelectAddress {
 
     @bindable selectedAddress = {};
     @bindable css = 'grid-content shrink';
+    @bindable showMenu = false;
+    @bindable showAdd = false;
+    @bindable title = 'Deliver To';
+    @bindable placeholder = 'SELECT ONE';
+    @bindable width = 170;
+    style = 'width: 170px';
 
     selectedDeliverToId = null;
 
@@ -39,6 +45,12 @@ export class SelectAddress {
         // lets clear out the previously selected address
         // remove this line to keep the last selected address as default
         this.ds.address.reset();
+    }
+
+    widthChanged(newValue, oldValue) {
+        if (newValue) {
+            this.style = `width: ${newValue}px`;
+        }
     }
 
     add() {

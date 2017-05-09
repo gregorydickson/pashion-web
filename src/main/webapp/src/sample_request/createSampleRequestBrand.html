@@ -5,6 +5,7 @@
     <require from="../common/formSelectObject"></require>
     <require from="../common/select-control"></require>
     <require from="../address/selectAddress"></require>
+    <require from="../common/seasonAbbreviationFormatterId"></require>
 
     <ai-dialog>
         <ai-dialog-header>
@@ -14,7 +15,7 @@
                     <span class="ui-text-label-m-broad">BOOKING&nbsp;${brand.name}
                      <!-- ${currentItem.season.id}&nbsp;-->
                      LOOK&nbsp;</span>
-                    <span class="ui-text-label-m-broad">${currentItem.name}</span>
+                    <span class="ui-text-label-m-broad">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.name}</span>
                 </div>
             </div>
         </ai-dialog-header>
@@ -83,7 +84,7 @@
                     </div>
 
                     <!-- Deliver To-->
-                    <select-address change.delegate="onSelectAddressChangeCallback($event)">
+                    <select-address change.delegate="onSelectAddressChangeCallback($event)" show-add="true">
                     </select-address>
 
                     <!-- Name-->
@@ -296,8 +297,8 @@
                     <table if.bind="currentItem.samples" class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples | sort: 'id': 'ascending'">
                         <tr>
 
-                            <td class="accordion" style="width:35px; max-width:35px;">${currentItem.name}.${$index+1} :&nbsp;</td>
-                            <td class="accordion to-u-c" style="width:389px; max-width:389px; overflow:hidden;">${sample.attributes}</td>
+                            <td class="accordion" style="width:70px; max-width:70px;">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.name}.${$index+1} :&nbsp;</td>
+                            <td class="accordion to-u-c" style="width:354px; max-width:354px; overflow:hidden;">${sample.attributes}</td>
                             <td class="accordion" style="width:10px; max-width:10px;">
                                 <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="sampleRequest.samples">
                             </td>
