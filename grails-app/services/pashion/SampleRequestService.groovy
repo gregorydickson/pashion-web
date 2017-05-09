@@ -172,8 +172,16 @@ class SampleRequestService {
     // is an ad-hoc address
     def addresses(SampleRequest sr,JSONObject jsonObject){
         log.info "sample request addresses"
-        if(jsonObject.returnToAddress)
-            sr.returnToAddress = Address.get(jsonObject.returnToAddress.toInteger())
+        if(jsonObject.has('returnToAddress')){
+            log.info "returnTo Address:"+jsonObject.returnToAddress
+            def returnToAddress = jsonObject.returnToAddress
+            if(returnToAddress.has('id')){
+                log.info "returnto id"
+                sr.returnToAddress = Address.get(jsonObject.returnToAddress.id.toInteger())
+            } else {
+                sr.returnToAddress = Address.get(jsonObject.returnToAddress.toInteger())
+            }
+        }
         
         if(jsonObject.addressDestination){
 
