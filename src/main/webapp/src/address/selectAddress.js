@@ -77,7 +77,7 @@ export class SelectAddress {
         this.selectedDeliverToId = event.detail.value;
         this.ds.address.selectedAddress = this.ds.address.deliverTo.find(item => item.id == this.selectedDeliverToId);
         console.log('Selected deliverTo:', this.ds.address.selectedAddress);
-
+        this.addressSelect.reset();
         // lets bubble this event with a generic event bubbler
         this.helpers.dispatchEvent(this.element, 'change', {
             selectedAddress: this.ds.address.selectedAddress
@@ -140,8 +140,6 @@ export class SelectAddress {
 
                     this.addressSelect.reset();
                     this.ds.address.selectNewsetDeliverTo(newAddressModel.newAddress);
-                    // this.addressSelect.reload();
-
                 } else {
                     console.log('bad');
                 }
@@ -174,7 +172,7 @@ export class SelectAddress {
                     // with an insert method on the datastore
                     this.ds.address.reloadData()
                         .then(() => {
-                            this.ds.address.reset();
+                            this.ds.address.reset(true);
                             this.addressSelect.reset();
                             this.helpers.dispatchEvent(this.element, 'change', {
                                 selectedAddress: {}
@@ -188,21 +186,5 @@ export class SelectAddress {
             });
     }
 
-    onDeliverToChangeCallback(event) {
-        event.stopPropagation();
-        console.log('onDeliverToChangeCallback() called:', event.detail.value);
-
-        // let's ensure we don't bubble out the same event twice
-        if (event.detail.value && this.selectedDeliverToId !== event.detail.value) {
-            this.selectedDeliverToId = event.detail.value;
-            this.ds.address.selectedAddress = this.ds.address.deliverTo.find(item => item.id == this.selectedDeliverToId);
-            console.log('Selected deliverTo:', this.ds.address.selectedAddress);
-
-            // lets bubble this event with a generic event bubbler
-            this.helpers.dispatchEvent(this.element, 'change', {
-                selectedAddress: this.ds.address.selectedAddress
-            });
-        }
-    }
 
 }

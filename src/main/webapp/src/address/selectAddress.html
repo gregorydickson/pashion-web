@@ -1,17 +1,12 @@
 <template>
-    <require from="../common/select-control"></require>
     <require from="../common/select2-custom-attribute"></require>
 
     <div class.bind="css">
         <span class="inline-label" style="">
             <span class="slim-text-box-label">${title}</span>
 
-        <!--<select-control ref="selectControl" name="deliverTo" change.delegate="onDeliverToChangeCallback($event)" selected.bind="ds.address.selectedDeliverToItems"
-            options.bind="ds.address.availableDeliverToItems" placeholder.bind="placeholder" allow_clear="true" style.bind="style">
-        </select-control>-->
-
         <select select2.bind='{ "placeholder": "SELECT ONE"}' select2.ref="addressSelect" change.delegate="onAddressSelectChanged($event)"
-            style="margin:0; width:105px">
+            style.bind="style">
             <option></option>
             <option repeat.for="option of ds.address.availableDeliverToItems" value.bind="option.id">${option.text}</option>
         </select>

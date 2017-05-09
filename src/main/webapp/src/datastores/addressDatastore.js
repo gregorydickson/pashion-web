@@ -44,7 +44,7 @@ export class AddressDatastore {
             if (item.surname) {
                 let text = `${item.name} ${item.surname}`;
                 if (item.city) text = text + `  (${item.city} Office)`;
-                
+
                 this.availableDeliverToItems.push({
                     id: item.id,
                     text: text
@@ -90,9 +90,10 @@ export class AddressDatastore {
         this.selectedDeliverToItems = [this.selectedDeliverToId];
     }
 
-    reset() {
+    reset(hard) {
         this.selectedDeliverToItems = [''];
         this.selectedDeliverToId = null;
-        // this.selectedAddress = {};
+        if (hard)
+            this.selectedAddress = {};
     }
 }
