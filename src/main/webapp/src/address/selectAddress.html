@@ -1,5 +1,10 @@
 <template>
     <require from="../common/select2-custom-attribute"></require>
+    <style>
+        .select2-default {
+            color: #383838 !important;
+        }
+    </style>
 
     <div class.bind="css">
         <span class="inline-label" style="">
@@ -10,7 +15,6 @@
             <option></option>
             <option repeat.for="option of ds.address.availableDeliverToItems" value.bind="option.id">${option.text}</option>
         </select>
-
 
         <template if.bind="showMenu">
             &nbsp;

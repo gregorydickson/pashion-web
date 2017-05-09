@@ -45,7 +45,7 @@ export class SelectAddress {
     attached() {
         // lets clear out the previously selected address
         // remove this line to keep the last selected address as default
-        this.ds.address.reset();
+        this.ds.address.reset(true);
     }
 
     widthChanged(newValue, oldValue) {
