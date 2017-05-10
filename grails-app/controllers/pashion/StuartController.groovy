@@ -74,11 +74,22 @@ class StuartController {
         	render message as JSON
         	return
         }
+
+        //check to see if there is an origin/returnTo address
+        def returnTo = sr.returnToAddress
+        if(sr.pressHouse && sr.brand && (sr.returnToAddress == null)){
+        	def brandAddress = Address.findByBrandAndDefaultAddress(sr.brand,true)
+        	log.info "Brand address:"+brandAddress.name
+
+        	if(brandAddress) returnTo = brandAddress
+        }
         
 
         
         def shippingEvent = sr.shippingOut
-        shippingEvent = stuartService.createJobQuote(sr.returnToAddress,sr.addressDestination,shippingEvent,"Scooter")
+        log.info "origin:"+returnTo.address1 
+        log.info "destination:"+sr.addressDestination.address1
+        shippingEvent = stuartService.createJobQuote(returnTo,sr.addressDestination,shippingEvent,"Scooter")
         log.info "quote:"+shippingEvent
         if(shippingEvent instanceof Map){
         	log.error "quote ERROR"
@@ -96,8 +107,8 @@ class StuartController {
         	theDate = theDate + theTime[1].toInteger().minutes
         }
 
-		shippingEvent = stuartService.createJob(theDate,sr.returnToAddress,sr.addressDestination,shippingEvent)
-        if(shippingEvent.hasProperty("message")){
+		shippingEvent = stuartService.createJob(theDate,returnTo,sr.addressDestination,shippingEvent)
+        if(shippingEvent instanceof Map){
         	log.error "stuart error message:"+shippingEvent.message
         	message = [message:"Booking Error"]
         }else{
@@ -117,9 +128,18 @@ class StuartController {
         	return
         }
 
+        //check to see if there is an origin/returnTo address
+        def returnTo = sr.returnToAddress
+        if(sr.pressHouse && sr.brand && (sr.returnToAddress == null)){
+        	def brandAddress = Address.findByBrandAndDefaultAddress(sr.brand,true)
+        	log.info "Brand address:"+brandAddress.name
+
+        	if(brandAddress) returnTo = brandAddress
+        }
+
         def shippingEvent = sr.shippingReturn
         shippingEvent = stuartService.createJobQuote(sr.addressDestination,
-        								sr.returnToAddress,shippingEvent,"Scooter")
+        								returnTo,shippingEvent,"Scooter")
         log.info "quote:"+shippingEvent
         if(shippingEvent instanceof Map){
         	log.error "quote ERROR"
@@ -137,7 +157,7 @@ class StuartController {
         	theDate = theDate + theTime[1].toInteger().minutes
         }
         
-		shippingEvent = stuartService.createJob(theDate,sr.addressDestination,sr.returnToAddress,shippingEvent)
+		shippingEvent = stuartService.createJob(theDate,sr.addressDestination,returnTo,shippingEvent)
         if(shippingEvent.hasProperty("message")){
         	log.info "Stuart message"
         	message = [message:"Booking Error"]
