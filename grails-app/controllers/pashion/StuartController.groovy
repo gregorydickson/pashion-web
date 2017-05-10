@@ -67,13 +67,22 @@ class StuartController {
 	def bookOut(){
 		def message
         def sr = sampleRequestService.updateSampleRequest(request.JSON)
+
+        if(sr.addressDestination == sr.returnToAddress){
+        	message = [message:"Origin and Destination are the same"]
+        	response.status = 200
+        	render message as JSON
+        	return
+        }
+        
+
+        
         def shippingEvent = sr.shippingOut
-        shippingEvent = stuartService.createJobQuote(sr.returnToAddress,
-        							sr.addressDestination,shippingEvent,"Scooter")
+        shippingEvent = stuartService.createJobQuote(sr.returnToAddress,sr.addressDestination,shippingEvent,"Scooter")
         log.info "quote:"+shippingEvent
         if(shippingEvent instanceof Map){
         	log.error "quote ERROR"
-        	message = [message:shippingEvent.error]
+        	message = [message:"Booking Error"]
         	render message as JSON
         	return
         }
@@ -90,7 +99,7 @@ class StuartController {
 		shippingEvent = stuartService.createJob(theDate,sr.returnToAddress,sr.addressDestination,shippingEvent)
         if(shippingEvent.hasProperty("message")){
         	log.error "stuart error message:"+shippingEvent.message
-        	message = [message:message(shippingEvent.message)]
+        	message = [message:"Booking Error"]
         }else{
         	message = [message:"Messenger Booked"]
         	response.status = 200
@@ -101,12 +110,20 @@ class StuartController {
 	def bookReturn(){
 		def message
 		def sr = sampleRequestService.updateSampleRequest(request.JSON)
+		if(sr.addressDestination == sr.returnToAddress){
+        	message = [message:"Origin and Destination are the same"]
+        	response.status = 200
+        	render message as JSON
+        	return
+        }
+
         def shippingEvent = sr.shippingReturn
         shippingEvent = stuartService.createJobQuote(sr.addressDestination,
         								sr.returnToAddress,shippingEvent,"Scooter")
         log.info "quote:"+shippingEvent
-        if(shippingEvent.hasProperty("error")){
-        	message = [message:shippingEvent.error]
+        if(shippingEvent instanceof Map){
+        	log.error "quote ERROR"
+        	message = [message:"Booking Error"]
         	render message as JSON
         	return
         }
@@ -123,7 +140,7 @@ class StuartController {
 		shippingEvent = stuartService.createJob(theDate,sr.addressDestination,sr.returnToAddress,shippingEvent)
         if(shippingEvent.hasProperty("message")){
         	log.info "Stuart message"
-        	message = [message:message(shippingEvent.message)]
+        	message = [message:"Booking Error"]
         }else{
         	message = [message:"Messenger Booked"]
         	response.status = 200
