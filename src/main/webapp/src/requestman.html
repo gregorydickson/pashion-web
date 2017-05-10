@@ -315,12 +315,12 @@
                                         </div>
                                         <div class="grid-content">
                                             <span if.bind="(booking.editorialName || booking.editorialWho || booking.editorialWhen)">Photo shoot ${booking.editorialName} ${booking.editorialWho} ${booking.editorialWhen | viewDateFormat }</span>
-                                            <span if.bind="(!booking.editorialName && !booking.editorialWho && !booking.editorialWhen)">No details of editorial</span>
+                                            <span if.bind="(!booking.editorialName && !booking.editorialWho && !booking.editorialWhen)">No details of editorial.</span>
                                         </div>
                                         <div class="grid-content" style="margin-top:1rem;">
                                             <span class="ui-text-label-m-blue">Delivery Pickup:</span><span style="margin-left:0.5rem;"> ${booking.shippingOut.id} ${booking.shippingOut.tracking}</span>
                                         </div>
-                                        <div class="grid-content">
+                                        <div if.bind="(booking.shippingOut.status!='Proposed')" class="grid-content">
                                             <span class="">${booking.shippingOut.status}</span>
                                             <span> for ${booking.pickupDate | viewDateFormat} ${booking.pickupTime} by ${booking.courierOut} (${booking.paymentOut})</span> 
                                             <span> to </span>
@@ -333,16 +333,22 @@
                                             <span if.bind="booking.pickedupAt"> at ${booking.pickedupAt} </span>
                                             <span if.bind="booking.signedBy"> signed by ${booking.signedBy} </span>
                                         </div>
+                                        <div if.bind="(booking.shippingOut.status=='Proposed')" class="grid-content">
+                                            <span>TBD</span>
+                                        </div>
                                         <div class="grid-content" style="margin-top:1rem;">
                                             <span class="ui-text-label-m-blue">Return Pickup:</span><span style="margin-left:0.5rem;"> ${booking.shippingReturn.id} ${booking.shippingReturn.tracking}</span>
                                         </div>
-                                        <div class="grid-content">
+                                        <div if.bind="(booking.shippingReturn.status!='Proposed')" class="grid-content">
                                             <span class="">${booking.shippingReturn.status}</span>
                                             <span>for ${booking.pickupDateReturn | viewDateFormat} ${booking.pickupTimeReturn} by ${booking.courierReturn} (${booking.paymentReturn}) </span>
                                             <span if.bind="booking.returnToAddress">coming back to ${booking.returnToAddress.name} </span>
                                             <!-- <span if.bind="!booking.returnToAddress">coming back to here</span> -->
                                             <span if.bind="booking.returnToName"> to ${booking.returnToName} ${booking.returnToSurname}</span>
                                             <!-- <span if.bind="!booking.returnToName"> to me</span> -->
+                                        </div>
+                                        <div if.bind="(booking.shippingReturn.status=='Proposed')" class="grid-content">
+                                            <span>TBD</span>
                                         </div>
                                         <div class="grid-content" style="margin-top:1rem;">
                                             <span class="ui-text-label-m-blue">Samples:</span><span style="margin-left:0.5rem;">${booking.searchableItems.length}</span>
