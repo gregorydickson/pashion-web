@@ -84,13 +84,14 @@
                     </div>
 
                     <!-- Deliver To-->
-                    <select-address change.delegate="onSelectAddressChangeCallback($event)" show-menu="true" width="105">
+                    <select-address change.delegate="onSelectAddressChangeCallback($event)" show-menu="true" width="105"
+                    class="${selectedAddress.name ? '' : 'red-deco' }">
                     </select-address>
 
                     <!-- Name-->
                     <div class="grid-content shrink">
                         <span class="inline-label" style="margin-bottom: 0px;">
-                        <span class="slim-text-box-label ${selectedAddress.name ? '' : 'red-deco' }" style="">Attention</span>
+                        <span class="slim-text-box-label" style="">Attention</span>
                         <div>
                             <input type="text" class="slim-text-box" value.bind="selectedAddress.name">
                         </div>

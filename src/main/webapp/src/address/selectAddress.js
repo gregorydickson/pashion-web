@@ -28,7 +28,7 @@ export class SelectAddress {
     @bindable showMenu = false;
     @bindable showAdd = false;
     @bindable title = 'Deliver To';
-    @bindable placeholder = 'SELECT ONE';
+    @bindable placeholder = 'Select';
     @bindable width = 170;
     style = 'width: 170px';
 
