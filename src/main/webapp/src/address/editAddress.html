@@ -75,9 +75,8 @@
         <!-- Footer buttons -->
         <ai-dialog-footer>
             <a class="hollow button" click.delegate="close()">Cancel</a>
-            <button class.bind="(newAddress.name && newAddress.contactPhone && newAddress.address1 && newAddress.city && newAddress.country && newAddress.postalCode) ? 'button' : 'button disabled'"
+            <button class="button" disabled.bind="buttonDisabled"
                 click.delegate="manageAddress()">${buttonText} Address</button>
-
         </ai-dialog-footer>
     </ai-dialog>
 </template>

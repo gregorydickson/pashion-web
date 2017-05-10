@@ -8,6 +8,7 @@
     <require from="calendars/datetimepicker"></require>
     <require from="common/formSelectSampleRequest"></require>
     <require from="common/select2-custom-attribute"></require>
+    <require from="../address/selectAddress"></require>
 
     <ai-dialog style="width: auto;"> 
         
@@ -259,6 +260,9 @@
                                 <input type="text" class="slim-text-box" value.bind="sampleRequest.shippingOut.stuartJobId">
                             </span>
                         </div>
+
+                        <select-address change.delegate="onSelectAddressChangeCallback($event)" css="grid-block shrink" width="169">
+                        </select-address>  
      
                         <!-- Attention  -->
                         <div class="grid-block shrink">

@@ -8,7 +8,8 @@ import {
 import 'fetch';
 import {
   inject,
-  observable
+  observable,
+  BindingEngine
 } from 'aurelia-framework';
 import {
   DateFormat
@@ -20,16 +21,17 @@ import {
   Helpers
 } from 'common/helpers';
 
-@inject(DialogController, AddressService, Helpers)
+
+@inject(BindingEngine, DialogController, AddressService, Helpers)
 export class EditAddress {
   static inject = [DialogController];
 
-  newAddress = {};
   editMode = false;
   deleteMode = false
 
   titleText = '';
   buttonText = '';
+  buttonDisabled = true;
 
   textItems = [{
     titleText: 'NEW',
@@ -48,10 +50,34 @@ export class EditAddress {
     this.buttonText = this.textItems[newValue].buttonText;
   }
 
-  constructor(controller, addressService, Helpers) {
+  @observable newAddress = {};
+  newAddressSubscriptions = []
+  newAddressChanged(newValue, oldValue) {
+    this.setButtonDisabled();
+  }
+
+  constructor(BindingEngine, controller, addressService, Helpers) {
+    this.bindingEngine = BindingEngine;
     this.controller = controller;
     this.addressService = addressService;
     this.helpers = Helpers;
+
+  }
+
+  bindNewAddress() {
+    this.disposeNewAddress();
+    this.newAddressSubscriptions.push(this.bindingEngine.propertyObserver(this.newAddress, 'name').subscribe(() => this.setButtonDisabled()));
+    this.newAddressSubscriptions.push(this.bindingEngine.propertyObserver(this.newAddress, 'contactPhone').subscribe(() => this.setButtonDisabled()));
+    this.newAddressSubscriptions.push(this.bindingEngine.propertyObserver(this.newAddress, 'address1').subscribe(() => this.setButtonDisabled()));
+    this.newAddressSubscriptions.push(this.bindingEngine.propertyObserver(this.newAddress, 'city').subscribe(() => this.setButtonDisabled()));
+    this.newAddressSubscriptions.push(this.bindingEngine.propertyObserver(this.newAddress, 'country').subscribe(() => this.setButtonDisabled()));
+    this.newAddressSubscriptions.push(this.bindingEngine.propertyObserver(this.newAddress, 'postalCode').subscribe(() => this.setButtonDisabled()));
+  }
+
+  disposeNewAddress() {
+    while (this.newAddressSubscriptions.length) {
+      this.newAddressSubscriptions.pop().dispose();
+    }
   }
 
   close() {
@@ -63,6 +89,8 @@ export class EditAddress {
     this.deleteMode = model.deleteMode;
     this.newAddress = model.newAddress;
 
+    this.bindNewAddress();
+
     if (this.editMode) {
       this.textMode = 1;
     } else {
@@ -71,6 +99,20 @@ export class EditAddress {
 
     if (this.deleteMode) {
       this.textMode = 2;
+    }
+  }
+
+  detached() {
+    this.disposeNewAddress();
+  }
+
+  setButtonDisabled() {
+    if (this.deleteMode) {
+      this.buttonDisabled = false;
+    } else {
+      this.buttonDisabled = ((this.newAddress.name && this.newAddress.contactPhone &&
+        this.newAddress.address1 && this.newAddress.city &&
+        this.newAddress.country && this.newAddress.postalCode) ? false : true);
     }
   }
 
