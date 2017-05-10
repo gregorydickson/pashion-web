@@ -70,10 +70,7 @@ export class EditSampleRequest {
     this.http.fetch('/brand/users/' + this.sampleRequest.brand.id)
       .then(response => response.json())
       .then(brandUsers => this.brandUsers = brandUsers);
-    if(this.sampleRequest.shippingOut.stuartJobId)
-      document.getElementById('bookOut').style.visibility = 'hidden';
-    if(this.sampleRequest.shippingReturn.stuartJobId)
-      document.getElementById('bookReturn').style.visibility = 'hidden';
+    
     if(this.sampleRequest.pickupTime == undefined)
       this.sampleRequest.pickupTime = '09:00';
     if(this.sampleRequest.pickupTimeReturn == undefined)
@@ -104,7 +101,8 @@ export class EditSampleRequest {
         this.sampleRequest = sampleRequest;
         this.busy.off();
         this.alertP(sr.message);
-        document.getElementById('bookOut').style.visibility = 'visible';
+        if(this.sampleRequest.shippingOut.stuartJobId == undefined)
+          document.getElementById('bookOut').style.visibility = 'visible';
       });
     });
 
@@ -124,7 +122,13 @@ export class EditSampleRequest {
         this.sampleRequest = sampleRequest;
         this.busy.off();
         this.alertP(sr.message);
-        document.getElementById('bookReturn').style.visibility = 'visible';
+
+        if(this.sampleRequest.shippingReturn.stuartJobId == undefined)
+          document.getElementById('bookReturn').style.visibility = 'visible';
+        
+      
+
+        
       });
     });
 
