@@ -222,7 +222,7 @@ class StuartService {
 			log.info "job status:"+job.status
 			shippingEvent.stuartJobId = job.id
 			shippingEvent.stuartStatus = job.status
-			shippingEvent.status = job.status
+			shippingEvent.status = job.status.capitalize()
 			shippingEvent.currency = job.currency?.isoCode
 			shippingEvent.finalAmount =  new BigDecimal(job.finalJobPrice.finalTotalAmount)
 			shippingEvent.save(failOnError:true,flush:true)
