@@ -108,11 +108,8 @@
                         </div>
 
                         <!-- Return To -->
-<<<<<<< HEAD
-                        <div class="grid-block " style="margin-bottom:0.5rem;">                                   
-=======
-                        <div if.bind="(!sampleRequest.shippingReturn.stuartJobId)" class="grid-block " >                                   
->>>>>>> origin/stuart-booking-crash-#412
+
+                        <div if.bind="(!sampleRequest.shippingReturn.stuartJobId)" class="grid-block " style="margin-bottom:0.5rem;">                                   
                             <span class="inline-label slim-text-box-label">Return To</span>
                             <select class="slim-text-box" name="" id="" value.bind="sampleRequest.returnToAddress.id">
                             <option repeat.for="address of brandAddresses" model.bind="address.id">${address.name}</option>
