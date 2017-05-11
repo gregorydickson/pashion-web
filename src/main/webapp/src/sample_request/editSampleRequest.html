@@ -18,11 +18,17 @@
         fieldset[disabled] textarea,
         fieldset[disabled] textarea:hover 
         {
-            padding-left: 5px;
+            align-self: normal;
+            flex: 0 1 auto;
+            height: 26.4px;
+            margin: 0;
+            min-height: 0px;
+            padding: 5.5px;
+            perspective-origin: 84.5px 13.2px;
+            transform-origin: 84.5px 13.2px;
+            vertical-align: middle;
         }
     </style>
-            <!--background-color: #fff;-->
-            <!--border: 1px solid #ebebeb;-->
 
 
     <ai-dialog style="width: auto;"> 
@@ -124,7 +130,7 @@
 
                         <!-- Return To -->
 
-                        <div if.bind="(!sampleRequest.shippingReturn.stuartJobId)" class="grid-block shrink" style="margin-bottom:0.5rem;">                                   
+                        <div if.bind="(!sampleRequest.shippingReturn.stuartJobId)" class="grid-block shrink" >                                   
                             <span class="inline-label slim-text-box-label">Return To</span>
                             <select class="slim-text-box" name="" id="" value.bind="sampleRequest.returnToAddress.id">
                             <option repeat.for="address of brandAddresses" model.bind="address.id">${address.name}</option>
@@ -142,7 +148,7 @@
 
 
                         <!-- Courier Section -->
-                        <div if.bind="(!sampleRequest.shippingReturn.stuartJobId)" class="grid-block shrink" style="margin-bottom:0.5rem;">
+                        <div if.bind="(!sampleRequest.shippingReturn.stuartJobId)" class="grid-block shrink" >
                             <span class="inline-label">
                                 <span class="slim-text-box-label">Courier</span>
                                 <form-select-sr class="to-u-c" name="courierOut" selected.two-way="sampleRequest.courierReturn" options.bind="courier" ></form-select-sr>
@@ -151,7 +157,7 @@
                         </div>
 
                         <!-- Courier Section after Stuart booking -->
-                        <div if.bind="sampleRequest.shippingReturn.stuartJobId" class="grid-block shrink" style="margin-bottom:0.5rem;">
+                        <div if.bind="sampleRequest.shippingReturn.stuartJobId" class="grid-block shrink" >
                             <div class="inline-label">
                                 <span class="slim-text-box-label">Courier</span>
                                 <input class="to-u-c slim-text-box" name="courierOut" value.bind="sampleRequest.courierReturn" disabled="disabled" style="width:169px" >
@@ -188,7 +194,7 @@
 
 
                        <!--  Payment Return -->
-                        <div class="grid-block shrink" style="margin-bottom:0.5rem;">
+                        <div class="grid-block shrink" >
                             <span class="inline-label">
                                 <span class=" slim-text-box-label">Split</span>
                                 <form-select-sr disabled class="to-u-c" name="paymentReturn" selected.two-way="sampleRequest.paymentReturn" options.bind="payment" width="169px"></form-select-sr>
@@ -215,7 +221,7 @@
                         </div>
                         
                         <!-- Courier Section -->
-                        <div if.bind="(!sampleRequest.shippingOut.stuartJobId)" class="grid-block shrink" style="margin-bottom:0.5rem;">
+                        <div if.bind="(!sampleRequest.shippingOut.stuartJobId)" class="grid-block shrink" >
                             <span class="inline-label">
                                 <span class="slim-text-box-label">Courier</span>
                                 
@@ -226,7 +232,7 @@
                         </div>
 
                         <!-- Courier Section after Stuart ID is set -->
-                        <div if.bind="sampleRequest.shippingOut.stuartJobId" class="grid-block shrink" style="margin-bottom:0.5rem;">
+                        <div if.bind="sampleRequest.shippingOut.stuartJobId" class="grid-block shrink" >
                             <span class="inline-label">
                                 <span class="slim-text-box-label">Courier</span>
                                 
@@ -260,13 +266,13 @@
                         </div>
 
                        <!--  split -->
-                        <div  if.bind="(!sampleRequest.courierOut.sampleRequest.shippingOut.stuartJobId)" class="grid-block shrink" style="margin-bottom:0.5rem;">
+                        <div  if.bind="(!sampleRequest.courierOut.sampleRequest.shippingOut.stuartJobId)" class="grid-block shrink" >
                             <span class="inline-label">
                                 <span class=" slim-text-box-label">Split</span>
                                 <form-select-sr class="to-u-c" name="paymentOut" selected.two-way="sampleRequest.paymentOut" options.bind="payment" width="169px" ></form-select-sr>
                             </span>
                         </div> 
-                        <div  if.bind="sampleRequest.courierOut.sampleRequest.shippingOut.stuartJobId" class="grid-block shrink" style="margin-bottom:0.5rem;">
+                        <div  if.bind="sampleRequest.courierOut.sampleRequest.shippingOut.stuartJobId" class="grid-block shrink" >
                             <span class="inline-label">
                                 <span class=" slim-text-box-label">Split</span>
                                 <input class="to-u-c" name="paymentOut" value.bind="sampleRequest.paymentOut" >
