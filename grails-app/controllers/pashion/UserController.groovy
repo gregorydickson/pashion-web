@@ -259,8 +259,16 @@ class UserController {
         if(jsonObject.id == session?.user?.id){
             user = session.user
             log.info "updateJson(), user for this session: "+user.toString()
-            Account account = session.account
-            user = userService.updateUser(jsonObject,user,account)
+            // get StormPath account (transient) from the user in the session
+            Account account = user.account
+            if(account){
+                user = userService.updateUser(jsonObject,user,account)
+            } else{
+                def response = [error: 'Error No Account'] as JSON
+                render response 
+                return 
+            }
+
         } else{
             log.info "updateJson(), other user"
             user = userService.updateUser(jsonObject)
