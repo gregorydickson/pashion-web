@@ -13,6 +13,7 @@ export class FormSelectSampleRequest {
     @bindable options = {};   // array of options with id/name properties
     @bindable placeHolder = null;
     @bindable allow_clear = false;
+    @bindable width = '110px';
     sel = null
     constructor(element) {
         this.element = element;
@@ -45,7 +46,7 @@ export class FormSelectSampleRequest {
     setup() {
         var el = $(this.element).find('select');
         this.sel = el.select2({
-          width: '110px',
+          width: this.width,
           minimumResultsForSearch: 15 // only allow terms up to n characters long
             });
 
