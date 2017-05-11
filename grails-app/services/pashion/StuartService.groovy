@@ -183,6 +183,9 @@ class StuartService {
 	*/
 	def createJob(Date pickup,Address fromAddress, Address toAddress, ShippingEvent shippingEvent){
 		log.info "stuart service create job"
+		if(fromAddress == null || toAddress == null)
+			return [message:"Missing Address"]
+
 		if(token == null)
 			token = KeyValue.findByItemKey("stuart")?.itemValue
 		if(token == null)

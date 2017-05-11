@@ -1,6 +1,6 @@
 
 <template>
-    <select if.bind="(name!='location')" value.two-way="selected" name.one-way="name" id.one-way="name" >
+    <select if.bind="(name!='location')" value.two-way="selected" name.one-way="name" id.one-way="name" style.bind="style" >
    		 <option if.bind="placeHolder" value="">${placeHolder}</option>
    		 <!-- Getting specific here for various data types -->
         <option class="to-u-c" if.bind="options[0].destination" repeat.for="option of options" value.bind="option.name">${option.name} ${option.surname}</option>
@@ -10,7 +10,7 @@
         <option class="to-u-c" if.bind="(options[0].name && options[0].surname)" repeat.for="option of options" value.bind="option">${option.name} ${option.surname}</option> 
     </select>
 
-    <select if.bind="(name=='location')" value.two-way="selected" name.one-way="name" id.one-way="name" >
+    <select if.bind="(name=='location')" value.two-way="selected" name.one-way="name" id.one-way="name"  style.bind="style">
         <option class="to-u-c" repeat.for="option of options" value.bind="option">${option.name}</option>
     </select>
 </template>

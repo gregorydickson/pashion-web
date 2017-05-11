@@ -67,13 +67,33 @@ class StuartController {
 	def bookOut(){
 		def message
         def sr = sampleRequestService.updateSampleRequest(request.JSON)
+
+        if(sr.addressDestination == sr.returnToAddress){
+        	message = [message:"Origin and Destination are the same"]
+        	response.status = 200
+        	render message as JSON
+        	return
+        }
+
+        //check to see if there is an origin/returnTo address
+        def returnTo = sr.returnToAddress
+        if(sr.pressHouse && sr.brand && (sr.returnToAddress == null)){
+        	def brandAddress = Address.findByBrandAndDefaultAddress(sr.brand,true)
+        	log.info "Brand address:"+brandAddress.name
+
+        	if(brandAddress) returnTo = brandAddress
+        }
+        
+
+        
         def shippingEvent = sr.shippingOut
-        shippingEvent = stuartService.createJobQuote(sr.returnToAddress,
-        							sr.addressDestination,shippingEvent,"Scooter")
+        log.info "origin:"+returnTo.address1 
+        log.info "destination:"+sr.addressDestination.address1
+        shippingEvent = stuartService.createJobQuote(returnTo,sr.addressDestination,shippingEvent,"Scooter")
         log.info "quote:"+shippingEvent
         if(shippingEvent instanceof Map){
         	log.error "quote ERROR"
-        	message = [message:shippingEvent.error]
+        	message = [message:"Booking Error"]
         	render message as JSON
         	return
         }
@@ -87,10 +107,10 @@ class StuartController {
         	theDate = theDate + theTime[1].toInteger().minutes
         }
 
-		shippingEvent = stuartService.createJob(theDate,sr.returnToAddress,sr.addressDestination,shippingEvent)
-        if(shippingEvent.hasProperty("message")){
+		shippingEvent = stuartService.createJob(theDate,returnTo,sr.addressDestination,shippingEvent)
+        if(shippingEvent instanceof Map){
         	log.error "stuart error message:"+shippingEvent.message
-        	message = [message:message(shippingEvent.message)]
+        	message = [message:"Booking Error"]
         }else{
         	message = [message:"Messenger Booked"]
         	response.status = 200
@@ -101,12 +121,29 @@ class StuartController {
 	def bookReturn(){
 		def message
 		def sr = sampleRequestService.updateSampleRequest(request.JSON)
+		if(sr.addressDestination == sr.returnToAddress){
+        	message = [message:"Origin and Destination are the same"]
+        	response.status = 200
+        	render message as JSON
+        	return
+        }
+
+        //check to see if there is an origin/returnTo address
+        def returnTo = sr.returnToAddress
+        if(sr.pressHouse && sr.brand && (sr.returnToAddress == null)){
+        	def brandAddress = Address.findByBrandAndDefaultAddress(sr.brand,true)
+        	log.info "Brand address:"+brandAddress.name
+
+        	if(brandAddress) returnTo = brandAddress
+        }
+
         def shippingEvent = sr.shippingReturn
         shippingEvent = stuartService.createJobQuote(sr.addressDestination,
-        								sr.returnToAddress,shippingEvent,"Scooter")
+        								returnTo,shippingEvent,"Scooter")
         log.info "quote:"+shippingEvent
-        if(shippingEvent.hasProperty("error")){
-        	message = [message:shippingEvent.error]
+        if(shippingEvent instanceof Map){
+        	log.error "quote ERROR"
+        	message = [message:"Booking Error"]
         	render message as JSON
         	return
         }
@@ -120,10 +157,10 @@ class StuartController {
         	theDate = theDate + theTime[1].toInteger().minutes
         }
         
-		shippingEvent = stuartService.createJob(theDate,sr.addressDestination,sr.returnToAddress,shippingEvent)
+		shippingEvent = stuartService.createJob(theDate,sr.addressDestination,returnTo,shippingEvent)
         if(shippingEvent.hasProperty("message")){
         	log.info "Stuart message"
-        	message = [message:message(shippingEvent.message)]
+        	message = [message:"Booking Error"]
         }else{
         	message = [message:"Messenger Booked"]
         	response.status = 200
