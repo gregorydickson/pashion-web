@@ -1,4 +1,4 @@
-<template>
+ <template>
     <require from="./../common/select-control"></require>
 
     <ai-dialog style="width: auto;">
@@ -25,6 +25,23 @@
                             <span class="inline-label slim-text-box-label">Email</span>
                             <input type="text" class="slim-text-box" disabled value=${lUser.email}>
                         </div>
+
+                        
+                        <!-- New Password -->
+                        <div class="grid-block shrink">
+                            <span class="inline-label slim-text-box-label">New Password</span>
+                            <input id="password-new" type="password" class="slim-text-box" value.bind="newPassword">
+                            <a id="password-word-new" style= "width: 30px; margin-left: 5px; margin-top:5px;" click.delegate="hide_un_hide_password_new()" style="">Show</a>
+                        </div>
+
+
+                       <!-- from login dialog <div class="grid-content shrink" >
+                                <span class="inline-label">
+                                    <span class="slim-text-box-label">Password</span>
+                                    <input id="password" type='password' name='password' value='${user?.password}'/>
+                                    <a id="password-word" style= "width: 30px; margin-left: 1rem;" href="javascript:hide_un_hide_password()" style="">Show</a>
+                                </span>
+                            </div> -->
 
 
                         <!-- Name -->

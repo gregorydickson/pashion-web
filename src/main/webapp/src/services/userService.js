@@ -130,6 +130,23 @@ export class UserService {
         return (-1); // no match, sorry, you have no friends
     }
 
+    checkPassword (user, password) {
+        //console.log("UserService checkPassword: " + user.email + " " + password);
+        var promise = new Promise((resolve, reject) => {
+            this.http.fetch('/user/checkLogin/', {
+                        method: 'post',
+                        body: json({email: user.email, password: password})
+                    })
+                    .then(response => response.json())
+                    .then(result => { 
+                        //onsole.log("UserService checkPassword result " + result);
+                        resolve(result.status);
+                    }).catch(err => reject(err));
+                });
+                return promise;
+
+    }
+
     checkDuplicateConnection(userId) {
         // Note id not email
         // errors for wrong status: -1 = already connected and -2 = pending request

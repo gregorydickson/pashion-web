@@ -104,7 +104,7 @@ class UserController {
         }
     }
 
-
+ 
     @Transactional
     def doLogin(){
         log.info "doLogin(), params:"+params
@@ -125,6 +125,36 @@ class UserController {
         } else{
             flash.message = "User not found"
             redirect(controller:'user',action:'login')
+        }
+    }
+
+    @Transactional
+    def checkLogin(){
+        log.info "checkLogin()"   
+        def jsonObject = request.JSON
+        def accountT = null
+        def userT= User.findWhere(email:jsonObject.email)
+        log.info "checkLogin() email: " + jsonObject.email + " " + jsonObject.password
+        if(userT){
+            accountT = userService.checkLogin(jsonObject.email,jsonObject.password)
+            //session.user = user                   
+            if(accountT instanceof Account){
+                //user.account = account
+
+                //redirect(controller:'dashboard',action:'index')
+                log.info "checkLogin() true"
+                render([status: true] as JSON)
+            } else{
+                //flash.message = "wrong password";
+                //redirect(controller:'user',action:'login')
+                log.info "checkLogin() false"
+                render([status: false] as JSON)
+            }
+        } else{
+            //flash.message = "User not found"
+            //redirect(controller:'user',action:'login')
+            log.info "checkLogin() false"
+            render([status: false] as JSON)
         }
     }
 
