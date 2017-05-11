@@ -202,10 +202,10 @@
                         </div> 
 
                         <!-- ID -->
-                        <div class="grid-block shrink">                       
-                            <span class="inline-label slim-text-box-label">ID</span>
-                            <span>
-                                <input type="text"  class="slim-text-box" value.bind="sampleRequest.shippingReturn.stuartJobId" style="width:169px">
+                        <div class="grid-block shrink">
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">ID</span>
+                                <input type="text" class="slim-text-box" value.bind="sampleRequest.shippingReturn.stuartJobId" style="width:169px">
                             </span>
                         </div>
 
@@ -281,13 +281,13 @@
 
                         <!-- ID -->
                         <div class="grid-block shrink">
-                            <span class="inline-label slim-text-box-label">ID</span>
-                            <span >
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">ID</span>
                                 <input type="text" class="slim-text-box" value.bind="sampleRequest.shippingOut.stuartJobId">
                             </span>
                         </div>
 
-                        <select-address change.delegate="onSelectAddressChangeCallback($event)" css="grid-block shrink" width="169" title="Deliver To:">
+                        <select-address change.delegate="onSelectAddressChangeCallback($event)" css="grid-block shrink" width="169">
                         </select-address>  
      
                         <!-- Attention  -->
