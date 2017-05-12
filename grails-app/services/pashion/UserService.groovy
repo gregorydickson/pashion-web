@@ -110,6 +110,29 @@ class UserService {
         }
         account
     }
+
+    def checkLogin(def email, def password){
+        log.info ("Check Login: " + email + " " + password)
+        def accountT = null
+        // Create an authentication request using the credentials
+        if(email && password){
+            AuthenticationRequest request = UsernamePasswordRequests.builder()
+                    .setUsernameOrEmail(email)
+                    .setPassword(password)
+                    .build();
+
+            //Now let's authenticate the account with the application:
+            try {
+                AuthenticationResult result = stormpathApp.authenticateAccount(request)
+                accountT = result.getAccount()
+                log.info("Authenticated Account: " + accountT.getUsername() + ", Email: " + accountT.getEmail());
+            } catch (ResourceException ex) {
+                log.error ex.getMessage()
+                accountT = ex.getMessage()
+            }
+        }
+        accountT
+    }
     
     def createUser(def params, def owner, Boolean isInPashionNetwork ){
     	def role

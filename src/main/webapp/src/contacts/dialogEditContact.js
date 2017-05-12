@@ -7,17 +7,22 @@ import { UserService } from 'services/userService';
 import { BrandService } from 'services/brandService';
 import { PressHouseService } from 'services/pressHouseService';
 import { PRAgencyService } from 'services/PRAgencyService';
+import { CreateDialogConfirmPassword } from './dialogConfirmPassword';
+import { DialogService } from 'aurelia-dialog';
 import { DS } from 'datastores/ds';
 
-@inject(HttpClient, DialogController, UserService, BrandService, PRAgencyService, PressHouseService, DS)
+@inject(HttpClient, DialogController, UserService, BrandService,  DialogService, PRAgencyService, PressHouseService, DS)
 export class CreateDialogEditContact {
     static inject = [DialogController];
 
     lUser = {};
     availableLocationItems = [];
     selectedLocationItems = [];
+    newPassword = '';
 
-    constructor(http, controller, userService, brandService, prAgencyService, pressHouseService, DS) {
+    flashMessage = '';
+
+    constructor(http, controller, userService, brandService, dialogService, prAgencyService, pressHouseService, DS) {
         this.controller = controller;
         http.configure(config => {
             config
@@ -25,6 +30,7 @@ export class CreateDialogEditContact {
         });
         this.http = http;
         this.userService = userService;
+        this.dialogService = dialogService;
         this.brandService = brandService;
         this.pressHouseService = pressHouseService;
         this.prAgencyService = prAgencyService;
@@ -68,10 +74,71 @@ export class CreateDialogEditContact {
         });
     }
 
+
+    hide_un_hide_password_new() {
+        var me = document.getElementById('password-new');
+        var meType = me.getAttribute('type');
+        if (meType == "password") {
+                me.setAttribute('type', 'text');
+                document.getElementById('password-word-new').innerHTML="Hide";
+            }
+        else {
+                me.setAttribute('type', 'password');               
+                document.getElementById('password-word-new').innerHTML="Show";
+            }
+      };
+
+
+
     save() {
+        this.flashMessage = '';
         console.log("CreateDialogEditContact.save, updating user:" + this.lUser.id + " name: " + this.lUser.name)
-        this.userService.update(this.lUser);
-        this.controller.close();
+        // new password check
+        if (this.newPassword!='') {
+            //console.log("perform password check");
+
+            if (this.newPassword.length < 8) {
+                this.flashMessage = 'Password must be at least 8 characters';
+                this.newPassword = '';
+                return false;
+            }
+
+            if (!(/[A-Z]/.test(this.newPassword))) {
+                this.flashMessage = 'Password must contain a capital letter';            
+                this.newPassword = '';
+                return false;
+            }
+
+
+            this.dialogService.open({
+                viewModel: CreateDialogConfirmPassword,
+                model: this.lUser,
+                lock: true
+              })
+              .then(response => {
+                //console.log("Confirm password return was cancelled: " + response.wasCancelled);
+                if (response.wasCancelled) {
+                    this.newPassword = '';
+                    return false;
+                }
+          
+
+                // else OK
+                //console.log("Update user, with password");
+                this.lUser.password = this.newPassword;
+                //
+                this.userService.update(this.lUser);
+                //
+                this.controller.close();
+              });
+
+
+        } else {
+            // console.log("Update user, no password");
+            this.lUser.password = '';
+            this.userService.update(this.lUser);
+            this.controller.close();
+        }
     }
 
     close() {

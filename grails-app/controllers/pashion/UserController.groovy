@@ -104,7 +104,7 @@ class UserController {
         }
     }
 
-
+ 
     @Transactional
     def doLogin(){
         log.info "doLogin(), params:"+params
@@ -125,6 +125,36 @@ class UserController {
         } else{
             flash.message = "User not found"
             redirect(controller:'user',action:'login')
+        }
+    }
+
+    @Transactional
+    def checkLogin(){
+        log.info "checkLogin()"   
+        def jsonObject = request.JSON
+        def accountT = null
+        def userT= User.findWhere(email:jsonObject.email)
+        log.info "checkLogin() email: " + jsonObject.email + " " + jsonObject.password
+        if(userT){
+            accountT = userService.checkLogin(jsonObject.email,jsonObject.password)
+            //session.user = user                   
+            if(accountT instanceof Account){
+                //user.account = account
+
+                //redirect(controller:'dashboard',action:'index')
+                log.info "checkLogin() true"
+                render([status: true] as JSON)
+            } else{
+                //flash.message = "wrong password";
+                //redirect(controller:'user',action:'login')
+                log.info "checkLogin() false"
+                render([status: false] as JSON)
+            }
+        } else{
+            //flash.message = "User not found"
+            //redirect(controller:'user',action:'login')
+            log.info "checkLogin() false"
+            render([status: false] as JSON)
         }
     }
 
@@ -229,8 +259,16 @@ class UserController {
         if(jsonObject.id == session?.user?.id){
             user = session.user
             log.info "updateJson(), user for this session: "+user.toString()
-            Account account = session.account
-            user = userService.updateUser(jsonObject,user,account)
+            // get StormPath account (transient) from the user in the session
+            Account account = user.account
+            if(account){
+                user = userService.updateUser(jsonObject,user,account)
+            } else{
+                def response = [error: 'Error No Account'] as JSON
+                render response 
+                return 
+            }
+
         } else{
             log.info "updateJson(), other user"
             user = userService.updateUser(jsonObject)
