@@ -91,10 +91,24 @@ export class CreateDialogEditContact {
 
 
     save() {
+        this.flashMessage = '';
         console.log("CreateDialogEditContact.save, updating user:" + this.lUser.id + " name: " + this.lUser.name)
         // new password check
         if (this.newPassword!='') {
             //console.log("perform password check");
+
+            if (this.newPassword.length < 8) {
+                this.flashMessage = 'Password must be at least 8 characters';
+                this.newPassword = '';
+                return false;
+            }
+
+            if (!(/[A-Z]/.test(this.newPassword))) {
+                this.flashMessage = 'Password must contain a capital letter';            
+                this.newPassword = '';
+                return false;
+            }
+
 
             this.dialogService.open({
                 viewModel: CreateDialogConfirmPassword,
@@ -121,6 +135,7 @@ export class CreateDialogEditContact {
 
         } else {
             // console.log("Update user, no password");
+            this.lUser.password = '';
             this.userService.update(this.lUser);
             this.controller.close();
         }
