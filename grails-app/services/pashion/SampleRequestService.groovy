@@ -176,7 +176,11 @@ class SampleRequestService {
             log.info "returnTo Address:"+jsonObject.returnToAddress
             def returnToAddress = jsonObject.returnToAddress
             log.info ""
-            if(returnToAddress instanceof Integer){
+            if(returnToAddress == '0'){
+
+                sr.returnToAddress = Address.findByBrandAndDefaultAddress(sr.brand, true)
+                log.info "return to brand default"+sr.returnToAddress
+            } else if(returnToAddress instanceof Integer){
                 sr.returnToAddress = Address.get(jsonObject.returnToAddress)
             } else if(returnToAddress instanceof String){
                 sr.returnToAddress = Address.get(jsonObject.returnToAddress.toInteger())
@@ -184,7 +188,7 @@ class SampleRequestService {
                 sr.returnToAddress = Address.get(jsonObject.returnToAddress.id.toInteger())
                 
             }
-        }
+        } 
         
         if(jsonObject.addressDestination){
 
