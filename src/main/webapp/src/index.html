@@ -410,7 +410,7 @@
                
                 <div if.bind="user.type === 'brand'" class="vertical grid-content grid-content-column accordion">
                     <!--header -->
-                    <div style="margin-bottom:5px;">
+                    <div style="margin-bottom:5px; width:255px;">
                         <table class="accordion" style="table-layout:fixed;">
                             <tr> 
                                 <th class="accordion w7"></th>
@@ -422,7 +422,7 @@
                         </table>
                     </div>
                     <!-- row with button -->
-                    <div repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user:seasons">
+                    <div style="width:255px;" repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user:seasons">
                         <table class="accordion" style="table-layout:fixed;">
                             <tr class="indexReqRow">
                                 <td class="accordion w7">
