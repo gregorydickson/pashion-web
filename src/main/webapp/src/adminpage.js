@@ -1,4 +1,4 @@
-import { inject, observable } from 'aurelia-framework';
+import { inject, observable, TaskQueue } from 'aurelia-framework';
 import { UserService } from './services/userService';
 import { DialogService } from 'aurelia-dialog';
 import { CreateDialogNewUser } from './admin/dialogNewUser';
@@ -12,7 +12,7 @@ import { AddressService } from 'services/addressService';
 import { CityService } from 'services/cityService';
 import { DS } from 'datastores/ds';
 
-@inject(DialogService, UserService, BrandService, PRAgencyService, PressHouseService, AddressService, CityService, DS)
+@inject(DialogService, UserService, BrandService, PRAgencyService, PressHouseService, AddressService, CityService, DS, TaskQueue)
 export class Adminpage {
 
     currentUser = {};
@@ -26,7 +26,7 @@ export class Adminpage {
     company = {};
     cities = [];
 
-    constructor(dialogService, userService, brandService, prAgencyService, pressHouseService, addressService, cityService, DS) {
+    constructor(dialogService, userService, brandService, prAgencyService, pressHouseService, addressService, cityService, DS, TaskQueue) {
         this.dialogService = dialogService;
         this.userService = userService;
         this.brandService = brandService;
@@ -35,6 +35,7 @@ export class Adminpage {
         this.addressService = addressService;
         this.cityService = cityService;
         this.ds = DS;
+        this.taskQueue = TaskQueue;
     }
 
     currentAddressIdChanged(newValue, oldValue) {
@@ -89,8 +90,8 @@ export class Adminpage {
         this.userService.getUsersByOrganization(true).then(users => {
             this.users = users;
             if (this.users.length) {
-                this.reloadUserSelect();
-                this.currentUser = this.users[0];
+                this.resetUserSelect();
+                this.taskQueue.queueMicroTask(() => { this.currentUser = this.users[0]; });
             }
         });
     }
@@ -133,6 +134,11 @@ export class Adminpage {
     reloadUserSelect() {
         if (this.userSelect)
             this.userSelect.reload();
+    }
+
+    resetUserSelect() {
+        if (this.userSelect)
+            this.userSelect.reset();
     }
 
     attached() {
