@@ -89,6 +89,7 @@ class ConnectionController {
             con1.connectedUserId = jsonObject.user1.connectedUserId
             con1.connectingStatus = 'PendingOut'
             con1.numberNewMessages = jsonObject.user1.numberNewMessages
+            con1.lastMessage = ''
             con1.mostRecentRead = jsonObject.user1.mostRecentRead
             con1.name = jsonObject.user1.name
             con1.save(flush:true, failOnError:true)
@@ -98,6 +99,7 @@ class ConnectionController {
             con2.connectedUserId = session.user.id
             con2.connectingStatus = 'PendingIn'
             con2.numberNewMessages = jsonObject.user2.numberNewMessages
+            con2.lastMessage = ''
             con2.mostRecentRead = jsonObject.user2.mostRecentRead
             con2.name = jsonObject.user2.name
             con2.save(flush:true, failOnError:true)
