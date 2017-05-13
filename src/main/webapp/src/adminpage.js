@@ -1,4 +1,4 @@
-import { inject } from 'aurelia-framework';
+import { inject, bindable } from 'aurelia-framework';
 import { UserService } from './services/userService';
 import { DialogService } from 'aurelia-dialog';
 import { CreateDialogNewUser } from './admin/dialogNewUser';
@@ -15,218 +15,251 @@ import { DS } from 'datastores/ds';
 @inject(DialogService, UserService, BrandService, PRAgencyService, PressHouseService, AddressService, CityService, DS)
 export class Adminpage {
 
-  //currentUser = {};
-  users = [];
-  addresses = [];
-  //currentAddress = {};
-  company = {};
-  cities = [];
+    currentUser = {};
+    users = [];
+    addresses = [];
+    currentAddress = {};
+    @bindable currentPassword = '';
+    validPassword = false;
 
-  constructor(dialogService, userService, brandService, prAgencyService, pressHouseService, addressService, cityService, DS) {
-    this.dialogService = dialogService;
-    this.userService = userService;
-    this.brandService = brandService;
-    this.pressHouseService = pressHouseService;
-    this.prAgencyService = prAgencyService;
-    this.addressService = addressService;
-    this.cityService = cityService;
-    this.ds = DS;
-  }
+    @bindable currentAddressId = '';
+    company = {};
+    cities = [];
 
-  activate() {
-    this.userService.getUsersByOrganization(true).then(users => this.users = users);
-    this.user = this.ds.user.user;
-
-    if (this.user.type === 'brand') {
-      this.brandService.getBrandAddresses(this.user.brand.id)
-        .then(addresses => {
-          this.addresses = addresses
-        });
-      //console.log(JSON.stringify(this.user.brand));
-      this.company = this.user.brand;
-    } else if (this.user.type === 'press') {
-      this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
-        .then(addresses => this.addresses = addresses)
-      this.company = this.user.pressHouse;
-    } else {
-      this.prAgencyService.getPRAgencyAddresses(this.user.prAgency.id)
-        .then(addresses => this.addresses = addresses)
-      this.company = this.user.prAgency;
+    constructor(dialogService, userService, brandService, prAgencyService, pressHouseService, addressService, cityService, DS) {
+        this.dialogService = dialogService;
+        this.userService = userService;
+        this.brandService = brandService;
+        this.pressHouseService = pressHouseService;
+        this.prAgencyService = prAgencyService;
+        this.addressService = addressService;
+        this.cityService = cityService;
+        this.ds = DS;
     }
 
-    this.cityService.getCities().then(cities => this.cities = cities);
-  }
-  attached() {
-    $("#passwordCheck").toggle();
-  }
+    currentAddressIdChanged(newValue, oldValue) {
+        if (newValue && oldValue) {
+            if (!this.currentUser.address)
+                this.currentUser.address = {};
 
-  deleteOffice() {
-    this.addressService.delete(this.currentAddress.id).then(response => {
-      if (this.user.brand != null) {
-        this.brandService.getBrandAddresses(this.user.brand.id)
-          .then(addresses => {
-            this.addresses = addresses
-          })
-      } else if (this.user.pressHouse != null) {
-        this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
-          .then(addresses => this.addresses = addresses)
-      } else if (this.user.prAgency != null) {
-        this.prAgencyService.getPRAgencyAddresses(this.user.prAgency.id)
-          .then(addresses => this.addresses = addresses)
-      }
-
-    });
-  }
-
-  hideCalendar() { //RM switch returning a boolean not the brand
-    console.log("hideCalendar: calendar: " + this.company.hideCalendar);
-    this.brandService.hideCalendar(this.company.id).then(brand => this.company.hideCalendar = brand);
-  }
-
-  allowAllRequests() {
-    console.log("Should be disabled for now");
-  }
-
-  allowAllRequests() {
-    console.log("Should be disabled for now");
-  }
-
-
-  // Create dialog NEW USER
-
-  CreateDialogNewUser() {
-    console.log("cities:");
-    console.log(JSON.stringify(this.cities));
-    this.dialogService.open({
-        viewModel: CreateDialogNewUser,
-        model: this.cities,
-        lock: true
-      })
-      .then(response => {
-
-        console.log("user created:" + response);
-        this.userService.getUsersByOrganization(true).then(users => this.users = users)
-
-      });
-  }
-
-  // Create dialog IMPORT USERS
-
-  CreateDialogImportUsers() {
-    this.dialogService.open({
-        viewModel: CreateDialogImportUsers,
-        model: "no-op",
-        lock: true
-      })
-      .then(response => {});
-  }
-
-
-  // Create dialog NEW OFFICE
-
-  CreateDialogNewOffice(user) {
-    this.dialogService.open({
-        viewModel: CreateDialogNewOffice,
-        model: this.user,
-        lock: true
-      })
-      .then(response => {
-        if (this.user.brand != null) {
-          this.brandService.getBrandAddresses(this.user.brand.id)
-            .then(addresses => {
-              this.addresses = addresses
-            })
-        } else if (this.user.pressHouse != null) {
-          this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
-            .then(addresses => this.addresses = addresses)
-        } else if (this.user.prAgency != null) {
-          this.prAgencyService.getPRAgencyAddresses(this.user.prAgency.id)
-            .then(addresses => this.addresses = addresses)
+            this.currentUser.address.id = newValue;
+            this.updateUser();
         }
-      })
-  }
-
-  deleteUser(id, userName) {
-    console.log("deleting:" + id);
-
-    this.dialogService.open({
-        viewModel: CreateDialogConfirmDelete,
-        model: userName,
-        lock: true
-      })
-      .then(response => {
-
-        console.log("confirm dialog was cancelled: " + response.wasCancelled);
-        if (response.wasCancelled) return false;
-        this.userService.delete(id)
-          .then(response => {
-            console.log("response to delete:" + response);
-            this.userService.getUsersByOrganization(true).then(users => this.users = users)
-          });
-      })
-
-  }
-
-  /* RM accordion expansion button */
-  closeExpand(buttonNumber) {
-    var buttonChoice = document.getElementById("button" + buttonNumber);
-    var panelChoice = document.getElementById("panel" + buttonNumber);
-    buttonChoice.classList.toggle("active");
-    panelChoice.classList.toggle("show");
-  }
-
-  updateUser() {
-    console.log("adminPage.updateUser");
-    // fill out the rest of the details for the user (done in userService)
-    this.userService.update(this.currentUser);
-  }
-
-  addressChange() {
-    console.log("updating address");
-    this.addressService.update(this.currentAddress);
-  }
-
-
-
-  togglePassword() {
-    console.log("toggle password");
-    var me = document.getElementById('password');
-    var meType = me.getAttribute('type');
-    if (meType == "password") {
-      me.setAttribute('type', 'text');
-      document.getElementById('password-toggle').innerHTML = "Hide";
-    } else {
-      me.setAttribute('type', 'password');
-      document.getElementById('password-toggle').innerHTML = "Show";
     }
-  }
 
-  checkPassword(e) {
-    console.log("checkPassword");
-    var pw = document.getElementById("password");
-
-    let str = pw.value;
-    if (str.length < 8) {
-      $("#passwordCheck").hide();
-      return ("too_short");
-    } else if (str.length > 50) {
-      $("#passwordCheck").hide();
-      return ("too_long");
-    } else if (str.search(/\d/) == -1) {
-      $("#passwordCheck").hide();
-      return ("no_num");
-    } else if (str.search(/[a-zA-Z]/) == -1) {
-      $("#passwordCheck").hide();
-      return ("no_letter");
-    } else if (str.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+]/) != -1) {
-      $("#passwordCheck").hide();
-      return ("bad_char");
+    currentPasswordChanged(newValue, oldValue) {
+        if (newValue) {
+            // Check Password
+            if (newValue.length < 8) {
+                this.validPassword = false
+                return ("too_short");
+            } else if (newValue.length > 50) {
+                this.validPassword = false
+                return ("too_long");
+            } else if (newValue.search(/\d/) == -1) {
+                this.validPassword = false
+                return ("no_num");
+            } else if (newValue.search(/[a-zA-Z]/) == -1) {
+                this.validPassword = false
+                return ("no_letter");
+            } else if (newValue.search(/[^a-zA-Z0-9\!\@\#\$\%\^\&\*\(\)\_\+]/) != -1) {
+                this.validPassword = false
+                return ("bad_char");
+            }
+            this.validPassword = true;
+            this.currentUser.password = newValue;
+            this.updateUser();
+        }
     }
-    $("#passwordCheck").show();
-    this.updateUser();
 
-  }
+    activate() {
+        this.user = this.ds.user.user;
+        this.reloadData();
+    }
+
+    reloadData() {
+        this.reloadUsers();
+
+        this.reloadAddresses();
+
+        this.reloadCities();
+    }
+
+    reloadUsers() {
+        this.userService.getUsersByOrganization(true).then(users => {
+            this.users = users;
+            if (this.users.length) {
+                this.reloadUserSelect();
+                this.currentUser = this.users[0];
+            }
+        });
+    }
+
+    reloadCities() {
+        this.cityService.getCities().then(cities => {
+            this.cities = cities;
+        });
+    }
+
+    reloadAddresses() {
+        if (this.user.type === 'brand') {
+            this.brandService.getBrandAddresses(this.user.brand.id)
+                .then(addresses => {
+                    this.addresses = addresses;
+                    if (this.addresses.length)
+                        this.currentAddress = this.addresses[0];
+                });
+            //console.log(JSON.stringify(this.user.brand));
+            this.company = this.user.brand;
+        } else if (this.user.type === 'press') {
+            this.pressHouseService.getPressHouseAddresses(this.user.pressHouse.id)
+                .then(addresses => {
+                    this.addresses = addresses;
+                    if (this.addresses.length)
+                        this.currentAddress = this.addresses[0];
+                });
+            this.company = this.user.pressHouse;
+        } else {
+            this.prAgencyService.getPRAgencyAddresses(this.user.prAgency.id)
+                .then(addresses => {
+                    this.addresses = addresses;
+                    if (this.addresses.length)
+                        this.currentAddress = this.addresses[0];
+                });
+            this.company = this.user.prAgency;
+        }
+    }
+
+    reloadUserSelect() {
+        if (this.userSelect)
+            this.userSelect.reload();
+    }
+
+    attached() {
+        $("#passwordCheck").toggle();
+    }
+
+    deleteOffice() {
+        this.addressService.delete(this.currentAddress.id).then(response => {
+            this.reloadAddresses();
+        });
+    }
+
+    hideCalendar() { //RM switch returning a boolean not the brand
+        console.log("hideCalendar: calendar: " + this.company.hideCalendar);
+        this.brandService.hideCalendar(this.company.id).then(brand => this.company.hideCalendar = brand);
+    }
+
+    allowAllRequests() {
+        console.log("Should be disabled for now");
+    }
+
+    allowAllRequests() {
+        console.log("Should be disabled for now");
+    }
 
 
+    // Create dialog NEW USER
+
+    CreateDialogNewUser() {
+        console.log("cities:");
+        console.log(JSON.stringify(this.cities));
+        this.dialogService.open({
+            viewModel: CreateDialogNewUser,
+            model: this.cities,
+            lock: true
+        })
+            .then(response => {
+                if (response.wasCancelled) return false;
+
+                console.log("user created:" + response);
+                this.reloadUsers();
+            });
+    }
+
+    // Create dialog IMPORT USERS
+
+    CreateDialogImportUsers() {
+        this.dialogService.open({
+            viewModel: CreateDialogImportUsers,
+            model: "no-op",
+            lock: true
+        })
+            .then(response => {
+                if (response.wasCancelled) return false;
+            });
+    }
+
+
+    // Create dialog NEW OFFICE
+
+    CreateDialogNewOffice(user) {
+        this.dialogService.open({
+            viewModel: CreateDialogNewOffice,
+            model: this.user,
+            lock: true
+        })
+            .then(response => {
+                if (response.wasCancelled) return false;
+                this.reloadAddresses();
+            })
+    }
+
+    deleteUser(id, userName) {
+        console.log("deleting:" + id);
+
+        this.dialogService.open({
+            viewModel: CreateDialogConfirmDelete,
+            model: userName,
+            lock: true
+        })
+            .then(response => {
+
+                console.log("confirm dialog was cancelled: " + response.wasCancelled);
+                if (response.wasCancelled) return false;
+                this.userService.delete(id)
+                    .then(response => {
+                        console.log("response to delete:" + response);
+                        this.reloadUsers();
+                    });
+            })
+
+    }
+
+    /* RM accordion expansion button */
+    closeExpand(buttonNumber) {
+        var buttonChoice = document.getElementById("button" + buttonNumber);
+        var panelChoice = document.getElementById("panel" + buttonNumber);
+        buttonChoice.classList.toggle("active");
+        panelChoice.classList.toggle("show");
+    }
+
+    updateUser() {
+        if (this.currentUser) {
+            console.log("adminPage.updateUser");
+            // fill out the rest of the details for the user (done in userService)
+            this.userService.update(this.currentUser);
+            this.reloadUserSelect();
+        }
+    }
+
+    addressChange() {
+        console.log("updating address");
+        this.addressService.update(this.currentAddress);
+    }
+
+
+    togglePassword() {
+        console.log("toggle password");
+        var me = document.getElementById('password');
+        var meType = me.getAttribute('type');
+        if (meType == "password") {
+            me.setAttribute('type', 'text');
+            document.getElementById('password-toggle').innerHTML = "Hide";
+        } else {
+            me.setAttribute('type', 'password');
+            document.getElementById('password-toggle').innerHTML = "Show";
+        }
+    }
 
 }

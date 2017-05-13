@@ -1,160 +1,160 @@
 import {
-  DialogController
+    DialogController
 } from 'aurelia-dialog';
 import {
-  HttpClient,
-  json
+    HttpClient,
+    json
 } from 'aurelia-fetch-client';
 import 'fetch';
 import {
-  inject,
-  observable,
-  BindingEngine
+    inject,
+    observable,
+    BindingEngine
 } from 'aurelia-framework';
 import {
-  DateFormat
+    DateFormat
 } from 'common/dateFormat';
 import {
-  AddressService
+    AddressService
 } from 'services/addressService'
 import {
-  Helpers
+    Helpers
 } from 'common/helpers';
 
 
 @inject(BindingEngine, DialogController, AddressService, Helpers)
 export class EditAddress {
-  static inject = [DialogController];
+    static inject = [DialogController];
 
-  editMode = false;
-  deleteMode = false
+    editMode = false;
+    deleteMode = false
 
-  titleText = '';
-  buttonText = '';
-  buttonDisabled = true;
+    titleText = '';
+    buttonText = '';
+    buttonDisabled = true;
 
-  textItems = [{
-    titleText: 'NEW',
-    buttonText: 'Add'
-  }, {
-    titleText: 'UPDATE',
-    buttonText: 'Update'
-  }, {
-    titleText: 'DELETE',
-    buttonText: 'Delete'
-  }];
+    textItems = [{
+        titleText: 'NEW',
+        buttonText: 'Add'
+    }, {
+        titleText: 'UPDATE',
+        buttonText: 'Update'
+    }, {
+        titleText: 'DELETE',
+        buttonText: 'Delete'
+    }];
 
-  @observable textMode;
-  textModeChanged(newValue, oldValue) {
-    this.titleText = this.textItems[newValue].titleText;
-    this.buttonText = this.textItems[newValue].buttonText;
-  }
-
-  @observable newAddress = {};
-  newAddressSubscriptions = []
-  newAddressChanged(newValue, oldValue) {
-    this.setButtonDisabled();
-  }
-
-  constructor(BindingEngine, controller, addressService, Helpers) {
-    this.bindingEngine = BindingEngine;
-    this.controller = controller;
-    this.addressService = addressService;
-    this.helpers = Helpers;
-
-  }
-
-  bindNewAddress() {
-    this.disposeNewAddress();
-    this.newAddressSubscriptions.push(this.bindingEngine.propertyObserver(this.newAddress, 'name').subscribe(() => this.setButtonDisabled()));
-    this.newAddressSubscriptions.push(this.bindingEngine.propertyObserver(this.newAddress, 'contactPhone').subscribe(() => this.setButtonDisabled()));
-    this.newAddressSubscriptions.push(this.bindingEngine.propertyObserver(this.newAddress, 'address1').subscribe(() => this.setButtonDisabled()));
-    this.newAddressSubscriptions.push(this.bindingEngine.propertyObserver(this.newAddress, 'city').subscribe(() => this.setButtonDisabled()));
-    this.newAddressSubscriptions.push(this.bindingEngine.propertyObserver(this.newAddress, 'country').subscribe(() => this.setButtonDisabled()));
-    this.newAddressSubscriptions.push(this.bindingEngine.propertyObserver(this.newAddress, 'postalCode').subscribe(() => this.setButtonDisabled()));
-  }
-
-  disposeNewAddress() {
-    while (this.newAddressSubscriptions.length) {
-      this.newAddressSubscriptions.pop().dispose();
-    }
-  }
-
-  close() {
-    this.controller.close();
-  }
-
-  activate(model) {
-    this.editMode = !this.helpers.isEmptyObject(model.newAddress);
-    this.deleteMode = model.deleteMode;
-    this.newAddress = model.newAddress;
-
-    this.bindNewAddress();
-
-    if (this.editMode) {
-      this.textMode = 1;
-    } else {
-      this.textMode = 0;
+    @observable textMode;
+    textModeChanged(newValue, oldValue) {
+        this.titleText = this.textItems[newValue].titleText;
+        this.buttonText = this.textItems[newValue].buttonText;
     }
 
-    if (this.deleteMode) {
-      this.textMode = 2;
-    }
-  }
-
-  detached() {
-    this.disposeNewAddress();
-  }
-
-  setButtonDisabled() {
-    if (this.deleteMode) {
-      this.buttonDisabled = false;
-    } else {
-      this.buttonDisabled = ((this.newAddress.name && this.newAddress.contactPhone &&
-        this.newAddress.address1 && this.newAddress.city &&
-        this.newAddress.country && this.newAddress.postalCode) ? false : true);
-    }
-  }
-
-  manageAddress() {
-
-    switch (this.textMode) {
-      case 0: // Add Address
-        this.add();
-        break;
-      case 1: // Update Address
-        this.update();
-        break;
-      case 2: // Delete Address
-        this.delete();
-        break;
+    @observable newAddress = {};
+    newAddressSubscriptions = []
+    newAddressChanged(newValue, oldValue) {
+        this.setButtonDisabled();
     }
 
-  }
+    constructor(BindingEngine, controller, addressService, Helpers) {
+        this.bindingEngine = BindingEngine;
+        this.controller = controller;
+        this.addressService = addressService;
+        this.helpers = Helpers;
 
-  add() {
-    this.addressService.createAdHoc(this.newAddress)
-      .then(response => {
-        // This should probably return the new address and not the list of all 
-        this.controller.ok(response);
-      });
-  }
+    }
 
-  update() {
-    this.addressService.update(this.newAddress)
-      .then(response => {
-        // I think we need to json the data then update the store.
-        this.controller.ok(response);
-      });
-  }
+    bindNewAddress() {
+        this.disposeNewAddress();
+        this.newAddressSubscriptions.push(this.bindingEngine.propertyObserver(this.newAddress, 'name').subscribe(() => this.setButtonDisabled()));
+        this.newAddressSubscriptions.push(this.bindingEngine.propertyObserver(this.newAddress, 'contactPhone').subscribe(() => this.setButtonDisabled()));
+        this.newAddressSubscriptions.push(this.bindingEngine.propertyObserver(this.newAddress, 'address1').subscribe(() => this.setButtonDisabled()));
+        this.newAddressSubscriptions.push(this.bindingEngine.propertyObserver(this.newAddress, 'city').subscribe(() => this.setButtonDisabled()));
+        this.newAddressSubscriptions.push(this.bindingEngine.propertyObserver(this.newAddress, 'country').subscribe(() => this.setButtonDisabled()));
+        this.newAddressSubscriptions.push(this.bindingEngine.propertyObserver(this.newAddress, 'postalCode').subscribe(() => this.setButtonDisabled()));
+    }
 
-  delete() {
-    this.addressService.delete(this.newAddress.id)
-      .then(response => {
-        // I think we need to json the data then update the store.
-        this.controller.ok(response);
-      });
-  }
+    disposeNewAddress() {
+        while (this.newAddressSubscriptions.length) {
+            this.newAddressSubscriptions.pop().dispose();
+        }
+    }
+
+    close() {
+        this.controller.close();
+    }
+
+    activate(model) {
+        this.editMode = !this.helpers.isEmptyObject(model.newAddress);
+        this.deleteMode = model.deleteMode;
+        this.newAddress = model.newAddress;
+
+        this.bindNewAddress();
+
+        if (this.editMode) {
+            this.textMode = 1;
+        } else {
+            this.textMode = 0;
+        }
+
+        if (this.deleteMode) {
+            this.textMode = 2;
+        }
+    }
+
+    detached() {
+        this.disposeNewAddress();
+    }
+
+    setButtonDisabled() {
+        if (this.deleteMode) {
+            this.buttonDisabled = false;
+        } else {
+            this.buttonDisabled = ((this.newAddress.name && this.newAddress.contactPhone &&
+                this.newAddress.address1 && this.newAddress.city &&
+                this.newAddress.country && this.newAddress.postalCode) ? false : true);
+        }
+    }
+
+    manageAddress() {
+
+        switch (this.textMode) {
+            case 0: // Add Address
+                this.add();
+                break;
+            case 1: // Update Address
+                this.update();
+                break;
+            case 2: // Delete Address
+                this.delete();
+                break;
+        }
+
+    }
+
+    add() {
+        this.addressService.createAdHoc(this.newAddress)
+            .then(response => {
+                // This should probably return the new address and not the list of all 
+                this.controller.ok(response);
+            });
+    }
+
+    update() {
+        this.addressService.update(this.newAddress)
+            .then(response => {
+                // I think we need to json the data then update the store.
+                this.controller.ok(response);
+            });
+    }
+
+    delete() {
+        this.addressService.delete(this.newAddress.id)
+            .then(response => {
+                // I think we need to json the data then update the store.
+                this.controller.ok(response);
+            });
+    }
 
 
 }
