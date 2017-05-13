@@ -1,4 +1,4 @@
-import { inject, bindable } from 'aurelia-framework';
+import { inject, observable } from 'aurelia-framework';
 import { UserService } from './services/userService';
 import { DialogService } from 'aurelia-dialog';
 import { CreateDialogNewUser } from './admin/dialogNewUser';
@@ -19,10 +19,10 @@ export class Adminpage {
     users = [];
     addresses = [];
     currentAddress = {};
-    @bindable currentPassword = '';
+    @observable currentPassword = '';
     validPassword = false;
 
-    @bindable currentAddressId = '';
+    @observable currentAddressId = '';
     company = {};
     cities = [];
 
@@ -48,7 +48,7 @@ export class Adminpage {
     }
 
     currentPasswordChanged(newValue, oldValue) {
-        if (newValue) {
+        if (newValue && this.currentUser) {
             // Check Password
             if (newValue.length < 8) {
                 this.validPassword = false
