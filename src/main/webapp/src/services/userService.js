@@ -96,6 +96,7 @@ export class UserService {
     // used to update the server when finished updating the connections with history from pubnub
     // only in case users gets reloaded while we are in session. IE keep the server matched to the internal strucutre
     flushConnectionsData() {
+        console.log("flushConnectionsData()");
         var parent = this;
         var promise = new Promise((resolve, reject) => {
             if (parent.users) {
@@ -381,13 +382,12 @@ export class UserService {
         // get id for email;
         var fromUserId = this.checkValidUser(fromEmail);
         var connectionId = -1;
-        // console.log("UserService.addMessgeCount, update message count from:" + fromEmail + " id:" + fromUserId + ' pushToServer: ' + pushToServer);
 
         var i;
         for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
             if (this.users[this.user.id - 1].connections[i].connectedUserId == fromUserId) {
                 this.users[this.user.id - 1].connections[i].lastMessage = message;
-                //console.log("UserService.updateLastMessage from: " + fromUserId + " to: " + this.user.id + " message: " + message);
+                // console.log("UserService.updateLastMessage from: " + fromUserId + " to: " + this.user.id + " message: " + message);
                 connectionId = this.users[this.user.id - 1].connections[i].id;
                 break;
             }

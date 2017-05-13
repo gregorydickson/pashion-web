@@ -72,19 +72,21 @@ export class ContactsList {
         var channelGroup = m.subscription; // The channel group or wildcard subscription match (if exists)
         var pubTT = m.timetoken; // Publish timetoken
         var receivedMessage = m.message; // The Payload
-        console.log("pubnub new nessage in contactList on " + m.channel + " > " + m.message);
+        console.log("contactList pubnub new nessage in contactList on " + m.channel + " > " + m.message);
 
-        if (channelName == parent.user.email + "_cacheInvalidate") {
-          console.log("cache invalidate for user:" + parent.user.email + " message " + receivedMessage);
-          // try some toast
-          toastr.options.timeOut = 5000;
-          toastr.options.closeButton = false;
-          toastr.options.preventDuplicates = true;
+        //if (channelName == parent.user.email + "_cacheInvalidate") {
           if (receivedMessage == "connections") {
+            console.log("contactList cache invalidate: connections");
             parent.fetchGetUserUsersFromServer(); //update data structure from JSON in contact list
+            // try some toast
+            toastr.options.timeOut = 5000;
+            toastr.options.closeButton = false;
+            toastr.options.preventDuplicates = true;
             toastr.info('Connections Update'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);    
           }
           if (receivedMessage == "users") {
+            console.log("contactList cache invalidate: users");
+
             // need this as changes in dialogEditContact are done locally to the dialog and then saved to json (and locally)
             parent.fetchGetUserUsersFromServer(); //update data structure from JSON in contact list
             // nothing for now as appears on own local window, now remote, could be a bugtoastr.info('User Changes'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);    
@@ -92,7 +94,7 @@ export class ContactsList {
           //if (receivedMessage == "requests") {
           //  toastr.info('Requests Update'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);    
           //}               
-        }
+        //}
       },
       status: function (s) {
         console.log("pubnub callback status in contactList:", s);
@@ -104,7 +106,7 @@ export class ContactsList {
     // strictly perhaps should not be in this model, as only affects users, but seemed
     // convenietnt to put it here with the other listeners.
     this.pubnub.subscribe({
-      channels: [this.user.email + "_cacheInvalidate"],
+      channels: [this.user.email + "_cacheInvalidate", "connections_cacheInvalidate"],
       withPresence: true // also subscribe to presence instances.
     });
 
