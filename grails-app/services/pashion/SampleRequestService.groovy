@@ -116,8 +116,8 @@ class SampleRequestService {
     }
 
     def destinationAddressPress(SampleRequest sr, JSONObject jsonObject){
-        if(jsonObject.has('addressDestination')){
-            def aUser = User.get(jsonObject.addressDestination.id.toInteger())
+        if(jsonObject.has('deliverTo')){
+            def aUser = User.get(jsonObject.deliverTo.id.toInteger())
             if(aUser){
                 if(aUser.pressHouse) {
                     if(aUser.address) {
@@ -135,10 +135,8 @@ class SampleRequestService {
         sr
     }
 
-    // sr.DeliverTo is a User which may not be set if the address
-    // is an ad-hoc address. sr.destinationAddress may be pulled from 
-    // the user's address, or set explicitly if a Brand has used an ad-hoc address
-    // 
+    // DeliverTo is a User in SampleRequest domain object. However, the UI sets DeliverTo
+    // with a User or a adhoc address and we tease them apart here.
     def destinationAddressBrand(SampleRequest sr,JSONObject jsonObject){
         log.info "sample request addresses"
     
