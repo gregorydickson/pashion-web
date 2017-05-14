@@ -105,8 +105,9 @@ export class Messages {
                 var channelGroup = m.subscription; // The channel group or wildcard subscription match (if exists)
                 var pubTT = m.timetoken; // Publish timetoken
                 var receivedMessage = m.message; // The Payload
-                console.log("pubnub new nessage in messages on " + m.channel + " > " + m.message);
-
+                console.log("messages pubnub new nessage in messages on " + m.channel + " > " + m.message);
+                if (channelName == parent.user.email) {
+                    console.log("messages cache invalidate: " + parent.user.email);
                     parent.messages.push({ // unshift?
                         text: receivedMessage.text,
                         time: receivedMessage.sentAt,
@@ -142,8 +143,9 @@ export class Messages {
 
                     window.setTimeout(function () {
                         $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight"));
-                         },250); // major kludge to scroll messages
+                         },450); // major kludge to scroll messages
                     //$("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
+                }
 
             },
             status: function(s) {

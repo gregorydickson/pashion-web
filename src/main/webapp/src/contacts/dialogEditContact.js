@@ -21,6 +21,7 @@ export class CreateDialogEditContact {
     newPassword = '';
 
     flashMessage = '';
+    greenMessage = 'Min 8 characters: 1 uppercase, 1 lowercase, 1 number';
 
     constructor(http, controller, userService, brandService, dialogService, prAgencyService, pressHouseService, DS) {
         this.controller = controller;
@@ -94,6 +95,16 @@ export class CreateDialogEditContact {
         this.flashMessage = '';
         console.log("CreateDialogEditContact.save, updating user:" + this.lUser.id + " name: " + this.lUser.name)
         // new password check
+        /*"href": "https://api.stormpath.com/v1/passwordPolicies/6P79ZLiwGpge17v7Os71wu/strength",
+        "minLength": 8,
+        "maxLength": 100,
+        "minLowerCase": 1,
+        "minUpperCase": 1,
+        "minNumeric": 1,
+        "minSymbol": 0,
+        "minDiacritic": 0,
+        "preventReuse": 0
+        } */
         if (this.newPassword!='') {
             //console.log("perform password check");
 
@@ -103,8 +114,26 @@ export class CreateDialogEditContact {
                 return false;
             }
 
+            if (this.newPassword.length > 99) {
+                this.flashMessage = 'Password must be less than 99 characters';
+                this.newPassword = '';
+                return false;
+            }
+
+            if (!(/[a-z]/.test(this.newPassword))) {
+                this.flashMessage = 'Password must contain a lower case letter';            
+                this.newPassword = '';
+                return false;
+            }
+
             if (!(/[A-Z]/.test(this.newPassword))) {
                 this.flashMessage = 'Password must contain a capital letter';            
+                this.newPassword = '';
+                return false;
+            }
+
+            if (!(/[0-9]/.test(this.newPassword))) {
+                this.flashMessage = 'Password must contain a number';            
                 this.newPassword = '';
                 return false;
             }
@@ -135,8 +164,10 @@ export class CreateDialogEditContact {
 
         } else {
             // console.log("Update user, no password");
+            // flush connections data to save last message
+            this.userService.flushConnectionsData();
             this.lUser.password = '';
-            this.userService.update(this.lUser);
+            this.userService.update(this.lUser); // update for user and gets connections.
             this.controller.close();
         }
     }

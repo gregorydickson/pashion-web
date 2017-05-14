@@ -27,11 +27,12 @@
                         </div>
 
                         <div if.bind="((flashMessage != '') && (newPassword == ''))" class="message" style="color:red; text-align: center;" role="status">${flashMessage}</div>
+                        <div if.bind="(!((flashMessage != '') && (newPassword == '')) && newPassword!='')" class="message" style="color:green; text-align: center;" role="status">${greenMessage}</div>
 
                         <!-- New Password -->
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">New Password</span>
-                            <input id="password-new" type="password" class="slim-text-box" value.bind="newPassword" placeholder="At least 8 characters, one capital">
+                            <input id="password-new" type="password" class="slim-text-box" value.bind="newPassword" placeholder="">
                             <a id="password-word-new" style= "width: 30px; margin-left: 5px; margin-top:5px;" click.delegate="hide_un_hide_password_new()" style="">Show</a>
                         </div>
 

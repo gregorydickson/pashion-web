@@ -715,7 +715,7 @@ export class Index {
         buttonChoice.classList.toggle("active");
         panelChoice.classList.toggle("show");
         //menu.scrollIntoView({block: "end", behavior: "smooth"});
-        menu.scrollIntoViewIfNeeded();
+        panelChoice.scrollIntoViewIfNeeded();
     }
 
     closeAllOpenRequestRows() {
