@@ -16,15 +16,49 @@ class DashboardController {
 
     def deliverToBrand(){
         Brand brand = Brand.get(params.id)
+        def id = 0
+        def returnList = []
+        brand.destinations.each{
+            def item = extractAddressProperties(it,null)
+            item << [id:id,type:'adhoc',name:it.name]
+            ++id
+            returnList.add(item)
+        }
         
-        def destinations = brand.destinations
         def users = brand.users
-        destinations.addAll(users)
-        destinations.sort{it.name}
-        def response = destinations as JSON
+        users.each{ 
+            def address
+            if(it.address){
+                address = extractAddressProperties(it.address,it.id)
+            } else{
+                address = extractAddressProperties(Address.findByBrandAndDefaultAddress(brand,true),it.id)
+            }
+            
+            address << [id:id,name:it.name +" "+ it.surname,type: 'user']
+            ++id
+            returnList.add(address)
+        }
+        returnList.sort{it.name}
+        def response = returnList as JSON
         
         render response
     }
+
+    def extractAddressProperties(Address address,def userId) {
+        if(userId){
+            return [userId:userId,originalId:address.id,address1:address.address1,city:address.city,
+                country:address.country,postalCode:address.postalCode,
+                company:address.company,comment:address.comment,attention:address.attention,
+                contactPhone:address.contactPhone]
+        } else{
+            return [originalId:address.id,address1:address.address1,city:address.city,
+                country:address.country,postalCode:address.postalCode,
+                company:address.company,comment:address.comment,attention:address.attention,
+                contactPhone:address.contactPhone]
+        }
+        
+    }
+
 
     def citiesObjects(){
         def cities = City.list() as JSON
@@ -290,6 +324,8 @@ class DashboardController {
         render item as JSON
         
     }
+
+        
 }
 
 /*nolwenn's list */
