@@ -19,7 +19,7 @@ class DashboardController {
         def id = 0
         def returnList = []
         brand.destinations.each{
-            def item = extractAddressProperties(it)
+            def item = extractAddressProperties(it,null)
             item << [id:id,type:'adhoc',name:it.name]
             ++id
             returnList.add(item)
@@ -29,9 +29,9 @@ class DashboardController {
         users.each{ 
             def address
             if(it.address){
-                address = extractAddressProperties(it.address)
+                address = extractAddressProperties(it.address,it.id)
             } else{
-                address = extractAddressProperties(Address.findByBrandAndDefaultAddress(brand,true))
+                address = extractAddressProperties(Address.findByBrandAndDefaultAddress(brand,true),it.id)
             }
             
             address << [id:id,name:it.name +" "+ it.surname,type: 'user']
@@ -44,12 +44,18 @@ class DashboardController {
         render response
     }
 
-    def extractAddressProperties(Address address) {
-        
-        return [originalId:address.id,address1:address.address1,city:address.city,
-            country:address.country,postalCode:address.postalCode,
-            company:address.company,comment:address.comment,attention:address.attention,
-            contactPhone:address.contactPhone]
+    def extractAddressProperties(Address address,def userId) {
+        if(userId){
+            return [userId:userId,originalId:address.id,address1:address.address1,city:address.city,
+                country:address.country,postalCode:address.postalCode,
+                company:address.company,comment:address.comment,attention:address.attention,
+                contactPhone:address.contactPhone]
+        } else{
+            return [originalId:address.id,address1:address.address1,city:address.city,
+                country:address.country,postalCode:address.postalCode,
+                company:address.company,comment:address.comment,attention:address.attention,
+                contactPhone:address.contactPhone]
+        }
         
     }
 

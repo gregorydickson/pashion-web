@@ -46,7 +46,6 @@ class SampleRequestService {
             sr.requiredBy = jsonObject.requiredBy
             
             
-            sr = addresses(sr,jsonObject)
             sr.returnBy = jsonObject.returnBy
 
             sr.requestStatusBrand = "Pending"
@@ -81,11 +80,96 @@ class SampleRequestService {
             
             
             sr.dateRequested = new Date()
+            if(requestingUser.pressHouse){
+                sr = destinationAddressPress(sr,jsonObject)
+            } else {
+                sr = destinationAddressBrand(sr,jsonObject)
+            }
+            
+            sr = returnToAddress(sr,jsonObject)
             sr.save(failOnError : true, flush: true)
             log.info "SAVED SAMPLE REQUEST:"+sr.id
         }
         sr
     }
+
+
+    def returnToAddress(SampleRequest sr, JSONObject jsonObject){
+        if(jsonObject.has('returnToAddress')){
+            log.info "returnTo Address:"+jsonObject.returnToAddress
+            def returnToAddress = jsonObject.returnToAddress
+            log.info ""
+            if(returnToAddress == '0'){
+
+                sr.returnToAddress = Address.findByBrandAndDefaultAddress(sr.brand, true)
+                log.info "return to brand default"+sr.returnToAddress
+            } else if(returnToAddress instanceof Integer){
+                sr.returnToAddress = Address.get(jsonObject.returnToAddress)
+            } else if(returnToAddress instanceof String){
+                sr.returnToAddress = Address.get(jsonObject.returnToAddress.toInteger())
+            } else if(returnToAddress.has('address1')){
+                sr.returnToAddress = Address.get(jsonObject.returnToAddress.id.toInteger())
+                
+            }
+        } 
+        sr
+    }
+
+    def destinationAddressPress(SampleRequest sr, JSONObject jsonObject){
+        if(jsonObject.has('addressDestination')){
+            def aUser = User.get(jsonObject.addressDestination.id.toInteger())
+            if(aUser){
+                if(aUser.pressHouse) {
+                    if(aUser.address) {
+                        sr.addressDestination = aUser.address
+                    } else {
+                        sr.addressDestination = Address.findByPressHouseAndDefaultAddress(sr.pressHouse, true)
+                    }
+                    sr.pressHouse = aUser.pressHouse
+                }
+            }
+        }
+        if(jsonObject.has('deliverTo') && jsonObject.deliverTo.id != null){
+            sr.deliverTo = User.get(jsonObject.deliverTo.id.toInteger())
+        }
+        sr
+    }
+
+    // sr.DeliverTo is a User which may not be set if the address
+    // is an ad-hoc address. sr.destinationAddress may be pulled from 
+    // the user's address, or set explicitly if a Brand has used an ad-hoc address
+    // 
+    def destinationAddressBrand(SampleRequest sr,JSONObject jsonObject){
+        log.info "sample request addresses"
+    
+        
+        if(jsonObject.has('deliverTo')){
+            //DeliverTo may be a User or an ad-hoc address on initial save
+            //UI updates DeliverTo and we update addressDestination here
+            def destino = jsonObject.deliverTo 
+            if(destino.type){
+                if(jsonObject.deliverTo.type  == 'user') {
+                    log.info "deliver To type is User"
+                    def aUser = User.get(jsonObject.deliverTo.userId.toInteger())
+                    if(aUser.address){
+                        sr.addressDestination = aUser.address
+                    } else {
+                        sr.addressDestination = Address.findByBrandAndDefaultAddress(aUser.brand, true)
+                    }
+                    sr.deliverTo = aUser
+                } else{
+                    // lookup ad-hoc address
+                    log.info "deliver To type is adhoc"
+                    sr.addressDestination = Address.get(jsonObject.deliverTo.originalId.toInteger())
+                    log.info "new destination is:" +sr.addressDestination.name
+                    sr.deliverTo = null
+                }
+            } 
+        
+        } 
+        sr
+    }
+
 
     def updateSampleRequest(JSONObject jsonObject){
         SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
@@ -100,8 +184,6 @@ class SampleRequestService {
             sr.editorialName = jsonObject.editorialName
             sr.editorialWho = jsonObject.editorialWho
             
-            sr = addresses(sr,jsonObject)
-
             sr.shippingOut.tracking = jsonObject.shippingOut.tracking
             
             if(jsonObject.shippingOut.startDate){
@@ -162,73 +244,15 @@ class SampleRequestService {
             sr.courierOut = jsonObject.courierOut
             sr.courierReturn = jsonObject.courierReturn
             
+            if(sr.pressHouse){
+                sr = destinationAddressPress(sr,jsonObject)
+            } else {
+                sr = destinationAddressBrand(sr,jsonObject)
+            }
+            sr = returnToAddress(sr,jsonObject)
             sr.save(failOnError:true,flush:true)
             log.info "UPDATED SAMPLE REQUEST:"+sr.id
         }
         sr
-    }
-
-    //DeliverTo is a User which may not be set if the address
-    // is an ad-hoc address
-    def addresses(SampleRequest sr,JSONObject jsonObject){
-        log.info "sample request addresses"
-        if(jsonObject.has('returnToAddress')){
-            log.info "returnTo Address:"+jsonObject.returnToAddress
-            def returnToAddress = jsonObject.returnToAddress
-            log.info ""
-            if(returnToAddress == '0'){
-
-                sr.returnToAddress = Address.findByBrandAndDefaultAddress(sr.brand, true)
-                log.info "return to brand default"+sr.returnToAddress
-            } else if(returnToAddress instanceof Integer){
-                sr.returnToAddress = Address.get(jsonObject.returnToAddress)
-            } else if(returnToAddress instanceof String){
-                sr.returnToAddress = Address.get(jsonObject.returnToAddress.toInteger())
-            } else if(returnToAddress.has('address1')){
-                sr.returnToAddress = Address.get(jsonObject.returnToAddress.id.toInteger())
-                
-            }
-        } 
-        
-        if(jsonObject.addressDestination){
-
-            if(jsonObject?.addressDestination?.surname != null) {
-                def aUser = User.get(jsonObject.addressDestination.id.toInteger())
-                if(aUser.pressHouse) {
-                    if(aUser.address) {
-                        sr.addressDestination = aUser.address
-                    } else {
-                        sr.addressDestination = Address.findByPressHouseAndDefaultAddress(sr.pressHouse, true)
-                    }
-                    sr.pressHouse = aUser.pressHouse
-                    
-                } else{
-                    sr.addressDestination = aUser.address
-                }
-                sr.deliverTo = aUser
-            } else{
-                sr.addressDestination = Address.get(jsonObject.addressDestination.id.toInteger())
-            }
-            
-        } else if(jsonObject?.deliverTo?.surname != null) {
-            def aUser = User.get(jsonObject.deliverTo.id.toInteger())
-            if(aUser.pressHouse) {
-                if(aUser.address) {
-                    sr.addressDestination = aUser.address
-                } else {
-                    sr.addressDestination = Address.findByPressHouseAndDefaultAddress(sr.pressHouse, true)
-                }
-                sr.pressHouse = aUser.pressHouse
-                
-            } else{
-                sr.addressDestination = aUser.address
-            }
-            sr.deliverTo = aUser
-        } else {
-            sr.addressDestination = Address.get(jsonObject.deliverTo.id.toInteger())
-        }
-
-        sr
-
     }
 }
