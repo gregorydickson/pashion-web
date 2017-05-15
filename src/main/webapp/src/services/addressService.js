@@ -38,15 +38,19 @@ export class AddressService {
         var promise = new Promise((resolve, reject) => {
 
             this.http.fetch(`/address/delete/${id}.json`)
+                .then(response => response.json())
                 .then(response => {
-                    if (response.ok) {
-                        resolve(response);
-                    } else {
-                        console.log('Network response was not ok.');
-                        reject("Not Deleted");
+                    console.log(JSON.stringify(response));
+                    if(response.status === 'Not Found'){
+                        resolve('Not Found'); 
+                    } else if (response.status === 'deleted'){
+                        resolve("deleted");
                     }
                 })
-                .catch(err => reject(err));
+                .catch(err => {
+
+                    reject(err);
+                });
         });
         return promise;
 
