@@ -1,14 +1,17 @@
 <template>
     <require from="./sort"></require>
     <require from="../common/seasonAbbreviationFormatterId"></require>
+    <require from="common/select2-custom-attribute"></require>
     <ai-dialog>
         <ai-dialog-header>
             <!-- header -->
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad">BOOKING&nbsp;${brand.name}
-                     <!-- ${currentItem.season.id}&nbsp;-->
-                     LOOK&nbsp;</span>
+                    <span class="ui-text-label-m-broad">
+                        BOOKING&nbsp;${brand.name}
+                        <!-- ${currentItem.season.id}&nbsp;-->
+                        LOOK&nbsp;
+                    </span>
                     <span class="ui-text-label-m-broad">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.name}</span>
                 </div>
             </div>
@@ -26,12 +29,12 @@
                     </div>
                     <div class="grid-block calendar-header-align">
                         <span click.delegate="startPrevious()" class="calendarnav prev">
-                            <a ><img src="/assets/calendar/prev.png"  /></a>
-                         </span>
+                            <a><img src="/assets/calendar/prev.png" /></a>
+                        </span>
                         <span class="calendarnav calendar-title"><a id="titlelink" click.delegate="startReset()">TODAY</a></span>
                         <span click.delegate="startNext()" class="calendarnav next">
-                         <a ><img src="/assets/calendar/next.png" /></a>
-                         </span>
+                            <a><img src="/assets/calendar/next.png" /></a>
+                        </span>
                     </div>
                     <div class="grid-block calendar-header-align">
                         <span class="calendarnav ui-text-label-m-broad monthyear">${startCalendar.calendarMonths[0].monthName}&emsp;${startCalendar.calendarMonths[0].year}</span>
@@ -40,17 +43,18 @@
                         <table class="calendar calendar-day-numbers">
                             <thead>
                                 <tr>
-                                    <td repeat.for="cell of startCalendar.calendarMonths[0].dayNames[0]">${cell.dayString}
+                                    <td repeat.for="cell of startCalendar.calendarMonths[0].dayNames[0]">
+                                        ${cell.dayString}
                                     </td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr repeat.for="row of startCalendar.calendarMonths[0].rows">
-                                    <td   class= "${cell.event}" repeat.for="cell of row">
-                                    <a  class=" ${(computedClass && (cell.dayString === sampleRequestStartDay)) ? 'start-selected' : ''} " href="#" click.delegate="setStartDate($event,cell.event,cell.dayString)">
-                                        ${cell.dayString}
-                                    </a>
-                                </td>
+                                    <td class="${cell.event}" repeat.for="cell of row">
+                                        <a class=" ${(computedClass && (cell.dayString === sampleRequestStartDay)) ? 'start-selected' : ''} " href="#" click.delegate="setStartDate($event,cell.event,cell.dayString)">
+                                            ${cell.dayString}
+                                        </a>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -59,34 +63,38 @@
                     <div class="grid-content shrink" style="margin-top: 1rem;">
                         <span class="inline-label">
                             <span class="slim-text-box-label">Required By</span>
-                        <select name="" id="" value.bind="sampleRequest.requiredBy">
-                            <option repeat.for="item of required" model.bind="item">${item}</option>
-                        </select>
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.requiredBy">
+                                <option></option>
+                                <option repeat.for="item of required" model.bind="item">${item}</option>
+                            </select>
                         </span>
                     </div>
                     <!-- Deliver To-->
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="slim-text-box-label ${sampleRequest.deliverTo ? '' : red-deco'}">Deliver To</span>
-                        <select name="" id="" value.bind="sampleRequest.deliverTo">
-                            <option repeat.for="person of deliverTo" model.bind="person">${person.name} ${person.surname}, ${person.brand.name}${person.pressHouse.name}${person.prAgency.name}</option>
-                        </select>
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.deliverTo">
+                                <option></option>
+                                <option repeat.for="person of deliverTo" model.bind="person">${person.name} ${person.surname}, ${person.brand.name}${person.pressHouse.name}${person.prAgency.name}</option>
+                            </select>
                         </span>
                     </div>
                     <!-- Courier Section -->
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="slim-text-box-label">Courier</span>
-                        <select name="" id="" value.bind="sampleRequest.courierOut">
-                            <option repeat.for="option of courier" model.bind="option">${option}</option>
-                        </select>
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.courierOut">
+                                <option></option>
+                                <option repeat.for="option of courier" model.bind="option">${option}</option>
+                            </select>
                         </span>
                     </div>
                     <!--  <div class="grid-block shrink"> -->
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class=" slim-text-box-label">Split</span>
-                            <select name="" id="" value.bind="sampleRequest.paymentOut">
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.paymentOut">
+                                <option></option>
                                 <option repeat.for="option of payment" model.bind="option">${option}</option>
                             </select>
                         </span>
@@ -95,8 +103,6 @@
                             <span class="" >Cost: £9.95</span>
                         </div> -->
                     <!--  </div> -->
-
-
                     <!-- Editorial -->
                     <div class="grid-content shrink">
                         <span class="title-form" style="margin-top:0px;">EDITORIAL</span>
@@ -104,17 +110,17 @@
 
                     <!-- Name -->
                     <div class="grid-content shrink">
-                        <span class="inline-label"> 
+                        <span class="inline-label">
                             <span class="slim-text-box-label">Name</span>
-                                <input type="text" value.bind="sampleRequest.editorialName" class="slim-text-box">
+                            <input type="text" value.bind="sampleRequest.editorialName" class="slim-text-box">
                         </span>
                     </div>
 
                     <!-- Who -->
                     <div class="grid-content shrink">
-                        <span class="inline-label"> 
+                        <span class="inline-label">
                             <span class="slim-text-box-label">Who</span>
-                                <input type="text" value.bind="sampleRequest.editorialWho" class="slim-text-box">
+                            <input type="text" value.bind="sampleRequest.editorialWho" class="slim-text-box">
                         </span>
                     </div>
 
@@ -127,12 +133,12 @@
                     </div>
                     <div class="grid-block shrink calendar-header-align">
                         <span click.delegate="endPrevious()" class="calendarnav prev">
-                            <a ><img src="/assets/calendar/prev.png"  /></a>
+                            <a><img src="/assets/calendar/prev.png" /></a>
                         </span>
                         <span class="calendarnav calendar-title"><a id="titlelink" click.delegate="endReset()">TODAY</a></span>
                         <span click.delegate="endNext()" class="calendarnav next">
-                         <a ><img src="/assets/calendar/next.png" /></a>
-                      </span>
+                            <a><img src="/assets/calendar/next.png" /></a>
+                        </span>
                     </div>
                     <div class="grid-block shrink calendar-header-align">
                         <span class="calendarnav ui-text-label-m-broad monthyear">${endCalendar.calendarMonths[0].monthName}&emsp;${endCalendar.calendarMonths[0].year}</span>
@@ -141,14 +147,15 @@
                         <table class="calendar calendar-day-numbers">
                             <thead>
                                 <tr>
-                                    <td repeat.for="cell of endCalendar.calendarMonths[0].dayNames[0]">${cell.dayString}
+                                    <td repeat.for="cell of endCalendar.calendarMonths[0].dayNames[0]">
+                                        ${cell.dayString}
                                     </td>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr repeat.for="row of endCalendar.calendarMonths[0].rows">
-                                    <td   class= "${cell.event}" repeat.for="cell of row">
-                                        <a  class=" ${(computedClassEnd && (cell.dayString === sampleRequestEndDay)) ? 'end-selected' : ''} " href="#" click.delegate="setEndDate($event,cell.event,cell.dayString)">
+                                    <td class="${cell.event}" repeat.for="cell of row">
+                                        <a class=" ${(computedClassEnd && (cell.dayString === sampleRequestEndDay)) ? 'end-selected' : ''} " href="#" click.delegate="setEndDate($event,cell.event,cell.dayString)">
                                             ${cell.dayString}
                                         </a>
                                     </td>
@@ -160,26 +167,29 @@
                     <div class="grid-content shrink" style="margin-top: 1rem;">
                         <span class="inline-label">
                             <span class="slim-text-box-label ">Return By</span>
-                        <select name="" id="" value.bind="sampleRequest.returnBy">
-                            <option repeat.for="item of returnBy" model.bind="item">${item}</option>
-                        </select>
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.returnBy">
+                                <option></option>
+                                <option repeat.for="item of returnBy" model.bind="item">${item}</option>
+                            </select>
                         </span>
                     </div>
                     <!-- Return To-->
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="slim-text-box-label ${sampleRequest.returnToAddress ? '' : 'red-deco'}">Return To</span>
-                        <select name="" id="" value.bind="sampleRequest.returnToAddress">
-                            <option value="0" selected>The Sender</option>
-                            <option repeat.for="address of brandAddresses" model.bind="address.id">${address.name}</option>
-                        </select>
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.returnToAddress">
+                                <option></option>
+                                <option value="0" selected>The Sender</option>
+                                <option repeat.for="address of brandAddresses" model.bind="address.id">${address.name}</option>
+                            </select>
                         </span>
                     </div>
                     <!-- Courier Section -->
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="slim-text-box-label">Courier</span>
-                            <select name="" id="" value.bind="sampleRequest.courierReturn">
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.courierReturn">
+                                <option></option>
                                 <option repeat.for="option of courier" model.bind="option">${option}</option>
                             </select>
                         </span>
@@ -188,7 +198,8 @@
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class=" slim-text-box-label">Split</span>
-                            <select name="" id="" value.bind="sampleRequest.paymentReturn">
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.paymentReturn">
+                                <option></option>
                                 <option repeat.for="option of payment" model.bind="option">${option}</option>
                             </select>
                         </span>

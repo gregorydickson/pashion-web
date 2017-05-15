@@ -1,91 +1,95 @@
 <template>
-<require from="../common/formSelect"></require>
-   <ai-dialog style="width: auto;">
-      <!-- header -->
-      <ai-dialog-header>
-         <div class="grid-block align-center tool-header shrink ">
-            <div id="" class="grid-block tool-header shrink">
-               <span class="ui-text-label-m-broad">NEW USER</span> <!-- fudge to take account of the X -->
+    <require from="../common/formSelect"></require>
+    <require from="common/select2-custom-attribute"></require>
+    <ai-dialog style="width: auto;">
+        <!-- header -->
+        <ai-dialog-header>
+            <div class="grid-block align-center tool-header shrink ">
+                <div id="" class="grid-block tool-header shrink">
+                    <span class="ui-text-label-m-broad">NEW USER</span> <!-- fudge to take account of the X -->
+                </div>
             </div>
-         </div>
-      </ai-dialog-header>
-      <!-- body-->
-      <ai-dialog-body>
-         <div class="grid-block vertical">
-            <div class="grid-block">
-               <!-- Column One -->
-               <div class="grid-block vertical align-left">
-                  <div class="grid-block-row">
-                     <div class="ui-text-label-m-broad ">PERSONAL DETAILS</div>
-                     <div class="grid-block-row-body">
-                        
-                        
-                        <!-- Email -->
-                        <div class="inline-label">
-                           <span class="slim-text-box-label">Email</span>
-                           <input class="slim-text-box" type='text' name='' value.bind="newUser.email" blur.trigger="emailCheck()">
-                           <span  class="slim-text-box-label"><img id="userCheck" src="/assets/CheckMark.png" /></span>
+        </ai-dialog-header>
+        <!-- body-->
+        <ai-dialog-body>
+            <div class="grid-block vertical">
+                <div class="grid-block">
+                    <!-- Column One -->
+                    <div class="grid-block vertical align-left">
+                        <div class="grid-block-row">
+                            <div class="ui-text-label-m-broad ">PERSONAL DETAILS</div>
+                            <div class="grid-block-row-body">
+
+
+                                <!-- Email -->
+                                <div class="inline-label">
+                                    <span class="slim-text-box-label">Email</span>
+                                    <input class="slim-text-box" type='text' name='' value.bind="newUser.email" blur.trigger="emailCheck()">
+                                    <span class="slim-text-box-label"><img id="userCheck" src="/assets/CheckMark.png" /></span>
+                                </div>
+                                <!-- Name -->
+                                <div class="inline-label">
+                                    <span class="slim-text-box-label">First Name</span>
+                                    <input class="slim-text-box" type='text' name='' value.bind="newUser.name">
+                                </div>
+                                <!-- Name -->
+                                <div class="inline-label">
+                                    <span class="slim-text-box-label">Surname</span>
+                                    <input class="slim-text-box" type='text' name='' value.bind="newUser.surname">
+                                </div>
+                                <!-- Office -->
+                                <div class="inline-label">
+                                    <span class="slim-text-box-label">City</span>
+                                    <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" class="slim-text-box" value.bind="newUser.city">
+                                        <option></option>
+                                        <option model.bind="city.id" repeat.for="city of cities">${city.name}</option>
+                                    </select>
+                                </div>
+                                <!--  <div class="inline-label">
+
+                                     <span class="slim-text-box-label">Test Select</span>
+                                     <form-select name="options" selected.bind="testSelected" options.bind="testOptions" ></form-select>
+                                    </span>
+                                 </div> -->
+                                <!-- Password -->
+                                <div class="inline-label">
+                                    <span class="slim-text-box-label">Password</span>
+                                    <input class="slim-text-box" id='password' type='password' name='password' value.bind="newUser.password" />
+                                    <span class="slim-text-box-label"><a id="password-word" click.trigger="togglePassword()" style="">Show</a></span>
+                                </div>
+                            </div>
                         </div>
-                        <!-- Name -->
-                        <div class="inline-label">
-                           <span class="slim-text-box-label">First Name</span>
-                           <input class="slim-text-box" type='text' name='' value.bind="newUser.name">
+                        <div class="grid-block-row">
+                            <div class="ui-text-label-m-broad ">PASHION SETTINGS</div>
+                            <div class="grid-block-row-body">
+                                <!-- Role -->
+                                <div class="inline-label disabled">
+                                    <span class="slim-text-box-label">Role</span>
+                                    <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" class="slim-text-box">
+                                        <option></option>
+                                        <option value="TBD">TBD</option>
+                                    </select>
+                                    <!-- <span class="slim-text-box-label"> <a  href="#" style=""><img src="/assets/QuestionMark.png" /></a></span> -->
+                                </div>
+                                <!-- Access -->
+                                <div class="inline-label disabled">
+                                    <span class="slim-text-box-label">Access</span>
+                                    <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" class="slim-text-box">
+                                        <option></option>
+                                        <option value="Full Access">Full Access</option>
+                                    </select>
+                                    <!-- <span class="slim-text-box-label"> <a  href="#" style=""><img src="/assets/QuestionMark.png" /></a></span> -->
+                                </div>
+                            </div>
                         </div>
-                        <!-- Name -->
-                        <div class="inline-label">
-                           <span class="slim-text-box-label">Surname</span>
-                           <input class="slim-text-box" type='text' name='' value.bind="newUser.surname">
-                        </div>
-                        <!-- Office -->
-                        <div class="inline-label">
-                           <span class="slim-text-box-label">City</span>
-                           <select name="" id="" class="slim-text-box" value.bind="newUser.city">
-                              <option model.bind="city.id" repeat.for="city of cities">${city.name}</option>
-                           </select>
-                        </div>
-                       <!--  <div class="inline-label">
-                           
-                            <span class="slim-text-box-label">Test Select</span>
-                            <form-select name="options" selected.bind="testSelected" options.bind="testOptions" ></form-select>
-                           </span>
-                        </div> -->
-                        <!-- Password -->
-                        <div class="inline-label">
-                           <span class="slim-text-box-label">Password</span>
-                           <input class="slim-text-box" id='password' type='password' name='password' value.bind="newUser.password"/>
-                           <span class="slim-text-box-label"><a id="password-word" click.trigger="togglePassword()" style="">Show</a></span>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="grid-block-row">
-                     <div class="ui-text-label-m-broad ">PASHION SETTINGS</div>
-                     <div class="grid-block-row-body">
-                        <!-- Role -->
-                        <div class="inline-label disabled">
-                           <span class="slim-text-box-label">Role</span>
-                           <select class="slim-text-box" name="" id="" >
-                              <option value="TBD">TBD</option>
-                           </select>
-                           <!-- <span class="slim-text-box-label"> <a  href="#" style=""><img src="/assets/QuestionMark.png" /></a></span> -->
-                        </div>
-                        <!-- Access -->
-                        <div class="inline-label disabled">
-                           <span class="slim-text-box-label">Access</span>
-                           <select class="slim-text-box" name="" id="" >
-                              <option value="Full Access">Full Access</option>
-                           </select>
-                           <!-- <span class="slim-text-box-label"> <a  href="#" style=""><img src="/assets/QuestionMark.png" /></a></span> -->
-                        </div>
-                     </div>
-                  </div>
-               </div>
+                    </div>
+                </div>
             </div>
-         </div>
-      </ai-dialog-body>
-      <!-- Footer buttons -->
-      <ai-dialog-footer>
-         <a class="hollow button"  click.delegate="close()">Cancel</a>
-         <button class.bind="(newUser.email && newUser.name && newUser.surname && newUser.city && newUser.password) ? 'button' : 'button disabled'" click.delegate="create()">Add User</button>
-      </ai-dialog-footer>
-   </ai-dialog>
+        </ai-dialog-body>
+        <!-- Footer buttons -->
+        <ai-dialog-footer>
+            <a class="hollow button" click.delegate="close()">Cancel</a>
+            <button class.bind="(newUser.email && newUser.name && newUser.surname && newUser.city && newUser.password) ? 'button' : 'button disabled'" click.delegate="create()">Add User</button>
+        </ai-dialog-footer>
+    </ai-dialog>
 </template>

@@ -1,235 +1,246 @@
 <!-- adminpage.html -->
 <template>
-   <require from="./common/viewDateFormatter"></require>
-   <require from="./calendars/datepicker"></require>
-   <!-- Main building block -->
-  <!-- <div class="vertical grid-block spa-background">
-      <!-- header 
-      <compose view-model="header"></compose>
-      <!-- spacer
-      <div class="grid-block shrink spa-v-spacer ">
-      </div>
-      <div class="grid-block" style="overflow:visible;"> -->
-
-      
-         <!-- -->
-         <!-- Admin Page -->
-         <!-- -->
-         <div class="grid-block vertical grid-block-vertical-shadow ">
-            <!-- header -->
-            <div class="grid-block tool-header shrink ">
-               <div class="grid-block align-left tool-header-spacer"></div>
-                  <span class="ui-text-label-m-broad ">${company.name} ADMINISTRATION</span>
-               <div class="grid-block align-left tool-header-spacer"></div>
-              <!--  <div class="grid-block align-right tool-header-spacer">
-                  <span class="expando">
-                  <a route-href="route: index;"><img  src="/assets/nav/collapso.png" /></a>
-                  </span>
-               </div> -->
-            </div>
-            <div class="grid-block">
-               <!-- First Column -->
-               <div class="vertical grid-block noscroll shrink" style="margin-left:50px;">
-                  <!-- Company -->
-                  <!-- -->               
-                  <div class="grid-block-row">
-                     <div class="ui-text-label-m-broad ">COMPANY</div>
-                     <div class="grid-block-row-body">
+    <require from="./common/viewDateFormatter"></require>
+    <require from="./calendars/datepicker"></require>
+    <require from="common/select2-custom-attribute"></require>
+    <!-- Main building block -->
+    <!-- <div class="vertical grid-block spa-background">
+        <!-- header
+        <compose view-model="header"></compose>
+        <!-- spacer
+        <div class="grid-block shrink spa-v-spacer ">
+        </div>
+        <div class="grid-block" style="overflow:visible;"> -->
+    <!-- -->
+    <!-- Admin Page -->
+    <!-- -->
+    <div class="grid-block vertical grid-block-vertical-shadow ">
+        <!-- header -->
+        <div class="grid-block tool-header shrink ">
+            <div class="grid-block align-left tool-header-spacer"></div>
+            <span class="ui-text-label-m-broad ">${company.name} ADMINISTRATION</span>
+            <div class="grid-block align-left tool-header-spacer"></div>
+            <!--  <div class="grid-block align-right tool-header-spacer">
+                <span class="expando">
+                <a route-href="route: index;"><img  src="/assets/nav/collapso.png" /></a>
+                </span>
+             </div> -->
+        </div>
+        <div class="grid-block">
+            <!-- First Column -->
+            <div class="vertical grid-block noscroll shrink" style="margin-left:50px;">
+                <!-- Company -->
+                <!-- -->
+                <div class="grid-block-row">
+                    <div class="ui-text-label-m-broad ">COMPANY</div>
+                    <div class="grid-block-row-body">
                         <!-- Company Name -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label">Name</span>
-                           <input class="slim-text-box" disabled type='text' name='' value.bind="company.name">
+                            <span class="slim-text-box-label">Name</span>
+                            <input class="slim-text-box" disabled type='text' name='' value.bind="company.name">
                         </div>
                         <!-- Type -->
                         <div class="inline-label ">
-                           <span class="slim-text-box-label">Type</span>
-                           <select class="slim-text-box" disabled name="" id="" >
-                              <option value="">Brand</option>
-                              <option value="">Press</option>
-                              <option value="">Administrator</option>
-                           </select>
+                            <span class="slim-text-box-label">Type</span>
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" class="slim-text-box" value.one-time="user.type">
+                                <option></option>
+                                <option value="brand">Brand</option>
+                                <option value="press">Press</option>
+                                <option value="administrator">Administrator</option>
+                            </select>
                         </div>
                         <!-- License -->
                         <div class="inline-label ">
-                           <span class="slim-text-box-label">License</span>
-                           <select class="slim-text-box" disabled name="" id="">
-                              <option value="">Full</option>
-                              <option value="">Not full</option>
-                           </select>
+                            <span class="slim-text-box-label">License</span>
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" class="slim-text-box">
+                                <option></option>
+                                <option selected value="full">Full</option>
+                                <option value="notFull">Not full</option>
+                            </select>
                         </div>
                         <!-- Status -->
                         <div class="inline-label ">
-                           <span class="slim-text-box-label">Status</span>
-                           <select class="slim-text-box" disabled name="" id="">
-                              <option value="">Active</option>
-                              <option value="">Not active</option>
-                           </select>
+                            <span class="slim-text-box-label">Status</span>
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" class="slim-text-box">
+                                <option></option>
+                                <option selected value="active">Active</option>
+                                <option value="notactive">Not active</option>
+                            </select>
                         </div>
                         <!-- Offices -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label">Offices</span>
-                           <select name="" id="" class="slim-text-box" value.bind="currentAddress" >
-                                    <option model.bind="address" repeat.for="address of addresses">${address.name}</option>
-                           </select>
-                           <span class="slim-text-box-label"><a click.delegate="deleteOffice()" style="">Delete</a></span>
+                            <span class="slim-text-box-label">Offices</span>
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" class="slim-text-box" value.bind="currentAddress">
+                                <option></option>
+                                <option model.bind="address" repeat.for="address of addresses">${address.name}</option>
+                            </select>
+                            <span class="slim-text-box-label" style="text-align: left;"><a click.delegate="deleteOffice()" style="">Delete</a></span>
                         </div>
 
                         <!-- Name -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label">Name</span>
-                           <input class="slim-text-box" input.delegate="addressChange()" type='text' name='' value.bind='currentAddress.name'>
+                            <span class="slim-text-box-label">Name</span>
+                            <input class="slim-text-box" change.delegate="addressChange()" type='text' name='' value.bind='currentAddress.name'>
                         </div>
                         <!-- Company -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label">Company</span>
-                           <input class="slim-text-box" input.delegate="addressChange()" type='text' name='' value.bind='currentAddress.company'>
+                            <span class="slim-text-box-label">Company</span>
+                            <input class="slim-text-box" change.delegate="addressChange()" type='text' name='' value.bind='currentAddress.company'>
                         </div>
                         <!-- Address 1-->
                         <div class="inline-label">
-                           <span class="slim-text-box-label">Address</span>
-                           <input class="slim-text-box" input.delegate="addressChange()" type='text' name='' value.bind='currentAddress.address1'>
+                            <span class="slim-text-box-label">Address</span>
+                            <input class="slim-text-box" change.delegate="addressChange()" type='text' name='' value.bind='currentAddress.address1'>
                         </div>
                         <!-- City -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label">City</span>
-                           <input class="slim-text-box" input.delegate="addressChange()" type='text' name='' value.bind='currentAddress.city'>
+                            <span class="slim-text-box-label">City</span>
+                            <input class="slim-text-box" change.delegate="addressChange()" type='text' name='' value.bind='currentAddress.city'>
                         </div>
                         <!-- Country -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label">Country</span>
-                           <input class="slim-text-box" input.delegate="addressChange()" type='text' name='' value.bind='currentAddress.country'>
+                            <span class="slim-text-box-label">Country</span>
+                            <input class="slim-text-box" change.delegate="addressChange()" type='text' name='' value.bind='currentAddress.country'>
                         </div>
                         <!-- Postal Code -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label">Postal Code</span>
-                           <input class="slim-text-box" input.delegate="addressChange()" type='text' name='' value.bind='currentAddress.postalCode'>
+                            <span class="slim-text-box-label">Postal Code</span>
+                            <input class="slim-text-box" change.delegate="addressChange()" type='text' name='' value.bind='currentAddress.postalCode'>
                         </div>
                         <!-- Attention -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label">Attention</span>
-                           <input class="slim-text-box" input.delegate="addressChange()" type='text' name='' value.bind='currentAddress.attention'>
+                            <span class="slim-text-box-label">Attention</span>
+                            <input class="slim-text-box" change.delegate="addressChange()" type='text' name='' value.bind='currentAddress.attention'>
                         </div>
                         <!-- Contact Phone -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label">Contact Phone</span>
-                           <input class="slim-text-box" input.delegate="addressChange()" type='text' name='' value.bind='currentAddress.contactPhone'>
+                            <span class="slim-text-box-label">Contact Phone</span>
+                            <input class="slim-text-box" change.delegate="addressChange()" type='text' name='' value.bind='currentAddress.contactPhone'>
                         </div>
                         <!-- Comment -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label">Comment</span>
-                           <input class="slim-text-box" input.delegate="addressChange()" type='text' name='' value.bind='currentAddress.comment'>
+                            <span class="slim-text-box-label">Comment</span>
+                            <input class="slim-text-box" change.delegate="addressChange()" type='text' name='' value.bind='currentAddress.comment'>
                         </div>
                         <!-- New office -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label"></span>
-                           <button class="small hollow button" click.delegate="CreateDialogNewOffice()">New Office...</button>
+                            <span class="slim-text-box-label"></span>
+                            <button class="small hollow button" click.delegate="CreateDialogNewOffice()">New Office...</button>
                         </div>
-                     </div>
-                  </div>
-                  <!-- Payment -->
-                  <!-- -->
-                  <div class="grid-block-row">
-                     <div class="ui-text-label-m-broad ">Payment</div>
-                     <div class="grid-block-row-body">
+                    </div>
+                </div>
+                <!-- Payment -->
+                <!-- -->
+                <div class="grid-block-row">
+                    <div class="ui-text-label-m-broad ">Payment</div>
+                    <div class="grid-block-row-body">
                         <!-- Payment -->
                         <div class="inline-label disabled">
-                           <span class="slim-text-box-label">Payment</span>
-                           <input class="slim-text-box" type='text' name='' value='Up to date'>
+                            <span class="slim-text-box-label">Payment</span>
+                            <input class="slim-text-box" type='text' name='' value='Up to date'>
                         </div>
                         <!-- Method -->
-                        <div class="inline-label disabled" >
-                           <span class="slim-text-box-label">Method</span>
-                           <select class="slim-text-box" name="" id="">
-                              <option value=""></option>
-                           </select>
+                        <div class="inline-label disabled">
+                            <span class="slim-text-box-label">Method</span>
+                            <select class="slim-text-box" name="" id="">
+                                <option value=""></option>
+                            </select>
                         </div>
                         <!-- Start date -->
                         <div class="inline-label disabled">
-                           <span class="slim-text-box-label">Start date</span>
-                           <input class="slim-text-box" type='text' name='' value=''>
+                            <span class="slim-text-box-label">Start date</span>
+                            <input class="slim-text-box" type='text' name='' value=''>
                         </div>
-                     </div>
-                  </div>
-               </div>
-               <!-- spacers -->
-               <div class="grid-block shrink spa-h-spacer">
-               </div>
-               <!-- 2nd Column -->
-               <!-- -->
-               <div class="vertical grid-block noscroll" style="margin-left:50px;">
-                  <!-- Users -->
-                  <!-- -->         
-                  <div class="grid-block-row">
-                     <div class="ui-text-label-m-broad ">USERS</div>
-                     <div class="grid-block-row-body">
+                    </div>
+                </div>
+            </div>
+            <!-- spacers -->
+            <div class="grid-block shrink spa-h-spacer">
+            </div>
+            <!-- 2nd Column -->
+            <!-- -->
+            <div class="vertical grid-block noscroll" style="margin-left:50px;">
+                <!-- Users -->
+                <!-- -->
+                <div class="grid-block-row">
+                    <div class="ui-text-label-m-broad ">USERS</div>
+                    <div class="grid-block-row-body">
                         <!-- Name -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label">User</span>
-                           <select name="" id="" class="slim-text-box" value.bind="currentUser">
-                                    <option if.bind="user.email !=null" model.bind="user" repeat.for="user of users">${user.name} ${user.surname}</option>
-                          </select>
-                           <!-- <span class="slim-text-box-label"><button class="small hollow button" click.delegate="delete(currentUser.id)">Delete</button></span> -->
-                           <span class="slim-text-box-label"><a click.trigger="deleteUser(currentUser.id,currentUser.email)" style="">Delete</a></span>
+                            <span class="slim-text-box-label">User</span>
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' select2.ref="userSelect" style="width: 169px" class="slim-text-box" value.bind="currentUser">
+                                <option></option>
+                                <option if.bind="user.email !=null" model.bind="user" repeat.for="user of users">${user.name} ${user.surname}</option>
+                            </select>
+                            <!-- <span class="slim-text-box-label"><button class="small hollow button" click.delegate="delete(currentUser.id)">Delete</button></span> -->
+                            <span class="slim-text-box-label" style="text-align: left;"><a click.trigger="deleteUser(currentUser.id,currentUser.email)" style="">Delete</a></span>
                         </div>
                         <!-- Email -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label">Username</span>
-                           <input class="slim-text-box" type='text' name='' disabled value.bind="currentUser.email">
+                            <span class="slim-text-box-label">Username</span>
+                            <input class="slim-text-box" type='text' name='' disabled value.bind="currentUser.email">
                         </div>
                         <!-- name -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label">First Name</span>
-                           <input class="slim-text-box" change.trigger="updateUser()" type='text' name='' value.bind="currentUser.name">
+                            <span class="slim-text-box-label">First Name</span>
+                            <input class="slim-text-box" change.trigger="updateUser()" type='text' name='' value.bind="currentUser.name">
                         </div>
                         <!-- surname -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label">Surname</span>
-                           <input class="slim-text-box" change.trigger="updateUser()" type='text' name='' value.bind="currentUser.surname">
+                            <span class="slim-text-box-label">Surname</span>
+                            <input class="slim-text-box" change.trigger="updateUser()" type='text' name='' value.bind="currentUser.surname">
                         </div>
-                        
+
                         <!-- Office -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label">Office</span>
-                           <select name="" id="" class="slim-text-box" change.trigger="updateUser()" value.bind="currentUser.address.id">
-                                    <option model.bind="address.id" repeat.for="address of addresses">${address.name}</option>
-                           </select>
+                            <span class="slim-text-box-label">Office</span>
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" name="" id="" class="slim-text-box" value.bind="currentAddressId">
+                                <option model.bind="address.id" repeat.for="address of addresses">${address.name}</option>
+                            </select>
+                            <!--<select name="" id="" class="slim-text-box" change.trigger="updateUser()" value.bind="currentUser.address.id">
+                                <option model.bind="address.id" repeat.for="address of addresses">${address.name}</option>
+                            </select>-->
                         </div>
                         <!-- Password -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label">Password</span>
-                           <input id="password" class="slim-text-box" input.trigger="checkPassword(this)"  type="password" name="password" value.bind="currentUser.password"/>
-                           <span class="slim-text-box-label"><a id="password-toggle" click.trigger="togglePassword()" style="">Show</a>&nbsp;<img id="passwordCheck" src="/assets/CheckMark.png" /></span>
+                            <span class="slim-text-box-label">Password</span>
+                            <input id="password" class="slim-text-box" type="password" name="password" value.bind="currentPassword" />
+                            <span class="slim-text-box-label">
+                                <a id="password-toggle" click.trigger="togglePassword()" style="">Show</a>
+                                &nbsp;
+                                <img if.bind="validPassword" id="passwordCheck" src="/assets/CheckMark.png" />
+                            </span>
                         </div>
                         <!-- Role -->
                         <div class="inline-label disabled">
-                           <span class="slim-text-box-label">Role</span>
-                           <select class="slim-text-box" name="" id="" >
-                              <option value=""></option>
-                           </select>
-                           <!-- <span class="slim-text-box-label"> <a  href="#" style=""><img src="/assets/QuestionMark.png" /></a></span> -->
+                            <span class="slim-text-box-label">Role</span>
+                            <select class="slim-text-box" name="" id="">
+                                <option value=""></option>
+                            </select>
+                            <!-- <span class="slim-text-box-label"> <a  href="#" style=""><img src="/assets/QuestionMark.png" /></a></span> -->
                         </div>
                         <!-- Access -->
                         <div class="inline-label disabled">
-                           <span class="slim-text-box-label">Access</span>
-                           <select class="slim-text-box" name="" id="" >
-                              <option value="">Full Access</option>
-                           </select>
-                           <!-- <span class="slim-text-box-label"> <a  href="#" style=""><img src="/assets/QuestionMark.png" /></a></span> -->
+                            <span class="slim-text-box-label">Access</span>
+                            <select class="slim-text-box" name="" id="">
+                                <option value="">Full Access</option>
+                            </select>
+                            <!-- <span class="slim-text-box-label"> <a  href="#" style=""><img src="/assets/QuestionMark.png" /></a></span> -->
                         </div>
                         <!-- Buttons -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label"></span>
-                           <button class="small hollow button" click.delegate="CreateDialogNewUser()">New User...</button>
-                           <div class="grid-block shrink spa-h-spacer"></div>
-                           <button class="small hollow button disabled" click.delegate="CreateDialogImportUsers()">Import...</button>
+                            <span class="slim-text-box-label"></span>
+                            <button class="small hollow button" click.delegate="CreateDialogNewUser()">New User...</button>
+                            <div class="grid-block shrink spa-h-spacer"></div>
+                            <button class="small hollow button disabled" click.delegate="CreateDialogImportUsers()">Import...</button>
                         </div>
-                     </div>
-                  </div>
-                  <!-- Private Calendard Booking -->
-                  <!-- -->         
-                  <div if.bind="(user.type =='brand') || (user.type =='prAgency')" class="grid-block-row">
-                     <div class="ui-text-label-m-broad ">Privacy Settings</div>
-                     <div class="grid-block-row-body">
+                    </div>
+                </div>
+                <!-- Private Calendard Booking -->
+                <!-- -->
+                <div if.bind="(user.type =='brand') || (user.type =='prAgency')" class="grid-block-row">
+                    <div class="ui-text-label-m-broad ">Privacy Settings</div>
+                    <div class="grid-block-row-body">
                         <!-- Keep Booking Data Private-->
                         <div class="inline-label" style="margin-bottom:0px;">
                             <span class="slim-text-box-label" style="width: 231px;">Keep Sample Availability Private</span>
@@ -240,94 +251,94 @@
                             <span class="slim-text-box-label" style="width: 231px;">Allow All Incoming Requests</span>
                             <input style="margin-top: 8px; margin-left: 5px;" id="" name="allowAllRequests" type="checkbox" checked="checked" disabled change.delegate="allowAllRequests()">
                         </div>
-                     </div>
-                  </div>
-                  <!-- White list -->
-                  <!-- -->         
-                  <div if.bind="(user.type =='brand') || (user.type =='prAgency')"  class="grid-block-row">
-                     <div class="ui-text-label-m-broad ">White list</div>
-                     <div class="grid-block-row-body">
+                    </div>
+                </div>
+                <!-- White list -->
+                <!-- -->
+                <div if.bind="(user.type =='brand') || (user.type =='prAgency')" class="grid-block-row">
+                    <div class="ui-text-label-m-broad ">White list</div>
+                    <div class="grid-block-row-body">
                         <!-- Name -->
                         <div class="inline-label disabled">
-                           <span class="slim-text-box-label">Name</span>
-                           <select class="slim-text-box" name="" id="" >
-                              <option value=""></option>
-                           </select>
-                           <span class="slim-text-box-label"><a href="#" style="">Delete</a></span>
+                            <span class="slim-text-box-label">Name</span>
+                            <select class="slim-text-box" name="" id="">
+                                <option value=""></option>
+                            </select>
+                            <span class="slim-text-box-label"><a href="#" style="">Delete</a></span>
                         </div>
                         <!-- Add white list name -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label"></span>
-                           <button class="small hollow button disabled" click.delegate="">Add...</button>
+                            <span class="slim-text-box-label"></span>
+                            <button class="small hollow button disabled" click.delegate="">Add...</button>
                         </div>
-                     </div>
-                  </div>
-                  <!-- Black ball -->
-                  <!-- -->         
-                  <div if.bind="(user.type =='brand') || (user.type =='prAgency')"  class="grid-block-row">
-                     <div class="ui-text-label-m-broad ">Black ball</div>
-                     <div class="grid-block-row-body">
+                    </div>
+                </div>
+                <!-- Black ball -->
+                <!-- -->
+                <div if.bind="(user.type =='brand') || (user.type =='prAgency')" class="grid-block-row">
+                    <div class="ui-text-label-m-broad ">Black ball</div>
+                    <div class="grid-block-row-body">
                         <!-- Company -->
                         <div class="inline-label disabled">
-                           <span class="slim-text-box-label">Company</span>
-                           <select class="slim-text-box" name="" id="" >
-                              <option value=""></option>
-                           </select>
-                           <span class="slim-text-box-label"><a href="#" style="">Delete</a></span>
+                            <span class="slim-text-box-label">Company</span>
+                            <select class="slim-text-box" name="" id="">
+                                <option value=""></option>
+                            </select>
+                            <span class="slim-text-box-label"><a href="#" style="">Delete</a></span>
                         </div>
                         <!-- Add Black ball company -->
                         <div class="inline-label">
-                           <span class="slim-text-box-label"></span>
-                           <button class="small hollow button disabled" click.delegate="">Add company...</button>
+                            <span class="slim-text-box-label"></span>
+                            <button class="small hollow button disabled" click.delegate="">Add company...</button>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 3rd Column -->
+            <!--
+            <div class="vertical grid-block noscroll">
+               <!-- ID Structure
+               <!--
+               <div class="grid-block-row ">
+                  <div class="ui-text-label-m-broad ">ID Structure</div>
+                  <div class="grid-block-row-body">
+                     <!-- Format
+                     <div class="inline-label disabled">
+                        <span class="slim-text-box-label">Format</span>
+                        <select class="slim-text-box" name="" id="" >
+                           <option value="">AA_XXXXXX_AA</option>
+                           <option value="">AA_XXXXXX_AA</option>
+                        </select>
                      </div>
                   </div>
                </div>
-               <!-- 3rd Column -->
-               <!-- 
-               <div class="vertical grid-block noscroll">
-                  <!-- ID Structure
-                  <!--          
-                  <div class="grid-block-row ">
-                     <div class="ui-text-label-m-broad ">ID Structure</div>
-                     <div class="grid-block-row-body">
-                        <!-- Format
-                        <div class="inline-label disabled">
-                           <span class="slim-text-box-label">Format</span>
-                           <select class="slim-text-box" name="" id="" >
-                              <option value="">AA_XXXXXX_AA</option>
-                              <option value="">AA_XXXXXX_AA</option>
-                           </select>
-                        </div>
-                     </div>
-                  </div>
-               </div> -->
-            </div>
-         </div>
-         <!-- spacer 
-         <div class="grid-block shrink spa-h-spacer">
-         </div>
-         <!-- 
-         <!-- Communications Panel 
-         <!-- 
-            <div id="right-panel" class="vertical grid-block grid-block-vertical-shadow" >
-                <!-- Header
-                <compose view-model="comms/commsHeader"></compose>
-                <compose view-model="contacts/contactsHeader" style="overflow:hidden; min-height:36px; margin-top: 1rem;"></compose>
-                <compose view-model="contacts/contactsList" style="overflow-x:hidden;"></compose>
-                <!-- white lip at bottom of scroll region 
-                <div class="grid-content shrink scrolling-fat-lip">
-                </div>
-                <!-- BUTTONS 
-                <div class="grid-block align-center shrink">
-                    <a class="hollow button" href="#" click.delegate="createDialogNewContact(1)">New Contact...</a>
-                    <a class="button" href="#" click.delegate="CreateDialogImportContacts(1)">Import Contacts...</a>
-                </div>
-            </div>
-      </div>
-           <!-- spacer
-        <div class="grid-content shrink spa-v-spacer">
-        </div> -->
-      
+            </div> -->
+        </div>
+    </div>
+    <!-- spacer
+       <div class="grid-block shrink spa-h-spacer">
+       </div>
+       <!--
+       <!-- Communications Panel
+       <!--
+          <div id="right-panel" class="vertical grid-block grid-block-vertical-shadow" >
+              <!-- Header
+              <compose view-model="comms/commsHeader"></compose>
+              <compose view-model="contacts/contactsHeader" style="overflow:hidden; min-height:36px; margin-top: 1rem;"></compose>
+              <compose view-model="contacts/contactsList" style="overflow-x:hidden;"></compose>
+              <!-- white lip at bottom of scroll region
+              <div class="grid-content shrink scrolling-fat-lip">
+              </div>
+              <!-- BUTTONS
+              <div class="grid-block align-center shrink">
+                  <a class="hollow button" href="#" click.delegate="createDialogNewContact(1)">New Contact...</a>
+                  <a class="button" href="#" click.delegate="CreateDialogImportContacts(1)">Import Contacts...</a>
+              </div>
+          </div>
+    </div>
+         <!-- spacer
+      <div class="grid-content shrink spa-v-spacer">
+      </div> -->
+
 
 </template>

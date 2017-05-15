@@ -1,31 +1,33 @@
 <template>
+    <require from="common/select2-custom-attribute"></require>
     <div class="grid-block header">
         <span class="collapso">
-           <a route-href="route: index;"><img src="/assets/nav/collapso.png" /></a>
+            <a route-href="route: index;"><img src="/assets/nav/collapso.png" /></a>
         </span>
-      </div>
+    </div>
     <div class="grid-block">
-      <div class="grid-content">
-        <form submit.delegate='search()'>
-          <ul class="menu-bar">
-              <li><a href="#">Filter </a></li>
-              <li>
-                  <input type="text" value.bind="searchtext" class="form-control" id="search" placeholder="Search Text">
-              </li>
-          </ul>
-          <ul class="menu-bar">
-              <li>Order:
-                  <select name="" id="">
-                      <option>By Time and Date</option>
-                      <option repeat.for="season of seasons" value.bind="seasons">${season}</option>
-                  </select>
-              </li>
-          </ul>
-        </form>
-      </div>
+        <div class="grid-content">
+            <form submit.delegate='search()'>
+                <ul class="menu-bar">
+                    <li><a href="#">Filter </a></li>
+                    <li>
+                        <input type="text" value.bind="searchtext" class="form-control" id="search" placeholder="Search Text">
+                    </li>
+                </ul>
+                <ul class="menu-bar">
+                    <li>
+                        Order:
+                        <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px">
+                            <option>By Time and Date</option>
+                            <option repeat.for="season of seasons" value.bind="seasons">${season}</option>
+                        </select>
+                    </li>
+                </ul>
+            </form>
+        </div>
     </div>
     <!-- Images/Looks -->
     <div class="medium-up-4 align-spaced grid-block">
-       
+
     </div>
 </template>
