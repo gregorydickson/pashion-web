@@ -1,60 +1,61 @@
 <template>
-
-<ai-dialog>
+    <require from="common/select2-custom-attribute"></require>
+    <ai-dialog>
         <ai-dialog-header>
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad" >ADD <ADDRESS></ADDRESS> &nbsp;</span>
+                    <span class="ui-text-label-m-broad">ADD <ADDRESS></ADDRESS> &nbsp;</span>
                     <span class="ui-text-label-m-broad"> </span>
                 </div>
             </div>
-        </ai-dialog-header>  
+        </ai-dialog-header>
 
-        <ai-dialog-body>               
-           <div class="vertical grid-block">
+        <ai-dialog-body>
+            <div class="vertical grid-block">
 
                 <div class="grid-content shrink">
-                    
+
                     <span style="margin-bottom: 1rem;">Address:</span>
                 </div>
-               
-                <div class="grid-block shrink">                       
+
+                <div class="grid-block shrink">
                     <span class="inline-label slim-text-box-label">Name</span>
                     <div style="">
                         <input type="text" class="slim-text-box" value.bind="address.name">
                     </div>
                 </div>
-               
-                <div class="grid-block shrink">                       
+
+                <div class="grid-block shrink">
                     <span class="inline-label slim-text-box-label">Street Address:</span>
                     <div style="padding-top: 0.5rem;">
                         <span class="">${address.streetAddress}</span>
                     </div>
                 </div>
 
-                <div class="grid-block shrink">                       
+                <div class="grid-block shrink">
                     <span class="inline-label slim-text-box-label">City:</span>
                     <div style="padding-top: 0.5rem;">
-                        <select name="" id="" value.bind="address.city">
-                        <option repeat.for="city of cities" model.bind="city">${city}</option>
+                        <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="address.city">
+                            <option></option>
+                            <option repeat.for="city of cities" model.bind="city">${city}</option>
                         </select>
                     </div>
                 </div>
-                <div class="grid-block shrink">                       
+                <div class="grid-block shrink">
                     <span class="inline-label slim-text-box-label">Postal Code:</span>
                     <div style="padding-top: 0.5rem;">
                         <span class="">${address.postalCode}</span>
                     </div>
                 </div>
 
-                
-                
-            </div>
-      </ai-dialog-body>
 
-      <ai-dialog-footer>
-         <a class="hollow button" click.delegate="cancel()">Cancel</a>
-         <a class="button" click.delegate="submit()">Save Address</a>
-      </ai-dialog-footer>
-   </ai-dialog>
+
+            </div>
+        </ai-dialog-body>
+
+        <ai-dialog-footer>
+            <a class="hollow button" click.delegate="cancel()">Cancel</a>
+            <a class="button" click.delegate="submit()">Save Address</a>
+        </ai-dialog-footer>
+    </ai-dialog>
 </template>

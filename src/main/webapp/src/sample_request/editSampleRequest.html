@@ -133,7 +133,8 @@
                     <div if.bind="(!sampleRequest.shippingReturn.stuartJobId)" class="grid-block shrink">
                         <div class="inline-label">
                             <span class="slim-text-box-label">Return To</span>
-                            <select class="slim-text-box" name="" id="" value.bind="sampleRequest.returnToAddress.id">
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" class="slim-text-box" value.bind="sampleRequest.returnToAddress.id">
+                                <option></option>
                                 <option repeat.for="address of brandAddresses" model.bind="address.id">${address.name}</option>
                                 <option> Other</option>
                             </select>
@@ -278,7 +279,7 @@
                             <input type="text" class="slim-text-box" value.bind="sampleRequest.shippingOut.stuartJobId">
                         </div>
                     </div>
-                    
+
                     <!--Deliver To-->
                     <select-address change.delegate="onSelectAddressChangeCallback($event)" css="grid-block shrink" width="169">
                     </select-address>

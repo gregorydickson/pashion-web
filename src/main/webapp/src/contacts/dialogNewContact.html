@@ -1,7 +1,8 @@
 
 <template>
+    <require from="common/select2-custom-attribute"></require>
     <ai-dialog style="width: auto;">
-        
+
         <!-- header -->
         <ai-dialog-header>
             <div class="grid-block align-center tool-header shrink ">
@@ -17,10 +18,10 @@
                 <div class="grid-block">
 
                     <!-- Column One -->
-                    <div class="grid-block vertical align-left">  
+                    <div class="grid-block vertical align-left">
 
                         <!-- Username -->
-                        <div class="grid-block shrink">                       
+                        <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Username</span>
                             <input type="text" class="slim-text-box" autofocus>
                             <i class="fa fa-check"></i>
@@ -34,14 +35,14 @@
                         </div>
 
                         <!-- Company -->
-                        <div class="grid-block shrink">        
-                                <span class="inline-label">
-                                    <span class="slim-text-box-label">Company</span>
-                                </span>
-                                <select name="" id=""  class="slim-text-box">
-                                    <option>Ralph Lauren</option>
-                                    <option>Chanel</option>
-                                </select>
+                        <div class="grid-block shrink">
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">Company</span>
+                            </span>
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" class="slim-text-box">
+                                <option>Ralph Lauren</option>
+                                <option>Chanel</option>
+                            </select>
                         </div>
 
                         <!-- Title -->
@@ -51,25 +52,25 @@
                         </div>
 
                         <!-- Role -->
-                        <div class="grid-block shrink">        
-                                <span class="inline-label">
-                                    <span class="slim-text-box-label">Role</span>
-                                </span>
-                                <select name="" id="" class="slim-text-box">
-                                    <option>Brand</option>
-                                    <option>Sales manager</option>
-                                </select>
+                        <div class="grid-block shrink">
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">Role</span>
+                            </span>
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" class="slim-text-box">
+                                <option>Brand</option>
+                                <option>Sales manager</option>
+                            </select>
                         </div>
 
                         <!-- Location -->
-                        <div class="grid-block shrink">        
-                                <span class="inline-label">
-                                    <span class="slim-text-box-label">Location</span>
-                                </span>
-                                <select name="" id="" class="slim-text-box">
-                                    <option>London</option>
-                                    <option>Paris</option>
-                                </select>
+                        <div class="grid-block shrink">
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">Location</span>
+                            </span>
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" class="slim-text-box">
+                                <option>London</option>
+                                <option>Paris</option>
+                            </select>
                         </div>
 
                         <!-- Address 1 -->
@@ -88,7 +89,7 @@
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Address 3</span>
                             <input type="text" class="slim-text-box">
-                        </div>                        
+                        </div>
 
                         <!-- Phone -->
                         <div class="grid-block shrink">
@@ -106,19 +107,19 @@
                         <div class="grid-block shrink">
                             <span class="inline-label slim-text-box-label">Skype</span>
                             <input type="text" class="slim-text-box">
-                        </div>                        
-                   
+                        </div>
+
                     </div>
 
                 </div>
-              
+
             </div>
         </ai-dialog-body>
 
         <!-- Footer buttons -->
         <ai-dialog-footer>
-                    <a class="hollow button"  click.delegate="close()">Cancel</a>
-                    <a class="button" href="javascript:;">Add Contact</a>
+            <a class="hollow button" click.delegate="close()">Cancel</a>
+            <a class="button" href="javascript:;">Add Contact</a>
         </ai-dialog-footer>
     </ai-dialog>
 </template>
