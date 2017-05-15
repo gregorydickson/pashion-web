@@ -136,21 +136,33 @@ class AddressController {
 
     @Transactional
     def delete(Address address) {
-
+        log.info "delete an address"
         if (address == null) {
-            transactionStatus.setRollbackOnly()
-            notFound()
+            
+            
+            def message = [status: 'Not Found'] as JSON
+            render message
             return
         }
 
         address.delete flush:true
 
         request.withFormat {
+            
+            json {
+                log.info "JSON DELETE"
+                response.status = 200
+                def body = [status:"deleted"] as JSON
+                
+                render body
+            }
             form multipartForm {
                 flash.message = message(code: 'default.deleted.message', args: [message(code: 'address.label', default: 'Address'), address.id])
                 redirect action:"index", method:"GET"
             }
-            '*'{ render status: NO_CONTENT }
+            
+            
+
         }
     }
 

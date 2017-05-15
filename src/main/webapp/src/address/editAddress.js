@@ -1,68 +1,32 @@
-import {
-    DialogController
-} from 'aurelia-dialog';
-import {
-    HttpClient,
-    json
-} from 'aurelia-fetch-client';
+import { DialogController,DialogService } from 'aurelia-dialog';
+import {HttpClient, json } from 'aurelia-fetch-client';
 import 'fetch';
-import {
-    inject,
-    observable,
-    BindingEngine
-} from 'aurelia-framework';
-import {
-    DateFormat
-} from 'common/dateFormat';
-import {
-    AddressService
-} from 'services/addressService'
-import {
-    Helpers
-} from 'common/helpers';
+import { inject, observable, BindingEngine } from 'aurelia-framework';
+import { DateFormat } from 'common/dateFormat';
+import { AddressService } from 'services/addressService'
+import { Helpers } from 'common/helpers';
+import { CreateDialogAlert } from 'common/dialogAlert';
 
 
-@inject(BindingEngine, DialogController, AddressService, Helpers)
+@inject(BindingEngine, DialogController, AddressService, Helpers,DialogService)
 export class EditAddress {
-    static inject = [DialogController];
+  
+  constructor(BindingEngine, controller, addressService, Helpers,dialogService) {
+    this.bindingEngine = BindingEngine;
+    this.controller = controller;
+    this.addressService = addressService;
+    this.dialogService = dialogService;
+    this.helpers = Helpers;
 
-    editMode = false;
-    deleteMode = false
+  }
 
-    titleText = '';
-    buttonText = '';
-    buttonDisabled = true;
 
-    textItems = [{
-        titleText: 'NEW',
-        buttonText: 'Add'
-    }, {
-        titleText: 'UPDATE',
-        buttonText: 'Update'
-    }, {
-        titleText: 'DELETE',
-        buttonText: 'Delete'
-    }];
+  static inject = [DialogController];
 
-    @observable textMode;
-    textModeChanged(newValue, oldValue) {
-        this.titleText = this.textItems[newValue].titleText;
-        this.buttonText = this.textItems[newValue].buttonText;
-    }
+  editMode = false;
+  deleteMode = false
 
-    @observable newAddress = {};
-    newAddressSubscriptions = []
-    newAddressChanged(newValue, oldValue) {
-        this.setButtonDisabled();
-    }
 
-    constructor(BindingEngine, controller, addressService, Helpers) {
-        this.bindingEngine = BindingEngine;
-        this.controller = controller;
-        this.addressService = addressService;
-        this.helpers = Helpers;
-
-    }
 
     bindNewAddress() {
         this.disposeNewAddress();
@@ -142,19 +106,23 @@ export class EditAddress {
 
     update() {
         this.addressService.update(this.newAddress)
-            .then(response => {
-                // I think we need to json the data then update the store.
-                this.controller.ok(response);
-            });
+
+
     }
 
-    delete() {
-        this.addressService.delete(this.newAddress.id)
-            .then(response => {
-                // I think we need to json the data then update the store.
-                this.controller.ok(response);
-            });
-    }
+  
 
+  delete() {
+    console.log(JSON.stringify(this.newAddress));
+    if(this.newAddress.type === 'user'){
+      this.alertP('Cannot Delete User');
+    } else{
+      this.addressService.delete(this.newAddress.originalId)
+        .then(response => {
+          // I think we need to json the data then update the store.
+          this.controller.ok(response);
+        });
+    }
+  }
 
 }

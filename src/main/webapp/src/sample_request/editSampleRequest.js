@@ -1,4 +1,4 @@
-import { DialogController } from 'aurelia-dialog';
+import { DialogController,DialogService } from 'aurelia-dialog';
 import { HttpClient } from 'aurelia-fetch-client';
 import 'fetch';
 import { inject } from 'aurelia-framework';
@@ -6,7 +6,6 @@ import { DateFormat } from 'common/dateFormat';
 import { SampleRequestService } from 'services/sampleRequestService';
 import { DS } from 'datastores/ds';
 import { CreateDialogAlert } from 'common/dialogAlert';
-import { DialogService } from 'aurelia-dialog';
 import moment from 'moment'
 import { busy } from 'services/busy';
 
