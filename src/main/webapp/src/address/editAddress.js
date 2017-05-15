@@ -26,32 +26,6 @@ export class EditAddress {
   editMode = false;
   deleteMode = false
 
-    titleText = '';
-    buttonText = '';
-    buttonDisabled = true;
-
-    textItems = [{
-        titleText: 'NEW',
-        buttonText: 'Add'
-    }, {
-        titleText: 'UPDATE',
-        buttonText: 'Update'
-    }, {
-        titleText: 'DELETE',
-        buttonText: 'Delete'
-    }];
-
-    @observable textMode;
-    textModeChanged(newValue, oldValue) {
-        this.titleText = this.textItems[newValue].titleText;
-        this.buttonText = this.textItems[newValue].buttonText;
-    }
-
-    @observable newAddress = {};
-    newAddressSubscriptions = []
-    newAddressChanged(newValue, oldValue) {
-        this.setButtonDisabled();
-    }
 
 
     bindNewAddress() {
@@ -132,10 +106,8 @@ export class EditAddress {
 
     update() {
         this.addressService.update(this.newAddress)
-            .then(response => {
-                // I think we need to json the data then update the store.
-                this.controller.ok(response);
-            });
+
+
     }
 
   
