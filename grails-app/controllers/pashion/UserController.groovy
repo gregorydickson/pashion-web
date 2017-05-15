@@ -38,15 +38,17 @@ class UserController {
                 
                 user.connections.each{ connection ->
                     
-                    log.info "connection:"+connection
+                    log.info "connection: "+connection
                     Connection con = Connection.get(connection.id.toInteger())
                     if(con){
                         try{
                             con.connectedUserId = connection.connectedUserId
                             con.connectingStatus = connection.connectingStatus
                             con.numberNewMessages = connection.numberNewMessages
+                            con.lastMessage = connection.lastMessage
                             con.mostRecentRead = connection.mostRecentRead
                             con.name = connection.name
+                            // log.info "con.lastMessage: "+con.lastMessage
                             con.save(flush:true,failOnError:true)
                         } catch(Exception econ){
                             log.error "exception updating connection:"+connection?.id
@@ -56,7 +58,7 @@ class UserController {
             }
         }
         
-        notify "connectionsUpdateNoPubNub","connections"
+        notify "connectionsUpdate","connections"
         log.info "updateConnections() OK"
         def sent = [message:'Connection Data Updated']
         render sent as JSON

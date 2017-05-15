@@ -65,6 +65,17 @@ class UserService {
 		// Build the client instance that you will use throughout your application code
 		client = builder.build();
 
+        /*"href": "https://api.stormpath.com/v1/passwordPolicies/6P79ZLiwGpge17v7Os71wu/strength",
+        "minLength": 8,
+        "maxLength": 100,
+        "minLowerCase": 1,
+        "minUpperCase": 1,
+        "minNumeric": 1,
+        "minSymbol": 0,
+        "minDiacritic": 0,
+        "preventReuse": 0
+        } */
+
 		Tenant tenant = client.getCurrentTenant();
 		ApplicationList applications = tenant.getApplications(
         	Applications.where(Applications.name().eqIgnoreCase(APPLICATION_NAME))
