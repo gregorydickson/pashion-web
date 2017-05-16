@@ -14,6 +14,11 @@ class UrlMappings {
             action = "addBrand"
             
         }
+        name brandsForAgency: "/agency/brands/$agency" {
+            controller = "PRAgency"
+            action = "brands"
+            
+        }
 
         "/searchableItems"(resources:'searchableItem')
 

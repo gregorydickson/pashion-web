@@ -4,23 +4,28 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.converters.JSON
 
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 class PRAgencyController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond PRAgency.list(params), model:[PRAgencyCount: PRAgency.count()]
     }
 
+    // /agency/brands/$agency
     def brands(){
         log.info "params:"+params
-        def pr = PRAgency.get(params.id.toInteger()) 
+        def pr = PRAgency.get(params?.agency?.toInteger()) 
         log.info "agency:"+pr
-        def  brands = pr.brands
-         
-        render brands as JSON
+        def brands = pr?.brands
+        if(brands){
+            render brands as JSON
+        } else {
+            def body = [] as JSON
+            render body
+        }
+
     }
     
     // /agency/addBrand/$agency/$brand/
@@ -33,6 +38,7 @@ class PRAgencyController {
         log.info "adding brand to agency"
         if(agency && brand){
             agency.addToBrands(brand)
+            agency.save(flush:true,failOnError:true)
             response.status = 200
             def body = [status:"added"] as JSON
             render body
