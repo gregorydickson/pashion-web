@@ -9,6 +9,12 @@ class UrlMappings {
             }
         }
 
+        name addBrandToAgency: "/agency/addBrand/$agency/$brand/" {
+            controller = "PRAgency"
+            action = "addBrand"
+            
+        }
+
         "/searchableItems"(resources:'searchableItem')
 
         "/"(controller:"dashboard",action:"index")

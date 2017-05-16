@@ -14,6 +14,36 @@ class PRAgencyController {
         respond PRAgency.list(params), model:[PRAgencyCount: PRAgency.count()]
     }
 
+    def brands(){
+        log.info "params:"+params
+        def pr = PRAgency.get(params.id.toInteger()) 
+        log.info "agency:"+pr
+        def  brands = pr.brands
+         
+        render brands as JSON
+    }
+    
+    // /agency/addBrand/$agency/$brand/
+    def addBrand(){
+        def agency = PRAgency.get(params.agency.toInteger())
+        def brand = Brand.get(params.brand.toInteger())
+        log.info "agency:"+agency
+        log.info "brand:"+brand
+        
+        log.info "adding brand to agency"
+        if(agency && brand){
+            agency.addToBrands(brand)
+            response.status = 200
+            def body = [status:"added"] as JSON
+            render body
+        } else {
+            response.status = 200
+            def body = [status:"error"] as JSON
+                
+            render body
+        }
+    }
+
     def addresses(){ 
         // log.info "pragency/addresses id: " + params.id.toInteger()
         def prAgency = PRAgency.get(params.id.toInteger())  
