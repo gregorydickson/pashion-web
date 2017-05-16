@@ -38,30 +38,44 @@ export class Messages {
         //window.removeEventListener('keypress', this.boundHandlerComms);
     }
 
+    activate() {
+
+        console.log("activated messages");
+    }
+
     alertHold (message){
-        console.log ("Messages alertHold before: this.controller: " + this.controller);
+        console.log ("Messages DOWN called: this.controller: " + this.controller);
         if (this.controller) {
-            this.controller.cancel();
+            this.controller.cancel(true);
             this.controller = null;
         }
-        this.dialogService.openAndYieldController({ viewModel: CreateDialogAlert, model: {title:"NO NETWORK", message:message, timeout:'none', redText:true}, lock: false }).then(controller => {
+        this.dialogService.openAndYieldController({ viewModel: CreateDialogAlert, model: {title:"NETWORK DOWN", message:message, timeout:'none', redText:true}, 
+                lock: false, ignoreTransitions:true})
+        .then(controller => {
             this.controller = controller;
-            console.log ("Messages alertHold then after: this.controller: " + this.controller);
+            console.log ("Messages DOWN afteryield: this.controller: " + this.controller);
             });
     }
 
     alertHoldOff (message) {
-        console.log ("Messages alertHoldOff: this controller: " + this.controller);
+        console.log ("Messages UP called: this controller: " + this.controller);
+        // this.dialogService.closeAll(); // next version of dialog
         if (this.controller) {
-            this.controller.cancel();
+            this.controller.cancel(true);
             this.controller = null;
         }
-        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"NETWORK UP", message:message, timeout:5000}, lock: false });
+        if (document.hidden) {
+            console.log("Message UP document hidden no dialog");
+        } else {            
+            console.log("Message UP document NOT hidden, do a dialog");
+            this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"NETWORK UP", message:message, timeout:5000}, 
+                    lock: false, ignoreTransitions:true });
+        }
     }
 
 
     handleKeyInput(event) {
-        // console.log(event);
+        console.log(event);
         if(event.keyCode == 13) {
             //console.log("user hit enter in comms");
             this.sendMessage();
@@ -78,6 +92,7 @@ export class Messages {
     }
 
     attached() {
+        console.log("attached messages");
 
         this.elementMsgInput = document.getElementById("msgInput");
         //this.elementMsgInput.addEventListener('keypress', this.boundHandlerComms, false);
