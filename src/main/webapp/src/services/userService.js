@@ -418,8 +418,10 @@ export class UserService {
         if (this.users[this.user.id - 1] == 'undefined') return;
         var i;
         // my connections
-        for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
-            this.clearUnreadMessages(this.users[this.user.id - 1].connections[i].connectedUserId);
+        if(this.users[this.user.id - 1].connections){
+            for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
+                this.clearUnreadMessages(this.users[this.user.id - 1].connections[i].connectedUserId);
+            }
         }
     }
 
@@ -428,12 +430,14 @@ export class UserService {
         if (this.users[this.user.id - 1] == 'undefined') return;
         var connectionId1 = -1;
         var i;
-        for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
-            if (this.users[this.user.id - 1].connections[i].connectedUserId == withUserId) {
-                this.users[this.user.id - 1].connections[i].numberNewMessages = 0;
-                connectionId1 = this.users[this.user.id - 1].connections[i].id;
-                console.log("UserService.cleanUnreadMessages, from: " + withUserId + " on id: " + connectionId1);
-                break;
+        if(this.users[this.user.id - 1].connections){
+            for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
+                if (this.users[this.user.id - 1].connections[i].connectedUserId == withUserId) {
+                    this.users[this.user.id - 1].connections[i].numberNewMessages = 0;
+                    connectionId1 = this.users[this.user.id - 1].connections[i].id;
+                    console.log("UserService.cleanUnreadMessages, from: " + withUserId + " on id: " + connectionId1);
+                    break;
+                }
             }
         }
 
