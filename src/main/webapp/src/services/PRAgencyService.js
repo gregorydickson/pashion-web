@@ -35,6 +35,34 @@ export class PRAgencyService {
         return promise;
     }
 
+    // change to be the first brand in the list
+    getDefault(){
+        var promise = new Promise((resolve, reject) => {
+            var brand = {name:'Miu Miu',id:45}
+            resolve( brand);
+        });
+        return promise;
+    }
+
+    // Change to be specific list of brands supported by the Agency
+    getBrands() {
+        var promise = new Promise((resolve, reject) => {
+            if (!this.brands) {
+                console.log("Getting PR brands from JSON");
+                this.http.fetch('/brand/fastList')
+                    .then(response =>
+                        response.json()).then(brands => {
+                        this.brands = brands;
+                        // console.log ("user brands fetched: " + brands);
+                        resolve(this.brands);
+                    }).catch(err => reject(err));
+            } else {
+                console.log("getting brands from local");
+                resolve(this.brands);
+            }
+        });
+        return promise;
+    }
 
     getPRAgencyAddresses(PRAgencyId) {
         var promise = new Promise((resolve, reject) => 
