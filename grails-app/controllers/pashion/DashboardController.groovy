@@ -33,10 +33,12 @@ class DashboardController {
             } else{
                 address = extractAddressProperties(Address.findByBrandAndDefaultAddress(brand,true),it.id)
             }
-            
-            address << [id:id,name:it.name +" "+ it.surname,type: 'user']
+            if(address){
+                address << [id:id,name:it.name +" "+ it.surname,type: 'user'] 
+                returnList.add(address)
+            }
+
             ++id
-            returnList.add(address)
         }
         returnList.sort{it.name}
         def response = returnList as JSON
@@ -45,16 +47,18 @@ class DashboardController {
     }
 
     def extractAddressProperties(Address address,def userId) {
-        if(userId){
+        if(userId && address){
             return [userId:userId,originalId:address.id,address1:address.address1,city:address.city,
                 country:address.country,postalCode:address.postalCode,
                 company:address.company,comment:address.comment,attention:address.attention,
                 contactPhone:address.contactPhone]
-        } else{
+        } else if(address){
             return [originalId:address.id,address1:address.address1,city:address.city,
                 country:address.country,postalCode:address.postalCode,
                 company:address.company,comment:address.comment,attention:address.attention,
                 contactPhone:address.contactPhone]
+        }else {
+            return []
         }
         
     }
