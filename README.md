@@ -139,12 +139,6 @@ https://github.com/stormpath/stormpath-sdk-java/issues/17
 
 # Databases
 
-## Development Database - contains bookable samples for testing and development:
-* pashionweb.c7nidmmcu7kv.us-east-1.rds.amazonaws.com:3306/pashionweb
-* username: pashionweb
-* password: ETWxa634WwxGaW6v
-
-
 ## browse.pashiontool.com and Production Single Page Application(SPA) DB, marked as Production in application.yml
 * pashion-prod.cnjmlfc6tctw.eu-west-1.rds.amazonaws.com:3306/pashionprod
 * username: pashionprod
