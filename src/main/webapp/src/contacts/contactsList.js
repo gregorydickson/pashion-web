@@ -137,12 +137,12 @@ export class ContactsList {
   //keep track of new messages
   messagesYesNew(numberNewMessages) {
     var newMsg = (numberNewMessages != 0 && numberNewMessages < 100);
-    console.log("messageYesNew called newMsg " + newMsg);
+    //console.log("messageYesNew called newMsg " + newMsg);
     return newMsg;
   }
   messagesYesNew100(numberNewMessages) {
     var newMsg = (numberNewMessages > 99);
-    console.log("messageYesNew100 called newMsg " + newMsg);
+    //console.log("messageYesNew100 called newMsg " + newMsg);
     return newMsg;
   }
 
