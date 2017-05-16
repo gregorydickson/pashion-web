@@ -1,12 +1,11 @@
 import {customElement, bindable, inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-fetch-client';
 import 'fetch';
-import {BrandService} from 'services/brandService';
 import {PRAgencyService} from 'services/PRAgencyService';
 import {Index} from 'index';
 
 
-@inject(HttpClient, Element, BrandService, PRAgencyService, Index)
+@inject(HttpClient, Element, PRAgencyService, Index)
 @customElement('filters-designer-pr')
 
 export class FiltersDesignerPrCustomElement {
@@ -14,10 +13,10 @@ export class FiltersDesignerPrCustomElement {
   
   @bindable brando = '';  
 
-  constructor(http,element, brandService, prAgencyService, index){
+  constructor(http,element, prAgencyService, index){
     this.http = http;
     this.element = element;
-    this.brandService = brandService;
+    //this.brandService = brandService;
     this.index = index;
     this.prAgencyService = prAgencyService;
   }
@@ -28,11 +27,8 @@ export class FiltersDesignerPrCustomElement {
   
   attached(){
     this.prAgencyService.getBrands().then (brands => this.brands = brands);
-    this.prAgencyService.getDefault().then(brand => {
-      this.brando = brand;
-      console.log("BRANDO:"+this.brando);
-      console.log("brand:"+brand);
-    });
+    this.brando = this.prAgencyService.getDefault();
+    console.log("BRANDO:"+this.brando);
     /*
     return Promise.all([
       this.http.fetch('/brand/fastList').then(response => response.json()).then(brands => this.brands = brands),
