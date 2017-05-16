@@ -103,6 +103,7 @@ export class Adminpage {
     }
 
     reloadAddresses() {
+        console.log("reload addresses");
         if (this.user.type === 'brand') {
             this.brandService.getBrandAddresses(this.user.brand.id)
                 .then(addresses => {
@@ -200,14 +201,18 @@ export class Adminpage {
     // Create dialog NEW OFFICE
 
     CreateDialogNewOffice(user) {
+        console.log("create new office");
         this.dialogService.open({
             viewModel: CreateDialogNewOffice,
             model: this.user,
             lock: true
         })
             .then(response => {
-                if (response.wasCancelled) return false;
-                this.reloadAddresses();
+                console.log("created new office"+response);
+                if (!response.wasCancelled) {
+                    this.reloadAddresses();
+                }
+                
             })
     }
 

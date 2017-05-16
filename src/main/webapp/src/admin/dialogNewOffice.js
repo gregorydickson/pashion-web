@@ -35,7 +35,7 @@ export class CreateDialogNewOffice {
       }
     this.addressService.create(this.newAddress)
       .then(response =>{
-        this.controller.close();
+        this.controller.ok();
       });
   }
 
