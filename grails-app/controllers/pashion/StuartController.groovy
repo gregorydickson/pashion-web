@@ -68,13 +68,13 @@ class StuartController {
 		def message
         def sr = sampleRequestService.updateSampleRequest(request.JSON)
 
-        if(sr.addressDestination == sr.returnToAddress){
-        	message = [message:"Origin and Destination are the same"]
+
+        message = checkRules(sr,'bookOut')
+        if(message){
         	response.status = 200
-        	render message as JSON
+        	render message 
         	return
         }
-
         //check to see if there is an origin/returnTo address
         def returnTo = sr.returnToAddress
         if(sr.pressHouse && sr.brand && (sr.returnToAddress == null)){
@@ -83,8 +83,6 @@ class StuartController {
 
         	if(brandAddress) returnTo = brandAddress
         }
-        
-
         
         def shippingEvent = sr.shippingOut
         log.info "origin:"+returnTo.address1 
@@ -121,10 +119,12 @@ class StuartController {
 	def bookReturn(){
 		def message
 		def sr = sampleRequestService.updateSampleRequest(request.JSON)
-		if(sr.addressDestination == sr.returnToAddress){
-        	message = [message:"Origin and Destination are the same"]
+		log.info "about to check rules"
+		message = checkRules(sr,'bookReturn')
+        if(message){
+        	log.info "message:"+message
         	response.status = 200
-        	render message as JSON
+        	render message 
         	return
         }
 
@@ -167,6 +167,66 @@ class StuartController {
         }
         render message as JSON
 	}
+
+
+
+	def checkRules(SampleRequest sr,String direction){
+		log.info "check rules for stuart"
+		def message
+
+		//no booking in the past
+		Date now = new Date()
+		Date inOneHour
+		use(TimeCategory) {
+        	inOneHour = now + 1.hours 
+        }
+        if(direction == 'bookOut'){
+        	Date theDate
+	        def theTime
+	        use (TimeCategory) {
+	        	theDate = sr.pickupDate.clearTime()
+	        	theTime = sr.pickupTime.split(":")
+	        	theDate = theDate + theTime[0].toInteger().hours
+	        	theDate = theDate + theTime[1].toInteger().minutes
+	        }
+	        if(theDate.before(inOneHour)){
+	        	message = [message:"Cannot book messenger in the past"] as JSON
+        	
+        		return message
+	        }
+        }
+
+        if(direction == 'bookReturn'){
+        	log.info "book return"
+        	Date theDate
+	        def theTime
+	        use (TimeCategory) {
+	        	theDate = sr.pickupDateReturn.clearTime()
+	        	theTime = sr.pickupTimeReturn.split(":")
+	        	theDate = theDate + theTime[0].toInteger().hours
+	        	theDate = theDate + theTime[1].toInteger().minutes
+	        }
+	        log.info "booking date:"+theDate
+	        log.info "in one hour:"+inOneHour
+	        if(theDate.before(inOneHour)){
+	        	message = [message:"Cannot book messenger in the past"] as JSON
+        	
+        		return message
+	        }
+        }
+        
+
+		//must be different locations
+		if(sr.addressDestination == sr.returnToAddress){
+        	message = [message:"Origin and Destination are the same"] as JSON
+        	
+        	return message
+        	
+        }
+        return null
+	}
+
+
 
 
 	def message(response){
