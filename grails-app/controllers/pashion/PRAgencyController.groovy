@@ -60,6 +60,39 @@ class PRAgencyController {
         render addresses
     }
 
+    @Transactional
+    def addAddress(){
+        def jsonObject = request.JSON
+        
+        log.info "address to add:"+jsonObject
+        Address address = new Address()
+        address.name =         jsonObject.name
+        address.company =      jsonObject.company
+        address.address1 =     jsonObject.address1
+        address.city =         jsonObject.city
+        address.country =      jsonObject.country
+        address.postalCode =   jsonObject.postalCode
+        address.contactPhone = jsonObject.contactPhone
+        address.comment =      jsonObject.comment
+        
+        address.save(failOnError: true)
+        
+        Brand brand = Brand.get(session.user.brand.id)
+        if(!brand.isAttached()){
+            brand.attach()
+        }
+        brand.addToDestinations(address)
+        brand.save(failOnError:true)
+        
+        def destinations = brand.destinations
+        def users = brand.users
+        destinations.addAll(users)
+        destinations.sort{it.name}
+        def response = destinations as JSON
+
+        render response
+    }
+
     def show(PRAgency PRAgency) {
         respond PRAgency
     }

@@ -44,6 +44,36 @@ class DashboardController {
         render response
     }
 
+    def deliverToPRAgency(){
+        PRAgency agency = PRAgency.get(params.id)
+        def id = 0
+        def returnList = []
+        agency.destinations.each{
+            def item = extractAddressProperties(it,null)
+            item << [id:id,type:'adhoc',name:it.name]
+            ++id
+            returnList.add(item)
+        }
+        
+        def users = agency.users
+        users.each{ 
+            def address
+            if(it.address){
+                address = extractAddressProperties(it.address,it.id)
+            } else{
+                address = extractAddressProperties(Address.findByPrAgencyAndDefaultAddress(agency,true),it.id)
+            }
+            
+            address << [id:id,name:it.name +" "+ it.surname,type: 'user']
+            ++id
+            returnList.add(address)
+        }
+        returnList.sort{it.name}
+        def response = returnList as JSON
+        
+        render response
+    }
+
     def extractAddressProperties(Address address,def userId) {
         if(userId){
             return [userId:userId,originalId:address.id,address1:address.address1,city:address.city,
@@ -113,7 +143,8 @@ class DashboardController {
         render users
     }
 
-    def usersPRAgency(){
+    def usersPRAgency(){    
+        log.info "Dashboard  usersPRAgency()"
         def company = PRAgency.get(params.id.toInteger())
         def users = company.users as JSON
         render users
@@ -302,12 +333,14 @@ class DashboardController {
     def deliverTo(){
         def press = session.user.pressHouse
         def brand = session.user.brand
+        def agency = session.user.prAgency
         def users
         if(press){
             users = User.findAllByPressHouse(press)
-        } else{
+        } else if (brand) {
             users = User.findAllByBrand(brand)
-        }
+        } else 
+            users = User.findAllByPrAgency(agency)
 
     	render users as JSON
     }

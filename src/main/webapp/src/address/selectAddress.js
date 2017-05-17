@@ -85,7 +85,7 @@ export class SelectAddress {
     }
 
     add() {
-        console.log("ad hoc");
+        console.log("SelectAddres.add ad hoc");
         let newAddressModel = {
             addresses: this.ds.address.deliverTo,
             newAddress: {}
