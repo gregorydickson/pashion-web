@@ -232,7 +232,7 @@ export class Index {
         console.log("Filter Change changing Brand");
         if (this.user.type === "brand") this.selectedBrand = this.user.companyId;
         if (this.user.type === "prAgency") this.selectedBrand = this.prAgencyService.getDefault().id;
-        else this.selectedBrand = '';
+        if (this.user.type === "press") this.selectedBrand = '';
         if (event)
             if (event.detail)
                 if (event.detail.value) {
