@@ -30,7 +30,43 @@ class PRAgencyController {
         }
 
     }
-    
+
+    def toggleOnlyShowMySampleRequests() {
+        PRAgency agency = PRAgency.get(params.id)
+        log.info "PRAgency in toggle onlyShowMySampleRequests: " + agency
+
+        if(agency.onlyShowMySampleRequests == false){
+            agency.onlyShowMySampleRequests = true
+        } else{
+            agency.onlyShowMySampleRequests = false
+        }
+        agency.save(failOnError:true,flush:true)
+        render agency.onlyShowMySampleRequests
+    }
+
+    def getOnlyShowMySampleRequests() {
+        PRAgency agency = PRAgency.get(params.id)
+        render agency.onlyShowMySampleRequests
+    }
+
+    def toggleRestrictOutsideBooking() {
+        PRAgency agency = PRAgency.get(params.id)
+        log.info "PRagency in toggle restrictOutsideBooking: " + agency
+        if(agency.restrictOutsideBooking == false){
+            agency.restrictOutsideBooking = true
+        } else{
+            agency.restrictOutsideBooking = false
+        }
+        agency.save(failOnError:true,flush:true)
+        render agency.restrictOutsideBooking
+    }
+
+    def getRestrictOutsideBooking() {     
+        PRAgency agency = PRAgency.get(params.id)
+        render agency.restrictOutsideBooking
+    }
+
+  
     // /agency/addBrand/$agency/$brand/
     def addBrand(){
         def agency = PRAgency.get(params.agency.toInteger())

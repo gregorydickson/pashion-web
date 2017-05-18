@@ -100,6 +100,41 @@ class BrandController {
 
     }
 
+    def toggleOnlyShowMySampleRequests() {
+        Brand brand = Brand.get(params.id)
+        log.info "brand in toggle onlyShowMySampleRequests: " + brand
+
+        if(brand.onlyShowMySampleRequests == false){
+            brand.onlyShowMySampleRequests = true
+        } else{
+            brand.onlyShowMySampleRequests = false
+        }
+        brand.save(failOnError:true,flush:true)
+        render brand.onlyShowMySampleRequests
+    }
+
+    def getOnlyShowMySampleRequests() {
+        Brand brand = Brand.get(params.id)
+        render brand.onlyShowMySampleRequests
+    }
+
+    def toggleRestrictOutsideBooking() {
+        Brand brand = Brand.get(params.id)
+        log.info "brand in toggle restrictOutsideBooking: " + brand
+        if(brand.restrictOutsideBooking == false){
+            brand.restrictOutsideBooking = true
+        } else{
+            brand.restrictOutsideBooking = false
+        }
+        brand.save(failOnError:true,flush:true)
+        render brand.restrictOutsideBooking
+    }
+
+    def getRestrictOutsideBooking() {     
+        Brand brand = Brand.get(params.id)
+        render brand.restrictOutsideBooking
+    }
+
     def show(Brand brand) {
         respond brand
     }

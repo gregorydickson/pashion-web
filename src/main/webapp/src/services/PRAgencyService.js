@@ -37,6 +37,61 @@ export class PRAgencyService {
         return promise;
     }
 
+
+    onlyShowMySampleRequests(id) {
+        var promise = new Promise((resolve, reject) => {
+                console.log("toggle onlyShowMySampleRequests");
+                this.http.fetch('/PRAgency/toggleOnlyShowMySampleRequests/'+id+'.json')
+                    .then(response =>
+                        response.json()).then(brand => {
+                        resolve(brand);
+                    }).catch(err => reject(err));
+            
+        });
+        return promise;
+    }
+
+    getOnlyShowMySampleRequests(id){
+        var promise = new Promise((resolve, reject) => {
+                this.http.fetch('/prAgency/getOnlyShowMySampleRequests/'+id+'.json')
+                    .then(response =>
+                        response.json()).then(hd => {
+                        resolve(hd);
+                    }).catch(err => reject(err));
+            
+        });
+        return promise;
+
+    }
+
+    restrictOutsideBooking(id) {
+        var promise = new Promise((resolve, reject) => {
+                console.log("toggle restrictOutsideBooking");
+                this.http.fetch('/PRAgency/toggleRestrictOutsideBooking/'+id+'.json')
+                    .then(response =>
+                        response.json()).then(brand => {
+                        resolve(brand);
+                    }).catch(err => reject(err));
+            
+        });
+        return promise;
+    }
+
+    getRestrictOutsideBooking(id){
+        var promise = new Promise((resolve, reject) => {
+                this.http.fetch('/prAgency/getRestrictOutsideBooking/'+id+'.json')
+                    .then(response =>
+                        response.json()).then(hd => {
+                        resolve(hd);
+                    }).catch(err => reject(err));
+            
+        });
+        return promise;
+
+    }
+
+
+
     // change to be the first brand in the list
     getDefault(){
         //var promise = new Promise((resolve, reject) => {
