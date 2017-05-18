@@ -12,14 +12,14 @@ class PRAgency {
 	Date lastUpdated
 
 	static hasMany = [brands: Brand , users:User,addresses:Address]
-  	static belongsTo = Brand
-    static constraints = {
-    	stormpathDirectory nullable:true
-        addresses nullable:true
-    }
 
-    static mapping = {
+  	static mapping = {
+        brands lazy: false
         cache true
+    }
+    static belongsTo = pashion.Brand
+
+    static constraints = {
     }
 
     String toString() {
