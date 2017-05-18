@@ -233,9 +233,11 @@ export class Index {
 
         if (this.user.type === "brand") {
             this.selectedBrand = this.user.companyId;
+            this.selectedCity = this.user.city.name;
         } else if (this.user.type === "prAgency") {
             this.selectedBrand = this.prAgencyService.getDefault().id;
-            this.selectedCity = this.user.city.name;
+            if(this.user.city)
+                this.selectedCity = this.user.city.name;
         } else if (this.user.type === "press") {
             this.selectedBrand = '';
         }
