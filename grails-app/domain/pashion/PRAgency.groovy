@@ -10,8 +10,18 @@ class PRAgency {
 	//auto fields
 	Date dateCreated
 	Date lastUpdated
+    Collection destinations
+    Collection addresses
 
-	static hasMany = [brands: Brand , users:User,addresses:Address]
+
+	static hasMany = [brands: Brand , users:User,addresses:Address,destinations:Address]
+  	static belongsTo = Brand
+    static constraints = {
+    	stormpathDirectory nullable:true
+        addresses nullable:true      
+        destinations nullable: true
+    }
+
 
   	static mapping = {
         brands lazy: false
@@ -21,6 +31,9 @@ class PRAgency {
 
     static constraints = {
     }
+
+    static mappedBy = [ addresses:"prAgency", 
+                        destinations:"prDestination"]
 
     String toString() {
         return name

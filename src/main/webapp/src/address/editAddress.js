@@ -25,10 +25,12 @@ export class EditAddress {
 
   editMode = false;
   deleteMode = false
+  newAddressSubscriptions = [];
 
 
 
     bindNewAddress() {
+        console.log("editAddress.bindNewAddress");
         this.disposeNewAddress();
         this.newAddressSubscriptions.push(this.bindingEngine.propertyObserver(this.newAddress, 'name').subscribe(() => this.setButtonDisabled()));
         this.newAddressSubscriptions.push(this.bindingEngine.propertyObserver(this.newAddress, 'contactPhone').subscribe(() => this.setButtonDisabled()));
@@ -39,14 +41,17 @@ export class EditAddress {
     }
 
     disposeNewAddress() {
-        while (this.newAddressSubscriptions.length) {
-            this.newAddressSubscriptions.pop().dispose();
+        console.log("editAddress.disposeNewAddress");
+        if (this.newAddressSubscriptions) 
+            while (this.newAddressSubscriptions.length) {
+                this.newAddressSubscriptions.pop().dispose();
         }
     }
 
     close() {
         this.controller.close();
     }
+
 
     activate(model) {
         this.editMode = !this.helpers.isEmptyObject(model.newAddress);
@@ -57,12 +62,15 @@ export class EditAddress {
 
         if (this.editMode) {
             this.textMode = 1;
+            this.buttonText = "Update";
         } else {
             this.textMode = 0;
+            this.buttonText = "Add";
         }
 
         if (this.deleteMode) {
             this.textMode = 2;
+            this.buttonText = "Delete";
         }
     }
 
@@ -97,6 +105,7 @@ export class EditAddress {
     }
 
     add() {
+        console.log("editAddress.add");
         this.addressService.createAdHoc(this.newAddress)
             .then(response => {
                 // This should probably return the new address and not the list of all 
@@ -105,6 +114,7 @@ export class EditAddress {
     }
 
     update() {
+        console.log("editAddress.update");
         this.addressService.update(this.newAddress)
 
 
@@ -113,7 +123,7 @@ export class EditAddress {
   
 
   delete() {
-    console.log(JSON.stringify(this.newAddress));
+    console.log("editAddress.add: " + JSON.stringify(this.newAddress));
     if(this.newAddress.type === 'user'){
       this.alertP('Cannot Delete User');
     } else{

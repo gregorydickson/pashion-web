@@ -4,14 +4,53 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.converters.JSON
 
-@Transactional(readOnly = true)
+@Transactional(readOnly = false)
 class PRAgencyController {
+
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond PRAgency.list(params), model:[PRAgencyCount: PRAgency.count()]
+    }
+
+    // /agency/brands/$agency
+    def brands(){
+        //log.info "PRAgency/brands params:"+params
+        //def pr = PRAgency.get(params?.agency?.toInteger()) 
+        def pr = PRAgency.get(params.id.toInteger()) 
+        log.info "PRAgency/brands agency:"+pr
+        def brands = pr?.brands
+        if(brands){
+            render brands as JSON
+        } else {
+            def body = [] as JSON
+            render body
+        }
+
+    }
+    
+    // /agency/addBrand/$agency/$brand/
+    def addBrand(){
+        def agency = PRAgency.get(params.agency.toInteger())
+        def brand = Brand.get(params.brand.toInteger())
+        log.info "agency:"+agency
+        log.info "brand:"+brand
+        
+        log.info "adding brand to agency"
+        if(agency && brand){
+            agency.addToBrands(brand)
+            agency.save(flush:true,failOnError:true)
+            response.status = 200
+            def body = [status:"added"] as JSON
+            render body
+        } else {
+            response.status = 200
+            def body = [status:"error"] as JSON
+                
+            render body
+        }
     }
 
     def addresses(){ 
@@ -21,6 +60,40 @@ class PRAgencyController {
         def addresses = Address.findAllByPrAgencyAndArchived(prAgency,false) as JSON 
         log.info "pragency/addresses addresses: " + addresses
         render addresses
+    }
+
+    @Transactional
+    def addAddress(){
+        log.info "addAddress called"
+        def jsonObject = request.JSON
+        
+        log.info "addAddress to add:"+jsonObject
+        Address address = new Address()
+        address.name =         jsonObject.name
+        address.company =      jsonObject.company
+        address.address1 =     jsonObject.address1
+        address.city =         jsonObject.city
+        address.country =      jsonObject.country
+        address.postalCode =   jsonObject.postalCode
+        address.contactPhone = jsonObject.contactPhone
+        address.comment =      jsonObject.comment
+        
+        address.save(failOnError: true)
+        
+        PRAgency agency = PRAgency.get(session.user.prAgency.id)
+        if(!agency.isAttached()){
+            agency.attach()
+        }
+        agency.addToDestinations(address)
+        agency.save(failOnError:true)
+        
+        def destinations = agency.destinations
+        def users = agency.users
+        destinations.addAll(users)
+        destinations.sort{it.name}
+        def response = destinations as JSON
+
+        render response
     }
 
     def show(PRAgency PRAgency) {
