@@ -33,6 +33,7 @@ class BrandController {
     
     @Transactional
     def addAddress(){
+        log.info "addAddress called"
         def jsonObject = request.JSON
         
         log.info "address to add:"+jsonObject

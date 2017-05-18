@@ -85,7 +85,7 @@ export class SelectAddress {
     }
 
     add() {
-        console.log("ad hoc");
+        console.log("SelectAddres.add ad hoc");
         let newAddressModel = {
             addresses: this.ds.address.deliverTo,
             newAddress: {}
@@ -97,7 +97,7 @@ export class SelectAddress {
             })
             .then(response => {
                 if (!response.wasCancelled) {
-                    console.log('good - ', response.output, newAddressModel);
+                    console.log('Accepted - ', response.output, newAddressModel);
 
                     // lets update the datastore
                     // this still assumes we get the whole list of addressess back
@@ -114,7 +114,7 @@ export class SelectAddress {
                         });
 
                 } else {
-                    console.log('bad');
+                    console.log('Cancelled');
                 }
 
             });

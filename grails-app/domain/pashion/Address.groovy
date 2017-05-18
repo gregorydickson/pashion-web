@@ -19,6 +19,7 @@ class Address{
 
 	PressHouse pressHouse
 	PRAgency prAgency
+	PRAgency prDestination
 	Brand brand
 	Brand destination
 

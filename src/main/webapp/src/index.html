@@ -11,6 +11,7 @@
     <require from="./dashboard_filters/filters-color"></require>
     <require from="./dashboard_filters/filters-theme"></require>
     <require from="./dashboard_filters/filters-designer"></require>
+    <require from="./dashboard_filters/filters-designer-pr"></require>
     <require from="./dashboard_filters/filters-season"></require>
     <require from="./dashboard_filters/filters-season-press"></require>
     <require from="./dashboard_filters/filters-type"></require>
@@ -237,7 +238,7 @@
                             </div>
                             <div class="grid-row">
                                 <div class="grid-row-col">
-                                    <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>
+                                    <filters-designer-pr change.delegate="filterChangeBrand($event)" ></filters-designer-pr>
                                 </div>
                                 <div class="grid-row-col">
                                     <filters-season-press season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season-press>

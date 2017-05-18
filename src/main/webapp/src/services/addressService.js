@@ -1,6 +1,5 @@
-import { inject } from 'aurelia-framework';
+import { inject, singleton } from 'aurelia-framework';
 import { HttpClient, json } from 'aurelia-fetch-client';
-import { singleton } from 'aurelia-framework';
 import 'fetch';
 
 @inject(HttpClient)
@@ -15,12 +14,23 @@ export class AddressService {
         this.http = http;
     }
 
+    attached() {
+        console.log("addressService.attached called");
+        this.user = this.ds.user.user;
+    }
+
     getAll(user) {
-        var promise = new Promise((resolve, reject) => {
+        console.log("addressService.getAll  called, user: " + user);
+        this.user = user;
+            var promise = new Promise((resolve, reject) => {
             let url = '/dashboard/deliverTo/';
 
             if (user.type === 'brand') {
                 url = '/dashboard/deliverToBrand/' + user.companyId;
+            }
+
+            if (user.type === 'prAgency') {
+                url = '/dashboard/deliverToPRAgency/' + user.companyId;
             }
 
             this.http.fetch(url)
@@ -75,7 +85,7 @@ export class AddressService {
     create(address) {
         // if we are updating the current login user then need to set local 
         // and add the extra stuff for the current user
-        console.log("updating address addressService");
+        console.log("AddressService.create: updating address addressService: " + address);
         console.log(JSON.stringify(address));
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/address/createjson.json', {
@@ -96,9 +106,22 @@ export class AddressService {
     }
 
     createAdHoc(newAddress) {
-
-        var promise = new Promise((resolve, reject) => {
-            this.http.fetch('/brand/AddAddress', {
+        console.log("AddressService.createAdHoc: " + newAddress + " for " + this.user.type);
+        if (this.user.type === "brand") {
+            var promise = new Promise((resolve, reject) => {
+                this.http.fetch('/brand/AddAddress', {
+                    method: 'post',
+                    body: json(newAddress)
+                })
+                    .then(response => response.json())
+                    .then(newList => {
+                        resolve(newList)
+                    });
+            });
+            return promise;
+        } else {
+           var promise = new Promise((resolve, reject) => {
+            this.http.fetch('/PRAgency/AddAddress', {
                 method: 'post',
                 body: json(newAddress)
             })
@@ -107,7 +130,8 @@ export class AddressService {
                     resolve(newList)
                 });
         });
-        return promise;
+        return promise;         
+        }
     }
 
 

@@ -19,12 +19,13 @@ import { ErrorDialogSample } from './error_dialog/error_dialog_sample';
 import { SampleRequestService } from './services/sampleRequestService';
 import { UserService } from './services/userService';
 import { BrandService } from './services/brandService';
+import { PRAgencyService } from './services/PRAgencyService';
 import { PubNubService } from './services/pubNubService';
 import { busy } from './services/busy';
 import { CreateDialogAlert } from './common/dialogAlert';
 import { DS } from './datastores/ds';
 
-@inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, busy, PubNubService, DS)
+@inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, PRAgencyService, busy, PubNubService, DS)
 export class Index {
     user = {};
     bookings = [];
@@ -54,7 +55,7 @@ export class Index {
     today = new Date(); // Do we have a problem with freshness of this variable, say login at 11:59PM?
     firstTime = true;
 
-    constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, busy, pubNubService, DS) {
+    constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, PRAgencyService, busy, pubNubService, DS) {
         http.configure(config => {
             config
                 .useStandardConfiguration();
@@ -66,6 +67,7 @@ export class Index {
         this.sampleRequestService = sampleRequestService;
         this.userService = userService;
         this.brandService = brandService;
+        this.prAgencyService = PRAgencyService;
         this.pubNubService = pubNubService;
         this.busy = busy;
         this.maxRReached = false;
@@ -229,7 +231,8 @@ export class Index {
         //this.rows = []; //RM can do this to prevent the loading over existing images, but have to deal with detritus 
         console.log("Filter Change changing Brand");
         if (this.user.type === "brand") this.selectedBrand = this.user.companyId;
-        else this.selectedBrand = '';
+        if (this.user.type === "prAgency") this.selectedBrand = this.prAgencyService.getDefault().id;
+        if (this.user.type === "press") this.selectedBrand = '';
         if (event)
             if (event.detail)
                 if (event.detail.value) {
@@ -579,13 +582,22 @@ export class Index {
         if (this.user.type === "press") { this.searchType = 'filterSearch'; this.company = this.user.pressHouse; }
         if (this.user.type === "prAgency") { this.searchType = 'filterSearch'; this.company = this.user.prAgency; }
 
-        return Promise.all([
-            this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
-            this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes),
-            this.brandService.getBrands().then(brands => this.brands = brands),
-            this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors),
-        ]);
-    }
+        if (this.user.type === "prAgency")
+            return Promise.all([
+                this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
+                this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes),
+                this.brandService.getBrands().then(brands => this.brands = brands),
+                this.prAgencyService.getBrands().then(brands => this.PRbrands = brands),
+                this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors),
+            ]);
+        else
+            return Promise.all([
+                this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
+                this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes),
+                this.brandService.getBrands().then(brands => this.brands = brands),
+                this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors),
+            ]);
+        }
 
     attached() {
         //RM upgrades here: 
