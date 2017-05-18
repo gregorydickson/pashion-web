@@ -230,9 +230,16 @@ export class Index {
         this.busy.on();
         //this.rows = []; //RM can do this to prevent the loading over existing images, but have to deal with detritus 
         console.log("Filter Change changing Brand");
-        if (this.user.type === "brand") this.selectedBrand = this.user.companyId;
-        if (this.user.type === "prAgency") this.selectedBrand = this.prAgencyService.getDefault().id;
-        if (this.user.type === "press") this.selectedBrand = '';
+
+        if (this.user.type === "brand") {
+            this.selectedBrand = this.user.companyId;
+        } else if (this.user.type === "prAgency") {
+            this.selectedBrand = this.prAgencyService.getDefault().id;
+            this.selectedCity = this.user.city.name;
+        } else if (this.user.type === "press") {
+            this.selectedBrand = '';
+        }
+
         if (event)
             if (event.detail)
                 if (event.detail.value) {
@@ -522,7 +529,7 @@ export class Index {
                     this.selectedCity = event.detail.value;
                     console.log("value:" + event.detail.value)
                 }
-        //console.log("Filter change called, Color: " + this.selectedColor);       
+        console.log("Filter change called, City: " + this.selectedCity);       
         this.numberImages = 0;
         this.maxRReached = false;
         this.http.fetch('/searchableItem/' + this.searchType + '?searchtext=' + encodeURI(this.searchText) +
@@ -580,7 +587,7 @@ export class Index {
         if (this.user.type === "nosession") window.location.href = '/user/login';
         if (this.user.type === "brand") { this.searchType = 'brandSearch'; this.company = this.user.brand; }
         if (this.user.type === "press") { this.searchType = 'filterSearch'; this.company = this.user.pressHouse; }
-        if (this.user.type === "prAgency") { this.searchType = 'filterSearch'; this.company = this.user.prAgency; }
+        if (this.user.type === "prAgency") { this.searchType = 'brandSearch'; this.company = this.user.prAgency; }
 
         if (this.user.type === "prAgency")
             return Promise.all([
