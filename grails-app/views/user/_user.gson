@@ -6,4 +6,4 @@ model {
 }
 //log.info "Rendering a User in _user.gson"
 
-json g.render(user,[expand:['connections','pressHouse','brand','prAgency']])
+json g.render(user,[expand:['connections','pressHouse','brand','prAgency','city']])
