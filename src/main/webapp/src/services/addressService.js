@@ -1,33 +1,28 @@
-
-//import { DS } from 'datastores/ds';
-import { inject } from 'aurelia-framework';
+import { inject, singleton } from 'aurelia-framework';
 import { HttpClient, json } from 'aurelia-fetch-client';
-import { singleton } from 'aurelia-framework';
 import 'fetch';
 
-@inject(HttpClient
-    //, DS
-    )
+@inject(HttpClient)
 @singleton()
 export class AddressService {
 
-    constructor(http
-        //, DS
-        ) {
+    constructor(http) {
         http.configure(config => {
             config
                 .useStandardConfiguration();
         });
         this.http = http;
-        //this.ds = DS;
     }
 
     attached() {
-        //this.user = this.ds.user.user;
+        console.log("addressService.attached called");
+        this.user = this.ds.user.user;
     }
 
     getAll(user) {
-        var promise = new Promise((resolve, reject) => {
+        console.log("addressService.getAll  called, user: " + user);
+        this.user = user;
+            var promise = new Promise((resolve, reject) => {
             let url = '/dashboard/deliverTo/';
 
             if (user.type === 'brand') {
@@ -126,7 +121,7 @@ export class AddressService {
             return promise;
         } else {
            var promise = new Promise((resolve, reject) => {
-            this.http.fetch('/prAgency/AddAddress', {
+            this.http.fetch('/PRAgency/AddAddress', {
                 method: 'post',
                 body: json(newAddress)
             })

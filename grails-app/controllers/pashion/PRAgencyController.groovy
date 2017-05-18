@@ -8,6 +8,8 @@ import grails.converters.JSON
 class PRAgencyController {
 
 
+    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond PRAgency.list(params), model:[PRAgencyCount: PRAgency.count()]
@@ -62,9 +64,10 @@ class PRAgencyController {
 
     @Transactional
     def addAddress(){
+        log.info "addAddress called"
         def jsonObject = request.JSON
         
-        log.info "address to add:"+jsonObject
+        log.info "addAddress to add:"+jsonObject
         Address address = new Address()
         address.name =         jsonObject.name
         address.company =      jsonObject.company
@@ -77,15 +80,15 @@ class PRAgencyController {
         
         address.save(failOnError: true)
         
-        Brand brand = Brand.get(session.user.brand.id)
-        if(!brand.isAttached()){
-            brand.attach()
+        PRAgency agency = PRAgency.get(session.user.prAgency.id)
+        if(!agency.isAttached()){
+            agency.attach()
         }
-        brand.addToDestinations(address)
-        brand.save(failOnError:true)
+        agency.addToDestinations(address)
+        agency.save(failOnError:true)
         
-        def destinations = brand.destinations
-        def users = brand.users
+        def destinations = agency.destinations
+        def users = agency.users
         destinations.addAll(users)
         destinations.sort{it.name}
         def response = destinations as JSON
