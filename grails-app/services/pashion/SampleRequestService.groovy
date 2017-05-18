@@ -19,12 +19,22 @@ class SampleRequestService {
         if(user?.brand){
             log.info "brand user get sample requests"
             def brand = user.brand
-            results = SampleRequest.findAllByBrand(brand, [cache:true]);
+            results = SampleRequest.findAllByBrand(brand, [cache:true])
         }
         if(user?.pressHouse){
             log.info "press user get sample requests"
             def pressHouse = user.pressHouse
-            results = SampleRequest.findAllByPressHouse(pressHouse, [cache:true]);
+            results = SampleRequest.findAllByPressHouse(pressHouse, [cache:true])
+        }
+        if(user?.prAgency){
+
+            def agency = PRAgency.get(user.prAgency.id)
+            def brands = agency.brands
+            
+            brands.each{
+                results.addAll(SampleRequest.findAllByBrand(it, [cache:true]))
+            }
+            
         }
 
         results
