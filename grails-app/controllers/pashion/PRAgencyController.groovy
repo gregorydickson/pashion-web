@@ -135,6 +135,10 @@ class PRAgencyController {
     def show(PRAgency PRAgency) {
         respond PRAgency
     }
+    def showjson(){
+        def agency = PRAgency.get(params.agency.toInteger())
+        render agency as JSON
+    }
 
     def create() {
         respond new PRAgency(params)

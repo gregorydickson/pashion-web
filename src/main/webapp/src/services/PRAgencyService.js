@@ -19,6 +19,45 @@ export class PRAgencyService {
 
     activate() {}
 
+    getPRAgency(id) {
+        var promise = new Promise((resolve, reject) => {
+            if (!this.agency) {
+                console.log("Getting the pr agency from server");
+                this.http.fetch('/agency/show/'+id)
+                    .then(response =>
+                        response.json()).then(agency => {
+                        this.agency = agency;
+                        resolve(this.agency);
+                    }).catch(err => reject(err));
+            } else {
+                console.log("getting the pr agency from local");
+                resolve(this.agency);
+            }
+        });
+        return promise;
+    }
+
+
+
+
+    getPRAgencies() {
+        var promise = new Promise((resolve, reject) => {
+            if (!this.PRAgencies) {
+                console.log("Getting PRAgencies from JSON");
+                this.http.fetch('/PRAgency/index.json')
+                    .then(response =>
+                        response.json()).then(PRAgencies => {
+                        this.PRAgencies = PRAgencies;
+                        resolve(this.PRAgencies);
+                    }).catch(err => reject(err));
+            } else {
+                console.log("getting PRAgencies from local");
+                resolve(this.PRAgencies);
+            }
+        });
+        return promise;
+    }
+
     getPRAgencies() {
         var promise = new Promise((resolve, reject) => {
             if (!this.press) {

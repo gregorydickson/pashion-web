@@ -4,6 +4,7 @@ import 'fetch';
 import { inject, bindable } from 'aurelia-framework';
 import { DateFormat } from 'common/dateFormat';
 import { BrandService } from 'services/brandService';
+import { UserService } from 'services/userService';
 import { DialogService } from 'aurelia-dialog';
 import { CreateDialogAlert } from 'common/dialogAlert';
 import $ from 'jquery';
@@ -11,7 +12,7 @@ import { computedFrom } from 'aurelia-framework';
 import { DS } from '../datastores/ds';
 
 
-@inject(HttpClient, DialogController, BrandService, DialogService, DS)
+@inject(HttpClient, DialogController, BrandService, DialogService, DS,UserService)
 export class CreateSampleRequestBrand {
   static inject = [DialogController];
   currentItem = {};
@@ -52,7 +53,7 @@ export class CreateSampleRequestBrand {
   startDay = '';
   endDay = '';
 
-  constructor(http, controller, brandService, dialogService, DS) {
+  constructor(http, controller, brandService, dialogService, DS,userService) {
     this.controller = controller;
     console.log("createSampleRequestBrand");
     http.configure(config => {
@@ -63,6 +64,7 @@ export class CreateSampleRequestBrand {
     this.brandService = brandService;
     this.dialogService = dialogService;
     this.ds = DS;
+    this.userService = userService;
   }
 
   activate(item) {
@@ -101,6 +103,7 @@ export class CreateSampleRequestBrand {
         this.sampleRequest.paymentReturn = "50/50";
       }),
 
+      this.userService.getUser().then(user => this.user = user),
 
       this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
 
@@ -129,16 +132,33 @@ export class CreateSampleRequestBrand {
 
 
           }),
-
-            this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);
           this.sampleRequest.samples = [];
-          var ids = this.sampleRequest.samples;
-          item.samples.forEach(function (item) {
-            ids.push(item.id);
-          })
+          this.brandService.getBrand(item.brand.id).then(brand => {
+            this.brand = brand;
+            var theBrand = brand;
+            var theUser = this.user;
+            var ids = this.sampleRequest.samples;
+            item.samples.forEach(function (item,index,object) {
+              if(theBrand.restrictOutsideBooking){
+                if(item.sampleCity.name == theUser.city.name ){
+                  ids.push(item.id);
+                } 
+              } else{
+                ids.push(item.id);
+              }
+            })
+            item.samples.forEach(function (item,index,object) {
+              if(theBrand.restrictOutsideBooking){
+                if(item.sampleCity.name != theUser.city.name ){
+                  object.splice(index,1);
+                }
+              } 
+            })
+          });
+          
+          
 
-        }
-        )
+        })
     ]).then(() => {
       this.isLoading = false
 
