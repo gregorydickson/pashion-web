@@ -92,7 +92,7 @@ export class PRAgencyService {
 
     getOnlyShowMySampleRequests(id){
         var promise = new Promise((resolve, reject) => {
-                this.http.fetch('/prAgency/getOnlyShowMySampleRequests/'+id+'.json')
+                this.http.fetch('/PRAgency/getOnlyShowMySampleRequests/'+id+'.json')
                     .then(response =>
                         response.json()).then(hd => {
                         resolve(hd);
@@ -118,7 +118,7 @@ export class PRAgencyService {
 
     getRestrictOutsideBooking(id){
         var promise = new Promise((resolve, reject) => {
-                this.http.fetch('/prAgency/getRestrictOutsideBooking/'+id+'.json')
+                this.http.fetch('/PRAgency/getRestrictOutsideBooking/'+id+'.json')
                     .then(response =>
                         response.json()).then(hd => {
                         resolve(hd);

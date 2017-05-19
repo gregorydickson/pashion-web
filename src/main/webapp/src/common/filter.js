@@ -1,5 +1,5 @@
 export class FilterValueConverter {
-    toView(array, searchTerm, filterFunc, filterTerm, user,seasons) {
+    toView(array, searchTerm, filterFunc, filterTerm, user,seasons, city) {
 
         if (!typeof(array)) return;
         if (!array) return;
@@ -13,7 +13,7 @@ export class FilterValueConverter {
 
                  // let matches = searchTerm && searchTerm.length > 0 ? filterFunc(searchTerm, item, filterTerm) : true;
 
-                return filterFunc(searchTerm, item, filterTerm, user,seasons);
+                return filterFunc(searchTerm, item, filterTerm, user,seasons, city);
             });
         } catch (e) {console.log ("Exception thrown in filter: " + e);}
 

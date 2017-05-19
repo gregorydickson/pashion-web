@@ -27,7 +27,7 @@ import { DS } from './datastores/ds';
 
 @inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, PRAgencyService, busy, PubNubService, DS)
 export class Index {
-    user = {};
+    //user = {};
     bookings = [];
     rows = [];
     //seasons = [];
@@ -54,6 +54,7 @@ export class Index {
     filtering = 'ALL REQUESTS';
     today = new Date(); // Do we have a problem with freshness of this variable, say login at 11:59PM?
     firstTime = true;
+    onlyShowMine = false;
 
     constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, PRAgencyService, busy, pubNubService, DS) {
         http.configure(config => {
@@ -80,6 +81,11 @@ export class Index {
         return document.getElementsByClassName("indexReqRow").length;
     }
 
+    /*get getOnlyShowMine () {
+        console.log("getONlyShowMine: " + this.onlyShowMine);
+        return this.onlyShowMine;
+    }*/
+
     computedOverdue(booking, status) {
         var computedDate = new Date(booking);
         var overdue = this.today > computedDate;
@@ -94,10 +100,11 @@ export class Index {
         if (this.imagePanelSize == 3) { this.imagePanelSize = 2; return }
     }
 
-    filterFunc(searchExpression, value, filter, user, seasons) {
+    filterFunc(searchExpression, value, filter, user, seasons, city) {
         var searchVal = true;
         var filterVal = true;
-        if (searchExpression == '' && filter == '') return true;
+        var filterCityVal = true;
+        if (searchExpression == '' && filter == '' && city == '' ) return true;
         var itemValue = '';
         if (value.pressHouse) itemValue = value.pressHouse.name;
         if (value.brand) itemValue = itemValue + ' ' + value.brand.name;
@@ -111,6 +118,17 @@ export class Index {
                 abbrev = seasons[i].abbreviation;
             }
         }
+        // filter on city
+        if (city)
+            if (city!="All" && city!="Select" && city!="ALL" && city!="SELECT") {
+                console.log("City filtering on: " + city);
+                // get city of request
+                var requestCity = value.searchableItems[0].sampleCity.name; // user first ssample location
+                console.log("city of request: " + requestCity);
+                filterCityVal = (requestCity == city);
+            }
+
+
         if (value.look && abbrev == '') itemValue = itemValue + ' ' + value.look;//RM check added to index small request man
         if (value.look && abbrev != '') itemValue = itemValue + ' ' + abbrev + value.look;//RM check added to index small request man
         // console.log("Filter value: " + itemValue);
@@ -164,7 +182,7 @@ export class Index {
             );
         }
 
-        return (searchVal && filterVal);
+        return (searchVal && filterVal && filterCityVal);
     }
 
 
@@ -182,6 +200,17 @@ export class Index {
                     console.log("value:" + event.detail.value + " filtering: " + this.filtering);
                 }
     }
+
+    filterChangeCityRM(event) {
+        this.closeAllOpenRequestRows();
+        if (event)
+            if (event.detail)
+                if (event.detail.value) {
+                    this.cityFiltering = event.detail.value;
+                    //console.log("filter value:" + event.detail.value + " city filtering: " + this.cityFiltering);
+                }
+    }
+
 
     filterChangeSearch(event) {
         this.busy.on();
@@ -608,6 +637,7 @@ export class Index {
             ]);
         }
 
+
     attached() {
         //RM upgrades here: 
         // - check for backwards dates
@@ -713,7 +743,20 @@ export class Index {
         });
 
         this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub());
-        
+
+        // filtering
+        if(this.user.type === "brand") this.brandService.getOnlyShowMySampleRequests(this.user.brand.id).then ( result => { 
+            this.onlyShowMine = result;
+            if(this.onlyShowMine) {
+                this.cityFiltering = this.user.city.name;
+            }
+        });       
+        if(this.user.type === "prAgency") this.prAgencyService.getOnlyShowMySampleRequests(this.user.prAgency.id).then ( result => { 
+            this.onlyShowMine = result;
+            if(this.onlyShowMine) {
+                this.cityFiltering = this.user.city.name;
+            }
+        });        
     }
 
 

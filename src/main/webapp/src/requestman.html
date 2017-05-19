@@ -12,6 +12,7 @@
     <require from="./dashboard_filters/filters-filterrequests"></require>
     <require from="./dashboard_filters/filters-search-from"></require>
     <require from="./dashboard_filters/filters-search-to"></require>
+    <require from="./dashboard_filters/filters-city"></require>
 
     <!-- start preloader -->
     <div class="preloader" show.bind="busy.active" >
@@ -102,6 +103,10 @@
                             <div class="" style="margin: 0 1rem 2rem 0; height:28px; min-height:28px;">
                                 <filters-search-to></filters-search-to>
                             </div>
+                            <!-- City -->
+                            <div if.bind="(((user.type === 'brand') || (user.type==='prAgency')) && !onlyShowMine)" class="" style="margin: 0 1rem 2rem 0; height:28px; min-height:28px; width:130px;">
+                                 <filters-city change.delegate="filterChangeCityRM($event)"></filters-city>
+                            </div>
                             <div class="grid-content shrink">
 
                                     <button disabled.bind="(numberOfRequests <= 0)" class="small button hollow" click.delegate="createPDFDialog()">Create PDF</button>
@@ -147,7 +152,7 @@
                             <!-- Rows of content View-->
                             <div  class="grid-content" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left: 1rem; margin-right: 1rem;">
                                 
-                                <div repeat.for="booking of bookings | sort:ordering:'ascending' | filter:searchTextReqMan:filterFunc:filtering:user:seasons
+                                <div repeat.for="booking of bookings | sort:ordering:'ascending' | filter:searchTextReqMan:filterFunc:filtering:user:seasons:cityFiltering
                                 | range:searchFrom:searchTo:filterRangeFunc">
                                     <table ref="aBooking"  class="big-accordion" cellspacing="2" style="table-layout: fixed;">
                                         <tr class="brandGridContent indexReqRow">

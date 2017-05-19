@@ -11,8 +11,10 @@ import { CreateDialogAlert } from './common/dialogAlert';
 import { HttpClient } from 'aurelia-fetch-client';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { PDFService } from './services/PDFService';
+import { PRAgencyService } from './services/PRAgencyService';
+import { BrandService } from './services/brandService';
 
-@inject(HttpClient, DialogService, DS, PDFService, SampleRequestService, busy, EventAggregator, PubNubService)
+@inject(HttpClient, DialogService, DS, PDFService, SampleRequestService, busy, EventAggregator, PubNubService, BrandService, PRAgencyService)
 export class Requestman {
 
   @bindable({ defaultBindingMode: bindingMode.twoWay }) bookings = [];
@@ -31,10 +33,11 @@ export class Requestman {
   ordering = 'bookingStartDate';
   filtering = ''; // IE all
   today = new Date(); // Do we have a problem with freshness of this variable, say login at 11:59PM?
+  onlyShowMine = false;
 
 
 
-  constructor(http, dialogService, DS, pDFService, sampleRequestService, busy, eventAggregator, pubNubService) {
+  constructor(http, dialogService, DS, pDFService, sampleRequestService, busy, eventAggregator, pubNubService, brandService, PRAgencyService) {
     http.configure(config => {
       config
         .useStandardConfiguration();
@@ -48,6 +51,8 @@ export class Requestman {
     this.ea = eventAggregator;
     this.pDFService = pDFService;
     this.pubNubService = pubNubService;
+    this.brandService = brandService;
+    this.prAgencyService = PRAgencyService;
 
   }
 
@@ -119,7 +124,21 @@ export class Requestman {
 
     });
 
-    this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub())
+    this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub());
+
+    // filtering
+    if(this.user.type === "brand") this.brandService.getOnlyShowMySampleRequests(this.user.brand.id).then ( result => { 
+        this.onlyShowMine = result;
+        if(this.onlyShowMine) {
+            this.cityFiltering = this.user.city.name;
+        }
+    });       
+    if(this.user.type === "prAgency") this.prAgencyService.getOnlyShowMySampleRequests(this.user.prAgency.id).then ( result => { 
+        this.onlyShowMine = result;
+        if(this.onlyShowMine) {
+            this.cityFiltering = this.user.city.name;
+        }
+    }); 
   }
 
   get numberOfRequests() {
@@ -214,14 +233,15 @@ export class Requestman {
   }
 
 
-  filterFunc(searchExpression, value, filter, user, seasons) {
+  filterFunc(searchExpression, value, filter, user, seasons, city) {
     // editorialName, pressHouse
 
     var searchVal = true;
     var filterVal = true;
+    var filterCityVal = true;
     //this.closeExpanded ();
 
-    if (searchExpression == '' && filter == '') return true;
+    if (searchExpression == '' && filter == '' && city == '') return true;
     var itemValue = '';
     if (value.pressHouse) itemValue = value.pressHouse.name;
     if (value.brand) itemValue = itemValue + ' ' + value.brand.name;
@@ -252,6 +272,15 @@ export class Requestman {
       for (i = 0; i < value.searchableItems.length; i++)
         itemValue = itemValue + ' ' + value.searchableItems[i].clientID;
     }
+    // filter on city
+    if (city)
+        if (city!="All" && city!="Select" && city!="ALL" && city!="SELECT") {
+            console.log("City filtering on: " + city);
+            // get city of request
+            var requestCity = value.searchableItems[0].sampleCity.name; // user first ssample location
+            console.log("city of request: " + requestCity);
+            filterCityVal = (requestCity == city);
+        }
 
     //console.log("Search value: " + itemValue);
     if (searchExpression && itemValue) searchVal = itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;
@@ -303,8 +332,18 @@ export class Requestman {
       );
     }
     //console.log(" filterfunc return value: " +  searchVal + " " + filterVal + " :: " + (searchVal && filterVal));
-    return (searchVal && filterVal);
+    return (searchVal && filterVal && filterCityVal);
   }
+
+  filterChangeCityRM(event) {
+        this.closeExpanded();
+        if (event)
+            if (event.detail)
+                if (event.detail.value) {
+                    this.cityFiltering = event.detail.value;
+                    //console.log("filter value:" + event.detail.value + " city filtering: " + this.cityFiltering);
+                }
+    }
 
   closeExpanded() {
     if (this.closed) return;
