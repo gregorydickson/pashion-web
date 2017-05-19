@@ -121,46 +121,49 @@ export class CreateSampleRequestBrand {
         .then(response => response.json())
         .then(item => {
           this.currentItem = item;
-          //
 
           this.userService.getUser().then(user => {
             this.user = user;
-            if (this.user.type=="brand") this.brandService.restrictOutsideBooking(this.user.brand.id).then(result => {
-              console.log("restrict Outside booking:"+result)
-              this.restrictOutsideBooking = result;
-              var theUser = this.user;
+            if (user.type=="brand"){
+              this.brandService.getRestrictOutsideBooking(this.user.brand.id).then(result => {
+                console.log("restrict Outside booking:"+result)
+                this.restrictOutsideBooking = result;
+                var theUser = this.user;
 
-              var ids = this.sampleRequest.samples;
-              item.samples.forEach(function (item,index,object) {
-                if(result){
-                  if(item.sampleCity.name == theUser.city.name ){
-                    ids.push(item.id);
+                var ids = this.sampleRequest.samples;
+                item.samples.forEach(function (item,index,object) {
+                  if(result){
+                    if(item.sampleCity.name == theUser.city.name ){
+                      ids.push(item.id);
+                    } else {
+                      console.log("not adding to selected");
+                    }
                   } else {
-                    console.log("not adding to selected");
-                  }
-                } else {
-                  ids.push(item.id);
-                }
-                
-              })
-
-            });
-            if (this.user.type=="prAgency") this.prAgencyService.restrictOutsideBooking(this.user.prAgency.id).then(result =>{ 
-              this.restrictOutsideBooking = result;
-              var theUser = this.user;
-
-              var ids = this.sampleRequest.samples;
-              item.samples.forEach(function (item,index,object) {
-                if(result){
-                  if(item.sampleCity.name == theUser.city.name ){
                     ids.push(item.id);
-                  } 
-                } else {
-                  ids.push(item.id);
-                }
-                
-              })
-            });
+                  }
+                  
+                })
+
+              });
+            }
+            if (user.type=="prAgency"){
+              this.prAgencyService.getRestrictOutsideBooking(this.user.prAgency.id).then(result =>{ 
+                this.restrictOutsideBooking = result;
+                var theUser = this.user;
+
+                var ids = this.sampleRequest.samples;
+                item.samples.forEach(function (item,index,object) {
+                  if(result){
+                    if(item.sampleCity.name == theUser.city.name ){
+                      ids.push(item.id);
+                    } 
+                  } else {
+                    ids.push(item.id);
+                  }
+                  
+                })
+              });
+            }
           })
 
 
