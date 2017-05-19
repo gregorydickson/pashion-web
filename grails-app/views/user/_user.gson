@@ -3,7 +3,19 @@ import pashion.User
 
 model {  
     User user
+
 }
 //log.info "Rendering a User in _user.gson"
 
-json g.render(user,[expand:['connections','pressHouse','brand','prAgency','city']])
+json g.render(user,[expand:['connections','pressHouse','brand','prAgency','city']]){
+	if(user.brand)
+		onlyShowMySampleRequests  user.brand.onlyShowMySampleRequests
+	if(user.prAgency)
+		onlyShowMySampleRequests  user.prAgency.onlyShowMySampleRequests
+
+	if(user.brand)
+		restrictOutsideBooking  user.brand.restrictOutsideBooking
+	if(user.prAgency)
+		restrictOutsideBooking  user.prAgency.restrictOutsideBooking
+	
+}

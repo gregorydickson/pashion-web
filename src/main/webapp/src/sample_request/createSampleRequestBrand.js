@@ -31,6 +31,7 @@ export class CreateSampleRequestBrand {
   sampleRequestEndMonth = '';
   sampleRequestEndDay = '';
 
+  @bindable user = {};
 
   brand = [];
 
@@ -103,7 +104,9 @@ export class CreateSampleRequestBrand {
         this.sampleRequest.paymentReturn = "50/50";
       }),
 
-      this.userService.getUser().then(user => this.user = user),
+      this.userService.getUser().then(user => {
+        this.user = user;
+      }),
 
       this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
 
@@ -135,25 +138,20 @@ export class CreateSampleRequestBrand {
           this.sampleRequest.samples = [];
           this.brandService.getBrand(item.brand.id).then(brand => {
             this.brand = brand;
-            var theBrand = brand;
+            
             var theUser = this.user;
             var ids = this.sampleRequest.samples;
             item.samples.forEach(function (item,index,object) {
-              if(theBrand.restrictOutsideBooking){
+              if(theUser.restrictOutsideBooking){
                 if(item.sampleCity.name == theUser.city.name ){
                   ids.push(item.id);
                 } 
-              } else{
+              } else {
                 ids.push(item.id);
               }
+              
             })
-            item.samples.forEach(function (item,index,object) {
-              if(theBrand.restrictOutsideBooking){
-                if(item.sampleCity.name != theUser.city.name ){
-                  object.splice(index,1);
-                }
-              } 
-            })
+            
           });
           
           

@@ -305,7 +305,7 @@
                                 ${sample.sampleCity.name}
                             </td>
                             <td class="accordion" style="width:10px; max-width:10px;">
-                                <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="sampleRequest.samples">
+                                <input disabled.bind="(user.city.name !== sample.sampleCity.name)" type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="sampleRequest.samples">
                             </td>
                         </tr>
                     </table>
