@@ -415,7 +415,7 @@
                 
                 <!-- row button + content -->
                
-                <div if.bind="user.type === 'brand'" class="vertical grid-content grid-content-column accordion">
+                <div if.bind="((user.type === 'brand') || (user.type === 'prAgency'))" class="vertical grid-content grid-content-column accordion">
                     <!--header -->
                     <div style="margin-bottom:5px; width:255px;">
                         <table class="accordion" style="table-layout:fixed;">
@@ -535,7 +535,7 @@
                      
                 </div>
                
-                <div if.bind="(user.type === 'press') || (user.type === 'prAgency')"  class="vertical grid-content grid-content-column accordion">
+                <div if.bind="(user.type === 'press')"  class="vertical grid-content grid-content-column accordion">
                     <!--header -->
                     <div style="margin-bottom:5px;">
                         <table class="accordion" style="table-layout:fixed;">

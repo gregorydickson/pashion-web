@@ -191,12 +191,12 @@
                                                 <div class="look-menu-absolute-wrap">
                                                     <!-- ... -->
                                                     <!-- disabled -->
-                                                    <span if.bind="((user.type === 'brand') && (booking.requestStatusBrand == 'Deleted'))" class="edit-box disabled" ></span>
+                                                    <span if.bind="(((user.type === 'brand') || (user.type === 'prAgency')) && (booking.requestStatusBrand == 'Deleted'))" class="edit-box disabled" ></span>
                                                     <!-- not disabled -->
-                                                    <span if.bind="((user.type === 'brand') && (booking.requestStatusBrand != 'Deleted'))" class="edit-box" ><a href="#" class="expandoHover" click.delegate="lookEditMenu(booking.id)">...</a></span>
+                                                    <span if.bind="(((user.type === 'brand')  || (user.type === 'prAgency')) && (booking.requestStatusBrand != 'Deleted'))" class="edit-box" ><a href="#" class="expandoHover" click.delegate="lookEditMenu(booking.id)">...</a></span>
 
                                                     <!-- ... disabled -->
-                                                    <span if.bind="(((user.type === 'press') || (user.type === 'prAgency')) && 
+                                                    <span if.bind="((user.type === 'press') && 
                                                            ((booking.requestStatusPress == 'Denied') ||
                                                             (booking.requestStatusPress == 'Deleted') ||
                                                             (booking.requestStatusPress == 'Returned') ||
@@ -204,7 +204,7 @@
                                                             (booking.requestStatusPress == 'Withdrawn') 
                                                             ))" class="edit-box disabled" ></span>
                                                     <!-- ... not disabled -->
-                                                    <span if.bind="(((user.type === 'press') || (user.type === 'prAgency')) && 
+                                                    <span if.bind="((user.type === 'press') && 
                                                             ((booking.requestStatusPress != 'Denied') &&
                                                             (booking.requestStatusPress != 'Deleted') &&
                                                             (booking.requestStatusPress != 'Returned') &&
@@ -214,7 +214,7 @@
                                                     <!-- edit request modal popup -->
                                                      <div class="look-menu-absolute" id="requestManTest${booking.id}">
                                                         <span class="look-menu-heading">REQUEST ${booking.id}</span>
-                                                        <ul if.bind="user.type === 'brand'"  class="look-menu-list">
+                                                        <ul if.bind="(user.type === 'brand') || (user.type === 'prAgency')"  class="look-menu-list">
 
                                                             <!-- Edit -->
                                                             <li if.bind="(
@@ -273,7 +273,7 @@
                                                             <li class="look-menu-item"><a click.delegate="deleteSampleRequest($index,booking.id)" href="#" class="look-menu-link">Delete Request</a></li>
                                                         </ul>
 
-                                                        <ul if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="look-menu-list">
+                                                        <ul if.bind="(user.type === 'press')" class="look-menu-list">
                                                             <!-- Edit -->
                                                             <li if.bind="(
                                                                 (booking.requestStatusPress == 'Pending') ||
