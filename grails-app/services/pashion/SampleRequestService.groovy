@@ -87,6 +87,7 @@ class SampleRequestService {
             sr.requestingUser = requestingUser
             sr.editorialName = jsonObject.editorialName
             sr.editorialWho = jsonObject.editorialWho
+            sr.prAgency = jsonObject.prAgency
             
             
             sr.dateRequested = new Date()

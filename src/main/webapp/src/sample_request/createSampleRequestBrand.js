@@ -4,14 +4,16 @@ import 'fetch';
 import { inject, bindable } from 'aurelia-framework';
 import { DateFormat } from 'common/dateFormat';
 import { BrandService } from 'services/brandService';
+import { PRAgencyService } from 'services/PRAgencyService';
+import { UserService } from 'services/userService';
 import { DialogService } from 'aurelia-dialog';
 import { CreateDialogAlert } from 'common/dialogAlert';
 import $ from 'jquery';
 import { computedFrom } from 'aurelia-framework';
-import { DS } from '../datastores/ds';
 
 
-@inject(HttpClient, DialogController, BrandService, DialogService, DS)
+
+@inject(HttpClient, DialogController, BrandService, DialogService, UserService, PRAgencyService)
 export class CreateSampleRequestBrand {
   static inject = [DialogController];
   currentItem = {};
@@ -30,6 +32,9 @@ export class CreateSampleRequestBrand {
   sampleRequestEndMonth = '';
   sampleRequestEndDay = '';
 
+  @bindable user = {};
+  
+  @bindable restrictOutsideBooking = false;
 
   brand = [];
 
@@ -52,7 +57,7 @@ export class CreateSampleRequestBrand {
   startDay = '';
   endDay = '';
 
-  constructor(http, controller, brandService, dialogService, DS) {
+  constructor(http, controller, brandService, dialogService,userService,PRAgencyService) {
     this.controller = controller;
     console.log("createSampleRequestBrand");
     http.configure(config => {
@@ -62,13 +67,20 @@ export class CreateSampleRequestBrand {
     this.http = http;
     this.brandService = brandService;
     this.dialogService = dialogService;
-    this.ds = DS;
+    this.userService = userService;
+    this.prAgencyService = PRAgencyService;
   }
+
+
+   
+
+    
 
   activate(item) {
     var queryString = DateFormat.urlString(0, 2) + '&searchType=brand';
 
     let sampleRequest = this.sampleRequest;
+    this.sampleRequest.samples = [];
     let availableReturnToItems = this.availableReturnToItems;
 
     Promise.all([
@@ -101,6 +113,7 @@ export class CreateSampleRequestBrand {
         this.sampleRequest.paymentReturn = "50/50";
       }),
 
+      
 
       this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
 
@@ -109,6 +122,52 @@ export class CreateSampleRequestBrand {
         .then(item => {
           this.currentItem = item;
 
+          this.userService.getUser().then(user => {
+            this.user = user;
+            if (user.type=="brand"){
+              this.brandService.getRestrictOutsideBooking(this.user.brand.id).then(result => {
+                console.log("restrict Outside booking:"+result)
+                this.restrictOutsideBooking = result;
+                var theUser = this.user;
+
+                var ids = this.sampleRequest.samples;
+                item.samples.forEach(function (item,index,object) {
+                  if(result){
+                    if(item.sampleCity.name == theUser.city.name ){
+                      ids.push(item.id);
+                    } else {
+                      console.log("not adding to selected");
+                    }
+                  } else {
+                    ids.push(item.id);
+                  }
+                  
+                })
+
+              });
+            }
+            if (user.type=="prAgency"){
+              this.prAgencyService.getRestrictOutsideBooking(this.user.prAgency.id).then(result =>{ 
+                this.restrictOutsideBooking = result;
+                var theUser = this.user;
+
+                var ids = this.sampleRequest.samples;
+                item.samples.forEach(function (item,index,object) {
+                  if(result){
+                    if(item.sampleCity.name == theUser.city.name ){
+                      ids.push(item.id);
+                    } 
+                  } else {
+                    ids.push(item.id);
+                  }
+                  
+                })
+              });
+            }
+          })
+
+
+          //
           this.brandService.getBrandAddresses(item.brand.id).then(addresses => {
             this.returnTo = addresses;
 
@@ -129,16 +188,14 @@ export class CreateSampleRequestBrand {
 
 
           }),
+          
+          this.brandService.getBrand(item.brand.id).then(brand => {
+            this.brand = brand;
+          });
+          
+          
 
-            this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);
-          this.sampleRequest.samples = [];
-          var ids = this.sampleRequest.samples;
-          item.samples.forEach(function (item) {
-            ids.push(item.id);
-          })
-
-        }
-        )
+        })
     ]).then(() => {
       this.isLoading = false
 
@@ -459,6 +516,9 @@ export class CreateSampleRequestBrand {
   submit() {
 
     this.sampleRequest.deliverTo = this.selectedAddress;
+    if (this.user.type=="prAgency"){
+      this.sampleRequest["prAgency"] = this.user.prAgency.name
+    }
     console.log("submitting Sample Request: " + JSON.stringify(this.sampleRequest));
     this.http.fetch('/sampleRequest/savejson', {
       method: 'post',

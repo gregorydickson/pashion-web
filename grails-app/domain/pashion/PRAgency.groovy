@@ -12,6 +12,8 @@ class PRAgency {
 	Date lastUpdated
     Collection destinations
     Collection addresses
+    Boolean onlyShowMySampleRequests = true
+    Boolean restrictOutsideBooking = true
 
 
 	static hasMany = [brands: Brand , users:User,addresses:Address,destinations:Address]

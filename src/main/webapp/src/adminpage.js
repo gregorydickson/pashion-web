@@ -161,8 +161,16 @@ export class Adminpage {
         console.log("Should be disabled for now");
     }
 
-    allowAllRequests() {
-        console.log("Should be disabled for now");
+    onlyShowMySampleRequests() {
+        console.log("onlyShowMySampleRequests " + this.company.onlyShowMySampleRequests);
+        if (this.user.type=="brand") this.brandService.onlyShowMySampleRequests(this.company.id).then(result => this.company.onlyShowMySampleRequests = result);
+        if (this.user.type=="prAgency") this.prAgencyService.onlyShowMySampleRequests(this.company.id).then(result => this.company.onlyShowMySampleRequests = result);
+    }
+
+    restrictOutsideBooking() {
+        console.log("restrictOutsideBooking " + this.company.restrictOutsideBooking);
+        if (this.user.type=="brand") this.brandService.restrictOutsideBooking(this.company.id).then(result => this.company.restrictOutsideBooking = result);
+        if (this.user.type=="prAgency") this.prAgencyService.restrictOutsideBooking(this.company.id).then(result => this.company.restrictOutsideBooking = result);
     }
 
 

@@ -31,7 +31,8 @@ export class CreateSampleRequestPress {
   sampleRequestEndDay = '';
 
 
-  sampleRequest = {requiredBy:"12:00", courierOut:"They Book",paymentOut:"50/50", returnBy:"Afternoon",courierReturn:"Pashion Courier",paymentReturn:"50/50"};
+  //sampleRequest = {requiredBy:"12:00", courierOut:"They Book",paymentOut:"50/50", returnBy:"Afternoon",courierReturn:"Pashion Courier",paymentReturn:"50/50"};
+  sampleRequest = {}
   startOffset = 0;
   endOffset = 0;
 
@@ -98,9 +99,8 @@ export class CreateSampleRequestPress {
   }
 
   alertP (message){
-
-        this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000}, lock:false }).then(response => {});
-    }
+    this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Booking", message:message, timeout:5000}, lock:false }).then(response => {});
+  }
 
   setStartDate(event,dayEvent,day){
     console.log("set start date: "+event);
@@ -275,11 +275,18 @@ export class CreateSampleRequestPress {
     
     if((this.sampleRequest.samples === undefined) ||
        (this.sampleRequest.samples.length == 0) ||
-       (this.sampleRequest.startDate === undefined) ||
        (this.sampleRequest.startDate == '') ||
        (this.sampleRequest.endDate === undefined) ||
-       (this.sampleRequest.deliverTo === undefined) ||
-       (this.sampleRequest.returnToAddress === undefined) ||
+       (this.sampleRequest.deliverTo === '') ||
+       (this.sampleRequest.returnToAddress === '') ||
+       (this.sampleRequest.returnBy === '') ||
+       (this.sampleRequest.requiredBy === '') ||
+       (this.sampleRequest.courierOut === '') ||
+       (this.sampleRequest.courierReturn === '') ||
+       (this.sampleRequest.paymentReturn === '') ||
+       (this.sampleRequest.paymentOut === '') ||
+       (this.sampleRequest.editorialName === '') ||
+       (this.sampleRequest.editorialWho === '') ||
        (this.sampleRequest.endDate == '')){
           document.getElementById("CreateSampleRequestButton").disabled = true;
           console.log("button DIS abled");

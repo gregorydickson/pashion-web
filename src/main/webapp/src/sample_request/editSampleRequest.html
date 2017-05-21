@@ -349,7 +349,7 @@
             </div>
 
             <!-- brand -->
-            <div if.bind="user.type === 'brand'" class="vertical grid-content accordion modal-table-wrap" style="margin-top: 0px;">
+            <div if.bind="(user.type === 'brand') || (user.type === 'prAgency')" class="vertical grid-content accordion modal-table-wrap" style="margin-top: 0px;">
                 <!-- scroll after n items -->
                 <!-- row -->
                 <table repeat.for="sample of sampleRequest.searchableItemsProposed" class="" style="table-layout:fixed">
@@ -379,7 +379,7 @@
             </div>
 
             <!-- press -->
-            <div if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="vertical grid-content accordion" style="overflow-x:hidden; max-height:10rem;">
+            <div if.bind="(user.type === 'press')" class="vertical grid-content accordion" style="overflow-x:hidden; max-height:10rem;">
                 <!-- scroll after n items -->
                 <!-- row -->
                 <table repeat.for="sample of sampleRequest.searchableItemsProposed" class="" style="margin-bottom:7px; table-layout:fixed">
@@ -403,7 +403,7 @@
 
         <!-- Footer buttons -->
         <ai-dialog-footer>
-            <div if.bind="user.type === 'brand'">
+            <div if.bind="(user.type === 'brand') || (user.type === 'prAgency')">
                 <a class="hollow button" click.delegate="deleteRequestBrand()">Delete Request</a>
                 <a class="hollow button" click.delegate="cancel()">Cancel</a>
                 <a class="hollow button" click.delegate="update()">Save Changes</a>

@@ -75,7 +75,7 @@ export class Messages {
 
 
     handleKeyInput(event) {
-        console.log(event);
+        // console.log(event);
         if(event.keyCode == 13) {
             //console.log("user hit enter in comms");
             this.sendMessage();

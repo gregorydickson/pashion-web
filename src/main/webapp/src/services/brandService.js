@@ -72,6 +72,59 @@ export class BrandService {
         return promise;
     }
 
+    onlyShowMySampleRequests(id) {
+        var promise = new Promise((resolve, reject) => {
+                console.log("toggle onlyShowMySampleRequests");
+                this.http.fetch('/brand/toggleOnlyShowMySampleRequests/'+id+'.json')
+                    .then(response =>
+                        response.json()).then(brand => {
+                        resolve(brand);
+                    }).catch(err => reject(err));
+            
+        });
+        return promise;
+    }
+
+    getOnlyShowMySampleRequests(id){
+        var promise = new Promise((resolve, reject) => {
+                this.http.fetch('/brand/getOnlyShowMySampleRequests/'+id+'.json')
+                    .then(response =>
+                        response.json()).then(hd => {
+                        resolve(hd);
+                    }).catch(err => reject(err));
+            
+        });
+        return promise;
+
+    }
+
+    restrictOutsideBooking(id) {
+        var promise = new Promise((resolve, reject) => {
+                console.log("toggle restrictOutsideBooking");
+                this.http.fetch('/brand/toggleRestrictOutsideBooking/'+id+'.json')
+                    .then(response =>
+                        response.json()).then(brand => {
+                        resolve(brand);
+                    }).catch(err => reject(err));
+            
+        });
+        return promise;
+    }
+
+    getRestrictOutsideBooking(id){
+        var promise = new Promise((resolve, reject) => {
+                this.http.fetch('/brand/getRestrictOutsideBooking/'+id+'.json')
+                    .then(response =>
+                        response.json()).then(hd => {
+                        resolve(hd);
+                    }).catch(err => reject(err));
+            
+        });
+        return promise;
+
+    }
+
+
     getBrand(brandId) {
         var promise = new Promise((resolve, reject) => 
                 this.http.fetch('/brand/show/'+brandId+ '.json')

@@ -61,9 +61,9 @@
                     </div>
                     <!-- Required Time -->
                     <div class="grid-content shrink" style="margin-top: 1rem;">
-                        <span class="inline-label">
+                        <span class="inline-label ${sampleRequest.requiredBy ? '' : 'red-deco'}">
                             <span class="slim-text-box-label">Required By</span>
-                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.requiredBy">
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.requiredBy" change.delegate="enableCheck()">
                                 <option></option>
                                 <option repeat.for="item of required" model.bind="item">${item}</option>
                             </select>
@@ -71,9 +71,9 @@
                     </div>
                     <!-- Deliver To-->
                     <div class="grid-content shrink">
-                        <span class="inline-label">
+                        <span class="inline-label ${sampleRequest.deliverTo ? '' : 'red-deco'}">
                             <span class="slim-text-box-label ${sampleRequest.deliverTo ? '' : red-deco'}">Deliver To</span>
-                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.deliverTo">
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.deliverTo" change.delegate="enableCheck()">
                                 <option></option>
                                 <option repeat.for="person of deliverTo" model.bind="person">${person.name} ${person.surname}, ${person.brand.name}${person.pressHouse.name}${person.prAgency.name}</option>
                             </select>
@@ -82,8 +82,8 @@
                     <!-- Courier Section -->
                     <div class="grid-content shrink">
                         <span class="inline-label">
-                            <span class="slim-text-box-label">Courier</span>
-                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.courierOut">
+                            <span class="slim-text-box-label ${sampleRequest.courierOut ? '' : 'red-deco'}">Courier</span>
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.courierOut" change.delegate="enableCheck()">
                                 <option></option>
                                 <option repeat.for="option of courier" model.bind="option">${option}</option>
                             </select>
@@ -92,8 +92,8 @@
                     <!--  <div class="grid-block shrink"> -->
                     <div class="grid-content shrink">
                         <span class="inline-label">
-                            <span class=" slim-text-box-label">Split</span>
-                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.paymentOut">
+                            <span class=" slim-text-box-label ${sampleRequest.paymentOut ? '' : 'red-deco'}">Split</span>
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.paymentOut" change.delegate="enableCheck()">
                                 <option></option>
                                 <option repeat.for="option of payment" model.bind="option">${option}</option>
                             </select>
@@ -166,8 +166,8 @@
                     <!-- Return By Time -->
                     <div class="grid-content shrink" style="margin-top: 1rem;">
                         <span class="inline-label">
-                            <span class="slim-text-box-label ">Return By</span>
-                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.returnBy">
+                            <span class="slim-text-box-label ${sampleRequest.returnBy ? '' : 'red-deco'}">Return By</span>
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.returnBy" change.delegate="enableCheck()">
                                 <option></option>
                                 <option repeat.for="item of returnBy" model.bind="item">${item}</option>
                             </select>
@@ -177,7 +177,7 @@
                     <div class="grid-content shrink">
                         <span class="inline-label">
                             <span class="slim-text-box-label ${sampleRequest.returnToAddress ? '' : 'red-deco'}">Return To</span>
-                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.returnToAddress">
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.returnToAddress" change.delegate="enableCheck()">
                                 <option></option>
                                 <option value="0" selected>The Sender</option>
                                 <option repeat.for="address of brandAddresses" model.bind="address.id">${address.name}</option>
@@ -187,8 +187,8 @@
                     <!-- Courier Section -->
                     <div class="grid-content shrink">
                         <span class="inline-label">
-                            <span class="slim-text-box-label">Courier</span>
-                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.courierReturn">
+                            <span class="slim-text-box-label ${sampleRequest.courierReturn ? '' : 'red-deco'}">Courier</span>
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.courierReturn" change.delegate="enableCheck()">
                                 <option></option>
                                 <option repeat.for="option of courier" model.bind="option">${option}</option>
                             </select>
@@ -197,8 +197,8 @@
                     <!--  <div class="grid-block shrink"> -->
                     <div class="grid-content shrink">
                         <span class="inline-label">
-                            <span class=" slim-text-box-label">Split</span>
-                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.paymentReturn">
+                            <span class=" slim-text-box-label ${sampleRequest.paymentReturn ? '' : 'red-deco'}">Split</span>
+                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" value.bind="sampleRequest.paymentReturn" change.delegate="enableCheck()">
                                 <option></option>
                                 <option repeat.for="option of payment" model.bind="option">${option}</option>
                             </select>

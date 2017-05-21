@@ -658,21 +658,22 @@ export class UserService {
                         this.getUserDetails(dashBoardUser.id).then(user => {
                             // this is the extra stuff created in groovy for the login user that is now relied upon
                             //RM should weed out the places that rely on this and create specific functions here
-                            this.user = user;
+                            
                             console.log("userService.getUser, got user " + user.name)
                             if (user.brand != null) {
-                                this.user["type"] = 'brand';
-                                this.user["companyId"] = user.brand.id;
+                                user["type"] = 'brand';
+                                user["companyId"] = user.brand.id;
                             } else if (user.pressHouse != null) {
-                                this.user["type"] = 'press';
-                                this.user["companyId"] = user.pressHouse.id;
+                                user["type"] = 'press';
+                                user["companyId"] = user.pressHouse.id;
                             } else if (user.prAgency != null) {
-                                this.user["type"] = 'prAgency';
-                                this.user["companyId"] = user.prAgency.id;
+                                user["type"] = 'prAgency';
+                                user["companyId"] = user.prAgency.id;
                             } else {
-                                this.user["type"] = 'nosession';
+                                user["type"] = 'nosession';
                             }
-                            this.user["company"] = dashBoardUser.company;
+                            user["company"] = dashBoardUser.company;
+                            this.user = user;
                             resolve(this.user);
                         })
                     }).catch(err => reject(err));

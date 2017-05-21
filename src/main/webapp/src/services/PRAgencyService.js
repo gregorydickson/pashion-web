@@ -19,6 +19,45 @@ export class PRAgencyService {
 
     activate() {}
 
+    getPRAgency(id) {
+        var promise = new Promise((resolve, reject) => {
+            if (!this.agency) {
+                console.log("Getting the pr agency from server");
+                this.http.fetch('/agency/show/'+id)
+                    .then(response =>
+                        response.json()).then(agency => {
+                        this.agency = agency;
+                        resolve(this.agency);
+                    }).catch(err => reject(err));
+            } else {
+                console.log("getting the pr agency from local");
+                resolve(this.agency);
+            }
+        });
+        return promise;
+    }
+
+
+
+
+    getPRAgencies() {
+        var promise = new Promise((resolve, reject) => {
+            if (!this.PRAgencies) {
+                console.log("Getting PRAgencies from JSON");
+                this.http.fetch('/PRAgency/index.json')
+                    .then(response =>
+                        response.json()).then(PRAgencies => {
+                        this.PRAgencies = PRAgencies;
+                        resolve(this.PRAgencies);
+                    }).catch(err => reject(err));
+            } else {
+                console.log("getting PRAgencies from local");
+                resolve(this.PRAgencies);
+            }
+        });
+        return promise;
+    }
+
     getPRAgencies() {
         var promise = new Promise((resolve, reject) => {
             if (!this.press) {
@@ -36,6 +75,61 @@ export class PRAgencyService {
         });
         return promise;
     }
+
+
+    onlyShowMySampleRequests(id) {
+        var promise = new Promise((resolve, reject) => {
+                console.log("toggle onlyShowMySampleRequests");
+                this.http.fetch('/PRAgency/toggleOnlyShowMySampleRequests/'+id+'.json')
+                    .then(response =>
+                        response.json()).then(brand => {
+                        resolve(brand);
+                    }).catch(err => reject(err));
+            
+        });
+        return promise;
+    }
+
+    getOnlyShowMySampleRequests(id){
+        var promise = new Promise((resolve, reject) => {
+                this.http.fetch('/PRAgency/getOnlyShowMySampleRequests/'+id+'.json')
+                    .then(response =>
+                        response.json()).then(hd => {
+                        resolve(hd);
+                    }).catch(err => reject(err));
+            
+        });
+        return promise;
+
+    }
+
+    restrictOutsideBooking(id) {
+        var promise = new Promise((resolve, reject) => {
+                console.log("toggle restrictOutsideBooking");
+                this.http.fetch('/PRAgency/toggleRestrictOutsideBooking/'+id+'.json')
+                    .then(response =>
+                        response.json()).then(brand => {
+                        resolve(brand);
+                    }).catch(err => reject(err));
+            
+        });
+        return promise;
+    }
+
+    getRestrictOutsideBooking(id){
+        var promise = new Promise((resolve, reject) => {
+                this.http.fetch('/PRAgency/getRestrictOutsideBooking/'+id+'.json')
+                    .then(response =>
+                        response.json()).then(hd => {
+                        resolve(hd);
+                    }).catch(err => reject(err));
+            
+        });
+        return promise;
+
+    }
+
+
 
     // change to be the first brand in the list
     getDefault(){

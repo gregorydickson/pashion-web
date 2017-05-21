@@ -1,0 +1,9 @@
+import pashion.Brand
+
+
+model {  
+    Brand brand
+}
+//log.info "Rendering a Brand in _brand.gson"
+
+json g.render(brand)

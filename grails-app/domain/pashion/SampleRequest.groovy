@@ -22,6 +22,7 @@ class SampleRequest {
 	Brand brand
 
 	PressHouse pressHouse
+	String prAgency
 	Address addressDestination
 	Address returnToAddress
 

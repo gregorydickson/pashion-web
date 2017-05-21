@@ -37,8 +37,9 @@ class SampleRequestController {
         def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Denied']
         render sent as JSON
-        def pressHouse = sampleRequest.pressHouse?.name ?: ""     
-        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, booking:sampleRequest.id, look:lookSeason]
+        def pressHouse = sampleRequest.pressHouse?.name ?: ""  
+        def prAgency = sampleRequest.prAgency ?: ""     
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
     }
 
     
@@ -67,10 +68,11 @@ class SampleRequestController {
         def lookSeason = Season.findByName(sr.season.trim()).abbreviation + '.' + sr.look
         def sent = [message:'Sample Request ' + sr.id + ' (look ' + lookSeason + ') Approved']
         render sent as JSON
-        def pressHouse = sr.pressHouse?.name ?: ""
+        def pressHouse = sr.pressHouse?.name ?: ""       
+        def prAgency = sr.prAgency ?: ""  
         //sr.searchableItems[0].look.season.abbreviation
         //log.info "Setting look with season in cache invalidate:"+lookSeason
-        notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse, booking:sr.id, look:lookSeason] // add season abbrev to methods
+        notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse, prAgency: prAgency, booking:sr.id, look:lookSeason] // add season abbrev to methods
     }
     
 
@@ -84,8 +86,9 @@ class SampleRequestController {
         def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Picked Up']
         render sent as JSON
-        def pressHouse = sampleRequest.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, booking:sampleRequest.id, look:lookSeason]
+        def pressHouse = sampleRequest.pressHouse?.name ?: "" 
+        def prAgency = sampleRequest.prAgency ?: ""  
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
     }
     def brandMarkReturned(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
@@ -96,8 +99,9 @@ class SampleRequestController {
         def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Returned']
         render sent as JSON
-        def pressHouse = sampleRequest.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, booking:sampleRequest.id, look:lookSeason]
+        def pressHouse = sampleRequest.pressHouse?.name ?: ""         
+        def prAgency = sampleRequest.prAgency ?: ""  
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
     }
     def brandRestocked(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
@@ -107,8 +111,9 @@ class SampleRequestController {
         def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Restocked']
         render sent as JSON
-        def pressHouse = sampleRequest.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, booking:sampleRequest.id, look:lookSeason]
+        def pressHouse = sampleRequest.pressHouse?.name ?: "" 
+        def prAgency = sampleRequest.prAgency ?: ""  
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
     }
     def brandMarkDeleted(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
@@ -119,8 +124,9 @@ class SampleRequestController {
         def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Deleted']
         render sent as JSON
-        def pressHouse = sampleRequest.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, booking:sampleRequest.id, look:lookSeason]
+        def pressHouse = sampleRequest.pressHouse?.name ?: "" 
+        def prAgency = sampleRequest.prAgency ?: "" 
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
     }
     //Press only methods
 
@@ -133,8 +139,9 @@ class SampleRequestController {
         def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') is In House']
         render sent as JSON
-        def pressHouse = sampleRequest.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, booking:sampleRequest.id, look:lookSeason]
+        def pressHouse = sampleRequest.pressHouse?.name ?: "" 
+        def prAgency = sampleRequest.prAgency ?: ""  
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
     }
     def pressDelete(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
@@ -144,8 +151,9 @@ class SampleRequestController {
         def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Withdrawn']
         render sent as JSON
-        def pressHouse = sampleRequest.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, booking:sampleRequest.id, look:lookSeason]
+        def pressHouse = sampleRequest.pressHouse?.name ?: "" 
+        def prAgency = sampleRequest.prAgency ?: ""  
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
     }
     def pressShip(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
@@ -156,8 +164,9 @@ class SampleRequestController {
         def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Picking Up']
         render sent as JSON
-        def pressHouse = sampleRequest.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, booking:sampleRequest.id, look:lookSeason]
+        def pressHouse = sampleRequest.pressHouse?.name ?: "" 
+        def prAgency = sampleRequest.prAgency ?: "" 
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
     }
     
     def pressMarkPickedUp(){
@@ -169,15 +178,16 @@ class SampleRequestController {
         def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Picked Up']
         render sent as JSON
-        def pressHouse = sampleRequest.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, booking:sampleRequest.id, look:lookSeason]
+        def pressHouse = sampleRequest.pressHouse?.name ?: "" 
+        def prAgency = sampleRequest.prAgency ?: "" 
+        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
     }
 
     
 
 
     // Only for initial creation
-    //Create a Sample Request - for a Press or Brand User
+    //Create a Sample Request - for a Press or Brand User ? prAgency
     def savejson(){
         def requestingUser = session.user
         def sr = sampleRequestService.initialSaveSampleRequest(request.JSON,requestingUser)
@@ -188,8 +198,10 @@ class SampleRequestController {
         if(sr.emailNotification)
             notify "sampleRequestEmail", sr
         
-        def pressHouse = sr.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse, booking:sr.id, look:lookSeason]
+        def pressHouse = sr.pressHouse?.name ?: "" 
+        def prAgency = sr.prAgency ?: "" 
+        notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse, prAgency: prAgency, booking:sr.id, look:lookSeason]
+
     }
 
     def updatejson(){
@@ -199,8 +211,9 @@ class SampleRequestController {
         def lookSeason = Season.findByName(sr.season.trim()).abbreviation + '.' + sr.look
         def sent = [message:'Sample Request ' + sr.id + ' (look ' + lookSeason + ') Updated']
         render sent as JSON
-        def pressHouse = sr.pressHouse?.name ?: ""
-        notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse, booking:sr.id, look:lookSeason]
+        def pressHouse = sr.pressHouse?.name ?: "" 
+        def prAgency = sr.prAgency ?: "" 
+        notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse, prAgency: prAgency, booking:sr.id, look:lookSeason]
     }
 
 

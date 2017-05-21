@@ -14,6 +14,8 @@ class Brand {
 	Collection destinations
 	Collection addresses
 	Boolean hideCalendar = false
+	Boolean onlyShowMySampleRequests = true
+	Boolean restrictOutsideBooking = true
 
 	static hasMany = [destinations:Address, brandCollections: BrandCollection,prAgencies:PRAgency,users:User,addresses:Address]
 

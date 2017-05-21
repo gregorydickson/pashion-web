@@ -11,13 +11,15 @@ class UrlMappings {
 
         name addBrandToAgency: "/agency/addBrand/$agency/$brand/" {
             controller = "PRAgency"
-            action = "addBrand"
-            
+            action = "addBrand"  
         }
         name brandsForAgency: "/agency/brands/$agency" {
             controller = "PRAgency"
             action = "brands"
-            
+        }
+        name agency: "/agency/show/$agency" {
+            controller = "PRAgency"
+            action = "showjson"
         }
 
         "/searchableItems"(resources:'searchableItem')

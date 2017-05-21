@@ -48,6 +48,7 @@ class CachingService implements JsonViewTest {
     @Selector('sampleRequestCacheInvalidate')
     void sampleRequestCacheInvalidate(Object data){
         Thread.sleep(2000);
+        log.info "sample data " + data
         try{
             Callback callback=new Callback() {}
             def channel
@@ -58,6 +59,11 @@ class CachingService implements JsonViewTest {
             }
             if(data.press){
                 channel = data.press+'_cacheInvalidate'
+                log.info "send Bookings Cache invalidate in cachingService:" + channel + " data > " + data
+                pubnub.publish(channel,data.booking + " (look " + data.look + ")", callback)
+            }
+            if(data.prAgency){
+                channel = data.prAgency+'_cacheInvalidate'
                 log.info "send Bookings Cache invalidate in cachingService:" + channel + " data > " + data
                 pubnub.publish(channel,data.booking + " (look " + data.look + ")", callback)
             }
