@@ -516,6 +516,9 @@ export class CreateSampleRequestBrand {
   submit() {
 
     this.sampleRequest.deliverTo = this.selectedAddress;
+    if (this.user.type=="prAgency"){
+      this.sampleRequest["prAgency"] = this.user.prAgency.name
+    }
     console.log("submitting Sample Request: " + JSON.stringify(this.sampleRequest));
     this.http.fetch('/sampleRequest/savejson', {
       method: 'post',

@@ -48,6 +48,7 @@ class CachingService implements JsonViewTest {
     @Selector('sampleRequestCacheInvalidate')
     void sampleRequestCacheInvalidate(Object data){
         Thread.sleep(2000);
+        log.info "sample data " + data
         try{
             Callback callback=new Callback() {}
             def channel

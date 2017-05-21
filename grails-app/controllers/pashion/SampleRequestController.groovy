@@ -199,7 +199,7 @@ class SampleRequestController {
             notify "sampleRequestEmail", sr
         
         def pressHouse = sr.pressHouse?.name ?: "" 
-        def prAgency = sr.prAgency?.name ?: "" 
+        def prAgency = sr.prAgency ?: "" 
         notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse, prAgency: prAgency, booking:sr.id, look:lookSeason]
 
     }
@@ -212,7 +212,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request ' + sr.id + ' (look ' + lookSeason + ') Updated']
         render sent as JSON
         def pressHouse = sr.pressHouse?.name ?: "" 
-        def prAgency = sr.prAgency?.name ?: "" 
+        def prAgency = sr.prAgency ?: "" 
         notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse, prAgency: prAgency, booking:sr.id, look:lookSeason]
     }
 
