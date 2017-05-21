@@ -50,9 +50,9 @@
         <g:if test="${flash.message}">
             ${flash.message}
         </g:if>
-    <form enctype="multipart/form-data" action="${createLink(action: 'uploaddetail')}"
+    <form enctype="multipart/form-data" action="${createLink(action: 'uploaddetail2')}"
           class="dropzone" id="my-awesome-dropzone" method="post">
-          <h1> For uploading DETAIL - SAMPLE CSV Files</h1>
+          <h1> VERSION 2 For uploading DETAIL - SAMPLE CSV Files</h1>
           <h1> City setting will set the location of the sample</h1>
           <select name="city">
             <option value="Paris">Paris</option>

@@ -18,11 +18,107 @@ class UploadController {
 
     }
 
-    def detail(){
+    def detail1(){
 
     }
-    // FOR SAMPLES - DETAILS Sheets - NOT LOOKS
-    def uploaddetail(){
+    def detail2(){
+
+    }
+
+    // FOR SAMPLES VERSION 1
+    def uploaddetail1(){
+        if (request.method == 'POST') {
+            def submittedFile = request.getFile('file')
+            if (submittedFile.empty) {
+                flash.message = 'File is mandatory.'
+                response.sendError(500)
+            } else {
+                if (!(submittedFile.getContentType() == 'application/csv'
+                        || submittedFile.getContentType() == 'text/csv')) {
+                    flash.message = 'File must have a CSV extension.'
+                    response.sendError(500)
+                } else {
+                    def data = parseCsv(submittedFile.getInputStream().getText())
+                    City city = City.findOrSaveWhere(name:params.city).save(flush:true,failOnError:true)
+                    
+                    
+                        
+                        def count = 0
+                        for (row in data) {
+                            ++count
+                            if(count > 2){ 
+                                SearchableItem.withTransaction { status ->
+                                    
+                                    
+                                    SearchableItemType type = SearchableItemType.findByDisplay('Samples')
+                                    SearchableItem item = new SearchableItem(type:type)
+                                    item.sampleCity = city
+                                    Brand brand = Brand.findOrSaveWhere(name:row.values[0].toString().trim()).save()
+                                    item.brand = brand
+                                    Season season = Season.findOrSaveWhere(name:row.values[1].toString().trim()).save()
+                                    item.season = season
+                                    SearchableItem look = SearchableItem.findByBrandAndSeasonAndName(brand,season,row.values[2].toString().trim())
+                                    item.look           = look
+                                    item.name           = row.values[3].toString().trim()
+                                    item.sampleType     = row.values[4].toString().trim()
+
+                                    String color1       = row.values[5].toString().trim()
+                                    String color2       = row.values[6].toString().trim()
+                                    String color3       = row.values[7].toString().trim()
+                                    item.color          = color1 + "," + color2 + ","+ color3
+                                
+                                    item.material       = row.values[8].toString().trim()
+                                    String type1         = row.values[9].toString().trim()
+                                    if(type != "") item.sampleType = type1
+
+                                    item.shape      = row.values[10].toString().trim()
+                                    
+                                    item.occasion       = row.values[11].toString().trim()
+                                    
+                                    String style1       = row.values[12].toString().trim()
+                                    String style2       = row.values[13].toString().trim()
+                                    item.style = style1 + "," + style2
+                                    
+                                    String motif1       = row.values[14].toString().trim()
+                                    String motif2       = row.values[15].toString().trim()
+                                    String motif3       = row.values[16].toString().trim()
+                                    item.motif = motif1 + "," + motif2 + "," + motif3
+
+                                    String theme1       = row.values[17].toString().trim()
+                                    String theme2       = row.values[18].toString().trim()
+                                    item.theme = theme1 + "," + theme2 
+
+                                    item.culture        = row.values[19].toString().trim()
+                                    item.lookSeason     = row.values[20].toString().trim()
+                                    item.decade         = row.values[21].toString().trim()
+                                    
+                                    StringBuilder sb = new StringBuilder()
+                                    for(def i=4;i<21;i++){
+                                        sb.append(row.values[i].toString() + " ") 
+                                    }
+                                    item.attributes = sb.toString()
+                                    look.attributes = look.attributes + " " + sb.toString()
+                                    look.save(flush:true,failOnError:true)
+
+                                    item.brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season).save()
+                                    item.save(flush:true,failOnError:true)
+                                    log.info "added sample (detail)"+item
+                                }
+                            }
+                        }
+
+                    flash.message = "Data added to the database."
+                    redirect([action: "index"])
+                }
+            }
+        }
+    }
+
+
+
+
+    //  VERSION 2 FOR SAMPLES - DETAILS Sheets - NOT LOOKS
+    def uploaddetail2(){
         if (request.method == 'POST') {
             def submittedFile = request.getFile('file')
             if (submittedFile.empty) {
