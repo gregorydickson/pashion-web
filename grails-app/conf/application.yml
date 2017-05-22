@@ -1,5 +1,5 @@
 server:
-   sessionTimeout: 3600
+   sessionTimeout: 86400
 ---
 hibernate:
     cache:
