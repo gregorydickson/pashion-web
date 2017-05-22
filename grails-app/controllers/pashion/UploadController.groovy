@@ -131,7 +131,7 @@ class UploadController {
                     response.sendError(500)
                 } else {
                     def data = parseCsv(submittedFile.getInputStream().getText())
-                    City city = City.findOrSaveWhere(name:params.city).save(flush:true,failOnError:true)
+                    City city = City.findOrSaveWhere(name:params.city)
                     
                         def count = 0
                         for (row in data) {
@@ -143,9 +143,9 @@ class UploadController {
                                         SearchableItemType type = SearchableItemType.findByDisplay('Samples')
                                         SearchableItem item = new SearchableItem(type:type)
                                         item.sampleCity = city
-                                        Brand brand = Brand.findOrSaveWhere(name:row.values[0].toString()).save()
+                                        Brand brand = Brand.findOrSaveWhere(name:row.values[0].toString())
                                         item.brand = brand
-                                        Season season = Season.findOrSaveWhere(name:row.values[1].toString().trim()).save()
+                                        Season season = Season.findOrSaveWhere(name:row.values[1].toString().trim())
                                         item.season = season
                                         SearchableItem look = SearchableItem.findByBrandAndSeasonAndName(brand,season,row.values[2].toString().trim())
                                         item.look           = look
