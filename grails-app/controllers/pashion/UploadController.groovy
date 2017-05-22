@@ -111,6 +111,7 @@ class UploadController {
                                         log.info "for look:"+look.name
                                     } catch(Exception e){
                                         log.error "exception:"+e.message
+                                        log.error e.printStackTrace()
                                     }
                                 }
                             }
