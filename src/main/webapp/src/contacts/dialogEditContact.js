@@ -70,7 +70,7 @@ export class CreateDialogEditContact {
                 return this.pressHouseService.getPressHouseAddresses(this.lUser.pressHouse.id)
                     .then(addresses => { this.addresses = addresses; resolve(addresses) })
             if (this.lUser.prAgency != null)
-                return this.prAgencyService.getPRAgencyAddresses(this.lUser.PRAgency.id)
+                return this.prAgencyService.getPRAgencyAddresses(this.lUser.prAgency.id)
                     .then(addresses => { this.addresses = addresses; resolve(addresses) })
         });
     }
