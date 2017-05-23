@@ -16,6 +16,10 @@ json g.render(sampleRequest,[expand:['searchableItemsStatus','searchableItemsPro
 		name sampleRequest.brand.name
 		id sampleRequest.brand.id
 	}
+	pressHouse{
+		name sampleRequest.pressHouse?.name
+		id sampleRequest.pressHouse?.id
+	}
 	shippingOut{
 		status sampleRequest.shippingOut.status
 		courier sampleRequest.shippingOut.courier
