@@ -3,6 +3,7 @@ package pashion
 import grails.transaction.Transactional
 import org.grails.web.json.JSONObject
 import java.text.SimpleDateFormat
+import org.hibernate.FetchMode as FM
 
 @Transactional
 class SampleRequestService {
@@ -16,23 +17,68 @@ class SampleRequestService {
     	def criteria = SampleRequest.createCriteria()
         List results = []
 
-        if(user?.brand){
+        if(user?.brand)
+        {
             log.info "brand user get sample requests"
             def brand = user.brand
-            results = SampleRequest.findAllByBrand(brand, [cache:true])
+            results = criteria.listDistinct () {
+                fetchMode 'brand', FM.JOIN
+                fetchMode 'pressHouse', FM.JOIN
+                fetchMode 'searchableItemsProposed', FM.JOIN 
+                fetchMode 'shippingOut', FM.JOIN
+                fetchMode 'shippingReturn', FM.JOIN
+                fetchMode 'addressDestination', FM.JOIN
+                fetchMode 'returnToAddress', FM.JOIN
+                fetchMode 'requestingUser', FM.JOIN
+                fetchMode 'deliverTo', FM.JOIN
+                fetchMode 'returnToAddress', FM.JOIN
+
+                eq('brand', brand)
+                cache true
+            }
         }
         if(user?.pressHouse){
             log.info "press user get sample requests"
             def pressHouse = user.pressHouse
-            results = SampleRequest.findAllByPressHouse(pressHouse, [cache:true])
+            results = criteria.listDistinct () {
+                fetchMode 'brand', FM.JOIN
+                fetchMode 'pressHouse', FM.JOIN
+                fetchMode 'searchableItemsProposed', FM.JOIN 
+                fetchMode 'shippingOut', FM.JOIN
+                fetchMode 'shippingReturn', FM.JOIN
+                fetchMode 'addressDestination', FM.JOIN
+                fetchMode 'returnToAddress', FM.JOIN
+                fetchMode 'requestingUser', FM.JOIN
+                fetchMode 'deliverTo', FM.JOIN
+                fetchMode 'returnToAddress', FM.JOIN
+
+                eq('pressHouse', pressHouse)
+                cache true
+            }
         }
         if(user?.prAgency){
 
             def agency = PRAgency.get(user.prAgency.id)
             def brands = agency.brands
             
-            brands.each{
-                results.addAll(SampleRequest.findAllByBrand(it, [cache:true]))
+            brands.each{ Brand brand ->
+                def brandCriteria = SampleRequest.createCriteria()
+                def aBrandResults = brandCriteria.listDistinct () {
+                        fetchMode 'brand', FM.JOIN
+                        fetchMode 'pressHouse', FM.JOIN
+                        fetchMode 'searchableItemsProposed', FM.JOIN 
+                        fetchMode 'shippingOut', FM.JOIN
+                        fetchMode 'shippingReturn', FM.JOIN
+                        fetchMode 'addressDestination', FM.JOIN
+                        fetchMode 'returnToAddress', FM.JOIN
+                        fetchMode 'requestingUser', FM.JOIN
+                        fetchMode 'deliverTo', FM.JOIN
+                        fetchMode 'returnToAddress', FM.JOIN
+
+                        eq('brand', brand)
+                        cache true
+                    }
+                results.addAll(aBrandResults)
             }
             
         }
