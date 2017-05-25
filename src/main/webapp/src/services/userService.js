@@ -415,7 +415,10 @@ export class UserService {
     }
 
     clearAllUnreadMessagesForTheCurrentUser() {
-        if (this.users[this.user.id - 1] == 'undefined') return;
+        if (this.users[this.user.id - 1] == 'undefined' || 
+            this.users[this.user.id - 1] == null ||
+            this.users[this.user.id - 1] == '' ||
+            this.users[this.user.id - 1] == undefined) { console.error ("** userService.clearAllUnreadMessagesForTheCurrentUser NO USER DEFINED in users structure **"); return;} 
         var i;
         // my connections
         if(this.users[this.user.id - 1].connections){
