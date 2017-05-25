@@ -66,6 +66,10 @@ export class CreateSampleRequestPress {
     this.http.fetch('/searchableItems/'+itemId+'.json')
       .then(response => response.json())
       .then(item => {
+          if (item.session == 'invalid') {
+            window.location.href = '/user/login';
+            return;
+          }
           this.currentItem = item;   
 
          /* this.http.fetch('/brand/addresses/'+item.brand.id)

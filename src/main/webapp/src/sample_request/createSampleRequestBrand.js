@@ -120,6 +120,10 @@ export class CreateSampleRequestBrand {
       this.http.fetch('/searchableItems/' + item.id + '.json')
         .then(response => response.json())
         .then(item => {
+          if (item.session == 'invalid') {
+            window.location.href = '/user/login';
+            return;
+          }
           this.currentItem = item;
 
           this.userService.getUser().then(user => {
