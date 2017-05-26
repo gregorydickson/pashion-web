@@ -131,7 +131,10 @@ export class EditSearchableItem {
   colorAdd (sample) {    
     if (!this.addColor) return;
     if (this.addColor=='') return;
-    sample.color = sample.color + " " + this.addColor;
+    if(sample.color)
+      sample.color = sample.color + " " + this.addColor;
+    else
+      sample.color = this.addColor;
   }
 
   colorClear (sample) {
@@ -301,7 +304,7 @@ export class EditSearchableItem {
       let addAttributes = '';
       if(sample.sampleType)
         addAttributes = sample.sampleType
-      if(sample.description)
+      if(sample.description && sample.description !== 'NEW')
         addAttributes = addAttributes +" "+ sample.description;
       if(sample.material)
         addAttributes = addAttributes +" "+ sample.material;
