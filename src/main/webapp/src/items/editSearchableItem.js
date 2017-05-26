@@ -304,7 +304,7 @@ export class EditSearchableItem {
       let addAttributes = '';
       if(sample.sampleType)
         addAttributes = sample.sampleType
-      if(sample.description)
+      if(sample.description && sample.description !== 'NEW')
         addAttributes = addAttributes +" "+ sample.description;
       if(sample.material)
         addAttributes = addAttributes +" "+ sample.material;
