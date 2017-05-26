@@ -131,7 +131,10 @@ export class EditSearchableItem {
   colorAdd (sample) {    
     if (!this.addColor) return;
     if (this.addColor=='') return;
-    sample.color = sample.color + " " + this.addColor;
+    if(sample.color)
+      sample.color = sample.color + " " + this.addColor;
+    else
+      sample.color = this.addColor;
   }
 
   colorClear (sample) {
