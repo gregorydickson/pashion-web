@@ -172,30 +172,34 @@ class SampleRequestService {
         sr
     }
 
+    // For a press user creating a sample request, it will always use the user's
+    // address or 
     def destinationAddressPress(SampleRequest sr, JSONObject jsonObject){
+        log.info "Destination Address Press"
         if(jsonObject.has('deliverTo')){
             def aUser = User.get(jsonObject.deliverTo.id.toInteger())
             if(aUser){
-                if(aUser.pressHouse) {
-                    if(aUser.address) {
-                        sr.addressDestination = aUser.address
-                    } else {
-                        sr.addressDestination = Address.findByPressHouseAndDefaultAddress(sr.pressHouse, true)
-                    }
-                    sr.pressHouse = aUser.pressHouse
+                sr.pressHouse = aUser.pressHouse
+                log.info "Press User:"+aUser.name + " " + aUser.surname
+                sr.deliverTo = aUser
+                if(aUser.address) {
+                    sr.addressDestination = aUser.address
+                    log.info "destination is press user's address"+aUser.address
+                } else {
+                    sr.addressDestination = Address.findByPressHouseAndDefaultAddress(sr.pressHouse, true)
+                    if(!sr.addressDestination)
+                        sr.addressDestination = Address.findByPressHouse(sr.pressHouse)
                 }
             }
         }
-        if(jsonObject.has('deliverTo') && jsonObject.deliverTo.id != null){
-            sr.deliverTo = User.get(jsonObject.deliverTo.id.toInteger())
-        }
+        log.info "destination address press outcome:"+sr.addressDestination
         sr
     }
 
     // DeliverTo is a User in SampleRequest domain object. However, the UI sets DeliverTo
     // with a User or a adhoc address and we tease them apart here.
     def destinationAddressBrand(SampleRequest sr,JSONObject jsonObject){
-        log.info "sample request addresses"
+        log.info "Destination Address Brand"
     
         
         if(jsonObject.has('deliverTo')){

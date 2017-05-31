@@ -84,9 +84,9 @@ class StuartController {
         	if(brandAddress) returnTo = brandAddress
         }
         
-        def shippingEvent = sr.shippingOut
-        log.info "origin:"+returnTo.address1 
-        log.info "destination:"+sr.addressDestination.address1
+        def shippingEvent = sr?.shippingOut
+        log.info "origin:"+returnTo?.address1 
+        log.info "destination:"+sr?.addressDestination?.address1
         shippingEvent = stuartService.createJobQuote(returnTo,sr.addressDestination,shippingEvent,"Scooter")
         log.info "quote:"+shippingEvent
         if(shippingEvent instanceof Map){
