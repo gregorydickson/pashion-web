@@ -236,15 +236,16 @@
                         </div>
                     </div>
                 </div>
-                <!-- Private Calendard Booking -->
+                <!-- Privacy settings -->
                 <!-- -->
                 <div if.bind="(user.type =='brand') || (user.type =='prAgency')" class="grid-block-row">
                     <div class="ui-text-label-m-broad ">Privacy Settings</div>
                     <div class="grid-block-row-body">
                         <!-- Keep Booking Data Private-->
+                        <!-- Active for brand. PRAgency follows along with each brands settings -->
                         <div class="inline-label" style="margin-bottom:0px;">
                             <span class="slim-text-box-label" style="width: 231px;">Keep Sample Availability Private</span>
-                            <input style="margin-top: 8px; margin-left: 5px;" id="" name="privacyCalendar" type="checkbox" checked.bind="company.hideCalendar" change.delegate="hideCalendar()">
+                            <input disabled.bind="(user.type =='prAgency')" style="margin-top: 8px; margin-left: 5px;" id="" name="privacyCalendar" type="checkbox" checked.bind="company.hideCalendar" change.delegate="hideCalendar()">
                         </div>
                         <!-- Enforce person to person booking -->
                         <div class="inline-label" style="margin-bottom:0px;">
