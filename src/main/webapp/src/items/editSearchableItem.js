@@ -112,10 +112,19 @@ export class EditSearchableItem {
           this.createdNew = false;
 
           item.samples.forEach(item => {
-            this.availableSampleItems.push({
-              id: item.id,
-              text: item.attributes.substr(0,30)
-            });
+            console.log("attrib:"+item.attributes);
+            let attrib = cleanAttributes(item.attributes).toUpperCase();
+            if(attrib.length < 31){
+              this.availableSampleItems.push({
+                id: item.id,
+                text: attrib
+              });
+            } else{
+              this.availableSampleItems.push({
+                id: item.id,
+                text: attrib.substr(0,27) + '...'
+              });
+            }
           });
           
           this.selectedSampleItems = [""];
@@ -334,4 +343,21 @@ export class EditSearchableItem {
 
   
 
+}
+
+function cleanAttributes(value){
+  if (!value) return;
+  if (value==undefined) return;
+  if (value=='') return;
+  // remove ","
+  value = value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+    value = value.replace(/NEW/g, "");
+    value = value.replace(/UNDEFINED/g, "");
+    value = value.replace(/undefined/g, "");
+  // remve duplciates
+  var uniqueList=value.split(' ').filter(function(item,i,allItems){
+    return i==allItems.indexOf(item);
+  }).join(' ');
+
+  return uniqueList;
 }
