@@ -202,6 +202,7 @@ $meter-radius: 0 !default;
   input[type="checkbox"], input[type="radio"] {
     width: 1rem;
     height: 1rem;
+    cursor: pointer;
 
     // Input inside of a label
     label > & {
