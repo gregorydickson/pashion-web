@@ -154,7 +154,11 @@ export class Adminpage {
 
     hideCalendar() { //RM switch returning a boolean not the brand
         console.log("hideCalendar: calendar: " + this.company.hideCalendar);
-        this.brandService.hideCalendar(this.company.id).then(brand => this.company.hideCalendar = brand);
+        if (this.user.type === 'brand') this.brandService.hideCalendar(this.company.id).then(brand => this.company.hideCalendar = brand);
+        // Currently not implemented. PRAgency and brand tightly coupled at the moment. PR Calendar depends on Brand's setting
+        if (this.user.type === 'prAgency') {} // this.PRAgencyService.hideCalendar(this.company.id).then(brand => this.company.hideCalendar = brand);
+        // should not get here...
+        if (this.user.type === 'press') {}
     }
 
     allowAllRequests() {
