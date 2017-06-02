@@ -64,19 +64,13 @@ dependencies {
     }
     assets 'com.bertramlabs.plugins:sass-asset-pipeline:2.11.6'
 
-    
     runtime 'mysql:mysql-connector-java:5.1.36'
     
     compile "org.grails.plugins:views-json:1.1.5"
 
-    compile "com.stormpath.sdk:stormpath-sdk-api:1.1.1"
-    runtime "com.stormpath.sdk:stormpath-sdk-httpclient:1.1.1"
-
     compile 'org.grails.plugins:grails-cookie:2.0.3'
 
     compile 'com.xlson.groovycsv:groovycsv:1.1'
-
-    compile "org.grails.plugins:jasypt-encryption:2.0.1"
 
     compile 'com.agileorbit:schwartz:1.0.0'
 

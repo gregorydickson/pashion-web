@@ -5,28 +5,12 @@ import javax.annotation.PostConstruct
 
 import java.util.HashMap
 
-import com.stormpath.sdk.account.Account
-import com.stormpath.sdk.account.AccountList
-import com.stormpath.sdk.application.Application
-import com.stormpath.sdk.application.ApplicationList
-import com.stormpath.sdk.application.Applications
-import com.stormpath.sdk.authc.*
-import com.stormpath.sdk.api.ApiKey
-import com.stormpath.sdk.api.ApiKeys
-import com.stormpath.sdk.client.Client
-import com.stormpath.sdk.client.ClientBuilder
-import com.stormpath.sdk.client.Clients
-import com.stormpath.sdk.directory.CustomData
-import com.stormpath.sdk.directory.Directory
-import com.stormpath.sdk.group.Group
-import com.stormpath.sdk.group.GroupList
-import com.stormpath.sdk.group.Groups
-import com.stormpath.sdk.resource.ResourceException
-import com.stormpath.sdk.tenant.Tenant
+import java.math.BigInteger
 import com.pubnub.api.*
 
 import com.amazonaws.services.s3.model.CannedAccessControlList
 import com.amazonaws.services.s3.model.ObjectMetadata
+
 import grails.converters.JSON
 import org.apache.commons.codec.binary.Base64
 import org.json.XML
@@ -35,6 +19,8 @@ import javax.servlet.http.HttpServletResponse
 import java.awt.image.BufferedImage
 import java.util.HashMap
 
+import java.security.*
+
 
 @Transactional
 class UserService {
@@ -42,145 +28,99 @@ class UserService {
 	def grailsApplication
     def amazonS3Service
 
-	def APPLICATION_NAME = "pashiontool"
+    Pubnub pubnub = new Pubnub("pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73", "sub-c-dd158aea-b76b-11e6-b38f-02ee2ddab7fe")
 
-	Application stormpathApp
-	Client client
-    GroupList groups
 
-     Pubnub pubnub = new Pubnub("pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73", "sub-c-dd158aea-b76b-11e6-b38f-02ee2ddab7fe")
-
-	
-	@PostConstruct
-    def init(){
-    	
-
-    	 ApiKey apiKey = ApiKeys.builder()
-    	 			.setId(grailsApplication.metadata['stormpath.apiKey.id'])
-    	 			.setSecret(grailsApplication.metadata['stormpath.apiKey.secret'])
-                 	.build();
-    	// Instantiate a builder for your client and set required properties
-		ClientBuilder builder = Clients.builder().setApiKey(apiKey);    
-
-		// Build the client instance that you will use throughout your application code
-		client = builder.build();
-
-        /*"href": "https://api.stormpath.com/v1/passwordPolicies/6P79ZLiwGpge17v7Os71wu/strength",
-        "minLength": 8,
-        "maxLength": 100,
-        "minLowerCase": 1,
-        "minUpperCase": 1,
-        "minNumeric": 1,
-        "minSymbol": 0,
-        "minDiacritic": 0,
-        "preventReuse": 0
-        } */
-
-		Tenant tenant = client.getCurrentTenant();
-		ApplicationList applications = tenant.getApplications(
-        	Applications.where(Applications.name().eqIgnoreCase(APPLICATION_NAME))
-		);
-
-		stormpathApp = applications.iterator().next();
-
-		log.debug "stormpath app:"+stormpathApp
     
-    }
 
-    def changePassword(def userId, def newPassword){
-
-    }
-
-
-    Group createGroup(Directory directory,String groupName, String description){
-    	Group agroup = client.instantiate(Group.class)
-    		.setName(groupName)
-    		.setDescription(description)
-    	directory.createGroup(agroup)
-    	agroup
-    }
-
-    def login(def email, def password){
-    	def account = null
+    def login(String email, String password){
+    	
         // Create an authentication request using the credentials
         if(email && password){
-            AuthenticationRequest request = UsernamePasswordRequests.builder()
-                    .setUsernameOrEmail(email)
-                    .setPassword(password)
-                    .build();
-
-            //Now let's authenticate the account with the application:
+            
+            def user = null
+            
             try {
-                AuthenticationResult result = stormpathApp.authenticateAccount(request)
-                account = result.getAccount()
-                log.info("Authenticated Account: " + account.getUsername() + ", Email: " + account.getEmail());
-            } catch (ResourceException ex) {
+                user = User.findWhere(email:email)
+                if(!user){
+                    log.info "user not found"
+                    return [message: "User not found"]
+                }
+
+                if(user.password == hash(password)){
+                    log.info "hash matched"
+                    return user
+                } else{
+                    log.info "wrong password"
+                    return [message: "wrong password"]
+                }
+                
+            } catch (Exception ex) {
                 log.error ex.getMessage()
-                account = ex.getMessage()
+                
             }
         }
-        account
+        
     }
 
-    def checkLogin(def email, def password){
-        log.info ("Check Login: " + email + " " + password)
-        def accountT = null
+    def checkLogin(User user, def password){
+        log.info ("Check Login: " + user+" " + password)
+        
         // Create an authentication request using the credentials
-        if(email && password){
-            AuthenticationRequest request = UsernamePasswordRequests.builder()
-                    .setUsernameOrEmail(email)
-                    .setPassword(password)
-                    .build();
-
-            //Now let's authenticate the account with the application:
+        if(user && password){
+            
             try {
-                AuthenticationResult result = stormpathApp.authenticateAccount(request)
-                accountT = result.getAccount()
-                log.info("Authenticated Account: " + accountT.getUsername() + ", Email: " + accountT.getEmail());
-            } catch (ResourceException ex) {
-                log.error ex.getMessage()
-                accountT = ex.getMessage()
+                
+                
+                if(user.password == hash(password)){
+                    return user
+                } else{
+                    return [message: "wrong password"]
+                }
+                
+            } catch (Exception ex) {
+                log.error ex.getMessage() 
             }
         }
-        accountT
+        user
     }
     
     def createUser(def params, def owner, Boolean isInPashionNetwork ){
-    	def role
+    	log.info "create user"
     	User user
-        City city = null
-        if(params.city) city = City.get(params.city.id.toInteger());
-    	if(owner instanceof Brand){
-            log.info "createUser() creating Brand user"
-    		role = "brand-users"
-    		user = new User(city:city,title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,brand:owner,isInPashionNetwork:true).save(failOnError : true)
-    	} else if(owner instanceof PressHouse){
-            log.info "createUser() creating Press user"
-    		role = "press-users"
-    		user = new User(city:city,title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,pressHouse:owner,isInPashionNetwork:true).save(failOnError : true)
-    	} else if(owner instanceof PRAgency){
-            log.info "createUser() creating PRAgency user"
-            role = "prAgency-users"
-            user = new User(city:city,title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,prAgency:owner,isInPashionNetwork:true).save(failOnError : true)
-        }
-        Directory directory
         try{
-            directory = client.getResource(owner.stormpathDirectory, Directory.class)
+            City city = null
+            log.info "password:"+ params.password
+            String password = hash(params.password)
+            if (params.city){
+                def cityParam = params.city
+                if(cityParam.hasProperty("id")) {
+                    city = City.get(cityParam.id.toInteger())
+                } else {
+                    city = City.get(cityParam.toInteger())
+                }
+            }
 
-            Account account = client.instantiate(Account.class)
-                            .setEmail(params.email)
-                            .setGivenName(params.name)
-                            .setSurname(params.surname)
-                            .setPassword(params.password)
+        	if(owner instanceof Brand){
 
-            directory.createAccount(account)
-            groups = directory.getGroups()
-            Group group = groups.iterator().next()
-            account.addGroup(group)
+                log.info "createUser() creating Brand user"
+        		user = new User(password:password,city:city,title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,brand:owner,isInPashionNetwork:true).save(failOnError : true)
+        	} else if(owner instanceof PressHouse){
+
+                log.info "createUser() creating Press user"
+        		user = new User(password:password,city:city,title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,pressHouse:owner,isInPashionNetwork:true).save(failOnError : true)
+        	} else if(owner instanceof PRAgency){
+
+                log.info "createUser() creating PRAgency user"
+                user = new User(password:password,city:city,title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,prAgency:owner,isInPashionNetwork:true).save(failOnError : true)
+            }
+        
+        
+            
         } catch(Exception e){
 
-                //TODO: create stormpath directory????
-                log.error "createUser() No Stormpath Directory for user"
+                log.error "createUser() ERROR: "+e.message
+                log.error e.printStackTrace()
         }
 		user
     }
@@ -206,17 +146,14 @@ class UserService {
 
     def updateUser(def params){
         log.info "updateUser() UPDATING OTHER USER"
-        Map<String, Object> queryParams = new HashMap<>();
-        queryParams.put("username", params.email);
-        AccountList accounts = stormpathApp.getAccounts(queryParams);
-        Account ac = accounts.iterator().next()
+        
         User user = User.get(params.id.toInteger())
         user = updateUser(params,user,ac)
 
 
     }
 
-    def updateUser(def params,def user, def account){
+    def updateUser(def params,def user){
             
             User.withTransaction { status ->
                 
@@ -230,6 +167,8 @@ class UserService {
                 user.phone = params.phone
                 user.name = params.name
                 user.surname = params.surname
+                if(params.password)
+                    user.password = hash(params.password)
                 if(params.address?.id)
                     user.address = Address.get(params.address.id)
 
@@ -244,28 +183,10 @@ class UserService {
 
 
                 log.info "updateUser() saved user:"+user.toString()
-                if(params.password || params.name || params.surname){
-                    try{
-                        
-                        
-                        if(account){
-                            log.info "updateUser() account not null"
-                            if(params.name) account.setGivenName(params.name)
-                            if(params.surname) account.setSurname(params.surname)
-                            if(params.password) {
-                                account.setPassword(params.password)
-                                log.info "updateUser() Updating PASSWORD ****"
-                            }
+                if(params.password){
 
-                            account.save()
-                        }
-
-                        
-                    } catch(Exception e){
-
-                        log.error "updateUser() stormpath update error:"+e.message
-                    }
                 }
+                 
             }
 
             // invalidate cache here for connected or connecting user     
@@ -275,6 +196,15 @@ class UserService {
             pubnub.publish(channel, "users" , callback) 
 
             user
+    }
+
+
+
+    String hash(String aString){
+        log.info "Hashing:"+aString
+        MessageDigest sha1 = MessageDigest.getInstance("SHA1")
+        byte[] digest  = sha1.digest(aString.getBytes())
+        return new BigInteger(1, digest).toString(16)
     }
 
 
