@@ -1,0 +1,12 @@
+<template>
+
+<require from="../common/customSelect"></require>
+
+
+    <span class="inline-label">
+		<span class="form-label" style="padding-right: 0.5rem; font-weight:500">CATEGORY</span>
+		<select2 style="min-width:12rem;" name="categorySelect" options.bind="categories" selected.bind="categoryno" change.delegate="setCategory($event)" ></select2>
+	</span>
+
+
+</template>

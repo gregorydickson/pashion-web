@@ -17,6 +17,7 @@
     <require from="./dashboard_filters/filters-type"></require>
     <require from="./dashboard_filters/filters-city"></require>
     <require from="./dashboard_filters/filters-order"></require>
+    <require from="./dashboard_filters/filters-category"></require>
     <require from="./dashboard_filters/filters-filterrequests"></require>
     <require from="./common/jquery.unveil"></require>
     <require from="./common/filter"></require>
@@ -162,6 +163,9 @@
                                         <div class="grid-row-col">
                                             <filters-season-press season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season-press>
                                         </div>
+                                        <div class="grid-row-col">
+                                            <filters-category change.delegate="filterChangeCategory($event)"></filters-category>
+                                        </div>
                                         <!-- Type
                                         <div class="grid-row-col">
                                             <filters-type></filters-type>
@@ -204,6 +208,9 @@
                                 </div>                    
                                 <div class="grid-row-col">
                                     <filters-city change.delegate="filterChangeCity($event)"></filters-city>
+                                </div>
+                                <div class="grid-row-col">
+                                    <filters-category change.delegate="filterChangeCategory($event)"></filters-category>
                                 </div>
                                 <div class="grid-row-col"></div>
                             </div>
@@ -262,6 +269,9 @@
                                 </div> 
                                 <div class="grid-row-col">
                                     <filters-city change.delegate="filterChangeCity($event)"></filters-city>
+                                </div>                                
+                                <div class="grid-row-col">
+                                    <filters-category change.delegate="filterChangeCategory($event)"></filters-category>
                                 </div>                   
                                 <div class="grid-row-col"></div>            
                             </div>

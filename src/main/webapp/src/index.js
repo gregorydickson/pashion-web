@@ -121,10 +121,10 @@ export class Index {
         // filter on city
         if (city)
             if (city!="All" && city!="Select" && city!="ALL" && city!="SELECT") {
-                console.log("City filtering on: " + city);
+                //console.log("City filtering on: " + city);
                 // get city of request
                 var requestCity = value.searchableItems[0].sampleCity.name; // user first ssample location
-                console.log("city of request: " + requestCity);
+                //console.log("city of request: " + requestCity);
                 filterCityVal = (requestCity == city);
             }
 
@@ -199,6 +199,10 @@ export class Index {
                     if (event.detail.value == 'INACTIVE REQUESTS') this.filtering = 'INACTIVE REQUESTS';
                     console.log("value:" + event.detail.value + " filtering: " + this.filtering);
                 }
+    }
+
+    filterChangeCategory(event){
+        console.log("filterChangeCategory to: " + event.detail.value);
     }
 
     filterChangeCityRM(event) {
