@@ -45,6 +45,7 @@ export class Index {
     availableFrom = '';
     availableTo = '';
     selectedSeason = '';
+    selectedCategory = '';
     selectedTheme = '';
     maxR = 250;
     maxRReached = false;
@@ -202,7 +203,47 @@ export class Index {
     }
 
     filterChangeCategory(event){
-        console.log("filterChangeCategory to: " + event.detail.value);
+        this.busy.on();
+        console.log("filterChangeCategory to: " + event.detail.value);        
+        this.selectedCategory = '';
+        if (event)
+            if (event.detail)
+                if (event.detail.value) {
+                    if (event.detail.value == "All") this.selectedCategory = '';
+                    else if (event.detail.value == "Select") this.selectedCategory = '';
+                    else this.selectedCategory = event.detail.value;
+                }
+        //console.log("Filter change called, Season: " + this.selectedSeason);
+        this.numberImages = 0;
+        this.maxRReached = false;
+        this.http.fetch('/searchableItem/' + this.searchType + '?searchtext=' + encodeURI(this.searchText) +
+            '&brand=' + this.selectedBrand +
+            '&season=' + encodeURI(this.selectedSeason) +
+            '&category=' + this.selectedCategory +  
+            '&availableFrom=' + this.availableFrom +
+            '&availableTo=' + this.availableTo +
+            '&theme=' + this.selectedTheme +
+            '&color=' + this.selectedColor +
+            '&city=' + this.selectedCity +
+            '&maxR=' + this.maxR)
+            .then(response => response.json())
+            .then(rows => {
+                if (rows.session == 'invalid') {
+                    window.location.href = '/user/login';
+                    return;
+                }
+                this.rows = rows;
+                this.busy.off();
+                if (rows.length > 0) {
+                    this.numberImages = (rows.length - 1) * rows[0].numberImagesThisRow;
+                    this.numberImages += rows[rows.length - 1].numberImagesThisRow;
+                    if (this.numberImages == this.maxR) this.maxRReached = true;
+                }
+            })
+
+        .then(anything =>  {setTimeout(function() { $("img.lazy").unveil(); }, 1000);}) // initial unveil of first images on load
+            .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
+            ;
     }
 
     filterChangeCityRM(event) {
@@ -233,6 +274,7 @@ export class Index {
             // '&itemType=' + this.selectedItemType + 
             '&brand=' + this.selectedBrand +
             '&season=' + encodeURI(this.selectedSeason) +
+            '&category=' + this.selectedCategory +
             '&availableFrom=' + this.availableFrom +
             '&availableTo=' + this.availableTo +
             '&color=' + this.selectedColor +
@@ -287,6 +329,7 @@ export class Index {
         this.http.fetch('/searchableItem/' + this.searchType + '?searchtext=' + encodeURI(this.searchText) +
             '&brand=' + this.selectedBrand +
             '&season=' + encodeURI(this.selectedSeason) +
+            '&category=' + this.selectedCategory +
             '&availableFrom=' + this.availableFrom +
             '&availableTo=' + this.availableTo +
             '&theme=' + this.selectedTheme +
@@ -386,6 +429,7 @@ export class Index {
         this.http.fetch('/searchableItem/' + this.searchType + '?searchtext=' + encodeURI(this.searchText) +
             '&brand=' + this.selectedBrand +
             '&season=' + encodeURI(this.selectedSeason) +
+            '&category=' + this.selectedCategory +
             '&availableFrom=' + this.availableFrom +
             '&availableTo=' + this.availableTo +
             '&theme=' + this.selectedTheme +
@@ -431,6 +475,7 @@ export class Index {
         this.http.fetch('/searchableItem/' + this.searchType + '?searchtext=' + encodeURI(this.searchText) +
             '&brand=' + this.selectedBrand +
             '&season=' + encodeURI(this.selectedSeason) +
+            '&category=' + this.selectedCategory +
             '&availableFrom=' + this.availableFrom +
             '&availableTo=' + this.availableTo +
             '&theme=' + this.selectedTheme +
@@ -477,6 +522,7 @@ export class Index {
         this.http.fetch('/searchableItem/' + this.searchType + '?searchtext=' + encodeURI(this.searchText) +
             '&brand=' + this.selectedBrand +
             '&season=' + encodeURI(this.selectedSeason) +
+            '&category=' + this.selectedCategory +
             '&availableFrom=' + this.availableFrom +
             '&availableTo=' + this.availableTo +
             '&theme=' + this.selectedTheme +
@@ -524,6 +570,7 @@ export class Index {
         this.http.fetch('/searchableItem/' + this.searchType + '?searchtext=' + encodeURI(this.searchText) +
             '&brand=' + this.selectedBrand +
             '&season=' + encodeURI(this.selectedSeason) +
+            '&category=' + this.selectedCategory +
             '&availableFrom=' + this.availableFrom +
             '&availableTo=' + this.availableTo +
             '&theme=' + this.selectedTheme +
@@ -570,6 +617,7 @@ export class Index {
         this.http.fetch('/searchableItem/' + this.searchType + '?searchtext=' + encodeURI(this.searchText) +
             '&brand=' + this.selectedBrand +
             '&season=' + encodeURI(this.selectedSeason) +
+            '&category=' + this.selectedCategory +
             '&availableFrom=' + this.availableFrom +
             '&availableTo=' + this.availableTo +
             '&theme=' + this.selectedTheme +

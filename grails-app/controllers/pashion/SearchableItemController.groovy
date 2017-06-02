@@ -24,6 +24,7 @@ class SearchableItemController {
         Brand brand = null
         SearchableItemType type = null
         Season seasonIn = null
+        Category category = null
         City city = null
         List results = null
         def keywords = null
@@ -42,6 +43,9 @@ class SearchableItemController {
             keywords = keywords.split(" ")
         }
 
+        if(params.category != "" && params.category != null)
+            category = Category.findById(params.category)
+
         if(params.city != null && params.city != "" && params.city != "All" && params.city != "undefined"){
             city = City.findByName(URLDecoder.decode(params.city))
 
@@ -50,6 +54,7 @@ class SearchableItemController {
             log.info "Brand:"+brand
             log.info "keywords:"+keywords
             log.info "season:"+seasonIn
+            log.info "category:"+category
             log.info "type:"+type
             
             log.info "city:"+ params.city + " (" + city + ")"
@@ -57,6 +62,7 @@ class SearchableItemController {
             
             //find Samples in city
             results = criteria.listDistinct () {
+                    fetchMode 'brandCollection', FM.JOIN
                     
                     if(brand) eq('brand', brand)
 
@@ -66,6 +72,9 @@ class SearchableItemController {
                     if(seasonIn) eq('season',seasonIn)
                     if(type) eq('type',type)
                     if(city) eq('sampleCity',city)
+                    if(category) brandCollection {
+                        eq('category',category)
+                    }
 
                     season{ order('order','desc') }
                     
@@ -85,15 +94,21 @@ class SearchableItemController {
             log.info "Brand:"+brand
             log.info "keywords:"+keywords
             log.info "season:"+seasonIn
+            log.info "category:"+category
             log.info "type:"+type
 
             results = criteria.listDistinct () {
+                fetchMode 'brandCollection', FM.JOIN
+
                 isNotNull('image')
                 if(brand) eq('brand', brand)
                 if(keywords) and {
                     keywords.each {  ilike('attributes', "%${it}%") }
                 }
                 if(seasonIn) eq('season',seasonIn)
+                if(category) brandCollection {
+                        eq('category',category)
+                    }
                 season{ order('order','desc') }
                 cache true
             } 
@@ -131,6 +146,7 @@ class SearchableItemController {
         Brand brand = null
         SearchableItemType type = null
         Season seasonIn = null
+        Category category = null
         def keywords = null
         def theme = null
         def color = null
@@ -158,6 +174,9 @@ class SearchableItemController {
 
         if(params.season != "" && params.season != null)
             seasonIn = Season.findByName(URLDecoder.decode(params.season))
+
+        if(params.category != "" && params.category != null)
+            category = Category.findById(params.category)
                    
         log.debug "availableFrom param:"+params.availableFrom
         if(params.availableFrom != null && params.availableFrom != "" )
@@ -175,6 +194,7 @@ class SearchableItemController {
         log.info "Brand:"+brand
         log.info "keywords:"+keywords
         log.info "season:"+seasonIn
+        log.info "category:"+category
         log.info "type:"+type
         log.info "theme:"+theme
         log.info "availableFrom:"+availableFrom
@@ -190,6 +210,7 @@ class SearchableItemController {
             fetchMode 'brand', FM.JOIN
             fetchMode 'samples', FM.JOIN
             fetchMode 'samples.sampleRequests', FM.JOIN
+            fetchMode 'brandCollection', FM.JOIN
             
             isNotNull('image')
             eq('isPrivate',false)
@@ -199,6 +220,9 @@ class SearchableItemController {
                 keywords.each {  ilike('attributes', "%${it}%") }
             }
             if(seasonIn) eq('season',seasonIn)
+            if(category) brandCollection {
+                eq('category',category)
+            }
             if(type) eq('type',type)
             if(city) eq('city',city)
             if(color) ilike('color',"%${color}%")

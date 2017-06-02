@@ -30,6 +30,7 @@ class BrandCollection {
 
 	static mapping = {
 		season index: 'season_idx'
+		category defaultValue: 0
 		cache true
 		
 	}
