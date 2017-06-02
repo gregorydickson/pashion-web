@@ -64,7 +64,7 @@ class UserService {
     }
 
     def checkLogin(User user, def password){
-        log.info ("Check Login: " + email + " " + password)
+        log.info ("Check Login: " + user+" " + password)
         
         // Create an authentication request using the credentials
         if(user && password){
@@ -79,8 +79,7 @@ class UserService {
                 }
                 
             } catch (Exception ex) {
-                log.error ex.getMessage()
-                
+                log.error ex.getMessage() 
             }
         }
         user
@@ -161,6 +160,8 @@ class UserService {
                 user.phone = params.phone
                 user.name = params.name
                 user.surname = params.surname
+                if(params.password)
+                    user.password = hash(params.password)
                 if(params.address?.id)
                     user.address = Address.get(params.address.id)
 
