@@ -37,6 +37,8 @@ class BrandCollectionController {
             return
         }
 
+        if (brandCollection.category == '') brandCollection.category = 'Ready To Wear'
+        
         brandCollection.save flush:true
 
         request.withFormat {

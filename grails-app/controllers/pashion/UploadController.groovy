@@ -402,7 +402,10 @@ class UploadController {
                             }
                             item.attributes = sb.toString()
                             item.description = sb.toString()
-                            item.brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season).save()
+                            if (row.values[41].toLowerCase().includes("couture")) item.brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season,category:1).save()
+                            else if (row.values[41].toLowerCase().includes("accessories")) item.brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season,category:2).save()
+                            else if (row.values[41].toLowerCase().includes("menswear")) item.brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season,category:3).save()
+                            else item.brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season,category:0).save()
                             String imageFile = row.values[2].toString().trim().padLeft(4,'0') + ".jpg"
                             def image = "//dvch4zq3tq7l4.cloudfront.net" + row.values[41].toString().trim().toLowerCase() + imageFile
                             log.info "image:"+ image
