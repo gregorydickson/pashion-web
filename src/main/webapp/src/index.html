@@ -65,7 +65,7 @@
                         </span> 
                         <!-- Header for 'prAgency'-->
                         <span if.bind="user.type == 'prAgency'">
-                            <span class="ui-text-label-m-broad">IMAGE SEARCH (</span>
+                            <span class="ui-text-label-m-broad">MANAGE IMAGES (</span>
                             <span if.bind="maxRReached" class="ui-text-label-m-broad"> > </span>
                             <span class="ui-text-label-m-broad">${numberImages} Results )</span>
                         </span> 
@@ -220,11 +220,10 @@
 
                     <!-- AGENCY filters BEGIN -->
                     <div if.bind="user.type === 'prAgency'">
-                        <div class="blockSearchImages">
+                        <!--<div class="blockSearchImages">
                             <div class="grid-row">
                                 <div class="grid-row-col">
                                     <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search">
-                                    <!-- <filters-search></filters-search> -->
                                 </div>
                                 <div class="grid-row-col">
                                     <filters-available-from></filters-available-from>
@@ -248,25 +247,28 @@
                                 </div>
                                 <div class="grid-row-col"></div>
                             </div>
-                        </div>
-                        <div class="blockManageImages">
+                        </div> -->
+                        <div> <!-- class="blockManageImages"> -->
                             <div class="grid-row">
                                 <div class="grid-row-col">
                                     <input type="search" value.bind="searchText" class="search-box" id="search-images" placeholder="Search">
                                     <!-- <filters-search></filters-search> -->
                                 </div>
                                 <div class="grid-row-col">
-                                    <filters-designer change.delegate="filterChangeBrand($event)" ></filters-designer>
+                                    <filters-designer-pr change.delegate="filterChangeBrand($event)" ></filters-designer-pr>
                                 </div>
                                 <div class="grid-row-col">
                                     <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
-                                </div>                    
+                                </div> 
+                                <div class="grid-row-col">
+                                    <filters-city change.delegate="filterChangeCity($event)"></filters-city>
+                                </div>                   
                                 <div class="grid-row-col"></div>            
                             </div>
                             <div class="grid-row">
                                 <div class="grid-content shrink">
                                     <button id="btn-add-files" class="small button hollow" click.delegate="createAddfilesDialog()">Add Images</button>
-                                    <button class="small button hollow">Delete Season</button>
+                                    <button class="small button hollow disabled">Delete Season</button>
                                 </div>              
                             </div>
                         </div>

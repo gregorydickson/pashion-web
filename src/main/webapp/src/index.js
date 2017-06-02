@@ -706,6 +706,7 @@ export class Index {
             });
         });
 
+        /*
         //Select functionality for brand and agency users to toggle/show "search images"/"manage images" blocks
         // Show/hide on document ready
         $('.blockSearchImages').show();
@@ -721,6 +722,7 @@ export class Index {
                 $('.blockManageImages').show();
             }
         });
+        */
 
         //document.getElementById('search-images').addEventListener('keypress', this.boundHandler, false);
 
