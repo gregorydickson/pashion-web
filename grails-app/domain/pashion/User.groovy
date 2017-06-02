@@ -1,12 +1,9 @@
 package pashion
 
-import com.stormpath.sdk.account.Account
-
-import com.bloomhealthco.jasypt.*
 
 
 class User {
-	Account account
+
 	String password
 	Address address
 	String title
@@ -43,40 +40,14 @@ class User {
 
    	static mapping = {
         cache true
-        //stormpathString type: GormEncryptedStringType
         pressHouse lazy:false
         brand lazy:false
         prAgency lazy:false
         
     }
-   	static transients = ['account','password']
+
 	static constraints = {
-		email nullable: true
-		account nullable: true
-		address nullable: true
-		title nullable: true
-		phone nullable: true
-		name nullable:true
-		surname nullable:true
-		avatar nullable: true
-		city nullable: true
-		image nullable: true
-
-		stormpathString nullable:true, maxSize: 1000
-		userCreatedId nullable: true
-		lastModifiedDate nullable: true
-		lastModifiedUserId nullable: true
-
-
-		pressHouse nullable: true
-		brand nullable: true
-		prAgency nullable: true
-
-		sampleRequestsSent nullable: true
-		sampleRequestsReceived nullable: true
-		connections nullable: true
-		permissions nullable: true
-
+		password nullable:true, maxSize: 2000
 	}
 
 	String toString(){

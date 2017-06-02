@@ -5,7 +5,7 @@ import grails.transaction.Transactional
 import grails.converters.JSON
 import com.bertramlabs.plugins.SSLRequired
 
-import com.stormpath.sdk.account.Account
+
 import javax.servlet.http.HttpServletResponse
 
 
@@ -92,42 +92,33 @@ class UserController {
 
 
     def login(){
-        def coooookie = cookieService.getCookie("remember")
-        def account = null
-        if(coooookie){
-            log.info "has Cookie:"+coooookie
-            def user = User.findWhere(email:coooookie)
-            session.user = user
-            account = userService.login(user.email,user.stormpathString)
-            if(account instanceof Account){
-               session.account = account
-               redirect(controller:'dashboard',action:'index')
-            }
-        }
+        
+        
     }
 
  
     @Transactional
     def doLogin(){
         log.info "doLogin(), params:"+params
-        def account = null
-        def user = User.findWhere(email:params['email'])
+        def user
+       
         log.info "user:"+user?.id?.toString()
-        if(user){
-            account = userService.login(params.email,params.password)
-            session.user = user                   
-            if(account instanceof Account){
-                user.account = account
-
-                redirect(controller:'dashboard',action:'index')
-            } else{
-                flash.message = "wrong password";
-                redirect(controller:'user',action:'login')
-            }
-        } else{
+        
+        user = userService.login(params.email,params.password)
+                           
+        if(user instanceof User){
+            
+            session.user = user 
+            redirect(controller:'dashboard',action:'index')
+        } else if(user.message == "wrong password"){
+            flash.message = "wrong password"
+            redirect(controller:'user',action:'login')
+        } else if(user.message == "User not found"){
+    
             flash.message = "User not found"
             redirect(controller:'user',action:'login')
         }
+        
     }
 
     @Transactional
@@ -138,9 +129,9 @@ class UserController {
         def userT= User.findWhere(email:jsonObject.email)
         log.info "checkLogin() email: " + jsonObject.email + " " + jsonObject.password
         if(userT){
-            accountT = userService.checkLogin(jsonObject.email,jsonObject.password)
+            userT = userService.checkLogin(userT,jsonObject.password)
             //session.user = user                   
-            if(accountT instanceof Account){
+            if(userT instanceof User){
                 //user.account = account
 
                 //redirect(controller:'dashboard',action:'index')
@@ -182,8 +173,15 @@ class UserController {
             respond user.errors, view:'create'
             return
         }
+        
 
+        
         user = userService.createUser(params, owner, inNetwork)
+        if ( user == null) {
+            flash.message = "unknown error"
+            respond  view:'create'
+            return
+        }
         
         notify "connectionsUpdate","connections"
         
@@ -262,9 +260,9 @@ class UserController {
             user = session.user
             log.info "updateJson(), user for this session: "+user.toString()
             // get StormPath account (transient) from the user in the session
-            Account account = user.account
-            if(account){
-                user = userService.updateUser(jsonObject,user,account)
+            
+            if(user){
+                user = userService.updateUser(jsonObject,user)
             } else{
                 def response = [error: 'Error No Account'] as JSON
                 render response 
