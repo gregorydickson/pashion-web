@@ -43,15 +43,12 @@ class UserService {
             try {
                 user = User.findWhere(email:email)
                 if(!user){
-                    log.info "user not found"
                     return [message: "User not found"]
                 }
 
                 if(user.password == hash(password)){
-                    log.info "hash matched"
                     return user
                 } else{
-                    log.info "wrong password"
                     return [message: "wrong password"]
                 }
                 
@@ -64,9 +61,7 @@ class UserService {
     }
 
     def checkLogin(User user, def password){
-        log.info ("Check Login: " + user+" " + password)
         
-        // Create an authentication request using the credentials
         if(user && password){
             
             try {
@@ -90,7 +85,7 @@ class UserService {
     	User user
         try{
             City city = null
-            log.info "password:"+ params.password
+
             String password = hash(params.password)
             if (params.city){
                 def cityParam = params.city
@@ -157,12 +152,8 @@ class UserService {
             
             User.withTransaction { status ->
                 
-        
-                
                 user = User.get(user.id)
                 
-
-                log.info "updateUser() params:"+params
                 user.title = params.title
                 user.phone = params.phone
                 user.name = params.name
@@ -172,19 +163,11 @@ class UserService {
                 if(params.address?.id)
                     user.address = Address.get(params.address.id)
 
-
-            
                 try{
                     user.save(failOnError:true, flush:true)
                 } catch(Exception e){
 
                     log.error "updateUser() error:"+e.message
-                }
-
-
-                log.info "updateUser() saved user:"+user.toString()
-                if(params.password){
-
                 }
                  
             }
@@ -201,7 +184,6 @@ class UserService {
 
 
     String hash(String aString){
-        log.info "Hashing:"+aString
         MessageDigest sha1 = MessageDigest.getInstance("SHA1")
         byte[] digest  = sha1.digest(aString.getBytes())
         return new BigInteger(1, digest).toString(16)

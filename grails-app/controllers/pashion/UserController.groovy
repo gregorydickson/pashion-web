@@ -99,10 +99,9 @@ class UserController {
  
     @Transactional
     def doLogin(){
-        log.info "doLogin(), params:"+params
+        
         def user
        
-        log.info "user:"+user?.id?.toString()
         
         user = userService.login(params.email,params.password)
                            
@@ -127,7 +126,7 @@ class UserController {
         def jsonObject = request.JSON
         def accountT = null
         def userT= User.findWhere(email:jsonObject.email)
-        log.info "checkLogin() email: " + jsonObject.email + " " + jsonObject.password
+        log.info "checkLogin() email: " + jsonObject.email 
         if(userT){
             userT = userService.checkLogin(userT,jsonObject.password)
             //session.user = user                   
@@ -154,7 +153,7 @@ class UserController {
     @Transactional
     def save(User user) {
         def owner 
-        log.info "save(), params:"+ params
+        
         if(params.pressHouse.id != "null"){
             owner = PressHouse.get(params.pressHouse.id.toInteger())
         } else if (params.brand.id != "null"){
@@ -163,7 +162,6 @@ class UserController {
             owner = PRAgency.get(params.prAgency.id.toInteger())
         }
 
-        log.info "params:"+params
         Boolean inNetwork = false
         if(params.isInPashionNetwork) {
             inNetwork = true
@@ -202,13 +200,11 @@ class UserController {
     @Transactional
     def update(User user) {
         def jsonObject = request.JSON
-        log.info "update(), json:"+jsonObject
         if(jsonObject?.id != null){
-            user = userService.updateUser(jsonObject,user,session)
-            log.info "update(), using json: " +jsonObject
+            user = userService.updateUser(jsonObject,user)
+            
         } else{
-            user = userService.updateUser(params,user, session)           
-            log.info "update(), using params: "+params
+            user = userService.updateUser(params,user)           
         }
         
         if (user == null) {
@@ -230,7 +226,7 @@ class UserController {
         def jsonObject = request.JSON
         def owner
         def user
-        log.info "createjson(), json :"+jsonObject
+        
         if(jsonObject.pressHouse){
             owner = PressHouse.get(jsonObject.pressHouse.toInteger())
         } else if (jsonObject.brand){
@@ -255,11 +251,9 @@ class UserController {
     def updatejson() {
         def user
         def jsonObject = request.JSON
-        log.info "updateJson(), json:"+jsonObject
+        
         if(jsonObject.id == session?.user?.id){
             user = session.user
-            log.info "updateJson(), user for this session: "+user.toString()
-            // get StormPath account (transient) from the user in the session
             
             if(user){
                 user = userService.updateUser(jsonObject,user)
@@ -270,7 +264,6 @@ class UserController {
             }
 
         } else{
-            log.info "updateJson(), other user"
             user = userService.updateUser(jsonObject)
         }
 
