@@ -232,11 +232,11 @@ class UserController {
         def user
         log.info "createjson(), json :"+jsonObject
         if(jsonObject.pressHouse){
-            owner = PressHouse.get(jsonObject.pressHouse.id.toInteger())
+            owner = PressHouse.get(jsonObject.pressHouse.toInteger())
         } else if (jsonObject.brand){
-            owner = Brand.get(jsonObject.brand.id.toInteger())
+            owner = Brand.get(jsonObject.brand.toInteger())
         } else if (jsonObject.prAgency){
-            owner = PRAgency.get(jsonObject.prAgency.id.toInteger())
+            owner = PRAgency.get(jsonObject.prAgency.toInteger())
         }
         
         def inNetwork = false
@@ -247,7 +247,7 @@ class UserController {
         user = userService.createUser(jsonObject, owner, inNetwork) as JSON
         
         
-       render user
+        render user
         
     }
 

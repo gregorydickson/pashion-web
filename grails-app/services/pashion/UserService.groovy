@@ -92,7 +92,14 @@ class UserService {
             City city = null
             log.info "password:"+ params.password
             String password = hash(params.password)
-            if(params.city) city = City.get(params.city.id.toInteger())
+            if (params.city){
+                def cityParam = params.city
+                if(cityParam.hasProperty("id")) {
+                    city = City.get(cityParam.id.toInteger())
+                } else {
+                    city = City.get(cityParam.toInteger())
+                }
+            }
 
         	if(owner instanceof Brand){
 
