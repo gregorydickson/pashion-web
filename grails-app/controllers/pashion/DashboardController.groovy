@@ -271,6 +271,13 @@ class DashboardController {
         render seasons
     }
 
+    def categories(){
+        log.info "categories all"
+        def categories = Category.list() as JSON
+
+        render categories
+    }
+
     def returnBy(){
     	def list = ['Morning','Noon','Afternoon'] as JSON
     	render list

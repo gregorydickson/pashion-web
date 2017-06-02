@@ -32,8 +32,9 @@ sortCategories (array) {
   } 
 
 attached() {
-    // this.categories = ["Ready To Wear","Couture", "Accessories", "Menswear"];
-    this.categories = [];
+    return Promise.all([
+      this.http.fetch('/dashboard/categories').then(response => response.json()).then(categories => this.categories = this.sortCategories(categories))
+    ]);
 }
 
 
