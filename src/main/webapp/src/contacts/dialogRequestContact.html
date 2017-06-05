@@ -35,7 +35,8 @@
         <!-- Footer buttons -->
         <ai-dialog-footer>
                     <a class="hollow button"  click.delegate="close()">Cancel</a>
-                    <a class="button" href="#" click.delegate="requestConnection() ">Request Connection</a>
+                    <a if.bind="invite" class="button" href="#" click.delegate="inviteToPashion() ">Invite to Pashion</a>
+                    <a class="${(invite || flashMessage != '') ? 'hollow disabled' : ''} button" href="#" click.delegate="requestConnection() ">Connect</a>
         </ai-dialog-footer>
     </ai-dialog>
 </template>
