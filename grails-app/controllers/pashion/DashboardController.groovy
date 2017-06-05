@@ -132,7 +132,36 @@ class DashboardController {
         render userInfo
     }
 
-    
+    def sendGetAccessEmail (){
+        def info
+
+        def jsonObject = request.JSON
+        log.info "Get Access Email " + jsonObject.newUser + " from " + jsonObject.requestingUser
+
+        if (jsonObject.requestingUser == null) {
+            info = [type:'norequestor' ] as JSON
+            render info 
+            return
+        }
+        if (jsonObject.newUser == null) {
+            info = [type:'nonewuser' ] as JSON
+            render info 
+            return
+        }
+
+        if(session.user == null){
+            info = [type:'nosession' ] as JSON
+            render info 
+            return
+        }
+
+        notify "grantAccessRequestEmail" , [requestingUser: jsonObject.requestingUser, newUser: jsonObject.newUser]
+
+        info = [type:'success' ] as JSON
+        render info 
+        return
+
+    }
 
     def usersBrand(){
         log.info "Dashboard  usersBrand()"

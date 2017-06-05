@@ -29,6 +29,46 @@ class EmailService {
 
     static scope = "singleton"
     
+    @Selector('grantAccessRequestEmail')
+    void grantAccessRequestEmailNotification(Object data){
+        log.info"grant access email"
+        log.info "params:"+data
+        
+        try {
+            
+            def messageTxt = "<br/>" 
+            
+            messageTxt += data.requestingUser 
+            messageTxt +=  " is requesting access for a new user: "
+            messageTxt +=  data.newUser
+            messageTxt += "<br/><br/>"
+            messageTxt += "This message is from the New Connection Dialog in the app."
+
+
+            Email from = new Email("richard@pashiontool.com")
+            String subject =  "Access request for " + data.newUser
+            Email to = new Email("support@pashiontool.com")
+            Content content = new Content("text/html", messageTxt)
+            Mail mail = new Mail(from, subject, to, content)
+
+            Base64 x = new Base64()
+            
+            String encoded = new String(x.encode(messageTxt.getBytes()));
+
+            SendGrid sg = new SendGrid("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");
+            Request request = new Request();
+    
+            request.method = Method.POST;
+            request.endpoint = "mail/send";
+            request.body = mail.build();
+            Response response = sg.api(request);
+            log.info response.statusCode.toString()
+            
+        } catch (Exception e) {
+            log.error "exception access request mail"
+            log.error e.message
+        }
+    }
 
     @Selector('sampleRequestEmail')
     void sampleRequestEmailNotification(Object data){
