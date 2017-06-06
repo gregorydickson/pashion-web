@@ -6,7 +6,8 @@
     <asset:stylesheet src="pashion/pashion.css"/>    
     <asset:stylesheet src="pashion/splash.css"/>   
     <asset:stylesheet src="pashion/toastr.css"/>    
-
+    <link rel="dns-prefetch" href="//dvch4zq3tq7l4.cloudfront.net">
+    <link rel="preconnect" href="//dvch4zq3tq7l4.cloudfront.net" crossorigin>
 
     <title>Loading Pashion</title>
     
