@@ -134,6 +134,14 @@ class SampleRequestService {
             sr.editorialName = jsonObject.editorialName
             sr.editorialWho = jsonObject.editorialWho
             sr.prAgency = jsonObject.prAgency
+
+            // truncate if necessary 
+            if (jsonObject.message) {
+                if (jsonObject.message.length() > SampleRequest.constrainedProperties.message.maxSize)
+                    sr.message = jsonObject.message.take(SampleRequest.constrainedProperties.message.maxSize)
+                else 
+                    sr.message = jsonObject.message
+            }
             
             
             sr.dateRequested = new Date()
@@ -302,6 +310,15 @@ class SampleRequestService {
             sr.paymentReturn = jsonObject.paymentReturn
             sr.courierOut = jsonObject.courierOut
             sr.courierReturn = jsonObject.courierReturn
+
+            // truncate if necessary 
+            if (jsonObject.message) {
+                if (jsonObject.message.length() > SampleRequest.constrainedProperties.message.maxSize)
+                    sr.message = jsonObject.message.take(SampleRequest.constrainedProperties.message.maxSize)
+                else 
+                    sr.message = jsonObject.message
+            }
+
             
             if(sr.pressHouse){
                 sr = destinationAddressPress(sr,jsonObject)

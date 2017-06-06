@@ -69,7 +69,7 @@ class SampleRequest {
 
 	static constraints = {
 		
-		
+		message maxSize: 4000
 		
 	}
 
