@@ -12,7 +12,7 @@ class User {
 	String surname
 	String email
 	Boolean isInPashionNetwork = false
-	String stormpathString
+
 	String avatar
 
 	City city
