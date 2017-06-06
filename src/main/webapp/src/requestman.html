@@ -382,10 +382,10 @@
 
                                         </div>
 
-                                        <div if.bind="(user.type === 'press' && booking.message)" class="grid-content">
+                                        <div if.bind="(booking.message)" class="grid-content">
                                             <span class="ui-text-label-m-blue">Notes:</span>
                                         </div>
-                                        <div if.bind="(user.type === 'press' && booking.message)"  class="grid-content" style="margin-bottom: 1rem">
+                                        <div if.bind="(booking.message)"  class="grid-content" style="margin-bottom: 1rem">
                                             <span>${booking.message}</span>
                                         </div>
                                         
