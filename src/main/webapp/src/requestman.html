@@ -358,7 +358,7 @@
                                         <div class="grid-content" style="margin-top:1rem;">
                                             <span class="ui-text-label-m-blue">Samples:</span><span style="margin-left:0.5rem;">${booking.searchableItems.length}</span>
                                         </div>
-                                        <div class="grid-content" style="margin-bottom: 2rem;">
+                                        <div class="grid-content" style="margin-bottom: 1rem;">
                                         <!-- with sample images 
                                             <table class="" style="table-layout:fixed;">
                                                 <tr  style="height:1rem;">
@@ -380,6 +380,13 @@
                                                 </tr>
                                             </table>
 
+                                        </div>
+
+                                        <div if.bind="(user.type === 'press' && booking.message)" class="grid-content">
+                                            <span class="ui-text-label-m-blue">Notes:</span>
+                                        </div>
+                                        <div if.bind="(user.type === 'press' && booking.message)"  class="grid-content" style="margin-bottom: 1rem">
+                                            <span>${booking.message}</span>
                                         </div>
                                         
                                     </div>
