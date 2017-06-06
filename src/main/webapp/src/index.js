@@ -211,7 +211,11 @@ export class Index {
 
     filterChangeCategory(event){
         this.busy.on();
-        console.log("filterChangeCategory to: " + event.detail.value);        
+        if(window.myblazy){
+            window.myblazy.destroy();
+        }
+        this.rows = [];
+               
         this.selectedCategory = '';
         if (event)
             if (event.detail)
@@ -246,9 +250,13 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
+                setTimeout(function () {
+                        window.myblazy.destroy();
+                        window.myblazy.revalidate();
+                        console.log("subsequent loading Blazy recreation");
+                }, 1000); 
+                this.busy.off();
             })
-
-        .then(anything =>  {setTimeout(function() { $("img.lazy").unveil(); }, 1000);}) // initial unveil of first images on load
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
             ;
     }
@@ -266,19 +274,15 @@ export class Index {
 
     filterChangeSearch(event) {
         this.busy.on();
-        console.log("Filter Change changing search: search value:" + this.searchText);
-        // this.searchText = '';
-        /* if (event)
-             if (event.detail)
-                 if (event.detail.value) {
-                     this.searchText = event.detail.value;
-                     console.log("value:" + event.detail.value)
-                 }*/
-        //console.log("Filter change called, SEARCH: " + this.searchText);
+        if(window.myblazy){
+            window.myblazy.destroy();
+        }
+        this.rows = [];
+        
+        
         this.numberImages = 0;
         this.maxRReached = false;
         this.http.fetch('/searchableItem/' + this.searchType + '?searchtext=' + encodeURI(this.searchText) +
-            // '&itemType=' + this.selectedItemType + 
             '&brand=' + this.selectedBrand +
             '&season=' + encodeURI(this.selectedSeason) +
             '&category=' + this.selectedCategory +
@@ -301,6 +305,11 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
+                setTimeout(function () {
+                        window.myblazy.destroy();
+                        window.myblazy.revalidate();
+                    }, 1000); 
+                this.busy.off();
             })
 
         .then(anything =>  { setTimeout(function() { $("img.lazy").unveil(); }, 1000) ; }) // initial unveil of first images on load
@@ -310,8 +319,12 @@ export class Index {
 
     filterChangeBrand(event) {
         this.busy.on();
+        if(window.myblazy){
+            window.myblazy.destroy();
+        }
         this.rows = []; //RM can do this to prevent the loading over existing images, but have to deal with detritus 
         //had to reset rows as lazy loading was broken
+        
 
         console.log("Filter Change changing Brand");
 
@@ -399,15 +412,8 @@ export class Index {
                     console.log ("NOT first time unveil");
                     
                     setTimeout(function () {
-                            
-                        if(window.myblazy){
-                            window.myblazy.destroy();
-                        }
-                        let blazy = new Blazy({ 
-                            container: '#mainScrollWindow',
-                            offset: 100 
-                        });
-                        window.myblazy = blazy;
+                        window.myblazy.destroy();
+                        window.myblazy.revalidate();
                         console.log("subsequent loading Blazy recreation");
                     }, 1000); 
                     
@@ -416,7 +422,7 @@ export class Index {
                 
             })
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
-            .then();
+            ;
             
     }
 
@@ -446,6 +452,10 @@ export class Index {
 
     filterChangeSeason(event) {
         this.busy.on();
+        if(window.myblazy){
+            window.myblazy.destroy();
+        }
+        this.rows = [];
         console.log("Filter Change changing Season");
         this.selectedSeason = '';
         if (event)
@@ -482,6 +492,12 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
+                setTimeout(function () {
+                            
+                        window.myblazy.revalidate();
+                        console.log("subsequent loading Blazy recreation");
+                }, 1000); 
+                this.busy.off();
             })
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
             ;
@@ -489,6 +505,10 @@ export class Index {
 
     filterChangeTheme(event) {
         this.busy.on();
+        if(window.myblazy){
+            window.myblazy.destroy();
+        }
+        this.rows = [];
         console.log("Filter Change changing Theme");
         this.selectedTheme = '';
         if (event)
@@ -526,6 +546,12 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
+                setTimeout(function () {
+                            
+                        window.myblazy.revalidate();
+                        console.log("subsequent loading Blazy recreation");
+                }, 1000); 
+                this.busy.off();
             })
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
             ;
@@ -533,6 +559,10 @@ export class Index {
 
     filterChangeColor(event) {
         this.busy.on();
+        if(window.myblazy){
+            window.myblazy.destroy();
+        }
+        this.rows = [];
         console.log("Filter Change changing Color");
         this.selectedColor = '';
         if (event)
@@ -570,6 +600,12 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
+                setTimeout(function () {
+                        window.myblazy.destroy();
+                        window.myblazy.revalidate();
+                        console.log("subsequent loading Blazy recreation");
+                }, 1000); 
+                this.busy.off();
             })
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
             ;
@@ -577,6 +613,10 @@ export class Index {
 
     filterChangeDates(event) {
         this.busy.on();
+        if(window.myblazy){
+            window.myblazy.destroy();
+        }
+        this.rows = [];
         console.log("Filter Change changing Change Dates: from: " + this.availableFrom + " to: " + this.availableTo);
         //this.availableTo = '';
         /* if (event)
@@ -615,14 +655,23 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
+                setTimeout(function () {
+                        window.myblazy.destroy();
+                        window.myblazy.revalidate();
+                        console.log("subsequent loading Blazy recreation");
+                }, 1000); 
+                this.busy.off();
             })
-
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
             ;
     }
 
     filterChangeCity(event) {
         this.busy.on();
+        if(window.myblazy){
+            window.myblazy.destroy();
+        }
+        this.rows = [];
         console.log("Filter Change changing Change City: from: " + this.selectedCity);
         this.selectedCity = '';
         if (event)
@@ -660,6 +709,12 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
+                setTimeout(function () {
+                        window.myblazy.destroy();
+                        window.myblazy.revalidate();
+                        console.log("subsequent loading Blazy recreation");
+                }, 1000); 
+                this.busy.off();
             })
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
             ;
