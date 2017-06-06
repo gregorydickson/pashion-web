@@ -23,8 +23,9 @@
       <script src="https://cdn.pubnub.com/sdk/javascript/pubnub.4.4.4.min.js"></script>  
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.debug.js"></script>
       <script src="/jspm_packages/system.js"></script>
+      <script src="//cdn.jsdelivr.net/blazy/latest/blazy.min.js"></script>
       <script src="/config.js"></script>
-      <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+
       <!-- <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script> -->
       <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script> -->
       <script src="/src/common/toastr.js"></script>

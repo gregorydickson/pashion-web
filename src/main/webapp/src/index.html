@@ -19,7 +19,6 @@
     <require from="./dashboard_filters/filters-order"></require>
     <require from="./dashboard_filters/filters-category"></require>
     <require from="./dashboard_filters/filters-filterrequests"></require>
-    <require from="./common/jquery.unveil"></require>
     <require from="./common/filter"></require>
     <require from="./contacts/sort"></require>
 
@@ -337,15 +336,14 @@
                                     </div>
                                 </div> 
 
-                                <!-- Main image -->
-                                <div id="card-${row.items[i].id}" class="card-image">
+                                <!-- Image Container for Look-->
+                                <div id="card-${row.items[i].id}" class="card-image" style="min-height:196px;">
                                     
-                                    <!-- <img if.bind="user.type == 'brand'" src.bind="row.items[i].image" ref="image" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"/> -->
-
-                                    <img class="lazy" src="/assets/bgGrey.jpg" data-src.bind="row.items[i].image" ref="image" 
+                                    
+                                    <!-- Main Look image -->
+                                    <img class="b-lazy" src="/assets/bgGrey.jpg" data-src="${row.items[i].image}" ref="image" 
                                      click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"/> 
 
-                                   <!-- <div if.bind="user.type === 'brand'" class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div> -->
 
                                     <!-- lower corner look number -->
                                     <div if.bind="user.type === 'brand'" class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
