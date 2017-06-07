@@ -89,6 +89,11 @@ dependencies {
 
     compile 'io.github.http-builder-ng:http-builder-ng-apache:0.14.0'
 
+    testCompile "org.grails:grails-plugin-testing"
+    testCompile "org.grails.plugins:geb"
+    testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
+    testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
+
 }
 war{
     zip64 true
