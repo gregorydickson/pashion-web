@@ -232,6 +232,8 @@ export class CreateSampleRequestBrand {
 
   attached() {
     document.getElementById("CreateSampleRequestButton").disabled = true;
+    ga('set', 'page', '/createSampleRequestBrand.html');
+    ga('send', 'pageview');
   }
 
   alertP(message) {
