@@ -75,6 +75,8 @@ export class EditSampleRequest {
     if(this.sampleRequest.pickupTimeReturn == undefined)
       this.sampleRequest.pickupTimeReturn = '09:00';
 
+    ga('set', 'page', '/editSampleRequest.html');
+    ga('send', 'pageview');
   }
 
   onSelectAddressChangeCallback(event) {
