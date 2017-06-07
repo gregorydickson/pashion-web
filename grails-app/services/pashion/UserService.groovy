@@ -88,8 +88,9 @@ class UserService {
 
             String password = hash(params.password)
             if (params.city){
+                log.info "city:"+params.city
                 def cityParam = params.city
-                if(cityParam.hasProperty("id")) {
+                if(cityParam.id) {
                     city = City.get(cityParam.id.toInteger())
                 } else {
                     city = City.get(cityParam.toInteger())
