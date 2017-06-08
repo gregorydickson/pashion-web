@@ -4,6 +4,7 @@ import com.agileorbit.schwartz.SchwartzJob
 import grails.transaction.Transactional
 
 import groovy.util.logging.Slf4j
+import java.util.TimeZone
 import org.quartz.JobExecutionContext
 import org.quartz.JobExecutionException
 import groovy.time.TimeCategory
@@ -17,14 +18,18 @@ class StuartNotificationJobService implements SchwartzJob {
 
 	@Transactional
 	void execute(JobExecutionContext context) throws JobExecutionException {
-		println "Stuart Notification JobService"
+		println "STUART NOTIFICAION  ******   Stuart Notification JobService"
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
 		
 		Date today = new Date().clearTime()
 		Date now = new Date()
+		println "STUART NOTIFICAION  ******  now "+now
+
 		Date inOneHour
 
 		use(TimeCategory) {
-        	inOneHour = today + 1.hours 
+        	inOneHour = now + 1.hours 
+        	println "STUART NOTIFICAION  ******  in OneHour "+inOneHour
         }
         
         def query = SampleRequest.createCriteria() 
@@ -44,19 +49,24 @@ class StuartNotificationJobService implements SchwartzJob {
  
 		
 		def listToNotify = []
-		results.each{
+		results.each{ SampleRequest sr ->
 			//if they are happening in the next hour then notify them
+			println "STUART NOTIFICAION  ******   a Shipping Out:"+sr
 			Date theirTime
 			use(TimeCategory){
 				
-				def timeArray = it.pickupTime.split(":")
+				def timeArray = sr.pickupTime.split(":")
         		theirTime = today + timeArray[0].toInteger().hours + timeArray[1].toInteger().minutes
-        		if(theirTime.after(now) && theirTime.before(inOneHour)){
-        			it << listToNotify 
+        		println "STUART NOTIFICAION  ******  sr pickup time: "+theirTime
+        		if(theirTime < inOneHour && theirTime > now ){
+        			println "STUART NOTIFICAION  ******   a Shipping Out in the next Hour:"+it
+        			listToNotify << sr
+        			sr.courierOutNotification = true
+        			sr.save(flush:true, failOnError:true)
         		}
 			}
 		}
-		println "courier out notifications: "+listToNotify.size()
+		println "STUART NOTIFICAION  ******   courier out notifications: "+listToNotify.size()
 		if(listToNotify.size() > 0) emailService.courierOutNotify(listToNotify)
 
 		// TODO notify return
@@ -75,12 +85,14 @@ class StuartNotificationJobService implements SchwartzJob {
 		def listToNotify2 = []
 		results2.each{
 			//if they are happening in the next hour then notify them
+			println "STUART NOTIFICAION  ******   a Shipping Return:"+it
 			Date theirTime
 			use(TimeCategory){
 				
 				def timeArray = it.pickupReturnTime.split(":")
         		theirTime = today + timeArray[0].toInteger().hours + timeArray[1].toInteger().minutes
         		if(theirTime.after(now) && theirTime.before(inOneHour)){
+        			println "STUART NOTIFICAION  ******   a Shipping Return in the next Hour:"+it
         			it << listToNotify 
         		}
 			}
@@ -92,6 +104,6 @@ class StuartNotificationJobService implements SchwartzJob {
 
 
 	void buildTriggers() {
-		triggers << factory('Stuart_EverySecond').intervalInSeconds(100).build()
+		triggers << factory('Stuart_EverySecond').intervalInSeconds(60).build()
 	}
 }
