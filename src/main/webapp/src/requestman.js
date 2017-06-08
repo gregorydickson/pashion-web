@@ -178,8 +178,8 @@ export class Requestman {
     if (this.searchFrom) dates = "From: " + this.searchFrom;
     if (this.searchTo) dates = dates + " to " + this.searchTo;
     // var headerText = {};
-    if (this.user.type == 'brand' || this.user.type == 'prAgency') var headerText = ['ID', 'LOOK', 'DUE DATE', 'COMPANY', 'EDITORIAL', 'WHO', '#', 'STATUS'];
-    if (this.user.type == 'press') var headerText = ['ID', 'LOOK', 'REQUESTED', 'BRAND', 'EDITORIAL', 'OWNER', '#', 'STATUS'];
+    if (this.user.type == 'brand' || this.user.type == 'prAgency') var headerText = ['ID', 'LOOK', 'DUE DATE', 'COMPANY', 'REQUESTOR', 'END DATE', '#', 'STATUS'];
+    if (this.user.type == 'press') var headerText = ['ID', 'LOOK', 'REQUESTED', 'BRAND', 'REQUESTOR', 'END DATE', '#', 'STATUS'];
     this.pDFService.generatePDF(this.user.name, this.user.surname, dates, search, filter, headerText);
     //console.log("container to text: " + container);
   }
@@ -236,7 +236,7 @@ export class Requestman {
 
 
   filterFunc(searchExpression, value, filter, user, seasons, city) {
-    // editorialName, pressHouse
+    // pressHouse
 
     var searchVal = true;
     var filterVal = true;
@@ -251,8 +251,6 @@ export class Requestman {
     if ((value.deliverTo) && value.deliverTo.pressHouse) itemValue = itemValue + ' ' + value.deliverTo.pressHouse.name;
     if ((value.deliverTo) && value.deliverTo.brand) itemValue = itemValue + ' ' + value.deliverTo.brand.name;
     if ((value.deliverTo) && value.deliverTo.prAgency) itemValue = itemValue + ' ' + value.deliverTo.prAgency.name;
-    if (value.editorialName) itemValue = itemValue + ' ' + value.editorialName;
-    if (value.editorialWho) itemValue = itemValue + ' ' + value.editorialWho;
     if (value.requestingUser) itemValue = itemValue + ' ' + value.requestingUser.name + ' ' + value.requestingUser.surname;
     if (value.returnToName) itemValue = itemValue + ' ' + value.returnToName;
     if (value.returnToSurname) itemValue = itemValue + ' ' + value.returnToSurname;
