@@ -12,15 +12,6 @@ class StuartController {
 	def stuartService
 	def sampleRequestService
 
-	def index(){
-		Address address1 = Address.get(61)
-		Address address2 = Address.get(62)
-		ShippingEvent event = ShippingEvent.get(294)
-		def response = stuartService.createJobQuote(address1,address2,event,"Scooter")
-		response = stuartService.createJob(address1,address2,response)
-
-		render 'done'
-	}
 
 
 	/*
@@ -56,7 +47,13 @@ class StuartController {
 			ShippingEvent shippingEvent = ShippingEvent.findByStuartJobId(update.data.id)
 			shippingEvent.status = update.data.status.capitalize()
 			shippingEvent.stuartStatus = update.data.status
-
+			
+			shippingEvent.transportType = update.data.currentDelivery.driver.transportType
+			shippingEvent.driverStatus = update.data.currentDelivery.driver.status
+			shippingEvent.latitude = new BigDecimal(update.data.currentDelivery.driver.latitude)
+			shippingEvent.longitude = new BigDecimal(update.data.currentDelivery.driver.longitude)
+			shippingEvent.driverPhone = update.data.currentDelivery.driver.phone
+			shippingEvent.driverName = update.data.currentDelivery.driver.firstname + " " + update.data.currentDelivery.driver.lastname
 			shippingEvent.save(failOnError:true,flush:true)
 		}
 		response.status = 200

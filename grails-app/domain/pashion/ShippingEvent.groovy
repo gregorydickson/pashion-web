@@ -15,6 +15,11 @@ class ShippingEvent {
 	String transportType
 	BigDecimal finalAmount
 	String currency
+	BigDecimal latitude
+	BigDecimal longitude
+	String driverPhone
+	String driverName
+	String driverStatus
 	
 
 	//auto fields
@@ -27,19 +32,10 @@ class ShippingEvent {
     }
 
 	static constraints = {
-		status nullable: true
-        startDate nullable: true
-        endDate nullable: true
-        courier nullable: true
-        tracking nullable: true
-        stuartQuoteId nullable:true
-        stuartJobId nullable:true
-        sampleRequest nullable: true
-        stuartStatus nullable: true
-        stuartJSON nullable:true
-        transportType nullable:true
-        finalAmount nullable:true
-        currency nullable: true
+    }
+
+    String toString(){
+    	return id+" - " + status + " " + startDate
     }
 
 
