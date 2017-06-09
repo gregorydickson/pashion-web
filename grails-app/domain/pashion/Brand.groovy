@@ -6,7 +6,6 @@ class Brand {
 	String name
 	String logo
 
-	String stormpathDirectory 
 
 	//auto fields
 	Date dateCreated
