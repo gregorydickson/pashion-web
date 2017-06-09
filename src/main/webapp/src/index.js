@@ -887,7 +887,9 @@ export class Index {
                 this.cityFiltering = this.user.city.name;
             }
         });
-          
+        ga('set', 'page', '/index.html');
+        ga('send', 'pageview');
+        ga('send', 'event', 'index', 'pageview', this.user.email);
     }
 
 

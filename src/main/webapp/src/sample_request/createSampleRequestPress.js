@@ -100,6 +100,8 @@ export class CreateSampleRequestPress {
 
   attached(){
     document.getElementById("CreateSampleRequestButton").disabled = true;
+    ga('set', 'page', '/createSampleRequestPress.html');
+    ga('send', 'pageview');
   }
 
   alertP (message){

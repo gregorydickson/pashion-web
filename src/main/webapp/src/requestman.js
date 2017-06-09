@@ -139,6 +139,8 @@ export class Requestman {
             this.cityFiltering = this.user.city.name;
         }
     }); 
+      ga('set', 'page', '/requestman.html');
+      ga('send', 'pageview');
   }
 
   get numberOfRequests() {

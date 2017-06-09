@@ -5,7 +5,7 @@ package pashion
 class PRAgency {
 
 	String name
-	String stormpathDirectory
+
 
 	//auto fields
 	Date dateCreated
