@@ -14,11 +14,6 @@ dataSource:
     jmxExport: true
     driverClassName: com.mysql.jdbc.Driver
     dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-    
-stormpath:
-    apiKey:
-        id: 3OTJGW2C2J572PYYPGTQVRL1A
-        secret: lOwKaNI3ClftnGl58MJLFLGbsCcuOL/EHNSjJg5MWss
 
 jasypt:
     algorithm: PBEWITHSHA256AND256BITAES-CBC-BC
