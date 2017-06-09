@@ -23,13 +23,6 @@ class PressHouse {
     static constraints = {
         name size: 1..100, blank: false
 
-        addresses nullable: true
-
-        lastModifiedUserId nullable: true
-        userCreatedId nullable: true
-        stormpathDirectory nullable: true
-
-        users nullable: true
     }
 
     String toString() {
