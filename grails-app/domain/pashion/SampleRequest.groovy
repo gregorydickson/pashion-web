@@ -23,6 +23,7 @@ class SampleRequest {
 
 	PressHouse pressHouse
 	String prAgency
+	String requestingUserCompany
 	Address addressDestination
 	Address returnToAddress
 
