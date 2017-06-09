@@ -171,7 +171,10 @@ export class Requestman {
     return overdue;
   }
 
+/*
+// VERY SLOW and clunky and kludge ? side effects on currentContact ??
 
+  // requires ref
   computeCompany(id,company) {
     console.log(company);
     if (id == null || id == undefined || id == 'undefined' || id == '') return '';
@@ -181,6 +184,7 @@ export class Requestman {
       else company.innerHTML = details.pressHouse.name;
     })
   }
+  */
 
   createPDFDialog() {
     //container = document.getElementsByClassName ('brandGridContent');

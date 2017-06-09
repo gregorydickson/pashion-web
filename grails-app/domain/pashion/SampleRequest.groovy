@@ -51,10 +51,6 @@ class SampleRequest {
 	Date pickupDateReturn
 	String pickupTime
 	String pickupTimeReturn
-	
-
-	String editorialName
-	String editorialWho
 
 	//auto fields
 	Date dateCreated

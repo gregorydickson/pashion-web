@@ -173,7 +173,7 @@
 
                                             <!-- BRAND / Company -->
                                             <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="col4 accordion-grey w17 variable-padding">${booking.brand.name}</td>
-                                            <td if.bind="user.type === 'brand'" class="col4 accordion-grey w17 variable-padding" ref="company">${computeCompany(booking.requestingUser.id, company)}</td> <!-- TBD -->
+                                            <td if.bind="user.type === 'brand'" class="col4 accordion-grey w17 variable-padding" ref="company">${booking.requestingUserCompany}</td> <!-- TBD -->
 
                                             <!-- Requestor -->
                                             <td if.bind="booking.requestingUser.name" class="col5 accordion-grey w17 variable-padding">${booking.requestingUser.name} ${booking.requestingUser.surname}</td>
