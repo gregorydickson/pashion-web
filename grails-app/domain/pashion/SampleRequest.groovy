@@ -23,6 +23,7 @@ class SampleRequest {
 
 	PressHouse pressHouse
 	String prAgency
+	String requestingUserCompany
 	Address addressDestination
 	Address returnToAddress
 
@@ -50,10 +51,6 @@ class SampleRequest {
 	Date pickupDateReturn
 	String pickupTime
 	String pickupTimeReturn
-	
-
-	String editorialName
-	String editorialWho
 
 	//auto fields
 	Date dateCreated

@@ -12,6 +12,11 @@ json g.render(sampleRequest,[expand:['searchableItemsStatus','searchableItemsPro
 	pickupTime sampleRequest.pickupTime
 	pickupDateReturn sampleRequest.pickupDateReturn?.format('dd-MMM-yyyy')
 	pickupTimeReturn sampleRequest.pickupTimeReturn
+	
+	requestingUserCompany sampleRequest.requestingUserCompany
+	prAgency{
+		name sampleRequest.prAgency
+	}
 	brand{
 		name sampleRequest.brand.name
 		id sampleRequest.brand.id

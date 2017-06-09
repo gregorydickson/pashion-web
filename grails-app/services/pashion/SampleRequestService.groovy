@@ -131,9 +131,13 @@ class SampleRequestService {
             sr.courierOut = jsonObject.courierOut
             sr.courierReturn = jsonObject.courierReturn
             sr.requestingUser = requestingUser
-            sr.editorialName = jsonObject.editorialName
-            sr.editorialWho = jsonObject.editorialWho
+
             sr.prAgency = jsonObject.prAgency
+
+            def srUser = new User().get(requestingUser.id)
+            if(srUser.brand) sr.requestingUserCompany = srUser.brand.name
+            if(srUser.pressHouse) sr.requestingUserCompany = srUser.pressHouse.name
+            if(srUser.prAgency) sr.requestingUserCompany = srUser.prAgency.name
 
             // truncate if necessary 
             if (jsonObject.message) {
@@ -247,9 +251,6 @@ class SampleRequestService {
         
 
         SampleRequest.withTransaction { status ->
-
-            sr.editorialName = jsonObject.editorialName
-            sr.editorialWho = jsonObject.editorialWho
             
             sr.shippingOut.tracking = jsonObject.shippingOut.tracking
             

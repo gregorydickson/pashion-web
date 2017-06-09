@@ -13,8 +13,9 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 import { PDFService } from './services/PDFService';
 import { PRAgencyService } from './services/PRAgencyService';
 import { BrandService } from './services/brandService';
+import { UserService } from './services/userService';
 
-@inject(HttpClient, DialogService, DS, PDFService, SampleRequestService, busy, EventAggregator, PubNubService, BrandService, PRAgencyService)
+@inject(HttpClient, DialogService, DS, PDFService, SampleRequestService, busy, EventAggregator, PubNubService, BrandService, PRAgencyService, UserService)
 export class Requestman {
 
   @bindable({ defaultBindingMode: bindingMode.twoWay }) bookings = [];
@@ -37,7 +38,7 @@ export class Requestman {
 
 
 
-  constructor(http, dialogService, DS, pDFService, sampleRequestService, busy, eventAggregator, pubNubService, brandService, PRAgencyService) {
+  constructor(http, dialogService, DS, pDFService, sampleRequestService, busy, eventAggregator, pubNubService, brandService, PRAgencyService, userService) {
     http.configure(config => {
       config
         .useStandardConfiguration();
@@ -52,6 +53,7 @@ export class Requestman {
     this.pDFService = pDFService;
     this.pubNubService = pubNubService;
     this.brandService = brandService;
+    this.userService = userService;
     this.prAgencyService = PRAgencyService;
 
   }
@@ -160,6 +162,7 @@ export class Requestman {
                   }          
       } */
 
+
   computedOverdue(booking, status) {
     var computedDate = new Date(booking);
     var overdue = this.today > computedDate;
@@ -167,6 +170,21 @@ export class Requestman {
     //console.log("computedOverdue function, booking: " + booking + " today: " + this.today + " computed: " +  computedDate + " overdue: " + (this.today > computedDate));
     return overdue;
   }
+
+/*
+// VERY SLOW and clunky and kludge ? side effects on currentContact ??
+
+  // requires ref
+  computeCompany(id,company) {
+    console.log(company);
+    if (id == null || id == undefined || id == 'undefined' || id == '') return '';
+    this.userService.getUserDetails(id).then ( details => { 
+      if (details.brand) company.innerHTML = details.brand.name;
+      else if (details.prAgency) company.innerHTML = details.prAgency.name;
+      else company.innerHTML = details.pressHouse.name;
+    })
+  }
+  */
 
   createPDFDialog() {
     //container = document.getElementsByClassName ('brandGridContent');
@@ -178,8 +196,8 @@ export class Requestman {
     if (this.searchFrom) dates = "From: " + this.searchFrom;
     if (this.searchTo) dates = dates + " to " + this.searchTo;
     // var headerText = {};
-    if (this.user.type == 'brand' || this.user.type == 'prAgency') var headerText = ['ID', 'LOOK', 'DUE DATE', 'COMPANY', 'EDITORIAL', 'WHO', '#', 'STATUS'];
-    if (this.user.type == 'press') var headerText = ['ID', 'LOOK', 'REQUESTED', 'BRAND', 'EDITORIAL', 'OWNER', '#', 'STATUS'];
+    if (this.user.type == 'brand' || this.user.type == 'prAgency') var headerText = ['ID', 'LOOK', 'DUE DATE', 'COMPANY', 'REQUESTOR', 'END DATE', '#', 'STATUS'];
+    if (this.user.type == 'press') var headerText = ['ID', 'LOOK', 'REQUESTED', 'BRAND', 'REQUESTOR', 'END DATE', '#', 'STATUS'];
     this.pDFService.generatePDF(this.user.name, this.user.surname, dates, search, filter, headerText);
     //console.log("container to text: " + container);
   }
@@ -236,7 +254,7 @@ export class Requestman {
 
 
   filterFunc(searchExpression, value, filter, user, seasons, city) {
-    // editorialName, pressHouse
+    // pressHouse
 
     var searchVal = true;
     var filterVal = true;
@@ -251,8 +269,6 @@ export class Requestman {
     if ((value.deliverTo) && value.deliverTo.pressHouse) itemValue = itemValue + ' ' + value.deliverTo.pressHouse.name;
     if ((value.deliverTo) && value.deliverTo.brand) itemValue = itemValue + ' ' + value.deliverTo.brand.name;
     if ((value.deliverTo) && value.deliverTo.prAgency) itemValue = itemValue + ' ' + value.deliverTo.prAgency.name;
-    if (value.editorialName) itemValue = itemValue + ' ' + value.editorialName;
-    if (value.editorialWho) itemValue = itemValue + ' ' + value.editorialWho;
     if (value.requestingUser) itemValue = itemValue + ' ' + value.requestingUser.name + ' ' + value.requestingUser.surname;
     if (value.returnToName) itemValue = itemValue + ' ' + value.returnToName;
     if (value.returnToSurname) itemValue = itemValue + ' ' + value.returnToSurname;
