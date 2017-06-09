@@ -7,7 +7,6 @@ class PressHouse {
 
     Long lastModifiedUserId
     Long userCreatedId
-    String stormpathDirectory 
 
 	//auto fields
 	Date dateCreated
