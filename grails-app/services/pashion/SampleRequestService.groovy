@@ -134,7 +134,7 @@ class SampleRequestService {
 
             sr.prAgency = jsonObject.prAgency
 
-            def srUser = new User().get(requestingUser.id)
+            def srUser = User.get(requestingUser.id)
             if(srUser.brand) sr.requestingUserCompany = srUser.brand.name
             if(srUser.pressHouse) sr.requestingUserCompany = srUser.pressHouse.name
             if(srUser.prAgency) sr.requestingUserCompany = srUser.prAgency.name
