@@ -13,8 +13,9 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 import { PDFService } from './services/PDFService';
 import { PRAgencyService } from './services/PRAgencyService';
 import { BrandService } from './services/brandService';
+import { UserService } from './services/userService';
 
-@inject(HttpClient, DialogService, DS, PDFService, SampleRequestService, busy, EventAggregator, PubNubService, BrandService, PRAgencyService)
+@inject(HttpClient, DialogService, DS, PDFService, SampleRequestService, busy, EventAggregator, PubNubService, BrandService, PRAgencyService, UserService)
 export class Requestman {
 
   @bindable({ defaultBindingMode: bindingMode.twoWay }) bookings = [];
@@ -37,7 +38,7 @@ export class Requestman {
 
 
 
-  constructor(http, dialogService, DS, pDFService, sampleRequestService, busy, eventAggregator, pubNubService, brandService, PRAgencyService) {
+  constructor(http, dialogService, DS, pDFService, sampleRequestService, busy, eventAggregator, pubNubService, brandService, PRAgencyService, userService) {
     http.configure(config => {
       config
         .useStandardConfiguration();
@@ -52,6 +53,7 @@ export class Requestman {
     this.pDFService = pDFService;
     this.pubNubService = pubNubService;
     this.brandService = brandService;
+    this.userService = userService;
     this.prAgencyService = PRAgencyService;
 
   }
@@ -160,12 +162,24 @@ export class Requestman {
                   }          
       } */
 
+
   computedOverdue(booking, status) {
     var computedDate = new Date(booking);
     var overdue = this.today > computedDate;
     overdue = (overdue && (status == 'Pending'))
     //console.log("computedOverdue function, booking: " + booking + " today: " + this.today + " computed: " +  computedDate + " overdue: " + (this.today > computedDate));
     return overdue;
+  }
+
+
+  computeCompany(id,company) {
+    console.log(company);
+    if (id == null || id == undefined || id == 'undefined' || id == '') return '';
+    this.userService.getUserDetails(id).then ( details => { 
+      if (details.brand) company.innerHTML = details.brand.name;
+      else if (details.prAgency) company.innerHTML = details.prAgency.name;
+      else company.innerHTML = details.pressHouse.name;
+    })
   }
 
   createPDFDialog() {
