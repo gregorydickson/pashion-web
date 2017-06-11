@@ -1,0 +1,73 @@
+<ehcache>
+
+   <diskStore path='java.io.tmpdir' />
+
+   <defaultCache
+      maxElementsInMemory='10000'
+      eternal='false'
+      timeToIdleSeconds='86400'
+      timeToLiveSeconds='86400'
+      overflowToDisk='true'
+      maxElementsOnDisk='10000000'
+      diskPersistent='false'
+      diskExpiryThreadIntervalSeconds='120'
+      memoryStoreEvictionPolicy='LRU'
+   />
+
+   <cache name='pashion.SearchableItem'
+      maxElementsInMemory='100000'
+      eternal='true'
+      overflowToDisk='false'
+   />
+   <cache name='pashion.SampleRequest'
+      maxElementsInMemory='10000'
+      eternal='true'
+      overflowToDisk='false'
+   />
+   <cache name='pashion.ShippingEvent'
+      maxElementsInMemory='10000'
+      eternal='true'
+      overflowToDisk='false'
+   />
+   <cache name='pashion.Brand'
+      maxElementsInMemory='10000'
+      eternal='true'
+      overflowToDisk='false'
+   />
+   <cache name='pashion.PressHouse'
+      maxElementsInMemory='10000'
+      eternal='true'
+      overflowToDisk='false'
+   />
+   <cache name='pashion.Address'
+      maxElementsInMemory='10000'
+      eternal='true'
+      overflowToDisk='false'
+   />
+   <cache name='pashion.User'
+      maxElementsInMemory='10000'
+      eternal='true'
+      overflowToDisk='false'
+   />
+   <cache name='pashion.City'
+      maxElementsInMemory='20'
+      eternal='true'
+      overflowToDisk='false'
+   />
+
+   <!-- hibernate stuff -->
+   <cache name='org.hibernate.cache.StandardQueryCache'
+      maxElementsInMemory='100'
+      eternal='false'
+      timeToLiveSeconds='120'
+      maxElementsOnDisk='0'
+   />
+
+   <cache
+      name='org.hibernate.cache.UpdateTimestampsCache'
+      maxElementsInMemory='5000'
+      eternal='true'
+      maxElementsOnDisk='0'
+   />
+
+</ehcache>

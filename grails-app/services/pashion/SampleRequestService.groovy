@@ -19,7 +19,6 @@ class SampleRequestService {
 
         if(user?.brand)
         {
-            log.info "brand user get sample requests"
             def brand = user.brand
             results = criteria.listDistinct () {
                 fetchMode 'brand', FM.JOIN
@@ -38,7 +37,6 @@ class SampleRequestService {
             }
         }
         if(user?.pressHouse){
-            log.info "press user get sample requests"
             def pressHouse = user.pressHouse
             results = criteria.listDistinct () {
                 fetchMode 'brand', FM.JOIN

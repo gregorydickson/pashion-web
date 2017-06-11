@@ -866,10 +866,13 @@ export class Index {
         $(window).resize(function () {
             mainScrollWindowHeight();
         });
+        console.time("SampleRequests");
         this.sampleRequestService.getSampleRequests().then(bookings => {
             bookings.forEach(item => {
                 this.bookings.push(item);
+                
             });
+            console.timeEnd("SampleRequests");
         });
 
         this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub());
