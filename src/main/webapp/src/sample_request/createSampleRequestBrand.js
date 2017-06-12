@@ -245,6 +245,8 @@ export class CreateSampleRequestBrand {
     console.log("parameterday: " + day);
 
     var today = new Date();
+    var yesterday = new Date ();
+    yesterday = yesterday.setDate(today.getDate() - (24*60*60*1000));
     this.startDay = day;
     var enddate = '';
     if (this.endDay != '') enddate = new Date(this.endCalendar.calendarMonths[0].year, this.endCalendar.calendarMonths[0].monthNumber - 1, this.endDay);
@@ -257,8 +259,8 @@ export class CreateSampleRequestBrand {
     console.log("startDay: " + this.startDay);
     if (this.endDay != '') console.log("enddate: " + enddate); else console.log("no endDay set")
     console.log("endDay: " + this.endDay);
-    if (startdate <= today) {
-      console.log("day is before today or is today, exit");
+    if (startdate <= yesterday) {
+      console.log("day is before today.");
       this.startDay = '';
       this.sampleRequest.startDate = '';
       this.sampleRequestStartMonth = '';
@@ -342,7 +344,9 @@ export class CreateSampleRequestBrand {
     var startdate = '';
     let enddate = new Date(this.endCalendar.calendarMonths[0].year, this.endCalendar.calendarMonths[0].monthNumber - 1, day);
     if (this.startDay != '') startdate = new Date(this.startCalendar.calendarMonths[0].year, this.startCalendar.calendarMonths[0].monthNumber - 1, this.startDay);
-    var today = new Date();
+    var today = new Date(); 
+    var yesterday = new Date ();
+    yesterday = yesterday.setDate(today.getDate() - (24*60*60*1000));
 
     console.log("today: " + today);
     if (this.startDay != '') console.log("startDay: " + this.startDay);
@@ -358,8 +362,8 @@ export class CreateSampleRequestBrand {
     console.log("startdate: " + startdate);
     console.log("enddate: " + enddate);
     console.log("endDay: " + this.endDay);
-    if (enddate <= today) {
-      console.log("day is before today or is today, exit");
+    if (enddate <= yesterday) {
+      console.log("day is before today.");
       this.endDay = '';
       this.sampleRequest.endDate = '';
       this.sampleRequestEndDay = '';
