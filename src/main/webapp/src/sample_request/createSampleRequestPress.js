@@ -243,8 +243,8 @@ export class CreateSampleRequestPress {
     }
     console.log ("day is in the future");
 
-    if(this.startDay === '' || enddate < startdate || enddate.getTime() == startdate.getTime()){
-      console.log (" empty, reverse or time clash");
+    if(this.startDay === '' || enddate < startdate ){
+      console.log (" empty, reverse");
       this.endDay = '';
       this.sampleRequest.endDate = '';
       this.sampleRequestEndDay = '';
