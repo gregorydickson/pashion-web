@@ -43,7 +43,7 @@
                                     </a>
                                 </td> -->
                                 <td class= "${cell.event}" repeat.for="cell of row">
-                                  <a  class=" ${(computedClass && (cell.dayString === sampleRequestStartDay)) ? 'end-selected' : ''} " href="#" click.delegate="setStartDate($event,cell.event,cell.dayString)">
+                                  <a  class=" ${(computedClass && (cell.dayString === sampleRequestStartDay)) ? 'start-selected' : ''} " href="#" click.delegate="setStartDate($event,cell.event,cell.dayString)">
                                       ${cell.dayString}
                                   </a>
                             </td>
