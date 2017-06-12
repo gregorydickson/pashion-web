@@ -3,22 +3,22 @@
 //}
 
 a.start-selected {
-	border: 2px solid $flat-blue;
+	border: 2px solid $muted-green;
 	padding: 4px;
 }
 
 a.end-selected {
-	border: 2px solid $flat-blue;
+	border: 2px solid $scarlet;
 	padding:4px;
 }
 
 td.au-target.start-selected {
-	border: 2px solid $flat-blue;
+	border: 2px solid $muted-green;
 	//padding: 4px;
 }
 
 td.au-target.end-selected {
-	border: 2px solid $flat-blue;
+	border: 2px solid $scarlet;
 	//padding:4px;
 }
 
@@ -27,11 +27,11 @@ td.au-target.available {
 }
 
 td.au-target.today {
-	background-color: $flat-blue;
+	background-color: $white-three;
 
-	> a {
-		color: white;
-	}
+//	> a {
+		color: $flat-blue;
+//	}
 }
 
 td.au-target.not-available {
