@@ -43,7 +43,7 @@
                 <div class="grid-block vertical align-left slim-form-wrap">
 
                     <!-- OVERVIEW -->
-                    <div class="grid-block vertical">
+                    <div class="grid-block shrink">
                         <span class="title-form">OVERVIEW</span>
                     </div>
 
@@ -96,7 +96,7 @@
                         </div>
 
                         <!-- Status-->
-                        <div class="grid-block vertical">
+                        <div class="grid-block shrink">
                             <div class="inline-label">
                                 <span if.bind="user.type === 'brand'" class="slim-text-box-label" style="margin-left: 2rem;">Status: ${sampleRequest.requestStatusBrand} </span>
                                 <span if.bind="user.type === 'press'" class="slim-text-box-label" style="margin-left: 2rem;">Status: ${sampleRequest.requestStatusPress} </span>
@@ -104,28 +104,7 @@
                         </div>
                     </div>
 
-                    <!-- Editorial -->
-                    <div class="grid-block vertical">
-                        <span class="title-form">EDITORIAL</span>
-                    </div>
-
-                    <!-- Name -->
                     <div class="grid-block shrink">
-                        <div class="inline-label">
-                            <span class="slim-text-box-label">Name</span>
-                            <input type="text" value.bind="sampleRequest.editorialName" class="slim-text-box">
-                        </div>
-                    </div>
-
-                    <!-- Who -->
-                    <div class="grid-block shrink">
-                        <div class="inline-label">
-                            <span class="slim-text-box-label">Who</span>
-                            <input type="text" value.bind="sampleRequest.editorialWho" class="slim-text-box">
-                        </div>
-                    </div>
-
-                    <div class="grid-block vertical">
                         <span class="title-form">RETURN DETAILS</span>
                     </div>
 

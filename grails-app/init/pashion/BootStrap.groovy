@@ -58,16 +58,12 @@ class BootStrap {
         returnArray['id'] =  it.id
         return returnArray
       }
-
-      def dateFormatString = "yyyy-MM-dd"
-      SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
-      def itemtype1 = SearchableItemType.findOrSaveWhere(display:'Looks',searchCode:'look').save(failOnError : true)
-      def itemtype2 = SearchableItemType.findOrSaveWhere(display:'Samples',searchCode:'sample').save(failOnError : true)
-      def itemtype3 = SearchableItemType.findOrSaveWhere(display:'Runway',searchCode:'runway').save(failOnError : true)
-
-      
-
-      
+      if (Environment.current == Environment.PRODUCTION) {
+        def ids = SampleRequest.executeQuery('select id from SampleRequest')
+        for (id in ids) {
+            SampleRequest.get(id)
+        }
+      }
         
 
 

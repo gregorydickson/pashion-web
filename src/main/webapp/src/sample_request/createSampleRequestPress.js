@@ -291,8 +291,6 @@ export class CreateSampleRequestPress {
        (this.sampleRequest.courierReturn === '') ||
        (this.sampleRequest.paymentReturn === '') ||
        (this.sampleRequest.paymentOut === '') ||
-       (this.sampleRequest.editorialName === '') ||
-       (this.sampleRequest.editorialWho === '') ||
        (this.sampleRequest.endDate == '')){
           document.getElementById("CreateSampleRequestButton").disabled = true;
           console.log("button DIS abled");

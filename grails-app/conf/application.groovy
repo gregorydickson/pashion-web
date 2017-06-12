@@ -70,16 +70,3 @@ dataSource{
 	}
 }
 
-grails.cache.config = {
-    cache {
-    	name 'mycache'
-        eternal false
-      	timeToIdleSeconds 86400
-      	timeToLiveSeconds 86400
-      	overflowToDisk true
-      	maxElementsOnDisk 10000000
-      	diskPersistent false
-      	diskExpiryThreadIntervalSeconds 120
-      	memoryStoreEvictionPolicy 'LRU'
-    }
-}
