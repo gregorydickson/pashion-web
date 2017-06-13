@@ -186,10 +186,12 @@ class SampleRequestService {
     // address or 
     def destinationAddressPress(SampleRequest sr, JSONObject jsonObject){
         log.info "Destination Address Press"
+        
         if(jsonObject.has('deliverTo') && jsonObject.deliverTo.originalId == null){
             log.info "destination address press has DeliverTo"+jsonObject.deliverTo
             def aUser = User.get(jsonObject.deliverTo.id.toInteger())
-            if(aUser){
+            
+            if((aUser) && sr.deliverTo != aUser){
                 sr.pressHouse = aUser.pressHouse
                 log.info "Press User:"+aUser.name + " " + aUser.surname
                 sr.deliverTo = aUser
@@ -326,11 +328,12 @@ class SampleRequestService {
                     sr.message = jsonObject.message
             }
 
-            
-            if(sr.pressHouse){
-                sr = destinationAddressPress(sr,jsonObject)
-            } else {
-                sr = destinationAddressBrand(sr,jsonObject)
+            if(sr.shippingOut.stuartQuoteId == null){
+                if(sr.pressHouse){
+                    sr = destinationAddressPress(sr,jsonObject)
+                } else {
+                    sr = destinationAddressBrand(sr,jsonObject)
+                }
             }
             sr = returnToAddress(sr,jsonObject)
             sr.save(failOnError:true,flush:true)
