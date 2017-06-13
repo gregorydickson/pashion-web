@@ -116,8 +116,9 @@ export class PRAgencyService {
         return promise;
     }
 
+    // always returns false as switch disabled an set to false.
     getRestrictOutsideBooking(id){
-        var promise = new Promise((resolve, reject) => {
+       /* var promise = new Promise((resolve, reject) => {
                 this.http.fetch('/PRAgency/getRestrictOutsideBooking/'+id+'.json')
                     .then(response =>
                         response.json()).then(hd => {
@@ -125,8 +126,9 @@ export class PRAgencyService {
                     }).catch(err => reject(err));
             
         });
-        return promise;
-
+        return promise; */
+        var promise = Promise.resolve(false);
+        return promise
     }
 
 
