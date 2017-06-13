@@ -210,8 +210,8 @@ class StuartController {
 	        	theDate = theDate + theTime[1].toInteger().minutes
 	        }
 	        log.info "booking date:"+theDate
-	        log.info "buffer:"+buffer
-	        if(theDate < buffer){
+	        log.info "buffer:"+timebuffer
+	        if(theDate < timebuffer){
 	        	message = [message:"Cannot book messenger in the past"] as JSON
         	
         		return message
