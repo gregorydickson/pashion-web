@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.converters.JSON
 import groovy.time.*
+import java.util.TimeZone
 
 
 @Transactional(readOnly = true)
@@ -88,7 +89,8 @@ class StuartController {
         log.info "quote:"+shippingEvent
         if(shippingEvent instanceof Map){
         	log.error "quote ERROR"
-        	message = [message:"Booking Error"]
+        	message = stuartMessage(shippingEvent)
+        	message = [message:message]
         	render message as JSON
         	return
         }
@@ -105,7 +107,7 @@ class StuartController {
 		shippingEvent = stuartService.createJob(theDate,returnTo,sr.addressDestination,shippingEvent)
         if(shippingEvent instanceof Map){
         	log.error "stuart error message:"+shippingEvent.message
-        	message = [message:"Booking Error"]
+        	message = stuartMessage(message)
         }else{
         	message = [message:"Messenger Booked"]
         	response.status = 200
@@ -140,7 +142,7 @@ class StuartController {
         log.info "quote:"+shippingEvent
         if(shippingEvent instanceof Map){
         	log.error "quote ERROR"
-        	message = [message:"Booking Error"]
+        	message = stuartMessage(shippingEvent)
         	render message as JSON
         	return
         }
@@ -155,9 +157,10 @@ class StuartController {
         }
         
 		shippingEvent = stuartService.createJob(theDate,sr.addressDestination,returnTo,shippingEvent)
-        if(shippingEvent.hasProperty("message")){
-        	log.info "Stuart message"
-        	message = [message:"Booking Error"]
+        if(shippingEvent instanceof Map){
+        	log.error "quote ERROR"
+        	message = stuartMessage(shippingEvent)
+
         }else{
         	message = [message:"Messenger Booked"]
         	response.status = 200
@@ -169,14 +172,17 @@ class StuartController {
 
 	def checkRules(SampleRequest sr,String direction){
 		log.info "check rules for stuart"
+		TimeZone.setDefault(TimeZone.getTimeZone("Europe/London"))
 		def message
 
 		//no booking in the past
 		Date now = new Date()
-		Date inOneHour
+		log.info "stuart check rules now:"+now
+		Date timebuffer
 		use(TimeCategory) {
-        	inOneHour = now + 1.hours 
+        	timebuffer = now + 30.minutes 
         }
+        log.info "stuart check rules buffer:"+timebuffer
         if(direction == 'bookOut'){
         	Date theDate
 	        def theTime
@@ -186,8 +192,8 @@ class StuartController {
 	        	theDate = theDate + theTime[0].toInteger().hours
 	        	theDate = theDate + theTime[1].toInteger().minutes
 	        }
-	        if(theDate.before(inOneHour)){
-	        	message = [message:"Cannot book messenger in the past"] as JSON
+	        if(theDate < timebuffer){
+	        	message = [message:"Cannot book messenger in the past or less than 30 minutes"] as JSON
         	
         		return message
 	        }
@@ -204,31 +210,27 @@ class StuartController {
 	        	theDate = theDate + theTime[1].toInteger().minutes
 	        }
 	        log.info "booking date:"+theDate
-	        log.info "in one hour:"+inOneHour
-	        if(theDate.before(inOneHour)){
+	        log.info "buffer:"+buffer
+	        if(theDate < buffer){
 	        	message = [message:"Cannot book messenger in the past"] as JSON
         	
         		return message
 	        }
         }
         
-
 		//must be different locations
 		if(sr.addressDestination == sr.returnToAddress){
         	message = [message:"Origin and Destination are the same"] as JSON
-        	
         	return message
-        	
         }
         return null
 	}
 
 
-
-
-	def message(response){
+	def stuartMessage(response){
+		log.info "response:"+response
 		def result
-		switch (response) {
+		switch (response.error) {
 	        case 'JOB_DELIVERIES_INVALID':
 	            //that the delivery is invalid
 	            log.error "JOB_DELIVERIES_INVALID"
@@ -242,16 +244,17 @@ class StuartController {
 	        	result = "Invalid time"
 	        	return result
 	        	break
+	        case 'JOB_DISTANCE_NOT_ALLOWED':
+	        	log.error "job distance not allowed"
+	        	result = "Addresses must be in same city"
+	        	return result
+	        	break
 	        default:
 	            result = response
 	            return result
 	            break
 	    } 
 	}
-
-
-
-
 
 
 }

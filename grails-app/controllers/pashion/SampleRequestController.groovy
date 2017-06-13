@@ -48,6 +48,7 @@ class SampleRequestController {
         if(!sr){
             sr = sampleRequestService.updateSampleRequest(request.JSON)
         }
+        sr.approvingUser = User.get(session?.user?.id)
 
         sr.searchableItemsProposed.each{ sample ->
                 
@@ -64,7 +65,7 @@ class SampleRequestController {
         sr.requestStatusPress = "Approved"
         
 
-        sr.save(flush:true)
+        sr.save(flush:true,failOnError:true)
         def lookSeason = Season.findByName(sr.season.trim()).abbreviation + '.' + sr.look
         def sent = [message:'Sample Request ' + sr.id + ' (look ' + lookSeason + ') Approved']
         render sent as JSON

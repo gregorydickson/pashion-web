@@ -35,6 +35,7 @@ class SampleRequest {
 	String paymentReturn
 	User receivingUser 
 	User requestingUser 
+	User approvingUser
 	User deliverTo
 	String emailNotification
 	
