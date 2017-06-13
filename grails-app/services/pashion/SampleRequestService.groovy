@@ -186,7 +186,8 @@ class SampleRequestService {
     // address or 
     def destinationAddressPress(SampleRequest sr, JSONObject jsonObject){
         log.info "Destination Address Press"
-        if(jsonObject.has('deliverTo')){
+        if(jsonObject.has('deliverTo') && jsonObject.deliverTo.originalId == null){
+            log.info "destination address press has DeliverTo"+jsonObject.deliverTo
             def aUser = User.get(jsonObject.deliverTo.id.toInteger())
             if(aUser){
                 sr.pressHouse = aUser.pressHouse
@@ -200,6 +201,13 @@ class SampleRequestService {
                     if(!sr.addressDestination)
                         sr.addressDestination = Address.findByPressHouse(sr.pressHouse)
                 }
+            } 
+        } else{ 
+            //Brand user editing a Press sample request
+            log.info "getting address ad-hoc"
+            Address address = Address.get(jsonObject.deliverTo.originalId.toInteger())
+            if(address){
+                sr.addressDestination = address
             }
         }
         log.info "destination address press outcome:"+sr.addressDestination

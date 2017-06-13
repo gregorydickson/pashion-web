@@ -22,23 +22,22 @@ class StuartNotificationJobService implements SchwartzJob {
 		
 
 		TimeZone.setDefault(TimeZone.getTimeZone("Europe/London"))
-		
 		Date today = new Date().clearTime()
 		Date now = new Date()
 		println "STUART NOTIFICATION LONDON ******  now "+now
 
 		Date inOneHour
-
 		use(TimeCategory) {
         	inOneHour = now + 1.hours 
         	println "STUART NOTIFICATION LONDON  ******  in OneHour "+inOneHour
         }
         
-        def query = SampleRequest.createCriteria() 
+        
 
         // SHIPPING OUT
         // first find any shipping out for today's date
         // that have not been notified
+        def query = SampleRequest.createCriteria()
         List results = query.listDistinct (){
         	fetchMode 'shippingOut', FM.JOIN
 
@@ -63,13 +62,13 @@ class StuartNotificationJobService implements SchwartzJob {
         		if(theirTime < inOneHour && theirTime > now ){
         			println "STUART NOTIFICATION LONDON  ******   a Shipping Out in the next Hour:"+it
         			listToNotify << sr
-        			sr.courierOutNotification = true
-        			sr.save(flush:true, failOnError:true)
         		}
 			}
 		}
 		println "STUART NOTIFICATION LONDON  ******   courier out notifications: "+listToNotify.size()
 		if(listToNotify.size() > 0) emailService.courierOutNotify(listToNotify)
+
+
 
 		// TODO notify return
 		// SHIPPING RETURN ***************************************
@@ -84,8 +83,26 @@ class StuartNotificationJobService implements SchwartzJob {
     		eq('pickupDateReturn',today)
     		eq('courierReturnNotification',false)
         }
+
+        listToNotify = []
+		results2.each{ SampleRequest sr ->
+			//if they are happening in the next hour then notify them
+			println "STUART NOTIFICATION LONDON  ******   a Shipping Return:"+sr
+			Date theirTime
+			use(TimeCategory){
+				
+				def timeArray = sr.pickupTime.split(":")
+        		theirTime = today + timeArray[0].toInteger().hours + timeArray[1].toInteger().minutes
+        		println "STUART NOTIFICATION LONDON  ******  sr pickup time: "+theirTime
+        		if(theirTime < inOneHour && theirTime > now ){
+        			println "STUART NOTIFICATION LONDON  ******   a Shipping Return in the next Hour:"+it
+        			listToNotify << sr
+        		}
+			}
+		}
+		println "STUART NOTIFICATION LONDON  ******   courier return notifications: "+listToNotify.size()
 		
-		//emailService.courierReturnNotify(listToNotify)
+		if(listToNotify.size() > 0) emailService.courierReturnNotify(listToNotify)
 
       
 	}

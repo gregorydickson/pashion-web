@@ -89,7 +89,8 @@ class StuartController {
         log.info "quote:"+shippingEvent
         if(shippingEvent instanceof Map){
         	log.error "quote ERROR"
-        	message = [message:"Booking Error"]
+        	message = stuartMessage(shippingEvent)
+        	message = [message:message]
         	render message as JSON
         	return
         }
@@ -106,7 +107,7 @@ class StuartController {
 		shippingEvent = stuartService.createJob(theDate,returnTo,sr.addressDestination,shippingEvent)
         if(shippingEvent instanceof Map){
         	log.error "stuart error message:"+shippingEvent.message
-        	message = message(message)
+        	message = stuartMessage(message)
         }else{
         	message = [message:"Messenger Booked"]
         	response.status = 200
@@ -141,7 +142,7 @@ class StuartController {
         log.info "quote:"+shippingEvent
         if(shippingEvent instanceof Map){
         	log.error "quote ERROR"
-        	message = [message:"Booking Error"]
+        	message = stuartMessage(shippingEvent)
         	render message as JSON
         	return
         }
@@ -156,9 +157,10 @@ class StuartController {
         }
         
 		shippingEvent = stuartService.createJob(theDate,sr.addressDestination,returnTo,shippingEvent)
-        if(shippingEvent.hasProperty("message")){
-        	log.info "Stuart message"
-        	message = [message:"Booking Error"]
+        if(shippingEvent instanceof Map){
+        	log.error "quote ERROR"
+        	message = stuartMessage(shippingEvent)
+
         }else{
         	message = [message:"Messenger Booked"]
         	response.status = 200
@@ -216,24 +218,19 @@ class StuartController {
 	        }
         }
         
-
 		//must be different locations
 		if(sr.addressDestination == sr.returnToAddress){
         	message = [message:"Origin and Destination are the same"] as JSON
-        	
         	return message
-        	
         }
         return null
 	}
 
 
-
-
-	def message(response){
-		log.info "response"
+	def stuartMessage(response){
+		log.info "response:"+response
 		def result
-		switch (response) {
+		switch (response.error) {
 	        case 'JOB_DELIVERIES_INVALID':
 	            //that the delivery is invalid
 	            log.error "JOB_DELIVERIES_INVALID"
@@ -248,6 +245,7 @@ class StuartController {
 	        	return result
 	        	break
 	        case 'JOB_DISTANCE_NOT_ALLOWED':
+	        	log.error "job distance not allowed"
 	        	result = "Addresses must be in same city"
 	        	return result
 	        	break
@@ -257,10 +255,6 @@ class StuartController {
 	            break
 	    } 
 	}
-
-
-
-
 
 
 }

@@ -33,7 +33,7 @@ class StartupGrailsApp extends GrailsApp {
             final sysprops = System.properties
             applicationLog.debug "Running on ${sysprops.'os.name'} v${sysprops.'os.version'}"
         }
-        'say hello'.execute()
+
     }
 
     
