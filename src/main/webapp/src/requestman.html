@@ -104,7 +104,10 @@
                                 <filters-search-to></filters-search-to>
                             </div>
                             <!-- City -->
-                            <div if.bind="(((user.type === 'brand') || (user.type==='prAgency')) && !onlyShowMine)" class="" style="margin: 0 1rem 2rem 0; height:28px; min-height:28px; width:130px;">
+                            <!-- always show city, regardless of onlyShowMine -->
+                            <!-- as move to company based interpretation of mine -->
+                            <!-- <div if.bind="(((user.type === 'brand') || (user.type==='prAgency')) && !onlyShowMine)" class="" style="margin: 0 1rem 2rem 0; -->
+                            <div if.bind="((user.type === 'brand') || (user.type==='prAgency'))" class="" style="margin: 0 1rem 2rem 0; height:28px; min-height:28px; width:130px;">
                                  <filters-city change.delegate="filterChangeCityRM($event)"></filters-city>
                             </div>
                             <div class="grid-content shrink">

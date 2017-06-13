@@ -404,7 +404,10 @@
                         </span>
 
                         <!-- City -->
-                        <span if.bind="(((user.type === 'brand') || (user.type==='prAgency')) && !onlyShowMine)" class="inline-label" style="margin-top:1rem; margin-bottom: 0px; width:258px; margin-top:0.5rem;">
+                        <!-- always show city, regardless of onlyShowMine -->
+                        <!-- as move to company based interpretation of mine -->
+                        <!-- <span if.bind="(((user.type === 'brand') || (user.type==='prAgency')) && !onlyShowMine)" class="inline-label" style="margin-top:1rem; -->
+                        <span if.bind="((user.type === 'brand') || (user.type==='prAgency'))" class="inline-label" style="margin-top:1rem; margin-bottom: 0px; width:258px; margin-top:0.5rem;">
                              <filters-city change.delegate="filterChangeCityRM($event)"></filters-city>
                         </span>
 
