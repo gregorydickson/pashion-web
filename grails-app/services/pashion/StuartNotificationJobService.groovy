@@ -18,18 +18,20 @@ class StuartNotificationJobService implements SchwartzJob {
 
 	@Transactional
 	void execute(JobExecutionContext context) throws JobExecutionException {
-		//println "STUART NOTIFICAION  ******   Stuart Notification JobService"
-		TimeZone.setDefault(TimeZone.getTimeZone("UTC"))
+		println "STUART NOTIFICATION LONDON  ******   Stuart Notification JobService"
+		
+
+		TimeZone.setDefault(TimeZone.getTimeZone("Europe/London"))
 		
 		Date today = new Date().clearTime()
 		Date now = new Date()
-		//println "STUART NOTIFICAION  ******  now "+now
+		println "STUART NOTIFICATION LONDON ******  now "+now
 
 		Date inOneHour
 
 		use(TimeCategory) {
         	inOneHour = now + 1.hours 
-        	//println "STUART NOTIFICAION  ******  in OneHour "+inOneHour
+        	println "STUART NOTIFICATION LONDON  ******  in OneHour "+inOneHour
         }
         
         def query = SampleRequest.createCriteria() 
@@ -51,22 +53,22 @@ class StuartNotificationJobService implements SchwartzJob {
 		def listToNotify = []
 		results.each{ SampleRequest sr ->
 			//if they are happening in the next hour then notify them
-			//println "STUART NOTIFICAION  ******   a Shipping Out:"+sr
+			println "STUART NOTIFICATION LONDON  ******   a Shipping Out:"+sr
 			Date theirTime
 			use(TimeCategory){
 				
 				def timeArray = sr.pickupTime.split(":")
         		theirTime = today + timeArray[0].toInteger().hours + timeArray[1].toInteger().minutes
-        		//println "STUART NOTIFICAION  ******  sr pickup time: "+theirTime
+        		println "STUART NOTIFICATION LONDON  ******  sr pickup time: "+theirTime
         		if(theirTime < inOneHour && theirTime > now ){
-        			//println "STUART NOTIFICAION  ******   a Shipping Out in the next Hour:"+it
+        			println "STUART NOTIFICATION LONDON  ******   a Shipping Out in the next Hour:"+it
         			listToNotify << sr
         			sr.courierOutNotification = true
         			sr.save(flush:true, failOnError:true)
         		}
 			}
 		}
-		//println "STUART NOTIFICAION  ******   courier out notifications: "+listToNotify.size()
+		println "STUART NOTIFICATION LONDON  ******   courier out notifications: "+listToNotify.size()
 		if(listToNotify.size() > 0) emailService.courierOutNotify(listToNotify)
 
 		// TODO notify return
@@ -82,21 +84,7 @@ class StuartNotificationJobService implements SchwartzJob {
     		eq('pickupDateReturn',today)
     		eq('courierReturnNotification',false)
         }
-		def listToNotify2 = []
-		results2.each{
-			//if they are happening in the next hour then notify them
-			//println "STUART NOTIFICAION  ******   a Shipping Return:"+it
-			Date theirTime
-			use(TimeCategory){
-				
-				def timeArray = it.pickupReturnTime.split(":")
-        		theirTime = today + timeArray[0].toInteger().hours + timeArray[1].toInteger().minutes
-        		if(theirTime.after(now) && theirTime.before(inOneHour)){
-        			//println "STUART NOTIFICAION  ******   a Shipping Return in the next Hour:"+it
-        			it << listToNotify 
-        		}
-			}
-		}
+		
 		//emailService.courierReturnNotify(listToNotify)
 
       
