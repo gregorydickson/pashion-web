@@ -98,6 +98,7 @@ export class BrandService {
 
     }
 
+    // Currently disabled
     restrictOutsideBooking(id) {
         var promise = new Promise((resolve, reject) => {
                 console.log("toggle restrictOutsideBooking");
@@ -111,7 +112,10 @@ export class BrandService {
         return promise;
     }
 
+    // always returns false as switch disabled an set to false.
     getRestrictOutsideBooking(id){
+        console.log("brandService.getRestrictOutsideBooking allows false as currently not implemented");
+        /*
         var promise = new Promise((resolve, reject) => {
                 this.http.fetch('/brand/getRestrictOutsideBooking/'+id+'.json')
                     .then(response =>
@@ -121,6 +125,9 @@ export class BrandService {
             
         });
         return promise;
+        */
+        var promise = Promise.resolve(false);
+        return promise
 
     }
 

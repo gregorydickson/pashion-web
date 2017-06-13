@@ -249,7 +249,7 @@
                         </div>
                         <!-- Enforce person to person booking -->
                         <div class="inline-label" style="margin-bottom:0px;">
-                            <span class="slim-text-box-label" style="width: 231px;">Allow All Incoming Requests</span>
+                            <span class="slim-text-box-label disabled" style="width: 231px;">Allow All Incoming Requests</span>
                             <input style="margin-top: 8px; margin-left: 5px;" id="" name="allowAllRequests" type="checkbox" checked="checked" disabled change.delegate="allowAllRequests()">
                         </div>
                         <!-- Enforce company level requests -->
@@ -259,8 +259,8 @@
                         </div>
                         <!-- Enforce booking only in our city -->
                         <div class="inline-label" style="margin-bottom:0px;">
-                            <span class="slim-text-box-label" style="width: 231px;">Only Allow Local City Bookings</span>
-                            <input style="margin-top: 8px; margin-left: 5px;" id="" name="restrictOutsideBooking" type="checkbox" checked.bind="company.restrictOutsideBooking" change.delegate="restrictOutsideBooking()">
+                            <span class="slim-text-box-label disabled" style="width: 231px;">Only Allow Local City Bookings</span>
+                            <input disabled style="margin-top: 8px; margin-left: 5px;" id="" name="restrictOutsideBooking" type="checkbox" checked.bind="company.restrictOutsideBooking" change.delegate="restrictOutsideBooking()">
                         </div>
                     </div>
                 </div>
