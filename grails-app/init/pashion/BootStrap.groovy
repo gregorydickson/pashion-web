@@ -67,7 +67,7 @@ class BootStrap {
         
 
 
-       
+      "say get to work".execute()
 
     }
     def destroy = {
