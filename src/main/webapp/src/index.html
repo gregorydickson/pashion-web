@@ -405,8 +405,7 @@
 
                         <!-- City -->
                         <!-- always show city, regardless of onlyShowMine -->
-                        <!-- as move to company based interpretation of mine -->
-                        <!-- <span if.bind="(((user.type === 'brand') || (user.type==='prAgency')) && !onlyShowMine)" class="inline-label" style="margin-top:1rem; -->
+                        <!-- as move to company based interpretation of onlyShowMine -->
                         <span if.bind="((user.type === 'brand') || (user.type==='prAgency'))" class="inline-label" style="margin-top:1rem; margin-bottom: 0px; width:258px; margin-top:0.5rem;">
                              <filters-city change.delegate="filterChangeCityRM($event)"></filters-city>
                         </span>
@@ -442,7 +441,7 @@
                         </table>
                     </div>
                     <!-- row with button -->
-                    <div style="width:255px;" repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user:seasons:cityFiltering">
+                    <div style="width:255px;" repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user:seasons:cityFiltering:onlyShowMine:onlyShowMineCompany">
                         <table class="accordion" style="table-layout:fixed;">
                             <tr class="indexReqRow">
                                 <td class="accordion w7">
@@ -562,7 +561,7 @@
                         </table>
                     </div>
                     <!-- row with button -->
-                    <div repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user:seasons:cityFiltering">
+                    <div repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user:seasons:cityFiltering:onlyShowMine:onlyShowMineCompany">
                         <table class="accordion" style="table-layout:fixed;">
                             <tr class="indexReqRow">
                                 <td class="accordion w7">

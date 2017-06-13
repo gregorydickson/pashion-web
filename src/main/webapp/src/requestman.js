@@ -35,6 +35,8 @@ export class Requestman {
   filtering = ''; // IE all
   today = new Date(); // Do we have a problem with freshness of this variable, say login at 11:59PM?
   onlyShowMine = false;
+  onlyShowMineCompany = '';
+  cityFiltering = '';
 
 
 
@@ -65,6 +67,24 @@ export class Requestman {
       .then(bookings => {
         this.bookings = bookings;
       });
+
+    // filtering
+    if(this.user.type === "brand") this.brandService.getOnlyShowMySampleRequests(this.user.brand.id).then ( result => { 
+        this.onlyShowMine = result;
+        console.log("onlyShowmine:" + this.onlyShowMine);
+        if(this.onlyShowMine) {
+            // move to company based interpretation of onlyShowMine this.cityFiltering = this.user.city.name;
+            this.onlyShowMineCompany = this.user.brand.name;
+        }
+    });       
+    if(this.user.type === "prAgency") this.prAgencyService.getOnlyShowMySampleRequests(this.user.prAgency.id).then ( result => { 
+        this.onlyShowMine = result;
+        console.log("onlyShowmine:" + this.onlyShowMine);
+        if(this.onlyShowMine) {
+            // move to company based interpretation of onlyShowMine this.cityFiltering = this.user.city.name;
+            this.onlyShowMineCompany = this.user.prAgency.name;
+        }
+    }); 
 
   }
 
@@ -128,19 +148,6 @@ export class Requestman {
 
     this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub());
 
-    // filtering
-    if(this.user.type === "brand") this.brandService.getOnlyShowMySampleRequests(this.user.brand.id).then ( result => { 
-        this.onlyShowMine = result;
-        if(this.onlyShowMine) {
-            this.cityFiltering = this.user.city.name;
-        }
-    });       
-    if(this.user.type === "prAgency") this.prAgencyService.getOnlyShowMySampleRequests(this.user.prAgency.id).then ( result => { 
-        this.onlyShowMine = result;
-        if(this.onlyShowMine) {
-            this.cityFiltering = this.user.city.name;
-        }
-    }); 
       ga('set', 'page', '/requestman.html');
       ga('send', 'pageview');
   }
@@ -253,14 +260,28 @@ export class Requestman {
   }
 
 
-  filterFunc(searchExpression, value, filter, user, seasons, city) {
+  filterFunc(searchExpression, value, filter, user, seasons, city, onlyShowMine, onlyShowMineCompany) {
     // pressHouse
 
     var searchVal = true;
     var filterVal = true;
     var filterCityVal = true;
+
     //this.closeExpanded ();
 
+    // filter on overall onlyShowOurRequests
+    if (onlyShowMine) {
+      if (value.approvingUserCompany) {
+        console.log("Filtering on onlyShowMine, this user company:" + onlyShowMineCompany + " approvingUser company: " + value.approvingUserCompany);
+        if (value.approvingUserCompany !== onlyShowMineCompany) return false;
+        else console.log("Ok to continue filter checks");
+      }
+      else console.log("Filtering on onlyShowMine, this user company:" + onlyShowMineCompany + " but not approved or no approvingUsercompany set");
+      // OK to proceed for now as no approval given, still visible to PR and brand
+    }
+    else console.log("NO filtering on onlyShowMine, onlyshowmine:" + onlyShowMine);
+
+    // if no other filters then OK
     if (searchExpression == '' && filter == '' && city == '') return true;
     var itemValue = '';
     if (value.pressHouse) itemValue = value.pressHouse.name;
@@ -290,6 +311,8 @@ export class Requestman {
       for (i = 0; i < value.searchableItems.length; i++)
         itemValue = itemValue + ' ' + value.searchableItems[i].clientID;
     }
+
+
     // filter on city
     if (city)
         if (city!="All" && city!="Select" && city!="ALL" && city!="SELECT") {
@@ -299,6 +322,7 @@ export class Requestman {
             console.log("city of request: " + requestCity);
             filterCityVal = (requestCity == city);
         }
+
 
     //console.log("Search value: " + itemValue);
     if (searchExpression && itemValue) searchVal = itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;

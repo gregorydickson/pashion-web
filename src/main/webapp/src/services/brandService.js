@@ -89,7 +89,8 @@ export class BrandService {
         var promise = new Promise((resolve, reject) => {
                 this.http.fetch('/brand/getOnlyShowMySampleRequests/'+id+'.json')
                     .then(response =>
-                        response.json()).then(hd => {
+                        response.json()).then(hd => {                   
+                        //console.log("getOnlyShowMySampleRequests returns:" + hd);
                         resolve(hd);
                     }).catch(err => reject(err));
             

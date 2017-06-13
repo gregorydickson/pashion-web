@@ -105,8 +105,7 @@
                             </div>
                             <!-- City -->
                             <!-- always show city, regardless of onlyShowMine -->
-                            <!-- as move to company based interpretation of mine -->
-                            <!-- <div if.bind="(((user.type === 'brand') || (user.type==='prAgency')) && !onlyShowMine)" class="" style="margin: 0 1rem 2rem 0; -->
+                            <!-- as move to company based interpretation of onlyShowMine -->
                             <div if.bind="((user.type === 'brand') || (user.type==='prAgency'))" class="" style="margin: 0 1rem 2rem 0; height:28px; min-height:28px; width:130px;">
                                  <filters-city change.delegate="filterChangeCityRM($event)"></filters-city>
                             </div>
@@ -155,7 +154,7 @@
                             <!-- Rows of content View-->
                             <div  class="grid-content" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left: 1rem; margin-right: 1rem;">
                                 
-                                <div repeat.for="booking of bookings | sort:ordering:'ascending' | filter:searchTextReqMan:filterFunc:filtering:user:seasons:cityFiltering
+                                <div repeat.for="booking of bookings | sort:ordering:'ascending' | filter:searchTextReqMan:filterFunc:filtering:user:seasons:cityFiltering:onlyShowMine:onlyShowMineCompany
                                 | range:searchFrom:searchTo:filterRangeFunc">
                                     <table ref="aBooking"  class="big-accordion" cellspacing="2" style="table-layout: fixed;">
                                         <tr class="brandGridContent indexReqRow">
