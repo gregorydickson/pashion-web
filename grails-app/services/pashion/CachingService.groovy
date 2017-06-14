@@ -90,7 +90,7 @@ class CachingService implements JsonViewTest {
                 // channel = company name
                 // data.booking = SR id
                 // data.look = look id (name)
-                pubnub.publish(channel,data.booking + " courier due in approximately one hour " +, callback)
+                pubnub.publish(channel,data.booking + " courier due in approximately one hour" , callback)
             }
             if(data.press){
                 channel = data.press+'_stuartOneHourNotification'
