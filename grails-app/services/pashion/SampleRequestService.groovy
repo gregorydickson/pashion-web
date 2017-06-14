@@ -137,11 +137,6 @@ class SampleRequestService {
             if(srUser.pressHouse) sr.requestingUserCompany = srUser.pressHouse.name
             if(srUser.prAgency) sr.requestingUserCompany = srUser.prAgency.name
 
-            /* these will not be present in a new SR 
-            if(jsonObject.approvingUser) sr.approvingUser = jsonObject.approvingUser
-            if(jsonObject.approvingUserCompany) sr.approvingUserCompany = jsonObject.approvingUserCompany
-            */
-
             // truncate if necessary 
             if (jsonObject.message) {
                 if (jsonObject.message.length() > SampleRequest.constrainedProperties.message.maxSize)
@@ -325,11 +320,7 @@ class SampleRequestService {
             sr.courierOut = jsonObject.courierOut
             sr.courierReturn = jsonObject.courierReturn
 
-            // add associated users if add
-            if (jsonObject.requestingUser) sr.requestingUser = jsonObject.requestingUser
-            if (jsonObject.requestingUserCompany) sr.requestingUserCompany = jsonObject.requestingUserCompany
-            if (jsonObject.approvingUser) sr.approvingUser = jsonObject.approvingUser
-            if (jsonObject.approvingUserCompany) sr.approvingUserCompany = jsonObject.approvingUserCompany
+
 
             // truncate if necessary 
             if (jsonObject.message) {

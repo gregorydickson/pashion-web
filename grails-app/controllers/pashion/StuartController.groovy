@@ -172,8 +172,21 @@ class StuartController {
 
 	def checkRules(SampleRequest sr,String direction){
 		log.info "check rules for stuart"
-		TimeZone.setDefault(TimeZone.getTimeZone("Europe/London"))
 		def message
+
+		//must be approved
+		if(sr.requestStatusBrand == 'Pending' ||
+			sr.requestStatusBrand == 'Denied' ||
+			sr.requestStatusBrand == 'Deleted'){
+
+			message = [message:"Request must be Approved"] as JSON
+        	
+        	return message
+		}
+
+
+		TimeZone.setDefault(TimeZone.getTimeZone("Europe/London"))
+		
 
 		//no booking in the past
 		Date now = new Date()
