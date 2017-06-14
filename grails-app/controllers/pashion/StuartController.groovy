@@ -107,7 +107,7 @@ class StuartController {
 		shippingEvent = stuartService.createJob(theDate,returnTo,sr.addressDestination,shippingEvent)
         if(shippingEvent instanceof Map){
         	log.error "stuart error message:"+shippingEvent.message
-        	message = stuartMessage(message)
+        	message = stuartMessage(shippingEvent)
         }else{
         	message = [message:"Messenger Booked"]
         	response.status = 200
