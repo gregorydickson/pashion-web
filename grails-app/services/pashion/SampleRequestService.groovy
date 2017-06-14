@@ -130,12 +130,17 @@ class SampleRequestService {
             sr.courierReturn = jsonObject.courierReturn
             sr.requestingUser = requestingUser
 
-            sr.prAgency = jsonObject.prAgency
+            if(jsonObject.prAgency) sr.prAgency = PRAgency.get(jsonObject.prAgency)
 
             def srUser = User.get(requestingUser.id)
             if(srUser.brand) sr.requestingUserCompany = srUser.brand.name
             if(srUser.pressHouse) sr.requestingUserCompany = srUser.pressHouse.name
             if(srUser.prAgency) sr.requestingUserCompany = srUser.prAgency.name
+
+            /* these will not be present in a new SR 
+            if(jsonObject.approvingUser) sr.approvingUser = jsonObject.approvingUser
+            if(jsonObject.approvingUserCompany) sr.approvingUserCompany = jsonObject.approvingUserCompany
+            */
 
             // truncate if necessary 
             if (jsonObject.message) {
@@ -319,6 +324,12 @@ class SampleRequestService {
             sr.paymentReturn = jsonObject.paymentReturn
             sr.courierOut = jsonObject.courierOut
             sr.courierReturn = jsonObject.courierReturn
+
+            // add associated users if add
+            if (jsonObject.requestingUser) sr.requestingUser = jsonObject.requestingUser
+            if (jsonObject.requestingUserCompany) sr.requestingUserCompany = jsonObject.requestingUserCompany
+            if (jsonObject.approvingUser) sr.approvingUser = jsonObject.approvingUser
+            if (jsonObject.approvingUserCompany) sr.approvingUserCompany = jsonObject.approvingUserCompany
 
             // truncate if necessary 
             if (jsonObject.message) {

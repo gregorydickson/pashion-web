@@ -126,14 +126,14 @@ export class Index {
         // filter on overall onlyShowOurRequests
         if (onlyShowMine) {
           if (value.approvingUserCompany) {
-            console.log("Filtering on onlyShowMine, this user company:" + onlyShowMineCompany + " approvingUser company: " + value.approvingUserCompany);
+            //console.log("Filtering on onlyShowMine, this user company:" + onlyShowMineCompany + " approvingUser company: " + value.approvingUserCompany);
             if (value.approvingUserCompany !== onlyShowMineCompany) return false;
-            else console.log("Ok to continue filter checks");
+            // else console.log("Ok to continue filter checks");
           }
-          else console.log("Filtering on onlyShowMine, this user company:" + onlyShowMineCompany + " but not approved or no approvingUsercompany set");
+          // else  console.log("Filtering on onlyShowMine, this user company:" + onlyShowMineCompany + " but not approved or no approvingUsercompany set");
           // OK to proceed for now as no approval given, still visible to PR and brand
         }
-        else console.log("NO filtering on onlyShowMine, onlyshowmine:" + onlyShowMine);
+        //else  console.log("NO filtering on onlyShowMine, onlyshowmine:" + onlyShowMine);
 
 
         // filter on city
