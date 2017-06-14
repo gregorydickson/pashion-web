@@ -55,6 +55,9 @@ class CachingService implements JsonViewTest {
             if(data.brand){
                 channel = data.brand+'_cacheInvalidate'
                 log.info "send Bookings Cache invalidate in cachingService:" + channel + " data > " + data
+                // channel = company name
+                // data.booking = SR id
+                // data.look = look id (name)
                 pubnub.publish(channel,data.booking + " (look " + data.look + ")", callback)
             }
             if(data.press){
@@ -69,6 +72,38 @@ class CachingService implements JsonViewTest {
             }
         } catch(Exception e){
             log.error "Exception in CachingService - sample Request Cache Invalidate"
+            log.error e.message
+        }
+    }
+
+    @Selector('stuartOneHourNotification')
+    void stuartOneHourNotification(Object data){
+        Thread.sleep(2000)
+        log.info "sample data " + data
+        try{
+            Callback callback=new Callback() {}
+
+            def channel
+            if(data.brand){
+                channel = data.brand+'_stuartOneHourNotification'
+                log.info "send Bookings Cache invalidate in cachingService:" + channel + " data > " + data
+                // channel = company name
+                // data.booking = SR id
+                // data.look = look id (name)
+                pubnub.publish(channel,data.booking + " courier due in approximately one hour " +, callback)
+            }
+            if(data.press){
+                channel = data.press+'_stuartOneHourNotification'
+                log.info "send Bookings Cache invalidate in cachingService:" + channel + " data > " + data
+                pubnub.publish(channel,data.booking + " courier due in approximately one hour", callback)
+            }
+            if(data.prAgency){
+                channel = data.prAgency+'_stuartOneHourNotification'
+                log.info "send Bookings Cache invalidate in cachingService:" + channel + " data > " + data
+                pubnub.publish(channel,data.booking + " courier due in approximately one hour", callback)
+            }
+        } catch(Exception e){
+            log.error "Exception in CachingService - _stuartOneHourNotification"
             log.error e.message
         }
     }
