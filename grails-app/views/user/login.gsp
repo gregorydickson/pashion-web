@@ -36,7 +36,7 @@
                 </div>
 
                 <!-- dialog body-->
-                <g:form action="doLogin" method="post">
+                <g:form action="doLogin" name="login" method="post">
                     <div class="ai-dialog-body">
                         <div class="vertical grid-block">
 
