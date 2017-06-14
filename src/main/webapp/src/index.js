@@ -58,6 +58,7 @@ export class Index {
     today = new Date(); // Do we have a problem with freshness of this variable, say login at 11:59PM?
     firstTime = true;
     onlyShowMine = false;
+    onlyShowMineCompany = '';
     bLazy = null;
 
 
@@ -89,11 +90,6 @@ export class Index {
         return document.getElementsByClassName("indexReqRow").length;
     }
 
-    /*get getOnlyShowMine () {
-        console.log("getONlyShowMine: " + this.onlyShowMine);
-        return this.onlyShowMine;
-    }*/
-
     computedOverdue(booking, status) {
         var computedDate = new Date(booking);
         var overdue = this.today > computedDate;
@@ -108,7 +104,7 @@ export class Index {
         if (this.imagePanelSize == 3) { this.imagePanelSize = 2; return }
     }
 
-    filterFunc(searchExpression, value, filter, user, seasons, city) {
+    filterFunc(searchExpression, value, filter, user, seasons, city, onlyShowMine, onlyShowMineCompany) {
         var searchVal = true;
         var filterVal = true;
         var filterCityVal = true;
@@ -126,6 +122,20 @@ export class Index {
                 abbrev = seasons[i].abbreviation;
             }
         }
+
+        // filter on overall onlyShowOurRequests
+        if (onlyShowMine) {
+          if (value.approvingUserCompany) {
+            console.log("Filtering on onlyShowMine, this user company:" + onlyShowMineCompany + " approvingUser company: " + value.approvingUserCompany);
+            if (value.approvingUserCompany !== onlyShowMineCompany) return false;
+            else console.log("Ok to continue filter checks");
+          }
+          else console.log("Filtering on onlyShowMine, this user company:" + onlyShowMineCompany + " but not approved or no approvingUsercompany set");
+          // OK to proceed for now as no approval given, still visible to PR and brand
+        }
+        else console.log("NO filtering on onlyShowMine, onlyshowmine:" + onlyShowMine);
+
+
         // filter on city
         if (city)
             if (city!="All" && city!="Select" && city!="ALL" && city!="SELECT") {
@@ -739,13 +749,31 @@ export class Index {
 
 
 
-    //activate() is called before attached()
     activate() {
         this.user = this.ds.user.user;
         if (this.user.type === "nosession") window.location.href = '/user/login';
         if (this.user.type === "brand") { this.searchType = 'brandSearch'; this.company = this.user.brand; }
         if (this.user.type === "press") { this.searchType = 'filterSearch'; this.company = this.user.pressHouse; }
         if (this.user.type === "prAgency") { this.searchType = 'brandSearch'; this.company = this.user.prAgency; }
+
+        // filtering
+        if(this.user.type === "brand") this.brandService.getOnlyShowMySampleRequests(this.user.brand.id).then ( result => { 
+            this.onlyShowMine = result;
+            console.log("onlyShowMine:" + this.onlyShowMine);
+            if(this.onlyShowMine) {
+                // move to company based interpretation of onlyShowMine this.cityFiltering = this.user.city.name;
+                this.onlyShowMineCompany = this.user.brand.name;
+            }
+        });   
+
+        if(this.user.type === "prAgency") this.prAgencyService.getOnlyShowMySampleRequests(this.user.prAgency.id).then ( result => { 
+            this.onlyShowMine = result;
+            console.log("onlyShowmine:" + this.onlyShowMine);
+            if(this.onlyShowMine) {
+                // move to company based interpretation of onlyShowMine this.cityFiltering = this.user.city.name;
+                this.onlyShowMineCompany = this.user.prAgency.name;
+            }
+        }); 
 
         if (this.user.type === "prAgency")
             return Promise.all([
@@ -762,7 +790,10 @@ export class Index {
                 this.brandService.getBrands().then(brands => this.brands = brands),
                 this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors),
             ]);
-        }
+
+
+
+    }
 
 
     attached() {
@@ -877,19 +908,6 @@ export class Index {
 
         this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub());
 
-        // filtering
-        if(this.user.type === "brand") this.brandService.getOnlyShowMySampleRequests(this.user.brand.id).then ( result => { 
-            this.onlyShowMine = result;
-            if(this.onlyShowMine) {
-                this.cityFiltering = this.user.city.name;
-            }
-        });       
-        if(this.user.type === "prAgency") this.prAgencyService.getOnlyShowMySampleRequests(this.user.prAgency.id).then ( result => { 
-            this.onlyShowMine = result;
-            if(this.onlyShowMine) {
-                this.cityFiltering = this.user.city.name;
-            }
-        });
         ga('set', 'page', '/index.html');
         ga('send', 'pageview');
         ga('send', 'event', 'index', 'pageview', this.user.email);

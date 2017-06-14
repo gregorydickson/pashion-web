@@ -5,7 +5,11 @@
 * The web page hosting the Aurelia Application - grails-app/views/dashboard/index.gsp
 * Aurelia (the single page application) root: src/main/webapp/
 
-# Testing
+# Automated Testing
+* Install Chrome WebDriver to /user/local/bin/chromedriver
+* https://chromedriver.storage.googleapis.com/index.html?path=2.30/
+* Version 2.30 of chromedriver is for Chrome versions 58-60
+
 
 * Test Miu Miu with miu@pashiontool.com / Pashion123
 

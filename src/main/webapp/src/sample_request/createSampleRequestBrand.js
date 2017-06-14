@@ -152,6 +152,7 @@ export class CreateSampleRequestBrand {
             }
             if (user.type=="prAgency"){
               this.prAgencyService.getRestrictOutsideBooking(this.user.prAgency.id).then(result =>{ 
+                console.log("restrict Outside booking:"+result)
                 this.restrictOutsideBooking = result;
                 var theUser = this.user;
 
