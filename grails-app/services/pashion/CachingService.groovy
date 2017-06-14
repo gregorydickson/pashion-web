@@ -90,17 +90,17 @@ class CachingService implements JsonViewTest {
                 // channel = company name
                 // data.booking = SR id
                 // data.look = look id (name)
-                pubnub.publish(channel,data.booking + " courier due in approximately one hour" , callback)
+                pubnub.publish(channel,"Courier for request " + data.booking + " due in an hour." , callback)
             }
             if(data.press){
                 channel = data.press+'_stuartOneHourNotification'
                 log.info "send Bookings Cache invalidate in cachingService:" + channel + " data > " + data
-                pubnub.publish(channel,data.booking + " courier due in approximately one hour", callback)
+                pubnub.publish(channel,"Courier for request " + data.booking + " due in an hour." , callback)
             }
             if(data.prAgency){
                 channel = data.prAgency+'_stuartOneHourNotification'
                 log.info "send Bookings Cache invalidate in cachingService:" + channel + " data > " + data
-                pubnub.publish(channel,data.booking + " courier due in approximately one hour", callback)
+                pubnub.publish(channel,"Courier for request " + data.booking + " due in an hour." , callback)
             }
         } catch(Exception e){
             log.error "Exception in CachingService - _stuartOneHourNotification"

@@ -1122,7 +1122,7 @@ export class Index {
         channel = company + '_stuartOneHourNotification';
         let today = new Date();
         let time = today.getHours() + ":" + today.getMinutes();
-        console.log("listening on channel:" + channel + " message on display: " + 'Request + message.messge ' + time);
+        console.log("listening on channel:" + channel + " message on display: " + 'message.messge ' + time);
 
         indexListener = {
             message: function alarmToast(message) {
@@ -1132,7 +1132,7 @@ export class Index {
                     toastr.options.preventDuplicates = false;
                     toastr.options.closeButton = true;
                     toastr.options.timeOut = 0;
-                    toastr.info('Request ' + message.message + ' (' + time + ')');
+                    toastr.info(message.message + ' (' + time + ')');
                 }
             }
         }
