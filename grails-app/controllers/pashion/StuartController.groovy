@@ -243,6 +243,9 @@ class StuartController {
 	def stuartMessage(response){
 		log.info "response:"+response
 		def result
+		def message 
+		if(response.error) message = response.error
+		if(response.message) message = response.message
 		switch (response.error) {
 	        case 'JOB_DELIVERIES_INVALID':
 	            //that the delivery is invalid
