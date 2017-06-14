@@ -82,7 +82,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request ' + sr.id + ' (look ' + lookSeason + ') Approved']
         render sent as JSON
         def pressHouse = sr.pressHouse?.name ?: ""       
-        def prAgency = sr.prAgency.name?.name ?: "" 
+        def prAgency = sr.prAgency.name ?: "" 
         //sr.searchableItems[0].look.season.abbreviation
         //log.info "Setting look with season in cache invalidate:"+lookSeason
         notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse, prAgency: prAgency, booking:sr.id, look:lookSeason] // add season abbrev to methods
@@ -212,7 +212,7 @@ class SampleRequestController {
             notify "sampleRequestEmail", sr
         
         def pressHouse = sr.pressHouse?.name ?: "" 
-        def prAgency = sr.prAgency?.name?.name ?: ""   
+        def prAgency = sr.prAgency?.name ?: ""   
         notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse, prAgency: prAgency, booking:sr.id, look:lookSeason]
 
     }
