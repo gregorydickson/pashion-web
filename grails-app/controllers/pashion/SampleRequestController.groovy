@@ -31,14 +31,22 @@ class SampleRequestController {
                 status.save(failOnError:true)
                 
         }
+
         sampleRequest.requestStatusBrand = "Denied"
         sampleRequest.requestStatusPress = "Denied"
+
+        // add in "approving user"
+        sampleRequest.approvingUser = User.get(session?.user?.id)
+        if(sampleRequest.approvingUser.brand) sampleRequest.approvingUserCompany = sampleRequest.approvingUser.brand.name
+        if(sampleRequest.approvingUser.pressHouse) sampleRequest.approvingUserCompany = sampleRequest.approvingUser.pressHouse.name
+        if(sampleRequest.approvingUser.prAgency) sampleRequest.approvingUserCompany = sampleRequest.approvingUser.prAgency.name
+
         sampleRequest.save(flush:true)
         def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Denied']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""  
-        def prAgency = sampleRequest.prAgency ?: ""     
+        def prAgency = sampleRequest.prAgency?.name ?: ""    
         notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
     }
 
@@ -48,7 +56,6 @@ class SampleRequestController {
         if(!sr){
             sr = sampleRequestService.updateSampleRequest(request.JSON)
         }
-        sr.approvingUser = User.get(session?.user?.id)
 
         sr.searchableItemsProposed.each{ sample ->
                 
@@ -63,6 +70,11 @@ class SampleRequestController {
 
         sr.requestStatusBrand = "Approved"
         sr.requestStatusPress = "Approved"
+
+        sr.approvingUser = User.get(session?.user?.id)
+        if(sr.approvingUser.brand) sr.approvingUserCompany = sr.approvingUser.brand.name
+        if(sr.approvingUser.pressHouse) sr.approvingUserCompany = sr.approvingUser.pressHouse.name
+        if(sr.approvingUser.prAgency) sr.approvingUserCompany = sr.approvingUser.prAgency.name
         
 
         sr.save(flush:true,failOnError:true)
@@ -70,7 +82,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request ' + sr.id + ' (look ' + lookSeason + ') Approved']
         render sent as JSON
         def pressHouse = sr.pressHouse?.name ?: ""       
-        def prAgency = sr.prAgency ?: ""  
+        def prAgency = sr.prAgency.name?.name ?: "" 
         //sr.searchableItems[0].look.season.abbreviation
         //log.info "Setting look with season in cache invalidate:"+lookSeason
         notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse, prAgency: prAgency, booking:sr.id, look:lookSeason] // add season abbrev to methods
@@ -88,7 +100,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Picked Up']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: "" 
-        def prAgency = sampleRequest.prAgency ?: ""  
+        def prAgency = sampleRequest.prAgency?.name ?: ""  
         notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
     }
     def brandMarkReturned(){
@@ -101,7 +113,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Returned']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: ""         
-        def prAgency = sampleRequest.prAgency ?: ""  
+        def prAgency = sampleRequest.prAgency?.name ?: ""   
         notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
     }
     def brandRestocked(){
@@ -113,7 +125,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Restocked']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: "" 
-        def prAgency = sampleRequest.prAgency ?: ""  
+        def prAgency = sampleRequest.prAgency?.name ?: ""   
         notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
     }
     def brandMarkDeleted(){
@@ -126,7 +138,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Deleted']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: "" 
-        def prAgency = sampleRequest.prAgency ?: "" 
+        def prAgency = sampleRequest.prAgency?.name ?: ""  
         notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
     }
     //Press only methods
@@ -141,7 +153,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') is In House']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: "" 
-        def prAgency = sampleRequest.prAgency ?: ""  
+        def prAgency = sampleRequest.prAgency?.name ?: ""   
         notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
     }
     def pressDelete(){
@@ -153,7 +165,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Withdrawn']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: "" 
-        def prAgency = sampleRequest.prAgency ?: ""  
+        def prAgency = sampleRequest.prAgency?.name ?: ""   
         notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
     }
     def pressShip(){
@@ -166,7 +178,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Picking Up']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: "" 
-        def prAgency = sampleRequest.prAgency ?: "" 
+        def prAgency = sampleRequest.prAgency?.name ?: ""  
         notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
     }
     
@@ -180,7 +192,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Picked Up']
         render sent as JSON
         def pressHouse = sampleRequest.pressHouse?.name ?: "" 
-        def prAgency = sampleRequest.prAgency ?: "" 
+        def prAgency = sampleRequest.prAgency?.name ?: ""  
         notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
     }
 
@@ -200,7 +212,7 @@ class SampleRequestController {
             notify "sampleRequestEmail", sr
         
         def pressHouse = sr.pressHouse?.name ?: "" 
-        def prAgency = sr.prAgency ?: "" 
+        def prAgency = sr.prAgency?.name?.name ?: ""   
         notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse, prAgency: prAgency, booking:sr.id, look:lookSeason]
 
     }
@@ -213,7 +225,7 @@ class SampleRequestController {
         def sent = [message:'Sample Request ' + sr.id + ' (look ' + lookSeason + ') Updated']
         render sent as JSON
         def pressHouse = sr.pressHouse?.name ?: "" 
-        def prAgency = sr.prAgency ?: "" 
+        def prAgency = sr.prAgency?.name ?: ""  
         notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse, prAgency: prAgency, booking:sr.id, look:lookSeason]
     }
 

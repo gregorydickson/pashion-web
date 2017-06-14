@@ -18,7 +18,8 @@ json g.render(sampleRequest,[expand:['searchableItemsStatus','searchableItemsPro
 	
 	requestingUserCompany sampleRequest.requestingUserCompany
 	prAgency{
-		name sampleRequest.prAgency
+		name sampleRequest.prAgency?.name
+		id sampleRequest.prAgency?.id
 	}
 	brand{
 		name sampleRequest.brand.name

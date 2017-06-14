@@ -22,7 +22,7 @@ class SampleRequest {
 	Brand brand
 
 	PressHouse pressHouse
-	String prAgency
+	PRAgency prAgency
 	String requestingUserCompany
 	Address addressDestination
 	Address returnToAddress
@@ -36,6 +36,7 @@ class SampleRequest {
 	User receivingUser 
 	User requestingUser 
 	User approvingUser
+	String approvingUserCompany
 	User deliverTo
 	String emailNotification
 	
@@ -84,6 +85,7 @@ class SampleRequest {
         shippingReturn lazy:false
         searchableItemsStatus lazy:false
         requestingUser lazy: false
+        approvingUser lazy: false
 
         receivingUser lazy:false
 	

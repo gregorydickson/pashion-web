@@ -125,8 +125,8 @@
                                         <td class="accordion-underline w6">ID</td>
                                         <td class="accordion-underline w10">LOOK</td>
                                         <td class="accordion-underline w13">START DATE</td>
-                                        <td class="accordion-underline w17">COMPANY</td>
-                                        <td class="accordion-underline w17">REQUESTOR</td>
+                                        <td class="accordion-underline w13">COMPANY</td>
+                                        <td class="accordion-underline w21">REQUESTOR</td>
                                         <td class="accordion-underline w13">END DATE</td>
                                         <td class="accordion-underline w5"><img style="width:19px;" src="/assets/shoppingcart60x47.png" height=47 width=60></img></td>
                                         <td class="accordion-underline w11" style="padding-left:7px;">STATUS</td>
@@ -141,8 +141,8 @@
                                         <td class="accordion-underline w6">ID</td>
                                         <td class="accordion-underline w10">LOOK</td>
                                         <td class="accordion-underline w13">START DATE</td>
-                                        <td class="accordion-underline w17">BRAND</td>
-                                        <td class="accordion-underline w17">REQUESTOR</td>
+                                        <td class="accordion-underline w13">BRAND</td>
+                                        <td class="accordion-underline w21">REQUESTOR</td>
                                         <td class="accordion-underline w13">END DATE</td>
                                         <td class="accordion-underline w5"><img style="width:25px;" src="/assets/shoppingcart60x47.png" height=47 width=60></img></td>
                                         <td class="accordion-underline w11" style="padding-left:10px;">STATUS</td>
@@ -174,11 +174,12 @@
                                             <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="col3 accordion-grey w13 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''} ">${booking.bookingStartDate | viewDateFormat}</td>
 
                                             <!-- BRAND / Company -->
-                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="col4 accordion-grey w17 variable-padding">${booking.brand.name}</td>
-                                            <td if.bind="user.type === 'brand'" class="col4 accordion-grey w17 variable-padding" ref="company">${booking.requestingUserCompany}</td> <!-- TBD -->
+                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="col4 accordion-grey w13 variable-padding">${booking.brand.name}</td>
+                                            <td if.bind="user.type === 'brand'" class="col4 accordion-grey w13 variable-padding" ref="company">${booking.requestingUserCompany}</td> <!-- TBD -->
 
                                             <!-- Requestor -->
-                                            <td if.bind="booking.requestingUser.name" class="col5 accordion-grey w17 variable-padding">${booking.requestingUser.name} ${booking.requestingUser.surname}</td>
+                                            <td if.bind="(booking.requestingUser.name) && ((user.type === 'press') || (user.type === 'brand'))" class="col5 accordion-grey w21 variable-padding">${booking.requestingUser.name} ${booking.requestingUser.surname}</td>
+                                            <td if.bind="(booking.requestingUser.name) && (user.type === 'prAgency')" class="col5 accordion-grey w21 variable-padding">${booking.requestingUser.name} ${booking.requestingUser.surname} (${booking.requestingUserCompany})</td>
 
                                             <!-- END DATE -->
                                             <td class="col6 accordion-grey w13 variable-padding ${computedOverdue(booking.bookingEndDate, booking.requestStatusBrand) ? 'red-deco' : ''}">${booking.bookingEndDate | viewDateFormat}</td>
