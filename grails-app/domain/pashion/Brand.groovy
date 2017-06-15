@@ -10,8 +10,13 @@ class Brand {
 	//auto fields
 	Date dateCreated
 	Date lastUpdated
+	
+	// destinations are ad-hoc addresses, added by a Brand user in CreateSampleRequest
 	Collection destinations
+
+	//addresses are offices in the UI, one can be marked default
 	Collection addresses
+
 	Boolean hideCalendar = false
 	Boolean onlyShowMySampleRequests = true
 	Boolean restrictOutsideBooking = true
