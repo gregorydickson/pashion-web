@@ -10,7 +10,6 @@ import geb.spock.*
  * See http://www.gebish.org/manual/current/ for more instructions
  */
 @Integration
-@Rollback
 class LoginSpec extends GebSpec {
 
     def setup() {
@@ -36,10 +35,22 @@ class LoginSpec extends GebSpec {
 
     void "Test the home page renders correctly"() {
         when:"The home page is visited"
-            go '/'
+            go '/user/login'
+            waitFor(7, 1) {$("form").verifyNotEmpty()}
 
         then:"The title is correct"
-            $('title').text() == "User Login"
+            title == "User Login"
+
+        when:"user logs in"
+            $("form").with {
+                email = "gregory@pashiontool.com"
+                password = "Pashion123"
+                submit()
+            }
+            waitFor(30,2){$(#ui-datepicker-div)}
+            
+        then:"The application loads"
+            title == "Dashboard | PASHION"
     }
 
 

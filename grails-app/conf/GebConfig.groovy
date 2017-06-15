@@ -1,6 +1,4 @@
-import org.openqa.selenium.htmlunit.HtmlUnitDriver
-import com.gargoylesoftware.htmlunit.BrowserVersion
-import com.gargoylesoftware.htmlunit.ThreadedRefreshHandler
+
 
 System.setProperty('webdriver.chrome.driver', '/usr/local/bin/chromedriver')
 
