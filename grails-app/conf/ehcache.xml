@@ -51,8 +51,10 @@
    />
    <cache name='pashion.City'
       maxElementsInMemory='20'
-      eternal='true'
+      eternal='false'
       overflowToDisk='false'
+      timeToIdleSeconds='10'
+      timeToLiveSeconds='10'
    />
 
    <!-- hibernate stuff -->

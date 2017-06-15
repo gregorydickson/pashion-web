@@ -4,7 +4,7 @@ class City{
 	String name
 
 	static mapping = {
-        cache true
+        cache false
     }
 
     String toString() {
