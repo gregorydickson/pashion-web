@@ -107,7 +107,7 @@ class StuartController {
 		shippingEvent = stuartService.createJob(theDate,returnTo,sr.addressDestination,shippingEvent)
         if(shippingEvent instanceof Map){
         	log.error "stuart error message:"+shippingEvent.message
-        	message = stuartMessage(message)
+        	message = stuartMessage(shippingEvent)
         }else{
         	message = [message:"Messenger Booked"]
         	response.status = 200
@@ -172,8 +172,21 @@ class StuartController {
 
 	def checkRules(SampleRequest sr,String direction){
 		log.info "check rules for stuart"
-		TimeZone.setDefault(TimeZone.getTimeZone("Europe/London"))
 		def message
+
+		//must be approved
+		if(sr.requestStatusBrand == 'Pending' ||
+			sr.requestStatusBrand == 'Denied' ||
+			sr.requestStatusBrand == 'Deleted'){
+
+			message = [message:"Request must be Approved"] as JSON
+        	
+        	return message
+		}
+
+
+		TimeZone.setDefault(TimeZone.getTimeZone("Europe/London"))
+		
 
 		//no booking in the past
 		Date now = new Date()
@@ -230,6 +243,9 @@ class StuartController {
 	def stuartMessage(response){
 		log.info "response:"+response
 		def result
+		def message 
+		if(response.error) message = response.error
+		if(response.message) message = response.message
 		switch (response.error) {
 	        case 'JOB_DELIVERIES_INVALID':
 	            //that the delivery is invalid

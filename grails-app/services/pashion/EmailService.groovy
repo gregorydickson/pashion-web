@@ -216,7 +216,7 @@ class EmailService {
                 log.info "created stuart message text"
 
                 Email from = new Email("support@pashiontool.com")
-                String subject =  "PASHION: Courier Pickup in One Hour (Approximate)"
+                String subject =  "PASHION: Courier Pickup in One Hour (Approximately)"
                 log.info "sending to:"+theEmail
                 Email to = new Email(theEmail)
                 Email secondTo = new Email(secondEmail)
@@ -312,7 +312,7 @@ class EmailService {
                 log.info "created stuart message text"
 
                 Email from = new Email("support@pashiontool.com")
-                String subject =  "PASHION: Courier Pickup in One Hour (Approximate)"
+                String subject =  "PASHION: Courier Pickup in One Hour (Approximately)"
                 log.info "sending to:"+theEmail
                 Email to = new Email(theEmail)
                 Email secondTo = new Email(secondEmail)

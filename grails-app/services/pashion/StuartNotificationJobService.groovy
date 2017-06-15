@@ -66,7 +66,16 @@ class StuartNotificationJobService implements SchwartzJob {
 			}
 		}
 		println "STUART NOTIFICATION LONDON  ******   courier out notifications: "+listToNotify.size()
-		if(listToNotify.size() > 0) emailService.courierOutNotify(listToNotify)
+		if(listToNotify.size() > 0) {
+			emailService.courierOutNotify(listToNotify)
+			listToNotify.each{SampleRequest sampleRequest ->
+				def pressHouse = sampleRequest.pressHouse?.name ?: ""  
+        		def prAgency = sampleRequest.prAgency ?: ""
+        		def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
+				notify "stuartOneHourNotification",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
+			}
+		
+		}
 
 
 
@@ -102,7 +111,15 @@ class StuartNotificationJobService implements SchwartzJob {
 		}
 		println "STUART NOTIFICATION LONDON  ******   courier return notifications: "+listToNotify.size()
 		
-		if(listToNotify.size() > 0) emailService.courierReturnNotify(listToNotify)
+		if(listToNotify.size() > 0){
+			emailService.courierReturnNotify(listToNotify)
+			listToNotify.each{SampleRequest sampleRequest ->
+				def pressHouse = sampleRequest.pressHouse?.name ?: ""  
+        		def prAgency = sampleRequest.prAgency ?: ""
+        		def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
+				notify "stuartOneHourNotification",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
+			}
+		}
 
       
 	}

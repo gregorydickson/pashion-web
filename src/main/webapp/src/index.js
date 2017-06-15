@@ -1084,6 +1084,7 @@ export class Index {
     listenForBookingsCacheInvalidation(pubNub) {
         console.log("listen for bookings cache invalidate - index.js");
 
+        // changes to sample requests
         let company = this.user.company;
         let channel = company + '_cacheInvalidate';
         console.log("listening on channel:" + channel);
@@ -1104,7 +1105,34 @@ export class Index {
                         });
                     });
                     toastr.options.preventDuplicates = true;
+                    toastr.options.closeButton = false;
+                    toastr.options.timeOut = 5000;
                     toastr.info('Request ' + message.message + " updated");
+                }
+            }
+        }
+        pubNub.addListener(indexListener);
+        this.pubNubService.addIndexListener(indexListener);
+        pubNub.subscribe({
+            channels: [channel],
+            withPresence: false
+        })
+
+        // bookings alarms
+        channel = company + '_stuartOneHourNotification';
+        let today = new Date();
+        let time = today.getHours() + ":" + today.getMinutes();
+        console.log("listening on channel:" + channel + " message on display: " + 'message.messge ' + time);
+
+        indexListener = {
+            message: function alarmToast(message) {
+
+                var channelName = message.channel;
+                if (channelName === channel) {
+                    toastr.options.preventDuplicates = false;
+                    toastr.options.closeButton = true;
+                    toastr.options.timeOut = 0;
+                    toastr.info(message.message + ' (' + time + ')');
                 }
             }
         }
