@@ -71,6 +71,7 @@ class StuartNotificationJobService implements SchwartzJob {
 			listToNotify.each{SampleRequest sampleRequest ->
 				def pressHouse = sampleRequest.pressHouse?.name ?: ""  
         		def prAgency = sampleRequest.prAgency ?: ""
+        		def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
 				notify "stuartOneHourNotification",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
 			}
 		
@@ -115,6 +116,7 @@ class StuartNotificationJobService implements SchwartzJob {
 			listToNotify.each{SampleRequest sampleRequest ->
 				def pressHouse = sampleRequest.pressHouse?.name ?: ""  
         		def prAgency = sampleRequest.prAgency ?: ""
+        		def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
 				notify "stuartOneHourNotification",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
 			}
 		}
