@@ -301,7 +301,7 @@
                                 </div>
                                 <!-- Three dots menu brand and prAgency-->
                                 <div if.bind="user.type !== 'press'" class="look-menu-absolute-wrap" >
-                                    <a href="#" class="look-menu-click" click.delegate="lookMenu(row.items[i].id)" >
+                                    <a href="#" id="image-${row.items[i].id}" class="look-menu-click" click.delegate="lookMenu(row.items[i].id)" >
                                         <div class="menu-stripe"></div>
                                     </a>
 

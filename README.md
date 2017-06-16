@@ -7,8 +7,11 @@
 
 # Automated Testing
 * Install Chrome WebDriver to /user/local/bin/chromedriver
-* https://chromedriver.storage.googleapis.com/index.html?path=2.30/
+* chmod +x on chromedriver
+* (https://chromedriver.storage.googleapis.com/index.html?path=2.30/)
 * Version 2.30 of chromedriver is for Chrome versions 58-60
+
+* to run tests, start grails, then enter 'test-app' 
 
 
 * Test Miu Miu with miu@pashiontool.com / Pashion123
