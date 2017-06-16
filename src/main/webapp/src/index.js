@@ -322,7 +322,7 @@ export class Index {
                 this.busy.off();
             })
 
-        .then(anything =>  { setTimeout(function() { $("img.lazy").unveil(); }, 1000) ; }) // initial unveil of first images on load
+        //.then(anything =>  { setTimeout(function() { $("img.lazy").unveil(); }, 1000) ; }) // initial unveil of first images on load
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
             ;
     }
