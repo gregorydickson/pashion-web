@@ -46,12 +46,14 @@ class SearchableItemController {
         if(params.category != "" && params.category != null)
             category = Category.findById(params.category)
 
-        if(params.city != null && params.city != "" && params.city != "All" && params.city != "undefined"){
+        if((params.city != null && params.city != "" && params.city != "All" && params.city != "undefined") || 
+           (keywords != null)) {
             // city = City.findByName(URLDecoder.decode(params.city))
-            city = City.get(params.city.toInteger())
+
+            if (params.city) city = City.get(params.city.toInteger())
 
             type = SearchableItemType.findByDisplay("Samples")
-            log.info "*****************************  A BRAND CITY SEARCH **********************"
+            log.info "*****************************  A BRAND search with city OR keyword. IE search all itmes and cascades up to the look"
             log.info "Brand:"+brand
             log.info "keywords:"+keywords
             log.info "season:"+seasonIn
@@ -61,14 +63,17 @@ class SearchableItemController {
             log.info "city:"+ params.city + " (" + city + ")"
 
             
-            //find Samples in city
+            //
             results = criteria.listDistinct () {
                     fetchMode 'brandCollection', FM.JOIN
                     
                     if(brand) eq('brand', brand)
 
-                    if(keywords) and {
-                        keywords.each {  ilike('attributes', "%${it}%") }
+                    if(keywords) and {            
+                        or {
+                            keywords.each { ilike('attributes', "%${it}%") }
+                            keywords.each { ilike('message', "%${it}%") }
+                        }
                     }
                     if(seasonIn) eq('season',seasonIn)
                     if(type) eq('type',type)
@@ -91,21 +96,25 @@ class SearchableItemController {
                 results = []
             }
         } else{
-            log.info "*****************************  A BRAND NON-CITY SEARCH **********************"
+            // Doesn't match on search outside of attributes
+            log.info "*****************************  A BRAND search with NO city AND NO keyword. IE looks only (with images)"
             log.info "Brand:"+brand
-            log.info "keywords:"+keywords
+            log.info "NO keywords!" // +keywords
             log.info "season:"+seasonIn
             log.info "category:"+category
             log.info "type:"+type
+            log.info "NO city!"
 
             results = criteria.listDistinct () {
                 fetchMode 'brandCollection', FM.JOIN
 
                 isNotNull('image')
                 if(brand) eq('brand', brand)
-                if(keywords) and {
-                    keywords.each {  ilike('attributes', "%${it}%") }
-                }
+             /*  if(keywords) and {
+                    keywords.each {  
+                             ilike('message', "%${it}%") 
+                     }
+                } */
                 if(seasonIn) eq('season',seasonIn)
                 if(category) brandCollection {
                         eq('category',category)
