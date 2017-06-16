@@ -10,7 +10,7 @@ import geb.spock.*
  * See http://www.gebish.org/manual/current/ for more instructions
  */
 @Integration
-class LoginSpec extends GebSpec {
+class BrandSpec extends GebSpec {
 
     def setup() {
     }
@@ -18,23 +18,10 @@ class LoginSpec extends GebSpec {
     def cleanup() {
     }
 
-    /*void "test something"() {
-        when:"The home page is visited"
-            go '/user/login'
-            
-            
-            $("form.login").with {
-                email = "gregory@pashiontool.com"
-                password = "Pashion123"
-                login().click()
-            }
-
-        then:"The title is correct"
-        	title == "Dashboard | PASHION"
-    }*/
+    
 
     void "Test the home page renders correctly"() {
-        when:"The home page is visited"
+        when:"The login page is visited"
             go '/user/login'
             waitFor(7, 1) {$("form").verifyNotEmpty()}
 
@@ -43,15 +30,30 @@ class LoginSpec extends GebSpec {
 
         when:"user logs in"
             $("form").with {
-                email = "gregory@pashiontool.com"
+                email = "pacorabanne@pashiontool.com"
                 password = "Pashion123"
-                submit()
+                
             }
-            waitFor(30,2){$(#ui-datepicker-div)}
+            $("input[type='submit']").click()
+            
             
         then:"The application loads"
+            waitFor(140,4){$("#mainScrollWindow").verifyNotEmpty()}
             title == "Dashboard | PASHION"
+
+        //TODO: use click event if possible to actually test UI
+        when:"select season"
+            js.exec("window.jQuery('#seasonSelect').val('7').trigger('change');")
+
+        then:
+            //Thread.sleep(20000)
+            waitFor(140,4){$("#image-3098").verifyNotEmpty()}
+
     }
+
+    
+
+    
 
 
 }
