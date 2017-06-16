@@ -48,6 +48,8 @@ class SearchableItem {
 					   // Used for full text searching
 					   // e.g. red dress silk
 
+	String message
+
 	String path
 
 	String size
@@ -94,6 +96,7 @@ class SearchableItem {
 	static constraints = {
 		description maxSize: 4000
 	 	attributes  maxSize: 4000
+	 	message maxSize: 4000
 	}
 
 	String toString(){

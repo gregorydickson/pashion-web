@@ -242,6 +242,14 @@
                            <!--<form-select-object class="to-u-c" name="location" selected.two-way="selectedSample.sampleCity.id" options.bind="cities" ></form-select-object>-->
                         </span> 
                     </div>
+
+                    <!-- Notes -->
+                    <div class="grid-block shrink">                       
+                        <span class="inline-label">
+                            <span class="slim-text-box-label" style="white-space: normal;">Notes</span>
+                                <textarea rows="2" type="textarea" class="slim-text-box" style="width:169px;" value.bind="selectedSample.message"></textarea>
+                        </span>
+                    </div>
                 </div>
             </div>
       </ai-dialog-body>

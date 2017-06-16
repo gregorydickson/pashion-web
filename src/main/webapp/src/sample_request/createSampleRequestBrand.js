@@ -132,6 +132,7 @@ export class CreateSampleRequestBrand {
               this.brandService.getRestrictOutsideBooking(this.user.brand.id).then(result => {
                 console.log("restrict Outside booking:"+result)
                 // currently disabled, so always false
+                // but can use for not-available locations??
                 this.restrictOutsideBooking = result;
                 var theUser = this.user;
 

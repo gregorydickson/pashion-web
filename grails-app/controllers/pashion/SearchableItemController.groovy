@@ -424,6 +424,8 @@ class SearchableItemController {
             sample.attributes = it.attributes
             sample.material = it.material
 
+            sample.message = it.message
+
             sample.save(failOnError : true, flush: true)
         } 
         item.save(failOnError : true, flush: true)

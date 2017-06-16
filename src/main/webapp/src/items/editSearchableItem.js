@@ -293,6 +293,7 @@ export class EditSearchableItem {
       newsample.sampleCity.id = this.availableLocationItems[0].id;
       this.selectedLocationItems = this.availableLocationItems[0];
       newsample.type = this.selectedSampleTypeItems[0];
+      newsample.message = '';
       console.log("new sample city:"+newsample.sampleCity.id);
       console.log("new sample type:"+newsample.type);
 
