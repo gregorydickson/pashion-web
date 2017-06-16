@@ -15,7 +15,9 @@ class User {
 
 	String avatar
 
-	City city
+	// default as currently not set in dialog
+	// to be replaced with office
+	City city 
 
 	String image
 

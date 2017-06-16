@@ -17,7 +17,7 @@ export class ViewDateFormatValueConverter {
         	var month = parseInt(value.substring(5,7)) - 1;
         	var day = value.substring(8,10);
         	var newString = day + "-" + monthNames[month] + "-" + year;
-        	console.log ("ViewDateFormatValueConverter value-in:" + value + " reformat abs date:" + newString + " old return:" + moment(value).format('DD-MMM-YYYY'));
+        	//console.log ("ViewDateFormatValueConverter value-in:" + value + " reformat abs date:" + newString + " old return:" + moment(value).format('DD-MMM-YYYY'));
         	return newString;
         }
         // (2) coming in with 27-Jun-2017 format (date picker)

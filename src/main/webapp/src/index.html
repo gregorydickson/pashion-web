@@ -211,7 +211,6 @@
                                 <div class="grid-row-col">
                                     <filters-city change.delegate="filterChangeCity($event)"></filters-city>
                                 </div>
-                                <div class="grid-row-col"></div>
                             </div>
                             <div class="grid-row">
                                 <div class="grid-content shrink">
@@ -263,8 +262,9 @@
                                 <div class="grid-row-col">
                                     <filters-designer-pr change.delegate="filterChangeBrand($event)" ></filters-designer-pr>
                                 </div>
+                                <!-- Use press fetch of (all) seasons -->
                                 <div class="grid-row-col">
-                                    <filters-season season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season>
+                                    <filters-season-press season.bind="season" change.delegate="filterChangeSeason($event)"></filters-season-press>
                                 </div>                                
                                 <div class="grid-row-col">
                                     <filters-category change.delegate="filterChangeCategory($event)"></filters-category>
@@ -272,7 +272,7 @@
                                 <div class="grid-row-col">
                                     <filters-city change.delegate="filterChangeCity($event)"></filters-city>
                                 </div>                   
-                                <div class="grid-row-col"></div>            
+           
                             </div>
                             <div class="grid-row">
                                 <div class="grid-content shrink">
@@ -404,11 +404,11 @@
                         </span>
 
                         <!-- City -->
-                        <!-- always show city, regardless of onlyShowMine -->
+                        <!-- is no longer Relvant for categorizing sample requests -->
                         <!-- as move to company based interpretation of onlyShowMine -->
-                        <span if.bind="((user.type === 'brand') || (user.type==='prAgency'))" class="inline-label" style="margin-top:1rem; margin-bottom: 0px; width:258px; margin-top:0.5rem;">
+                       <!--  <span if.bind="((user.type === 'brand') || (user.type==='prAgency'))" class="inline-label" style="margin-top:1rem; margin-bottom: 0px; width:258px; margin-top:0.5rem;">
                              <filters-city change.delegate="filterChangeCityRM($event)"></filters-city>
-                        </span>
+                        </span> -->
 
                         <!-- ORDER -->     
                         <span class="inline-label" style="margin-top:1rem; width:258px; margin-top:0.5rem;">

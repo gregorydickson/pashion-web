@@ -104,11 +104,11 @@
                                 <filters-search-to></filters-search-to>
                             </div>
                             <!-- City -->
-                            <!-- always show city, regardless of onlyShowMine -->
+                            <!-- is no longer Relvant for categorizing sample requests -->
                             <!-- as move to company based interpretation of onlyShowMine -->
-                            <div if.bind="((user.type === 'brand') || (user.type==='prAgency'))" class="" style="margin: 0 1rem 2rem 0; height:28px; min-height:28px; width:130px;">
+                            <!-- <div if.bind="((user.type === 'brand') || (user.type==='prAgency'))" class="" style="margin: 0 1rem 2rem 0; height:28px; min-height:28px; width:130px;">
                                  <filters-city change.delegate="filterChangeCityRM($event)"></filters-city>
-                            </div>
+                            </div> -->
                             <div class="grid-content shrink">
 
                                     <button disabled.bind="(numberOfRequests <= 0)" class="small button hollow" click.delegate="createPDFDialog()">Create PDF</button>

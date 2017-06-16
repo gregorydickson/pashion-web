@@ -84,18 +84,21 @@ class UserService {
     	log.info "create user"
     	User user
         try{
-            City city = null
+            // for now default city to 1
+            // need to add an office drop down in the new user dialog
+            City city = City.get(1)
 
             String password = hash(params.password)
+            /*
             if (params.city){
                 log.info "city:"+params.city
                 def cityParam = params.city
-                if(cityParam.id) {
-                    city = City.get(cityParam.id.toInteger())
-                } else {
+              //  if(cityParam.id) {
+                   // city = City.get(cityParam.id.toInteger())
+             //   } else {
                     city = City.get(cityParam.toInteger())
-                }
-            }
+             //   }
+            } */
 
         	if(owner instanceof Brand){
 

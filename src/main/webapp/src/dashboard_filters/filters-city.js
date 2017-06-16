@@ -1,9 +1,10 @@
 import {customElement, bindable, inject,bindingMode} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-fetch-client';
+import {CityService} from 'services/cityService';
 import 'fetch';
 
 
-@inject(HttpClient)
+@inject(HttpClient, CityService)
 @customElement('filters-city')
 
 export class FiltersCityCustomElement {
@@ -13,8 +14,9 @@ export class FiltersCityCustomElement {
 
   @bindable cityo = '';
 
-  constructor(http, element){
+  constructor(http, cityService, element){
     this.http = http;
+    this.cityService = cityService;
     this.element = element;
   }
 
@@ -22,13 +24,21 @@ export class FiltersCityCustomElement {
   	this.cityo = event.detail.value;
   }
   
+  activate () {     
+
+
+  }
 
 	attached() {
-	    return Promise.all([
-	      this.http.fetch('/dashboard/cities').then(response => response.json()).then(cities => this.cities = cities)
-	    ]);
+
+    return Promise.all([
+        //this.http.fetch('/dashboard/cities').then(response => response.json()).then(cities => this.cities = cities)
+
+      this.cityService.getCities().then(cities => { this.cities = cities; })
+        
+
+      ]);
+
 	}
-
-
 }
 

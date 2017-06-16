@@ -131,6 +131,7 @@ export class CreateSampleRequestBrand {
             if (user.type=="brand"){
               this.brandService.getRestrictOutsideBooking(this.user.brand.id).then(result => {
                 console.log("restrict Outside booking:"+result)
+                // currently disabled, so always false
                 this.restrictOutsideBooking = result;
                 var theUser = this.user;
 

@@ -37,14 +37,15 @@
                                     <span class="slim-text-box-label">Surname</span>
                                     <input class="slim-text-box" type='text' name='' value.bind="newUser.surname">
                                 </div>
-                                <!-- Office -->
+                                <!-- Office
+                                need to change this to be a selection of office locations NOT a city
                                 <div class="inline-label">
                                     <span class="slim-text-box-label">City</span>
                                     <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" class="slim-text-box" value.bind="newUser.city">
                                         <option></option>
                                         <option model.bind="city.id" repeat.for="city of cities">${city.name}</option>
                                     </select>
-                                </div>
+                                </div> -->
                                 <!--  <div class="inline-label">
 
                                      <span class="slim-text-box-label">Test Select</span>
@@ -89,7 +90,7 @@
         <!-- Footer buttons -->
         <ai-dialog-footer>
             <a class="hollow button" click.delegate="close()">Cancel</a>
-            <button class.bind="(newUser.email && newUser.name && newUser.surname && newUser.city && newUser.password) ? 'button' : 'button disabled'" click.delegate="create()">Add User</button>
+            <button class.bind="(newUser.email && newUser.name && newUser.surname && newUser.password) ? 'button' : 'button disabled'" click.delegate="create()">Add User</button>
         </ai-dialog-footer>
     </ai-dialog>
 </template>

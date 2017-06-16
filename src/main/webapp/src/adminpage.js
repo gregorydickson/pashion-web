@@ -171,6 +171,7 @@ export class Adminpage {
         if (this.user.type=="prAgency") this.prAgencyService.onlyShowMySampleRequests(this.company.id).then(result => this.company.onlyShowMySampleRequests = result);
     }
 
+    // currently disabled
     restrictOutsideBooking() {
         console.log("restrictOutsideBooking " + this.company.restrictOutsideBooking);
         if (this.user.type=="brand") this.brandService.restrictOutsideBooking(this.company.id).then(result => this.company.restrictOutsideBooking = result);

@@ -4,16 +4,17 @@ import 'fetch';
 import {inject} from 'aurelia-framework';
 import {DialogService} from 'aurelia-dialog';
 import { CreateDialogAlert } from 'common/dialogAlert';
+import { CityService } from 'services/cityService';
 
 
-@inject(HttpClient, DialogController, DialogService)
+@inject(HttpClient, DialogController, DialogService, CityService)
 export class CreateAddress {
   static inject = [DialogController];
   
   address = {};
   cities = [];
   
-  constructor(http, controller, dialogService){
+  constructor(http, controller, dialogService, cityService) {
     this.controller = controller;
     
     http.configure(config => {
@@ -22,11 +23,14 @@ export class CreateAddress {
     });
     this.http = http;
     this.dialogService = dialogService;
+    this.cityService = cityService;
   }
 
   activate(brandId){
     address.brandId = brandId;
-    this.http.fetch('/dashboard/cities').then(response => response.json()).then(cities => this.cities = cities);
+    // this.http.fetch('/dashboard/cities').then(response => response.json()).then(cities => this.cities = cities);
+    this.cityService.getCities().then(cities => { this.cities = cities; });
+
   }
 
   alertP (message){

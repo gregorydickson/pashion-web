@@ -47,7 +47,8 @@ class SearchableItemController {
             category = Category.findById(params.category)
 
         if(params.city != null && params.city != "" && params.city != "All" && params.city != "undefined"){
-            city = City.findByName(URLDecoder.decode(params.city))
+            // city = City.findByName(URLDecoder.decode(params.city))
+            city = City.get(params.city.toInteger())
 
             type = SearchableItemType.findByDisplay("Samples")
             log.info "*****************************  A BRAND CITY SEARCH **********************"

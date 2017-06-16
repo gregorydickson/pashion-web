@@ -62,12 +62,15 @@ export class EditSearchableItem {
     this.cityService.getCities().then(cities => {
       this.cities = cities;
 
+      this.availableLocationItems = cities.map(value => {return {id: value.id, text:value.name.toUpperCase()};});
+      /*
       cities.forEach(item => {
           this.availableLocationItems.push({
             id: item.id,
             text: item.name.toUpperCase()
           });
         });
+        */
     });
     Promise.all([
       this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => {

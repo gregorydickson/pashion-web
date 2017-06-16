@@ -340,11 +340,12 @@ export class Index {
 
         if (this.user.type === "brand") {
             this.selectedBrand = this.user.companyId;
-            this.selectedCity = this.user.city.name;
+            //disable user city filtering
+            //this.selectedCity = this.user.city.name;
         } else if (this.user.type === "prAgency") {
             this.selectedBrand = this.prAgencyService.getDefault().id;
-            if(this.user.city)
-                this.selectedCity = this.user.city.name;
+            //disable user city filtering
+            // if(this.user.city) this.selectedCity = this.user.city.name;
         } else if (this.user.type === "press") {
             this.selectedBrand = '';
         }

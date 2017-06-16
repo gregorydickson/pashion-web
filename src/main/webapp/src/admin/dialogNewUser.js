@@ -48,6 +48,8 @@ export class CreateDialogNewUser {
   }
   
   create(){
+    // no city , added a defaultin server side
+    // should be a choice of which Office.
   	console.log("new user:"+this.newUser);
   	this.userService.createUser(this.newUser)
   		.then(response =>{
