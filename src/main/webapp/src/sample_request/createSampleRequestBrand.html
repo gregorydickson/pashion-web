@@ -290,7 +290,7 @@
                 <table class="" style="margin-bottom:4px; table-layout:fixed;">
                     <tr>
                         <td class="accordion ${(sampleRequest.samples.length == 0) ? 'red-deco' : ''}" style="width:100px;">SELECT SAMPLES</td>
-                        <td class="accordion" style="width:419px;text-align:right; padding-right: 0.5rem;">Select All</td>
+                        <td class="accordion" style="width:417px;text-align:right; padding-right: 0.5rem;">Select All</td>
                         <td class="accordion" style="width:10px;">
                             <input type="checkbox" checked.bind="selectAll" change.delegate="allsamples($event)">
                         </td>
@@ -307,7 +307,7 @@
                         <tr>
 
                             <td class="accordion" style="width:70px; max-width:70px;">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.name}.${$index+1} :&nbsp;</td>
-                            <td class="accordion to-u-c" style="width:300px; max-width:300px; overflow:hidden;">${sample.attributes}</td>
+                            <td class="accordion to-u-c" style="width:300px; max-width:300px; overflow:hidden; padding-right:20px;">${sample.attributes}</td>
                             
                             <td class="accordion" style="width:60px; max-width:60px;">
                                 ${sample.sampleCity.name}
