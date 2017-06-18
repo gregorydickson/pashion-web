@@ -337,7 +337,7 @@ export class CreateSampleRequestPress {
   }
 
   allsamples(event){
-    console.log("all samples"+event.srcElement.checked);
+    console.log("all samples: "+event.srcElement.checked);
     if(event.srcElement.checked) {
       for (var i = 0, len = this.currentItem.samples.length; i < len; i++) {
         if(!(this.sampleRequest.samples.includes(this.currentItem.samples[i].id))){
@@ -349,7 +349,8 @@ export class CreateSampleRequestPress {
       this.sampleRequest.samples = [];
       document.getElementById("CreateSampleRequestButton").disabled = true; 
     }
-    this.enableCheck();    
+    this.enableCheck(); 
+    this.updateAvailability();   
   }
 
 
@@ -358,28 +359,28 @@ export class CreateSampleRequestPress {
     if(this.sampleRequest.samples.length == 0) {
       console.log("no samples");
       document.getElementById("CreateSampleRequestButton").disabled = true;
-    } else {
+    } 
 
-      var queryString = DateFormat.urlString(this.endOffset,1);
-      this.http.fetch('/calendar/showAvailabilitySamples'+queryString, {
-              method: 'post',
-              body: json(this.sampleRequest.samples)
-            })
-            .then(response => response.json())
-            .then(calendar => {
-                this.endCalendar = calendar;
-            });
+    var queryString = DateFormat.urlString(this.endOffset,1);
+    this.http.fetch('/calendar/showAvailabilitySamples'+queryString, {
+            method: 'post',
+            body: json(this.sampleRequest.samples)
+          })
+          .then(response => response.json())
+          .then(calendar => {
+              this.endCalendar = calendar;
+          });
 
-      queryString = DateFormat.urlString(this.startOffset,1);
-      this.http.fetch('/calendar/showAvailabilitySamples'+queryString, {
-              method: 'post',
-              body: json(this.sampleRequest.samples)
-            })
-            .then(response => response.json())
-            .then(calendar => {
-                this.startCalendar = calendar;
-            });
-    }
+    queryString = DateFormat.urlString(this.startOffset,1);
+    this.http.fetch('/calendar/showAvailabilitySamples'+queryString, {
+            method: 'post',
+            body: json(this.sampleRequest.samples)
+          })
+          .then(response => response.json())
+          .then(calendar => {
+              this.startCalendar = calendar;
+          });
+    
     
   }
 

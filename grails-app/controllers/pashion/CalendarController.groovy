@@ -102,7 +102,7 @@ class CalendarController {
     // for a specific list of samples and the Look
     def showAvailabilityLookAndSamples(){
         def jsonObject = request.JSON
-        log.info "json:"+jsonObject
+        log.info "showAvailabilityLookAndSamples json:"+jsonObject
         List samples = []
         jsonObject.each{
             samples << SearchableItem.get(it)
@@ -129,7 +129,7 @@ class CalendarController {
 
     def showAvailabilitySamples(){
         def jsonObject = request.JSON
-        log.info "json:"+jsonObject
+        log.info "showAvailabilitySamples json:"+jsonObject
         List samples = []
         jsonObject.each{
             samples << SearchableItem.get(it)
@@ -146,11 +146,17 @@ class CalendarController {
                                              request.locale.toString(),
                                              params.offset.toInteger(),
                                              params.months.toInteger())
-        log.debug "showAvailabilitySamples"
-        if(params.searchType == "brand" || samples[0].look.brand.hideCalendar == false){
-            log.debug "brand sample calendar"
-            aCalendar = calendarService.availableDaysForSamples(samples,localDate,aCalendar)
+        if (samples == []) {
+            log.info "showAvailabilitySamples no samples, so all available after today"
             aCalendar = calendarService.pastNotAvailable(localDate,aCalendar)
+        }
+        else {
+            log.debug "showAvailabilitySamples"
+            if(params.searchType == "brand" || samples[0].look.brand.hideCalendar == false){
+                log.debug "brand sample calendar"
+                aCalendar = calendarService.availableDaysForSamples(samples,localDate,aCalendar)
+                aCalendar = calendarService.pastNotAvailable(localDate,aCalendar)
+            }
         }
 
         render aCalendar as JSON
