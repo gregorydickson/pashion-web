@@ -57,6 +57,14 @@ class SampleRequestController {
             sr = sampleRequestService.updateSampleRequest(request.JSON)
         }
 
+
+        // Need to add check that the smample is still available for the proposed dates before
+        // changing the status and approving.
+        // Because two requests can come in for the same items.
+        // This request should then be denied, with a message.
+        // See issue #584
+        log.info "** Need to add check that the smample is still available for the proposed dates: #584 **"
+
         sr.searchableItemsProposed.each{ sample ->
                 
                 def status = sr.searchableItemsStatus.find { it.itemId == sample.id }
