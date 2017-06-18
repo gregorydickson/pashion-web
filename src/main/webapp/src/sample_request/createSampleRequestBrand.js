@@ -490,26 +490,26 @@ export class CreateSampleRequestBrand {
       document.getElementById("CreateSampleRequestButton").disabled = true;
     } 
 
-      var queryString = DateFormat.urlString(this.endOffset, 1) + '&searchType=brand';
-      this.http.fetch('/calendar/showAvailabilitySamples' + queryString, {
-        method: 'post',
-        body: json(this.sampleRequest.samples)
-      })
-        .then(response => response.json())
-        .then(calendar => {
-          this.endCalendar = calendar;
-        });
+    var queryString = DateFormat.urlString(this.endOffset, 1) + '&searchType=brand';
+    this.http.fetch('/calendar/showAvailabilitySamples' + queryString, {
+      method: 'post',
+      body: json(this.sampleRequest.samples)
+    })
+      .then(response => response.json())
+      .then(calendar => {
+        this.endCalendar = calendar;
+      });
 
-      queryString = DateFormat.urlString(this.startOffset, 1) + '&searchType=brand';
-      this.http.fetch('/calendar/showAvailabilitySamples' + queryString, {
-        method: 'post',
-        body: json(this.sampleRequest.samples)
-      })
-        .then(response => response.json())
-        .then(calendar => {
-          this.startCalendar = calendar;
-        });
-    
+    queryString = DateFormat.urlString(this.startOffset, 1) + '&searchType=brand';
+    this.http.fetch('/calendar/showAvailabilitySamples' + queryString, {
+      method: 'post',
+      body: json(this.sampleRequest.samples)
+    })
+      .then(response => response.json())
+      .then(calendar => {
+        this.startCalendar = calendar;
+      });
+  
 
   }
 
