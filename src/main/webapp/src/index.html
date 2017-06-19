@@ -225,8 +225,13 @@
                                     <filters-available-to></filters-available-to>
                                 </div>
                                 <!-- today -->
-                                <div id="indexToday" class="grid-row-col">
-                                    <filters-show-available change.delegate="filterChangeShowAvailable($event)"></filters-show-available>
+                                <div show.bind="availableTo" id="indexTodayBR" class="grid-row-col" >
+                                    <filters-show-available  change.delegate="filterChangeShowAvailable($event)"></filters-show-available>
+                                </div>
+                                <div show.bind="!availableTo"  class="grid-row-col">
+                                    <span class="inline-label">
+                                        <span class="form-label" style="font-weight:500; color:#cccccc">WHERE (Set Dates)</span>
+                                    </span>
                                 </div>
                             </div>
                             <div class="grid-row">
@@ -285,11 +290,27 @@
                                 </div>                                
                                 <div class="grid-row-col">
                                     <filters-category change.delegate="filterChangeCategory($event)"></filters-category>
-                                </div> 
-                                <div class="grid-row-col">
-                                    <filters-show-available change.delegate="filterChangeShowAvailable($event)"></filters-show-available>
                                 </div>                   
            
+                            </div>
+                            <div class="grid-row">
+                                <!-- start date -->
+                                <div class="grid-row-col grid-row-date-start">
+                                    <filters-available-from></filters-available-from>
+                                 </div>
+                                    <!-- end date -->
+                                <div class="grid-row-col grid-row-date-end">
+                                    <filters-available-to></filters-available-to>
+                                </div>
+                                <!-- today -->
+                                <div show.bind="availableTo" id="indexTodayPR" class="grid-row-col availableToday" >
+                                    <filters-show-available change.delegate="filterChangeShowAvailable($event)"></filters-show-available>
+                                </div>
+                                <div show.bind="!availableTo"  class="grid-row-col">
+                                    <span class="inline-label">
+                                        <span class="form-label" style="font-weight:500; color:#cccccc">WHERE (Set Dates)</span>
+                                    </span>
+                                </div>
                             </div>
                             <div class="grid-row">
                                 <div class="grid-content shrink">

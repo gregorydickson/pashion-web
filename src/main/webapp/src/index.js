@@ -625,16 +625,14 @@ export class Index {
     }
 
     filterChangeDates(event) {
+        console.log("Filter Change changing Change Dates: from: " + this.availableFrom + " to: " + this.availableTo);
+        //if (this.availableTo == '' || this.availableTo == null) return;
+
         this.busy.on();
         if(window.myblazy){
             window.myblazy.destroy();
         }
         this.rows = [];
-        console.log("Filter Change changing Change Dates: from: " + this.availableFrom + " to: " + this.availableTo);
-        // Clear the today box
-        document.querySelector("#select2-chosen-3").innerHTML = "SELECT"; //.querySelector(".select2-container").value = '';
-
-        //$("#s2fsha").select2().find(":selected").data("id").value="test";
 
         //this.availableTo = '';
         /* if (event)
@@ -658,7 +656,8 @@ export class Index {
             '&availableTo=' + this.availableTo +
             '&theme=' + this.selectedTheme +
             '&color=' + this.selectedColor +
-            '&city=' + this.selectedCity +
+            '&city=' + this.selectedCity +           
+            '&outToday=' + this.outToday +
             '&maxR=' + this.maxR)
             .then(response => response.json())
             .then(rows => {
@@ -685,72 +684,72 @@ export class Index {
     }
 
     filterChangeShowAvailable(event) {
-        // clear datepicker fields
-        document.querySelector("#datepickerfrom").value = "";
-        document.querySelector("#datepickerto").value = "";
-        this.busy.on();
-        if(window.myblazy){
-            window.myblazy.destroy();
-        }
-        this.rows = [];
-        this.selectedCity = '';
-        this.availableFrom = '';
-        this.availableTo = '';
-        this.outToday = '';
+        console.log("Filter Change changing Show available:" + event.detail.value);
+        if ((this.availableTo != '') && (this.availableTo != null) && (this.availableTo != undefined)){ 
+            this.rows = [];
+            this.selectedCity = '';
+            this.outToday = '';
 
-        if (event)
-            if (event.detail)
-                if (event.detail.value) {
-                    let today = new Date();
-                    console.log("Filter Change changing Show available:" + event.detail.value);
-                    if (event.detail.value == 'All' || event.detail.value == 'ALL' ) event.detail.value = '';
-                    if (event.detail.value == 'Select' || event.detail.value == 'SELECT') event.detail.value = '';
-                    if (event.detail.value == 'In-House' || event.detail.value == 'IN-HOUSE') {
-                        this.availableFrom =  moment(today).format('DD-MMM-YYYY'); 
-                        this.availableTo = this.availableFrom; 
-                        this.outToday = false;
-                    } else if (event.detail.value == 'Out' || event.detail.value == 'OUT') {
-                        this.availableFrom =  moment(today).format('DD-MMM-YYYY'); 
-                        this.availableTo = this.availableFrom; 
-                        this.outToday = true;
+            if (event)
+                if (event.detail)
+                    if (event.detail.value) {
+                        let today = new Date();
+                        console.log("Filter Change accepted");
+                        if (event.detail.value == 'All' || event.detail.value == 'ALL' ) event.detail.value = '';
+                        if (event.detail.value == 'Select' || event.detail.value == 'SELECT') event.detail.value = '';
+                        if (event.detail.value == 'In-House' || event.detail.value == 'IN-HOUSE') {
+                            //this.availableFrom =  moment(today).format('DD-MMM-YYYY'); 
+                            //this.availableTo = this.availableFrom; 
+                            this.outToday = false;
+                        } else if (event.detail.value == 'Out' || event.detail.value == 'OUT') {
+                            //this.availableFrom =  moment(today).format('DD-MMM-YYYY'); 
+                            //this.availableTo = this.availableFrom; 
+                            this.outToday = true;
+                        }
                     }
-                }
 
-        this.numberImages = 0;
-        this.maxRReached = false;
-        this.http.fetch('/searchableItem/' + this.searchType + '?searchtext=' + encodeURI(this.searchText) +
-            '&brand=' + this.selectedBrand +
-            '&season=' + encodeURI(this.selectedSeason) +
-            '&category=' + this.selectedCategory +
-            '&availableFrom=' + this.availableFrom +
-            '&availableTo=' + this.availableTo +
-            '&theme=' + this.selectedTheme +
-            '&color=' + this.selectedColor +
-            '&city=' + this.selectedCity +
-            '&outToday=' + this.outToday +
-            '&maxR=' + this.maxR)
-            .then(response => response.json())
-            .then(rows => {
-                if (rows.session == 'invalid') {
-                    window.location.href = '/user/login';
-                    return;
-                }
-                this.rows = rows;
-                this.busy.off();
-                if (rows.length > 0) {
-                    this.numberImages = (rows.length - 1) * rows[0].numberImagesThisRow;
-                    this.numberImages += rows[rows.length - 1].numberImagesThisRow;
-                    if (this.numberImages == this.maxR) this.maxRReached = true;
-                }
-                setTimeout(function () {
-                        window.myblazy.destroy();
-                        window.myblazy.revalidate();
-                        console.log("subsequent loading Blazy recreation");
-                }, 1000); 
-                this.busy.off();
-            })
-            .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
-            ;
+            console.log("Filter Change changing Show available:" + this.outToday);
+            this.busy.on();
+            if(window.myblazy) {
+                window.myblazy.destroy();
+            }     
+
+            this.numberImages = 0;
+            this.maxRReached = false;
+            this.http.fetch('/searchableItem/' + this.searchType + '?searchtext=' + encodeURI(this.searchText) +
+                '&brand=' + this.selectedBrand +
+                '&season=' + encodeURI(this.selectedSeason) +
+                '&category=' + this.selectedCategory +
+                '&availableFrom=' + this.availableFrom +
+                '&availableTo=' + this.availableTo +
+                '&theme=' + this.selectedTheme +
+                '&color=' + this.selectedColor +
+                '&city=' + this.selectedCity +
+                '&outToday=' + this.outToday +
+                '&maxR=' + this.maxR)
+                .then(response => response.json())
+                .then(rows => {
+                    if (rows.session == 'invalid') {
+                        window.location.href = '/user/login';
+                        return;
+                    }
+                    this.rows = rows;
+                    this.busy.off();
+                    if (rows.length > 0) {
+                        this.numberImages = (rows.length - 1) * rows[0].numberImagesThisRow;
+                        this.numberImages += rows[rows.length - 1].numberImagesThisRow;
+                        if (this.numberImages == this.maxR) this.maxRReached = true;
+                    }
+                    setTimeout(function () {
+                            window.myblazy.destroy();
+                            window.myblazy.revalidate();
+                            console.log("subsequent loading Blazy recreation");
+                    }, 1000); 
+                    this.busy.off();
+                })
+                .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
+                ;
+            }
     }
 /*
     filterChangeCity(event) {

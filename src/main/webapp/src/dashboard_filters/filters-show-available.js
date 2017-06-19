@@ -8,7 +8,7 @@ import 'fetch';
 
 export class FiltersShowAvailableCustomElement {
   availableStates = ["IN-HOUSE", "OUT"];
-  selectorselector = true;
+  selectorselector = false;
   selectorall = false;
 
   @bindable availableo = '';
