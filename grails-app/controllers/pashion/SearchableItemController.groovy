@@ -26,57 +26,91 @@ class SearchableItemController {
         Season seasonIn = null
         Category category = null
         City city = null
+        Date availableFrom = null
+        Date availableTo = null
         List results = null
         def keywords = null
         def criteria = SearchableItem.createCriteria()
+        def outToday = null;
 
-        
-        if(params.brand && params.brand != '' && params.brand.trim() != 'All'){
+              
+        if(params.brand && params.brand != '' && params.brand.trim() != 'All' && params.brand.trim() != 'ALL'){
             brand = Brand.get(params.brand.trim())
         }
+        //log.info "brand param:"+params.brand  + " after " + brand
         
-        if(params.season != "" && params.season != null)
+        if(params.season && params.season != "" && params.season != null)
             seasonIn = Season.findByName(URLDecoder.decode(params.season))
 
-        if(params.searchtext != null && params.searchtext != "" && params.searchtext != "undefined"){
+        if(params.searchtext && params.searchtext != null && params.searchtext != "" && params.searchtext != "undefined"){
             keywords = URLDecoder.decode(params.searchtext)
             keywords = keywords.split(" ")
         }
 
-        if(params.category != "" && params.category != null)
+        if (params.category && params.category != "" && params.category != null)
             category = Category.findById(params.category)
 
-        if((params.city != null && params.city != "" && params.city != "All" && params.city != "undefined") || 
-           (keywords != null)) {
-            // city = City.findByName(URLDecoder.decode(params.city))
+        if (params.city && params.city != "" && params.city != null && params.city != "All" && params.city != "ALL" && params.city != "undefined") 
+            city = City.get(params.city.toInteger())
 
-            if (params.city) city = City.get(params.city.toInteger())
+        if (params.availableFrom && params.availableFrom != null && params.availableFrom != "" )
+            availableFrom = dateFormat.parse(params.availableFrom)
+
+        if (params.availableTo && params.availableTo != null && params.availableTo != "")   
+            availableTo = dateFormat.parse(params.availableTo)
+
+        if (params.outToday && params.outToday != null && params.outToday != "") 
+            outToday = Boolean.parseBoolean(params.outToday);
+
+        if ((city != null ) || 
+           (keywords != null) ||
+           (availableTo != null) ||
+           (outToday != null)){
+
 
             type = SearchableItemType.findByDisplay("Samples")
-            log.info "*****************************  A BRAND search with city OR keyword. IE search all itmes and cascades up to the look"
+            log.info "*****************************  A BRAND search with city OR keyword OR outToday or availbleDates. IE search all itmes and cascades up to the look"
             log.info "Brand:"+brand
             log.info "keywords:"+keywords
             log.info "season:"+seasonIn
             log.info "category:"+category
-            log.info "type:"+type
-            
+            log.info "availableFrom:"+availableFrom
+            log.info "availableTo:"+ availableTo
+            log.info "out today:" + outToday            
             log.info "city:"+ params.city + " (" + city + ")"
+            log.info "type to match:"+ type
 
-            
-            //
             results = criteria.listDistinct () {
-                    fetchMode 'brandCollection', FM.JOIN
-                    
+                fetchMode 'brandCollection', FM.JOIN
+                fetchMode 'samples', FM.JOIN
+                fetchMode 'samples.sampleRequests', FM.JOIN
+                fetchMode 'brand', FM.JOIN
+
                     if(brand) eq('brand', brand)
 
+                    // only need keywords to search all items
                     if(keywords) and {            
                         or {
                             keywords.each { ilike('attributes', "%${it}%") }
                             keywords.each { ilike('message', "%${it}%") }
                         }
-                    }
-                    if(seasonIn) eq('season',seasonIn)
+                    } 
+
                     if(type) eq('type',type)
+                    /*
+                    if(!keywords) {
+                        // otherwise restrict to looks
+                        isNotNull('image')
+                        log.info "type all"
+                    } else {
+                        
+
+                        log.info "type to match:"+ type
+                    }
+                    */
+
+                    if(seasonIn) eq('season',seasonIn)
+                    
                     if(city) eq('sampleCity',city)
                     if(category) brandCollection {
                         eq('category',category)
@@ -85,25 +119,35 @@ class SearchableItemController {
                     season{ order('order','desc') }
                     
                     cache true
-            } 
-            log.info "brand results count:"+results.size()
+            }
+
+            log.info "Results from search: " + results.size()
+
             def ids = []
             results.collect{ids << it.look.id }
             ids.unique()
             if(ids.size()>0){
                 results = SearchableItem.getAll(ids)
-            } else{
+                log.info "Results from collection: " + results.size()
+            } else {
                 results = []
             }
-        } else{
+
+            if ((availableFrom && availableTo) || outToday) {
+                if (outToday) results = filterOnDates(results, availableFrom, availableTo, outToday, true)
+                else results = filterOnDates(results, availableFrom, availableTo, outToday, true)
+            }
+
+        } else {
             // Doesn't match on search outside of attributes
-            log.info "*****************************  A BRAND search with NO city AND NO keyword. IE looks only (with images)"
+            log.info "*****************************  A BRAND search with NO city AND NO keyword. IE looks only (IE SI's with images)"
             log.info "Brand:"+brand
             log.info "NO keywords!" // +keywords
             log.info "season:"+seasonIn
             log.info "category:"+category
             log.info "type:"+type
             log.info "NO city!"
+
 
             results = criteria.listDistinct () {
                 fetchMode 'brandCollection', FM.JOIN
@@ -241,8 +285,9 @@ class SearchableItemController {
             cache true
         }
 
+        log.info "Results from search: " + results.size()
         if(availableFrom && availableTo)
-            results = filterOnDates(results, availableFrom, availableTo)
+            results = filterOnDates(results, availableFrom, availableTo, false, false)
 
         results = results.take(maxRInt)
         
@@ -268,48 +313,82 @@ class SearchableItemController {
         
     }
 
-    def filterOnDates(results, availableFrom, availableTo){
-        log.debug "availability filter"
-        log.debug "availableFrom:"+availableFrom
-        log.debug "availableTo:"+availableTo
+    // checks for complete un-availability for the looks (IE all samples are booked) in results
+    // if outToday == false, same behavior
+    // if outToday == true, then flips and returns all completely booked looks
+    // partial returns results with any smaple out or in as appropriate
+    def filterOnDates(results, availableFrom, availableTo, outToday, partial){
+        SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
+        log.info "availability filter"
+        log.info "availableFrom:"+availableFrom
+        log.info "availableTo:"+availableTo
+        log.info "results: " + results.size()
+        log.info "outToday: " + outToday
+        log.info "partial: " + partial
         results.removeAll {
             def remove = false
+            if (outToday) remove = true
             def count = 0
+            def unCount = 0
             it.samples.each{
                 def booked = false
+                //log.info "id: " + it.look.name
                 it.sampleRequests.each{
-                    log.debug "start date"+it.bookingStartDate
-                    log.debug "end date"+it.bookingEndDate
+                  //log.info "--- " + it.id 
+                  if (it.id == 503) {
+                        //log.info "start date for booking:" +it.bookingStartDate
+                        //log.info "end date for booking:"+it.bookingEndDate
+                        
+                          }
                     if ( 
-                        (
-                             (it.bookingStartDate.after(availableFrom) ||
-                             it.bookingStartDate.equals(availableFrom))
-                             &&
-                             (it.bookingStartDate.before(availableTo) ||
-                             it.bookingStartDate.equals(availableTo)) 
-                          ||
-                             (it.bookingEndDate.after(availableFrom) ||
-                             it.bookingEndDate.equals(availableFrom))
-                             && 
-                             (it.bookingEndDate.before(availableTo) ||
-                             it.bookingEndDate.equals(availableTo))
-                        )
+                            ((
+                                 (it.bookingStartDate.after(availableFrom) ||
+                                    dateFormat.format(it.bookingStartDate).equals(dateFormat.format(availableFrom)))
+                                 &&
+                                 (it.bookingStartDate.before(availableTo) ||
+                                    dateFormat.format(it.bookingStartDate).equals(dateFormat.format(availableTo)))
+                            ) 
+                              ||
+                            (
+                                 (it.bookingEndDate.after(availableFrom) ||
+                                    dateFormat.format(it.bookingEndDate).equals(dateFormat.format(availableFrom)))
+                                 && 
+                                 (it.bookingEndDate.before(availableTo) ||
+                                    dateFormat.format(it.bookingEndDate).equals(dateFormat.format(availableTo)))
+                            )
+                            ||
+                            (
+                                 (it.bookingStartDate.before(availableFrom) ||
+                                    dateFormat.format(it.bookingStartDate).equals(dateFormat.format(availableFrom)))
+                                 && 
+                                 (it.bookingEndDate.after(availableTo) ||
+                                    dateFormat.format(it.bookingEndDate).equals(dateFormat.format(availableTo)))
+                            ))
                         &&
-                        (it.requestStatusBrand == 'Approved' ||
-                        it.requestStatusBrand == 'Picked Up' ||
-                        it.requestStatusBrand == 'Returning')
-                    ){
-                        log.debug "booked true"
+                            (it.requestStatusBrand == 'Approved' ||
+                            it.requestStatusBrand == 'Picked Up' ||
+                            it.requestStatusBrand == 'Returning')
+                        )
+                    {
+                        //log.info "booked true"
                         booked = true
                     }
                 }       
-                if(booked) ++count     
+                if(booked) ++count   
+                else ++unCount 
             }
-            log.debug "count:"+count
-            log.debug "samples size:"+it.samples.size()
-            if(count == it.samples.size() && !(it.brand.hideCalendar)) {
-                log.debug "removing"
+            //log.info "count:"+count + " unCount:"+unCount + " it.samples.size():" + it.samples.size() // + " it.samples.sampleRequests.size():" + it.samples.sampleRequests.size()
+            //if ( it.samples.size() !=0 ) log.info "samples size for:" + it.id + " : " +it.samples.size()
+            if ((count == it.samples.size()) && !(it.brand.hideCalendar)) {
+                //log.info "removing"
                 remove = true
+                if (outToday) {
+                   //log.info "...undo removing for OUT"
+                    remove = false
+                }
+            } else if ((unCount != it.samples.size()) && !(it.brand.hideCalendar) && partial && outToday) {
+                //log.info "removing partials for OUT"
+                remove = false
             }
             remove
         }

@@ -1,0 +1,11 @@
+<template>
+
+<require from="../common/customSelect"></require>
+
+	<span id ="s2fsha" class="inline-label">
+        <span class="form-label" style="font-weight:500">AVAILABILITY TODAY</span>
+        <select2 name="showAvailableSelect" sa.bind="selectorall" ss.bind="selectorselector" options.bind="availableStates" selected.bind="availableo" change.delegate="setAvailable($event)" ></select2>
+    </span>   
+    
+
+</template>

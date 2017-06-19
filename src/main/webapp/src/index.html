@@ -15,7 +15,7 @@
     <require from="./dashboard_filters/filters-season"></require>
     <require from="./dashboard_filters/filters-season-press"></require>
     <require from="./dashboard_filters/filters-type"></require>
-    <require from="./dashboard_filters/filters-city"></require>
+    <require from="./dashboard_filters/filters-show-available"></require>
     <require from="./dashboard_filters/filters-order"></require>
     <require from="./dashboard_filters/filters-category"></require>
     <require from="./dashboard_filters/filters-filterrequests"></require>
@@ -207,9 +207,26 @@
                                 </div> 
                                 <div class="grid-row-col">
                                     <filters-category change.delegate="filterChangeCategory($event)"></filters-category>
-                                </div>                   
+                                </div>  
+                                <!--                  
                                 <div class="grid-row-col">
                                     <filters-city change.delegate="filterChangeCity($event)"></filters-city>
+                                </div> -->
+                                
+                            </div>
+
+                            <div class="grid-row">
+                                <!-- start date -->
+                                <div class="grid-row-col grid-row-date-start">
+                                    <filters-available-from></filters-available-from>
+                                 </div>
+                                    <!-- end date -->
+                                <div class="grid-row-col grid-row-date-end">
+                                    <filters-available-to></filters-available-to>
+                                </div>
+                                <!-- today -->
+                                <div id="indexToday" class="grid-row-col">
+                                    <filters-show-available change.delegate="filterChangeShowAvailable($event)"></filters-show-available>
                                 </div>
                             </div>
                             <div class="grid-row">
@@ -270,7 +287,7 @@
                                     <filters-category change.delegate="filterChangeCategory($event)"></filters-category>
                                 </div> 
                                 <div class="grid-row-col">
-                                    <filters-city change.delegate="filterChangeCity($event)"></filters-city>
+                                    <filters-show-available change.delegate="filterChangeShowAvailable($event)"></filters-show-available>
                                 </div>                   
            
                             </div>

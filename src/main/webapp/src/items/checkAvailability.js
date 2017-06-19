@@ -123,7 +123,8 @@ export class CheckAvailability {
     } else {
       this.selectedProductIds = [];
       //document.getElementById("CreateSampleRequestButton").disabled = true;
-    }
+    }   
+    this.updateAvailability();
   }
 
   allSamplesSelected() {
@@ -133,11 +134,12 @@ export class CheckAvailability {
     if (samples.length != samplesSelected.length) {
       this.selectAll = false;
       console.log("length not equal");
-      return;
+      //return;
     } else {
       this.selectAll = true;
     }
     //this.enableCheck();
+
   }
 
 
