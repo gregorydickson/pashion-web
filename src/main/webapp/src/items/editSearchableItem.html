@@ -62,14 +62,10 @@
                     <span class="inline-label">
                         <span class="slim-text-box-label">SAMPLES</span>
 
-                        <!--
-                            INFO: Wasn't sure if we wanted to use the newer
-                            select-control element for this one or not, but it's here
-                            in the event we do 
-                       -->
+                        
                             <select-control ref="sampleSelectControl" name="sample"
                                 class="to-u-c" 
-                                change.delegate="sample2Callback($event)"                      
+                                change.delegate="sample2Callback($event)"       
                                 selected.bind="selectedSampleItems" 
                                 options.bind="availableSampleItems" 
                                 placeholder="SELECT SAMPLE" 
@@ -247,8 +243,13 @@
                     <div class="grid-block shrink">                       
                         <span class="inline-label">
                             <span class="slim-text-box-label" style="white-space: normal;">Notes</span>
-                                <textarea rows="2" type="textarea" class="slim-text-box" style="width:169px;" value.bind="selectedSample.message"></textarea>
+                            <textarea rows="2" type="textarea" class="slim-text-box" style="width:169px;" value.bind="selectedSample.message"></textarea>
                         </span>
+                    </div>
+                    <!-- delete -->
+                    <div class="grid-block shrink" style="width: 50%;margin: 0 auto;">                       
+                        <a class="hollow button" click.delegate="deleteSample()">Delete Sample</a>
+                        
                     </div>
                 </div>
             </div>
