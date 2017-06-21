@@ -175,7 +175,10 @@ export class EditSearchableItem {
         console.log('sample2Callback() / Selected value:', selectedSampleId); 
 
         this.selectedSample = this.currentItem.samples.find(x => x.id == selectedSampleId);
+        if(!this.selectedSample){
 
+          return
+        }
         // Sample type
         if (this.selectedSample.sampleType) {
           let selectedSampleType = this.availableSampleTypeItems.find(x => x.text.toUpperCase() == this.selectedSample.sampleType.toUpperCase());
@@ -257,6 +260,7 @@ export class EditSearchableItem {
       }
   }
 
+
   onMaterialChangeCallback(event) {   
       console.log('onMaterialChangeCallback() called:', event.detail.value);
 
@@ -304,6 +308,27 @@ export class EditSearchableItem {
       this.selectedSampleItems = [this.newSampleId]
       this.selectedSample = this.currentItem.samples.find(x => x.id == this.newSampleId);
     }
+  }
+
+  deleteSample(){
+    console.log("deleting sample");
+    let sampleId = this.selectedSample.id;
+    this.currentItem.samples.splice(this.currentItem.samples.indexOf(this.selectedSample),1);
+    let index = this.availableSampleItems.findIndex(x => {x.id ==sampleId});
+    this.availableSampleItems.splice(index,1);
+
+    
+    
+    this.selectedSample = {};
+    
+    if(this.currentItem.deletedSamples){
+      this.currentItem.deletedSamples.push(sampleId);
+    } else{
+      this.currentItem.deletedSamples = [];
+      this.currentItem.deletedSamples.push(sampleId);
+    }
+    $('#sample').val('SELECT SAMPLE').trigger('change');
+    console.log("deleting sample done");
   }
  
 
