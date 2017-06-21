@@ -176,7 +176,7 @@ export class EditSearchableItem {
 
         this.selectedSample = this.currentItem.samples.find(x => x.id == selectedSampleId);
         if(!this.selectedSample){
-          $('#sample').val('SELECT SAMPLE').trigger('change');
+
           return
         }
         // Sample type
@@ -327,6 +327,7 @@ export class EditSearchableItem {
       this.currentItem.deletedSamples = [];
       this.currentItem.deletedSamples.push(sampleId);
     }
+    $('#sample').val('SELECT SAMPLE').trigger('change');
     console.log("deleting sample done");
   }
  
