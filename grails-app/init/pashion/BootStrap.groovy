@@ -65,9 +65,11 @@ class BootStrap {
         }
       }
         
+      if (Environment.current == Environment.DEVELOPMENT) {
+        "say get to work".execute()
+      }
 
-
-      "say get to work".execute()
+      
 
     }
     def destroy = {
