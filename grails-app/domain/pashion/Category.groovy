@@ -4,6 +4,7 @@ class Category{
 	
 	String name
 	String abbreviation
+	Integer order
 	static mapping = {
         cache true
     }

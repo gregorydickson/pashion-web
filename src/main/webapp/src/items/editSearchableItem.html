@@ -122,7 +122,7 @@
                                 change.delegate="onSampleTypeChangeCallback($event)"                      
                                 selected.bind="selectedSampleTypeItems" 
                                 options.bind="availableSampleTypeItems" 
-                                placeholder="Select one" 
+                                placeholder="Select" 
                                 allow_clear="true" width="169px">
                             </select-control>
 
@@ -171,7 +171,7 @@
                                 change.delegate="onNewColorChangeCallback($event)"                      
                                 selected.bind="selectedNewColorItems" 
                                 options.bind="availableNewColorItems" 
-                                placeholder="Select one" 
+                                placeholder="Select" 
                                 allow_clear="true" width="169px">
                             </select-control>
 
@@ -228,18 +228,29 @@
                     <!-- Location -->
                     <div class="grid-block shrink" >                        
                         <span class="inline-label">
-                            <span class="slim-text-box-label">Location</span>
-
+                            <span class="slim-text-box-label">Home Location</span>
                             <select-control-no-sort ref="locationSelectControl" name="location"
                                 class="to-u-c"
                                 change.delegate="onLocationChangeCallback($event)"     
                                 selected.bind="selectedLocationItems" 
                                 options.bind="availableLocationItems" 
-                                placeholder="Select one" 
+                                placeholder="Select" 
                                 allow_clear="true" width="169px">
                             </select-control-no-sort>
-
-                           <!--<form-select-object class="to-u-c" name="location" selected.two-way="selectedSample.sampleCity.id" options.bind="cities" ></form-select-object>-->
+                        </span> 
+                    </div>
+                    <!-- out Reason -->
+                    <div class="grid-block shrink" > 
+                        <span class="inline-label">
+                            <span class="slim-text-box-label">Out Reason</span>
+                            <select-control-no-sort ref="outReasonSelectControl" name="outReason"
+                                class="to-u-c"
+                                change.delegate="onOutReasonChangeCallback($event)"     
+                                selected.bind="selectedOutReasonItems" 
+                                options.bind="availableOutReasonItems" 
+                                placeholder="Select" 
+                                allow_clear="true" width="169px">
+                            </select-control-no-sort>
                         </span> 
                     </div>
 

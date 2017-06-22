@@ -48,7 +48,7 @@ export class SelectControl {
     }
 
     selectedChanged(value) {
-        console.log('SelectControl.selectedChanged(): Selected values changed');
+        console.log('SelectControl.selectedChanged(): Selected values changed: ' + value);
 
         let el = $(this.element).find('select');
 
@@ -60,6 +60,7 @@ export class SelectControl {
                 try {
                     sel.val(this.selected).trigger('change');
                 } catch (err) {
+                    console.log (`selet2 val error: ${err}`)
                     // A "find of null" error is raised by select2 in some
                     // instances. Doesn't appear to interfere with any
                     // functionality so let's just swallow it until
