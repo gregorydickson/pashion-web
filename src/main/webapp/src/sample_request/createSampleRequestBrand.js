@@ -482,6 +482,19 @@ export class CreateSampleRequestBrand {
     this.updateAvailability();
   }
 
+  get aSampleHasOutReason() {
+    for (let i = 0; i < this.currentItem.samples.length; i++) {
+      let sample = this.currentItem.samples[i];
+      if (sample.outReason) {
+        if (sample.outReason.id != 0) {
+            if (this.sampleRequest.samples.includes(sample.id)) { //console.log (" found an outReason"); 
+              return true}
+        } 
+      }
+    }
+    //console.log (" no outReason"); 
+    return false
+  }
 
   updateAvailability() {
     this.allSamplesSelected();

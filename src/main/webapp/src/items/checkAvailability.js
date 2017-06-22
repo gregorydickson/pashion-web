@@ -19,9 +19,6 @@ export class CheckAvailability {
   selectAll = true;
   brandHideCalendar = false;
 
-
-
-
   constructor(http, controller, userService, brandService, DS) {
     this.controller = controller;
 
@@ -98,6 +95,7 @@ export class CheckAvailability {
   }
 
   reset() {
+    console.log("CheckAvailability, reset called");
     this.offset = 0;
     var queryString = DateFormat.urlString(0, 1);
     if (this.user.type === "brand")
@@ -139,7 +137,17 @@ export class CheckAvailability {
       this.selectAll = true;
     }
     //this.enableCheck();
+  }
 
+  get aSampleHasOutReason() {
+    for (let sample of this.currentItem.samples) {
+      if (sample.outReason) {
+        if ((sample.outReason.id != 0) && (this.selectedProductIds.indexOf(sample.id) > -1)) {
+          return true
+        }
+      } 
+    }
+    return false
   }
 
 
