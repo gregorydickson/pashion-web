@@ -187,16 +187,9 @@ export class EditSearchableItem {
             console.log('Found a match for sample type:', selectedSampleType);
             this.selectedSampleTypeItems = [selectedSampleType.id];
           }
-        }
-
-        // Material
-        if (this.selectedSample.material) {
-          let selectedMaterial = this.availableMaterialItems.find(x => x.text.toUpperCase() == this.selectedSample.material.toUpperCase())
-          
-          if (selectedMaterial) {
-            console.log('Found a match for material:', selectedMaterial);              
-          }
-        }
+        } else{
+          $('#type').val('').trigger('change');
+        } 
 
         // Location
         if (this.selectedSample.sampleCity) {
@@ -206,19 +199,16 @@ export class EditSearchableItem {
             console.log('Found a match for location:', selectedLocation);
             this.selectedLocationItems = [selectedLocation.id];      
           }
-        }          
+        } else{
+          $('#location').val('').trigger('change');
+        }        
 
         // out Reason 
         if (this.selectedSample.outReason) {
-          let selectedOutReason = this.selectedSample.outReason;
+          this.selectedOutReasonItems = this.selectedSample.outReason.id;
 
-          if (selectedOutReason) {
-            console.log('Found a match for outReason:', selectedOutReason);
-            this.selectedOutReasonItems = [selectedOutReason.id];      
-          }
         } else {
-          console.log('Found NO match for outReason:');
-          //this.selectedOutReasonItems = [1]
+          $('#outReason').val('').trigger('change');
         }
          
         this.showSampleEdit = (this.selectedSample !== null);
@@ -335,19 +325,25 @@ export class EditSearchableItem {
       
       this.availableSampleItems.push({ id: this.newSampleId , text: "NEW" });
       this.selectedSampleItems = [this.newSampleId]
-      this.selectedSample = this.currentItem.samples.find(x => x.id == this.newSampleId);
+      this.selectedSample = this.currentItem.samples.find(x => {x.id == this.newSampleId});
     }
   }
 
   deleteSample(){
     console.log("deleting sample");
     let sampleId = this.selectedSample.id;
-    this.currentItem.samples.splice(this.currentItem.samples.indexOf(this.selectedSample),1);
-    let index = this.availableSampleItems.findIndex(x => {x.id ==sampleId});
-    this.availableSampleItems.splice(index,1);
+    console.log("sample ID:"+sampleId);
+    let sampleIndex = this.currentItem.samples.indexOf(this.selectedSample);
+    console.log("sample index:"+sampleIndex);
+    this.currentItem.samples.splice(sampleIndex,1);
 
-    
-    
+    let index = this.availableSampleItems.findIndex(x => {
+      console.log("x id:"+x.id);
+
+      if(x.id ===sampleId) return true;
+    });
+    console.log("index in available sample items"+index);
+    this.availableSampleItems.splice(index,1);
     this.selectedSample = {};
     
     if(this.currentItem.deletedSamples){
