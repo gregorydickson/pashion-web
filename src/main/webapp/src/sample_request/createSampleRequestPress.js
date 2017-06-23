@@ -379,7 +379,7 @@ export class CreateSampleRequestPress {
     this.sampleRequest.endDate = '';
     this.sampleRequestEndDay = '';
     this.sampleRequestEndMonth = '';
-    enableCheck()
+    this.enableCheck()
     //
     this.allSamplesSelected();
     if(this.sampleRequest.samples.length == 0) {
