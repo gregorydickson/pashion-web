@@ -4,7 +4,7 @@ model {
     SearchableItem searchableItem
 }
 
-json g.render(searchableItem,[excludes:'brandCollection',expand:['type', 'samples']])  {
+json g.render(searchableItem,[excludes:'brandCollection',expand:['type', 'samples','outReason']])  {
 	brandCollection{
 		season searchableItem.brandCollection.season.name
 	}

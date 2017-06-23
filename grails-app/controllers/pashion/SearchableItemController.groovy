@@ -510,7 +510,7 @@ class SearchableItemController {
             sample.size = it.size
             sample.material = it.material
             sample.sampleCity = City.get(it.sampleCity?.id?.toInteger())
-
+            log.info "outreason:"+it.outReason
             if (it.outReason) sample.outReason = OutReason.get(it.outReason.id.toInteger())
             
             sample.description = it.description

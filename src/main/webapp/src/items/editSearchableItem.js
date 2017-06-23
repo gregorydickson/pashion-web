@@ -271,7 +271,7 @@ export class EditSearchableItem {
             let selectedValue = event.detail.value;         
             console.log('Selected out Reason value:', selectedValue);     
 
-            if (this.selectedSample.outReason) this.selectedSample.id = parseInt(selectedValue); 
+            if (this.selectedSample.outReason) this.selectedSample.outReason.id = parseInt(selectedValue); 
             else this.selectedSample["outReason"] = {id:parseInt(selectedValue)};
           }
       }
