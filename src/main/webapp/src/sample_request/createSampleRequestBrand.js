@@ -497,6 +497,18 @@ export class CreateSampleRequestBrand {
   }
 
   updateAvailability() {
+    console.log ("updateAvailability called");
+    // clear dates as they may no longer be valid for the range
+    this.startDay = '';
+    this.sampleRequest.startDate = '';
+    this.sampleRequestStartMonth = '';
+    this.sampleRequestStartDay = ''; 
+    //  end date
+    this.endDay = '';
+    this.sampleRequest.endDate = '';
+    this.sampleRequestEndDay = '';
+    this.sampleRequestEndMonth = '';
+    this.enableCheck()
     this.allSamplesSelected();
     if (this.sampleRequest.samples.length == 0) {
       console.log("no samples");
