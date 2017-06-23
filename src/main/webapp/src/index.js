@@ -265,7 +265,7 @@ export class Index {
                 setTimeout(function () {
                         window.myblazy.destroy();
                         window.myblazy.revalidate();
-                        console.log("subsequent loading Blazy recreation");
+                        //console.log("subsequent loading Blazy recreation");
                 }, 1000); 
                 this.busy.off();
             })
@@ -416,7 +416,7 @@ export class Index {
                                 offset: 100 
                             });
                             window.myblazy = blazy;
-                            console.log("window focus Blazy recreation");
+                            //console.log("window focus Blazy recreation");
                         }, 1000);
                     }, false);
                     
@@ -427,7 +427,7 @@ export class Index {
                     setTimeout(function () {
                         window.myblazy.destroy();
                         window.myblazy.revalidate();
-                        console.log("subsequent loading Blazy recreation");
+                        //console.log("subsequent loading Blazy recreation");
                     }, 1000); 
                     
                 }
@@ -508,7 +508,7 @@ export class Index {
                 setTimeout(function () {
                             
                         window.myblazy.revalidate();
-                        console.log("subsequent loading Blazy recreation");
+                        //console.log("subsequent loading Blazy recreation");
                 }, 1000); 
                 this.busy.off();
             })
@@ -562,7 +562,7 @@ export class Index {
                 setTimeout(function () {
                             
                         window.myblazy.revalidate();
-                        console.log("subsequent loading Blazy recreation");
+                       // console.log("subsequent loading Blazy recreation");
                 }, 1000); 
                 this.busy.off();
             })
@@ -616,7 +616,7 @@ export class Index {
                 setTimeout(function () {
                         window.myblazy.destroy();
                         window.myblazy.revalidate();
-                        console.log("subsequent loading Blazy recreation");
+                        //console.log("subsequent loading Blazy recreation");
                 }, 1000); 
                 this.busy.off();
             })
@@ -626,7 +626,7 @@ export class Index {
 
     filterChangeDates(event) {
         console.log("Filter Change changing Change Dates: from: " + this.availableFrom + " to: " + this.availableTo);
-        //if (this.availableTo == '' || this.availableTo == null) return;
+        if (this.availableTo == '' || this.availableTo == null) this.outToday = '';
 
         this.busy.on();
         if(window.myblazy){
@@ -675,7 +675,7 @@ export class Index {
                 setTimeout(function () {
                         window.myblazy.destroy();
                         window.myblazy.revalidate();
-                        console.log("subsequent loading Blazy recreation");
+                        //console.log("subsequent loading Blazy recreation");
                 }, 1000); 
                 this.busy.off();
             })
@@ -695,13 +695,13 @@ export class Index {
                     if (event.detail.value) {
                         let today = new Date();
                         console.log("Filter Change accepted");
-                        if (event.detail.value == 'All' || event.detail.value == 'ALL' ) event.detail.value = '';
-                        if (event.detail.value == 'Select' || event.detail.value == 'SELECT') event.detail.value = '';
-                        if (event.detail.value == 'In-House' || event.detail.value == 'IN-HOUSE') {
+                        if (event.detail.value.toUpperCase() == 'ALL' ) event.detail.value = '';
+                        if (event.detail.value.toUpperCase() == 'SELECT') event.detail.value = '';
+                        if (event.detail.value.toUpperCase() == 'IN HOUSE') {
                             //this.availableFrom =  moment(today).format('DD-MMM-YYYY'); 
                             //this.availableTo = this.availableFrom; 
                             this.outToday = false;
-                        } else if (event.detail.value == 'Out' || event.detail.value == 'OUT') {
+                        } else if (event.detail.value.toUpperCase() == 'NOT IN HOUSE') {
                             //this.availableFrom =  moment(today).format('DD-MMM-YYYY'); 
                             //this.availableTo = this.availableFrom; 
                             this.outToday = true;
@@ -743,7 +743,7 @@ export class Index {
                     setTimeout(function () {
                             window.myblazy.destroy();
                             window.myblazy.revalidate();
-                            console.log("subsequent loading Blazy recreation");
+                            // console.log("subsequent loading Blazy recreation");
                     }, 1000); 
                     this.busy.off();
                 })

@@ -7,7 +7,7 @@ import 'fetch';
 @customElement('filters-show-available')
 
 export class FiltersShowAvailableCustomElement {
-  availableStates = ["IN-HOUSE", "OUT"];
+  availableStates = ["IN HOUSE", "NOT IN HOUSE"];
   selectorselector = false;
   selectorall = false;
 

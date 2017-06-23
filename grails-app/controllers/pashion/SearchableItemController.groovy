@@ -332,48 +332,53 @@ class SearchableItemController {
             def unCount = 0
             it.samples.each{
                 def booked = false
-                //log.info "id: " + it.look.name
-                it.sampleRequests.each{
-                  //log.info "--- " + it.id 
-                  if (it.id == 503) {
-                        //log.info "start date for booking:" +it.bookingStartDate
-                        //log.info "end date for booking:"+it.bookingEndDate
-                        
-                          }
-                    if ( 
-                            ((
-                                 (it.bookingStartDate.after(availableFrom) ||
-                                    dateFormat.format(it.bookingStartDate).equals(dateFormat.format(availableFrom)))
-                                 &&
-                                 (it.bookingStartDate.before(availableTo) ||
-                                    dateFormat.format(it.bookingStartDate).equals(dateFormat.format(availableTo)))
-                            ) 
-                              ||
-                            (
-                                 (it.bookingEndDate.after(availableFrom) ||
-                                    dateFormat.format(it.bookingEndDate).equals(dateFormat.format(availableFrom)))
-                                 && 
-                                 (it.bookingEndDate.before(availableTo) ||
-                                    dateFormat.format(it.bookingEndDate).equals(dateFormat.format(availableTo)))
+                if (it.outReason && it.outReason.id != 0) {
+                    log.info "outReason true";
+                    booked = true;
+                } else {
+                    //log.info "id: " + it.look.name
+                    it.sampleRequests.each{
+                      //log.info "--- " + it.id 
+                      //if (it.id == 503) {
+                            //log.info "start date for booking:" +it.bookingStartDate
+                            //log.info "end date for booking:"+it.bookingEndDate
+                            
+                        //      }
+                        if ( 
+                                ((
+                                     (it.bookingStartDate.after(availableFrom) ||
+                                        dateFormat.format(it.bookingStartDate).equals(dateFormat.format(availableFrom)))
+                                     &&
+                                     (it.bookingStartDate.before(availableTo) ||
+                                        dateFormat.format(it.bookingStartDate).equals(dateFormat.format(availableTo)))
+                                ) 
+                                  ||
+                                (
+                                     (it.bookingEndDate.after(availableFrom) ||
+                                        dateFormat.format(it.bookingEndDate).equals(dateFormat.format(availableFrom)))
+                                     && 
+                                     (it.bookingEndDate.before(availableTo) ||
+                                        dateFormat.format(it.bookingEndDate).equals(dateFormat.format(availableTo)))
+                                )
+                                ||
+                                (
+                                     (it.bookingStartDate.before(availableFrom) ||
+                                        dateFormat.format(it.bookingStartDate).equals(dateFormat.format(availableFrom)))
+                                     && 
+                                     (it.bookingEndDate.after(availableTo) ||
+                                        dateFormat.format(it.bookingEndDate).equals(dateFormat.format(availableTo)))
+                                ))
+                            &&
+                                (it.requestStatusBrand == 'Approved' ||
+                                it.requestStatusBrand == 'Picked Up' ||
+                                it.requestStatusBrand == 'Returning')
                             )
-                            ||
-                            (
-                                 (it.bookingStartDate.before(availableFrom) ||
-                                    dateFormat.format(it.bookingStartDate).equals(dateFormat.format(availableFrom)))
-                                 && 
-                                 (it.bookingEndDate.after(availableTo) ||
-                                    dateFormat.format(it.bookingEndDate).equals(dateFormat.format(availableTo)))
-                            ))
-                        &&
-                            (it.requestStatusBrand == 'Approved' ||
-                            it.requestStatusBrand == 'Picked Up' ||
-                            it.requestStatusBrand == 'Returning')
-                        )
-                    {
-                        //log.info "booked true"
-                        booked = true
-                    }
-                }       
+                        {
+                            log.info "booked true";
+                            booked = true;
+                        }
+                    }  
+                }     
                 if(booked) ++count   
                 else ++unCount 
             }
