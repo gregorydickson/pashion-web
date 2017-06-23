@@ -66,7 +66,7 @@
                                     <!-- <td class=" ${cell.event==' today' ? ' today' : ''} ${computedClass ? 'start-selected' : 'start-not-selected' }" repeat.for="cell of row"> -->
                                     <!--  <td if.bind="startCalendar.calendarMonths[0].monthNumber == sampleRequestStartMonth" class="start-selected"  repeat.for="cell of row">
                                 <td if.bind="startCalendar.calendarMonths[0].monthNumber != sampleRequestStartMonth" class=""  repeat.for="cell of row"> -->
-                                    <td class="${cell.event}" repeat.for="cell of row">
+                                    <td class="${cell.event} ${aSampleHasOutReason ? 'not-available' : ''}" repeat.for="cell of row">
                                         <a class=" ${(computedClass && (cell.dayString === sampleRequestStartDay)) ? 'start-selected' : ''} " href="#" click.delegate="setStartDate($event,cell.event,cell.dayString)">
                                         ${cell.dayString}
                                     </a>
@@ -211,7 +211,7 @@
                                         ${cell.dayString}
                                     </a>
                                 </td> -->
-                                    <td class="${cell.event}" repeat.for="cell of row">
+                                    <td class="${cell.event} ${aSampleHasOutReason ? 'not-available' : ''}" repeat.for="cell of row">
                                         <a class=" ${(computedClassEnd && (cell.dayString === sampleRequestEndDay)) ? 'end-selected' : ''} " href="#" click.delegate="setEndDate($event,cell.event,cell.dayString)">
                                         ${cell.dayString}
                                     </a>
@@ -306,11 +306,12 @@
                     <table if.bind="currentItem.samples" class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples | sort: 'id': 'ascending'">
                         <tr>
 
-                            <td class="accordion" style="width:70px; max-width:70px;">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.name}.${$index+1} :&nbsp;</td>
-                            <td class="accordion to-u-c" style="width:300px; max-width:300px; overflow:hidden; padding-right:20px;">${sample.attributes}</td>
+                            <td class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'red-deco' : ''}" style="width:70px; max-width:70px;">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.name}.${$index+1} :&nbsp;</td>
+                            <td class="accordion to-u-c ${(sample.outReason && sample.outReason.id != 0)  ? 'red-deco' : ''}" style="width:300px; max-width:300px; overflow:hidden; padding-right:20px;">${sample.attributes}</td>
                             
-                            <td class="accordion" style="width:60px; max-width:60px;">
-                                ${sample.sampleCity.name}
+                           <td if.bind="!(sample.outReason && sample.outReason.id != 0)" class="accordion" style="width:60px; max-width:60px;">
+                            </td> 
+                            <td if.bind="(sample.outReason && sample.outReason.id != 0)" class="accordion red-deco" style="width:60px; max-width:60px;">OUT
                             </td>
                             <td class="accordion" style="width:10px; max-width:10px;">
                                 <input disabled.bind="((user.city.name !== sample.sampleCity.name) && (restrictOutsideBooking))" type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="sampleRequest.samples">

@@ -482,8 +482,33 @@ export class CreateSampleRequestBrand {
     this.updateAvailability();
   }
 
+  get aSampleHasOutReason() {
+    for (let i = 0; i < this.currentItem.samples.length; i++) {
+      let sample = this.currentItem.samples[i];
+      if (sample.outReason) {
+        if (sample.outReason.id != 0) {
+            if (this.sampleRequest.samples.includes(sample.id)) { //console.log (" found an outReason"); 
+              return true}
+        } 
+      }
+    }
+    //console.log (" no outReason"); 
+    return false
+  }
 
   updateAvailability() {
+    console.log ("updateAvailability called");
+    // clear dates as they may no longer be valid for the range
+    this.startDay = '';
+    this.sampleRequest.startDate = '';
+    this.sampleRequestStartMonth = '';
+    this.sampleRequestStartDay = ''; 
+    //  end date
+    this.endDay = '';
+    this.sampleRequest.endDate = '';
+    this.sampleRequestEndDay = '';
+    this.sampleRequestEndMonth = '';
+    this.enableCheck()
     this.allSamplesSelected();
     if (this.sampleRequest.samples.length == 0) {
       console.log("no samples");

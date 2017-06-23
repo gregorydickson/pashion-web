@@ -99,6 +99,11 @@ class DashboardController {
         render cities
     }
 
+    def outReasonObjects(){
+        def outReasons = OutReason.list() as JSON
+        render outReasons
+    }
+
     def user(){
         def info
         if(session.user == null){

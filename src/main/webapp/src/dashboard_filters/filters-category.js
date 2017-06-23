@@ -26,7 +26,7 @@ sortCategories (array) {
         .sort(
           function (a, b) {
           //console.log (a["order"] + " " + b["order"] + " " + (a["order"] - b["order"] ));
-          return (a["order"] - b["order"]) * -1  }
+          return (b["order"] - a["order"] ) * -1  }
           );
     return iarray;
   } 

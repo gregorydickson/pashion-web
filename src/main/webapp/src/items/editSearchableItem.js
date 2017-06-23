@@ -4,11 +4,12 @@ import 'fetch';
 import {inject, bindable} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import {CityService} from 'services/cityService';
+import {OutReasonService} from 'services/outReasonService';
 import {DialogService} from 'aurelia-dialog';
 import { CreateDialogAlert } from 'common/dialogAlert';
 
 
-@inject(HttpClient, DialogController,CityService, DialogService)
+@inject(HttpClient, DialogController,CityService, OutReasonService, DialogService)
 export class EditSearchableItem {
   static inject = [DialogController];
   isLoading = true;
@@ -29,10 +30,13 @@ export class EditSearchableItem {
   selectedMaterialItems = [];
   availableLocationItems = [];
   selectedLocationItems = [];
+  availableOutReasonItems = [];
+  selectedOutReasonItems = [];
 
   colors = [];
   material = [];
   cities = [];
+  outReasons = [];
 
   createdNew = true;
 
@@ -44,7 +48,7 @@ export class EditSearchableItem {
   
   showSampleEdit = false;
 
-  constructor(http, controller,cityService, dialogService){
+  constructor(http, controller,cityService, outReasonService, dialogService){
     this.controller = controller;
     
     http.configure(config => {
@@ -53,6 +57,7 @@ export class EditSearchableItem {
     });
     this.http = http;
     this.cityService = cityService;
+    this.outReasonService = outReasonService;
     this.dialogService = dialogService;
   }
 
@@ -61,16 +66,11 @@ export class EditSearchableItem {
     var queryString = DateFormat.urlString(0, 1);
     this.cityService.getCities().then(cities => {
       this.cities = cities;
-
       this.availableLocationItems = cities.map(value => {return {id: value.id, text:value.name.toUpperCase()};});
-      /*
-      cities.forEach(item => {
-          this.availableLocationItems.push({
-            id: item.id,
-            text: item.name.toUpperCase()
-          });
-        });
-        */
+    });
+    this.outReasonService.getOutReasons().then(outReasons => {
+      this.outReasons = outReasons;
+      this.availableOutReasonItems = outReasons.map(value => {return {id: value.id, text:value.name.toUpperCase()};});
     });
     Promise.all([
       this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => {
@@ -207,8 +207,23 @@ export class EditSearchableItem {
             this.selectedLocationItems = [selectedLocation.id];      
           }
         }          
+
+        // out Reason 
+        if (this.selectedSample.outReason) {
+          let selectedOutReason = this.selectedSample.outReason;
+
+          if (selectedOutReason) {
+            console.log('Found a match for outReason:', selectedOutReason);
+            this.selectedOutReasonItems = [selectedOutReason.id];      
+          }
+        } else {
+          console.log('Found NO match for outReason:');
+          //this.selectedOutReasonItems = [1]
+        }
          
         this.showSampleEdit = (this.selectedSample !== null);
+        
+        
     }
   }
 
@@ -245,6 +260,19 @@ export class EditSearchableItem {
             console.log('Selected location value:', selectedValue);     
 
             this.selectedSample.sampleCity.id = selectedValue; 
+          }
+      }
+  }
+
+  onOutReasonChangeCallback(event) {   
+      console.log('onOutReasonChangeCallback() called:', event.detail.value);
+      if (event.detail) {
+          if(event.detail.value){
+            let selectedValue = event.detail.value;         
+            console.log('Selected out Reason value:', selectedValue);     
+
+            if (this.selectedSample.outReason) this.selectedSample.id = parseInt(selectedValue); 
+            else this.selectedSample["outReason"] = {id:parseInt(selectedValue)};
           }
       }
   }
@@ -293,7 +321,8 @@ export class EditSearchableItem {
       newsample.description = "NEW";
       newsample.attributes = "NEW";
       newsample.id = this.newSampleId;
-      newsample.sampleCity = {}
+      newsample.sampleCity = {};
+      newsample.outReason = {};
       newsample.sampleCity.id = this.availableLocationItems[0].id;
       this.selectedLocationItems = this.availableLocationItems[0];
       newsample.type = this.selectedSampleTypeItems[0];
@@ -348,6 +377,8 @@ export class EditSearchableItem {
         addAttributes = addAttributes +" "+ sample.material;
       if(sample.color)
         addAttributes = addAttributes +" "+sample.color;
+      if(sample.outReason)
+        addAttributes = addAttributes +" "+sample.outReason.name;
 
       item.attributes = item.attributes +" "+ addAttributes;
     });

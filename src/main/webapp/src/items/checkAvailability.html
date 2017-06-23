@@ -54,7 +54,7 @@
                         </thead>
                         <tbody>
                             <tr repeat.for="row of calendar.calendarMonths[0].rows">
-                                <td class="${cell.event}" repeat.for="cell of row">
+                                <td class="${cell.event} ${aSampleHasOutReason ? 'not-available' : ''}" repeat.for="cell of row">
                                     <a href="#" style="cursor: default" click.delegate="">
                                     ${cell.dayString}
                                     </a>
@@ -82,8 +82,10 @@
                     <table class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples | sort: 'id': 'ascending' ">
                                   <tr>
                                      <!-- <td class="accordion" style="width:15px; max-width:15px;">${$index + 1}</td> -->
-                                      <td class="accordion" style="width:65px; max-width:65px;">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.name}.${$index+1} :</td>
-                                      <td class="accordion to-u-c" style="width:190px; max-width:190px; overflow:hidden; padding-right:10px;">${sample.attributes}</td>
+                                      <td class="accordion 
+                                        ${(sample.outReason && sample.outReason.id != 0) ? 'red-deco' : ''}" 
+                                          style="width:65px; max-width:65px;">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.name}.${$index+1} :</td>
+                                      <td class="accordion to-u-c ${(sample.outReason && sample.outReason.id != 0)  ? 'red-deco' : ''}" style="width:190px; max-width:190px; overflow:hidden; padding-right:10px;">${sample.attributes}</td>
                                       <td class="accordion" style="width:10px; max-width:10px;">
                               
                                <input type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="selectedProductIds" >

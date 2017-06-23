@@ -21,6 +21,7 @@ class SearchableItem {
 	City city
 	City sampleCity
 	String sex
+	OutReason outReason
 
 	String image
 	
@@ -86,6 +87,8 @@ class SearchableItem {
 		type lazy:false
 		brandCollection lazy:false
 		city lazy:false
+
+		outReason lazy:false
 
 		description type: 'text'
 

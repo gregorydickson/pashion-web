@@ -25,6 +25,7 @@ import { SearchableItemService } from './services/searchableItemService';
 import { busy } from './services/busy';
 import { CreateDialogAlert } from './common/dialogAlert';
 import { DS } from './datastores/ds';
+import moment from 'moment'
 
 
 @inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, PRAgencyService, busy, PubNubService, DS, SearchableItemService)
@@ -55,11 +56,11 @@ export class Index {
     busy;
     ordering = 'bookingStartDate';
     filtering = 'ALL REQUESTS';
-    today = new Date(); // Do we have a problem with freshness of this variable, say login at 11:59PM?
     firstTime = true;
     onlyShowMine = false;
     onlyShowMineCompany = '';
     bLazy = null;
+    outToday = false;
 
 
 
@@ -91,8 +92,9 @@ export class Index {
     }
 
     computedOverdue(booking, status) {
+        let today = new Date();
         var computedDate = new Date(booking);
-        var overdue = this.today > computedDate;
+        var overdue = today > computedDate;
         overdue = (overdue && (status == 'Pending'))
         //console.log("computedOverdue function, booking: " + booking + " today: " + this.today + " computed: " +  computedDate + " overdue: " + (this.today > computedDate));
         return overdue;
@@ -623,12 +625,15 @@ export class Index {
     }
 
     filterChangeDates(event) {
+        console.log("Filter Change changing Change Dates: from: " + this.availableFrom + " to: " + this.availableTo);
+        //if (this.availableTo == '' || this.availableTo == null) return;
+
         this.busy.on();
         if(window.myblazy){
             window.myblazy.destroy();
         }
         this.rows = [];
-        console.log("Filter Change changing Change Dates: from: " + this.availableFrom + " to: " + this.availableTo);
+
         //this.availableTo = '';
         /* if (event)
             if (event.detail)
@@ -651,7 +656,8 @@ export class Index {
             '&availableTo=' + this.availableTo +
             '&theme=' + this.selectedTheme +
             '&color=' + this.selectedColor +
-            '&city=' + this.selectedCity +
+            '&city=' + this.selectedCity +           
+            '&outToday=' + this.outToday +
             '&maxR=' + this.maxR)
             .then(response => response.json())
             .then(rows => {
@@ -677,6 +683,75 @@ export class Index {
             ;
     }
 
+    filterChangeShowAvailable(event) {
+        console.log("Filter Change changing Show available:" + event.detail.value);
+        if ((this.availableTo != '') && (this.availableTo != null) && (this.availableTo != undefined)){ 
+            this.rows = [];
+            this.selectedCity = '';
+            this.outToday = '';
+
+            if (event)
+                if (event.detail)
+                    if (event.detail.value) {
+                        let today = new Date();
+                        console.log("Filter Change accepted");
+                        if (event.detail.value == 'All' || event.detail.value == 'ALL' ) event.detail.value = '';
+                        if (event.detail.value == 'Select' || event.detail.value == 'SELECT') event.detail.value = '';
+                        if (event.detail.value == 'In-House' || event.detail.value == 'IN-HOUSE') {
+                            //this.availableFrom =  moment(today).format('DD-MMM-YYYY'); 
+                            //this.availableTo = this.availableFrom; 
+                            this.outToday = false;
+                        } else if (event.detail.value == 'Out' || event.detail.value == 'OUT') {
+                            //this.availableFrom =  moment(today).format('DD-MMM-YYYY'); 
+                            //this.availableTo = this.availableFrom; 
+                            this.outToday = true;
+                        }
+                    }
+
+            console.log("Filter Change changing Show available:" + this.outToday);
+            this.busy.on();
+            if(window.myblazy) {
+                window.myblazy.destroy();
+            }     
+
+            this.numberImages = 0;
+            this.maxRReached = false;
+            this.http.fetch('/searchableItem/' + this.searchType + '?searchtext=' + encodeURI(this.searchText) +
+                '&brand=' + this.selectedBrand +
+                '&season=' + encodeURI(this.selectedSeason) +
+                '&category=' + this.selectedCategory +
+                '&availableFrom=' + this.availableFrom +
+                '&availableTo=' + this.availableTo +
+                '&theme=' + this.selectedTheme +
+                '&color=' + this.selectedColor +
+                '&city=' + this.selectedCity +
+                '&outToday=' + this.outToday +
+                '&maxR=' + this.maxR)
+                .then(response => response.json())
+                .then(rows => {
+                    if (rows.session == 'invalid') {
+                        window.location.href = '/user/login';
+                        return;
+                    }
+                    this.rows = rows;
+                    this.busy.off();
+                    if (rows.length > 0) {
+                        this.numberImages = (rows.length - 1) * rows[0].numberImagesThisRow;
+                        this.numberImages += rows[rows.length - 1].numberImagesThisRow;
+                        if (this.numberImages == this.maxR) this.maxRReached = true;
+                    }
+                    setTimeout(function () {
+                            window.myblazy.destroy();
+                            window.myblazy.revalidate();
+                            console.log("subsequent loading Blazy recreation");
+                    }, 1000); 
+                    this.busy.off();
+                })
+                .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 250 }, 'slow')) // scroll to top
+                ;
+            }
+    }
+/*
     filterChangeCity(event) {
         this.busy.on();
         if(window.myblazy){
@@ -731,6 +806,7 @@ export class Index {
             ;
     }
 
+*/
     orderChange(event) {
         this.closeAllOpenRequestRows();
         console.log("Order changed ");
