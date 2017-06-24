@@ -1,6 +1,7 @@
 <!-- Note same layout for Press and Brand, only content and Titles change -->
 
-<template>
+<template>    
+<require from="./sort"></require>
     <require from="common/viewDateFormatter"></require>
     <!-- <require from="common/dateTimeFormatter"></require> -->
     <require from="calendars/datepicker"></require>
@@ -331,7 +332,7 @@
             <div if.bind="(user.type === 'brand') || (user.type === 'prAgency')" class="vertical grid-content accordion modal-table-wrap" style="margin-top: 0px;">
                 <!-- scroll after n items -->
                 <!-- row -->
-                <table repeat.for="sample of sampleRequest.searchableItemsProposed" class="" style="table-layout:fixed">
+                <table repeat.for="sample of sampleRequest.searchableItemsProposed | sort: 'id': 'ascending'" class="" style="table-layout:fixed">
                     <tr>
                         <!-- <td class="accordion w3">${$index+1}</td> -->
                         <td class="accordion" style="width:65px; max-width:65px;">${sampleRequest.season | seasonAbbreviation:seasons}.${sampleRequest.look}.${$index+1}</td>

@@ -129,6 +129,10 @@ export class EditSearchableItem {
               });
             }
           });
+
+          // sort items according id number
+          this.availableSampleItems.sort((a,b) => { return (a.id > b.id) * 1});
+
           
           this.selectedSampleItems = [""];
     })
