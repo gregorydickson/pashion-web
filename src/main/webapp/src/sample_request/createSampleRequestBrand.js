@@ -4,6 +4,7 @@ import 'fetch';
 import { inject, bindable } from 'aurelia-framework';
 import { DateFormat } from 'common/dateFormat';
 import { BrandService } from 'services/brandService';
+import { OutReasonService } from 'services/outReasonService';
 import { PRAgencyService } from 'services/PRAgencyService';
 import { UserService } from 'services/userService';
 import { DialogService } from 'aurelia-dialog';
@@ -13,7 +14,7 @@ import { computedFrom } from 'aurelia-framework';
 
 
 
-@inject(HttpClient, DialogController, BrandService, DialogService, UserService, PRAgencyService)
+@inject(HttpClient, DialogController, BrandService, DialogService, UserService, OutReasonService, PRAgencyService)
 export class CreateSampleRequestBrand {
   static inject = [DialogController];
   currentItem = {};
@@ -57,7 +58,7 @@ export class CreateSampleRequestBrand {
   startDay = '';
   endDay = '';
 
-  constructor(http, controller, brandService, dialogService,userService,PRAgencyService) {
+  constructor(http, controller, brandService, dialogService,userService, outReasonService, PRAgencyService) {
     this.controller = controller;
     console.log("createSampleRequestBrand");
     http.configure(config => {
@@ -69,6 +70,8 @@ export class CreateSampleRequestBrand {
     this.dialogService = dialogService;
     this.userService = userService;
     this.prAgencyService = PRAgencyService;
+    this.outReasonService = outReasonService;
+
   }
 
 
@@ -113,8 +116,10 @@ export class CreateSampleRequestBrand {
         this.sampleRequest.paymentReturn = "50/50";
       }),
 
+      this.outReasonService.getOutReasons().then(outReasons => {
+        //sparse array?
+        this.outReasons = outReasons.map(value => {return {id: value.id, name:value.name.toUpperCase()};});}),
       
-
       this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
 
       this.http.fetch('/searchableItems/' + item.id + '.json')

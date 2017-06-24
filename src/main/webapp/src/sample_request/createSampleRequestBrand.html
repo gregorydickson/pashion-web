@@ -290,7 +290,7 @@
                 <table class="" style="margin-bottom:4px; table-layout:fixed;">
                     <tr>
                         <td class="accordion ${(sampleRequest.samples.length == 0) ? 'red-deco' : ''}" style="width:100px;">SELECT SAMPLES</td>
-                        <td class="accordion" style="width:427px;text-align:right; padding-right: 0.5rem;">Select All</td>
+                        <td class="accordion" style="width:447px;text-align:right; padding-right: 0.5rem;">Select All</td>
                         <td class="accordion" style="width:10px;">
                             <input type="checkbox" checked.bind="selectAll" change.delegate="allsamples($event)">
                         </td>
@@ -309,9 +309,9 @@
                             <td class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'red-deco' : ''}" style="width:70px; max-width:70px;">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.name}.${$index+1} :&nbsp;</td>
                             <td class="accordion to-u-c ${(sample.outReason && sample.outReason.id != 0)  ? 'red-deco' : ''}" style="width:300px; max-width:300px; overflow:hidden; padding-right:20px;">${sample.attributes}</td>
                             
-                           <td if.bind="!(sample.outReason && sample.outReason.id != 0)" class="accordion" style="width:70px; max-width:70px;">
+                           <td if.bind="!(sample.outReason && sample.outReason.id != 0)" class="accordion" style="width:90px; max-width:90px;">
                             </td> 
-                            <td if.bind="(sample.outReason && sample.outReason.id != 0)" class="accordion red-deco" style="width:70px; max-width:70px;">Manual Out
+                            <td if.bind="(sample.outReason && sample.outReason.id != 0)" class="accordion red-deco" style="width:90px; max-width:90px;">${outReasons[sample.outReason.id].name}
                             </td>
                             <td class="accordion" style="width:10px; max-width:10px;">
                                 <input disabled.bind="((user.city.name !== sample.sampleCity.name) && (restrictOutsideBooking))" type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="sampleRequest.samples">
