@@ -333,7 +333,7 @@ class SearchableItemController {
             it.samples.each{
                 def booked = false
                 if (it.outReason && it.outReason.id != 0) {
-                    log.info "outReason true";
+                    //log.info "outReason true";
                     booked = true;
                 } else {
                     //log.info "id: " + it.look.name
@@ -374,7 +374,7 @@ class SearchableItemController {
                                 it.requestStatusBrand == 'Returning')
                             )
                         {
-                            log.info "booked true";
+                            //log.info "booked true";
                             booked = true;
                         }
                     }  

@@ -9,7 +9,7 @@ import { CreateSampleRequestPress } from './sample_request/createSampleRequestPr
 import { CreateSampleRequestBrand } from './sample_request/createSampleRequestBrand';
 import { EditSampleRequest } from './sample_request/editSampleRequest';
 import { EditSearchableItem } from './items/editSearchableItem';
-import { CheckAvailability } from './items/checkAvailability';
+//import { CheckAvailability } from './items/checkAvailability';
 import { SetAvailability } from './items/setAvailability';
 import { Introduction } from './hello/introduction';
 import { Zoom } from './zoom/zoom';
@@ -1057,11 +1057,13 @@ export class Index {
             });
     }
 
+    /*
     checkAvailabilitySearchableItem(itemId) {
         //this.lookMenu(itemId);
         this.dialogService.open({ viewModel: CheckAvailability, model: itemId, lock: false })
             .then(response => { });
     }
+    */
 
     setAvailabilitySearchableItem(item) {
         //this.lookMenu(itemId);
