@@ -256,6 +256,7 @@ class SearchableItemController {
         log.info "city param:"+ params.city
         log.info "city:" + city
         log.info "color:"+color
+        log.info "MaxR (500 fetched): "+maxRInt
 
         def criteria = SearchableItem.createCriteria()
         
@@ -281,7 +282,7 @@ class SearchableItemController {
             if(city) eq('city',city)
             if(color) ilike('color',"%${color}%")
             season{ order('order','desc') }
-            maxResults(500)
+            setMaxResults(1000)
             cache true
         }
 
