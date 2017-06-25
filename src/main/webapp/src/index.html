@@ -357,7 +357,7 @@
                                                 <!-- Nobody loves me...
                                                 <li class="pure-menu-item"><a href="#" click.delegate="setAvailabilitySearchableItem(row.items[i])" class="look-menu-link">Set Initial Availability</a></li>
                                                 -->
-                                                
+
                                                 <li class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
                                                 <li class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Booking &nbsp;</a></li>
                                             </ul>
@@ -471,7 +471,7 @@
                
                 <div if.bind="((user.type === 'brand') || (user.type === 'prAgency'))" class="vertical grid-content grid-content-column accordion">
                     <!--header -->
-                    <div style="margin-bottom:5px; width:255px;">
+                    <div style="margin-bottom:5px; width:250px;">
                         <table class="accordion" style="table-layout:fixed;">
                             <tr> 
                                 <th class="accordion w7"></th>
@@ -483,7 +483,7 @@
                         </table>
                     </div>
                     <!-- row with button -->
-                    <div style="width:255px;" repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user:seasons:cityFiltering:onlyShowMine:onlyShowMineCompany">
+                    <div style="width:250px;" repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user:seasons:cityFiltering:onlyShowMine:onlyShowMineCompany">
                         <table class="accordion" style="table-layout:fixed;">
                             <tr class="indexReqRow">
                                 <td class="accordion w7">
