@@ -1,6 +1,5 @@
 # Main file locations
 * CSS - grails-app/assets/stylesheets/pashion/pashion.scss
-* Layout file - grails-app/assets/views/layouts/pashion.gsp
 * Login page - grails-app/views/user/login.gsp
 * The web page hosting the Aurelia Application - grails-app/views/dashboard/index.gsp
 * Aurelia (the single page application) root: src/main/webapp/
@@ -13,8 +12,9 @@
 
 * to run tests, start grails, then enter 'test-app' 
 
-
+# Manual Testing
 * Test Miu Miu with miu@pashiontool.com / Pashion123
+* Test brand is Paco Rabanne / pacorabanne@pashiontool.com / Pashion123
 
 # Pashion 
 
@@ -64,23 +64,13 @@ To setup the Development Environment:
 
 ## Notes on app deployment
 * The aurelia app can be bundled for a faster application load.
-* The Stormpath library requires the Oracle JDK to support encryption. However, the default AMIs used in Elastic Beanstalk come with Open JDK. I have created a custom ami with Java 8 and an Elastic Beanstalk extention for setting the alternative JDK to support loading of the Stormpath library. The ami is name: java8_102_2nd_try, id: ami-600c5277 (in US East amazon).
 
 
 ## Deployment of the Single Page Application 
 
-### Notes 
-* A custom Amazon Machine Image is required to run the application. This is because the default AMIs come with Open JDK. The StormPath JDK requires Oracle JDK: 
-https://github.com/stormpath/stormpath-sdk-java/issues/17
-* One custom AMI has been created and is in the US East and London regions. FYI, you can copy AMIs from region to region. And you have to in order to use them in other regions. http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/CopyingAMIs.html
-* Instructions on using the Custom AMI in Elastic Beanstalk: http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/using-features.managing.ec2.html
-* AMI Name: (java8_102_2nd_try)
-* An elastic beanstalk extension is in src/main/webapp/.ebextensions that sets the Oracle JDK as the primary JDK in the machine image.
-* The curent AMI is one that requires a certain type of virtualization and an m1 generation EC2 instance. An ec2 m1-small works but the m1 types are only available in certain regions.
-
 ### To deploy the application
 * from your gulp terminal run `gulp bundle` (This is optional)
-* from your grails terminal run `war`
+* after gulp bundle completes, from your grails command line run `war`
 * login to Amazon Web Services
 * Under Services (in header, left side), choose Elastic Beanstalk
 * Ensure that you are in Ireland region, (in header, right side)
@@ -116,15 +106,14 @@ https://github.com/stormpath/stormpath-sdk-java/issues/17
 7. After uploading, select all the uploaded files in S3, then Choose: Actions > Make Public.
 
 
-### CSV to Upload Process
-1. Open Google Sheet.
-2. Verify Path (Column AJ) is in the correct form: /sonia-rykiel/2017/spring/ready-to-wear/ and exists for all looks.
+### Collections Data Upload Process
+1. Find Looks Google GSheet
 3. File > Download As > Comma Separated Values (.csv current sheet)
-4. In a running instance of the application. (run with `grails>prod run` or at browse.pashiontool.com) go to /upload/ (http://browse.pashiontool.com/upload/newformat or http://localhost:8080/upload/newformat)
-5. Choose the City for the collection, then drag the CSV file to the 'Drop files here to Upload' area. The file will upload. You can view the command line to view debugging information on the upload. The code for this upload is in UploadController.groovy index() method.
+4. In a running instance of the application go to /upload/newformat
+5. Choose the City for the collection, then drag the CSV file to the 'Drop files here to Upload' area. The file will upload. You can view the command line to view debugging information on the upload. The code for this upload is in UploadController.groovy .
 6. You may verify the data by connecting to the database with Sequel Pro.
 7. To prepare for the next upload, refresh the /upload/ screen in the browser.
-8. upload detail metadata into URL:/upload/detail
+8. upload detail/samples into URL: /upload/detail2
 
 ### Verification
 * You can verify the collection by viewing browse.pashiontool.com and selecting the designer (and Collection if neccessary). Verify that there are no broken images. In case of discrepancies, you may view the collection in Vogue Runway for comparison. Occasionally, the 'make public' portion in S3 has to be reapplied if you see errors in the javascript console 503 permission errors. 
@@ -137,16 +126,12 @@ https://github.com/stormpath/stormpath-sdk-java/issues/17
 # Brand Onboarding
  * Brand probably already has a Brand record in the database, if not, create a Brand in database at https://app.pashiontool.com/brand or http://localhost:8080/brand
  * upload Looks will create a Brand if none exists
- * Create a Directory in StormPath (stormpath tenant: zippy-lizard1) for the Brand, put directory URI in the Brand's record in the database.
- * In Stormpath admin console, create a Group for the user type (brand_users). Put the Brand's name in the group description.
- * Switch to Groups > brand_users (for the brand you added). Map the application to the group.
  * Create users with the page /users/create in our application.
  * Required fields for new users are email,city,is in pashion network, and password.
 
 
-# Databases
+# Database
 
-## browse.pashiontool.com and Production Single Page Application(SPA) DB, marked as Production in application.yml
 * pashion-prod.cnjmlfc6tctw.eu-west-1.rds.amazonaws.com:3306/pashionprod
 * username: pashionprod
 * password: 2Mc9Nf17gBzyGs*a4$WS
