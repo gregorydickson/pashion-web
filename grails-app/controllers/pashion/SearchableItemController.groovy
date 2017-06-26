@@ -256,7 +256,7 @@ class SearchableItemController {
         log.info "city param:"+ params.city
         log.info "city:" + city
         log.info "color:"+color
-        log.info "MaxR (500 fetched): "+maxRInt
+        //log.info "MaxR (1000 fetched): "+maxRInt
 
         def criteria = SearchableItem.createCriteria()
         
