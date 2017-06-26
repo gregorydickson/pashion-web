@@ -1173,9 +1173,10 @@ export class Index {
 
         var indexListener = {
             message: function updateBookingsIndex(message) {
-
+                console.log("message on channel for index:");
                 var channelName = message.channel;
                 if (channelName === channel) {
+                    console.log("reloading sample requests");
                     sampleRequestService.getSampleRequests(true).then(newBookings => {
                         while (bookingsToUpdate.length > 0) {
                             bookingsToUpdate.pop();
@@ -1199,16 +1200,16 @@ export class Index {
         })
 
         // bookings alarms
-        channel = company + '_stuartOneHourNotification';
+        let channel2 = company + '_stuartOneHourNotification';
         let today = new Date();
         let time = today.getHours() + ":" + today.getMinutes();
-        console.log("listening on channel:" + channel + " message on display: " + 'message.messge ' + time);
+        console.log("listening on channel:" + channel2 + " message on display: " + 'message.messge ' + time);
 
         indexListener = {
             message: function alarmToast(message) {
 
                 var channelName = message.channel;
-                if (channelName === channel) {
+                if (channelName === channel2) {
                     toastr.options.preventDuplicates = false;
                     toastr.options.closeButton = true;
                     toastr.options.timeOut = 0;
@@ -1219,7 +1220,7 @@ export class Index {
         pubNub.addListener(indexListener);
         this.pubNubService.addIndexListener(indexListener);
         pubNub.subscribe({
-            channels: [channel],
+            channels: [channel2],
             withPresence: false
         })
     }
