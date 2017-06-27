@@ -45,6 +45,19 @@ class CachingService implements JsonViewTest {
 
     }
 
+    @Selector('connectionsUpdateNewUser')
+    void invalidateConnectionsNewUser(Object data){
+        Thread.sleep(2000)
+        log.info "UPDATING CONNECTIONS "
+        String newValue = loadConnections()
+        connections = newValue
+        Callback callback=new Callback() {}
+        def channel = data + '_cacheInvalidate'
+        log.info "send invalidate in cachingService:invalidateConnectionsPubNub on:" + channel
+        pubnub.publish(channel, "connections" , callback)
+
+    }
+
     @Selector('sampleRequestCacheInvalidate')
     void sampleRequestCacheInvalidate(Object data){
         Thread.sleep(2000);

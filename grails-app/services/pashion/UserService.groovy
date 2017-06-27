@@ -103,21 +103,18 @@ class UserService {
         	if(owner instanceof Brand){
 
                 log.info "createUser() creating Brand user"
-        		user = new User(password:password,city:city,title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,brand:owner,isInPashionNetwork:true).save(failOnError : true)
+        		user = new User(password:password,city:city,title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,brand:owner,isInPashionNetwork:true).save(flush:true,failOnError: true)
         	} else if(owner instanceof PressHouse){
 
                 log.info "createUser() creating Press user"
-        		user = new User(password:password,city:city,title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,pressHouse:owner,isInPashionNetwork:true).save(failOnError : true)
+        		user = new User(password:password,city:city,title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,pressHouse:owner,isInPashionNetwork:true).save(flush:true,failOnError: true)
         	} else if(owner instanceof PRAgency){
 
                 log.info "createUser() creating PRAgency user"
-                user = new User(password:password,city:city,title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,prAgency:owner,isInPashionNetwork:true).save(failOnError : true)
+                user = new User(password:password,city:city,title:params.title,phone:params.phone,name:params.name,surname:params.surname, email:params.email,prAgency:owner,isInPashionNetwork:true).save(flush:true,failOnError: true)
             }
         
-        
-            
         } catch(Exception e){
-
                 log.error "createUser() ERROR: "+e.message
                 log.error e.printStackTrace()
         }
