@@ -180,7 +180,7 @@ class UserController {
             respond  view:'create'
             return
         }
-        
+        log.info "notify connections update on new user creation"
         notify "connectionsUpdate","connections"
         
         request.withFormat {
@@ -242,7 +242,8 @@ class UserController {
         }
 
         user = userService.createUser(jsonObject, owner, inNetwork) as JSON
-        
+        log.info "notify connections update on new user creation"
+        notify "connectionsUpdateNewUser","connections"
         
         render user
         
