@@ -14,7 +14,7 @@
 
 # Manual Testing
 * Test Miu Miu with miu@pashiontool.com / Pashion123
-* Test brand is Paco Rabanne / pacorabanne@pashiontool.com / Pashion123
+* Another test brand is Paco Rabanne / pacorabanne@pashiontool.com / Pashion123
 
 # Pashion 
 
@@ -50,7 +50,7 @@ To setup the Development Environment:
 
 * Press test user account: ellen@pashiontool.com / Pashion123 - Elle Magazine
 
-* Brand test user account:  lauren@pashiontool.com / Pashion123 - Ralph Lauren
+* Brand test user account:  pacorabanne@pashiontool.com / Pashion123
 
 * The application uses a database on Amazon AWS which will require internet connectivity. If this is too slow then you can setup MySQL locally.
 
@@ -126,7 +126,7 @@ To setup the Development Environment:
 # Brand Onboarding
  * Brand probably already has a Brand record in the database, if not, create a Brand in database at https://app.pashiontool.com/brand or http://localhost:8080/brand
  * upload Looks will create a Brand if none exists
- * Create users with the page /users/create in our application.
+ * Create users with the page /users/create in our application. After one user has been created for a brand, you can login and use that user to create more users.
  * Required fields for new users are email,city,is in pashion network, and password.
 
 
