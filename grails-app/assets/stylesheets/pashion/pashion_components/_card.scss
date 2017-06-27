@@ -20,6 +20,15 @@
 	.card img {
 		display: flex; 
 	}
+	.card-look {
+		max-width: none;
+	    height: 97.5%;
+	    width: auto;
+	    position: absolute;
+	    left: 50%;
+    	transform: translateX(-50%);
+	}
+
 	.card-image-name {
 		position: absolute;
 		top: 5px;
@@ -43,6 +52,7 @@
 	.card-image {
 		position: relative;
 		cursor: pointer; 
+		overflow: hidden;
 	}
 
 
@@ -147,7 +157,6 @@
 	}
 	.card-image .card-look-number {
 		// bottom: 10px; 
-
 	}
 	.card-image:hover {
 		min-height: 68px;
