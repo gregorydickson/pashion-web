@@ -383,8 +383,11 @@
                                     
                                     
                                     <!-- Main Look image -->
-                                    <img class="b-lazy card-look" src="/assets/bgGrey.jpg" data-src="${row.items[i].image}" ref="image" 
-                                     click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"/> 
+                                    <img src="/assets/bgGrey.jpg" />
+                                    <div class="card-look-container">
+                                        <div class="b-lazy card-look" style="background-image:url('${row.items[i].image}');" data-src="${row.items[i].image}" ref="image" 
+                                     click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"></div> 
+                                    </div>
 
 
                                     <!-- lower corner look number -->

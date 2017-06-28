@@ -11,6 +11,8 @@
 	justify-content: center;
 }
 
+
+
 .cards-list {
 	.card {
 		margin-bottom: 0;
@@ -21,12 +23,10 @@
 		display: flex; 
 	}
 	.card-look {
-		max-width: none;
-	    height: 97.5%;
-	    width: auto;
-	    position: absolute;
-	    left: 50%;
-    	transform: translateX(-50%);
+		height:100%;
+		width:100%;
+		background-size: cover;
+		background-position: center top;
 	}
 
 	.card-image-name {
