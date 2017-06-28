@@ -21,12 +21,18 @@
 	}
 	.card img {
 		display: flex; 
+		width: 99%;
+	}
+	.bg-grey{
+		height: 20vw;
 	}
 	.card-look {
-		height:100%;
+		min-height: 196px;
+		height:20vw;
 		width:100%;
 		background-size: cover;
 		background-position: center top;
+		position:absolute;
 	}
 
 	.card-image-name {
@@ -53,6 +59,7 @@
 		position: relative;
 		cursor: pointer; 
 		overflow: hidden;
+		height: 20vw;
 	}
 
 
