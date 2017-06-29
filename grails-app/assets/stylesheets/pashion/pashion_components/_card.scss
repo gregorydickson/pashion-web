@@ -20,15 +20,16 @@
 		overflow: visible; 
 	}
 	.card img {
+		position: relative;
 		display: flex; 
-		width: 99%;
+		/*width: 99%;*/
 	}
 	.bg-grey{
 		height: 20vw;
 	}
 	.card-look {
 		min-height: 196px;
-		height:20vw;
+		/*height:20vw;*/
 		width:100%;
 		background-size: cover;
 		background-position: center top;
@@ -55,11 +56,15 @@
 		bottom: 0;
 	}
 
+	 .indigital-and-align{
+	 	margin-top:3px;
+	 }
+
 	.card-image {
 		position: relative;
 		cursor: pointer; 
 		overflow: hidden;
-		height: 20vw;
+		/*height: 20vw;*/
 	}
 
 
