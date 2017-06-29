@@ -541,6 +541,7 @@ class SearchableItemController {
     @Transactional
     def upload(){
         log.info "upload params:"+params
+        def sent
         def user = session.user
         
         log.info "user:"+user
@@ -561,7 +562,10 @@ class SearchableItemController {
         log.info "category:"+category
 
         BrandCollection brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season).save()
+
         SearchableItemType type = SearchableItemType.findByDisplay('Looks')
+        log.info "type:" + type
+
         //String path = brand.name.toLowerCase().replace(" ","-")+"/"+season.name.toLowerCase().replace(" ","-") +"/"
         String path = brand.name.toLowerCase().replace(" ","-")+"/"+season.path+"/"+category.path+"/"
         log.info "path:"+path
@@ -590,12 +594,31 @@ class SearchableItemController {
                
                String location = path + name
                log.info "location:"+location
+
                String message
+               Boolean fileExists = amazonS3Service.exists("pashion-tool", location)
+               if (fileExists) {
+                    log.info "file already exists"
+                    response.status = 501
+                    //response.statusText = 'File ' + name + ' Already Exists'
+                    //sent = [message: 'File ' + name + ' Already Exists', error: true]
+                    //render sent as JSON 
+                    return
+               }
 
-               log.info "S3 buckets:" + amazonS3Service.listBucketNames()
-               log.info "file exists test "+ path+"0001.jpg :" + amazonS3Service.exists("pashion-tool", path+"0001.jpg")
+               /* file size exception comes from spring, so no need to do this.
+               /* and up proven code
+               Integer fileSize = multipartFile.getBytes()
+               log.info "file size:" + fileSize
+                if (fileSize > 2000000){
+                    log.info "file too big"
+                    response.status = 500
+                    sent = [message: 'File ' + name + ' Bigger than 2MB ', error: true]
+                    render sent as JSON 
+                    return
+               }
+               */
 
-               log.info "file exists:" + amazonS3Service.exists("pashion-tool", location)
 
                if (multipartFile && !multipartFile.empty) {
                     log.info "storing"
@@ -608,10 +631,14 @@ class SearchableItemController {
               
             } catch(Exception e){
                 log.error "exception saving file:"+e.message
+                response.status = 502
+                //sent = [message: 'Error Saving File', error: true]
+                //render sent as JSON 
+                return
             }
         }
 
-        def sent = [message:'Items Updated']
+        sent = [message:'Items Updated', error: false]
         render sent as JSON
 
     }

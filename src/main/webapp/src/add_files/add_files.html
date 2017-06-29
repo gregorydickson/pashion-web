@@ -15,7 +15,10 @@
             <div class="add-choose-file">
                 <input type="file" files.bind="selectedFiles" name="file-1" id="file-img" class="input-file" data-multiple-caption="{count} files selected" accept="image/*" multiple />
                 <label for="file-1"><span>Choose Image(s)...</span></label>
+
+                <div if.bind="(flashMessage != '')" class="message" style="color:red; text-align: center; margin-top:10px;" role="status">${flashMessage}</div>
             </div>
+
             <div class="grid-row-col" style="width:250px; margin-right:0; margin-left:20px;">
                 <span class="inline-label">
               <span class="form-label" style="padding-right: 0.5rem;">Season</span>

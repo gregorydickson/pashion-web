@@ -16,6 +16,7 @@ export class AddFilesDialog {
   selectedFiles;
   formData;
   isPrivate;
+  flashMessage = '';
 
   constructor(http, controller){
     this.controller = controller;
@@ -88,6 +89,7 @@ export class AddFilesDialog {
 
 
   addFiles (){
+    this.flashMessage = '';
     this.formData = new FormData();
     console.log("add actions here");
     let j = this.selectedFiles.length;
@@ -109,8 +111,13 @@ export class AddFilesDialog {
     }).then(response => {
         console.log('Status:', response);
         this.controller.close();
+        
     }).catch(e => {
         console.log('Error saving ',e);
+        if (e.status == 200) {} // shoud not get here
+        else if (e.status == 501) this.flashMessage = "File Already Exists";
+        else if (e.status == 502) this.flashMessage = "File Save Error";
+        else this.flashMessage = "File Too Big";
     });
     
 
