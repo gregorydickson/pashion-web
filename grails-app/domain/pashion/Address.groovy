@@ -24,20 +24,6 @@ class Address{
 	Brand destination
 
 	static constraints = {
-		company nullable:true
-		brand nullable: true 
-		destination nullable:true
-		pressHouse nullable:true
-		prAgency nullable:true
-		address1 nullable: true
-		address2 nullable: true
-		city nullable: true
-		country nullable: true
-		postalCode nullable: true
-		attention nullable:true
-		contactPhone nullable:true
-		stuartId nullable:true
-		comment nullable:true
 	}
 
 	static mapping = {
