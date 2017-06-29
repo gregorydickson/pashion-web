@@ -713,6 +713,7 @@ class SearchableItemController {
 
     @Transactional
     def delete(SearchableItem searchableItem) {
+        log.info "deleting:" + searchableItem.name
 
         if (searchableItem == null) {
             transactionStatus.setRollbackOnly()

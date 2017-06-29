@@ -33,7 +33,7 @@ export class AddFilesDialog {
   }
 
   close(){
-    this.controller.close();
+    this.controller.close(false);
   }
 
   sortCategories (array) {
@@ -110,7 +110,7 @@ export class AddFilesDialog {
         body:this.formData   
     }).then(response => {
         console.log('Status:', response);
-        this.controller.close();
+        this.controller.close(true);
         
     }).catch(e => {
         console.log('Error saving ',e);
@@ -126,10 +126,6 @@ export class AddFilesDialog {
   lookEditMenu(){
     var menu = document.getElementById("newCollection");
     menu.classList.toggle("look-menu-hide");
-  }
-
-  close (){
-    this.controller.close();
   }
   
 }
