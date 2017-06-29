@@ -190,6 +190,8 @@ export class ContactsList {
     } else if ((this.numberMCR + this.numberRTC + this.numberNew != 0) && (this.favicon == 0)) {
       //chage to some
       this.changeFavicon("/assets/PashionIcoBluepsd.ico");
+      var audio = new Audio('/assets/audio/bweep.mp3');
+      audio.play();
       this.favicon = 1;
     }
   }
