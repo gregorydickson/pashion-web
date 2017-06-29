@@ -4,7 +4,7 @@
         <ai-dialog-header>
             <!-- header -->
             <div class="grid-block align-center tool-header shrink">
-                ADD IMAGES
+                ADD LOOKS
             </div>
         </ai-dialog-header>
         <ai-dialog-body>
@@ -15,12 +15,21 @@
             <div class="add-choose-file">
                 <input type="file" files.bind="selectedFiles" name="file-1" id="file-img" class="input-file" data-multiple-caption="{count} files selected" accept="image/*" multiple />
                 <label for="file-1"><span>Choose Image(s)...</span></label>
+
+                <div if.bind="(flashMessage != '')" class="message" style="color:red; text-align: center; margin-top:10px;" role="status">${flashMessage}</div>
             </div>
+
             <div class="grid-row-col" style="width:250px; margin-right:0; margin-left:20px;">
                 <span class="inline-label">
               <span class="form-label" style="padding-right: 0.5rem;">Season</span>
-                <form-select class="to-u-c" name="options" selected.two-way="selectedSeason" options.bind="seasons"></form-select>
-                </span>
+                <form-select class="to-u-c" name="seasonoptions" selected.two-way="selectedSeason" options.bind="seasons"></form-select>
+              </span>
+            </div>
+            <div class="grid-row-col" style="width:250px; margin-right:0; margin-left:20px;">
+                <span class="inline-label">
+              <span class="form-label" style="padding-right: 0.5rem;">Category</span>
+                <form-select class="to-u-c" name="categoryoptions" selected.two-way="selectedCategory" options.bind="categories"></form-select>
+              </span>
             </div>
             <div class="grid-row-col" style="width:250px; margin-right:0; margin-left:20px;">
                 <div class="grid-block-row-body">
@@ -48,7 +57,7 @@
         </ai-dialog-body>
         <ai-dialog-footer>
             <a class="button hollow" click.delegate="close()">Cancel</a>
-            <button id="AddFilesButton" class="button" click.delegate="addFiles()">Add Images(s)</button>
+            <button id="AddFilesButton" class="button" click.delegate="addFiles()">Add Look(s)</button>
         </ai-dialog-footer>
     </ai-dialog>
 </template>

@@ -541,17 +541,33 @@ class SearchableItemController {
     @Transactional
     def upload(){
         log.info "upload params:"+params
+        def sent
         def user = session.user
         
         log.info "user:"+user
 
         Brand brand = user.brand
         log.info "brand:"+brand
-        Season season = Season.findOrSaveWhere(name:params.season.toString().trim()).save()
+
+        Long seasonp = params.season.toInteger()
+        log.info "season in params:"+seasonp
+
+        Long categoryp = params.category.toInteger()
+        log.info "category in params:"+categoryp
+
+        Season season = Season.findOrSaveWhere(id:seasonp).save()
         log.info "season:"+season
+
+        Category category = Category.findOrSaveWhere(id:categoryp).save()
+        log.info "category:"+category
+
         BrandCollection brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season).save()
+
         SearchableItemType type = SearchableItemType.findByDisplay('Looks')
-        String path = brand.name.toLowerCase().replace(" ","-")+"/"+season.name.toLowerCase().replace(" ","-") +"/"
+        log.info "type:" + type
+
+        //String path = brand.name.toLowerCase().replace(" ","-")+"/"+season.name.toLowerCase().replace(" ","-") +"/"
+        String path = brand.name.toLowerCase().replace(" ","-")+"/"+season.path+"/"+category.path+"/"
         log.info "path:"+path
         SearchableItem item = null
         def all = request.getFileNames()
@@ -578,7 +594,31 @@ class SearchableItemController {
                
                String location = path + name
                log.info "location:"+location
+
                String message
+               Boolean fileExists = amazonS3Service.exists("pashion-tool", location)
+               if (fileExists) {
+                    log.info "file already exists"
+                    response.status = 501
+                    //response.statusText = 'File ' + name + ' Already Exists'
+                    //sent = [message: 'File ' + name + ' Already Exists', error: true]
+                    //render sent as JSON 
+                    return
+               }
+
+               /* file size exception comes from spring, so no need to do this.
+               /* and up proven code
+               Integer fileSize = multipartFile.getBytes()
+               log.info "file size:" + fileSize
+                if (fileSize > 2000000){
+                    log.info "file too big"
+                    response.status = 500
+                    sent = [message: 'File ' + name + ' Bigger than 2MB ', error: true]
+                    render sent as JSON 
+                    return
+               }
+               */
+
 
                if (multipartFile && !multipartFile.empty) {
                     log.info "storing"
@@ -591,10 +631,14 @@ class SearchableItemController {
               
             } catch(Exception e){
                 log.error "exception saving file:"+e.message
+                response.status = 502
+                //sent = [message: 'Error Saving File', error: true]
+                //render sent as JSON 
+                return
             }
         }
 
-        def sent = [message:'Items Updated']
+        sent = [message:'Items Updated', error: false]
         render sent as JSON
 
     }
@@ -669,6 +713,7 @@ class SearchableItemController {
 
     @Transactional
     def delete(SearchableItem searchableItem) {
+        log.info "deleting:" + searchableItem.name
 
         if (searchableItem == null) {
             transactionStatus.setRollbackOnly()

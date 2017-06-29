@@ -134,9 +134,9 @@ class UserService {
         InputStream is = new ByteArrayInputStream(os.toByteArray())
 
         ObjectMetadata metadata = amazonS3Service.buildMetadataFromType('image', ext, CannedAccessControlList.PublicRead)
-        amazonS3Service.storeInputStream('pashion-profiles', fileName + '.' + ext, is, metadata)
+        amazonS3Service.storeInputStream('pashion-profiles-frankfurt', fileName + '.' + ext, is, metadata)
 
-        return 'https://pashion-profiles.s3.amazonaws.com/' + fileName + '.' + ext
+        return 'https://pashion-profiles-frankfurt.s3.amazonaws.com/' + fileName + '.' + ext
 
     }
 

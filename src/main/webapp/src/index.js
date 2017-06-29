@@ -10,6 +10,7 @@ import { CreateSampleRequestBrand } from './sample_request/createSampleRequestBr
 import { EditSampleRequest } from './sample_request/editSampleRequest';
 import { EditSearchableItem } from './items/editSearchableItem';
 import { CheckAvailability } from './items/checkAvailability';
+import { CreateDialogConfirmDeleteItem } from './items/dialogConfirmDeleteItem';
 //import { SetAvailability } from './items/setAvailability';
 import { Introduction } from './hello/introduction';
 import { Zoom } from './zoom/zoom';
@@ -1079,6 +1080,21 @@ export class Index {
             .then(response => { });
     }
 
+    deleteSearchableItem(itemId) {
+        //console.log (`ItemId: ${itemId}`)
+        this.dialogService.open({ viewModel: CreateDialogConfirmDeleteItem, model: itemId, lock: true })
+            .then(response => {        
+                console.log("confirm dialog was cancelled? " + response.wasCancelled);
+                if (response.wasCancelled) return false;
+        
+                this.http.fetch('/searchableItem/delete/'+itemId.id, {method: 'post'})
+                   .then(response => {})
+                   .then(result => {
+                     this.filterChangeBrand(); 
+                 });
+        });
+    }
+
     sampleRequestMenu(id) {
         var menu = document.getElementById("requestTest" + id);
         menu.classList.toggle("look-menu-show");
@@ -1288,8 +1304,13 @@ export class Index {
     // Add files (Add images) dialog
     createAddfilesDialog() {
         this.dialogService.open({ viewModel: AddFilesDialog, model: null, lock: true })
-            .then(response => { });
+            .then(response => {         
+                console.log("confirm dialog was cancelled? " + response.wasCancelled);
+                if (response.wasCancelled) return false;
+                this.filterChangeBrand(); 
+        });
     }
+
 
     // Create error dialog sample
     createErrorDialogSample() {

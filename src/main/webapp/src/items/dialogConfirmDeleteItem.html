@@ -1,0 +1,33 @@
+<template>
+
+<require from="../common/seasonAbbreviationFormatter"></require>
+
+   <ai-dialog>
+        <ai-dialog-header>
+            <!-- header -->
+            <div class="grid-block align-center tool-header shrink">
+              <span class="ui-text-label-m-broad">DELETE LOOK ${lookForDeletion.brandCollection.season | seasonAbbreviation:seasons }.${lookForDeletion.name}</span>
+            </div>
+        </ai-dialog-header>
+      <ai-dialog-body>
+
+        <div class="paragraph-30 text-center">
+          Are you sure you want to delete the look
+        </div>
+        <div class="paragraph-30 text-center"> 
+          ${lookForDeletion.brandCollection.season | seasonAbbreviation:seasons }.${lookForDeletion.name}
+        </div>
+        <div class="paragraph-30 text-center"> 
+          AND all its samples?
+        </div>
+
+      </ai-dialog-body>
+
+
+      <ai-dialog-footer>
+         <button class="button" click.delegate="close()">Cancel</button>
+         <button class="hollow button" click.delegate="confirm()" >Delete</button>
+      </ai-dialog-footer>
+
+   </ai-dialog>
+</template>
