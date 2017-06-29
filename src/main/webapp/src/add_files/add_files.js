@@ -11,6 +11,8 @@ export class AddFilesDialog {
 
   seasons = [];
   selectedSeason = '';
+  categories = [];
+  selectedCategory = '';
   selectedFiles;
   formData;
   isPrivate;
@@ -33,7 +35,19 @@ export class AddFilesDialog {
     this.controller.close();
   }
 
+  sortCategories (array) {
+
+    var iarray = array.slice(0)
+        .sort(
+          function (a, b) {
+          //console.log (a["order"] + " " + b["order"] + " " + (a["order"] - b["order"] ));
+          return (b["order"] - a["order"] ) * -1  }
+          );
+    return iarray;
+  }
+
   attached() {
+    this.http.fetch('/dashboard/categories').then(response => response.json()).then(categories => this.categories = this.sortCategories(categories));
     this.http.fetch('/dashboard/seasonsByBrand').then(response => response.json()).then(seasons => this.seasons = seasons);
     var inputs = document.querySelectorAll( '.input-file' );
     Array.prototype.forEach.call( inputs, function(input) {
@@ -87,6 +101,7 @@ export class AddFilesDialog {
     if(this.isPrivate)
       this.formData.append('isPrivate', this.isPrivate);
     this.formData.append('season', this.selectedSeason);
+    this.formData.append('category', this.selectedCategory);
 
     this.http.fetch('/searchableItem/upload', {
         method:'POST',

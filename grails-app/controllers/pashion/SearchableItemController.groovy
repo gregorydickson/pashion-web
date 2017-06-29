@@ -547,11 +547,23 @@ class SearchableItemController {
 
         Brand brand = user.brand
         log.info "brand:"+brand
-        Season season = Season.findOrSaveWhere(name:params.season.toString().trim()).save()
+
+        Long seasonp = params.season.toInteger()
+        log.info "season in params:"+seasonp
+
+        Long categoryp = params.category.toInteger()
+        log.info "category in params:"+categoryp
+
+        Season season = Season.findOrSaveWhere(id:seasonp).save()
         log.info "season:"+season
+
+        Category category = Category.findOrSaveWhere(id:categoryp).save()
+        log.info "category:"+category
+
         BrandCollection brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season).save()
         SearchableItemType type = SearchableItemType.findByDisplay('Looks')
-        String path = brand.name.toLowerCase().replace(" ","-")+"/"+season.name.toLowerCase().replace(" ","-") +"/"
+        //String path = brand.name.toLowerCase().replace(" ","-")+"/"+season.name.toLowerCase().replace(" ","-") +"/"
+        String path = brand.name.toLowerCase().replace(" ","-")+"/"+season.path+"/"+category.path+"/"
         log.info "path:"+path
         SearchableItem item = null
         def all = request.getFileNames()
@@ -579,6 +591,11 @@ class SearchableItemController {
                String location = path + name
                log.info "location:"+location
                String message
+
+               log.info "S3 buckets:" + amazonS3Service.listBucketNames()
+               log.info "file exists test "+ path+"0001.jpg :" + amazonS3Service.exists("pashion-tool", path+"0001.jpg")
+
+               log.info "file exists:" + amazonS3Service.exists("pashion-tool", location)
 
                if (multipartFile && !multipartFile.empty) {
                     log.info "storing"
