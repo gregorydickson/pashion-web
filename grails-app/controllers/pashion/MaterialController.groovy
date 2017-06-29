@@ -2,12 +2,17 @@ package pashion
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import grails.converters.JSON
 
 @Transactional(readOnly = true)
 class MaterialController {
 
-    static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
+    
 
+    def list(){
+        def list = Material.list().collect{it.name} as JSON
+        render list
+    }
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Material.list(params), model:[materialCount: Material.count()]
