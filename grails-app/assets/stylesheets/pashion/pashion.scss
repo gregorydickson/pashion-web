@@ -182,10 +182,19 @@
 }
 
 .alert-box-small {
-  min-width: 12px;
-  height: 12px;
+  min-width: 11px;
+  height: 11px;
   border-radius: 50%;
   background-color: $flat-blue;
+  margin-top: 5px;
+  margin-left: 2px;
+}
+
+.alert-box-small-empty {
+  min-width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background-color: $white-two;
   margin-top: 5px;
   margin-left: 2px;
 }
