@@ -42,6 +42,8 @@ export class DatePicker {
         autoclose: true,
         showButtonPanel: true,
         closeText: 'Clear',
+        dayNamesMin: [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ],
+        minDate: new Date(),
         onClose: function(dateText, inst) {
             if ($(window.event.srcElement).hasClass('ui-datepicker-close')) {
                 document.getElementById(this.id).value = '';

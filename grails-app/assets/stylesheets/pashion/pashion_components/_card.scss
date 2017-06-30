@@ -11,6 +11,8 @@
 	justify-content: center;
 }
 
+
+
 .cards-list {
 	.card {
 		margin-bottom: 0;
@@ -18,8 +20,22 @@
 		overflow: visible; 
 	}
 	.card img {
+		position: relative;
 		display: flex; 
+		/*width: 99%;*/
 	}
+	.bg-grey{
+		height: 20vw;
+	}
+	.card-look {
+		min-height: 196px;
+		/*height:20vw;*/
+		width:100%;
+		background-size: cover;
+		background-position: center top;
+		position:absolute;
+	}
+
 	.card-image-name {
 		position: absolute;
 		top: 5px;
@@ -40,9 +56,15 @@
 		bottom: 0;
 	}
 
+	 .indigital-and-align{
+	 	margin-top:-6px;
+	 }
+
 	.card-image {
 		position: relative;
 		cursor: pointer; 
+		overflow: hidden;
+		/*height: 20vw;*/
 	}
 
 
@@ -147,7 +169,6 @@
 	}
 	.card-image .card-look-number {
 		// bottom: 10px; 
-
 	}
 	.card-image:hover {
 		min-height: 68px;
