@@ -8,9 +8,10 @@ import {CreateDialogNewContact} from 'contacts/dialogNewContact';
 import {CreateDialogImportContacts} from 'contacts/dialogImportContacts';
 import {Messages} from 'messages/messages';
 import {EventAggregator} from 'aurelia-event-aggregator';
+import {CommsActivity} from 'services/commsActivity';
 
 
-@inject(HttpClient, DialogController, DialogService, Messages, EventAggregator)
+@inject(HttpClient, DialogController, DialogService, Messages, EventAggregator, CommsActivity)
 @singleton()
 export class CommsHeader {
   static inject = [DialogController];
@@ -18,9 +19,9 @@ export class CommsHeader {
  statusValues = {messages : "messages", contacts: "contacts", news : "news"};
   comms = {};
   currentContact = null;
-  contactActivity = true;
+
   
-  constructor(http, controller, dialogService, messages, eventAggregator){
+  constructor(http, controller, dialogService, messages, eventAggregator, commsActivity){
     this.dialogService = dialogService;
     this.controller = controller;  
     
@@ -30,6 +31,7 @@ export class CommsHeader {
     });
     this.http = http;
     this.messages = messages;
+    this.commsActivity = commsActivity;
 
     this.comms.status = this.statusValues.contacts;
     console.log("Init comms status to " + this.comms.status);
@@ -51,7 +53,6 @@ export class CommsHeader {
 
   detached() {
   }
-
 
   setStatusTab (id) {
     // prevent switch to messages if there is no currentContact

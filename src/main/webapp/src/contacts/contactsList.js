@@ -10,11 +10,12 @@ import { UserService } from 'services/userService';
 import { CommsHeader } from 'comms/commsHeader';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { PubNubService } from 'services/pubNubService';
+import { CommsActivity } from 'services/commsActivity';
 import { DS } from 'datastores/ds';
 // import {Messages} from 'messages/messages';
 
 
-@inject(HttpClient, DialogController, DialogService, UserService, CommsHeader, EventAggregator, PubNubService, DS) //, Messages)
+@inject(HttpClient, DialogController, DialogService, UserService, CommsHeader, EventAggregator, PubNubService, CommsActivity,  DS) //, Messages)
 export class ContactsList {
   static inject = [DialogController];
 
@@ -31,7 +32,7 @@ export class ContactsList {
   numberNew = 0;
   favicon = 0;
 
-  constructor(http, controller, dialogService, userService, commsHeader, eventAggregator, pubNubService, DS) { //} messages){
+  constructor(http, controller, dialogService, userService, commsHeader, eventAggregator, pubNubService, commsActivity, DS) { //} messages){
     this.controller = controller;
     http.configure(config => {
       config
@@ -43,6 +44,7 @@ export class ContactsList {
     this.commsHeader = commsHeader;
     this.ea = eventAggregator;
     this.pubNubService = pubNubService;
+    this.commsActivity = commsActivity;
     this.ds = DS;
     // this.messages = messages;
 
@@ -167,18 +169,21 @@ export class ContactsList {
   get numberOfMyConnections() {
     this.numberMCR = document.getElementsByClassName("indexMyConnections").length;
     this.checkAndChangeFavicon();
+    this.checkAndChangeActivityFlag();
     return this.numberMCR;
   }
 
   get numberOfRequestsToConnect() {
     this.numberRTC = document.getElementsByClassName("indexRequestsToConnect").length;
     this.checkAndChangeFavicon();
+    this.checkAndChangeActivityFlag();
     return this.numberRTC;
   }
 
   get numberOfNewMessages() {
     this.numberNew = document.getElementsByClassName("indexNewMessages").length;
     this.checkAndChangeFavicon();
+    this.checkAndChangeActivityFlag();
     return this.numberNew;
   }
 
@@ -193,6 +198,16 @@ export class ContactsList {
       var audio = new Audio('https://dvch4zq3tq7l4.cloudfront.net/audio/pwee.mp3');
       audio.play();
       this.favicon = 1;
+    }
+  }
+
+  checkAndChangeActivityFlag() {
+    if (this.numberMCR + this.numberRTC + this.numberNew == 0) {
+      //chage to empty
+      this.commsActivity.noActivity();
+    } else {
+      //chage to some
+      this.commsActivity.activity();
     }
   }
 
