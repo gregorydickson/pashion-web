@@ -136,3 +136,7 @@ To setup the Development Environment:
 * username: pashionprod
 * password: 2Mc9Nf17gBzyGs*a4$WS
 
+# Set Cache Control on S3 images
+* install s3cmd
+* s3cmd --recursive modify --add-header="Cache-Control:max-age=2592000" s3://pashion-tool/
+
