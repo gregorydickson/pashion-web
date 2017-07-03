@@ -96,7 +96,7 @@ export class EditSearchableItem {
           });
         });
     }),
-    this.http.fetch('/dashboard/material').then(response => response.json()).then(material => {
+    this.http.fetch('/material/list').then(response => response.json()).then(material => {
       this.material = material
 
       material.forEach(item => {
@@ -133,7 +133,7 @@ export class EditSearchableItem {
           // sort items according id number
           this.availableSampleItems.sort((a,b) => { return (a.id > b.id) * 1});
 
-          
+
           this.selectedSampleItems = [""];
     })
     ]).then(() => this.isLoading = false);
