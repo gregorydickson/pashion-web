@@ -10,7 +10,10 @@ class Category{
         cache true
     }
     static constraints = {
-		
+		name()
 		abbreviation nullable:true
+	}
+	String toString(){
+		return name
 	}
 }
