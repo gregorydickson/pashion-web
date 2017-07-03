@@ -13,4 +13,8 @@ class Season{
 		
 		abbreviation nullable:true
 	}
+
+	String toString(){
+		return name
+	}
 }

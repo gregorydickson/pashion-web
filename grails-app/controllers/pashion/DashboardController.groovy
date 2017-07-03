@@ -281,7 +281,7 @@ class DashboardController {
         def brand = session.user.brand
         def seasons
         if(!session.seasons){
-            seasons = SearchableItem.findAllByBrand(brand).collect{it.season}
+            seasons = BrandCollection.findAllByBrand(brand).collect{it.season}
             seasons.unique()
             session.seasons = seasons
         }

@@ -2,10 +2,10 @@ package pashion
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
-import grails.converters.JSON
 
 @Transactional(readOnly = true)
 class BrandCollectionController {
+
 
 
     def index(Integer max) {
@@ -16,13 +16,11 @@ class BrandCollectionController {
     def show(BrandCollection brandCollection) {
         respond brandCollection
     }
-    
-
 
     def create() {
         respond new BrandCollection(params)
     }
-    
+
     @Transactional
     def save(BrandCollection brandCollection) {
         if (brandCollection == null) {
@@ -37,14 +35,12 @@ class BrandCollectionController {
             return
         }
 
-        if (brandCollection.category == '') brandCollection.category = 'Ready To Wear'
-        
         brandCollection.save flush:true
 
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'brandCollection.label', default: 'BrandCollection'), brandCollection.id])
-                redirect collection
+                redirect brandCollection
             }
             '*' { respond brandCollection, [status: CREATED] }
         }
