@@ -124,10 +124,15 @@ To setup the Development Environment:
 
 
 # Brand Onboarding
- * Brand probably already has a Brand record in the database, if not, create a Brand in database at https://app.pashiontool.com/brand or http://localhost:8080/brand
- * upload Looks will create a Brand if none exists
- * Create users with the page /users/create in our application. After one user has been created for a brand, you can login and use that user to create more users.
- * Required fields for new users are email,city,is in pashion network, and password.
+ * Brand could already has a Brand record in the database, check by going to https://app.pashiontool.com/brand and checking list.
+ * Create a Brand in database at https://app.pashiontool.com/brand/create
+  -Brand only requires a name then click Create.
+ * For each Collection you want to create, you must create a BrandCollection. https://app.pashiontool.com/brandCollection/create
+  - Select a Season, Category, and a Brand and then click create.
+ * Create initial brand user with the page /user/create in our application. 
+  - Requires Name, Surname, Password, City, IsInPashionNetwork (checked), Brand (select a brand), and email. Then click create.
+ * After one user has been created for a brand, you can login and use that user to create more users in the application
+ * Looks for each season may be added using the application
 
 
 # Database

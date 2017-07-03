@@ -34,6 +34,7 @@ class Brand {
     }
 
 	static constraints = {
+		name()
 		
 	}
 
