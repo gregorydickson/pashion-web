@@ -196,9 +196,9 @@
                             <span class="slim-text-box-label">New Material</span>
 
 
-                            <select-control ref="materialSelectControl" name="material"
-                                class="to-u-c"                   
-                                change.delegate="onMaterialChangeCallback($event)"                                  
+                            <select-control ref="materialSelectControl" name="material" 
+                                class="to-u-c" 
+                                change.delegate="onMaterialChangeCallback($event)" 
                                 selected.bind="selectedMaterialItems" 
                                 options.bind="availableMaterialItems" 
                                 placeholder="Select one" 
@@ -210,6 +210,18 @@
                             <a style= "width: 30px; margin-left: 1rem;" click.delegate="materialAdd(selectedSample)">Add</a>
                         </span>
 
+                    </div>
+
+                    <div class="grid-block shrink"> 
+                        <span class="inline-label">
+                            <span class="slim-text-box-label">Unlisted <br> Material</span>
+                        
+                            <input id="unl-mat" type="text" class="slim-text-box" style="margin-bottom:0px;" value.bind="selectedSample.unlMaterial">
+                        
+
+
+                            <a style= "width: 30px; margin-left: 1rem;" click.delegate="materialNewAdd(selectedSample)">Add</a>
+                        </span>
                     </div>
                     <!-- Size 
                     <div class="grid-block shrink" >                        

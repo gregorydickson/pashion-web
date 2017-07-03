@@ -166,6 +166,20 @@ export class EditSearchableItem {
       sample.material = this.addMaterial;
   }
 
+  materialNewAdd (sample) {
+    let thisValue = $('#unl-mat').val().toUpperCase();
+    console.log('Selected value:', thisValue);      
+
+    this.unlMaterial = thisValue;
+
+    if (!this.unlMaterial) return;
+    if (this.unlMaterial=='') return;
+    if(sample.material)
+      sample.material = sample.material + " " + this.unlMaterial;
+    else
+      sample.material = this.unlMaterial;
+  }
+
   materialClear (sample) {
     sample.material = '';
   }
@@ -287,7 +301,7 @@ export class EditSearchableItem {
       console.log('onMaterialChangeCallback() called:', event.detail.value);
 
       if (event.detail) {
-          let selectedValue = event.detail.value;         
+          let selectedValue = event.detail.value;
           console.log('Selected value:', selectedValue);      
 
           this.addMaterial = selectedValue;
