@@ -24,7 +24,9 @@ class PRAgency {
         brands lazy: false
         cache true
     }
-
+    static constraints = {
+        name()
+    }
     
 
     static mappedBy = [ addresses:"prAgency", 
