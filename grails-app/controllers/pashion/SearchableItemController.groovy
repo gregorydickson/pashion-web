@@ -741,4 +741,21 @@ class SearchableItemController {
             '*'{ render status: NOT_FOUND }
         }
     }
+
+
+    def pad(){
+        SearchableItemType type = SearchableItemType.findByDisplay('Looks')
+        def ids = SearchableItem.executeQuery('select id from SearchableItem')
+        for (id in ids) {
+            def item = SearchableItem.get(id)
+            if(item.type == type){
+                if(item.name.toInteger() < 10){
+                    item.name.trim().padLeft(2,'0')
+                    item.save(failOnError:true, flush:true)
+                }
+            }
+
+        }
+        
+    }
 }
