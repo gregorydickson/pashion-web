@@ -134,6 +134,13 @@ To setup the Development Environment:
  * After one user has been created for a brand, you can login and use that user to create more users in the application
  * Looks for each season may be added using the application
 
+# PR Agency Onboarding
+  * Create Brands
+  * Create PR Agency http://localhost:8080/PRAgency/create
+  * Add Brands to PR Agency http://localhost:8080/PRAgency
+    - In list, click on Agency you want to update.
+    - Then click on Edit
+    - Edit uses a multi-select control, hold the Ctrl (windows), Command (mac), to multi-select Brands to add them to the PR Agency, then click Update
 
 # Database
 
