@@ -21,7 +21,7 @@ class SearchableItemController {
         long startTime = System.currentTimeMillis()
         SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
         
-        Brand brand = null
+        Brand brandIn = null
         SearchableItemType type = null
         Season seasonIn = null
         Category category = null
@@ -35,7 +35,7 @@ class SearchableItemController {
 
               
         if(params.brand && params.brand != '' && params.brand.trim() != 'All' && params.brand.trim() != 'ALL'){
-            brand = Brand.get(params.brand.trim())
+            brandIn = Brand.get(params.brand.trim())
         }
         //log.info "brand param:"+params.brand  + " after " + brand
         
@@ -70,7 +70,7 @@ class SearchableItemController {
 
             type = SearchableItemType.findByDisplay("Samples")
             log.info "*****************************  A BRAND search with city OR keyword OR outToday or availbleDates. IE search all itmes and cascades up to the look"
-            log.info "Brand:"+brand
+            log.info "Brand:"+brandIn
             log.info "keywords:"+keywords
             log.info "season:"+seasonIn
             log.info "category:"+category
@@ -86,7 +86,7 @@ class SearchableItemController {
                 fetchMode 'samples.sampleRequests', FM.JOIN
                 fetchMode 'brand', FM.JOIN
 
-                    if(brand) eq('brand', brand)
+                    if(brandIn) eq('brand', brandIn)
 
                     // only need keywords to search all items
                     if(keywords) and {            
@@ -116,7 +116,11 @@ class SearchableItemController {
                         eq('category',category)
                     }
 
-                    season{ order('order','desc') }
+                    season { order('order','desc') }
+
+                    brand { order ('name', 'asc')}
+
+                    order ('name', 'asc')
                     
                     cache true
             }
@@ -141,7 +145,7 @@ class SearchableItemController {
         } else {
             // Doesn't match on search outside of attributes
             log.info "*****************************  A BRAND search with NO city AND NO keyword. IE looks only (IE SI's with images)"
-            log.info "Brand:"+brand
+            log.info "Brand:"+brandIn
             log.info "NO keywords!" // +keywords
             log.info "season:"+seasonIn
             log.info "category:"+category
@@ -153,7 +157,7 @@ class SearchableItemController {
                 fetchMode 'brandCollection', FM.JOIN
 
                 isNotNull('image')
-                if(brand) eq('brand', brand)
+                if(brandIn) eq('brand', brandIn)
              /*  if(keywords) and {
                     keywords.each {  
                              ilike('message', "%${it}%") 
@@ -163,7 +167,12 @@ class SearchableItemController {
                 if(category) brandCollection {
                         eq('category',category)
                     }
-                season{ order('order','desc') }
+                season { order('order','desc') }
+
+                brand { order ('name', 'asc')}
+
+                order ('name', 'asc')
+
                 cache true
             } 
 
@@ -188,8 +197,8 @@ class SearchableItemController {
         log.info "JSON render duration:"+duration
         log.info "**************************************************************"
         
-
     }
+
     def filterSearch(){
         long startTime = System.currentTimeMillis()
         log.info "**********************  A Press availability SEARCH **********************"
@@ -197,7 +206,7 @@ class SearchableItemController {
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"))
         Date availableFrom = null
         Date availableTo = null
-        Brand brand = null
+        Brand brandIn = null
         SearchableItemType type = null
         Season seasonIn = null
         Category category = null
@@ -223,7 +232,7 @@ class SearchableItemController {
 
         log.debug "brand param:"+params.brand
         if(params.brand && params.brand != '' && params.brand.trim() != 'All'){
-            brand = Brand.get(params.brand.trim())
+            brandIn = Brand.get(params.brand.trim())
         }
 
         if(params.season != "" && params.season != null)
@@ -245,7 +254,7 @@ class SearchableItemController {
             keywords = keywords.split(" ")
         }
         
-        log.info "Brand:"+brand
+        log.info "Brand:"+brandIn
         log.info "keywords:"+keywords
         log.info "season:"+seasonIn
         log.info "category:"+category
@@ -269,7 +278,7 @@ class SearchableItemController {
             
             isNotNull('image')
             eq('isPrivate',false)
-            if(brand) eq('brand', brand)
+            if(brandIn) eq('brand', brandIn)
             if(theme) ilike('attributes', "%${theme}%")
             if(keywords) and {
                 keywords.each {  ilike('attributes', "%${it}%") }
@@ -281,7 +290,14 @@ class SearchableItemController {
             if(type) eq('type',type)
             if(city) eq('city',city)
             if(color) ilike('color',"%${color}%")
-            season{ order('order','desc') }
+
+
+            season { order('order','desc') }
+
+            brand { order ('name', 'asc')}
+
+            order ('name', 'asc')
+
             setMaxResults(1000)
             cache true
         }
