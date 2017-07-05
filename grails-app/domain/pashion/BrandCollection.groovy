@@ -2,7 +2,7 @@ package pashion
 
 class BrandCollection {
 
-
+	Brand brand
 	Integer status
 	Integer security
 	
@@ -24,7 +24,7 @@ class BrandCollection {
 	Date lastUpdated
 
 
-	static belongsTo = [brand:Brand]
+	
 
 	static hasMany = [ permissions:Permission, searchableItems:SearchableItem]
 
@@ -37,20 +37,7 @@ class BrandCollection {
 
 	static constraints = {
 
-		status nullable: true
-		security nullable: true
-		fromDate nullable: true
-		toDate nullable: true
-
-		availability nullable: true
-		lastModifiedUserId nullable: true
-		userCreatedId nullable:true
-		season nullable: true
-		category nullable: true
 		
-		
-		permissions nullable: true 
-		searchableItems nullable: true
 
 	}
 }
