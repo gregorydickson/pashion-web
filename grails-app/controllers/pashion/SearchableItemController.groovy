@@ -493,6 +493,7 @@ class SearchableItemController {
         item.name = jsonObject.name
         item.description = jsonObject.description
         item.attributes = jsonObject.attributes
+        item.isPrivate = jsonObject.isPrivate
         jsonObject.deletedSamples.each{
             def sample = SearchableItem.get(it)
             sample.delete(failOnError:true, flush: true)

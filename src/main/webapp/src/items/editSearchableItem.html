@@ -59,6 +59,14 @@
                             <input type="text" class="slim-text-box" style="margin-bottom:0px;  max-width: 40px; min-width: 40px;" maxlength="3" value.bind="currentItem.name">
                         </div>
                     </span>
+
+                    <!-- Keep Booking Data Private-->
+                        <span class="inline-label" style="">
+                            <span class="slim-text-box-label">Mark Private</span>
+                            <div>
+                                <input style="margin-top: 8px;" checked.bind="currentItem.isPrivate" type="checkbox">
+                            </div>
+                        </span>
                 </div>
 
 
@@ -115,14 +123,7 @@
                         <span class="inline-label">
                             <span class="slim-text-box-label">Sample ID</span>
                             <div>
-                                <input type="text" class="slim-text-box" style="margin-bottom:0px; width:80px; min-width:80px;" value.bind="selectedSample.clientID">
-                            </div>
-                        </span>
-                        <!-- Keep Booking Data Private-->
-                        <span class="inline-label" style="">
-                            <span class="slim-text-box-label">Mark Private</span>
-                            <div>
-                                <input style="margin-top: 8px;" checked.bind="selectedSample.isPrivate" type="checkbox">
+                                <input type="text" class="slim-text-box" style="margin-bottom:0px;" value.bind="selectedSample.clientID">
                             </div>
                         </span>
                     </div>
