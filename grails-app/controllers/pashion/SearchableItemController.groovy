@@ -747,15 +747,27 @@ class SearchableItemController {
         SearchableItemType type = SearchableItemType.findByDisplay('Looks')
         def ids = SearchableItem.executeQuery('select id from SearchableItem')
         for (id in ids) {
-            def item = SearchableItem.get(id)
-            if(item.type == type){
-                if(item.name.toInteger() < 10){
-                    item.name.trim().padLeft(2,'0')
-                    item.save(failOnError:true, flush:true)
+            SearchableItem.withTransaction { status ->
+                
+                def item = SearchableItem.get(id)
+                if(item.type == type){
+                    try{
+                        if(item.name.toInteger() < 10){
+                            log.info "updating"+item.name
+                            item.name = item.name.trim().padLeft(2,'0')
+                            log.info "new name:"+ item.name
+                            item.save(failOnError:true, flush:true)
+                            log.info "updated"
+                        }
+                    } catch(Exception e){
+                        log.info "exception"+e.message
+                    }
                 }
             }
 
         }
+        log.info "done"
+        render 'done'
         
     }
 }
