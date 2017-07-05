@@ -13,12 +13,22 @@ class MaterialController {
     }
 
     def index(Integer max) {
+        log.info "butts";
         params.max = Math.min(max ?: 10, 100)
         respond Material.list(params), model:[materialCount: Material.count()]
     }
 
     def show(Material material) {
         respond material
+    }
+
+    def newMaterial() {
+        def jsonObject = request.JSON
+        log.info "butts" + jsonObject;
+
+        def newMaterial = new Material()
+        material.name = 'steel'
+        material.save(failOnError:true, flush:true)
     }
 
     def create() {

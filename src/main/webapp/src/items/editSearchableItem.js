@@ -92,7 +92,7 @@ export class EditSearchableItem {
       colors.forEach(item => {
           this.availableNewColorItems.push({
             id: item,
-            text: item
+            text: item 
           });
         });
     }),
@@ -167,9 +167,13 @@ export class EditSearchableItem {
   }
 
   materialNewAdd (sample) {
+    this.http.fetch('/material/newMaterial', {
+            method: 'post',
+            body: {"this":"one"}
+          });
     let thisValue = $('#unl-mat').val().toUpperCase();
     console.log('Selected value:', thisValue);      
-
+ 
     this.unlMaterial = thisValue;
 
     if (!this.unlMaterial) return;
