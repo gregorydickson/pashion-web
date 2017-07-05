@@ -522,6 +522,7 @@ class SearchableItemController {
             sample.description = it.description
             sample.attributes = it.attributes
             sample.material = it.material
+            sample.isPrivate = it.isPrivate
 
             sample.message = it.message
 
