@@ -165,14 +165,16 @@ export class EditSearchableItem {
     else
       sample.material = this.addMaterial;
   }
-
+ 
   materialNewAdd (sample) {
-    this.http.fetch('/material/newMaterial', {
+    let thisValue = $('#unl-mat').val().toUpperCase();
+    console.log('Selected value:', thisValue);      
+
+
+    this.http.fetch('/material/newMaterial?material=' + thisValue, {
             method: 'post',
             body: {"this":"one"}
           });
-    let thisValue = $('#unl-mat').val().toUpperCase();
-    console.log('Selected value:', thisValue);      
  
     this.unlMaterial = thisValue;
 
