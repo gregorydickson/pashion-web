@@ -316,27 +316,27 @@ export class CreateSampleRequestPress {
   }
   startNext(){
     ++this.startOffset;
-    this.updateAvailability();
+    this.updateAvailability(false);
   }
   startPrevious(){
     --this.startOffset;
-    this.updateAvailability();
+    this.updateAvailability(false);
   }
   startReset(){
     this.startOffset=0;
-    this.updateAvailability();
+    this.updateAvailability(false);
   }
   endNext(){
     ++this.endOffset;
-    this.updateAvailability();
+    this.updateAvailability(false);
   }
   endPrevious(){
     --this.endOffset;
-    this.updateAvailability();
+    this.updateAvailability(false);
   }
   endReset(){
     this.endOffset=0;
-    this.updateAvailability();
+    this.updateAvailability(false);
   }
 
   allsamples(event){
@@ -353,7 +353,7 @@ export class CreateSampleRequestPress {
       document.getElementById("CreateSampleRequestButton").disabled = true; 
     }
     this.enableCheck(); 
-    this.updateAvailability();   
+    this.updateAvailability(true);   
   }
 
   get aSampleHasOutReason() {
@@ -370,18 +370,20 @@ export class CreateSampleRequestPress {
     return false
   }
 
-  updateAvailability(){
+  updateAvailability(clear = true){
     console.log ("updateAvailability called");
     // clear dates as they may no longer be valid for the range
-    this.startDay = '';
-    this.sampleRequest.startDate = '';
-    this.sampleRequestStartMonth = '';
-    this.sampleRequestStartDay = ''; 
-    //  end date
-    this.endDay = '';
-    this.sampleRequest.endDate = '';
-    this.sampleRequestEndDay = '';
-    this.sampleRequestEndMonth = '';
+    if (clear) {
+      this.startDay = '';
+      this.sampleRequest.startDate = '';
+      this.sampleRequestStartMonth = '';
+      this.sampleRequestStartDay = ''; 
+      //  end date
+      this.endDay = '';
+      this.sampleRequest.endDate = '';
+      this.sampleRequestEndDay = '';
+      this.sampleRequestEndMonth = '';
+    }
     this.enableCheck()
     //
     this.allSamplesSelected();
