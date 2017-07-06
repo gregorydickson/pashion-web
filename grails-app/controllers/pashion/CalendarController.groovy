@@ -69,11 +69,11 @@ class CalendarController {
         log.debug "params: "+params
         if(params.searchType == "brand" || theItem.brand.hideCalendar == false){
             aCalendar = calendarService.availableDaysInMonth(theItem,localDate,aCalendar)
-            log.debug "searchableItemPicker, show the brand availability"
-        } else {
-            aCalendar = calendarService.availableDaysInMonthSetTodayOnly(theItem, localDate,aCalendar)
-
-            log.debug "searchableItemPicker, set today only"
+            log.info "searchableItemPicker, show the brand availability"
+        } else if (params.searchType != "brand" && theItem.brand.hideCalendar == true){
+            //aCalendar = calendarService.availableDaysInMonthSetTodayOnly(theItem, localDate,aCalendar)
+            aCalendar = calendarService.pastNotAvailable(localDate,aCalendar)
+            log.info "searchableItemPicker, set today & past not available"
         }
         
         render aCalendar as JSON
@@ -94,7 +94,7 @@ class CalendarController {
                                              params.offset.toInteger(),
                                              params.months.toInteger())
         
-        log.debug "datePickerNoAvailability"
+        log.info "datePickerNoAvailability"
         render aCalendar as JSON
     }
 
@@ -121,9 +121,13 @@ class CalendarController {
                                              params.months.toInteger())
         log.debug "showAvailabilityLookAndSamples"
         if(params.searchType == "brand" || samples[0].look.brand.hideCalendar == false){
+            log.info "brand sample calendar OR show calenader"
             aCalendar = calendarService.availableDaysForALook(samples[0].look,aCalendar)
             aCalendar = calendarService.availableDaysForSamples(samples,localDate,aCalendar)
-        }
+        } else if (params.searchType != "brand" && samples[0].look.brand.hideCalendar == true) {
+                log.info "NOT brand sample calendar and hide calenadr"
+                aCalendar = calendarService.pastNotAvailable(localDate,aCalendar)
+            }
         render aCalendar as JSON
     }
 
@@ -151,10 +155,13 @@ class CalendarController {
             aCalendar = calendarService.pastNotAvailable(localDate,aCalendar)
         }
         else {
-            log.debug "showAvailabilitySamples"
+            log.info "showAvailabilitySamples"
             if(params.searchType == "brand" || samples[0].look.brand.hideCalendar == false){
-                log.debug "brand sample calendar"
+                log.info "brand sample calendar OR show calenader"
                 aCalendar = calendarService.availableDaysForSamples(samples,localDate,aCalendar)
+                aCalendar = calendarService.pastNotAvailable(localDate,aCalendar)
+            } else if (params.searchType != "brand" && samples[0].look.brand.hideCalendar == true) {
+                log.info "NOT brand sample calendar and hide calenadr"
                 aCalendar = calendarService.pastNotAvailable(localDate,aCalendar)
             }
         }

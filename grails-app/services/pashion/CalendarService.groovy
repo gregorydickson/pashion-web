@@ -12,7 +12,7 @@ class CalendarService {
 
     PashionCalendar pastNotAvailable( LocalDate localDate,
                                          PashionCalendar pashionCalendar){
-        log.debug "pastNotAvailable"
+        log.info "pastNotAvailable"
 	   LocalDate now = new Date().toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
        if(pashionCalendar.calendarMonths[0].beforeThisMonth(now)){
             pashionCalendar = monthNotAvailable(pashionCalendar)
@@ -20,7 +20,7 @@ class CalendarService {
         }
         if(pashionCalendar.calendarMonths[0].sameMonth(now)){
             pashionCalendar.calendarMonths[0].days[now.getDayOfMonth()].event = pashionCalendar.calendarMonths[0].days[now.getDayOfMonth()].event + " today"
-            log.debug "pastNotAvailbe, today set here"
+            log.info "pastNotAvailbe, today set here"
             
             IntRange range
             if(now.getDayOfMonth() > 1){
@@ -73,7 +73,7 @@ class CalendarService {
 
 
     PashionCalendar monthNotAvailable(PashionCalendar pashionCalendar){
-        log.debug "monthNotAvailable"
+        log.info "monthNotAvailable"
         IntRange range = 1..pashionCalendar.calendarMonths[0].numberOfDays
         range.each{
             log.info "month not available"

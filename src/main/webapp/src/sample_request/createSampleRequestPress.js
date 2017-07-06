@@ -57,7 +57,7 @@ export class CreateSampleRequestPress {
 
     var queryString = DateFormat.urlString(0, 2);
     this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+itemId)
-    	.then(response => response.json())
+      .then(response => response.json())
         .then(calendar => {
               this.startCalendar = calendar;
               this.endCalendar = calendar;
@@ -113,8 +113,9 @@ export class CreateSampleRequestPress {
     console.log("parameterday: "+day);
 
     var today = new Date();    
-    var yesterday = new Date ();
-    yesterday = yesterday.setDate(today.getDate() - (24*60*60*1000));
+    var yesterday = 0;
+    var todayMilli = today.getTime();
+    yesterday = todayMilli - (24*60*60*1000);
 
     this.startDay = day;
     var enddate = '';
@@ -126,9 +127,10 @@ export class CreateSampleRequestPress {
     console.log("today: " + today);
     console.log("startdate: " + startdate);
     console.log("startDay: " + this.startDay);
+    console.log("Yesterday: " + yesterday);
     if (this.endDay !='') console.log("enddate: " + enddate); else console.log("no endDay set")
     console.log("endDay: " + this.endDay);
-    if (startdate <= yesterday) { 
+    if (startdate.getTime() <= yesterday) { 
       console.log ("day is before today."); 
       this.startDay = '';
       this.sampleRequest.startDate = '';
@@ -215,8 +217,9 @@ export class CreateSampleRequestPress {
     let enddate = new Date(this.endCalendar.calendarMonths[0].year,this.endCalendar.calendarMonths[0].monthNumber-1,day);
     if (this.startDay != '') startdate = new Date(this.startCalendar.calendarMonths[0].year,this.startCalendar.calendarMonths[0].monthNumber-1,this.startDay);
     var today = new Date();
-    var yesterday = new Date ();
-    yesterday = yesterday.setDate(today.getDate() - (24*60*60*1000));
+    var yesterday = 0;
+    var todayMilli = today.getTime();
+    yesterday = todayMilli - (24*60*60*1000);
 
     console.log("today: " + today);
     if (this.startDay != '') console.log("startDay: " + this.startDay); 
@@ -232,8 +235,8 @@ export class CreateSampleRequestPress {
     console.log("startdate: " + startdate); 
     console.log("enddate: " + enddate);
     console.log("endDay: " + this.endDay);
-    if (enddate <= yesterday) { 
-      console.log ("day is before today"); 
+    if (enddate.getTime() <= yesterday) { 
+      console.log ("day is before today!"); 
       this.endDay = ''; 
       this.sampleRequest.endDate = '';
       this.sampleRequestEndDay = '';
@@ -309,31 +312,31 @@ export class CreateSampleRequestPress {
   redraw(element){
     element.style.display='none';
     element.offsetHeight; 
-	  element.style.display='';
+    element.style.display='';
   }
   startNext(){
-  	++this.startOffset;
-    this.updateAvailability();
+    ++this.startOffset;
+    this.updateAvailability(false);
   }
   startPrevious(){
-  	--this.startOffset;
-    this.updateAvailability();
+    --this.startOffset;
+    this.updateAvailability(false);
   }
   startReset(){
     this.startOffset=0;
-    this.updateAvailability();
+    this.updateAvailability(false);
   }
   endNext(){
-  	++this.endOffset;
-    this.updateAvailability();
+    ++this.endOffset;
+    this.updateAvailability(false);
   }
   endPrevious(){
-  	--this.endOffset;
-    this.updateAvailability();
+    --this.endOffset;
+    this.updateAvailability(false);
   }
   endReset(){
     this.endOffset=0;
-    this.updateAvailability();
+    this.updateAvailability(false);
   }
 
   allsamples(event){
@@ -350,7 +353,7 @@ export class CreateSampleRequestPress {
       document.getElementById("CreateSampleRequestButton").disabled = true; 
     }
     this.enableCheck(); 
-    this.updateAvailability();   
+    this.updateAvailability(true);   
   }
 
   get aSampleHasOutReason() {
@@ -367,18 +370,20 @@ export class CreateSampleRequestPress {
     return false
   }
 
-  updateAvailability(){
+  updateAvailability(clear = true){
     console.log ("updateAvailability called");
     // clear dates as they may no longer be valid for the range
-    this.startDay = '';
-    this.sampleRequest.startDate = '';
-    this.sampleRequestStartMonth = '';
-    this.sampleRequestStartDay = ''; 
-    //  end date
-    this.endDay = '';
-    this.sampleRequest.endDate = '';
-    this.sampleRequestEndDay = '';
-    this.sampleRequestEndMonth = '';
+    if (clear) {
+      this.startDay = '';
+      this.sampleRequest.startDate = '';
+      this.sampleRequestStartMonth = '';
+      this.sampleRequestStartDay = ''; 
+      //  end date
+      this.endDay = '';
+      this.sampleRequest.endDate = '';
+      this.sampleRequestEndDay = '';
+      this.sampleRequestEndMonth = '';
+    }
     this.enableCheck()
     //
     this.allSamplesSelected();
