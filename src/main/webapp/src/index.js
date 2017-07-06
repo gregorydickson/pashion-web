@@ -56,7 +56,7 @@ export class Index {
     numberImages = 0;
     busy;
     ordering = 'bookingStartDate';
-    filtering = 'ALL REQUESTS';
+    filtering = 'ACTIVE REQUESTS';
     firstTime = true;
     onlyShowMine = false;
     onlyShowMineCompany = '';

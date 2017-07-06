@@ -32,7 +32,7 @@ export class Requestman {
   closed = true;
   searchTextReqMan = '';
   ordering = 'bookingStartDate';
-  filtering = ''; // IE all
+  filtering = 'ACTIVE REQUESTS'; // IE all
   today = new Date(); // Do we have a problem with freshness of this variable, say login at 11:59PM?
   onlyShowMine = false;
   onlyShowMineCompany = '';
