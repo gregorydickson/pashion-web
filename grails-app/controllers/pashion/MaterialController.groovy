@@ -25,8 +25,17 @@ class MaterialController {
         log.info params.material;
 
         def newMaterial = new Material()
-        material.name = params.material
-        material.save(failOnError:true, flush:true)
+        newMaterial.name = params.material
+        newMaterial.save(failOnError:true, flush:true)
+        
+        def message
+        if(newMaterial.id){
+            message = [message:"Material saved"]
+            response.status = 200
+        }else{
+            message = [message:"Error"]
+        }
+        render message as JSON
     }
 
     def create() {
