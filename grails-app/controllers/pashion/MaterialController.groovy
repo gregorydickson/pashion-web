@@ -22,10 +22,10 @@ class MaterialController {
     }
 
     def newMaterial() {
-        log.info params.material;
+        log.info "params:"+params
 
         def newMaterial = new Material()
-        newMaterial.name = params.material
+        newMaterial.name = params.name
         newMaterial.save(failOnError:true, flush:true)
         
         def message
