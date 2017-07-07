@@ -9,12 +9,19 @@ class MaterialController {
 
     def list(){
         def list = Material.list().collect{it.name} as JSON
+        //list.retainAll { it != "" }
         render list
     }
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond Material.list(params), model:[materialCount: Material.count()]
+    }
+
+    def removeMistakes(){
+        def mist = new Material();
+        mist.name = "";
+
     }
 
     def show(Material material) {
@@ -30,12 +37,12 @@ class MaterialController {
         
         def message
         if(newMaterial.id){
-            message = [message:"Material saved"]
+            message = [message:"Material saved"] 
             response.status = 200
         }else{
             message = [message:"Error"]
         }
-        render message as JSON
+        render message as JSON 
     }
 
     def create() {

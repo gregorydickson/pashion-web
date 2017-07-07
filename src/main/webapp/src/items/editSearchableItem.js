@@ -170,12 +170,34 @@ export class EditSearchableItem {
     let thisValue = $('#unl-mat').val().toUpperCase();
     console.log('Selected value:', thisValue);      
 
-
-    this.http.fetch('/material/newMaterial?material=' + thisValue, {
+    var bool = true;
+    this.availableMaterialItems.forEach(item => {
+        console.log(item.id);
+         if(item.id == thisValue){
+          bool = false;
+          console.log("Material already present in list");
+        }
+    });
+     if(bool){
+      this.http.fetch('/material/newMaterial?name=' + thisValue, {
             method: 'post',
             body: {"this":"one"}
-          });
- 
+      });
+     }
+
+   this.http.fetch('/material/list').then(response => response.json()).then(material => {
+    this.material = material
+    this.availableMaterialItems = [];
+    
+    material.forEach(item => {
+        this.availableMaterialItems.push({
+          id: item,
+          text: item
+        });
+      });
+    });
+
+
     this.unlMaterial = thisValue;
 
     if (!this.unlMaterial) return;
