@@ -14,6 +14,7 @@ import { PDFService } from './services/PDFService';
 import { PRAgencyService } from './services/PRAgencyService';
 import { BrandService } from './services/brandService';
 import { UserService } from './services/userService';
+import moment from 'moment'
 
 @inject(HttpClient, DialogService, DS, PDFService, SampleRequestService, busy, EventAggregator, PubNubService, BrandService, PRAgencyService, UserService)
 export class Requestman {
@@ -244,18 +245,41 @@ export class Requestman {
   }
 
   filterRangeFunc(startDate, searchStartDate, endDate, searchEndDate) {
+
+    //console.log ('Incoming Dates: ' + startDate + "   " + searchStartDate + "   " + endDate + "   " + searchEndDate);
+    // startDate : 2017-12-31
+    // searchStartDate: 31-Jul-2017
+
+    // strip timezone
+    if (startDate) startDate = startDate.slice(0,10);
+    if (endDate) endDate = endDate.slice(0,10);
+    //console.log ('Converted Dates: ' + startDate + "   " + searchStartDate + "   " + endDate + "   " + searchEndDate);
     // local compare
     if (!searchStartDate) return true;
     //if (!searchEndDate) return true; 
-    // convert to milliseconds as coming in as two different formats
-    var startDateMilli = new Date(startDate).getTime();
-    var searchStartDateMilli = new Date(searchStartDate).getTime();
-    var endDateMilli = new Date(endDate).getTime();
-    var searchEndDateMilli = new Date(searchEndDate).getTime();
+    // convert to milliseconds using moment as coming in as two different formats
+    var startDateMilli = moment(startDate, "YYYY-MM-DD");
+    var endDateMilli = moment(endDate, "YYYY-MM-DD");
+    var searchStartDateMilli = moment(searchStartDate, "DD-MMM-YYYY");
+    var searchEndDateMilli = moment(searchEndDate, "DD-MMM-YYYY");
+    //console.log ('DatesMilli: ' + startDateMilli + "   " + searchStartDateMilli + "   " + endDateMilli + "   " + searchEndDateMilli);
     // compare
-    if (searchStartDateMilli > searchEndDateMilli) return true
+    //if (searchStartDateMilli > searchEndDateMilli) return true
+
+    // single ended case: SR date range 'includes' the From (searchStartdDate)
+    if (!searchEndDate && ((searchStartDateMilli >= startDateMilli) && (searchStartDateMilli<=endDateMilli))) return true;
+    else if (!searchEndDate) return false;
+
+    // Double ended: SR range overlaps with the From - To Range
+    if ( (searchStartDateMilli<startDateMilli) && (searchEndDateMilli<startDateMilli) ) return false;
+    if ( (searchStartDateMilli>endDateMilli) && (searchEndDateMilli>endDateMilli) ) return false;
+
+
+    return true; 
+    /*
     return (((searchStartDateMilli >= startDateMilli) && (searchStartDateMilli <= endDateMilli)) ||
       ((searchEndDateMilli >= startDateMilli) && (searchEndDateMilli <= endDateMilli)))
+    */
 
   }
 
