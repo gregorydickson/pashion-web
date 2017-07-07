@@ -573,13 +573,13 @@ class SearchableItemController {
         Long categoryp = params.category.toInteger()
         log.info "category in params:"+categoryp
 
-        Season season = Season.findOrSaveWhere(id:seasonp).save()
+        Season season = Season.findOrSaveWhere(id:seasonp).save(failOnError:true, flush:true)
         log.info "season:"+season
 
-        Category category = Category.findOrSaveWhere(id:categoryp).save()
+        Category category = Category.findOrSaveWhere(id:categoryp).save(failOnError:true, flush:true)
         log.info "category:"+category
 
-        BrandCollection brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season).save()
+        BrandCollection brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season).save(failOnError:true, flush:true)
 
         SearchableItemType type = SearchableItemType.findByDisplay('Looks')
         log.info "type:" + type
