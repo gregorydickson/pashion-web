@@ -22,7 +22,7 @@ class CachingService implements JsonViewTest {
     static lazyInit = false
     static scope = "singleton"
     
-    def seasons
+
     def themes
     String connections = null
 
@@ -148,14 +148,7 @@ class CachingService implements JsonViewTest {
         }
         themes
     }
-    def seasons(){
-        if(!seasons){
-            def result = loadSeasons()
-            seasons = result
-            return result
-        }
-        seasons
-    }
+    
 
     def loadThemes(){
         
@@ -165,14 +158,6 @@ class CachingService implements JsonViewTest {
         return items as JSON
     }
 
-    def loadSeasons(){
-        List items = SearchableItem.list().collect{it.season}
-
-        items.unique()
-        log.info"seasons"+items
-        return items as JSON
-
-    }
 
     def loadConnections(){
         def list = User.list()
