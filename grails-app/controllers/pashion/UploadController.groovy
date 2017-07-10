@@ -407,9 +407,9 @@ class UploadController {
                             else if (rv41.contains("accessories")) item.brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season,category:Category.get(2)).save()
                             else if (rv41.contains("menswear")) item.brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season,category:Category.get(3)).save()
                             else if (rv41.contains("cruise")) item.brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season,category:Category.get(4)).save()
-                            else item.brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season,category:0).save()
+                            else item.brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season,category:Category.get(0)).save()
                             String imageFile = row.values[2].toString().trim().padLeft(4,'0') + ".jpg"
-                            def image = "//dvch4zq3tq7l4.cloudfront.net" + row.values[41].toString().trim().toLowerCase() + imageFile
+                            def image = "//dvch4zq3tq7l4.cloudfront.net" + row.values[42].toString().trim().toLowerCase() + imageFile
                             log.info "image:"+ image
                             item.image = image
                             item.fromDate = new Date()
