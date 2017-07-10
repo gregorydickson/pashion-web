@@ -19,6 +19,8 @@ export class Messages {
     currentContact = {};
     searchTerm = ''; // hard wired search goes here
 
+    fetchTimeStamp = null;
+
     //pubnub
     pubnub;
 
@@ -90,6 +92,60 @@ export class Messages {
         if (sh > 67) $("#messages-inside-top").animate({scrollTop: $("#messages-inside-top").prop("scrollHeight")}, 250);
         return true; // bubble the characters
     }
+
+            //get the history callback for this channel
+    getAllMessages(timetoken) {
+
+            var parent = this;
+            this.pubnub.history(
+            {
+                channel: parent.user.email,
+                reverse: false, // Setting to true will traverse the time line in reverse starting with the oldest message first.
+                count: 100, // how many items to fetch max is 100
+                stringifiedTimeToken: true, //, // false is the default
+                start: timetoken // start time token to fetch
+                //end: '123123123133' // end timetoken to fetch
+            },
+            function (status, response) {
+                console.log("pubhub history error?" + status.error + " response.length(messages):" + response.messages.length);
+                var i = response.messages.length -1;
+                for (; i >= 0 ; i--) { 
+                  parent.messages.unshift({
+                        text: response.messages[i].entry.text,
+                        time: response.messages[i].entry.sentAt,
+                        image: '',
+                        fromName: response.messages[i].entry.fromName,
+                        fromSurname: response.messages[i].entry.fromSurname,
+                        fromId: response.messages[i].entry.fromId,
+                        toName: response.messages[i].entry.toName,
+                        toSurname: response.messages[i].entry.toSurname,
+                        toId: response.messages[i].entry.toId,
+                        toMe: (response.messages[i].entry.toId == parent.user.email),
+                        fromMe: (response.messages[i].entry.fromId == parent.user.email)
+                  });
+
+                  // get messages count + lastmessage on history 
+                  if (response.messages[i].entry.toId == parent.user.email) {
+                    //console.log("getMostRecentRead: " + parent.userService.getMostRecentRead (response.messages[i].entry.fromId));
+                      // console.log("response timestamp: "+ parseInt(response.messages[i].timetoken));
+                      // see if the the latest message or not
+                      parent.userService.updateLastMessage(response.messages[i].entry.fromId, response.messages[i].entry.text, response.messages[i].entry.sentAt, false);
+                      if (parseInt(response.messages[i].timetoken) > parseInt(parent.userService.getMostRecentRead (response.messages[i].entry.fromId))) {
+                            // console.log("response timestamp > mostrecent read stamp");
+                            // do not push to server, use flushConnectionsData instead
+                            parent.userService.addMessageCount(response.messages[i].entry.fromId, false);
+                      }
+                    }
+                }
+                // do separate server update of message count to prevent overload fetch posts
+              //  parent.userService.flushConnectionsData().then( returnedBoolean  => { 
+                // recursive call of anon function until all messages retrieved
+                    parent.fetchTimeStamp = response.startTimeToken;
+                    if (response.messages.length==100) parent.getAllMessages(parent.fetchTimeStamp);
+               // });
+            }
+          );
+        }
 
     attached() {
         console.log("attached messages");
@@ -185,61 +241,11 @@ export class Messages {
             withPresence: true // also subscribe to presence instances.
         });
 
-        //get the history callback for this channel
-        var getAllMessages = function (timetoken) {
 
-            parent.pubnub.history(
-            {
-                channel: parent.user.email,
-                reverse: false, // Setting to true will traverse the time line in reverse starting with the oldest message first.
-                count: 100, // how many items to fetch max is 100
-                stringifiedTimeToken: true, //, // false is the default
-                start: timetoken // start time token to fetch
-                //end: '123123123133' // end timetoken to fetch
-            },
-            function (status, response) {
-                console.log("pubhub history error?" + status.error + " response.length(messages):" + response.messages.length);
-                var i = response.messages.length -1;
-                for (; i >= 0 ; i--) { 
-                  parent.messages.unshift({
-                        text: response.messages[i].entry.text,
-                        time: response.messages[i].entry.sentAt,
-                        image: '',
-                        fromName: response.messages[i].entry.fromName,
-                        fromSurname: response.messages[i].entry.fromSurname,
-                        fromId: response.messages[i].entry.fromId,
-                        toName: response.messages[i].entry.toName,
-                        toSurname: response.messages[i].entry.toSurname,
-                        toId: response.messages[i].entry.toId,
-                        toMe: (response.messages[i].entry.toId == parent.user.email),
-                        fromMe: (response.messages[i].entry.fromId == parent.user.email)
-                  });
-
-                  // get messages count + lastmessage on history 
-                  if (response.messages[i].entry.toId == parent.user.email) {
-                    //console.log("getMostRecentRead: " + parent.userService.getMostRecentRead (response.messages[i].entry.fromId));
-                      // console.log("response timestamp: "+ parseInt(response.messages[i].timetoken));
-                      // see if the the latest message or not
-                      parent.userService.updateLastMessage(response.messages[i].entry.fromId, response.messages[i].entry.text, response.messages[i].entry.sentAt, false);
-                      if (parseInt(response.messages[i].timetoken) > parseInt(parent.userService.getMostRecentRead (response.messages[i].entry.fromId))) {
-                            //console.log("response timestamp > mostrecent read stamp");
-                            // do not push to server, use flushConnectionsData instead
-                            parent.userService.addMessageCount(response.messages[i].entry.fromId, false);
-                      }
-                    }
-                }
-                // do separate server update of message count to prevent overload fetch posts
-              //  parent.userService.flushConnectionsData().then( returnedBoolean  => { 
-                // recursive call of anon function until all messages retrieved
-                    if (response.messages.length==100) getAllMessages(response.startTimeToken);
-               // });
-            }
-          );
-        }
         // clear out the previous values, since we are reading them from history on pubnub server 
         this.userService.clearAllUnreadMessagesForTheCurrentUser();
         // recursive call to get all messages for the current user
-        getAllMessages(); 
+        this.getAllMessages(this.fetchTimeStamp); 
  
     }
 
