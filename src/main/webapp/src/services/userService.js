@@ -378,7 +378,7 @@ export class UserService {
     // from pubnub real-time only and not history
     // history sets pushToServer as false and uses flushConnectionsData
     // only messages to or from this email user are sent.
-    updateLastMessage(fromEmail, message, pushToServer) { // add 1 to the count
+    updateLastMessage(fromEmail, message, messageStamp, pushToServer) { // add 1 to the count
         // get id for email;
         var fromUserId = this.checkValidUser(fromEmail);
         var connectionId = -1;
@@ -386,10 +386,16 @@ export class UserService {
         var i;
         for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
             if (this.users[this.user.id - 1].connections[i].connectedUserId == fromUserId) {
-                this.users[this.user.id - 1].connections[i].lastMessage = message;
-                // console.log("UserService.updateLastMessage from: " + fromUserId + " to: " + this.user.id + " message: " + message);
-                connectionId = this.users[this.user.id - 1].connections[i].id;
+
+                if ( (this.users[this.user.id - 1].connections[i].lastMessageStamp == undefined)
+                    || (this.users[this.user.id - 1].connections[i].lastMessageStamp < messageStamp) ) {
+                    this.users[this.user.id - 1].connections[i].lastMessage = message;
+                    this.users[this.user.id - 1].connections[i].lastMessageStamp = messageStamp;
+                    // console.log("UserService.updateLastMessage from: " + fromUserId + " to: " + this.user.id + " message: " + message);
+                    //connectionId = this.users[this.user.id - 1].connections[i].id;
+                }
                 break;
+
             }
         }
 
