@@ -15,11 +15,12 @@ import { DS } from 'datastores/ds';
 export class Messages {
 
     messages = [];
+    allMessages = {};
     user = {};
     currentContact = {};
     searchTerm = ''; // hard wired search goes here
 
-    fetchTimeStamp = null;
+    fetchTimeStamps = {};
 
     //pubnub
     pubnub;
@@ -93,24 +94,31 @@ export class Messages {
         return true; // bubble the characters
     }
 
-            //get the history callback for this channel
-    getAllMessages(timetoken) {
+    //get the history callback for this user's channels
+    // all per channel, 100 at at time
+    getAllMessages(timetoken, channel, totalNumberOfMessages, perPage) {
+            console.log (`getAllMessages: ${timetoken} ${channel} ${totalNumberOfMessages} ${perPage}`)
+
+            if (totalNumberOfMessages <= 0) return;
+            if (totalNumberOfMessages < perPage) perPage = totalNumberOfMessages;
 
             var parent = this;
+
             this.pubnub.history(
             {
-                channel: parent.user.email,
+                channel: channel,
                 reverse: false, // Setting to true will traverse the time line in reverse starting with the oldest message first.
-                count: 100, // how many items to fetch max is 100
+                count: perPage, // how many items to fetch max is 100
                 stringifiedTimeToken: true, //, // false is the default
                 start: timetoken // start time token to fetch
                 //end: '123123123133' // end timetoken to fetch
             },
             function (status, response) {
                 console.log("pubhub history error?" + status.error + " response.length(messages):" + response.messages.length);
+                if (parent.allMessages[channel] == undefined) parent.allMessages[channel] = [];
                 var i = response.messages.length -1;
                 for (; i >= 0 ; i--) { 
-                  parent.messages.unshift({
+                  parent.allMessages[channel].unshift({
                         text: response.messages[i].entry.text,
                         time: response.messages[i].entry.sentAt,
                         image: '',
@@ -123,6 +131,7 @@ export class Messages {
                         toMe: (response.messages[i].entry.toId == parent.user.email),
                         fromMe: (response.messages[i].entry.fromId == parent.user.email)
                   });
+                  //parent.allMessages[channel] = messages;
 
                   // get messages count + lastmessage on history 
                   if (response.messages[i].entry.toId == parent.user.email) {
@@ -140,8 +149,8 @@ export class Messages {
                 // do separate server update of message count to prevent overload fetch posts
               //  parent.userService.flushConnectionsData().then( returnedBoolean  => { 
                 // recursive call of anon function until all messages retrieved
-                    parent.fetchTimeStamp = response.startTimeToken;
-                    if (response.messages.length==100) parent.getAllMessages(parent.fetchTimeStamp);
+                    parent.fetchTimeStamps[channel] = response.startTimeToken;
+                    if (response.messages.length==perPage) parent.getAllMessages(parent.fetchTimeStamps[channel], channel, totalNumberOfMessages-perPage, perPage);
                // });
             }
           );
@@ -177,9 +186,10 @@ export class Messages {
                 var pubTT = m.timetoken; // Publish timetoken
                 var receivedMessage = m.message; // The Payload
                 console.log("messages pubnub new nessage in messages on " + m.channel + " > " + m.message);
-                if (channelName == parent.user.email) {
+                // channel name first part is this user's email
+                if (channelName.slice(0,parent.user.email.length) == parent.user.email ) {
                     console.log("messages cache invalidate: " + parent.user.email);
-                    parent.messages.push({ // unshift?
+                    parent.allMessages[channelName].push({ // unshift?
                         text: receivedMessage.text,
                         time: receivedMessage.sentAt,
                         image: '',
@@ -237,15 +247,21 @@ export class Messages {
 
         // pubnub subscribe to messages channel for this email
         this.pubnub.subscribe({
-            channels: [ this.user.email ], // ['my_channel'],
+            channels:  this.userService.channelList(this.user.id) , // ['my_channel'],
             withPresence: true // also subscribe to presence instances.
         });
 
 
         // clear out the previous values, since we are reading them from history on pubnub server 
         this.userService.clearAllUnreadMessagesForTheCurrentUser();
-        // recursive call to get all messages for the current user
-        this.getAllMessages(this.fetchTimeStamp); 
+
+        // call to get all messages for all the current user's channels
+        // define totalNumberOfMessages to get
+        // define number per page
+        var allChannels = this.userService.channelList(this.user.id);
+        for (let channel of allChannels) {
+            this.getAllMessages(this.fetchTimeStamps[channel], channel, 50, 10); 
+        }
  
     }
 
@@ -280,7 +296,7 @@ export class Messages {
         //pubnub to user and contact user's channels
         this.pubnub.publish({
                 message: message,
-                channel: this.user.email,
+                channel: this.user.email + this.currentContact.email,
                 sendByPost: false, // true to send via post
                 storeInHistory: true, //override default storage options
                 meta: { "cool": "meta" } // publish extra meta with the request
@@ -293,9 +309,10 @@ export class Messages {
                 else console.log("sendMessage pubhub publish error? errorData: " + status.errorData);
             }
         );
+
         this.pubnub.publish({
                 message: message,
-                channel: this.currentContact.email,
+                channel: this.currentContact.email + this.user.email,
                 sendByPost: false, // true to send via post
                 storeInHistory: true, //override default storage options
                 meta: { "cool": "meta" } // publish extra meta with the request

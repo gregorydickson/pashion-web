@@ -335,6 +335,32 @@ export class UserService {
 
     }
 
+
+    channelList(id) {
+
+        // Build list of channels 
+        let allChannels = [];
+        for (let i = 0; i < this.users[id - 1].connections.length; i++) {
+            // console.log (`Adding ${this.users[ this.users[id - 1].connections[i].connectedUserId -1].email}`);
+            allChannels.push (this.users[id- 1].email + this.users[ this.users[id- 1].connections[i].connectedUserId -1].email )
+        } 
+        return allChannels;
+
+    }
+
+    connectionsList(id) {
+
+        // Build list of channels 
+        let allConnections = [];
+        for (let i = 0; i < this.users[id - 1].connections.length; i++) {
+            // console.log (`Adding ${this.users[ this.users[id - 1].connections[i].connectedUserId -1].email}`);
+            allConnections.push (this.users[ this.users[id- 1].connections[i].connectedUserId -1].email )
+        } 
+        return allConnections;
+
+    }
+
+
     // from pubnub real-time only and not history
     // history sets pushToServer as false and uses flushConnectionsData
     // only messages to or from this email user are sent.

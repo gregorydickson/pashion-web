@@ -10,7 +10,7 @@
 	</div>
 
 	<div id="messages-inside-top" class="grid-block vertical scroll " style="margin-top:32px; width:278px;">
-	    <div repeat.for="message of messages | filter:searchTerm:filterFunc" id="message-container"  style="margin-left:1rem; margin-right:1rem;">
+	    <div repeat.for="message of allMessages[user.email + currentContact.email] | filter:searchTerm:filterFunc" id="message-container"  style="margin-left:1rem; margin-right:1rem;">
 	       <!--  <compose view-model="messages/messageEntry"></compose> -->
 	        <!-- <compose view-model="messages/messageEntryNotMe"></compose> -->
 
