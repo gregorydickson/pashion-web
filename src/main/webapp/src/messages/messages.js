@@ -253,7 +253,7 @@ export class Messages {
         // define number per page
         var allChannels = this.userService.channelList(this.user.id);
         for (let channel of allChannels) {
-            this.getAllMessages(this.fetchTimeStamps[channel], channel, 10, 100); 
+            this.getAllMessages(this.fetchTimeStamps[channel], channel, 50, 100); 
         }
 
 
@@ -263,8 +263,14 @@ export class Messages {
                //console.log ("Top");
                // construct channel
                // ask for more blindly, if none then no biggie
+               // save current scroll height
+               let scrollHeight = $("#messages-inside-top").prop("scrollHeight");
                 let channel = this.user.email + this.currentContact.email;
                 this.getAllMessages(this.fetchTimeStamps[channel], channel, 10, 100);
+                //scroll back down, fake with a timeout, but need to do via promisses
+                window.setTimeout(()=> {
+                        $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight") - scrollHeight);
+                         },1000);
             }
         });
  
