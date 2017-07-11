@@ -102,8 +102,6 @@ export class Messages {
             if (totalNumberOfMessages <= 0) return;
             if (totalNumberOfMessages < perPage) perPage = totalNumberOfMessages;
 
-            var parent = this;
-
             this.pubnub.history(
             {
                 channel: channel,
@@ -113,12 +111,12 @@ export class Messages {
                 start: timetoken // start time token to fetch
                 //end: '123123123133' // end timetoken to fetch
             },
-            function (status, response) {
+            (status, response) => {
                 console.log("pubhub history error?" + status.error + " response.length(messages):" + response.messages.length);
-                if (parent.allMessages[channel] == undefined) parent.allMessages[channel] = [];
+                if (this.allMessages[channel] == undefined) this.allMessages[channel] = [];
                 var i = response.messages.length -1;
                 for (; i >= 0 ; i--) { 
-                  parent.allMessages[channel].unshift({
+                  this.allMessages[channel].unshift({
                         text: response.messages[i].entry.text,
                         time: response.messages[i].entry.sentAt,
                         image: '',
@@ -128,29 +126,28 @@ export class Messages {
                         toName: response.messages[i].entry.toName,
                         toSurname: response.messages[i].entry.toSurname,
                         toId: response.messages[i].entry.toId,
-                        toMe: (response.messages[i].entry.toId == parent.user.email),
-                        fromMe: (response.messages[i].entry.fromId == parent.user.email)
+                        toMe: (response.messages[i].entry.toId == this.user.email),
+                        fromMe: (response.messages[i].entry.fromId == this.user.email)
                   });
-                  //parent.allMessages[channel] = messages;
 
                   // get messages count + lastmessage on history 
-                  if (response.messages[i].entry.toId == parent.user.email) {
-                    //console.log("getMostRecentRead: " + parent.userService.getMostRecentRead (response.messages[i].entry.fromId));
+                  if (response.messages[i].entry.toId == this.user.email) {
+                    //console.log("getMostRecentRead: " + this.userService.getMostRecentRead (response.messages[i].entry.fromId));
                       // console.log("response timestamp: "+ parseInt(response.messages[i].timetoken));
                       // see if the the latest message or not
-                      parent.userService.updateLastMessage(response.messages[i].entry.fromId, response.messages[i].entry.text, response.messages[i].entry.sentAt, false);
-                      if (parseInt(response.messages[i].timetoken) > parseInt(parent.userService.getMostRecentRead (response.messages[i].entry.fromId))) {
+                      this.userService.updateLastMessage(response.messages[i].entry.fromId, response.messages[i].entry.text, response.messages[i].entry.sentAt, false);
+                      if (parseInt(response.messages[i].timetoken) > parseInt(this.userService.getMostRecentRead (response.messages[i].entry.fromId))) {
                             console.log("response timestamp > mostrecent read stamp");
                             // do not push to server, use flushConnectionsData instead
-                            parent.userService.addMessageCount(response.messages[i].entry.fromId, false);
+                            this.userService.addMessageCount(response.messages[i].entry.fromId, false);
                       }
                     }
                 }
                 // do separate server update of message count to prevent overload fetch posts
-              //  parent.userService.flushConnectionsData().then( returnedBoolean  => { 
+              //  this.userService.flushConnectionsData().then( returnedBoolean  => { 
                 // recursive call of anon function until all messages retrieved
-                    parent.fetchTimeStamps[channel] = response.startTimeToken;
-                    if (response.messages.length==perPage) parent.getAllMessages(parent.fetchTimeStamps[channel], channel, totalNumberOfMessages-perPage, perPage);
+                    this.fetchTimeStamps[channel] = response.startTimeToken;
+                    if (response.messages.length==perPage) this.getAllMessages(this.fetchTimeStamps[channel], channel, totalNumberOfMessages-perPage, perPage);
                // });
             }
           );
@@ -162,8 +159,7 @@ export class Messages {
         this.elementMsgInput = document.getElementById("msgInput");
         //this.elementMsgInput.addEventListener('keypress', this.boundHandlerComms, false);
         //this.elementMsgInput.addEventListener('keypress', this.handleKeyInput(e), false);
-        var parent = this;
-        $("#msgInput").keypress(function (e) {return parent.handleKeyInput(e);});
+        $("#msgInput").keypress((e) => {return this.handleKeyInput(e);});
 
         this.subscriber = this.ea.subscribe('setCurrentContact', response => {
             this.userService.getUserDetails(response.userId).then(contact => {
@@ -171,15 +167,12 @@ export class Messages {
             });
         });
 
-
         this.pubnub = this.pubNubService.getPubNub();
-        
-        var parent = this;
 
         //pubnub messages listener
         this.pubnub.addListener({
 
-            message: function(m) {
+            message: (m) => {
                 // handle message
                 var channelName = m.channel; // The channel for which the message belongs
                 var channelGroup = m.subscription; // The channel group or wildcard subscription match (if exists)
@@ -187,9 +180,9 @@ export class Messages {
                 var receivedMessage = m.message; // The Payload
                 console.log("messages pubnub new nessage in messages on " + m.channel + " > " + m.message);
                 // channel name first part is this user's email
-                if (channelName.slice(0,parent.user.email.length) == parent.user.email ) {
-                    console.log("messages cache invalidate: " + parent.user.email);
-                    parent.allMessages[channelName].push({ // unshift?
+                if (channelName.slice(0,this.user.email.length) == this.user.email ) {
+                    console.log("messages cache invalidate: " + this.user.email);
+                    this.allMessages[channelName].push({ // unshift?
                         text: receivedMessage.text,
                         time: receivedMessage.sentAt,
                         image: '',
@@ -199,27 +192,27 @@ export class Messages {
                         toName: receivedMessage.toName,
                         toSurname: receivedMessage.toSurname,
                         toId: receivedMessage.toId,
-                        toMe: (receivedMessage.toId == parent.user.email),
-                        fromMe: (receivedMessage.fromId == parent.user.email)
+                        toMe: (receivedMessage.toId == this.user.email),
+                        fromMe: (receivedMessage.fromId == this.user.email)
                     });
 
                     // get messages in real time 
                     // but need to not add to count if the user is viewing this message stream
                     // kludge with combination of combination of HTML + current user
                     // if the message tab is open and fromId == current user then don't add up the messages.
-                    if (receivedMessage.toId == parent.user.email) {
+                    if (receivedMessage.toId == this.user.email) {
                         //check to see if we are in a conversation with this user and if so do not update the count
                         var tabShowing = $('#tab-messages');
                         var hasTabShowing = tabShowing.hasClass('look-menu-show');
-                        if (hasTabShowing && (parent.currentContact.email == receivedMessage.fromId)) {}//nothing
+                        if (hasTabShowing && (this.currentContact.email == receivedMessage.fromId)) {}//nothing
                             // push message count to server
-                        else parent.userService.addMessageCount(receivedMessage.fromId, true);
+                        else this.userService.addMessageCount(receivedMessage.fromId, true);
                         // try some toast
                         toastr.options.timeOut = 5000;
                         toastr.options.closeButton = false;
                         toastr.options.preventDuplicates = true;
                         toastr.info('New Message from ' + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);
-                        parent.userService.updateLastMessage(receivedMessage.fromId, receivedMessage.text, false);
+                        this.userService.updateLastMessage(receivedMessage.fromId, receivedMessage.text, false);
                         }
 
                     window.setTimeout(function () {
@@ -234,12 +227,12 @@ export class Messages {
                 if (s.category) {
                     if (s.category== 'PNNetworkDownCategory') {
                         //console.log("pubnub network DOWN");
-                        parent.alertHold("No internet connection");
+                        this.alertHold("No internet connection");
 
                     }
                     if (s.category== 'PNNetworkUpCategory') {
                         //console.log("pubnub network UP");
-                        parent.alertHoldOff("Internet connection restored");
+                        this.alertHoldOff("Internet connection restored");
                     }
                 }
             }
