@@ -140,7 +140,7 @@ export class Messages {
                       // see if the the latest message or not
                       parent.userService.updateLastMessage(response.messages[i].entry.fromId, response.messages[i].entry.text, response.messages[i].entry.sentAt, false);
                       if (parseInt(response.messages[i].timetoken) > parseInt(parent.userService.getMostRecentRead (response.messages[i].entry.fromId))) {
-                            // console.log("response timestamp > mostrecent read stamp");
+                            console.log("response timestamp > mostrecent read stamp");
                             // do not push to server, use flushConnectionsData instead
                             parent.userService.addMessageCount(response.messages[i].entry.fromId, false);
                       }
@@ -260,8 +260,20 @@ export class Messages {
         // define number per page
         var allChannels = this.userService.channelList(this.user.id);
         for (let channel of allChannels) {
-            this.getAllMessages(this.fetchTimeStamps[channel], channel, 50, 10); 
+            this.getAllMessages(this.fetchTimeStamps[channel], channel, 10, 100); 
         }
+
+
+        // detect scroll past top attempt to fire new messages
+        $("#messages-inside-top").scroll( () => {
+            if($("#messages-inside-top").scrollTop() == 0) {
+               //console.log ("Top");
+               // construct channel
+               // ask for more blindly, if none then no biggie
+                let channel = this.user.email + this.currentContact.email;
+                this.getAllMessages(this.fetchTimeStamps[channel], channel, 10, 100);
+            }
+        });
  
     }
 
