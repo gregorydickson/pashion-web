@@ -96,9 +96,9 @@ body.ai-dialog-open .blue-image {
   display: block;
   height: 30px;
   position: absolute;
-  width: 48px;
+  width: 30px;
   top: 0;
-  right: 0;
+  right: 15px;
   z-index: 1;
   background: rgba(0, 0, 0, 0.01);
 }
@@ -108,12 +108,13 @@ body.ai-dialog-open .blue-image {
 }
 
 .menu-stripe {
+  display: table-cell;
   position: relative;
   width: 48px;
   height: 48px;
-  margin-bottom: -50px;
+  /*margin-bottom: -50px;
   padding-left: 80%;
-  transform: rotate(90deg);
+  transform: rotate(90deg);*/
 }
 
 .menu-stripe:before,
@@ -121,11 +122,11 @@ body.ai-dialog-open .blue-image {
   background: white;
   content: "";
   position: absolute;
-  height: 5px;
+  height: 7px;
   top: 13px;
   left: 13px;
-  border-radius: 5px;
-  box-shadow: 0 10px white, 0 20px white;
+  border-radius: 7px;
+  /*box-shadow: 0 10px white, 0 20px white;*/
 }
 
 .menu-stripe:before {
@@ -149,8 +150,9 @@ white-space: normal;
 
   .menu-stripe:before,
   .menu-stripe:after {
-    width: 4px; 
-    height: 4px;
-    border-radius: 4px; 
+    width: 5px; 
+    height: 5px;
+    border-radius: 50%;
+    border:1px solid gray; 
     }
 }
