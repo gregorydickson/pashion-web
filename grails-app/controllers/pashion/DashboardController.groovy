@@ -280,7 +280,7 @@ class DashboardController {
         log.info "season by brand:"
         def brand = session.user.brand
         
-        def  seasons = BrandCollection.findAllByBrand(brand,[cache:true]).collect{it.season}
+        def  seasons = BrandCollection.findAllByBrand(brand,[cache:true]).collect{it.season}.unique()
 
         def response = seasons as JSON
 
