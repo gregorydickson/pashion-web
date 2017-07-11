@@ -53,10 +53,12 @@ class SampleRequestController {
     
     def brandApprove(){
         SampleRequest sr = SampleRequest.get(params?.id?.toInteger())
-        if(!sr){
-            sr = sampleRequestService.updateSampleRequest(request.JSON)
-        }
+        def json = request.JSON
 
+        if(json){
+            sr = sampleRequestService.updateSampleRequest(json)
+        }
+        
 
         // Need to add check that the smample is still available for the proposed dates before
         // changing the status and approving.

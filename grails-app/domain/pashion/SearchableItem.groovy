@@ -106,6 +106,9 @@ class SearchableItem {
 		return name +" sample city:" +sampleCity?.name
 	}
 
+	def availableForDateRange(LocalDate start,LocalDate end){
+		
+	}
 
 		
 	/**
