@@ -1,6 +1,6 @@
 import { HttpClient } from 'aurelia-fetch-client';
 import 'fetch';
-import { inject } from 'aurelia-framework';
+import { inject, TaskQueue } from 'aurelia-framework';
 import { DateFormat } from 'common/dateFormat';
 import { UserService } from 'services/userService';
 import { singleton } from 'aurelia-framework';
@@ -10,7 +10,7 @@ import { DialogService } from 'aurelia-dialog';
 import { CreateDialogAlert } from 'common/dialogAlert';
 import { DS } from 'datastores/ds';
 
-@inject(HttpClient, UserService, EventAggregator, PubNubService, DialogService, DS) 
+@inject(HttpClient, UserService, EventAggregator, PubNubService, DialogService, DS, TaskQueue) 
 @singleton()
 export class Messages {
 
@@ -25,7 +25,7 @@ export class Messages {
     //pubnub
     pubnub;
 
-    constructor(http, userService, eventAggregator, pubNubService, dialogService, DS) {  
+    constructor(http, userService, eventAggregator, pubNubService, dialogService, DS, taskQueue) {  
       this.http = http;
       this.userService = userService;
       this.ea = eventAggregator;
@@ -34,6 +34,7 @@ export class Messages {
       this.dialogService = dialogService;
       this.ds = DS;
       this.user = this.ds.user.user;
+      this.taskQueue = taskQueue;
     }
 
     detached() {
@@ -95,12 +96,13 @@ export class Messages {
     }
 
     //get the history callback for this user's channels
-    // all per channel, 100 at at time
-    getAllMessages(timetoken, channel, totalNumberOfMessages, perPage) {
+    // all per channel, xx at at time
+    getAllMessages(timetoken, channel, totalNumberOfMessages, perPage, scroll) {
             console.log (`getAllMessages: ${timetoken} ${channel} ${totalNumberOfMessages} ${perPage}`)
 
-            if (totalNumberOfMessages <= 0) return;
-            if (totalNumberOfMessages < perPage) perPage = totalNumberOfMessages;
+            if (totalNumberOfMessages < perPage) perPage = totalNumberOfMessages;              
+            // save current scroll height before items added
+            let scrollHeight = $("#messages-inside-top").prop("scrollHeight");
 
             this.pubnub.history(
             {
@@ -110,8 +112,7 @@ export class Messages {
                 stringifiedTimeToken: true, //, // false is the default
                 start: timetoken // start time token to fetch
                 //end: '123123123133' // end timetoken to fetch
-            },
-            (status, response) => {
+            }).then ((response) => {
                 console.log("pubhub history error?" + status.error + " response.length(messages):" + response.messages.length);
                 if (this.allMessages[channel] == undefined) this.allMessages[channel] = [];
                 var i = response.messages.length -1;
@@ -128,29 +129,33 @@ export class Messages {
                         toId: response.messages[i].entry.toId,
                         toMe: (response.messages[i].entry.toId == this.user.email),
                         fromMe: (response.messages[i].entry.fromId == this.user.email)
-                  });
+                      });
 
-                  // get messages count + lastmessage on history 
-                  if (response.messages[i].entry.toId == this.user.email) {
-                    //console.log("getMostRecentRead: " + this.userService.getMostRecentRead (response.messages[i].entry.fromId));
-                      // console.log("response timestamp: "+ parseInt(response.messages[i].timetoken));
-                      // see if the the latest message or not
-                      this.userService.updateLastMessage(response.messages[i].entry.fromId, response.messages[i].entry.text, response.messages[i].entry.sentAt, false);
-                      if (parseInt(response.messages[i].timetoken) > parseInt(this.userService.getMostRecentRead (response.messages[i].entry.fromId))) {
-                            console.log("response timestamp > mostrecent read stamp");
-                            // do not push to server, use flushConnectionsData instead
-                            this.userService.addMessageCount(response.messages[i].entry.fromId, false);
-                      }
+                      // get messages count + lastmessage on history 
+                      if (response.messages[i].entry.toId == this.user.email) {
+                        //console.log("getMostRecentRead: " + this.userService.getMostRecentRead (response.messages[i].entry.fromId));
+                          // console.log("response timestamp: "+ parseInt(response.messages[i].timetoken));
+                          // see if the the latest message or not
+                          this.userService.updateLastMessage(response.messages[i].entry.fromId, response.messages[i].entry.text, response.messages[i].entry.sentAt, false);
+                          if (parseInt(response.messages[i].timetoken) > parseInt(this.userService.getMostRecentRead (response.messages[i].entry.fromId))) {
+                                //console.log("response timestamp > mostrecent read stamp");
+                                // do not push to server, use flushConnectionsData instead
+                                this.userService.addMessageCount(response.messages[i].entry.fromId, false);
+                          }
+                        }
                     }
-                }
-                // do separate server update of message count to prevent overload fetch posts
-              //  this.userService.flushConnectionsData().then( returnedBoolean  => { 
-                // recursive call of anon function until all messages retrieved
+                    // do separate server update of message count to prevent overload fetch posts
+                    //  this.userService.flushConnectionsData().then( returnedBoolean  => { 
+                    // recursive call of anon function until all messages retrieved
                     this.fetchTimeStamps[channel] = response.startTimeToken;
-                    if (response.messages.length==perPage) this.getAllMessages(this.fetchTimeStamps[channel], channel, totalNumberOfMessages-perPage, perPage);
-               // });
-            }
-          );
+                    if ((response.messages.length == perPage) && (totalNumberOfMessages-perPage > 0))
+                        this.getAllMessages(this.fetchTimeStamps[channel], channel, totalNumberOfMessages-perPage, perPage, scroll);
+                    else if (scroll=='top') {   
+                        this.taskQueue.queueMicroTask(() => {
+                            $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight") - scrollHeight);
+                         });
+                    }
+                });
         }
 
     attached() {
@@ -213,14 +218,14 @@ export class Messages {
                         toastr.options.preventDuplicates = true;
                         toastr.info('New Message from ' + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);
                         this.userService.updateLastMessage(receivedMessage.fromId, receivedMessage.text, false);
+
+                        this.taskQueue.queueMicroTask(() => {
+                            $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight"));
+                        });
                         }
 
-                    window.setTimeout(function () {
-                        $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight"));
-                         },450); // major kludge to scroll messages
-                    //$("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
+                    
                 }
-
             },
             status: function(s) {
                 console.log("pubnub callback status in messages:", s);
@@ -244,18 +249,17 @@ export class Messages {
             withPresence: true // also subscribe to presence instances.
         });
 
-
         // clear out the previous values, since we are reading them from history on pubnub server 
         this.userService.clearAllUnreadMessagesForTheCurrentUser();
 
         // call to get all messages for all the current user's channels
+        // used to read the latest message and unread count
         // define totalNumberOfMessages to get
         // define number per page
         var allChannels = this.userService.channelList(this.user.id);
         for (let channel of allChannels) {
-            this.getAllMessages(this.fetchTimeStamps[channel], channel, 50, 100); 
+            this.getAllMessages(this.fetchTimeStamps[channel], channel, 50, 100, null); 
         }
-
 
         // detect scroll past top attempt to fire new messages
         $("#messages-inside-top").scroll( () => {
@@ -263,14 +267,8 @@ export class Messages {
                //console.log ("Top");
                // construct channel
                // ask for more blindly, if none then no biggie
-               // save current scroll height
-               let scrollHeight = $("#messages-inside-top").prop("scrollHeight");
                 let channel = this.user.email + this.currentContact.email;
-                this.getAllMessages(this.fetchTimeStamps[channel], channel, 10, 100);
-                //scroll back down, fake with a timeout, but need to do via promisses
-                window.setTimeout(()=> {
-                        $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight") - scrollHeight);
-                         },1000);
+                this.getAllMessages(this.fetchTimeStamps[channel], channel, 10, 100, 'top');
             }
         });
  
@@ -335,9 +333,9 @@ export class Messages {
                 else console.log("sendMessage pubhub publish error? errorData: " + status.errorData);
             }
         );
-        window.setTimeout(function () {
+        this.taskQueue.queueMicroTask(() => {
               $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight"));
-            },250); // major kludge to scroll messages
+            });
     }
 
     filterFunc(searchExpression, value){
