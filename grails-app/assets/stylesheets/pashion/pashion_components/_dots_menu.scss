@@ -123,14 +123,15 @@ body.ai-dialog-open .blue-image {
   content: "";
   position: absolute;
   height: 7px;
+  width: 7px;
   top: 13px;
   left: 13px;
-  border-radius: 7px;
-  /*box-shadow: 0 10px white, 0 20px white;*/
 }
 
 .menu-stripe:before {
-  width: 5px;
+  width: 7px;
+  border-radius: 50%;
+  border:1px solid gray; 
 }
 
 .cards-list .card .look-menu-absolute{
