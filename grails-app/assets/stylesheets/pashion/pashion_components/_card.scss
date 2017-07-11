@@ -88,11 +88,12 @@
 
 .card-look-number {
 	position: absolute;
-	right: 5px;
-	bottom: 1px;
-	color: white;
-	cursor: pointer;    
-	background: rgba(0, 0, 0, 0.15);
+    right: 5px;
+    bottom: 1px;
+    color: darkgray;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 2px;
     font-weight: 500;
 }
 
