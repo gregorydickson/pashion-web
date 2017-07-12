@@ -206,6 +206,11 @@ export class Messages {
                         fromMe: (receivedMessage.fromId == this.user.email)
                     });
 
+                    // wait for update then redraw
+                    this.taskQueue.queueMicroTask(() => {
+                            $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight"));
+                        });
+
                     // get messages in real time 
                     // but need to not add to count if the user is viewing this message stream
                     // kludge with combination of combination of HTML + current user
@@ -222,12 +227,8 @@ export class Messages {
                         toastr.options.closeButton = false;
                         toastr.options.preventDuplicates = true;
                         toastr.info('New Message from ' + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);
-                        this.userService.updateLastMessage(receivedMessage.fromId, receivedMessage.text, false);
-
-                        this.taskQueue.queueMicroTask(() => {
-                            $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight"));
-                        });
-                        }
+                        this.userService.updateLastMessage(receivedMessage.fromId, receivedMessage.text, false); 
+                    }
 
                     
                 }
@@ -338,9 +339,8 @@ export class Messages {
                 else console.log("sendMessage pubhub publish error? errorData: " + status.errorData);
             }
         );
-        this.taskQueue.queueMicroTask(() => {
-              $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight"));
-            });
+       $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight"));
+            
     }
 
     filterFunc(searchExpression, value){
