@@ -2,7 +2,7 @@ import {DialogController} from 'aurelia-dialog';
 import {HttpClient,json} from 'aurelia-fetch-client';
 import {DialogService} from 'aurelia-dialog';
 import 'fetch';
-import {inject} from 'aurelia-framework';
+import {inject, TaskQueue} from 'aurelia-framework';
 import {singleton} from 'aurelia-framework';
 import {CreateDialogNewContact} from 'contacts/dialogNewContact';
 import {CreateDialogImportContacts} from 'contacts/dialogImportContacts';
@@ -11,7 +11,7 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {CommsActivity} from 'services/commsActivity';
 
 
-@inject(HttpClient, DialogController, DialogService, Messages, EventAggregator, CommsActivity)
+@inject(HttpClient, DialogController, DialogService, Messages, EventAggregator, CommsActivity, TaskQueue)
 @singleton()
 export class CommsHeader {
   static inject = [DialogController];
@@ -21,7 +21,7 @@ export class CommsHeader {
   currentContact = null;
 
   
-  constructor(http, controller, dialogService, messages, eventAggregator, commsActivity){
+  constructor(http, controller, dialogService, messages, eventAggregator, commsActivity, taskQueue){
     this.dialogService = dialogService;
     this.controller = controller;  
     
@@ -32,6 +32,7 @@ export class CommsHeader {
     this.http = http;
     this.messages = messages;
     this.commsActivity = commsActivity;
+    this.taskQueue = taskQueue;
 
     this.comms.status = this.statusValues.contacts;
     console.log("Init comms status to " + this.comms.status);
@@ -86,12 +87,17 @@ export class CommsHeader {
       // Scroll messages to the end
       if (this.comms.status == this.statusValues.messages)       
         $('#msgInput').val('');
+
+      this.taskQueue.queueMicroTask(() => {
+          $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight"));
+          // $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
+       });
+/*
         window.setTimeout(function () {
-            // $("#messages-inside-top").height($("#messages-inside-top").height()+500); // RM kludge to redraw flex box with new elements
             $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight"));
             $("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
           },2500); // major kludge to scroll messages
-
+*/
     }
   }
 
