@@ -227,7 +227,10 @@ export class Messages {
                         toastr.options.closeButton = false;
                         toastr.options.preventDuplicates = true;
                         toastr.info('New Message from ' + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);
-                        this.userService.updateLastMessage(receivedMessage.fromId, receivedMessage.text, false); 
+                        this.userService.updateLastMessage(receivedMessage.fromId, receivedMessage.text, receivedMessage.sentAt,false); 
+
+                        //this.userService.updateLastMessage(response.messages[i].entry.fromId, response.messages[i].entry.text, response.messages[i].entry.sentAt, false);
+                          
                     }
 
                     
