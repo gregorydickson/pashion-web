@@ -19,7 +19,7 @@ export class EditSearchableItem {
 
   itemTypes = [];
   sampleTypes = [];
-
+ 
   availableSampleItems = [];
   selectedSampleItems = [];
   availableSampleTypeItems = [];
@@ -182,10 +182,8 @@ export class EditSearchableItem {
       this.http.fetch('/material/newMaterial?name=' + thisValue, {
             method: 'post',
             body: {"this":"one"}
-      });
-     }
-
-   this.http.fetch('/material/list').then(response => response.json()).then(material => {
+      }).then(response => {
+    this.http.fetch('/material/list').then(response => response.json()).then(material => {
     this.material = material
     this.availableMaterialItems = [];
     
@@ -195,7 +193,10 @@ export class EditSearchableItem {
           text: item
         });
       });
-    });
+    });});
+     }
+
+   
 
 
     this.unlMaterial = thisValue;
@@ -443,7 +444,7 @@ export class EditSearchableItem {
     this.controller.close();
   }
 
-  
+   
 
 }
 

@@ -12,7 +12,7 @@
 <!-- <require from="./truncate"></require> -->
     
    <ai-dialog>
-        <ai-dialog-header>
+        <ai-dialog-header> 
             <!-- header -->
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
@@ -209,7 +209,7 @@
 
                             <a style= "width: 30px; margin-left: 1rem;" click.delegate="materialAdd(selectedSample)">Add</a>
                         </span>
-
+ 
                     </div>
 
                     <div class="grid-block shrink"> 
@@ -277,6 +277,15 @@
                 </div>
             </div>
       </ai-dialog-body>
+
+      <ai-dialog-footer if.bind="!isLoading">
+         <a class="hollow button" click.delegate="close()">Exit</a>
+        <!--  <a class.bind="sampleChanged ? 'button' :'hollow button'" class="button" click.delegate="submit()">Save Changes</a>-->
+         <a class="button" click.delegate="submit()">Save Changes</a>
+      </ai-dialog-footer>
+   </ai-dialog>
+</template>
+i-dialog-body>
 
       <ai-dialog-footer if.bind="!isLoading">
          <a class="hollow button" click.delegate="close()">Exit</a>

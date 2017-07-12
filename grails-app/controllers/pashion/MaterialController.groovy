@@ -45,6 +45,14 @@ class MaterialController {
         render message as JSON 
     }
 
+     def delMaterial() {
+        log.info "params:"+params
+
+        def newMaterial = new Material()
+        newMaterial.name = params.name
+        newMaterial.delete flush:true 
+    }
+
     def create() {
         respond new Material(params)
     }
