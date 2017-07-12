@@ -1,6 +1,6 @@
 import { HttpClient } from 'aurelia-fetch-client';
 import 'fetch';
-import { inject } from 'aurelia-framework';
+import { inject, TaskQueue } from 'aurelia-framework';
 import { DateFormat } from 'common/dateFormat';
 import { UserService } from 'services/userService';
 import { singleton } from 'aurelia-framework';
@@ -10,19 +10,23 @@ import { DialogService } from 'aurelia-dialog';
 import { CreateDialogAlert } from 'common/dialogAlert';
 import { DS } from 'datastores/ds';
 
-@inject(HttpClient, UserService, EventAggregator, PubNubService, DialogService, DS) 
+@inject(HttpClient, UserService, EventAggregator, PubNubService, DialogService, DS, TaskQueue) 
 @singleton()
 export class Messages {
 
     messages = [];
+    allMessages = {};
     user = {};
-    currentContact = {};
+    currentContact = {}; // to speed up rendering (hopefully)
+    currentChannel = '';
     searchTerm = ''; // hard wired search goes here
+
+    fetchTimeStamps = {};
 
     //pubnub
     pubnub;
 
-    constructor(http, userService, eventAggregator, pubNubService, dialogService, DS) {  
+    constructor(http, userService, eventAggregator, pubNubService, dialogService, DS, taskQueue) {  
       this.http = http;
       this.userService = userService;
       this.ea = eventAggregator;
@@ -31,6 +35,7 @@ export class Messages {
       this.dialogService = dialogService;
       this.ds = DS;
       this.user = this.ds.user.user;
+      this.taskQueue = taskQueue;
     }
 
     detached() {
@@ -39,8 +44,13 @@ export class Messages {
     }
 
     activate() {
-
         console.log("activated messages");
+
+        var forceGetFromServer = false;
+        this.user = this.ds.user.user;
+        return Promise.all([
+          this.users = this.userService.getUsers(forceGetFromServer).then(users => this.users = users)
+        ]);
     }
 
     alertHold (message){
@@ -91,117 +101,29 @@ export class Messages {
         return true; // bubble the characters
     }
 
-    attached() {
-        console.log("attached messages");
+    //get the history callback for this user's channels
+    // all per channel, xx at at time
+    getAllMessages(timetoken, channel, totalNumberOfMessages, perPage, scroll) {
+            console.log (`getAllMessages: ${timetoken} ${channel} ${totalNumberOfMessages} ${perPage}`)
 
-        this.elementMsgInput = document.getElementById("msgInput");
-        //this.elementMsgInput.addEventListener('keypress', this.boundHandlerComms, false);
-        //this.elementMsgInput.addEventListener('keypress', this.handleKeyInput(e), false);
-        var parent = this;
-        $("#msgInput").keypress(function (e) {return parent.handleKeyInput(e);});
+            if (totalNumberOfMessages < perPage) perPage = totalNumberOfMessages;              
+            // save current scroll height before items added
+            let scrollHeight = $("#messages-inside-top").prop("scrollHeight");
 
-        this.subscriber = this.ea.subscribe('setCurrentContact', response => {
-            this.userService.getUserDetails(response.userId).then(contact => {
-                this.currentContact = contact;
-            });
-        });
-
-
-        this.pubnub = this.pubNubService.getPubNub();
-        
-        var parent = this;
-
-        //pubnub messages listener
-        this.pubnub.addListener({
-
-            message: function(m) {
-                // handle message
-                var channelName = m.channel; // The channel for which the message belongs
-                var channelGroup = m.subscription; // The channel group or wildcard subscription match (if exists)
-                var pubTT = m.timetoken; // Publish timetoken
-                var receivedMessage = m.message; // The Payload
-                console.log("messages pubnub new nessage in messages on " + m.channel + " > " + m.message);
-                if (channelName == parent.user.email) {
-                    console.log("messages cache invalidate: " + parent.user.email);
-                    parent.messages.push({ // unshift?
-                        text: receivedMessage.text,
-                        time: receivedMessage.sentAt,
-                        image: '',
-                        fromName: receivedMessage.fromName,
-                        fromSurname: receivedMessage.fromSurname,
-                        fromId: receivedMessage.fromId,
-                        toName: receivedMessage.toName,
-                        toSurname: receivedMessage.toSurname,
-                        toId: receivedMessage.toId,
-                        toMe: (receivedMessage.toId == parent.user.email),
-                        fromMe: (receivedMessage.fromId == parent.user.email)
-                    });
-
-                    // get messages in real time 
-                    // but need to not add to count if the user is viewing this message stream
-                    // kludge with combination of combination of HTML + current user
-                    // if the message tab is open and fromId == current user then don't add up the messages.
-                    if (receivedMessage.toId == parent.user.email) {
-                        //check to see if we are in a conversation with this user and if so do not update the count
-                        var tabShowing = $('#tab-messages');
-                        var hasTabShowing = tabShowing.hasClass('look-menu-show');
-                        if (hasTabShowing && (parent.currentContact.email == receivedMessage.fromId)) {}//nothing
-                            // push message count to server
-                        else parent.userService.addMessageCount(receivedMessage.fromId, true);
-                        // try some toast
-                        toastr.options.timeOut = 5000;
-                        toastr.options.closeButton = false;
-                        toastr.options.preventDuplicates = true;
-                        toastr.info('New Message from ' + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);
-                        parent.userService.updateLastMessage(receivedMessage.fromId, receivedMessage.text, false);
-                        }
-
-                    window.setTimeout(function () {
-                        $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight"));
-                         },450); // major kludge to scroll messages
-                    //$("#right-panel-body").scrollTop($("#right-panel-body").prop("scrollHeight"));
-                }
-
-            },
-            status: function(s) {
-                console.log("pubnub callback status in messages:", s);
-                if (s.category) {
-                    if (s.category== 'PNNetworkDownCategory') {
-                        //console.log("pubnub network DOWN");
-                        parent.alertHold("No internet connection");
-
-                    }
-                    if (s.category== 'PNNetworkUpCategory') {
-                        //console.log("pubnub network UP");
-                        parent.alertHoldOff("Internet connection restored");
-                    }
-                }
-            }
-        });
-
-        // pubnub subscribe to messages channel for this email
-        this.pubnub.subscribe({
-            channels: [ this.user.email ], // ['my_channel'],
-            withPresence: true // also subscribe to presence instances.
-        });
-
-        //get the history callback for this channel
-        var getAllMessages = function (timetoken) {
-
-            parent.pubnub.history(
+            this.pubnub.history(
             {
-                channel: parent.user.email,
-                reverse: true, // Setting to true will traverse the time line in reverse starting with the oldest message first.
-                count: 100, // how many items to fetch max is 100
+                channel: channel,
+                reverse: false, // Setting to true will traverse the time line in reverse starting with the oldest message first.
+                count: perPage, // how many items to fetch max is 100
                 stringifiedTimeToken: true, //, // false is the default
                 start: timetoken // start time token to fetch
                 //end: '123123123133' // end timetoken to fetch
-            },
-            function (status, response) {
+            }).then ((response) => {
                 console.log("pubhub history error?" + status.error + " response.length(messages):" + response.messages.length);
-                var i;
-                for (i = 0; i < response.messages.length; i++) { 
-                  parent.messages.push({
+                if (this.allMessages[channel] == undefined) this.allMessages[channel] = [];
+                var i = response.messages.length -1;
+                for (; i >= 0 ; i--) { 
+                  this.allMessages[channel].unshift({
                         text: response.messages[i].entry.text,
                         time: response.messages[i].entry.sentAt,
                         image: '',
@@ -211,34 +133,169 @@ export class Messages {
                         toName: response.messages[i].entry.toName,
                         toSurname: response.messages[i].entry.toSurname,
                         toId: response.messages[i].entry.toId,
-                        toMe: (response.messages[i].entry.toId == parent.user.email),
-                        fromMe: (response.messages[i].entry.fromId == parent.user.email)
-                  });
+                        toMe: (response.messages[i].entry.toId == this.user.email),
+                        fromMe: (response.messages[i].entry.fromId == this.user.email)
+                      });
 
-                  // get messages count + lastmessage on history 
-                  if (response.messages[i].entry.toId == parent.user.email) {
-                    //console.log("getMostRecentRead: " + parent.userService.getMostRecentRead (response.messages[i].entry.fromId));
-                      // console.log("response timestamp: "+ parseInt(response.messages[i].timetoken));
-                      parent.userService.updateLastMessage(response.messages[i].entry.fromId, response.messages[i].entry.text, false);
-                      if (parseInt(response.messages[i].timetoken) > parseInt(parent.userService.getMostRecentRead (response.messages[i].entry.fromId))) {
-                            //console.log("response timestamp > mostrecent read stamp");
-                            // do not push to server, use flushConnectionsData instead
-                            parent.userService.addMessageCount(response.messages[i].entry.fromId, false);
-                      }
+                      // get messages count + lastmessage on history 
+                      if (response.messages[i].entry.toId == this.user.email) {
+                        //console.log("getMostRecentRead: " + this.userService.getMostRecentRead (response.messages[i].entry.fromId));
+                          // console.log("response timestamp: "+ parseInt(response.messages[i].timetoken));
+                          // see if the the latest message or not
+                          this.userService.updateLastMessage(response.messages[i].entry.fromId, response.messages[i].entry.text, response.messages[i].entry.sentAt, false);
+                          if (parseInt(response.messages[i].timetoken) > parseInt(this.userService.getMostRecentRead (response.messages[i].entry.fromId))) {
+                                //console.log("response timestamp > mostrecent read stamp");
+                                // do not push to server, use flushConnectionsData instead
+                                this.userService.addMessageCount(response.messages[i].entry.fromId, false);
+                          }
+                        }
+                    }
+                    // do separate server update of message count to prevent overload fetch posts
+                    //  this.userService.flushConnectionsData().then( returnedBoolean  => { 
+                    // recursive call of anon function until all messages retrieved
+                    this.fetchTimeStamps[channel] = response.startTimeToken;
+                    if ((response.messages.length == perPage) && (totalNumberOfMessages-perPage > 0))
+                        this.getAllMessages(this.fetchTimeStamps[channel], channel, totalNumberOfMessages-perPage, perPage, scroll);
+                    else if (scroll=='top') {   
+                        this.taskQueue.queueMicroTask(() => {
+                            $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight") - scrollHeight);
+                         });
+                    }
+                });
+        }
+
+    attached() {
+        console.log("attached messages");
+
+        this.elementMsgInput = document.getElementById("msgInput");
+        //this.elementMsgInput.addEventListener('keypress', this.boundHandlerComms, false);
+        //this.elementMsgInput.addEventListener('keypress', this.handleKeyInput(e), false);
+        $("#msgInput").keypress((e) => {return this.handleKeyInput(e);});
+
+        this.subscriber = this.ea.subscribe('setCurrentContact', response => {
+            this.currentContact = this.users[response.userId-1];
+            this.currentChannel = this.user.email + this.currentContact.email;
+        });
+
+        this.pubnub = this.pubNubService.getPubNub();
+
+        //pubnub messages listener
+        this.pubnub.addListener({
+
+            message: (m) => {
+                // handle message
+                var channelName = m.channel; // The channel for which the message belongs
+                var channelGroup = m.subscription; // The channel group or wildcard subscription match (if exists)
+                var pubTT = m.timetoken; // Publish timetoken
+                var receivedMessage = m.message; // The Payload
+                console.log("messages pubnub new nessage in messages on " + m.channel + " > " + m.message);
+                // channel name first part is this user's email
+                if (channelName.slice(0,this.user.email.length) == this.user.email ) {
+                    console.log("messages cache invalidate: " + this.user.email);
+                    this.allMessages[channelName].push({ // unshift?
+                        text: receivedMessage.text,
+                        time: receivedMessage.sentAt,
+                        image: '',
+                        fromName: receivedMessage.fromName,
+                        fromSurname: receivedMessage.fromSurname,
+                        fromId: receivedMessage.fromId,
+                        toName: receivedMessage.toName,
+                        toSurname: receivedMessage.toSurname,
+                        toId: receivedMessage.toId,
+                        toMe: (receivedMessage.toId == this.user.email),
+                        fromMe: (receivedMessage.fromId == this.user.email)
+                    });
+
+                    // wait for update then redraw
+                    this.taskQueue.queueMicroTask(() => {
+                            $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight"));
+                        });
+
+                    // get messages in real time 
+                    // but need to not add to count if the user is viewing this message stream
+                    // kludge with combination of combination of HTML + current user
+                    // if the message tab is open and fromId == current user then don't add up the messages.
+                    if (receivedMessage.toId == this.user.email) {
+                        //check to see if we are in a conversation with this user and if so do not update the count
+                        var tabShowing = $('#tab-messages');
+                        var hasTabShowing = tabShowing.hasClass('look-menu-show');
+                        if (hasTabShowing && (this.currentContact.email == receivedMessage.fromId)) {
+                            //  update read time, as we assume it has been seen
+                            // get pubnub time
+
+
+                            this.pubnub.time((status, response) => {
+                                  if (status.error) {
+                                    console.log("pubnub time error");
+                                    // handle error if something went wrong based on the status object
+                                  } else {
+                                    console.log(response.timetoken);
+                                    this.userService.saveMostRecentRead(
+                                        this.userService.checkValidUser(receivedMessage.fromId), response.timetoken); // save now
+                                  }
+                                });
+
+                        }
+                        else {
+                            // push message count to server
+                            this.userService.addMessageCount(receivedMessage.fromId, true);
+                        }
+                        // try some toast
+                        toastr.options.timeOut = 5000;
+                        toastr.options.closeButton = false;
+                        toastr.options.preventDuplicates = true;
+                        toastr.info('New Message from ' + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);
+                        this.userService.updateLastMessage(receivedMessage.fromId, receivedMessage.text, receivedMessage.sentAt,false);
+                                                
+                    }
+
+                    
+                }
+            },
+            status: function(s) {
+                console.log("pubnub callback status in messages:", s);
+                if (s.category) {
+                    if (s.category== 'PNNetworkDownCategory') {
+                        //console.log("pubnub network DOWN");
+                        this.alertHold("No internet connection");
+
+                    }
+                    if (s.category== 'PNNetworkUpCategory') {
+                        //console.log("pubnub network UP");
+                        this.alertHoldOff("Internet connection restored");
                     }
                 }
-                // do separate server update of message count to prevent overload fetch posts
-              //  parent.userService.flushConnectionsData().then( returnedBoolean  => { 
-                // recursive call of anon function until all messages retrieved
-                    if (response.messages.length==100) getAllMessages(response.endTimeToken);
-               // });
             }
-          );
-        }
+        });
+
+        // pubnub subscribe to messages channel for this email
+        this.pubnub.subscribe({
+            channels:  this.userService.channelList(this.user.id) , // ['my_channel'],
+            withPresence: true // also subscribe to presence instances.
+        });
+
         // clear out the previous values, since we are reading them from history on pubnub server 
         this.userService.clearAllUnreadMessagesForTheCurrentUser();
-        // recursive call to get all messages for the current user
-        getAllMessages(0); 
+
+        // call to get all messages for all the current user's channels
+        // used to read the latest message and unread count
+        // define totalNumberOfMessages to get
+        // define number per page
+        var allChannels = this.userService.channelList(this.user.id);
+        for (let channel of allChannels) {
+            this.getAllMessages(this.fetchTimeStamps[channel], channel, 50, 100, null); 
+        }
+
+        // detect scroll past top attempt to fire new messages
+        $("#messages-inside-top").scroll( () => {
+            if($("#messages-inside-top").scrollTop() == 0) {
+               //console.log ("Top");
+               // construct channel
+               // ask for more blindly, if none then no biggie
+                let channel = this.currentChannel;
+                this.getAllMessages(this.fetchTimeStamps[channel], channel, 10, 100, 'top');
+            }
+        });
  
     }
 
@@ -273,7 +330,7 @@ export class Messages {
         //pubnub to user and contact user's channels
         this.pubnub.publish({
                 message: message,
-                channel: this.user.email,
+                channel: this.currentChannel,
                 sendByPost: false, // true to send via post
                 storeInHistory: true, //override default storage options
                 meta: { "cool": "meta" } // publish extra meta with the request
@@ -286,9 +343,10 @@ export class Messages {
                 else console.log("sendMessage pubhub publish error? errorData: " + status.errorData);
             }
         );
+
         this.pubnub.publish({
                 message: message,
-                channel: this.currentContact.email,
+                channel: this.currentContact.email + this.user.email,
                 sendByPost: false, // true to send via post
                 storeInHistory: true, //override default storage options
                 meta: { "cool": "meta" } // publish extra meta with the request
@@ -300,9 +358,8 @@ export class Messages {
                 else console.log("sendMessage pubhub publish error? errorData: " + status.errorData);
             }
         );
-        window.setTimeout(function () {
-              $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight"));
-            },250); // major kludge to scroll messages
+       $("#messages-inside-top").scrollTop($("#messages-inside-top").prop("scrollHeight"));
+            
     }
 
     filterFunc(searchExpression, value){

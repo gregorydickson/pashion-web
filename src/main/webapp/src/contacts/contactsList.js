@@ -331,7 +331,7 @@ export class ContactsList {
 
     this.pubnub.time(function (status, response) {
       if (status.error) {
-        console.log("pubnub time error")
+        console.log("pubnub time error");
         // handle error if something went wrong based on the status object
       } else {
         console.log(response.timetoken);
