@@ -10,12 +10,12 @@
 	</div>
 
 	<div id="messages-inside-top" class="grid-block vertical scroll " style="margin-top:32px; width:278px;">
-	    <div repeat.for="message of allMessages[user.email + currentContact.email] | filter:searchTerm:filterFunc" id="message-container"  style="margin-left:1rem; margin-right:1rem;">
+	    <div repeat.for="message of allMessages[currentChannel] | filter:searchTerm:filterFunc" id="message-container"  style="margin-left:1rem; margin-right:1rem;">
 	       <!--  <compose view-model="messages/messageEntry"></compose> -->
 	        <!-- <compose view-model="messages/messageEntryNotMe"></compose> -->
 
 	        <!-- from me -->
-		    <div show.bind="(message.fromMe && (message.toId == currentContact.email) && (message.text != ''))" class="grid-block scroll align-right inter-message-gap">
+		    <div show.bind="(message.fromMe && (message.toId == currentContact.email))" class="grid-block scroll align-right inter-message-gap">
 		        <table class="" style="table-layout:fixed;">
 		            <tr>
 		                <td colspan="2">
@@ -29,14 +29,14 @@
 		            </tr>
 		            <tr>
 		               <!-- <td class="message-text message-right-text message-date">${message.time | viewDateFullFormat}</td> -->
-		                <td if.bind="(!isDateToday(message.time))" class="message-text message-left-text message-date">${message.time | viewDateFullFormat} </td>
-		                <td if.bind="(isDateToday(message.time))" class="message-text message-left-text message-date">${message.time | viewDateTimeFormat} </td>
+		                <td show.bind="(!isDateToday(message.time))" class="message-text message-left-text message-date">${message.time | viewDateFullFormat} </td>
+		                <td show.bind="(isDateToday(message.time))" class="message-text message-left-text message-date">${message.time | viewDateTimeFormat} </td>
 		                <td class="message-text message-right-text" style="">Me</td>
 		            </tr>
 		        </table>
 		    </div>
 		    <!-- not from me -->
-	        <div show.bind="(message.toMe && (message.fromId == currentContact.email)&& (message.text != ''))" class="grid-block vertical align-left inter-message-gap">
+	        <div show.bind="(message.toMe && (message.fromId == currentContact.email))" class="grid-block vertical align-left inter-message-gap">
 		        <table class="message-wrap">
 		            <tr>
 		                <td colspan="2">
@@ -50,8 +50,8 @@
 		            </tr>
 		            <tr>
 		                <td class="message-text message-left-text" style="">${message.fromName}</td>
-		                <td if.bind="(!isDateToday(message.time))" class="message-text message-right-text message-date">${message.time | viewDateFullFormat} </td>
-		                <td if.bind="(isDateToday(message.time))" class="message-text message-right-text message-date">${message.time | viewDateTimeFormat} </td>
+		                <td show.bind="(!isDateToday(message.time))" class="message-text message-right-text message-date">${message.time | viewDateFullFormat} </td>
+		                <td show.bind="(isDateToday(message.time))" class="message-text message-right-text message-date">${message.time | viewDateTimeFormat} </td>
 		            </tr>
 		        </table>
 	    	</div>

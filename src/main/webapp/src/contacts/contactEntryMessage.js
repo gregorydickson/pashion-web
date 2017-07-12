@@ -36,20 +36,24 @@ export class ContactEntryMessage {
   }
 
   activate () {
-
+  
   }
 
   attached () {
     //this.userService.getUserdetails (headerContactId);
     // console.log ("Contact details: " + headerContactDetails);
-    let contact = this.currentContact
-    this.subscriber = this.ea.subscribe('setCurrentContact', response => {
+    // let contact = this.currentContact
+    this.userService.getUsers(false).then(users => { 
+      this.users = users;
+      this.subscriber = this.ea.subscribe('setCurrentContact', response => {
+          this.currentContact = this.users[response.userId-1];
+
+         //   this.userService.getUserDetails(response.userId).then(contact => {
+          //    this.currentContact = contact;
+          //  });
             
-            this.userService.getUserDetails(response.userId).then(contact => {
-              this.currentContact = contact;
-            });
-            
-    });
+        });
+     });
   }
 
   subChange(newvalue,oldvalue){

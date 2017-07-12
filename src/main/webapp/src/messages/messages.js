@@ -17,7 +17,8 @@ export class Messages {
     messages = [];
     allMessages = {};
     user = {};
-    currentContact = {};
+    currentContact = {}; // to speed up rendering (hopefully)
+    currentChannel = '';
     searchTerm = ''; // hard wired search goes here
 
     fetchTimeStamps = {};
@@ -43,8 +44,13 @@ export class Messages {
     }
 
     activate() {
-
         console.log("activated messages");
+
+        var forceGetFromServer = false;
+        this.user = this.ds.user.user;
+        return Promise.all([
+          this.users = this.userService.getUsers(forceGetFromServer).then(users => this.users = users)
+        ]);
     }
 
     alertHold (message){
@@ -167,9 +173,8 @@ export class Messages {
         $("#msgInput").keypress((e) => {return this.handleKeyInput(e);});
 
         this.subscriber = this.ea.subscribe('setCurrentContact', response => {
-            this.userService.getUserDetails(response.userId).then(contact => {
-                this.currentContact = contact;
-            });
+            this.currentContact = this.users[response.userId-1];
+            this.currentChannel = this.user.email + this.currentContact.email;
         });
 
         this.pubnub = this.pubNubService.getPubNub();
@@ -267,7 +272,7 @@ export class Messages {
                //console.log ("Top");
                // construct channel
                // ask for more blindly, if none then no biggie
-                let channel = this.user.email + this.currentContact.email;
+                let channel = this.currentChannel;
                 this.getAllMessages(this.fetchTimeStamps[channel], channel, 10, 100, 'top');
             }
         });
@@ -305,7 +310,7 @@ export class Messages {
         //pubnub to user and contact user's channels
         this.pubnub.publish({
                 message: message,
-                channel: this.user.email + this.currentContact.email,
+                channel: this.currentChannel,
                 sendByPost: false, // true to send via post
                 storeInHistory: true, //override default storage options
                 meta: { "cool": "meta" } // publish extra meta with the request
