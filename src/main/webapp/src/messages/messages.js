@@ -219,18 +219,34 @@ export class Messages {
                         //check to see if we are in a conversation with this user and if so do not update the count
                         var tabShowing = $('#tab-messages');
                         var hasTabShowing = tabShowing.hasClass('look-menu-show');
-                        if (hasTabShowing && (this.currentContact.email == receivedMessage.fromId)) {}//nothing
+                        if (hasTabShowing && (this.currentContact.email == receivedMessage.fromId)) {
+                            //  update read time, as we assume it has been seen
+                            // get pubnub time
+
+
+                            this.pubnub.time((status, response) => {
+                                  if (status.error) {
+                                    console.log("pubnub time error");
+                                    // handle error if something went wrong based on the status object
+                                  } else {
+                                    console.log(response.timetoken);
+                                    this.userService.saveMostRecentRead(
+                                        this.userService.checkValidUser(receivedMessage.fromId), response.timetoken); // save now
+                                  }
+                                });
+
+                        }
+                        else {
                             // push message count to server
-                        else this.userService.addMessageCount(receivedMessage.fromId, true);
+                            this.userService.addMessageCount(receivedMessage.fromId, true);
+                        }
                         // try some toast
                         toastr.options.timeOut = 5000;
                         toastr.options.closeButton = false;
                         toastr.options.preventDuplicates = true;
                         toastr.info('New Message from ' + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);
-                        this.userService.updateLastMessage(receivedMessage.fromId, receivedMessage.text, receivedMessage.sentAt,false); 
-
-                        //this.userService.updateLastMessage(response.messages[i].entry.fromId, response.messages[i].entry.text, response.messages[i].entry.sentAt, false);
-                          
+                        this.userService.updateLastMessage(receivedMessage.fromId, receivedMessage.text, receivedMessage.sentAt,false);
+                                                
                     }
 
                     
