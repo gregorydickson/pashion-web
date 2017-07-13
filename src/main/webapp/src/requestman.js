@@ -327,9 +327,11 @@ export class Requestman {
         abbrev = seasons[i].abbreviation;
       }
     }
+    // Add <abbrev>.<look> to search list
     if (value.look && abbrev == '') itemValue = itemValue + ' ' + value.look;//RM check added to index small request man
-    if (value.look && abbrev != '') itemValue = itemValue + ' ' + abbrev + value.look;//RM check added to index small request man
-    // Add sample id's to search list
+    if (value.look && abbrev != '') itemValue = itemValue + ' ' + abbrev  + '.' + value.look;//RM check added to index small request man
+
+    // Add clients sample id's to search list
     if (value.searchableItems) {
       var i;
       for (i = 0; i < value.searchableItems.length; i++)
