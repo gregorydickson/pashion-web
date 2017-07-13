@@ -190,7 +190,9 @@ export class Messages {
                 var receivedMessage = m.message; // The Payload
                 console.log("messages pubnub new nessage in messages on " + m.channel + " > " + m.message);
                 // channel name first part is this user's email
-                if (channelName.slice(0,this.user.email.length) == this.user.email ) {
+                if ((channelName.slice(0,this.user.email.length) == this.user.email) && 
+                    (m.message != 'users') &&
+                    (m.message != 'connections')) {
                     console.log("messages cache invalidate: " + this.user.email);
                     this.allMessages[channelName].push({ // unshift?
                         text: receivedMessage.text,
