@@ -12,7 +12,7 @@
 <!-- <require from="./truncate"></require> -->
     
    <ai-dialog>
-        <ai-dialog-header>
+        <ai-dialog-header> 
             <!-- header -->
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
@@ -180,7 +180,7 @@
 
                     <div class="grid-block shrink" style="margin-top: -10px;">                        
                         <span class="inline-label" >
-                            <span class="slim-text-box-label">New Colour</span>
+                            <span class="slim-text-box-label">Add Colour</span>
 
                             <select-control ref="newColorSelectControl" name="newColor"
                                 class="to-u-c" 
@@ -213,23 +213,35 @@
 
                     <div class="grid-block shrink" style="margin-top: -10px;">                        
                         <span class="inline-label" >
-                            <span class="slim-text-box-label">New Material</span>
+                            <span class="slim-text-box-label">Add Material</span>
 
 
-                            <select-control ref="materialSelectControl" name="material"
-                                class="to-u-c"                   
-                                change.delegate="onMaterialChangeCallback($event)"                                  
+                            <select-control ref="materialSelectControl" name="material" 
+                                class="to-u-c" 
+                                change.delegate="onMaterialChangeCallback($event)" 
                                 selected.bind="selectedMaterialItems" 
                                 options.bind="availableMaterialItems" 
                                 placeholder="Select one" 
                                 allow_clear="true" width="169px">
                             </select-control>
 
-
+  
 
                             <a style= "width: 30px; margin-left: 1rem;" click.delegate="materialAdd(selectedSample)">Add</a>
                         </span>
+ 
+                    </div>
 
+                    <div class="grid-block shrink"> 
+                        <span class="inline-label">
+                            <span class="slim-text-box-label">New Material</span>
+                        
+                            <input id="unl-mat" type="text" class="slim-text-box" style="margin-bottom:0px;" value.bind="selectedSample.unlMaterial">
+                        
+
+
+                            <a style= "width: 30px; margin-left: 1rem;" click.delegate="materialNewAdd(selectedSample)">Add</a>
+                        </span>
                     </div>
                     <!-- Size 
                     <div class="grid-block shrink" >                        
@@ -285,6 +297,15 @@
                 </div>
             </div>
       </ai-dialog-body>
+
+      <ai-dialog-footer if.bind="!isLoading">
+         <a class="hollow button" click.delegate="close()">Exit</a>
+        <!--  <a class.bind="sampleChanged ? 'button' :'hollow button'" class="button" click.delegate="submit()">Save Changes</a>-->
+         <a class="button" click.delegate="submit()">Save Changes</a>
+      </ai-dialog-footer>
+   </ai-dialog>
+</template>
+i-dialog-body>
 
       <ai-dialog-footer if.bind="!isLoading">
          <a class="hollow button" click.delegate="close()">Exit</a>

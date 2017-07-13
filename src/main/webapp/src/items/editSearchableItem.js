@@ -19,7 +19,7 @@ export class EditSearchableItem {
 
   itemTypes = [];
   sampleTypes = [];
-
+ 
   availableSampleItems = [];
   selectedSampleItems = [];
   availableSampleTypeItems = [];
@@ -92,11 +92,11 @@ export class EditSearchableItem {
       colors.forEach(item => {
           this.availableNewColorItems.push({
             id: item,
-            text: item
+            text: item 
           });
         });
     }),
-    this.http.fetch('/dashboard/material').then(response => response.json()).then(material => {
+    this.http.fetch('/material/list').then(response => response.json()).then(material => {
       this.material = material
 
       material.forEach(item => {
@@ -133,7 +133,7 @@ export class EditSearchableItem {
           // sort items according id number
           this.availableSampleItems.sort((a,b) => { return (a.id > b.id) * 1});
 
-          
+
           this.selectedSampleItems = [""];
     })
     ]).then(() => this.isLoading = false);
@@ -164,6 +164,49 @@ export class EditSearchableItem {
       sample.material = sample.material + " " + this.addMaterial;
     else
       sample.material = this.addMaterial;
+  }
+ 
+  materialNewAdd (sample) {
+    let thisValue = $('#unl-mat').val().toUpperCase();
+    console.log('Selected value:', thisValue);      
+
+    var bool = true;
+    this.availableMaterialItems.forEach(item => {
+        console.log(item.id);
+         if(item.id == thisValue){
+          bool = false;
+          console.log("Material already present in list");
+        }
+    });
+     if(bool){
+      this.http.fetch('/material/newMaterial?name=' + thisValue, {
+            method: 'post',
+            body: {"this":"one"}
+      }).then(response => {
+    this.http.fetch('/material/list').then(response => response.json()).then(material => {
+    this.material = material
+    this.availableMaterialItems = [];
+    
+    material.forEach(item => {
+        this.availableMaterialItems.push({
+          id: item,
+          text: item
+        });
+      });
+    });});
+     }
+
+   
+
+
+    this.unlMaterial = thisValue;
+
+    if (!this.unlMaterial) return;
+    if (this.unlMaterial=='') return;
+    if(sample.material)
+      sample.material = sample.material + " " + this.unlMaterial;
+    else
+      sample.material = this.unlMaterial;
   }
 
   materialClear (sample) {
@@ -287,7 +330,7 @@ export class EditSearchableItem {
       console.log('onMaterialChangeCallback() called:', event.detail.value);
 
       if (event.detail) {
-          let selectedValue = event.detail.value;         
+          let selectedValue = event.detail.value;
           console.log('Selected value:', selectedValue);      
 
           this.addMaterial = selectedValue;
@@ -401,7 +444,7 @@ export class EditSearchableItem {
     this.controller.close();
   }
 
-  
+   
 
 }
 
