@@ -579,7 +579,7 @@ class SearchableItemController {
         Category category = Category.findOrSaveWhere(id:categoryp).save(failOnError:true, flush:true)
         log.info "category:"+category
 
-        BrandCollection brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season).save(failOnError:true, flush:true)
+        BrandCollection brandCollection = BrandCollection.findOrSaveWhere(brand:brand,season:season,category:category).save(failOnError:true, flush:true)
 
         SearchableItemType type = SearchableItemType.findByDisplay('Looks')
         log.info "type:" + type
