@@ -17,7 +17,7 @@
 
 .look-menu-absolute-wrap .look-menu-absolute {
   top: 30px;
-  right: 0;
+  right: 0; 
   margin-right: 9px;
 }
 
@@ -96,11 +96,11 @@ body.ai-dialog-open .blue-image {
   display: block;
   height: 30px;
   position: absolute;
-  width: 22px;
+  width: 28px;
   top: -3px;
   right: 20px;
   z-index: 1;
-  background: rgba(0, 0, 0, 0.01);
+  /*background: rgba(0, 0, 0, 0.01);*/
 }
 
 .look-menu-click:hover {
@@ -134,6 +134,10 @@ body.ai-dialog-open .blue-image {
   border:1px solid gray; 
 }
 
+.menu-stripe:after {
+  display: none;
+}
+
 .cards-list .card .look-menu-absolute{
   
 
@@ -156,4 +160,8 @@ white-space: normal;
     border-radius: 50%;
     border:1px solid gray; 
     }
+
+  .look-menu-click {
+    width: 22px;
+  }
 }
