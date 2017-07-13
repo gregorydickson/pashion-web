@@ -81,9 +81,9 @@ export class ContactsList {
             console.log("contactList cache invalidate: connections");
             parent.fetchGetUserUsersFromServer(); //update data structure from JSON in contact list
             // try some toast
-            toastr.options.timeOut = 5000;
-            toastr.options.closeButton = false;
-            toastr.options.preventDuplicates = true;
+            toastr.options.preventDuplicates = false;
+            toastr.options.closeButton = true;
+            toastr.options.timeOut = 0;
             toastr.info('Connections Update'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);    
           }
           if (receivedMessage == "users") {
