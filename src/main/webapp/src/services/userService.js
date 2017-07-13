@@ -198,7 +198,9 @@ export class UserService {
         if (updateUser.address) tempNewUser.address = updateUser.address;
         if (updateUser.name) tempNewUser.name = updateUser.name;
         if (updateUser.surname) tempNewUser.surname = updateUser.surname;
+        // need to clear out old password to prevent re-hashing
         if (updateUser.password) tempNewUser["password"] = updateUser.password;
+        else tempNewUser["password"] = ''; // there will always be a password field, but use this method any way
         if (updateUser.title) tempNewUser["title"] = updateUser.title;
         if (updateUser.phone) tempNewUser["phone"] = updateUser.phone;
 
