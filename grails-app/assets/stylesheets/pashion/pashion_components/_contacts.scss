@@ -1,3 +1,7 @@
+#panelAC{
+  overflow: scroll;
+  max-height: calc(100vh - 410px);  
+}
 
 .contact-entry {
   height: auto;
