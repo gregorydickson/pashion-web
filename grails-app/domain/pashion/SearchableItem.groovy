@@ -119,7 +119,11 @@ class SearchableItem {
         LocalDate endLocal = end.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
         def notAvailable = false
         for(sampleRequest in sampleRequests){
-			if(sr.id != sampleRequest.id){
+			if(sr.id != sampleRequest.id &&
+					(sampleRequest.requestStatusBrand == "Approved" ||
+					sampleRequest.requestStatusBrand == "Picked Up" ||
+					sampleRequest.requestStatusBrand == "Out")
+			  ){
 				if(sampleRequest.checkDateRangeForEvents(startLocal,endLocal)){
 					notAvailable = true
 					break
