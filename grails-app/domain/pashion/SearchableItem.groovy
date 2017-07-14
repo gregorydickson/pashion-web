@@ -15,7 +15,9 @@ class SearchableItem {
 
 	Long id
 	String clientID // The sample id that is used by the client
-	String name //string for ID set by user For Look this is the Look ID which matches Vogue Runway
+	String name //string for ID set by user For Look this is the Look ID which matches Vogue Runway-ish
+	Long nameNumber // 3 digit max number
+	String nameVariant // one character
 	String description
 	Brand brand
 	City city

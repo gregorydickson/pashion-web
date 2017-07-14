@@ -1,5 +1,5 @@
 // AURELIA
-import { inject } from 'aurelia-framework';
+import { inject, TaskQueue } from 'aurelia-framework';
 import { HttpClient } from 'aurelia-fetch-client';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { DialogService } from 'aurelia-dialog';
@@ -29,7 +29,7 @@ import { DS } from './datastores/ds';
 import moment from 'moment'
 
 
-@inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, PRAgencyService, busy, PubNubService, DS, SearchableItemService)
+@inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, PRAgencyService, busy, PubNubService, DS, SearchableItemService, TaskQueue)
 export class Index {
     //user = {};
     bookings = [];
@@ -65,7 +65,7 @@ export class Index {
 
 
 
-    constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, PRAgencyService, busy, pubNubService, DS,searchableItemService) {
+    constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, PRAgencyService, busy, pubNubService, DS,searchableItemService, taskQueue) {
         http.configure(config => {
             config
                 .useStandardConfiguration();
@@ -85,6 +85,7 @@ export class Index {
         this.imagePanelSize = 2; //  1 = small, 2 = mid, 3 = large
         this.ds = DS;
         this.searchableItemService = searchableItemService;
+        this.taskQueue = taskQueue;
         
     }
 
@@ -1085,20 +1086,30 @@ export class Index {
     editSearchableItem(itemId) {
         //this.lookMenu(itemId);
         this.dialogService.open({ viewModel: EditSearchableItem, model: itemId, lock: true })
-            .then(response => { });
+            .then(response => {
+            //console.log("editsearchableitem confirm dialog was cancelled? " + response.wasCancelled);
+            if (response.wasCancelled) return false;
+            // redraw to take effect if name changed updates names and order
+            this.taskQueue.queueMicroTask(() => {
+                            this.filterChangeBrand();
+                         });
+             });
+
     }
 
     deleteSearchableItem(itemId) {
         //console.log (`ItemId: ${itemId}`)
         this.dialogService.open({ viewModel: CreateDialogConfirmDeleteItem, model: itemId, lock: true })
             .then(response => {        
-                console.log("confirm dialog was cancelled? " + response.wasCancelled);
+                //console.log("confirm dialog was cancelled? " + response.wasCancelled);
                 if (response.wasCancelled) return false;
         
                 this.http.fetch('/searchableItem/delete/'+itemId.id, {method: 'post'})
                    .then(response => {})
                    .then(result => {
-                     this.filterChangeBrand(); 
+                    if (response.wasCancelled) return false;
+                    // redraw to take effect if name changed updates names and order
+                    this.filterChangeBrand(); 
                  });
         });
     }
@@ -1119,9 +1130,7 @@ export class Index {
     editSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.dialogService.open({ viewModel: EditSampleRequest, model: id, lock: true })
-            .then(response => {
-
-            });
+            .then(response => {});
     }
 
 
@@ -1315,6 +1324,7 @@ export class Index {
             .then(response => {         
                 console.log("confirm dialog was cancelled? " + response.wasCancelled);
                 if (response.wasCancelled) return false;
+                // redraw to take effect if name changed updates names and order
                 this.filterChangeBrand(); 
         });
     }
