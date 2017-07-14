@@ -102,6 +102,8 @@ class SearchableItem {
 		description maxSize: 4000
 	 	attributes  maxSize: 4000
 	 	message maxSize: 4000
+	 	nameVariant nullable:true
+	 	nameNumber nullable:true
 	}
 
 	String toString(){
