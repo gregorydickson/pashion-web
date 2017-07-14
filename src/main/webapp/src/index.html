@@ -478,8 +478,8 @@
                         <table class="accordion" style="table-layout:fixed;">
                             <tr> 
                                 <th class="accordion w7"></th>
-                                <th class="accordion w25">LOOK</th>
-                                <th class="accordion w30">OUT</th>
+                                <th class="accordion w24">LOOK</th>
+                                <th class="accordion w31">OUT</th>
                                 <th class="accordion w27">STATUS</th>
                                 <th class="accordion w10"></th>
                             </tr>
@@ -492,8 +492,8 @@
                                 <td class="accordion w7">
                                     <button id="button${booking.id}" class="accordion requestButton expandoHover" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
-                                <td class="accordion w25">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td>
-                                <td class="accordion w30 
+                                <td class="accordion w24">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td>
+                                <td class="accordion w31 
                                            ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
                                 <td class="accordion w27
                                            ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" >${booking.requestStatusBrand}</td>
@@ -598,8 +598,8 @@
                         <table class="accordion" style="table-layout:fixed;">
                             <tr>
                                 <th class="accordion w7"></th>
-                                <th class="accordion w25">LOOK</th>
-                                <th class="accordion w30">START</th>
+                                <th class="accordion w24">LOOK</th>
+                                <th class="accordion w31">START</th>
                                 <th class="accordion w27">STATUS</th>
                                 <th class="accordion w10"></th>
                             </tr>
@@ -612,8 +612,8 @@
                                 <td class="accordion w7">
                                     <button id="button${booking.id}" class="accordion requestButton expandoHover" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
-                                <td class="accordion w25">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td>
-                                <td class="accordion w30 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
+                                <td class="accordion w24">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td>
+                                <td class="accordion w31 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
                                 <td class.bind="(booking.requestStatusPress=='Pending') ? 'accordion ui-text-label-m-blue w27' :'accordion w27'" >${booking.requestStatusPress}</td>
 
                                 <!-- ... disabled -->
