@@ -77,14 +77,18 @@ export class ContactsList {
         console.log("contactList pubnub new nessage in contactList on " + m.channel + " > " + m.message);
 
         //if (channelName == parent.user.email + "_cacheInvalidate") {
+
           if (receivedMessage == "connections") {
             console.log("contactList cache invalidate: connections");
             parent.fetchGetUserUsersFromServer(); //update data structure from JSON in contact list
+            /* Don't display generic connection update messages
+            /* Need to implement a more comprehensive, meaningful update, like with SRs
             // try some toast
             toastr.options.preventDuplicates = false;
             toastr.options.closeButton = true;
             toastr.options.timeOut = 0;
-            toastr.info('Connections Update'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);    
+            toastr.info('Connections Update'); // + receivedMessage.fromName + ' '+ receivedMessage.fromSurname);  
+            */  
           }
           if (receivedMessage == "users") {
             console.log("contactList cache invalidate: users");
