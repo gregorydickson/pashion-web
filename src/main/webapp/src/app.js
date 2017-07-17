@@ -1,13 +1,11 @@
 import { inject } from 'aurelia-framework';
-import { DS } from './datastores/ds'
 
-@inject(DS)
+
 export class App {
 
 	user = {};
 
-	constructor(DS) {
-		this.ds = DS;
+	constructor() {
 	}
 
 	configureRouter(config, router) {
@@ -23,12 +21,6 @@ export class App {
 	}
 
 	activate() {
-		return Promise.all([
-			this.ds.activate()
-				.then(() => {
-					this.user = this.ds.user.user;
-				}),
-		]);
 	}
 
 }

@@ -1,25 +1,10 @@
-import {
-    inject,
-    bindable,
-    observable,
-    customElement
-} from 'aurelia-framework';
-import {
-    DialogController,
-    DialogService
-} from 'aurelia-dialog';
+import { inject, bindable, observable, customElement } from 'aurelia-framework';
+import { DialogController, DialogService } from 'aurelia-dialog';
+import { EditAddress } from './editAddress';
+import { AddressService } from 'services/addressService';
+import { Helpers } from '../common/helpers';
 
-import {
-    EditAddress
-} from './editAddress';
-import {
-    DS
-} from '../datastores/ds';
-import {
-    Helpers
-} from '../common/helpers';
-
-@inject(Element, DialogController, DialogService, DS, Helpers)
+@inject(Element, DialogController, DialogService, AddressService, Helpers)
 @customElement('select-address')
 export class SelectAddress {
 
@@ -32,20 +17,49 @@ export class SelectAddress {
     @bindable width = 170;
     style = 'width: 170px';
 
+    @bindable deliverTo = [];
+    availableDeliverToItems = [];
+    selectedDeliverToItems = [''];
     selectedDeliverToId = null;
 
-    constructor(Element, DialogController, DialogService, DS, Helpers) {
+    selectedDeliverToId = null;
+    editMode = false;
+
+    constructor(Element, DialogController, DialogService, AddressService, Helpers) {
         this.element = Element;
         this.dialogController = DialogController;
         this.dialogService = DialogService;
-        this.ds = DS;
+        this.addressService = AddressService;
         this.helpers = Helpers;
     }
 
     attached() {
-        // lets clear out the previously selected address
-        // remove this line to keep the last selected address as default
-        this.ds.address.reset(true);
+        this.addressService.getAll()
+            .then(deliverTo => {
+                this.deliverTo = deliverTo;
+                console.log("set deliver to");
+            });
+    }
+    deliverToChanged() {
+        console.log("deliver to changed");
+        this.availableDeliverToItems = [];
+
+        this.deliverTo.forEach(item => {
+            if (item.surname) {
+                let text = `${item.name} ${item.surname}`;
+                if (item.city) text = text + `  (${item.city} Office)`;
+
+                this.availableDeliverToItems.push({
+                    id: item.id,
+                    text: text
+                });
+            } else {
+                this.availableDeliverToItems.push({
+                    id: item.id,
+                    text: item.name
+                });
+            }
+        });
     }
 
     widthChanged(newValue, oldValue) {
@@ -75,7 +89,7 @@ export class SelectAddress {
     onAddressSelectChanged(event) {
         // lets bubble this event with a generic event bubbler
         this.selectedDeliverToId = event.detail.value;
-        this.ds.address.selectedAddress = this.ds.address.deliverTo.find(item => item.id == this.selectedDeliverToId);
+        this.selectedAddress = this.ds.address.deliverTo.find(item => item.id == this.selectedDeliverToId);
         console.log('Selected deliverTo:', this.ds.address.selectedAddress);
         this.addressSelect.reset();
         // lets bubble this event with a generic event bubbler

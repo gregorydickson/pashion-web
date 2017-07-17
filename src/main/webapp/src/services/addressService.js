@@ -1,38 +1,35 @@
 import { inject, singleton } from 'aurelia-framework';
 import { HttpClient, json } from 'aurelia-fetch-client';
+import {UserService} from './userService';
 import 'fetch';
 
-@inject(HttpClient)
+@inject(HttpClient,UserService)
 @singleton()
 export class AddressService {
 
-    constructor(http) {
+    constructor(http,userService) {
         http.configure(config => {
             config
                 .useStandardConfiguration();
         });
         this.http = http;
+        this.userService = userService;
+
     }
 
-    attached() {
-        console.log("addressService.attached called");
-        this.user = this.ds.user.user;
-    }
 
-    getAll(user) {
+    getAll() {
         console.log("addressService.getAll  called, user: " + user);
-        this.user = user;
-            var promise = new Promise((resolve, reject) => {
-            let url = '/dashboard/deliverTo/';
 
-            if (user.type === 'brand') {
-                url = '/dashboard/deliverToBrand/' + user.companyId;
-            }
+        let user = this.userService.getUser();
+        let url = '/dashboard/deliverTo/';
 
-            if (user.type === 'prAgency') {
-                url = '/dashboard/deliverToPRAgency/' + user.companyId;
-            }
-
+        if (user.type === 'brand') {
+            url = '/dashboard/deliverToBrand/' + user.companyId;
+        } else if (user.type === 'prAgency') {
+            url = '/dashboard/deliverToPRAgency/' + user.companyId;
+        }
+        var promise = new Promise((resolve, reject) => {
             this.http.fetch(url)
                 .then(response => response.json())
                 .then(deliverTo => {
@@ -107,21 +104,14 @@ export class AddressService {
 
     createAdHoc(newAddress) {
         console.log("AddressService.createAdHoc: " + newAddress + " for " + this.user.type);
+        let url = '';
         if (this.user.type === "brand") {
-            var promise = new Promise((resolve, reject) => {
-                this.http.fetch('/brand/AddAddress', {
-                    method: 'post',
-                    body: json(newAddress)
-                })
-                    .then(response => response.json())
-                    .then(newList => {
-                        resolve(newList)
-                    });
-            });
-            return promise;
+            url = '/brand/AddAddress';
         } else {
-           var promise = new Promise((resolve, reject) => {
-            this.http.fetch('/PRAgency/AddAddress', {
+            url = '/PRAgency/AddAddress';
+        }
+        var promise = new Promise((resolve, reject) => {
+            this.http.fetch(url, {
                 method: 'post',
                 body: json(newAddress)
             })
@@ -129,9 +119,9 @@ export class AddressService {
                 .then(newList => {
                     resolve(newList)
                 });
-        });
-        return promise;         
-        }
+            });
+        
+        return promise; 
     }
 
 
