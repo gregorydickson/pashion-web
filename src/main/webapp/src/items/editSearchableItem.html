@@ -16,7 +16,7 @@
             <!-- header -->
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad">EDIT LOOK ${currentItem.brandCollection.season | seasonAbbreviation:seasons }.${currentItem.name}</span>
+                    <span class="ui-text-label-m-broad">EDIT ${currentItem.brandCollection.season | seasonAbbreviation:seasons }.${currentItem.name}</span>
                 </div>
             </div>
         </ai-dialog-header>  
@@ -54,9 +54,16 @@
                 <!-- Look Name -->
                 <div class="grid-block shrink"> 
                     <span class="inline-label">
-                        <span class="slim-text-box-label">Look Number</span>
+                        <span class="slim-text-box-label" >Number</span>
                         <div>
-                            <input type="text" class="slim-text-box" style="margin-bottom:0px;  max-width: 40px; min-width: 40px;" maxlength="3" value.bind="currentItem.name">
+                            <input type="number" min="0" max="999" class="slim-text-box" style="margin-bottom:0px;  max-width: 33px; min-width: 33px;" value.bind="currentItem.nameNumber">
+                        </div>
+                    </span>
+
+                     <span class="inline-label">
+                        <span class="slim-text-box-label" style="width:45px;">Version</span>
+                        <div>
+                            <input type="text" class="slim-text-box" style="margin-bottom:0px;  max-width: 22px; min-width: 22px;" maxlength="1" value.bind="currentItem.nameVariant">
                         </div>
                     </span>
 

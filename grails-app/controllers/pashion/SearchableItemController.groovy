@@ -120,7 +120,9 @@ class SearchableItemController {
 
                     brand { order ('name', 'asc')}
 
-                    order ('name', 'asc')
+                    order ('nameNumber', 'asc')
+
+                    order ('nameVariant', 'asc')
                     
                     cache true
             }
@@ -171,7 +173,9 @@ class SearchableItemController {
 
                 brand { order ('name', 'asc')}
 
-                order ('name', 'asc')
+                order ('nameNumber', 'asc')
+
+                order ('nameVariant', 'asc')
 
                 cache true
             } 
@@ -296,7 +300,9 @@ class SearchableItemController {
 
             brand { order ('name', 'asc')}
 
-            order ('name', 'asc')
+            order ('nameNumber', 'asc')
+
+            order ('nameVariant', 'asc')
 
             setMaxResults(1000)
             cache true
@@ -506,7 +512,11 @@ class SearchableItemController {
         log.info "save item using savejson:"+jsonObject
 
         def item =  SearchableItem.get(jsonObject.id)
-        item.name = jsonObject.name
+        item.name = jsonObject.nameNumber.toString() 
+        if (jsonObject.nameVariant) item.name = item.name + jsonObject.nameVariant
+        if (jsonObject.nameNumber instanceof Integer) item.nameNumber = jsonObject.nameNumber
+        else item.nameNumber = Integer.parseInt(jsonObject.nameNumber)
+        item.nameVariant = jsonObject.nameVariant
         item.description = jsonObject.description
         item.attributes = jsonObject.attributes
         item.isPrivate = jsonObject.isPrivate
@@ -760,7 +770,7 @@ class SearchableItemController {
         }
     }
 
-
+/*
     def pad(){
         SearchableItemType type = SearchableItemType.findByDisplay('Looks')
         def ids = SearchableItem.executeQuery('select id from SearchableItem')
@@ -786,6 +796,7 @@ class SearchableItemController {
         }
         log.info "done"
         render 'done'
+
         
-    }
+    } */
 }

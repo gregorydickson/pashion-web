@@ -153,6 +153,13 @@
   background-color: transparent;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
 .grid-block-vertical-shadow {
   box-shadow: 2px 2px 4px 1px rgba(0, 0, 0, 0.2);
   background: white;
