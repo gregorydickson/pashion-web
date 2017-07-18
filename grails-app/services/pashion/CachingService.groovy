@@ -14,6 +14,7 @@ import grails.plugin.json.view.test.*
 import groovy.transform.Synchronized
 
 import com.pubnub.api.*
+import com.pubnub.api.callbacks.*
 
 
 @Transactional
