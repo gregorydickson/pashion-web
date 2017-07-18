@@ -1,3 +1,16 @@
+
+/*
+ * Example: Delete a brand's Sample Requests
+*/
+select id from sample_request where brand_id = '68';
+delete from booking_status where sample_request_id IN(532,533,604,605,617,618);
+delete from searchable_item_sample_requests where sample_request_id IN(532,533,604,605,617,618);
+update sample_request set shipping_out_id = null where id IN(532,533,604,605,617,618);
+update sample_request set shipping_return_id = null where id IN(532,533,604,605,617,618);
+delete from shipping_event where sample_request_id IN(532,533,604,605,617,618);
+delete from sample_request where id IN(532,533,604,605,617,618);
+
+
 /*
  * Delete all Sample Requests
 */
