@@ -13,7 +13,7 @@ import com.amazonaws.services.s3.model.ObjectMetadata
 
 import grails.converters.JSON
 import org.apache.commons.codec.binary.Base64
-import org.json.XML
+//import org.json.XML
 import javax.imageio.ImageIO
 import javax.servlet.http.HttpServletResponse
 import java.awt.image.BufferedImage
@@ -28,10 +28,20 @@ class UserService {
 	def grailsApplication
     def amazonS3Service
 
-    Pubnub pubnub = new Pubnub("pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73", "sub-c-dd158aea-b76b-11e6-b38f-02ee2ddab7fe")
+    PubNub pubnub = null
 
+    @PostConstruct
+    void init() {
+        //pubnub = new PubNub("pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73", "sub-c-dd158aea-b76b-11e6-b38f-02ee2ddab7fe")
 
-    
+        PNConfiguration pnConfiguration = new PNConfiguration()
+        pnConfiguration.setSubscribeKey("sub-c-dd158aea-b76b-11e6-b38f-02ee2ddab7fe")
+        pnConfiguration.setPublishKey("pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73")
+        pnConfiguration.setSecure(true)
+           
+        pubnub = new PubNub(pnConfiguration)
+    }
+
 
     def login(String email, String password){
     	
@@ -176,10 +186,10 @@ class UserService {
             }
 
             // invalidate cache here for connected or connecting user     
-            Callback callback=new Callback() {}
+            //Callback callback=new Callback() {}
             def channel = user.email + '_cacheInvalidate'
             log.info "updateUser() send invalidate users on:" + channel
-            pubnub.publish(channel, "users" , callback) 
+            pubnub.publish().message("users").channel(channel) // , callback) 
 
             user
     }

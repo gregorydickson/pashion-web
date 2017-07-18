@@ -15,6 +15,7 @@ import groovy.transform.Synchronized
 
 import com.pubnub.api.*
 
+
 @Transactional
 @Consumer
 class CachingService implements JsonViewTest {
@@ -26,11 +27,19 @@ class CachingService implements JsonViewTest {
     def themes
     String connections = null
 
-    Pubnub pubnub = null
+    PubNub pubnub = null
 
     @PostConstruct
     void init() {
-        pubnub = new Pubnub("pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73", "sub-c-dd158aea-b76b-11e6-b38f-02ee2ddab7fe")
+        //pubnub = new PubNub("pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73", "sub-c-dd158aea-b76b-11e6-b38f-02ee2ddab7fe")
+
+        PNConfiguration pnConfiguration = new PNConfiguration()
+        pnConfiguration.setSubscribeKey("sub-c-dd158aea-b76b-11e6-b38f-02ee2ddab7fe")
+        pnConfiguration.setPublishKey("pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73")
+        pnConfiguration.setSecure(true)
+           
+        pubnub = new PubNub(pnConfiguration)
+        log.info "PubNub init"
     }
 
     @Selector('connectionsUpdate')
@@ -38,10 +47,10 @@ class CachingService implements JsonViewTest {
         log.info "UPDATING CONNECTIONS "
         String newValue = loadConnections()
         connections = newValue
-        Callback callback=new Callback() {}
+        //Callback callback=new Callback() {}
         def channel = data + '_cacheInvalidate'
         log.info "send invalidate in cachingService:invalidateConnectionsPubNub on:" + channel
-        pubnub.publish(channel, "connections" , callback)
+        pubnub.publish().message("connections").channel(channel)// , callback)
 
     }
 
@@ -51,10 +60,10 @@ class CachingService implements JsonViewTest {
         log.info "UPDATING CONNECTIONS "
         String newValue = loadConnections()
         connections = newValue
-        Callback callback=new Callback() {}
+        //Callback callback=new Callback() {}
         def channel = data + '_cacheInvalidate'
         log.info "send invalidate in cachingService:invalidateConnectionsPubNub on:" + channel
-        pubnub.publish(channel, "connections" , callback)
+        pubnub.publish().message("connections").channel(channel)// , callback)
 
     }
 
@@ -63,25 +72,33 @@ class CachingService implements JsonViewTest {
         Thread.sleep(2000);
         log.info "sample data " + data
         try{
-            Callback callback=new Callback() {}
+            PNCallback callback=new PNCallback() {}
             def channel
             if(data.brand){
                 channel = data.brand+'_cacheInvalidate'
-                log.info "send Bookings Cache invalidate in cachingService:" + channel + " data > " + data
+                log.info "send Bookings Cache invalidate in cachingService Brand:" + channel + " data > " + data
                 // channel = company name
                 // data.booking = SR id
                 // data.look = look id (name)
-                pubnub.publish(channel,data.booking + " (look " + data.look + ")", callback)
+                pubnub.publish(data.booking + " (look " + data.look + ")",channel, callback)
+
+                /*.async(new PNCallback<PNPublishResult>() {
+                    @Override
+                    public void onResponse(PNPublishResult result, PNStatus status) {
+                        log.info result // handle publish result, status always present, result if successful
+                        log.info status.isError // to see if error happened
+                    }
+                }) //callback) */
             }
             if(data.press){
                 channel = data.press+'_cacheInvalidate'
-                log.info "send Bookings Cache invalidate in cachingService:" + channel + " data > " + data
-                pubnub.publish(channel,data.booking + " (look " + data.look + ")", callback)
+                log.info "send Bookings Cache invalidate in cachingService press:" + channel + " data > " + data
+                pubnub.publish(data.booking + " (look " + data.look + ")",channel, callback)
             }
             if(data.prAgency){
                 channel = data.prAgency+'_cacheInvalidate'
-                log.info "send Bookings Cache invalidate in cachingService:" + channel + " data > " + data
-                pubnub.publish(channel,data.booking + " (look " + data.look + ")", callback)
+                log.info "send Bookings Cache invalidate in cachingService prAgency:" + channel + " data > " + data
+                pubnub.publish().message(data.booking + " (look " + data.look + ")").channel(channel) //callback)
             }
         } catch(Exception e){
             log.error "Exception in CachingService - sample Request Cache Invalidate"
@@ -94,7 +111,7 @@ class CachingService implements JsonViewTest {
         Thread.sleep(2000)
         log.info "sample data " + data
         try{
-            Callback callback=new Callback() {}
+            //Callback callback=new Callback() {}
 
             def channel
             if(data.brand){
@@ -103,17 +120,17 @@ class CachingService implements JsonViewTest {
                 // channel = company name
                 // data.booking = SR id
                 // data.look = look id (name)
-                pubnub.publish(channel,"Courier for request " + data.booking + " due in an hour." , callback)
+                pubnub.publish().message("Courier for request " + data.booking + " due in an hour.").channel(channel)// , callback)
             }
             if(data.press){
                 channel = data.press+'_stuartOneHourNotification'
                 log.info "send Bookings Cache invalidate in cachingService:" + channel + " data > " + data
-                pubnub.publish(channel,"Courier for request " + data.booking + " due in an hour." , callback)
+                pubnub.publish().message("Courier for request " + data.booking + " due in an hour.").channel(channel)// , callback)
             }
             if(data.prAgency){
                 channel = data.prAgency+'_stuartOneHourNotification'
                 log.info "send Bookings Cache invalidate in cachingService:" + channel + " data > " + data
-                pubnub.publish(channel,"Courier for request " + data.booking + " due in an hour." , callback)
+                pubnub.publish().message("Courier for request " + data.booking + " due in an hour.").channel(channel)// , callback)
             }
         } catch(Exception e){
             log.error "Exception in CachingService - _stuartOneHourNotification"
