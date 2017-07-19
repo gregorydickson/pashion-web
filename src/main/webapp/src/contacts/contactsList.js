@@ -60,7 +60,7 @@ export class ContactsList {
         console.log("pubnub time error")
         // handle error if something went wrong based on the status object
       } else {
-        console.log(response.timetoken);
+        console.log("contactList attached, pubnub time rsponse: " + response.timetoken);
         parent.currentPNTime = response.timetoken;
       }
     });

@@ -58,14 +58,22 @@ class CachingService implements JsonViewTest {
         connections = newValue
         def channel = data + '_cacheInvalidate'
         log.info "send invalidate in cachingService:invalidateConnectionsPubNub on:" + channel
-        pubnub.publish().message("connections").channel(channel).async(new PNCallback<PNPublishResult>() {
-            @Override
-            public void onResponse(PNPublishResult result, PNStatus status) {
-                log.info "pubnub invalidateConnectionsPubNub publish status code: " + Integer.toString(status.statusCode)
-                if (status.error) info.log "pubNub.publish Error: " + status.errorData.information
-                else if (result.hasProperty("timetoken") && result.timetoken != null) log.info "pubnub publish success, timetoken: " + Long.toString(result.timetoken)
-            }
-        }) 
+        pubnub.publish()
+
+            //.message(Arrays.asList ("connections", "private" ))
+            .message("connections")
+
+            
+            .channel(channel)
+            //.meta({visibility: "private"}) // server side filtering
+            .async(new PNCallback<PNPublishResult>() {
+                @Override
+                public void onResponse(PNPublishResult result, PNStatus status) {
+                    log.info "pubnub invalidateConnectionsPubNub publish status code: " + Integer.toString(status.statusCode)
+                    if (status.error) info.log "pubNub.publish Error: " + status.errorData.information
+                    else if (result.hasProperty("timetoken") && result.timetoken != null) log.info "pubnub publish success, timetoken: " + Long.toString(result.timetoken)
+                }
+            }) 
 
     }
 
