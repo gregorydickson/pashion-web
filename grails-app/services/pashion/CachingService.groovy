@@ -14,6 +14,19 @@ import grails.plugin.json.view.test.*
 import groovy.transform.Synchronized
 
 import com.pubnub.api.*
+//import com.pubnub.api.builder.*
+import com.pubnub.api.callbacks.*
+//import com.pubnub.api.endpoints.*
+//import com.pubnub.api.endpoints.pubsub.*
+//import com.pubnub.api.enums.*
+//import com.pubnub.api.interceptors.*
+//import com.pubnub.api.managers.*
+//import com.pubnub.api.models.*
+import com.pubnub.api.models.consumer.*
+//import com.pubnub.api.models.server.*
+//import com.pubnub.api.vendor.*
+//import com.pubnub.api.workers.*
+
 
 @Transactional
 @Consumer
@@ -26,62 +39,106 @@ class CachingService implements JsonViewTest {
     def themes
     String connections = null
 
-    Pubnub pubnub = null
+    PubNub pubnub = null
 
     @PostConstruct
     void init() {
-        pubnub = new Pubnub("pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73", "sub-c-dd158aea-b76b-11e6-b38f-02ee2ddab7fe")
+        PNConfiguration pnConfiguration = new PNConfiguration()
+        pnConfiguration.setSubscribeKey("sub-c-dd158aea-b76b-11e6-b38f-02ee2ddab7fe")
+        pnConfiguration.setPublishKey("pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73")
+        pnConfiguration.setSecure(true)
+           
+        pubnub = new PubNub(pnConfiguration)
     }
 
     @Selector('connectionsUpdate')
     void invalidateConnectionsPubNub(Object data){
-        log.info "UPDATING CONNECTIONS "
+        log.info "invalidateConnectionsPubNub "
         String newValue = loadConnections()
         connections = newValue
-        Callback callback=new Callback() {}
         def channel = data + '_cacheInvalidate'
         log.info "send invalidate in cachingService:invalidateConnectionsPubNub on:" + channel
-        pubnub.publish(channel, "connections" , callback)
+        pubnub.publish()
+
+            //.message(Arrays.asList ("connections", "private" ))
+            .message("connections")
+
+            
+            .channel(channel)
+            //.meta({visibility: "private"}) // server side filtering
+            .async(new PNCallback<PNPublishResult>() {
+                @Override
+                public void onResponse(PNPublishResult result, PNStatus status) {
+                    log.info "pubnub invalidateConnectionsPubNub publish status code: " + Integer.toString(status.statusCode)
+                    if (status.error) info.log "pubNub.publish Error: " + status.errorData.information
+                    else if (result.hasProperty("timetoken") && result.timetoken != null) log.info "pubnub publish success, timetoken: " + Long.toString(result.timetoken)
+                }
+            }) 
 
     }
 
     @Selector('connectionsUpdateNewUser')
     void invalidateConnectionsNewUser(Object data){
         Thread.sleep(2000)
-        log.info "UPDATING CONNECTIONS "
+        log.info "invalidateConnectionsNewUser "
         String newValue = loadConnections()
         connections = newValue
-        Callback callback=new Callback() {}
         def channel = data + '_cacheInvalidate'
-        log.info "send invalidate in cachingService:invalidateConnectionsPubNub on:" + channel
-        pubnub.publish(channel, "connections" , callback)
-
+        log.info "send invalidate in cachingService:invalidateConnectionsNewUser on:" + channel
+        pubnub.publish().message("connections").channel(channel).async(new PNCallback<PNPublishResult>() {
+            @Override
+            public void onResponse(PNPublishResult result, PNStatus status) {
+                log.info "pubnub invalidateConnectionsNewUser publish status code: " + Integer.toString(status.statusCode)
+                if (status.error) info.log "pubNub.publish Error: " + status.errorData.information
+                else if (result.hasProperty("timetoken") && result.timetoken != null) log.info "pubnub publish success, timetoken: " + Long.toString(result.timetoken)
+            }
+        }) 
     }
 
     @Selector('sampleRequestCacheInvalidate')
     void sampleRequestCacheInvalidate(Object data){
         Thread.sleep(2000);
-        log.info "sample data " + data
+        log.info "sampleRequestCacheInvalidate sample data " + data
         try{
-            Callback callback=new Callback() {}
             def channel
             if(data.brand){
                 channel = data.brand+'_cacheInvalidate'
-                log.info "send Bookings Cache invalidate in cachingService:" + channel + " data > " + data
+                log.info "send Bookings Cache invalidate in cachingService Brand:" + channel + " data > " + data
                 // channel = company name
                 // data.booking = SR id
                 // data.look = look id (name)
-                pubnub.publish(channel,data.booking + " (look " + data.look + ")", callback)
+                pubnub.publish().message(data.booking + " (look " + data.look + ")").channel(channel).async(new PNCallback<PNPublishResult>() {
+                    @Override
+                    public void onResponse(PNPublishResult result, PNStatus status) {
+                        log.info "pubnub sampleRequestCacheInvalidate publish status code: " + Integer.toString(status.statusCode)
+                        if (status.error) info.log "pubNub.publish Error: " + status.errorData.information
+                        else if (result.hasProperty("timetoken") && result.timetoken != null) log.info "pubnub publish success, timetoken: " + Long.toString(result.timetoken)
+                    }
+                }) 
             }
             if(data.press){
                 channel = data.press+'_cacheInvalidate'
-                log.info "send Bookings Cache invalidate in cachingService:" + channel + " data > " + data
-                pubnub.publish(channel,data.booking + " (look " + data.look + ")", callback)
+                log.info "send Bookings Cache invalidate in cachingService press:" + channel + " data > " + data
+                pubnub.publish().message(data.booking + " (look " + data.look + ")").channel(channel).async(new PNCallback<PNPublishResult>() {
+                    @Override
+                    public void onResponse(PNPublishResult result, PNStatus status) {
+                        log.info "pubnub sampleRequestCacheInvalidate publish status code: " + Integer.toString(status.statusCode)
+                        if (status.error) info.log "pubNub.publish Error: " + status.errorData.information
+                        else if (result.hasProperty("timetoken") && result.timetoken != null) log.info "pubnub publish success, timetoken: " + Long.toString(result.timetoken) 
+                    }
+                }) 
             }
             if(data.prAgency){
                 channel = data.prAgency+'_cacheInvalidate'
-                log.info "send Bookings Cache invalidate in cachingService:" + channel + " data > " + data
-                pubnub.publish(channel,data.booking + " (look " + data.look + ")", callback)
+                log.info "send Bookings Cache invalidate in cachingService prAgency:" + channel + " data > " + data
+                pubnub.publish().message(data.booking + " (look " + data.look + ")").channel(channel).async(new PNCallback<PNPublishResult>() {
+                    @Override
+                    public void onResponse(PNPublishResult result, PNStatus status) {
+                        log.info "pubnub sampleRequestCacheInvalidate publish status code: " + Integer.toString(status.statusCode)
+                        if (status.error) info.log "pubNub.publish Error: " + status.errorData.information
+                        else if (result.hasProperty("timetoken") && result.timetoken != null) log.info "pubnub publish success, timetoken: " + Long.toString(result.timetoken) 
+                    }
+                }) 
             }
         } catch(Exception e){
             log.error "Exception in CachingService - sample Request Cache Invalidate"
@@ -92,10 +149,8 @@ class CachingService implements JsonViewTest {
     @Selector('stuartOneHourNotification')
     void stuartOneHourNotification(Object data){
         Thread.sleep(2000)
-        log.info "sample data " + data
+        log.info "stuartOneHourNotification sample data " + data
         try{
-            Callback callback=new Callback() {}
-
             def channel
             if(data.brand){
                 channel = data.brand+'_stuartOneHourNotification'
@@ -103,17 +158,38 @@ class CachingService implements JsonViewTest {
                 // channel = company name
                 // data.booking = SR id
                 // data.look = look id (name)
-                pubnub.publish(channel,"Courier for request " + data.booking + " due in an hour." , callback)
+                pubnub.publish().message("Courier for request " + data.booking + " due in an hour.").channel(channel).async(new PNCallback<PNPublishResult>() {
+                    @Override
+                    public void onResponse(PNPublishResult result, PNStatus status) {
+                        log.info "pubnub stuartOneHourNotification publish status code: " + Integer.toString(status.statusCode)
+                        if (status.error) info.log "pubNub.publish Error: " + status.errorData.information
+                        else if (result.hasProperty("timetoken") && result.timetoken != null) log.info "pubnub publish success, timetoken: " + Long.toString(result.timetoken) 
+                    }
+                }) 
             }
             if(data.press){
                 channel = data.press+'_stuartOneHourNotification'
                 log.info "send Bookings Cache invalidate in cachingService:" + channel + " data > " + data
-                pubnub.publish(channel,"Courier for request " + data.booking + " due in an hour." , callback)
+                pubnub.publish().message("Courier for request " + data.booking + " due in an hour.").channel(channel).async(new PNCallback<PNPublishResult>() {
+                    @Override
+                    public void onResponse(PNPublishResult result, PNStatus status) {
+                        log.info "pubnub stuartOneHourNotification publish status code: " + Integer.toString(status.statusCode)
+                        if (status.error) info.log "pubNub.publish Error: " + status.errorData.information
+                        else if (result.hasProperty("timetoken") && result.timetoken != null) log.info "pubnub publish success, timetoken: " + Long.toString(result.timetoken)
+                    }
+                })
             }
             if(data.prAgency){
                 channel = data.prAgency+'_stuartOneHourNotification'
                 log.info "send Bookings Cache invalidate in cachingService:" + channel + " data > " + data
-                pubnub.publish(channel,"Courier for request " + data.booking + " due in an hour." , callback)
+                pubnub.publish().message("Courier for request " + data.booking + " due in an hour.").channel(channel).async(new PNCallback<PNPublishResult>() {
+                    @Override
+                    public void onResponse(PNPublishResult result, PNStatus status) {
+                        log.info "pubnub stuartOneHourNotification publish status code: " + Integer.toString(status.statusCode)
+                        if (status.error) info.log "pubNub.publish Error: " + status.errorData.information
+                        else if (result.hasProperty("timetoken") && result.timetoken != null) log.info "pubnub publish success, timetoken: " + Long.toString(result.timetoken) 
+                    }
+                })
             }
         } catch(Exception e){
             log.error "Exception in CachingService - _stuartOneHourNotification"

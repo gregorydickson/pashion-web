@@ -339,7 +339,7 @@ class EmailService {
                 response = sg.api(request)
                 log.info response.statusCode.toString()
 
-                sr.courierOutNotification = true
+                sr.courierReturnNotification = true
                 sr.save(flush:true, failOnError:true)
 
             } catch (Exception e) {
