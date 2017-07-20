@@ -2,35 +2,41 @@ import { inject } from 'aurelia-framework';
 import { HttpClient } from 'aurelia-fetch-client';
 import 'fetch';
 import { Router } from 'aurelia-router';
-import { DS } from './datastores/ds';
+import { UserService } from './services/userService';
 import { CreateDialogEditContact } from './contacts/dialogEditContact';
 import { DialogService } from 'aurelia-dialog';
 import { CreateDialogUpdatePhoto } from './contacts/dialogUpdatePhoto';
 
-@inject(HttpClient, DS, Router, DialogService)
+@inject(HttpClient, UserService, Router, DialogService)
 export class Header {
     //user = {};
     currentRoute = '';
 
     navOptions = [{ value: "index", name: "DASHBOARD" }, { value: "adminpage", name: "ADMIN" }];
 
-    constructor(http, DS, router, dialogService) {
+    constructor(http, UserService, router, dialogService) {
+        console.log("constructing header");
         http.configure(config => {
             config
                 .useStandardConfiguration();
         });
         this.http = http;
-        this.ds = DS;
+        this.userService = UserService;
         this.theRouter = router;
         this.dialogService = dialogService;
     }
 
     activate() {
-        this.user = this.ds.user.user;
-        this.userActionsPlaceholder = this.ds.user.user.name;
+        console.log("header activate");
+        this.userService.getUser().then(user =>{
+            this.user = user;
+            this.userActionsPlaceholder = user.name;
+        });
+        
     }
 
     attached() {
+        console.log("header attached");
         this.wireMenus();
     }
 
@@ -108,7 +114,7 @@ export class Header {
             this.availableUserItems = [];
             this.dialogService.open({ viewModel: CreateDialogEditContact, model: 0 })
                 .then(response => {
-                    this.user = this.ds.user.user;
+                    this.userService.getUser().then(user=> this.user = user);
                     // Add back in the available options
                     this.availableUserItems = [
                         { id: 'logout', text: 'LOGOUT' },
@@ -125,7 +131,7 @@ export class Header {
 
         if (this.currentRoute == "adminpage") {
             console.log("admin, getUser()");
-            this.user = this.ds.user.user;
+            this.userService.getUser().then(user=> this.user = user);
         }
     }
 

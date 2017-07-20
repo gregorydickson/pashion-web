@@ -2,10 +2,9 @@ import { DialogController } from 'aurelia-dialog';
 import { inject } from 'aurelia-framework';
 import { DateFormat } from 'common/dateFormat';
 import $ from 'jquery';
-import { DS } from 'datastores/ds';
 
 
-@inject(DialogController, DS)
+@inject(DialogController)
 export class Zoom {
   static inject = [DialogController];
   currentItem = {};
@@ -17,9 +16,8 @@ export class Zoom {
   image = '';
   name = '';
 
-  constructor(controller, DS) {
+  constructor(controller) {
     this.controller = controller;
-    this.ds = DS;
   }
 
   activate(zoomModel) {
@@ -32,7 +30,7 @@ export class Zoom {
     this.image = zoomModel.item.image;
     this.name = zoomModel.item.name;
     this.imageProvider = zoomModel.item.imageProvider;
-    this.user = this.ds.user.user;
+
     console.log("zoom.js row number :" + zoomModel.rowNumber);
     console.log("zoom.js item number :" + zoomModel.itemNumber);
     //console.log("rows  :"+zoomModel.rows);

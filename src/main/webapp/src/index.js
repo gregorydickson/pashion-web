@@ -25,11 +25,11 @@ import { PubNubService } from './services/pubNubService';
 import { SearchableItemService } from './services/searchableItemService';
 import { busy } from './services/busy';
 import { CreateDialogAlert } from './common/dialogAlert';
-import { DS } from './datastores/ds';
+
 import moment from 'moment'
 
 
-@inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, PRAgencyService, busy, PubNubService, DS, SearchableItemService)
+@inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, PRAgencyService, busy, PubNubService,  SearchableItemService)
 export class Index {
     //user = {};
     bookings = [];
@@ -65,7 +65,7 @@ export class Index {
 
 
 
-    constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, PRAgencyService, busy, pubNubService, DS,searchableItemService) {
+    constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, PRAgencyService, busy, pubNubService, searchableItemService) {
         http.configure(config => {
             config
                 .useStandardConfiguration();
@@ -83,7 +83,6 @@ export class Index {
         this.maxRReached = false;
         this.numberImages = 0;
         this.imagePanelSize = 2; //  1 = small, 2 = mid, 3 = large
-        this.ds = DS;
         this.searchableItemService = searchableItemService;
         
     }
@@ -332,10 +331,7 @@ export class Index {
                     }, 1000); 
                 this.busy.off();
             })
-
-        //.then(anything =>  { setTimeout(function() { $("img.lazy").unveil(); }, 1000) ; }) // initial unveil of first images on load
-            .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 500 }, 'slow')) // scroll to top
-            ;
+            .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 500 }, 'slow'));
     }
 
     filterChangeBrand(event) {
@@ -441,10 +437,10 @@ export class Index {
                     
                 }
                 this.busy.off();
+                //$("#MainScrollWindow").animate({ scrollTop: $("#MainScrollWindow").offset().top - 500 }, 'slow');
                 
             })
-            .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 500 }, 'slow')) // scroll to top
-            ;
+            
             
     }
 
@@ -836,47 +832,56 @@ export class Index {
 
 
     activate() {
-        this.user = this.ds.user.user;
-        if (this.user.type === "nosession") window.location.href = '/user/login';
-        if (this.user.type === "brand") { this.searchType = 'brandSearch'; this.company = this.user.brand; }
-        if (this.user.type === "press") { this.searchType = 'filterSearch'; this.company = this.user.pressHouse; }
-        if (this.user.type === "prAgency") { this.searchType = 'brandSearch'; this.company = this.user.prAgency; }
+        this.userService.getUser().then(user =>{
+            this.user = user;
 
-        // filtering
-        if(this.user.type === "brand") this.brandService.getOnlyShowMySampleRequests(this.user.brand.id).then ( result => { 
-            this.onlyShowMine = result;
-            console.log("onlyShowMine:" + this.onlyShowMine);
-            if(this.onlyShowMine) {
-                // move to company based interpretation of onlyShowMine this.cityFiltering = this.user.city.name;
-                this.onlyShowMineCompany = this.user.brand.name;
+            if (this.user.type === "nosession") window.location.href = '/user/login';
+            if (this.user.type === "brand") { this.searchType = 'brandSearch'; this.company = this.user.brand; }
+            if (this.user.type === "press") { this.searchType = 'filterSearch'; this.company = this.user.pressHouse; }
+            if (this.user.type === "prAgency") { this.searchType = 'brandSearch'; this.company = this.user.prAgency; }
+
+            // filtering
+            if(this.user.type === "brand") this.brandService.getOnlyShowMySampleRequests(this.user.brand.id).then ( result => { 
+                this.onlyShowMine = result;
+                console.log("onlyShowMine:" + this.onlyShowMine);
+                if(this.onlyShowMine) {
+                    // move to company based interpretation of onlyShowMine this.cityFiltering = this.user.city.name;
+                    this.onlyShowMineCompany = this.user.brand.name;
+                }
+            });   
+
+            if(this.user.type === "prAgency") this.prAgencyService.getOnlyShowMySampleRequests(this.user.prAgency.id).then ( result => { 
+                this.onlyShowMine = result;
+                console.log("onlyShowmine:" + this.onlyShowMine);
+                if(this.onlyShowMine) {
+                    // move to company based interpretation of onlyShowMine this.cityFiltering = this.user.city.name;
+                    this.onlyShowMineCompany = this.user.prAgency.name;
+                }
+            }); 
+            this.filterChangeBrand();
+            this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub());
+            ga('set', 'page', '/index.html');
+            ga('send', 'pageview');
+            ga('send', 'event', 'index', 'pageview', this.user.email);
+
+            if (this.user.type === "prAgency"){
+                
+                    this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
+                    this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes);
+                    this.brandService.getBrands().then(brands => this.brands = brands);
+                    this.prAgencyService.getBrands().then(brands => this.PRbrands = brands);
+                    this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors);
+            } else{
+                
+                    this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
+                    this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes);
+                    this.brandService.getBrands().then(brands => this.brands = brands);
+                    this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors);
             }
-        });   
+                
 
-        if(this.user.type === "prAgency") this.prAgencyService.getOnlyShowMySampleRequests(this.user.prAgency.id).then ( result => { 
-            this.onlyShowMine = result;
-            console.log("onlyShowmine:" + this.onlyShowMine);
-            if(this.onlyShowMine) {
-                // move to company based interpretation of onlyShowMine this.cityFiltering = this.user.city.name;
-                this.onlyShowMineCompany = this.user.prAgency.name;
-            }
-        }); 
-
-        if (this.user.type === "prAgency")
-            return Promise.all([
-                this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
-                this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes),
-                this.brandService.getBrands().then(brands => this.brands = brands),
-                this.prAgencyService.getBrands().then(brands => this.PRbrands = brands),
-                this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors),
-            ]);
-        else
-            return Promise.all([
-                this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
-                this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes),
-                this.brandService.getBrands().then(brands => this.brands = brands),
-                this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors),
-            ]);
-
+        });
+        
 
 
     }
@@ -921,7 +926,7 @@ export class Index {
         }
 
         // load initial iamges. NOTE special code in filterChangeBrand for first time loading - move this if change this line
-        this.filterChangeBrand();
+        
         var parent = this;
 
         // search box functionality
@@ -992,11 +997,9 @@ export class Index {
             console.timeEnd("SampleRequests");
         });
 
-        this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub());
+        
 
-        ga('set', 'page', '/index.html');
-        ga('send', 'pageview');
-        ga('send', 'event', 'index', 'pageview', this.user.email);
+        
     }
 
 

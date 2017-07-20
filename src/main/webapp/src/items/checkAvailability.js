@@ -5,9 +5,8 @@ import { inject } from 'aurelia-framework';
 import { DateFormat } from 'common/dateFormat';
 import { UserService } from 'services/userService';
 import { BrandService } from 'services/brandService';
-import { DS } from 'datastores/ds';
 
-@inject(HttpClient, DialogController, UserService, BrandService, DS)
+@inject(HttpClient, DialogController, UserService, BrandService)
 export class CheckAvailability {
   static inject = [DialogController];
 
@@ -19,7 +18,7 @@ export class CheckAvailability {
   selectAll = true;
   brandHideCalendar = false;
 
-  constructor(http, controller, userService, brandService, DS) {
+  constructor(http, controller, userService, brandService) {
     this.controller = controller;
 
     http.configure(config => {
@@ -29,7 +28,6 @@ export class CheckAvailability {
     this.http = http;
     this.userService = userService;
     this.brandService = brandService;
-    this.ds = DS;
   }
 
   activate(itemId) {
@@ -46,20 +44,24 @@ export class CheckAvailability {
           ids.push(item.id);
         })
 
-        this.user = this.ds.user.user;
+        this.userService.getUser().then(user =>{
 
-        var queryString = DateFormat.urlString(0, 1);
-        if (this.user.type === "brand")
-          queryString = queryString + '&searchType=brand';
+          var queryString = DateFormat.urlString(0, 1);
+          if (this.user.type === "brand")
+            queryString = queryString + '&searchType=brand';
 
-        this.http.fetch('/calendar/showAvailabilitySamples' + queryString, {
-          method: 'post',
-          body: json(this.selectedProductIds)
-        })
-          .then(response => response.json())
-          .then(calendar => {
-            this.calendar = calendar;
-          });
+          this.http.fetch('/calendar/showAvailabilitySamples' + queryString, {
+            method: 'post',
+            body: json(this.selectedProductIds)
+          })
+            .then(response => response.json())
+            .then(calendar => {
+              this.calendar = calendar;
+            });
+
+        });
+
+        
       });
       this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
 

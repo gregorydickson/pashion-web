@@ -12,11 +12,9 @@ import {
 import {
   UserService
 } from 'services/userService';
-import {
-  DS
-} from 'datastores/ds';
 
-@inject(DialogController, UserService, DS)
+
+@inject(DialogController, UserService)
 export class CreateDialogUpdatePhoto {
 
   flashMessage = '';
@@ -24,10 +22,9 @@ export class CreateDialogUpdatePhoto {
   reader = null;
   @bindable avatar = null;
 
-  constructor(controller, userService, DS) {
+  constructor(controller, userService) {
     this.controller = controller;
     this.userService = userService;
-    this.ds = DS;
   }
 
 
@@ -67,10 +64,14 @@ export class CreateDialogUpdatePhoto {
   delete() {
     // clear user.avatar
     // save null to user record
-    this.user = this.ds.user.user;
-    this.user.avatar = '';
-    this.userService.clearAvatar(this.user);
-    this.close();
+    this.userService.getUser().then(user =>{
+      this.user = user;
+      this.user.avatar = '';
+      this.userService.clearAvatar(this.user);
+      this.close();
+    });
+    
+    
   }
 
   clearMessage() {

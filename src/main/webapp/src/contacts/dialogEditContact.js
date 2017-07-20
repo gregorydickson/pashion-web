@@ -9,9 +9,9 @@ import { PressHouseService } from 'services/pressHouseService';
 import { PRAgencyService } from 'services/PRAgencyService';
 import { CreateDialogConfirmPassword } from './dialogConfirmPassword';
 import { DialogService } from 'aurelia-dialog';
-import { DS } from 'datastores/ds';
 
-@inject(HttpClient, DialogController, UserService, BrandService,  DialogService, PRAgencyService, PressHouseService, DS)
+
+@inject(HttpClient, DialogController, UserService, BrandService,  DialogService, PRAgencyService, PressHouseService)
 export class CreateDialogEditContact {
     static inject = [DialogController];
 
@@ -23,7 +23,7 @@ export class CreateDialogEditContact {
     flashMessage = '';
     greenMessage = 'Min 8 characters: 1 uppercase, 1 lowercase, 1 number';
 
-    constructor(http, controller, userService, brandService, dialogService, prAgencyService, pressHouseService, DS) {
+    constructor(http, controller, userService, brandService, dialogService, prAgencyService, pressHouseService) {
         this.controller = controller;
         http.configure(config => {
             config
@@ -35,17 +35,21 @@ export class CreateDialogEditContact {
         this.brandService = brandService;
         this.pressHouseService = pressHouseService;
         this.prAgencyService = prAgencyService;
-        this.ds = DS;
     }
 
 
     activate() {
         //this.lUser = user;
-        this.lUser = clone(this.ds.user.user);
+        this.userService.getUser().then(user =>{
+            
+            this.lUser = clone(user);
+            if (!this.lUser.address) {
+                this.lUser.address = { id: '' };
+            }
+        });
+        
 
-        if (!this.lUser.address) {
-            this.lUser.address = { id: '' };
-        }
+        
 
         this.getAddresses().then(addresses => {
             console.log(addresses)

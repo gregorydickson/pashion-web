@@ -8,9 +8,8 @@ import { EventAggregator } from 'aurelia-event-aggregator';
 import { PubNubService } from 'services/pubNubService';
 import { DialogService } from 'aurelia-dialog';
 import { CreateDialogAlert } from 'common/dialogAlert';
-import { DS } from 'datastores/ds';
 
-@inject(HttpClient, UserService, EventAggregator, PubNubService, DialogService, DS, TaskQueue) 
+@inject(HttpClient, UserService, EventAggregator, PubNubService, DialogService, TaskQueue) 
 @singleton()
 export class Messages {
 
@@ -26,15 +25,14 @@ export class Messages {
     //pubnub
     pubnub;
 
-    constructor(http, userService, eventAggregator, pubNubService, dialogService, DS, taskQueue) {  
+    constructor(http, userService, eventAggregator, pubNubService, dialogService, taskQueue) {  
       this.http = http;
       this.userService = userService;
       this.ea = eventAggregator;
       //this.boundHandlerComms = this.handleKeyInput.bind(this);
       this.pubNubService = pubNubService;
       this.dialogService = dialogService;
-      this.ds = DS;
-      this.user = this.ds.user.user;
+
       this.taskQueue = taskQueue;
     }
 
@@ -47,9 +45,10 @@ export class Messages {
         console.log("activated messages");
 
         var forceGetFromServer = false;
-        this.user = this.ds.user.user;
+        
         return Promise.all([
-          this.users = this.userService.getUsers(forceGetFromServer).then(users => this.users = users)
+            this.userService.getUser().then(user =>this.user = user),
+            this.userService.getUsers(forceGetFromServer).then(users => this.users = users)
         ]);
     }
 

@@ -10,9 +10,8 @@ import { PRAgencyService } from 'services/PRAgencyService';
 import { CreateDialogConfirmDelete } from './admin/dialogConfirmDelete';
 import { AddressService } from 'services/addressService';
 import { CityService } from 'services/cityService';
-import { DS } from 'datastores/ds';
 
-@inject(DialogService, UserService, BrandService, PRAgencyService, PressHouseService, AddressService, CityService, DS, TaskQueue)
+@inject(DialogService, UserService, BrandService, PRAgencyService, PressHouseService, AddressService, CityService,  TaskQueue)
 export class Adminpage {
 
     currentUser = {};
@@ -26,7 +25,7 @@ export class Adminpage {
     company = {};
     cities = [];
 
-    constructor(dialogService, userService, brandService, prAgencyService, pressHouseService, addressService, cityService, DS, TaskQueue) {
+    constructor(dialogService, userService, brandService, prAgencyService, pressHouseService, addressService, cityService, TaskQueue) {
         this.dialogService = dialogService;
         this.userService = userService;
         this.brandService = brandService;
@@ -34,7 +33,6 @@ export class Adminpage {
         this.prAgencyService = prAgencyService;
         this.addressService = addressService;
         this.cityService = cityService;
-        this.ds = DS;
         this.taskQueue = TaskQueue;
     }
 
@@ -74,7 +72,10 @@ export class Adminpage {
     }
 
     activate() {
-        this.user = this.ds.user.user;
+        this.userService.getUser().then(user =>{
+            this.user = user;
+            
+        });
         this.reloadData();
     }
 
