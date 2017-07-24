@@ -354,7 +354,7 @@ export class Index {
             this.selectedBrand = this.user.companyId;
             //disable user city filtering
             //this.selectedCity = this.user.city.name;
-        } else if (this.user.type === "prAgency") {
+        } else if (this.user.type === "prAgency" && this.selectedBrand == '') {
             this.selectedBrand = this.prAgencyService.getDefault().id;
             //disable user city filtering
             // if(this.user.city) this.selectedCity = this.user.city.name;

@@ -513,9 +513,16 @@ class SearchableItemController {
 
         def item =  SearchableItem.get(jsonObject.id)
         item.name = jsonObject.nameNumber.toString() 
-        if (jsonObject.nameVariant) item.name = item.name + jsonObject.nameVariant
-        if (jsonObject.nameNumber instanceof Integer) item.nameNumber = jsonObject.nameNumber
-        else item.nameNumber = Integer.parseInt(jsonObject.nameNumber)
+        if (jsonObject.nameVariant)
+            item.name = item.name + jsonObject.nameVariant
+        
+        if(jsonObject.nameNumber){
+            if (jsonObject.nameNumber instanceof Integer){
+                item.nameNumber = jsonObject.nameNumber
+            } else {
+                item.nameNumber = Integer.parseInt(jsonObject.nameNumber)
+            }
+        }
         item.nameVariant = jsonObject.nameVariant
         item.description = jsonObject.description
         item.attributes = jsonObject.attributes
@@ -554,6 +561,7 @@ class SearchableItemController {
             sample.message = it.message
 
             sample.save(failOnError : true, flush: true)
+            log.info "saved sample:"+sample.id
         } 
         item.save(failOnError : true, flush: true)
         def sent = [message:'Items Updated']
