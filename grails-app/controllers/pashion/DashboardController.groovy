@@ -212,14 +212,6 @@ class DashboardController {
         render list
     }
 
-    def material(){
-        def list = ['ANGORA','CASHMERE','CHAMBRAY','CLOTH','COTTON','CORDUROY','CREPE','CUIR','DENIM','DUNGAREE','FISHNET','FLUFFY',
-                    'FRILL','FUR','GLITTER','JOUY','KNIT','LACE','LAMÉ','LEATHER','LINEN',
-                    'METAL','MOHAIR','ORGANZA','OXFORD','PAISLEY','PLAID','PLASTIC','PVC',
-                    'QUILT','RIB','SATIN','SHEARLING','SHEEP','SHEER','SILK','SNAKE','SNAKESKIN','STITCH','SUEDE',
-                    'TARTAN','TULLE','TWEED','VELVET','WATERPROOF','WOOL','WRAP'] as JSON
-        render list
-    }
 
     def themes(){
         def list = cachingService.themes() 
