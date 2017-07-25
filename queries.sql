@@ -30,6 +30,14 @@ and brand_collection_id = '168' and date_created > '2017-04-03 17:33:50';
 
 ALTER TABLE user AUTO_INCREMENT = 60;
 
+
+INSERT INTO color (name) VALUES ('baby blue') , ('blue light') , ('beige') , ('bicolour') , ('black') , ('bleu') , ('blue') , ('bordeaux'),
+                    ('bright') , ('bronze') , ('brown') , ('brown light') , ('burgundy') , ('camel') , ('cobalt') , ('cognac') , ('colorful'),
+                    ('coral') , ('cream') , ('duotone') , ('fuschia') , ('glitter') , ('gold') , ('gray') , ('green') , ('grey') , ('ivory') , ('jaune'),
+                    ('khaki') , ('lavendar') , ('lilac') , ('lime') , ('metallic') , ('monochrome'),
+                    ('multicolour') , ('mustard') , ('navy blue') , ('noir') , ('nude') , ('orange') , ('pastel') , ('pearl'),
+                    ('pink') , ('powder') , ('purple') , ('red') , ('rust') , ('salmon') , ('shine') , ('silver') , ('transparent'),
+                    ('turquoise') , ('white') , ('yellow');
 /*
 	sample types
 */
