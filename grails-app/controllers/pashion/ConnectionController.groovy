@@ -4,14 +4,14 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import grails.converters.JSON
 
-import com.pubnub.api.*
+//import com.pubnub.api.*
 
 @Transactional(readOnly = true)
 class ConnectionController {
 
     // static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
-    Pubnub pubnub = new Pubnub("pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73", "sub-c-dd158aea-b76b-11e6-b38f-02ee2ddab7fe")
+   // PubNub pubnub = new PubNub("pub-c-b5b66a91-2d36-4cc1-96f3-f33188a8cc73", "sub-c-dd158aea-b76b-11e6-b38f-02ee2ddab7fe")
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)

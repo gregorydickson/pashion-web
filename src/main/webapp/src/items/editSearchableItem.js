@@ -112,6 +112,9 @@ export class EditSearchableItem {
       .then(response => response.json())
       .then(item => {
           this.currentItem = item;
+          // break out number and variant
+          //this.nameNumber = parseInt(this.currentItem.name.replace(/\D/g,''));
+          //this.nameVariant = this.currentItem.name.replace(/[0-9]/g, '');
           this.createdNew = false;
 
           item.samples.forEach(item => {
@@ -407,6 +410,7 @@ export class EditSearchableItem {
   submit(){
 
     var item = this.currentItem;
+    item.name = this.currentItem.nameNumber + this.currentItem.nameVariant;
     console.log("submitting Image Data");
     console.log(JSON.stringify(item));
     //add attributes from samples to the look
@@ -437,13 +441,12 @@ export class EditSearchableItem {
           });
     
     this.alertP("Updated");
-    this.controller.close();
+    this.controller.close(true);
   }
 
   close(){
-    this.controller.close();
+    this.controller.close(false);
   }
-
    
 
 }

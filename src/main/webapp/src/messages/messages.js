@@ -253,7 +253,7 @@ export class Messages {
                     
                 }
             },
-            status: function(s) {
+            status: (s) => {
                 console.log("pubnub callback status in messages:", s);
                 if (s.category) {
                     if (s.category== 'PNNetworkDownCategory') {

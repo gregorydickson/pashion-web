@@ -1,5 +1,5 @@
 // AURELIA
-import { inject } from 'aurelia-framework';
+import { inject, TaskQueue } from 'aurelia-framework';
 import { HttpClient } from 'aurelia-fetch-client';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { DialogService } from 'aurelia-dialog';
@@ -29,7 +29,11 @@ import { CreateDialogAlert } from './common/dialogAlert';
 import moment from 'moment'
 
 
+<<<<<<< HEAD
 @inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, PRAgencyService, busy, PubNubService,  SearchableItemService)
+=======
+@inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, PRAgencyService, busy, PubNubService, DS, SearchableItemService, TaskQueue)
+>>>>>>> master
 export class Index {
     //user = {};
     bookings = [];
@@ -65,7 +69,11 @@ export class Index {
 
 
 
+<<<<<<< HEAD
     constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, PRAgencyService, busy, pubNubService, searchableItemService) {
+=======
+    constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, PRAgencyService, busy, pubNubService, DS,searchableItemService, taskQueue) {
+>>>>>>> master
         http.configure(config => {
             config
                 .useStandardConfiguration();
@@ -84,6 +92,7 @@ export class Index {
         this.numberImages = 0;
         this.imagePanelSize = 2; //  1 = small, 2 = mid, 3 = large
         this.searchableItemService = searchableItemService;
+        this.taskQueue = taskQueue;
         
     }
 
@@ -349,7 +358,7 @@ export class Index {
             this.selectedBrand = this.user.companyId;
             //disable user city filtering
             //this.selectedCity = this.user.city.name;
-        } else if (this.user.type === "prAgency") {
+        } else if (this.user.type === "prAgency" && this.selectedBrand == '') {
             this.selectedBrand = this.prAgencyService.getDefault().id;
             //disable user city filtering
             // if(this.user.city) this.selectedCity = this.user.city.name;
@@ -1088,20 +1097,30 @@ export class Index {
     editSearchableItem(itemId) {
         //this.lookMenu(itemId);
         this.dialogService.open({ viewModel: EditSearchableItem, model: itemId, lock: true })
-            .then(response => { });
+            .then(response => {
+            //console.log("editsearchableitem confirm dialog was cancelled? " + response.wasCancelled);
+            if (response.wasCancelled) return false;
+            // redraw to take effect if name changed updates names and order
+            this.taskQueue.queueMicroTask(() => {
+                            this.filterChangeBrand();
+                         });
+             });
+
     }
 
     deleteSearchableItem(itemId) {
         //console.log (`ItemId: ${itemId}`)
         this.dialogService.open({ viewModel: CreateDialogConfirmDeleteItem, model: itemId, lock: true })
             .then(response => {        
-                console.log("confirm dialog was cancelled? " + response.wasCancelled);
+                //console.log("confirm dialog was cancelled? " + response.wasCancelled);
                 if (response.wasCancelled) return false;
         
                 this.http.fetch('/searchableItem/delete/'+itemId.id, {method: 'post'})
                    .then(response => {})
                    .then(result => {
-                     this.filterChangeBrand(); 
+                    if (response.wasCancelled) return false;
+                    // redraw to take effect if name changed updates names and order
+                    this.filterChangeBrand(); 
                  });
         });
     }
@@ -1122,9 +1141,7 @@ export class Index {
     editSampleRequest(id) {
         this.closeSampleRequestMenu(id);
         this.dialogService.open({ viewModel: EditSampleRequest, model: id, lock: true })
-            .then(response => {
-
-            });
+            .then(response => {});
     }
 
 
@@ -1318,6 +1335,7 @@ export class Index {
             .then(response => {         
                 console.log("confirm dialog was cancelled? " + response.wasCancelled);
                 if (response.wasCancelled) return false;
+                // redraw to take effect if name changed updates names and order
                 this.filterChangeBrand(); 
         });
     }

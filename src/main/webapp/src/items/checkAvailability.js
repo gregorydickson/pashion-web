@@ -5,8 +5,15 @@ import { inject } from 'aurelia-framework';
 import { DateFormat } from 'common/dateFormat';
 import { UserService } from 'services/userService';
 import { BrandService } from 'services/brandService';
+<<<<<<< HEAD
 
 @inject(HttpClient, DialogController, UserService, BrandService)
+=======
+import { OutReasonService } from 'services/outReasonService';
+import { DS } from 'datastores/ds';
+
+@inject(HttpClient, DialogController, UserService, BrandService, DS, OutReasonService)
+>>>>>>> master
 export class CheckAvailability {
   static inject = [DialogController];
 
@@ -18,7 +25,11 @@ export class CheckAvailability {
   selectAll = true;
   brandHideCalendar = false;
 
+<<<<<<< HEAD
   constructor(http, controller, userService, brandService) {
+=======
+  constructor(http, controller, userService, brandService, DS, outReasonService) {
+>>>>>>> master
     this.controller = controller;
 
     http.configure(config => {
@@ -28,6 +39,11 @@ export class CheckAvailability {
     this.http = http;
     this.userService = userService;
     this.brandService = brandService;
+<<<<<<< HEAD
+=======
+    this.ds = DS;
+    this.outReasonService = outReasonService;
+>>>>>>> master
   }
 
   activate(itemId) {
@@ -63,7 +79,11 @@ export class CheckAvailability {
 
         
       });
+
       this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
+
+      this.outReasonService.getOutReasons().then(outReasons => {
+        this.outReasons = outReasons.map(value => {return {id: value.id, name:value.name.toUpperCase()};});});
 
   }
 
