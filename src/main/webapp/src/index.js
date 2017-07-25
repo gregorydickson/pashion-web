@@ -29,11 +29,8 @@ import { CreateDialogAlert } from './common/dialogAlert';
 import moment from 'moment'
 
 
-<<<<<<< HEAD
+
 @inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, PRAgencyService, busy, PubNubService,  SearchableItemService)
-=======
-@inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, PRAgencyService, busy, PubNubService, DS, SearchableItemService, TaskQueue)
->>>>>>> master
 export class Index {
     //user = {};
     bookings = [];
@@ -69,11 +66,7 @@ export class Index {
 
 
 
-<<<<<<< HEAD
     constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, PRAgencyService, busy, pubNubService, searchableItemService) {
-=======
-    constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, PRAgencyService, busy, pubNubService, DS,searchableItemService, taskQueue) {
->>>>>>> master
         http.configure(config => {
             config
                 .useStandardConfiguration();
