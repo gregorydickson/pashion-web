@@ -64,10 +64,5 @@ export class AddressDatastore {
 
     
 
-    reset(hard) {
-        this.selectedDeliverToItems = [''];
-        this.selectedDeliverToId = null;
-        if (hard)
-            this.selectedAddress = {};
-    }
+    
 }

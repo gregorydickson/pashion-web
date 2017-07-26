@@ -19,23 +19,26 @@ export class AddressService {
 
 
     getAll() {
-        console.log("addressService.getAll  called, user: " + user);
-
-        let user = this.userService.getUser();
+        console.log("addressService.getAll  called");
         let url = '/dashboard/deliverTo/';
-
-        if (user.type === 'brand') {
-            url = '/dashboard/deliverToBrand/' + user.companyId;
-        } else if (user.type === 'prAgency') {
-            url = '/dashboard/deliverToPRAgency/' + user.companyId;
-        }
+        
         var promise = new Promise((resolve, reject) => {
-            this.http.fetch(url)
-                .then(response => response.json())
-                .then(deliverTo => {
-                    resolve(deliverTo);
-                })
-                .catch(err => reject(err));
+            this.userService.getUser().then(user =>{
+                if (user.type === 'brand') {
+                    url = '/dashboard/deliverToBrand/' + user.companyId;
+                } else if (user.type === 'prAgency') {
+                    url = '/dashboard/deliverToPRAgency/' + user.companyId;
+                }
+                console.log("get addresses url:"+url);
+                this.http.fetch(url)
+                    .then(response => response.json())
+                    .then(deliverTo => {
+                        resolve(deliverTo);
+                    })
+                    .catch(err => reject(err));
+            });
+
+            
         });
         return promise;
     }

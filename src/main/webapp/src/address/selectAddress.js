@@ -150,7 +150,7 @@ export class SelectAddress {
 
         console.log("update address");
         let newAddressModel = {
-            newAddress: this.ds.address.selectedAddress
+            newAddress: this.selectedAddress
         }
 
         this.dialogService.open({
@@ -163,7 +163,7 @@ export class SelectAddress {
                     console.log('good - ', response.output, newAddressModel);
 
                     this.addressSelect.reset();
-                    this.ds.address.selectNewsetDeliverTo(newAddressModel.newAddress);
+                    this.selectNewsetDeliverTo(newAddressModel.newAddress);
                 } else {
                     console.log('bad');
                 }
@@ -187,12 +187,12 @@ export class SelectAddress {
     }
 
     delete() {
-        if (!this.ds.address.editMode)
+        if (!this.editMode)
             return;
 
         console.log("delete address");
         let newAddressModel = {
-            newAddress: this.ds.address.selectedAddress,
+            newAddress: this.selectedAddress,
             deleteMode: true
         }
 
@@ -209,9 +209,9 @@ export class SelectAddress {
                     // this still assumes we get the whole list of addressess back
                     // and should be changed if we switch to only return the new record
                     // with an insert method on the datastore
-                    this.ds.address.reloadData()
+                    this.reloadData()
                         .then(() => {
-                            this.ds.address.reset(true);
+                            this.reset(true);
                             this.addressSelect.reset();
                             this.helpers.dispatchEvent(this.element, 'change', {
                                 selectedAddress: {}
