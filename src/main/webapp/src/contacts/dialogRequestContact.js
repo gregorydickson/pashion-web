@@ -4,9 +4,8 @@ import 'fetch';
 import { inject } from 'aurelia-framework';
 import { DateFormat } from 'common/dateFormat';
 import { UserService } from 'services/userService';
-import { DS } from 'datastores/ds';
 
-@inject(HttpClient, DialogController, UserService, DS)
+@inject(HttpClient, DialogController, UserService)
 export class DialogRequestContact {
     static inject = [DialogController];
 
@@ -15,7 +14,7 @@ export class DialogRequestContact {
     invite = false;
 
 
-    constructor(http, controller, userService, DS) {
+    constructor(http, controller, userService) {
         this.controller = controller;
         http.configure(config => {
             config
@@ -25,7 +24,6 @@ export class DialogRequestContact {
 
         this.userService = userService;
         this.boundHandlerComms = this.handleKeyInput.bind(this);
-        this.ds = DS;
         
     }
 
@@ -34,7 +32,7 @@ export class DialogRequestContact {
     }
 
     activate() {
-        this.user = this.ds.user.user;
+    return this.userService.getUser().then(user =>{this.user = user});
     }
 
     close() {

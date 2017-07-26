@@ -11,11 +11,11 @@ import { CommsHeader } from 'comms/commsHeader';
 import { EventAggregator } from 'aurelia-event-aggregator';
 import { PubNubService } from 'services/pubNubService';
 import { CommsActivity } from 'services/commsActivity';
-import { DS } from 'datastores/ds';
+
 // import {Messages} from 'messages/messages';
 
 
-@inject(HttpClient, DialogController, DialogService, UserService, CommsHeader, EventAggregator, PubNubService, CommsActivity,  DS) //, Messages)
+@inject(HttpClient, DialogController, DialogService, UserService, CommsHeader, EventAggregator, PubNubService, CommsActivity) //, Messages)
 export class ContactsList {
   static inject = [DialogController];
 
@@ -32,7 +32,7 @@ export class ContactsList {
   numberNew = 0;
   favicon = 0;
 
-  constructor(http, controller, dialogService, userService, commsHeader, eventAggregator, pubNubService, commsActivity, DS) { //} messages){
+  constructor(http, controller, dialogService, userService, commsHeader, eventAggregator, pubNubService, commsActivity) { //} messages){
     this.controller = controller;
     http.configure(config => {
       config
@@ -45,7 +45,6 @@ export class ContactsList {
     this.ea = eventAggregator;
     this.pubNubService = pubNubService;
     this.commsActivity = commsActivity;
-    this.ds = DS;
     // this.messages = messages;
 
   }
@@ -122,9 +121,10 @@ export class ContactsList {
   activate() {
 
     var forceGetFromServer = false;
-    this.user = this.ds.user.user;
+    
     return Promise.all([
-      this.users = this.userService.getUsers(forceGetFromServer).then(users => this.users = users)
+      this.userService.getUser().then(user =>this.user = user),
+      this.userService.getUsers(forceGetFromServer).then(users => this.users = users)
       // This version now creates two entries for each conneciton, one each with user as the id.
       // But no access to these data structures should be done here
       // All manipulations should happen in userServices.

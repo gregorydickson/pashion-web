@@ -8,7 +8,7 @@
         <select select2.bind='{ "placeholder": placeholder}' select2.ref="addressSelect" change.delegate="onAddressSelectChanged($event)"
             style.bind="style">
             <option></option>
-            <option repeat.for="option of ds.address.availableDeliverToItems" value.bind="option.id">${option.text}</option>
+            <option repeat.for="option of availableDeliverToItems" value.bind="option.id">${option.text}</option>
         </select>
 
         <template if.bind="showMenu">
@@ -17,8 +17,8 @@
                 style="margin:0; width:62px">
                 <option></option>
                 <option value="AddNew">Add New</option>
-                <option value="Update" if.bind="ds.address.editMode">Update</option>
-                <option value="Delete" if.bind="ds.address.editMode">Delete</option>
+                <option value="Update" if.bind="editMode">Update</option>
+                <option value="Delete" if.bind="editMode">Delete</option>
             </select>
         </template>
         </span>

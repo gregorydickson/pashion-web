@@ -4,13 +4,12 @@ import 'fetch';
 import { inject } from 'aurelia-framework';
 import { DateFormat } from 'common/dateFormat';
 import { SampleRequestService } from 'services/sampleRequestService';
-import { DS } from 'datastores/ds';
 import { CreateDialogAlert } from 'common/dialogAlert';
 import moment from 'moment'
 import { busy } from 'services/busy';
 
 
-@inject(SampleRequestService, DialogController, DS, HttpClient, DialogService, busy)
+@inject(SampleRequestService, DialogController, HttpClient, DialogService, busy)
 export class EditSampleRequest {
   static inject = [DialogController];
 
@@ -23,7 +22,7 @@ export class EditSampleRequest {
   payment = [];
   times = [];
 
-  constructor(sampleRequestService, controller, DS, http, DialogService, busy) {
+  constructor(sampleRequestService, controller, http, DialogService, busy) {
     http.configure(config => {
       config
         .useStandardConfiguration();
@@ -31,7 +30,6 @@ export class EditSampleRequest {
     this.http = http;
     this.controller = controller;
     this.sampleRequestService = sampleRequestService;
-    this.ds = DS;
     this.dialogService = DialogService;
     this.busy = busy;
   }
@@ -62,7 +60,7 @@ export class EditSampleRequest {
 
   attached() {
 
-    this.user = this.ds.user.user;
+    
     this.http.fetch('/brand/addresses/' + this.sampleRequest.brand.id)
       .then(response => response.json())
       .then(addresses => this.brandAddresses = addresses);

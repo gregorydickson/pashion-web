@@ -1,5 +1,4 @@
 import { inject, bindable, bindingMode } from 'aurelia-framework';
-import { DS } from './datastores/ds';
 import { SampleRequestService } from './services/sampleRequestService';
 import { PubNubService } from './services/pubNubService';
 import { DialogService } from 'aurelia-dialog';
@@ -16,7 +15,7 @@ import { BrandService } from './services/brandService';
 import { UserService } from './services/userService';
 import moment from 'moment'
 
-@inject(HttpClient, DialogService, DS, PDFService, SampleRequestService, busy, EventAggregator, PubNubService, BrandService, PRAgencyService, UserService)
+@inject(HttpClient, DialogService, PDFService, SampleRequestService, busy, EventAggregator, PubNubService, BrandService, PRAgencyService, UserService)
 export class Requestman {
 
   @bindable({ defaultBindingMode: bindingMode.twoWay }) bookings = [];
@@ -41,7 +40,7 @@ export class Requestman {
 
 
 
-  constructor(http, dialogService, DS, pDFService, sampleRequestService, busy, eventAggregator, pubNubService, brandService, PRAgencyService, userService) {
+  constructor(http, dialogService, pDFService, sampleRequestService, busy, eventAggregator, pubNubService, brandService, PRAgencyService, userService) {
     http.configure(config => {
       config
         .useStandardConfiguration();
@@ -49,7 +48,6 @@ export class Requestman {
 
     this.http = http;
     this.dialogService = dialogService;
-    this.ds = DS;
     this.sampleRequestService = sampleRequestService;
     this.busy = busy;
     this.ea = eventAggregator;
@@ -63,29 +61,36 @@ export class Requestman {
 
   activate() {
     this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
-    this.user = this.ds.user.user;
     this.sampleRequestService.getSampleRequests()
       .then(bookings => {
         this.bookings = bookings;
       });
 
-    // filtering
-    if(this.user.type === "brand") this.brandService.getOnlyShowMySampleRequests(this.user.brand.id).then ( result => { 
+    this.userService.getUser().then(user=>{
+      this.user = user;
+      if(this.user.type === "brand") this.brandService.getOnlyShowMySampleRequests(this.user.brand.id).then ( result => { 
         this.onlyShowMine = result;
         console.log("onlyShowmine:" + this.onlyShowMine);
         if(this.onlyShowMine) {
             // move to company based interpretation of onlyShowMine this.cityFiltering = this.user.city.name;
             this.onlyShowMineCompany = this.user.brand.name;
         }
-    });       
-    if(this.user.type === "prAgency") this.prAgencyService.getOnlyShowMySampleRequests(this.user.prAgency.id).then ( result => { 
-        this.onlyShowMine = result;
-        console.log("onlyShowmine:" + this.onlyShowMine);
-        if(this.onlyShowMine) {
-            // move to company based interpretation of onlyShowMine this.cityFiltering = this.user.city.name;
-            this.onlyShowMineCompany = this.user.prAgency.name;
-        }
-    }); 
+      });       
+      if(this.user.type === "prAgency") this.prAgencyService.getOnlyShowMySampleRequests(this.user.prAgency.id).then ( result => { 
+          this.onlyShowMine = result;
+          console.log("onlyShowmine:" + this.onlyShowMine);
+          if(this.onlyShowMine) {
+              // move to company based interpretation of onlyShowMine this.cityFiltering = this.user.city.name;
+              this.onlyShowMineCompany = this.user.prAgency.name;
+          }
+      });
+
+
+    });
+    
+
+    // filtering
+     
 
   }
 

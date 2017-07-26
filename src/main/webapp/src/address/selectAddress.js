@@ -1,29 +1,14 @@
-import {
-    inject,
-    bindable,
-    observable,
-    customElement
-} from 'aurelia-framework';
-import {
-    DialogController,
-    DialogService
-} from 'aurelia-dialog';
+import { inject, bindable, observable, customElement } from 'aurelia-framework';
+import { DialogController, DialogService } from 'aurelia-dialog';
+import { EditAddress } from './editAddress';
+import { AddressService } from 'services/addressService';
+import { Helpers } from '../common/helpers';
 
-import {
-    EditAddress
-} from './editAddress';
-import {
-    DS
-} from '../datastores/ds';
-import {
-    Helpers
-} from '../common/helpers';
-
-@inject(Element, DialogController, DialogService, DS, Helpers)
+@inject(Element, DialogController, DialogService, AddressService, Helpers)
 @customElement('select-address')
 export class SelectAddress {
 
-    @bindable selectedAddress = {};
+    @observable selectedAddress = {};
     @bindable css = 'grid-content shrink';
     @bindable showMenu = false;
     @bindable showAdd = false;
@@ -32,20 +17,64 @@ export class SelectAddress {
     @bindable width = 170;
     style = 'width: 170px';
 
+    @observable deliverTo = [];
+    availableDeliverToItems = [];
+    selectedDeliverToItems = [''];
     selectedDeliverToId = null;
 
-    constructor(Element, DialogController, DialogService, DS, Helpers) {
+    selectedDeliverToId = null;
+    editMode = false;
+
+    constructor(Element, DialogController, DialogService, AddressService, Helpers) {
         this.element = Element;
         this.dialogController = DialogController;
         this.dialogService = DialogService;
-        this.ds = DS;
+        this.addressService = AddressService;
         this.helpers = Helpers;
     }
 
     attached() {
-        // lets clear out the previously selected address
-        // remove this line to keep the last selected address as default
-        this.ds.address.reset(true);
+        this.addressService.getAll()
+            .then(deliverTo => {
+                this.deliverTo = deliverTo;
+                console.log("set deliver to");
+            });
+    }
+
+    selectedAddressChanged(newValue, oldValue) {
+        this.editMode = !this.helpers.isEmptyObject(newValue);
+    }
+
+
+    reloadData() {
+        console.log("reload data");
+        this.addressService.getAll()
+            .then(deliverTo => {
+                console.log("new data");
+                this.loadData(deliverTo);
+            });
+    }
+
+    deliverToChanged() {
+        console.log("deliver to changed");
+        this.availableDeliverToItems = [];
+
+        this.deliverTo.forEach(item => {
+            if (item.surname) {
+                let text = `${item.name} ${item.surname}`;
+                if (item.city) text = text + `  (${item.city} Office)`;
+
+                this.availableDeliverToItems.push({
+                    id: item.id,
+                    text: text
+                });
+            } else {
+                this.availableDeliverToItems.push({
+                    id: item.id,
+                    text: item.name
+                });
+            }
+        });
     }
 
     widthChanged(newValue, oldValue) {
@@ -75,19 +104,19 @@ export class SelectAddress {
     onAddressSelectChanged(event) {
         // lets bubble this event with a generic event bubbler
         this.selectedDeliverToId = event.detail.value;
-        this.ds.address.selectedAddress = this.ds.address.deliverTo.find(item => item.id == this.selectedDeliverToId);
-        console.log('Selected deliverTo:', this.ds.address.selectedAddress);
+        this.selectedAddress = this.deliverTo.find(item => item.id == this.selectedDeliverToId);
+        console.log('Selected deliverTo:', this.selectedAddress);
         this.addressSelect.reset();
         // lets bubble this event with a generic event bubbler
         this.helpers.dispatchEvent(this.element, 'change', {
-            selectedAddress: this.ds.address.selectedAddress
+            selectedAddress: this.selectedAddress
         });
     }
 
     add() {
         console.log("SelectAddres.add ad hoc");
         let newAddressModel = {
-            addresses: this.ds.address.deliverTo,
+            addresses: this.deliverTo,
             newAddress: {}
         }
         this.dialogService.open({
@@ -103,15 +132,15 @@ export class SelectAddress {
                     // this still assumes we get the whole list of addressess back
                     // and should be changed if we switch to only return the new record
                     // with an insert method on the datastore
-                    this.ds.address.loadData(response.output)
-                        .then(() => {
-                            this.ds.address.selectNewsetDeliverTo(newAddressModel.newAddress);
-                            // lets bubble this event with a generic event bubbler
-                            this.helpers.dispatchEvent(this.element, 'change', {
-                                selectedAddress: this.ds.address.selectedAddress
-                            });
-                            this.ds.address.reset();
-                        });
+                    this.loadData(response.output)
+                        
+                    this.selectNewsetDeliverTo(newAddressModel.newAddress);
+                    // lets bubble this event with a generic event bubbler
+                    this.helpers.dispatchEvent(this.element, 'change', {
+                        selectedAddress: this.selectedAddress
+                    });
+                    this.reset();
+                    
 
                 } else {
                     console.log('Cancelled');
@@ -121,12 +150,12 @@ export class SelectAddress {
     }
 
     update() {
-        if (!this.ds.address.editMode)
+        if (!this.editMode)
             return;
 
         console.log("update address");
         let newAddressModel = {
-            newAddress: this.ds.address.selectedAddress
+            newAddress: this.selectedAddress
         }
 
         this.dialogService.open({
@@ -139,7 +168,7 @@ export class SelectAddress {
                     console.log('good - ', response.output, newAddressModel);
 
                     this.addressSelect.reset();
-                    this.ds.address.selectNewsetDeliverTo(newAddressModel.newAddress);
+                    this.selectNewsetDeliverTo(newAddressModel.newAddress);
                 } else {
                     console.log('bad');
                 }
@@ -147,13 +176,28 @@ export class SelectAddress {
             });
     }
 
+    // set the selectedAddress and
+    // the selectedDeliverToItems
+    selectNewsetDeliverTo(selectedAddress) {
+        this.deliverToChanged();
+        let newestDeliverTo = this.availableDeliverToItems.reduce(function (max, x) {
+            return x.id > max.id ? x : max;
+        });
+
+        console.log('Newest deliver to:', newestDeliverTo);
+
+        this.selectedAddress = this.deliverTo.find(item => item.id == newestDeliverTo.id);
+        this.selectedDeliverToId = newestDeliverTo.id;
+        this.selectedDeliverToItems = [this.selectedDeliverToId];
+    }
+
     delete() {
-        if (!this.ds.address.editMode)
+        if (!this.editMode)
             return;
 
         console.log("delete address");
         let newAddressModel = {
-            newAddress: this.ds.address.selectedAddress,
+            newAddress: this.selectedAddress,
             deleteMode: true
         }
 
@@ -170,20 +214,33 @@ export class SelectAddress {
                     // this still assumes we get the whole list of addressess back
                     // and should be changed if we switch to only return the new record
                     // with an insert method on the datastore
-                    this.ds.address.reloadData()
-                        .then(() => {
-                            this.ds.address.reset(true);
-                            this.addressSelect.reset();
-                            this.helpers.dispatchEvent(this.element, 'change', {
-                                selectedAddress: {}
-                            });
-                        });
+                    this.reloadData();
+                        
+                    this.reset(true);
+                    this.addressSelect.reset();
+                    this.helpers.dispatchEvent(this.element, 'change', {
+                        selectedAddress: {}
+                    });
+                        
 
                 } else {
                     console.log('bad');
                 }
 
             });
+    }
+
+    reset(hard) {
+        this.selectedDeliverToItems = [''];
+        this.selectedDeliverToId = null;
+        if (hard)
+            this.selectedAddress = {};
+    }
+
+    loadData(data) {
+        this.deliverTo = data;
+        this.deliverToChanged();
+        
     }
 
 

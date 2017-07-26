@@ -24,7 +24,7 @@ export class EditAddress {
   static inject = [DialogController];
 
   editMode = false;
-  deleteMode = false
+  deleteMode = false;
   newAddressSubscriptions = [];
 
 
@@ -116,6 +116,10 @@ export class EditAddress {
     update() {
         console.log("editAddress.update");
         this.addressService.update(this.newAddress)
+            .then(response => {
+                // This should probably return the new address and not the list of all 
+                this.controller.ok(response);
+            });
 
 
     }
