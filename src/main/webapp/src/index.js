@@ -30,7 +30,7 @@ import moment from 'moment'
 
 
 
-@inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, PRAgencyService, busy, PubNubService,  SearchableItemService)
+@inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, PRAgencyService, busy, PubNubService,  SearchableItemService, TaskQueue)
 export class Index {
     //user = {};
     bookings = [];
@@ -66,7 +66,7 @@ export class Index {
 
 
 
-    constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, PRAgencyService, busy, pubNubService, searchableItemService) {
+    constructor(http, eventAggregator, dialogService, sampleRequestService, userService, brandService, PRAgencyService, busy, pubNubService, searchableItemService, taskQueue) {
         http.configure(config => {
             config
                 .useStandardConfiguration();
