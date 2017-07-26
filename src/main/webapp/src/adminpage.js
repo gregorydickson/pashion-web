@@ -74,9 +74,9 @@ export class Adminpage {
     activate() {
         this.userService.getUser().then(user =>{
             this.user = user;
-            
+            this.reloadData();
         });
-        this.reloadData();
+        
     }
 
     reloadData() {
