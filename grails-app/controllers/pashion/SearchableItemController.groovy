@@ -512,7 +512,8 @@ class SearchableItemController {
         log.info "save item using savejson:"+jsonObject
 
         def item =  SearchableItem.get(jsonObject.id)
-        item.name = jsonObject.nameNumber.toString() 
+        if(jsonObject.nameNumber)
+            item.name = jsonObject.nameNumber.toString() 
         if (jsonObject.nameVariant)
             item.name = item.name + jsonObject.nameVariant
         
@@ -523,7 +524,8 @@ class SearchableItemController {
                 item.nameNumber = Integer.parseInt(jsonObject.nameNumber)
             }
         }
-        item.nameVariant = jsonObject.nameVariant
+        if(jsonObject.nameVariant)
+            item.nameVariant = jsonObject.nameVariant
         item.description = jsonObject.description
         item.attributes = jsonObject.attributes
         item.isPrivate = jsonObject.isPrivate
