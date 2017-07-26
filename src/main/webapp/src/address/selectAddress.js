@@ -45,12 +45,13 @@ export class SelectAddress {
         this.editMode = !this.helpers.isEmptyObject(newValue);
     }
 
-    // this will fetch addresses based on account.type 
-    // which is why we pass in the user record.
+
     reloadData() {
-        return this.addressService.getAll(this.userDatastore.user)
+        console.log("reload data");
+        this.addressService.getAll()
             .then(deliverTo => {
-                return this.loadData(deliverTo);
+                console.log("new data");
+                this.loadData(deliverTo);
             });
     }
 
@@ -132,14 +133,14 @@ export class SelectAddress {
                     // and should be changed if we switch to only return the new record
                     // with an insert method on the datastore
                     this.loadData(response.output)
-                        .then(() => {
-                            this.selectNewsetDeliverTo(newAddressModel.newAddress);
-                            // lets bubble this event with a generic event bubbler
-                            this.helpers.dispatchEvent(this.element, 'change', {
-                                selectedAddress: this.selectedAddress
-                            });
-                            this.reset();
-                        });
+                        
+                    this.selectNewsetDeliverTo(newAddressModel.newAddress);
+                    // lets bubble this event with a generic event bubbler
+                    this.helpers.dispatchEvent(this.element, 'change', {
+                        selectedAddress: this.selectedAddress
+                    });
+                    this.reset();
+                    
 
                 } else {
                     console.log('Cancelled');
@@ -213,14 +214,14 @@ export class SelectAddress {
                     // this still assumes we get the whole list of addressess back
                     // and should be changed if we switch to only return the new record
                     // with an insert method on the datastore
-                    this.reloadData()
-                        .then(() => {
-                            this.reset(true);
-                            this.addressSelect.reset();
-                            this.helpers.dispatchEvent(this.element, 'change', {
-                                selectedAddress: {}
-                            });
-                        });
+                    this.reloadData();
+                        
+                    this.reset(true);
+                    this.addressSelect.reset();
+                    this.helpers.dispatchEvent(this.element, 'change', {
+                        selectedAddress: {}
+                    });
+                        
 
                 } else {
                     console.log('bad');
@@ -235,12 +236,11 @@ export class SelectAddress {
         if (hard)
             this.selectedAddress = {};
     }
-    // since adding addresses delivers back a complete updated list
-    // we will allow for reloading without hitting the service
+
     loadData(data) {
         this.deliverTo = data;
         this.deliverToChanged();
-        return Promise.resolve();
+        
     }
 
 
