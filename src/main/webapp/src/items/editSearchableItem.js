@@ -86,7 +86,7 @@ export class EditSearchableItem {
           });
         });
     }),
-    this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => {
+    this.http.fetch('/color/list').then(response => response.json()).then(colors => {
       this.colors = colors
 
       colors.forEach(item => {
@@ -158,6 +158,49 @@ export class EditSearchableItem {
 
   colorClear (sample) {
     sample.color = '';
+  }
+
+  colorNewAdd (sample) {
+    let thisValue = $('#unl-col').val().toUpperCase();
+    console.log('Selected value:', thisValue);      
+
+    var bool = true;
+    this.availableMaterialItems.forEach(item => {
+        console.log(item.id);
+         if(item.id == thisValue){
+          bool = false;
+          console.log("Color already present in list");
+        }
+    });
+     if(bool){
+      this.http.fetch('/color/newColor?name=' + thisValue, {
+            method: 'post',
+            body: {"this":"one"}
+      }).then(response => {
+    this.http.fetch('/color/list').then(response => response.json()).then(material => {
+    this.material = material
+    this.availableMaterialItems = [];
+    
+    material.forEach(item => {
+        this.availableMaterialItems.push({
+          id: item,
+          text: item
+        });
+      });
+    });});
+     }
+
+   
+
+
+    this.unlColor = thisValue;
+
+    if (!this.unlColor) return;
+    if (this.unlColor=='') return;
+    if(sample.color)
+      sample.color = sample.color + " " + this.unlColor;
+    else
+      sample.color = this.unlColor;
   }
 
   materialAdd (sample) {
