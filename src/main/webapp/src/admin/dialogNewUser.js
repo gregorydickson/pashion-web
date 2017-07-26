@@ -3,8 +3,9 @@ import {inject} from 'aurelia-framework';
 import {DateFormat} from 'common/dateFormat';
 import {UserService} from 'services/userService';
 import { CityService } from 'services/cityService';
+import { busy } from 'services/busy';
 
-@inject(DialogController, CityService,UserService)
+@inject(DialogController, CityService,UserService, busy)
 export class CreateDialogNewUser {
   static inject = [DialogController];
 
@@ -17,10 +18,11 @@ export class CreateDialogNewUser {
   testOptions = [];
   //end testing
 
-  constructor(controller, cityService,userService){
+  constructor(controller, cityService,userService,busy){
     this.controller = controller;
     this.cityService = cityService;
     this.userService = userService;
+    this.busy = busy;
   }
 
   attached(){
@@ -50,6 +52,8 @@ export class CreateDialogNewUser {
   create(){
     // no city , added a defaultin server side
     // should be a choice of which Office.
+    document.getElementById("newUser").disabled = true;
+    this.busy.on();
   	console.log("new user:"+this.newUser);
   	this.userService.createUser(this.newUser)
   		.then(response =>{
@@ -59,6 +63,8 @@ export class CreateDialogNewUser {
   			} else{
   				alert("error");
   			}
+        document.getElementById("newUser").disabled = false;
+        this.busy.off();
   		});
   }
   togglePassword() {
