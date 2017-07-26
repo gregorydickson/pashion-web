@@ -58,37 +58,11 @@ export class AddressDatastore {
         });
     }
 
-    // this will fetch addresses based on account.type 
-    // which is why we pass in the user record.
-    reloadData() {
-        return this.addressService.getAll(this.userDatastore.user)
-            .then(deliverTo => {
-                return this.loadData(deliverTo);
-            });
-    }
+    
 
-    // since adding addresses delivers back a complete updated list
-    // we will allow for reloading without hitting the service
-    loadData(data) {
-        this.deliverTo = data;
-        this.deliverToChanged();
-        return Promise.resolve();
-    }
+    
 
-    // set the selectedAddress and
-    // the selectedDeliverToItems
-    selectNewsetDeliverTo(selectedAddress) {
-        this.deliverToChanged();
-        let newestDeliverTo = this.availableDeliverToItems.reduce(function (max, x) {
-            return x.id > max.id ? x : max;
-        });
-
-        console.log('Newest deliver to:', newestDeliverTo);
-
-        this.selectedAddress = this.deliverTo.find(item => item.id == newestDeliverTo.id);
-        this.selectedDeliverToId = newestDeliverTo.id;
-        this.selectedDeliverToItems = [this.selectedDeliverToId];
-    }
+    
 
     reset(hard) {
         this.selectedDeliverToItems = [''];

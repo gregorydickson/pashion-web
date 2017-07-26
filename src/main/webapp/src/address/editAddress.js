@@ -24,7 +24,7 @@ export class EditAddress {
   static inject = [DialogController];
 
   editMode = false;
-  deleteMode = false
+  deleteMode = false;
   newAddressSubscriptions = [];
 
 

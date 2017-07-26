@@ -103,23 +103,33 @@ export class AddressService {
     }
 
     createAdHoc(newAddress) {
-        console.log("AddressService.createAdHoc: " + newAddress + " for " + this.user.type);
-        let url = '';
-        if (this.user.type === "brand") {
-            url = '/brand/AddAddress';
-        } else {
-            url = '/PRAgency/AddAddress';
-        }
+        
+        console.log("AddressService.createAdHoc: " + newAddress);
+        let userService = this.userService;
+
         var promise = new Promise((resolve, reject) => {
-            this.http.fetch(url, {
-                method: 'post',
-                body: json(newAddress)
-            })
+            userService.getUser().then(user => {
+                let url = '';
+                if (user.type === "brand") {
+                    url = '/brand/AddAddress';
+                } else {
+                    url = '/PRAgency/AddAddress';
+                }
+
+                this.http.fetch(url, {
+                    method: 'post',
+                    body: json(newAddress)
+                })
                 .then(response => response.json())
                 .then(newList => {
                     resolve(newList)
                 });
             });
+
+
+        });
+
+            
         
         return promise; 
     }
