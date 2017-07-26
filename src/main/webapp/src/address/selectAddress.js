@@ -8,7 +8,7 @@ import { Helpers } from '../common/helpers';
 @customElement('select-address')
 export class SelectAddress {
 
-    @bindable selectedAddress = {};
+    @observable selectedAddress = {};
     @bindable css = 'grid-content shrink';
     @bindable showMenu = false;
     @bindable showAdd = false;
@@ -17,7 +17,7 @@ export class SelectAddress {
     @bindable width = 170;
     style = 'width: 170px';
 
-    @bindable deliverTo = [];
+    @observable deliverTo = [];
     availableDeliverToItems = [];
     selectedDeliverToItems = [''];
     selectedDeliverToId = null;
@@ -39,6 +39,10 @@ export class SelectAddress {
                 this.deliverTo = deliverTo;
                 console.log("set deliver to");
             });
+    }
+
+    selectedAddressChanged(newValue, oldValue) {
+        this.editMode = !this.helpers.isEmptyObject(newValue);
     }
 
     // this will fetch addresses based on account.type 
@@ -145,7 +149,7 @@ export class SelectAddress {
     }
 
     update() {
-        if (!this.ds.address.editMode)
+        if (!this.editMode)
             return;
 
         console.log("update address");
