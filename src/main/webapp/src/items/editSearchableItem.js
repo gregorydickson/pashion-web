@@ -164,11 +164,11 @@ export class EditSearchableItem {
             method: 'post',
             body: {"this":"one"}
       }).then(response => {
-    this.http.fetch('/sampleType/list').then(response => response.json()).then(material => {
-    this.selectedSampleType = selectedSampleType
+    this.http.fetch('/sampleType/list').then(response => response.json()).then(types => {
+    // this.selectedSampleType = selectedSampleType
     this.availableSampleTypeItems = [];
     
-    selectedSampleType.forEach(item => {
+    types.forEach(item => {
         this.availableSampleTypeItems.push({
           id: item,
           text: item
@@ -180,7 +180,7 @@ export class EditSearchableItem {
 
     
     this.selectedSampleTypeItems = [thisValue];
-    $('[name="type"]').find('select').val('TEST').trigger('change');
+    $('[name="type"]').find('select').val(thisValue).trigger('change');
 
   }
 
@@ -214,11 +214,11 @@ export class EditSearchableItem {
             method: 'post',
             body: {"this":"one"}
       }).then(response => {
-    this.http.fetch('/color/list').then(response => response.json()).then(material => {
-    this.material = material
+    this.http.fetch('/color/list').then(response => response.json()).then(colors => {
+    // this.material = colors
     this.availableNewColorItems = [];
     
-    material.forEach(item => {
+    colors.forEach(item => {
         this.availableNewColorItems.push({
           id: item,
           text: item
