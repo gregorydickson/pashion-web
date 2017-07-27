@@ -175,7 +175,7 @@ export class EditSearchableItem {
         });
       });
     });});
-     }
+     } 
 
 
     
