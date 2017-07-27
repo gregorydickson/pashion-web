@@ -156,7 +156,7 @@ export class EditSearchableItem {
       sample.color = this.addColor;
   }
 
-  colorClear (sample) {
+  colorClear (sample) { 
     sample.color = '';
   }
 
