@@ -840,7 +840,14 @@ export class Index {
             if (this.user.type === "nosession") window.location.href = '/user/login';
             if (this.user.type === "brand") { this.searchType = 'brandSearch'; this.company = this.user.brand; }
             if (this.user.type === "press") { this.searchType = 'filterSearch'; this.company = this.user.pressHouse; }
-            if (this.user.type === "prAgency") { this.searchType = 'brandSearch'; this.company = this.user.prAgency; }
+            if (this.user.type === "prAgency") { 
+                this.searchType = 'brandSearch'; 
+                this.company = this.user.prAgency; 
+                this.prAgencyService.getBrands().then(brands => {
+                    this.PRbrands = brands;
+                    this.filterChangeBrand();
+                });
+            }
 
             // filtering
             if(this.user.type === "brand") this.brandService.getOnlyShowMySampleRequests(this.user.brand.id).then ( result => { 
@@ -860,7 +867,7 @@ export class Index {
                     this.onlyShowMineCompany = this.user.prAgency.name;
                 }
             }); 
-            this.filterChangeBrand();
+            
             this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub());
             ga('set', 'page', '/index.html');
             ga('send', 'pageview');
@@ -871,7 +878,7 @@ export class Index {
                     this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
                     this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes);
                     this.brandService.getBrands().then(brands => this.brands = brands);
-                    this.prAgencyService.getBrands().then(brands => this.PRbrands = brands);
+                    
                     this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors);
             } else{
                 
@@ -879,6 +886,7 @@ export class Index {
                     this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes);
                     this.brandService.getBrands().then(brands => this.brands = brands);
                     this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors);
+                    this.filterChangeBrand();
             }
                 
 
