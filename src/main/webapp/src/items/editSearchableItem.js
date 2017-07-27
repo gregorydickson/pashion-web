@@ -76,13 +76,13 @@ export class EditSearchableItem {
       this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => {
       this.itemTypes = itemTypes
     }),
-    this.http.fetch('/dashboard/sampleTypes').then(response => response.json()).then(sampleTypes => {
+    this.http.fetch('sampleType/list').then(response => response.json()).then(sampleTypes => {
       this.sampleTypes = sampleTypes
 
        sampleTypes.forEach(item => {
           this.availableSampleTypeItems.push({
-            id: item,
-            text: item
+            id: item.toUpperCase(),
+            text: item.toUpperCase()
           });
         });
     }),
@@ -147,6 +147,43 @@ export class EditSearchableItem {
         this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Edit", message:message, timeout:5000}, lock:false }).then(response => {});
     }
 
+  typeNewAdd (sample) {
+    let thisValue = $('#unl-type').val().toUpperCase();
+    console.log('Selected value:', thisValue);      
+
+    var bool = true;
+    this.availableMaterialItems.forEach(item => {
+        console.log(item.id);
+         if(item.id == thisValue){
+          bool = false;
+          console.log("SampleType already present in list");
+        }
+    });
+     if(bool){
+      this.http.fetch('/sampleType/newSampleType?name=' + thisValue, {
+            method: 'post',
+            body: {"this":"one"}
+      }).then(response => {
+    this.http.fetch('/sampleType/list').then(response => response.json()).then(material => {
+    this.selectedSampleType = selectedSampleType
+    this.availableSampleTypeItems = [];
+    
+    selectedSampleType.forEach(item => {
+        this.availableSampleTypeItems.push({
+          id: item,
+          text: item
+        });
+      });
+    });});
+     }
+
+
+    
+    this.selectedSampleTypeItems = [thisValue];
+    $('[name="type"]').find('select').val('TEST').trigger('change');
+
+  }
+
   colorAdd (sample) {    
     if (!this.addColor) return;
     if (this.addColor=='') return;
@@ -165,7 +202,7 @@ export class EditSearchableItem {
     console.log('Selected value:', thisValue);      
 
     var bool = true;
-    this.availableMaterialItems.forEach(item => {
+    this.availableNewColorItems.forEach(item => {
         console.log(item.id);
          if(item.id == thisValue){
           bool = false;
@@ -179,10 +216,10 @@ export class EditSearchableItem {
       }).then(response => {
     this.http.fetch('/color/list').then(response => response.json()).then(material => {
     this.material = material
-    this.availableMaterialItems = [];
+    this.availableNewColorItems = [];
     
     material.forEach(item => {
-        this.availableMaterialItems.push({
+        this.availableNewColorItems.push({
           id: item,
           text: item
         });
@@ -277,7 +314,7 @@ export class EditSearchableItem {
           let selectedSampleType = this.availableSampleTypeItems.find(x => x.text.toUpperCase() == this.selectedSample.sampleType.toUpperCase());
           
           if (selectedSampleType) {
-            console.log('Found a match for sample type:', selectedSampleType);
+            console.log('Found a match for sample type:', selectedSampleType, selectedSampleType.id);
             this.selectedSampleTypeItems = [selectedSampleType.id];
           }
         } else{
@@ -335,7 +372,7 @@ export class EditSearchableItem {
       }
   }
 
-  onLocationChangeCallback(event) {   
+  onLocationChangeCallback(event) {
       console.log('onLocationChangeCallback() called:', event.detail.value);
       if (event.detail) {
           if(event.detail.value){
