@@ -159,7 +159,7 @@ class UserService {
                 user.phone = params.phone
                 user.name = params.name
                 user.surname = params.surname
-                if(params.password)
+                if(params.password && params.password != "")
                     user.password = hash(params.password)
                 if(params.address?.id)
                     user.address = Address.get(params.address.id)

@@ -100,12 +100,12 @@ class UserController {
     @Transactional
     def doLogin(){
         
-        def user
+        def user = null
        
         
         user = userService.login(params.email,params.password)
                            
-        if(user instanceof User){
+        if((user != null) && (user instanceof User)){
             
             session.user = user 
             redirect(controller:'dashboard',action:'index')
