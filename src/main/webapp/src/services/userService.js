@@ -196,11 +196,11 @@ export class UserService {
         // json side can then decide what to update
         var tempNewUser = this.users[updateUser.id - 1];
         if (updateUser.address) tempNewUser.address = updateUser.address;
-        if (updateUser.name) tempNewUser.name = updateUser.name;
-        if (updateUser.surname) tempNewUser.surname = updateUser.surname;
+        if (updateUser.name || updateUser.name == "") tempNewUser.name = updateUser.name;
+        if (updateUser.surname || updateUser.surname == "") tempNewUser.surname = updateUser.surname;
         if (updateUser.password) tempNewUser["password"] = updateUser.password;
-        if (updateUser.title) tempNewUser["title"] = updateUser.title;
-        if (updateUser.phone) tempNewUser["phone"] = updateUser.phone;
+        if (updateUser.title || updateUser.title == "") tempNewUser["title"] = updateUser.title;
+        if (updateUser.phone || updateUser.phone == "") tempNewUser["phone"] = updateUser.phone;
 
         // now write it out
         var promise = new Promise((resolve, reject) => {
