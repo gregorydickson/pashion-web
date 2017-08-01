@@ -834,12 +834,21 @@ export class Index {
 
 
     activate() {
+        this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
+        this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes);
+        this.brandService.getBrands().then(brands => this.brands = brands);
+        this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors);
+        
         this.userService.getUser().then(user =>{
             this.user = user;
 
             if (this.user.type === "nosession") window.location.href = '/user/login';
-            if (this.user.type === "brand") { this.searchType = 'brandSearch'; this.company = this.user.brand; }
-            if (this.user.type === "press") { this.searchType = 'filterSearch'; this.company = this.user.pressHouse; }
+
+            if (this.user.type === "press" && this.user.agencyIDForPressUser) { 
+                this.searchType = 'filterSearch'; 
+                this.company = this.user.pressHouse;
+
+            }
             if (this.user.type === "prAgency") { 
                 this.searchType = 'brandSearch'; 
                 this.company = this.user.prAgency; 
@@ -847,53 +856,36 @@ export class Index {
                     this.PRbrands = brands;
                     this.filterChangeBrand();
                 });
+                this.prAgencyService.getOnlyShowMySampleRequests(this.user.prAgency.id).then ( result => { 
+                    this.onlyShowMine = result;
+                    console.log("onlyShowmine:" + this.onlyShowMine);
+                    if(this.onlyShowMine) {
+                        // move to company based interpretation of onlyShowMine this.cityFiltering = this.user.city.name;
+                        this.onlyShowMineCompany = this.user.prAgency.name;
+                    }
+                }); 
             }
 
-            // filtering
-            if(this.user.type === "brand") this.brandService.getOnlyShowMySampleRequests(this.user.brand.id).then ( result => { 
-                this.onlyShowMine = result;
-                console.log("onlyShowMine:" + this.onlyShowMine);
-                if(this.onlyShowMine) {
-                    // move to company based interpretation of onlyShowMine this.cityFiltering = this.user.city.name;
-                    this.onlyShowMineCompany = this.user.brand.name;
-                }
-            });   
+           
+            if(this.user.type === "brand"){
+                this.searchType = 'brandSearch'; this.company = this.user.brand; 
+                this.brandService.getOnlyShowMySampleRequests(this.user.brand.id).then ( result => { 
+                    this.onlyShowMine = result;
+                    console.log("onlyShowMine:" + this.onlyShowMine);
+                    if(this.onlyShowMine) {
+                        // move to company based interpretation of onlyShowMine this.cityFiltering = this.user.city.name;
+                        this.onlyShowMineCompany = this.user.brand.name;
+                    }
+                });
+            }
 
-            if(this.user.type === "prAgency") this.prAgencyService.getOnlyShowMySampleRequests(this.user.prAgency.id).then ( result => { 
-                this.onlyShowMine = result;
-                console.log("onlyShowmine:" + this.onlyShowMine);
-                if(this.onlyShowMine) {
-                    // move to company based interpretation of onlyShowMine this.cityFiltering = this.user.city.name;
-                    this.onlyShowMineCompany = this.user.prAgency.name;
-                }
-            }); 
-            
-            this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub());
             ga('set', 'page', '/index.html');
             ga('send', 'pageview');
             ga('send', 'event', 'index', 'pageview', this.user.email);
-
-            if (this.user.type === "prAgency"){
                 
-                    this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
-                    this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes);
-                    this.brandService.getBrands().then(brands => this.brands = brands);
-                    
-                    this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors);
-            } else{
-                
-                    this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
-                    this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes);
-                    this.brandService.getBrands().then(brands => this.brands = brands);
-                    this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors);
-                    this.filterChangeBrand();
-            }
-                
-
         });
-        
 
-
+        this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub());
     }
 
 
