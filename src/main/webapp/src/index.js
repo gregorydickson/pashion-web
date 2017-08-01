@@ -834,7 +834,7 @@ export class Index {
     activate() {
         this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
         this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => this.itemTypes = itemTypes);
-        this.brandService.getBrands().then(brands => this.brands = brands);
+
         this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors);
         
         this.userService.getUser().then(user =>{
@@ -842,18 +842,28 @@ export class Index {
 
             if (this.user.type === "nosession") window.location.href = '/user/login';
 
-            if (this.user.type === "press" && this.user.agencyIDForPressUser) { 
+            if (this.user.type === "press") { 
                 this.searchType = 'filterSearch'; 
                 this.company = this.user.pressHouse;
+                if(this.user.agencyIDForPressUser){
+                    this.prAgencyService.getBrands(this.user.agencyIDForPressUser).then(result=>{
+                        this.selectedBrand = this.prAgencyService.getDefault().id;
+                        this.filterChangeBrand();
+                    });
+                } else{
+                    this.filterChangeBrand();
+                }
 
             }
             if (this.user.type === "prAgency") { 
                 this.searchType = 'brandSearch'; 
-                this.company = this.user.prAgency; 
-                this.prAgencyService.getBrands().then(brands => {
-                    this.PRbrands = brands;
+                this.company = this.user.prAgency;
+                this.prAgencyService.getBrands().then(result=>{
                     this.filterChangeBrand();
                 });
+                
+                
+
                 this.prAgencyService.getOnlyShowMySampleRequests(this.user.prAgency.id).then ( result => { 
                     this.onlyShowMine = result;
                     console.log("onlyShowmine:" + this.onlyShowMine);
@@ -861,13 +871,14 @@ export class Index {
                         // move to company based interpretation of onlyShowMine this.cityFiltering = this.user.city.name;
                         this.onlyShowMineCompany = this.user.prAgency.name;
                     }
-                }); 
+                });
             }
 
            
             if(this.user.type === "brand"){
-                this.searchType = 'brandSearch'; this.company = this.user.brand; 
-                this.brandService.getOnlyShowMySampleRequests(this.user.brand.id).then ( result => { 
+                this.searchType = 'brandSearch'; 
+                this.company = this.user.brand; 
+                this.brandService.getOnlyShowMySampleRequests(this.user.brand.id).then( result => { 
                     this.onlyShowMine = result;
                     console.log("onlyShowMine:" + this.onlyShowMine);
                     if(this.onlyShowMine) {
@@ -880,10 +891,11 @@ export class Index {
             ga('set', 'page', '/index.html');
             ga('send', 'pageview');
             ga('send', 'event', 'index', 'pageview', this.user.email);
+            this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub());
                 
         });
 
-        this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub());
+        
     }
 
 
