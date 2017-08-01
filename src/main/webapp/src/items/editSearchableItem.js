@@ -177,6 +177,8 @@ export class EditSearchableItem {
     });});
      } 
 
+    $('#unl-type').val(''); 
+
 
     
     this.selectedSampleTypeItems = [thisValue];
@@ -232,6 +234,8 @@ export class EditSearchableItem {
 
     this.unlColor = thisValue;
 
+    $('#unl-col').val('');
+
     if (!this.unlColor) return;
     if (this.unlColor=='') return;
     if(sample.color)
@@ -283,6 +287,8 @@ export class EditSearchableItem {
 
 
     this.unlMaterial = thisValue;
+
+    $('#unl-mat').val('');
 
     if (!this.unlMaterial) return;
     if (this.unlMaterial=='') return;
