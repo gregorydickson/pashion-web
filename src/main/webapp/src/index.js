@@ -355,9 +355,7 @@ export class Index {
             this.selectedBrand = this.prAgencyService.getDefault().id;
             //disable user city filtering
             // if(this.user.city) this.selectedCity = this.user.city.name;
-        } else if (this.user.type === "press") {
-            this.selectedBrand = '';
-        }
+        } 
 
         if (event)
             if (event.detail)
