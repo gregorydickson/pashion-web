@@ -21,7 +21,7 @@ class PRAgencyController {
         //def pr = PRAgency.get(params?.agency?.toInteger()) 
         def pr = PRAgency.get(params.id.toInteger()) 
         log.info "PRAgency/brands agency:"+pr
-        def brands = pr?.brands
+        def brands = pr?.brands.sort{it.name}
         if(brands){
             render brands as JSON
         } else {
