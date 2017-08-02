@@ -336,12 +336,16 @@
                                 <div if.bind="user.type === 'press'" class="look-menu-absolute-wrap">
                                     <a href="#" class="look-menu-click " click.delegate="createSampleRequestPress(row.items[i].id )">
                                         <div class="menu-stripe" ></div>
+                                        <div class="menu-stripe" ></div> 
+                                        <div class="menu-stripe" ></div>
                                     </a>
                                 </div>
                                 <!-- Three dots menu brand and prAgency-->
                                 <div if.bind="user.type !== 'press'" class="look-menu-absolute-wrap" >
                                     <a href="#" id="image-${row.items[i].id}" class="look-menu-click" click.delegate="lookMenu(row.items[i].id)" >
-                                        <div class="menu-stripe"></div>
+                                        <div class="menu-stripe" ></div>
+                                        <div class="menu-stripe" ></div>
+                                        <div class="menu-stripe" ></div>
                                     </a>
 
                                     <!-- Menu on image when three dots clicked -->                            
@@ -382,7 +386,7 @@
                                 </div> 
 
                                 <!-- Image Container for Look-->
-                                <div id="card-${row.items[i].id}" class="card-image" style="min-height:196px;">
+                                <div id="card-${row.items[i].id}" class="card-image">
                                     
                                     
                                     <!-- Main Look image -->
