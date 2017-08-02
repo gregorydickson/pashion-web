@@ -76,17 +76,17 @@ export class EditSearchableItem {
       this.http.fetch('/dashboard/itemTypes').then(response => response.json()).then(itemTypes => {
       this.itemTypes = itemTypes
     }),
-    this.http.fetch('/dashboard/sampleTypes').then(response => response.json()).then(sampleTypes => {
+    this.http.fetch('sampleType/list').then(response => response.json()).then(sampleTypes => {
       this.sampleTypes = sampleTypes
 
        sampleTypes.forEach(item => {
           this.availableSampleTypeItems.push({
-            id: item,
-            text: item
+            id: item.toUpperCase(),
+            text: item.toUpperCase()
           });
         });
     }),
-    this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => {
+    this.http.fetch('/color/list').then(response => response.json()).then(colors => {
       this.colors = colors
 
       colors.forEach(item => {
@@ -147,6 +147,45 @@ export class EditSearchableItem {
         this.dialogService.open({ viewModel: CreateDialogAlert, model: {title:"Edit", message:message, timeout:5000}, lock:false }).then(response => {});
     }
 
+  typeNewAdd (sample) {
+    let thisValue = $('#unl-type').val().toUpperCase();
+    console.log('Selected value:', thisValue);      
+
+    var bool = true;
+    this.availableMaterialItems.forEach(item => {
+        console.log(item.id);
+         if(item.id == thisValue){
+          bool = false;
+          console.log("SampleType already present in list");
+        }
+    });
+     if(bool){
+      this.http.fetch('/sampleType/newSampleType?name=' + thisValue, {
+            method: 'post',
+            body: {"this":"one"}
+      }).then(response => {
+    this.http.fetch('/sampleType/list').then(response => response.json()).then(types => {
+    // this.selectedSampleType = selectedSampleType
+    this.availableSampleTypeItems = [];
+    
+    types.forEach(item => {
+        this.availableSampleTypeItems.push({
+          id: item,
+          text: item
+        });
+      });
+    });});
+     } 
+
+    $('#unl-type').val(''); 
+
+
+    
+    this.selectedSampleTypeItems = [thisValue];
+    $('[name="type"]').find('select').val(thisValue).trigger('change');
+
+  }
+
   colorAdd (sample) {    
     if (!this.addColor) return;
     if (this.addColor=='') return;
@@ -158,6 +197,51 @@ export class EditSearchableItem {
 
   colorClear (sample) {
     sample.color = '';
+  }
+
+  colorNewAdd (sample) {
+    let thisValue = $('#unl-col').val().toUpperCase();
+    console.log('Selected value:', thisValue);      
+
+    var bool = true;
+    this.availableNewColorItems.forEach(item => {
+        console.log(item.id);
+         if(item.id == thisValue){
+          bool = false;
+          console.log("Color already present in list");
+        }
+    });
+     if(bool){
+      this.http.fetch('/color/newColor?name=' + thisValue, {
+            method: 'post',
+            body: {"this":"one"}
+      }).then(response => {
+    this.http.fetch('/color/list').then(response => response.json()).then(colors => {
+    // this.material = colors
+    this.availableNewColorItems = [];
+    
+    colors.forEach(item => {
+        this.availableNewColorItems.push({
+          id: item,
+          text: item
+        });
+      });
+    });});
+     }
+
+   
+
+
+    this.unlColor = thisValue;
+
+    $('#unl-col').val('');
+
+    if (!this.unlColor) return;
+    if (this.unlColor=='') return;
+    if(sample.color)
+      sample.color = sample.color + " " + this.unlColor;
+    else
+      sample.color = this.unlColor;
   }
 
   materialAdd (sample) {
@@ -204,6 +288,8 @@ export class EditSearchableItem {
 
     this.unlMaterial = thisValue;
 
+    $('#unl-mat').val('');
+
     if (!this.unlMaterial) return;
     if (this.unlMaterial=='') return;
     if(sample.material)
@@ -234,7 +320,7 @@ export class EditSearchableItem {
           let selectedSampleType = this.availableSampleTypeItems.find(x => x.text.toUpperCase() == this.selectedSample.sampleType.toUpperCase());
           
           if (selectedSampleType) {
-            console.log('Found a match for sample type:', selectedSampleType);
+            console.log('Found a match for sample type:', selectedSampleType, selectedSampleType.id);
             this.selectedSampleTypeItems = [selectedSampleType.id];
           }
         } else{
@@ -292,7 +378,7 @@ export class EditSearchableItem {
       }
   }
 
-  onLocationChangeCallback(event) {   
+  onLocationChangeCallback(event) {
       console.log('onLocationChangeCallback() called:', event.detail.value);
       if (event.detail) {
           if(event.detail.value){

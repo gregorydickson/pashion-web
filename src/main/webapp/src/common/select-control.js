@@ -51,10 +51,12 @@ export class SelectControl {
         console.log('SelectControl.selectedChanged(): Selected values changed: ' + value);
 
         let el = $(this.element).find('select');
+        // console.log(el);
 
         if (el) {
             let selOptions = $.extend(true, this.selectDefaultOptions, this.selectOptions);
             let sel = el.select2(selOptions);
+
 
             if (el && value) {
                 try {
