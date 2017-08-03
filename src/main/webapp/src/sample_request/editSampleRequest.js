@@ -4,12 +4,13 @@ import 'fetch';
 import { inject } from 'aurelia-framework';
 import { DateFormat } from 'common/dateFormat';
 import { SampleRequestService } from 'services/sampleRequestService';
+import { UserService } from 'services/userService';
 import { CreateDialogAlert } from 'common/dialogAlert';
 import moment from 'moment'
 import { busy } from 'services/busy';
 
 
-@inject(SampleRequestService, DialogController, HttpClient, DialogService, busy)
+@inject(SampleRequestService, DialogController, HttpClient, DialogService, busy,UserService)
 export class EditSampleRequest {
   static inject = [DialogController];
 
@@ -22,7 +23,7 @@ export class EditSampleRequest {
   payment = [];
   times = [];
 
-  constructor(sampleRequestService, controller, http, DialogService, busy) {
+  constructor(sampleRequestService, controller, http, DialogService, busy, userService) {
     http.configure(config => {
       config
         .useStandardConfiguration();
@@ -32,6 +33,7 @@ export class EditSampleRequest {
     this.sampleRequestService = sampleRequestService;
     this.dialogService = DialogService;
     this.busy = busy;
+    this.userService = userService;
   }
 
   activate(requestId) {
@@ -53,7 +55,8 @@ export class EditSampleRequest {
         this.sampleRequest.paymentReturn = "50/50";
       }),
       this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
-      this.http.fetch('/dashboard/times').then(response => response.json()).then(times => this.times = times)
+      this.http.fetch('/dashboard/times').then(response => response.json()).then(times => this.times = times),
+      this.userService.getUser().then(user => this.user = user)
     ]);
 
   }
