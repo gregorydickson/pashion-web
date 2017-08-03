@@ -21,7 +21,6 @@ export class CreateSampleRequestPress {
   brand = [];
   brandAddresses = [];
   returnBy = [];
-  returnTo = [];
   courier = [];
   payment = [];
  // seasons = [];
@@ -56,52 +55,56 @@ export class CreateSampleRequestPress {
   activate(itemId){
 
     var queryString = DateFormat.urlString(0, 2);
-    this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+itemId)
-      .then(response => response.json())
+
+    return Promise.all([
+      this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+itemId)
+        .then(response => response.json())
         .then(calendar => {
-              this.startCalendar = calendar;
-              this.endCalendar = calendar;
-          });
-    
-    this.http.fetch('/searchableItems/'+itemId+'.json')
-      .then(response => response.json())
-      .then(item => {
-          if (item.session == 'invalid') {
-            window.location.href = '/user/login';
-            return;
-          }
-          this.currentItem = item;   
-
-         /* this.http.fetch('/brand/addresses/'+item.brand.id)
-              .then(response => response.json())
-              .then(addresses => this.brandAddresses = addresses); */
-
-          this.brandService.getBrandAddresses(item.brand.id).then(addresses => this.brandAddresses = addresses);
-          this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);
-          this.sampleRequest.samples = [];
-          var ids = this.sampleRequest.samples;
-          item.samples.forEach(function(item){
-            ids.push(item.id);
-          })
-          
-        }
-      )
+          this.startCalendar = calendar;
+          this.endCalendar = calendar;
+        }),
       
-    this.http.fetch('/dashboard/required').then(response => response.json()).then(required => this.required = required);
-    this.http.fetch('/dashboard/deliverTo').then(response => response.json()).then(deliverTo => this.deliverTo = deliverTo);
-    this.http.fetch('/dashboard/returnBy').then(response => response.json()).then(returnBy => this.returnBy = returnBy);
-    this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => this.courier = courier);
-    this.http.fetch('/dashboard/returnTo').then(response => response.json()).then(returnTo => this.returnTo = returnTo);
-    this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => this.payment = payment);
-    this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
-   // this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
-   this.sampleRequest["returnToAddress"] = 0; // defualt return to sender
+      this.http.fetch('/searchableItems/'+itemId+'.json')
+        .then(response => response.json())
+        .then(item => {
+            if (item.session == 'invalid') {
+              window.location.href = '/user/login';
+              return;
+            }
+            this.currentItem = item;   
+
+           /* this.http.fetch('/brand/addresses/'+item.brand.id)
+                .then(response => response.json())
+                .then(addresses => this.brandAddresses = addresses); */
+
+            this.brandService.getBrandLocations(item.brand.id).then(addresses => {this.brandAddresses = addresses});
+            this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);
+            this.sampleRequest.samples = [];
+            var ids = this.sampleRequest.samples;
+            item.samples.forEach(function(item){
+              ids.push(item.id);
+            })
+            
+          }
+        ),
+        
+      this.http.fetch('/dashboard/required').then(response => response.json()).then(required => this.required = required),
+      this.http.fetch('/dashboard/deliverTo').then(response => response.json()).then(deliverTo => this.deliverTo = deliverTo),
+      this.http.fetch('/dashboard/returnBy').then(response => response.json()).then(returnBy => this.returnBy = returnBy),
+      this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => this.courier = courier),
+      this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => this.payment = payment)
+    ])
+    
   }
 
   attached(){
     document.getElementById("CreateSampleRequestButton").disabled = true;
     ga('set', 'page', '/createSampleRequestPress.html');
     ga('send', 'pageview');
+    
+    $('#returnToSelect').val('0').trigger('change');
+    $('#requiredBySelect').val('9:00').trigger('change');
+    $('#courierSelect').val('Pashion Courier').trigger('change');
   }
 
   alertP (message){
