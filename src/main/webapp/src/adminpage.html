@@ -70,7 +70,7 @@
                         <!-- Offices -->
                         <div class="inline-label">
                             <span class="slim-text-box-label">Offices</span>
-                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" class="slim-text-box" value.bind="currentAddress">
+                            <select id="officeSelect" select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" class="slim-text-box" value.bind="currentAddress">
                                 <option></option>
                                 <option model.bind="address" repeat.for="address of addresses">${address.name}</option>
                             </select>
@@ -194,8 +194,11 @@
                         <!-- Office -->
                         <div class="inline-label">
                             <span class="slim-text-box-label">Office</span>
-                            <select select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" name="" id="" class="slim-text-box" value.bind="currentAddressId">
+                            <select id="userOfficeSelect" select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" class="slim-text-box" value.bind="currentUser.address.id">
+                                <option></option>
                                 <option model.bind="address.id" repeat.for="address of addresses">${address.name}</option>
+                                <option value="blah">blah</option>
+
                             </select>
                             <!--<select name="" id="" class="slim-text-box" change.trigger="updateUser()" value.bind="currentUser.address.id">
                                 <option model.bind="address.id" repeat.for="address of addresses">${address.name}</option>

@@ -1,0 +1,15 @@
+import pashion.User
+
+log.info ""
+log.info "******   Rendering users brand.gson *************"
+
+
+model {  
+  List<User> userList
+}
+
+json tmpl.adminUser(userList)
+
+log.info "****** Done Rendering users brand *************"
+log.info ""
+log.info ""

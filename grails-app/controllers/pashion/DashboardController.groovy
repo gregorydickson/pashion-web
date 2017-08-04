@@ -168,26 +168,7 @@ class DashboardController {
 
     }
 
-    def usersBrand(){
-        log.info "Dashboard  usersBrand()"
-        def company = Brand.get(params.id.toInteger())
-        def users = company.users as JSON
-        render users
-    }
-    def usersPressHouse(){
-        log.info "Dashboard  usersPressHouse()"
-        def company = PressHouse.get(params.id.toInteger())
-        def users = company.users as JSON
-        render users
-    }
-
-    def usersPRAgency(){    
-        log.info "Dashboard  usersPRAgency()"
-        def company = PRAgency.get(params.id.toInteger())
-        def users = company.users as JSON
-        render users
-        
-    }
+    
 
 
     def times(){
