@@ -30,7 +30,7 @@ export class CreateSampleRequestPress {
   sampleRequestEndDay = '';
 
 
-  //sampleRequest = {requiredBy:"12:00", courierOut:"They Book",paymentOut:"50/50", returnBy:"Afternoon",courierReturn:"Pashion Courier",paymentReturn:"50/50"};
+  
   sampleRequest = {}
   startOffset = 0;
   endOffset = 0;
@@ -73,10 +73,6 @@ export class CreateSampleRequestPress {
             }
             this.currentItem = item;   
 
-           /* this.http.fetch('/brand/addresses/'+item.brand.id)
-                .then(response => response.json())
-                .then(addresses => this.brandAddresses = addresses); */
-
             this.brandService.getBrandLocations(item.brand.id).then(addresses => {this.brandAddresses = addresses});
             this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);
             this.sampleRequest.samples = [];
@@ -102,9 +98,20 @@ export class CreateSampleRequestPress {
     ga('set', 'page', '/createSampleRequestPress.html');
     ga('send', 'pageview');
     
+    this.sampleRequest.requiredBy = "12:00";
+    this.sampleRequest.courierOut = "They Book";
+    this.sampleRequest.paymentOut = "50/50";
+    this.sampleRequest.returnBy = "Afternoon";
+    this.sampleRequest.courierReturn = "Pashion Courier"
+    this.sampleRequest.paymentReturn = "50/50";
+    this.sampleRequest.returnToAddress = "0";
     $('#returnToSelect').val('0').trigger('change');
-    $('#requiredBySelect').val('9:00').trigger('change');
+    $('#requiredBySelect').val('12:00').trigger('change');
     $('#courierSelect').val('Pashion Courier').trigger('change');
+    $('#courierReturnSelect').val('Pashion Courier').trigger('change');
+    
+    $('#deliverSplitSelect').val('50/50').trigger('change');
+    $('#returnBySelect').val('Afternoon').trigger('change');
   }
 
   alertP (message){
@@ -175,28 +182,10 @@ export class CreateSampleRequestPress {
         this.sampleRequestEndDay = '';
         this.sampleRequestEndMonth = '';
         this.enableCheck();
-        //let element = event.srcElement.parentElement;
-        //let document = element.ownerDocument;
-        //let elems = document.querySelectorAll(".end-selected");
-        //var redraw = this.redraw;
-        //[].forEach.call(elems, function(el) {
-          //if(el.classList.contains("end-selected")){
-         //   el.classList.remove("end-selected");
-          //  redraw(el);
-         // }
-        //});
+        
       }
     }
-    //var element = event.srcElement.parentElement;
-    //var document = element.ownerDocument;
-    //var elems = document.querySelectorAll(".start-selected");
-    //this.sampleRequestStartMonth = '';
-    //this.sampleRequestStartDay = '';
-    //[].forEach.call(elems, function(el) {
-     // el.classList.remove("start-selected");
-    //});
-    //element.className += " start-selected";
-    //this.redraw(element);
+    
     this.sampleRequest.startDate = this.startCalendar.calendarMonths[0].year+"-"+this.startCalendar.calendarMonths[0].monthNumber+"-"+day;
     this.sampleRequestStartMonth = this.startCalendar.calendarMonths[0].monthNumber;
     this.sampleRequestStartDay = day;
