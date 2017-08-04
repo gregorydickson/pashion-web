@@ -30,6 +30,15 @@ class BrandController {
         render addresses
     }
 
+    def locations(){ 
+        // log.info "brand/addresses id: " + params.id.toInteger()
+        def brand = Brand.get(params.id.toInteger())  
+        // log.info "brand addresses brand: " + brand
+        def addresses = Address.findAllByBrandAndArchivedAndDestinationIsNull(brand,false,[cache: true]) as JSON
+        // log.info "brand/addresses addresses: " + addresses
+        render addresses
+    }
+
     
     @Transactional
     def addAddress(){
