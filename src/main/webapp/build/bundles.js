@@ -27,10 +27,14 @@ module.exports = {
         "aurelia-loader-default",
         "aurelia-history-browser",
         "aurelia-logging-console",
+        "aurelia-dialog",
+        "aurelia-pal-browser",
         "bootstrap",
-        "bootstrap/css/bootstrap.css!text",
         "fetch",
-        "jquery"
+        "jquery",
+        "jquery-ui",
+        "moment",
+        "select2"
       ],
       "options": {
         "inject": true,
