@@ -75,7 +75,7 @@ export class UserService {
         var promise = new Promise((resolve, reject) => {
             if ((!this.usersOrg) || forceGetFromServer) { // local storage if already loaded
                 console.log("UserService.getUsersByOrganization, getting users from /dashboard/" + method);
-                this.http.fetch('/dashboard/' + method + "/" + id)
+                this.http.fetch('/user/' + method + "/" + id)
                     .then(response => response.json())
                     .then(users => {
                         this.usersOrg = users;

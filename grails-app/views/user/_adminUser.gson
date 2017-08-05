@@ -1,0 +1,13 @@
+import pashion.User
+
+
+model {  
+    User user
+
+}
+//log.info "Rendering a User in adminuser.gson"
+
+json g.render(user,[excludes:['password'],expand:['address']]){
+	
+	
+}
