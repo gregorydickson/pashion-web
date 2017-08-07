@@ -24,10 +24,10 @@ export class DialogRequestContact {
 
         this.userService = userService;
         this.boundHandlerComms = this.handleKeyInput.bind(this);
-        
     }
 
     attached() {
+        $('#emailInputReq').focus();
         document.getElementById("emailInputReq").addEventListener('keydown', this.boundHandlerComms, false);
     }
 
