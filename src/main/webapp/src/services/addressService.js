@@ -124,8 +124,9 @@ export class AddressService {
                     body: json(newAddress)
                 })
                 .then(response => response.json())
-                .then(newList => {
-                    resolve(newList)
+                .then(address => {
+                    this.getAll().then(addresses => resolve(addresses));
+                    
                 });
             });
 

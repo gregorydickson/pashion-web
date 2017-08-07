@@ -108,7 +108,7 @@ export class EditAddress {
         console.log("editAddress.add");
         this.addressService.createAdHoc(this.newAddress)
             .then(response => {
-                // This should probably return the new address and not the list of all 
+                
                 this.controller.ok(response);
             });
     }
@@ -127,10 +127,11 @@ export class EditAddress {
   
 
   delete() {
-    console.log("editAddress.add: " + JSON.stringify(this.newAddress));
+    console.log("editAddress. delete: " + JSON.stringify(this.newAddress));
     if(this.newAddress.type === 'user'){
       this.alertP('Cannot Delete User');
     } else{
+
       this.addressService.delete(this.newAddress.originalId)
         .then(response => {
           // I think we need to json the data then update the store.
