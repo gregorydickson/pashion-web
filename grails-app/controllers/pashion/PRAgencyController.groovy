@@ -116,6 +116,9 @@ class PRAgencyController {
         
         address.save(failOnError: true)
         
+        
+        def response = address as JSON
+
         PRAgency agency = PRAgency.get(session.user.prAgency.id)
         if(!agency.isAttached()){
             agency.attach()
@@ -123,12 +126,6 @@ class PRAgencyController {
         agency.addToDestinations(address)
         agency.save(failOnError:true)
         
-        def destinations = agency.destinations
-        def users = agency.users
-        destinations.addAll(users)
-        destinations.sort{it.name}
-        def response = destinations as JSON
-
         render response
     }
 
