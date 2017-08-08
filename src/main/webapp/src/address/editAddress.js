@@ -116,8 +116,7 @@ export class EditAddress {
     update() {
         console.log("editAddress.update");
         this.addressService.update(this.newAddress)
-            .then(response => {
-                // This should probably return the new address and not the list of all 
+            .then(response => { 
                 this.controller.ok(response);
             });
 

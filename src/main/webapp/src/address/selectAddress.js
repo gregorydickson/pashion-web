@@ -129,7 +129,7 @@ export class SelectAddress {
                     console.log('Accepted - ', newAddressModel);
                     
                     this.loadData(response.output);
-                    this.selectNewsetDeliverTo(newAddressModel.newAddress);
+                    this.selectNewestDeliverTo(newAddressModel.newAddress);
                     // lets bubble this event with a generic event bubbler
                     this.helpers.dispatchEvent(this.element, 'change', {
                         selectedAddress: this.selectedAddress
@@ -167,7 +167,7 @@ export class SelectAddress {
                     console.log('good - ', response.output, newAddressModel);
 
                     this.addressSelect.reset();
-                    this.selectNewsetDeliverTo(newAddressModel.newAddress);
+                    this.selectNewestDeliverTo(newAddressModel.newAddress);
                 } else {
                     console.log('bad');
                 }
@@ -176,7 +176,7 @@ export class SelectAddress {
     }
 
     
-    selectNewsetDeliverTo(address) {
+    selectNewestDeliverTo(address) {
         console.log("finding:");
         console.log(JSON.stringify(address));
         this.deliverToChanged();
