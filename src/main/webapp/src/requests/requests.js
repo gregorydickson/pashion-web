@@ -23,7 +23,6 @@ export class Looks {
     return Promise.all([
       this.http.fetch('/brandCollection/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
       this.http.fetch('/brand/index.json').then(response => response.json()).then(brands => this.brands = brands)
-
     ]);
   }
 
