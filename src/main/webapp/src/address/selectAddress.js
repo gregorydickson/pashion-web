@@ -126,20 +126,19 @@ export class SelectAddress {
             })
             .then(response => {
                 if (!response.wasCancelled) {
-                    console.log('Accepted - ', response.output, newAddressModel);
-
-                    // lets update the datastore
-                    // this still assumes we get the whole list of addressess back
-                    // and should be changed if we switch to only return the new record
-                    // with an insert method on the datastore
-                    this.loadData(response.output)
-                        
-                    this.selectNewsetDeliverTo(newAddressModel.newAddress);
+                    console.log('Accepted - ', newAddressModel);
+                    
+                    this.loadData(response.output);
+                    this.selectNewestDeliverTo(newAddressModel.newAddress);
                     // lets bubble this event with a generic event bubbler
                     this.helpers.dispatchEvent(this.element, 'change', {
                         selectedAddress: this.selectedAddress
                     });
                     this.reset();
+                        
+                        
+                    
+                    
                     
 
                 } else {
@@ -168,7 +167,7 @@ export class SelectAddress {
                     console.log('good - ', response.output, newAddressModel);
 
                     this.addressSelect.reset();
-                    this.selectNewsetDeliverTo(newAddressModel.newAddress);
+                    this.selectNewestDeliverTo(newAddressModel.newAddress);
                 } else {
                     console.log('bad');
                 }
@@ -176,17 +175,20 @@ export class SelectAddress {
             });
     }
 
-    // set the selectedAddress and
-    // the selectedDeliverToItems
-    selectNewsetDeliverTo(selectedAddress) {
+    
+    selectNewestDeliverTo(address) {
+        console.log("finding:");
+        console.log(JSON.stringify(address));
         this.deliverToChanged();
-        let newestDeliverTo = this.availableDeliverToItems.reduce(function (max, x) {
-            return x.id > max.id ? x : max;
+        let newestDeliverTo = this.deliverTo.find(function (item) {
+            console.log(JSON.stringify(item));
+            return ((item.address1 === address.address1) && 
+                (item.name ===  address.name));
         });
 
         console.log('Newest deliver to:', newestDeliverTo);
 
-        this.selectedAddress = this.deliverTo.find(item => item.id == newestDeliverTo.id);
+        this.selectedAddress = newestDeliverTo;
         this.selectedDeliverToId = newestDeliverTo.id;
         this.selectedDeliverToItems = [this.selectedDeliverToId];
     }

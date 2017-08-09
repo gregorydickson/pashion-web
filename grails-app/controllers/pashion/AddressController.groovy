@@ -136,17 +136,17 @@ class AddressController {
 
     @Transactional
     def delete(Address address) {
-        log.info "delete an address"
+        log.info "delete an address params:"+params
         if (address == null) {
-            
+            log.info "address not found"
             
             def message = [status: 'Not Found'] as JSON
             render message
             return
         }
 
-        address.delete flush:true
-
+        address.delete flush:true, failOnError:true
+        log.info "address:"+address
         request.withFormat {
             
             json {

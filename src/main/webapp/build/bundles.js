@@ -32,9 +32,7 @@ module.exports = {
         "bootstrap",
         "fetch",
         "jquery",
-        "jquery-ui",
-        "moment",
-        "select2"
+        "moment"
       ],
       "options": {
         "inject": true,
