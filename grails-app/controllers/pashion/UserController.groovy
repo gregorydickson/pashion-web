@@ -296,7 +296,7 @@ class UserController {
                 return
             }
 
-        } else{
+        } else{ 
             if(user){
                 user = userService.updateUser(jsonObject,user)
             } else{
