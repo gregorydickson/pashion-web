@@ -17,7 +17,7 @@ export class SearchableItemService{
 
     	
   	
-
+    //TODO: move search to this service
   	getItems(reload,params){
   		console.log("looks");
   		var promise = new Promise((resolve, reject) => {

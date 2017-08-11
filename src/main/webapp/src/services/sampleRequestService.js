@@ -5,7 +5,6 @@ import 'fetch';
 @inject(HttpClient)
 export class SampleRequestService{
 
-
   	constructor(http) {
   	    http.configure(config => {
   	      config
@@ -13,8 +12,35 @@ export class SampleRequestService{
   	    });
   	    this.http = http;
     }
+    sampleRequest = null;
 
-    	
+    getCurrentSampleRequest(){
+      if(this.sampleRequest){
+        return this.sampleRequest;
+      } else {
+        return this.startSampleRequest();
+      }
+
+    }
+    cancelCurrentSampleRequest(){
+      if(this.sampleRequest.id){
+        //TODO: delete on server
+      }
+      this.sampleRequest = null;
+    }
+
+    startSampleRequest(){
+      this.sampleRequest = {};
+      this.sampleRequest.samples = [];
+      this.sampleRequest.courierOut = "Pashion Courier";
+      this.sampleRequest.courierReturn = "Pashion Courier";
+      this.sampleRequest.returnBy = "Afternoon";
+      this.sampleRequest.paymentOut = "50/50";
+      this.sampleRequest.paymentReturn = "50/50";
+      this.sampleRequest.requiredBy = "12:00";
+      return this.sampleRequest;
+    }
+
   	getSampleRequest(id){
   		var promise = new Promise((resolve, reject) => {
   		  this.http.fetch('/sampleRequest/show/'+id+'.json')
@@ -24,27 +50,18 @@ export class SampleRequestService{
                 window.location.href = '/user/login';
                 return;
             }
-            sampleRequest.searchableItemsProposed.forEach(function(item1) {
-              item1.status = sampleRequest.searchableItemsStatus.find(function (item2) {
-                return item2.itemId === item1.id;
-              });
-            });
-            this.sampleRequest = sampleRequest;
+            this.sampleRequest = collectStatus(sampleRequest);
     				resolve( this.sampleRequest);
     			}).catch(err=>reject(err));
     		});
-
     	return promise;
-        	
-  	
   	}
 
   	getSampleRequests(reload,searchText, status){
   		console.log("getting sample requests");
   		var promise = new Promise((resolve, reject) => {
     		if(reload || !(this.sampleRequests)){
-    			this.http.fetch('/sampleRequest.json?searchtext='+ encodeURI(searchText) + 
-                                          '&status=' + status)
+    			this.http.fetch('/sampleRequest.json?searchtext='+ encodeURI(searchText) + '&status=' + status)
       			.then(response => response.json())
       			.then(sampleRequests => {
               if(sampleRequests.session == 'invalid'){
@@ -64,14 +81,14 @@ export class SampleRequestService{
         } else { 
           resolve(this.sampleRequests);
         }
-  	      	
   		});
-
 		  return promise;
   	}
 
     updateSampleRequest(sr){
-      console.log("sample request:");
+      if(sr === null)
+        sr = this.sampleRequest;
+      console.log("update sample request:");
       console.log(JSON.stringify(sr));
       var promise = new Promise((resolve, reject) => {
         this.http.fetch('/sampleRequest/updatejson', {
@@ -84,7 +101,8 @@ export class SampleRequestService{
                 window.location.href = '/user/login';
                 return;
             }
-            resolve(result);
+            this.sampleRequest = collectStatus(result);
+            resolve(this.sampleRequest);
           });
       });
       return promise;
@@ -92,18 +110,29 @@ export class SampleRequestService{
 
   	saveSampleRequest(sr){
   		this.http.fetch('/sampleRequest/savejson', {
-            method: 'post',
-            body: json(sr)
-          })
-          .then(response => response.json())
-          .then(result => {
-              if(result.session == 'invalid'){
-                  window.location.href = '/user/login';
-                  return;
-              }
-              resolve(result);
-          });
+          method: 'post',
+          body: json(sr)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if(result.session == 'invalid'){
+                window.location.href = '/user/login';
+                return;
+            }
+            this.sampleRequest = collectStatus(result);
+            resolve(this.sampleRequest);
+        });
   	}
+
+    collectStatus(sampleRequest){
+      sampleRequest.searchableItemsProposed.forEach(function(item1) {
+        item1.status = sampleRequest.searchableItemsStatus.find(function (item2) {
+          return item2.itemId === item1.id;
+        });
+      });
+      return sampleRequest;
+    }
+
 
     // START BRAND ACTIONS
     denySampleRequest(id){
@@ -288,7 +317,6 @@ export class SampleRequestService{
             });
       });
       return promise;
-
     }
 
     bookReturnSampleRequest(sr){
@@ -307,12 +335,8 @@ export class SampleRequestService{
             });
       });
       return promise;
-
     }
 
-  
-
-    
 
 }
 

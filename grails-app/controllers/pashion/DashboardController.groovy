@@ -278,13 +278,12 @@ class DashboardController {
     	def list = ['Morning','Noon','Afternoon'] as JSON
     	render list
     }
-/*
-    def courier(){
-        def list = ['Bike','Car','Foot',
-                        'Scooter', 'My Courier'] as JSON
+
+    def stuartModes(){
+        def list = ['Bike','Car','Foot', 'Scooter'] as JSON
         render list
     }
-*/
+
     def courier(){
         def list = ['My Courier','Pashion Courier','They Book'] as JSON
         render list
