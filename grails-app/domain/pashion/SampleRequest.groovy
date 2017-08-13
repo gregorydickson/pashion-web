@@ -17,6 +17,7 @@ class SampleRequest {
 	String requestStatusBrand //Pending ->Approved->Shipped -> Delivered -> Due Back ->Overdue ->Closed
 	String requestStatusPress
 	Boolean overdue = false
+	Boolean finalize = false
 	Long userCreatedId
 	
 	Brand brand

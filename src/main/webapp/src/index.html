@@ -568,6 +568,12 @@
                                                 )"
                                                 class="look-menu-item"><a click.delegate="restockedSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Restocked</a></li>
 
+                                                <!-- Finalize -->
+                                                <li if.bind="(
+                                                    (booking.requestStatusBrand == 'Finalize')
+                                                )"
+                                                class="look-menu-item"><a click.delegate="finalizeSampleRequest(booking.id)" href="#" class="look-menu-link">Finalize</a></li>
+                                                
                                                 <!-- Delete -->
                                                 <li class="look-menu-item"><a click.delegate="deleteSampleRequest(booking.id)" href="#" class="look-menu-link">Delete Request</a></li>
                                             </ul>

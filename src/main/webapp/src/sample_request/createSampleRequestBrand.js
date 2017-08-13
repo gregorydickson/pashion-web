@@ -23,7 +23,7 @@ export class CreateSampleRequestBrand {
   startCalendar = null;
   endCalendar = null;
   isLoading = true;
-
+  @bindable startFinalize = false;
   selectAll = true;
   required = [];
 
@@ -76,9 +76,11 @@ export class CreateSampleRequestBrand {
     var queryString = DateFormat.urlString(0, 2) + '&searchType=brand';
 
     this.sampleRequest = this.sampleRequestService.getCurrentSampleRequest();
-    
 
-    if(this.sampleRequest.startFinalize){
+    if(this.sampleRequest.requestStatusBrand === 'Finalize'){
+      this.startFinalize = true;
+      this.sampleRequest.datesSaved = true;
+      this.sampleRequest.samples = this.sampleRequest.searchableItems;
       return Promise.all([
         this.userService.getUser().then(user => {
           this.user = user;
@@ -152,6 +154,8 @@ export class CreateSampleRequestBrand {
 
   attached() {
     this.isLoading = false;
+
+    
     if(this.currentItem)
       this.checkSamples();
     ga('set', 'page', '/createSampleRequestBrand.html');
@@ -182,12 +186,12 @@ export class CreateSampleRequestBrand {
         this.currentItem.samples.forEach(function (item,index,object) {
           if(result){
             if(item.sampleCity.name == theUser.city.name ){
-              ids.push(item.id);
+              ids.push(item);
             } else {
               console.log("not adding to selected");
             }
           } else {
-            ids.push(item.id);
+            ids.push(item);
           }
           
         })
@@ -204,10 +208,10 @@ export class CreateSampleRequestBrand {
         this.currentItem.samples.forEach(function (item,index,object) {
           if(result){
             if(item.sampleCity.name == theUser.city.name ){
-              ids.push(item.id);
+              ids.push(item);
             } 
           } else {
-            ids.push(item.id);
+            ids.push(item);
           }
           
         })
@@ -334,17 +338,7 @@ export class CreateSampleRequestBrand {
     this.sampleRequest.endDay = day;
   }
 
-  dates(){
-    if(this.sampleRequest.startDate && this.sampleRequest.endDate){
-      this.sampleRequest.datesSaved = true;
-      this.alertP("Dates Set").then(result => {
-        $("#saveDates").toggle();
-      });
-      
-    } else{
-      this.alertP("Dates have not been Set");
-    }
-  }
+  
 
   addSample(sample){
     let already = this.sampleRequest.samples.find(item => {return sample.id === item.id});
@@ -436,13 +430,98 @@ export class CreateSampleRequestBrand {
     }
   }
 
+  bookOut() {
+    // initiate stuart booking
+    if (!(this.sampleRequest.pickupDate) ||
+      !(this.sampleRequest.pickupTime) ||
+      !(this.sampleRequest.addressDestination)) {
+      this.alertP("Please pick a Date and Time and Address");
+      return
+    }
+    this.busy.on();
+    console.log("Initiate Stuart booking from editSampleRequest Out");
+    document.getElementById('bookOut').style.visibility = 'hidden';
+    this.sampleRequestService.bookOutSampleRequest(this.sampleRequest).then(sr => {
+      this.sampleRequestService.getSampleRequest(this.sampleRequest.id).then(sampleRequest => {
+        this.sampleRequest = sampleRequest;
+        this.busy.off();
+        this.alertP(sr.message);
+        if(this.sampleRequest.shippingOut.stuartJobId == undefined)
+          document.getElementById('bookOut').style.visibility = 'visible';
+      });
+    });
+
+  }
+
+  bookReturn() {
+    // initiate stuart booking
+    if (!(this.sampleRequest.pickupDateReturn) || !(this.sampleRequest.pickupTimeReturn)) {
+      this.alertP("Please pick a Date and Time");
+      return
+    }
+    this.busy.on();
+    document.getElementById('bookReturn').style.visibility = 'hidden';
+    console.log("Initiate Stuart booking from editSampleRequest Return");
+    this.sampleRequestService.bookReturnSampleRequest(this.sampleRequest).then(sr => {
+      this.sampleRequestService.getSampleRequest(this.sampleRequest.id).then(sampleRequest => {
+        this.sampleRequest = sampleRequest;
+        this.busy.off();
+        this.alertP(sr.message);
+
+        if(this.sampleRequest.shippingReturn.stuartJobId == undefined)
+          document.getElementById('bookReturn').style.visibility = 'visible';
+        
+      
+
+        
+      });
+    });
+
+  }
+
+  // BUTTONS
+
+  dates(){
+    if(this.sampleRequest.startDate && this.sampleRequest.endDate){
+      this.sampleRequest.datesSaved = true;
+      this.alertP("Dates Set").then(result => {
+        $("#saveDates").toggle();
+      });
+    } else{
+      this.alertP("Dates have not been Set");
+    }
+  }
+
   cancel(){
     this.sampleRequestService.cancelCurrentSampleRequest();
     this.controller.close();
   }
 
-  close() {
+  continue() {
     this.controller.close();
   }
+
+  send(){
+    this.sampleRequest.finalize = true;
+    this.sampleRequest.requestStatusBrand = "Finalize"
+    this.sampleRequestService.saveSampleRequest(this.sampleRequest)
+      .then(result =>{
+        this.alertP("Request Sent");
+        this.controller.close();
+      });
+  }
+
+  update(){
+    this.sampleRequest.requestStatusBrand = "Approved"
+    this.sampleRequestService.updateSampleRequest(this.sampleRequest)
+      .then(result =>{
+        this.alertP("Request Updated");
+        this.controller.close();
+      });
+  }
+
+
+
+
 
 }

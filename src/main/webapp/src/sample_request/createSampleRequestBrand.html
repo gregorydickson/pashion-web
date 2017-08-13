@@ -30,47 +30,49 @@
             </div>
 
             
-            <div class="grid-block row" if.bind="startCalendar">
+            <div class="grid-block row">
                 <!--Start Left column -->
-                <div class="vertical grid-block" >
-                    <div class="grid-block">
-                        <span class="calendarnav ui-text-label-m-blue ${sampleRequest.startDate ? '' : 'red-deco'}" style="text-align:center;">START BOOKING</span>
+                <div class="vertical grid-block">
+                    <div if.bind="startCalendar">
+                        <div class="grid-block">
+                            <span class="calendarnav ui-text-label-m-blue ${sampleRequest.startDate ? '' : 'red-deco'}" style="text-align:center;">START BOOKING</span>
+                        </div>
+                        <div class="grid-block calendar-header-align">
+                            <span click.delegate="startPrevious()" class="calendarnav prev">
+                            <a><img src="/assets/calendar/prev.png"  /></a>
+                         </span>
+                            <span class="calendarnav calendar-title">
+                            <a id="titlelink" click.delegate="startReset()">TODAY</a>
+                         </span>
+                            <span click.delegate="startNext()" class="calendarnav next">
+                            <a><img src="/assets/calendar/next.png" /></a>
+                         </span>
+                        </div>
+                        <div class="grid-block calendar-header-align">
+                            <span class="calendarnav ui-text-label-m-broad monthyear">${startCalendar.calendarMonths[0].monthName}&emsp;${startCalendar.calendarMonths[0].year}</span>
+                        </div>
+                        <div class="grid-block  calendar-header-align">
+                            <table class="calendar calendar-day-numbers">
+                                <thead>
+                                    <tr>
+                                        <td repeat.for="cell of startCalendar.calendarMonths[0].dayNames[0]">${cell.dayString}
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr repeat.for="row of startCalendar.calendarMonths[0].rows">
+                                        
+                                        <td class="${cell.event} ${aSampleHasOutReason ? 'not-available' : ''}" repeat.for="cell of row">
+                                            <a class=" ${(computedClass && (cell.dayString === sampleRequest.startDay)) ? 'start-selected' : ''} " href="#" click.delegate="setStartDate($event,cell.event,cell.dayString)">
+                                            ${cell.dayString}
+                                        </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="grid-block calendar-header-align">
-                        <span click.delegate="startPrevious()" class="calendarnav prev">
-                        <a><img src="/assets/calendar/prev.png"  /></a>
-                     </span>
-                        <span class="calendarnav calendar-title">
-                        <a id="titlelink" click.delegate="startReset()">TODAY</a>
-                     </span>
-                        <span click.delegate="startNext()" class="calendarnav next">
-                        <a><img src="/assets/calendar/next.png" /></a>
-                     </span>
-                    </div>
-                    <div class="grid-block calendar-header-align">
-                        <span class="calendarnav ui-text-label-m-broad monthyear">${startCalendar.calendarMonths[0].monthName}&emsp;${startCalendar.calendarMonths[0].year}</span>
-                    </div>
-                    <div class="grid-block  calendar-header-align">
-                        <table class="calendar calendar-day-numbers">
-                            <thead>
-                                <tr>
-                                    <td repeat.for="cell of startCalendar.calendarMonths[0].dayNames[0]">${cell.dayString}
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr repeat.for="row of startCalendar.calendarMonths[0].rows">
-                                    
-                                    <td class="${cell.event} ${aSampleHasOutReason ? 'not-available' : ''}" repeat.for="cell of row">
-                                        <a class=" ${(computedClass && (cell.dayString === sampleRequest.startDay)) ? 'start-selected' : ''} " href="#" click.delegate="setStartDate($event,cell.event,cell.dayString)">
-                                        ${cell.dayString}
-                                    </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div if.bind="sampleRequest.finalize">
+                    <div if.bind="startFinalize">
                         <!-- Required By -->
                         <div class="grid-content shrink" style="margin-top: 1.5rem;">
                             <span class="inline-label">
@@ -218,7 +220,7 @@
                             </table>
                         </div>
                     </div>
-                    <div if.bind="sampleRequest.finalize">
+                    <div if.bind="startFinalize">
                         <!-- Return By Time -->
                         <div class="grid-content shrink" style="margin-top: 1.5rem;">
                             <span class="inline-label">
@@ -340,10 +342,11 @@
 
 
         <ai-dialog-footer show.bind="!isLoading">
-            <button class="hollow button" click.delegate="cancel()">Cancel Request</button>
+            <button class="hollow button" click.delegate="cancel()">Close</button>
             <button if.bind="(!sampleRequest.datesSaved)" id="saveDates" class="button" click.delegate="dates()">Save Dates</button>
-            <button if.bind="sampleRequest.datesSaved" id="continue" class="button" click.delegate="close()">Continue</button>
-            <button id="CreateSampleRequestButton" class="button" click.delegate="submit()">Submit</button>
+            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="continue" class="button" click.delegate="continue()">Continue</button>
+            <button if.bind="(sampleRequest.datesSaved && startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="send()">Send</button>
+            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="update()">Update</button>
         </ai-dialog-footer>
     </ai-dialog>
 </template>

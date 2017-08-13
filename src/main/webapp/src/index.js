@@ -1143,6 +1143,15 @@ export class Index {
             .then(response => {});
     }
 
+    finalizeSampleRequest(id) {
+        this.closeSampleRequestMenu(id);
+        this.sampleRequestService.getSampleRequest(id)
+            .then(result =>{
+                this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: null, lock: true })
+                    .then(response => {});
+            });
+    }
+
 
     alertP(message) {
 

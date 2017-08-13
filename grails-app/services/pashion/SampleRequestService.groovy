@@ -102,14 +102,21 @@ class SampleRequestService {
             
             sr.returnBy = jsonObject.returnBy
 
-            sr.requestStatusBrand = "Pending"
-            sr.requestStatusPress = "Pending"
+            if(jsonObject.requestStatusBrand){
+                sr.requestStatusBrand = jsonObject.requestStatusBrand
+            } else{
+                sr.requestStatusBrand = "Pending"
+                sr.requestStatusPress = "Pending"
+            }
+
+            
          
 
             SearchableItem item
 
             jsonObject.samples.each{
-                item = SearchableItem.get(it)
+                log.info "a sample"+it
+                item = SearchableItem.get(it.id.toInteger())
                 log.info "sample request item:"+item
                 if(!sr.brand) sr.brand = item.brand
                 if(!sr.image) sr.image = item.look.image

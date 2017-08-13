@@ -38,7 +38,7 @@ export class SampleRequestService{
       this.sampleRequest.paymentOut = "50/50";
       this.sampleRequest.paymentReturn = "50/50";
       this.sampleRequest.requiredBy = "12:00";
-      
+
       this.sampleRequest.startDay = '';
       this.sampleRequest.startDate = '';
       this.sampleRequest.startMonth = '';
@@ -57,7 +57,7 @@ export class SampleRequestService{
                 window.location.href = '/user/login';
                 return;
             }
-            this.sampleRequest = collectStatus(sampleRequest);
+            this.sampleRequest = this.collectStatus(sampleRequest);
     				resolve( this.sampleRequest);
     			}).catch(err=>reject(err));
     		});
@@ -108,7 +108,7 @@ export class SampleRequestService{
                 window.location.href = '/user/login';
                 return;
             }
-            this.sampleRequest = collectStatus(result);
+            this.sampleRequest = this.collectStatus(result);
             resolve(this.sampleRequest);
           });
       });
@@ -116,19 +116,23 @@ export class SampleRequestService{
     }
 
   	saveSampleRequest(sr){
-  		this.http.fetch('/sampleRequest/savejson', {
-          method: 'post',
-          body: json(sr)
-        })
-        .then(response => response.json())
-        .then(result => {
-            if(result.session == 'invalid'){
-                window.location.href = '/user/login';
-                return;
-            }
-            this.sampleRequest = collectStatus(result);
-            resolve(this.sampleRequest);
-        });
+      var promise = new Promise((resolve, reject) => {
+    		this.http.fetch('/sampleRequest/savejson', {
+            method: 'post',
+            body: json(sr)
+          })
+          .then(response => response.json())
+          .then(result => {
+              if(result.session == 'invalid'){
+                  window.location.href = '/user/login';
+                  return;
+              }
+              this.sampleRequest = this.collectStatus(result);
+              resolve(this.sampleRequest);
+          });
+
+      });
+      return promise;
   	}
 
     collectStatus(sampleRequest){
