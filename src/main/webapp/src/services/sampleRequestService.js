@@ -38,6 +38,13 @@ export class SampleRequestService{
       this.sampleRequest.paymentOut = "50/50";
       this.sampleRequest.paymentReturn = "50/50";
       this.sampleRequest.requiredBy = "12:00";
+      
+      this.sampleRequest.startDay = '';
+      this.sampleRequest.startDate = '';
+      this.sampleRequest.startMonth = '';
+      this.sampleRequest.endDate = '';
+      this.sampleRequest.endDay = '';
+      this.sampleRequest.endMonth = '';
       return this.sampleRequest;
     }
 

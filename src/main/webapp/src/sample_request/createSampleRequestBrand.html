@@ -13,7 +13,6 @@
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
                     <span class="ui-text-label-m-broad">BOOKING&nbsp;${brand.name}
-                     <!-- ${currentItem.season.id}&nbsp;-->
                      &nbsp;</span>
                     <span class="ui-text-label-m-broad">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.name}</span>
                 </div>
@@ -63,7 +62,7 @@
                                 <tr repeat.for="row of startCalendar.calendarMonths[0].rows">
                                     
                                     <td class="${cell.event} ${aSampleHasOutReason ? 'not-available' : ''}" repeat.for="cell of row">
-                                        <a class=" ${(computedClass && (cell.dayString === sampleRequestStartDay)) ? 'start-selected' : ''} " href="#" click.delegate="setStartDate($event,cell.event,cell.dayString)">
+                                        <a class=" ${(computedClass && (cell.dayString === sampleRequest.startDay)) ? 'start-selected' : ''} " href="#" click.delegate="setStartDate($event,cell.event,cell.dayString)">
                                         ${cell.dayString}
                                     </a>
                                     </td>
@@ -210,7 +209,7 @@
                                     <tr repeat.for="row of endCalendar.calendarMonths[0].rows">
                                        
                                         <td class="${cell.event} ${aSampleHasOutReason ? 'not-available' : ''}" repeat.for="cell of row">
-                                            <a class=" ${(computedClassEnd && (cell.dayString === sampleRequestEndDay)) ? 'end-selected' : ''} " href="#" click.delegate="setEndDate($event,cell.event,cell.dayString)">
+                                            <a class=" ${(computedClassEnd && (cell.dayString === sampleRequest.endDay)) ? 'end-selected' : ''} " href="#" click.delegate="setEndDate($event,cell.event,cell.dayString)">
                                             ${cell.dayString}
                                         </a>
                                         </td>

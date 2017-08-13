@@ -29,10 +29,7 @@ export class CreateSampleRequestBrand {
 
   availableReturnToItems = [];
   selectedReturnToItems = [''];
-  sampleRequestStartMonth = '';
-  sampleRequestStartDay = '';
-  sampleRequestEndMonth = '';
-  sampleRequestEndDay = '';
+
 
   @bindable user = {};
   
@@ -252,9 +249,9 @@ export class CreateSampleRequestBrand {
     var todayMilli = today.getTime();
     yesterday = todayMilli - (24*60*60*1000);
 
-    this.startDay = day;
+    this.sampleRequest.startDay = day;
     var enddate = '';
-    if (this.endDay != '') enddate = new Date(this.endCalendar.calendarMonths[0].year, this.endCalendar.calendarMonths[0].monthNumber - 1, this.endDay);
+    if (this.sampleRequest.endDay != '') enddate = new Date(this.endCalendar.calendarMonths[0].year, this.endCalendar.calendarMonths[0].monthNumber - 1, this.sampleRequest.endDay);
     let startdate = new Date(this.startCalendar.calendarMonths[0].year, this.startCalendar.calendarMonths[0].monthNumber - 1, day);
 
     // quit if in the past
@@ -262,27 +259,26 @@ export class CreateSampleRequestBrand {
     console.log("today: " + today);
     console.log("startdate: " + startdate);
     console.log("startDay: " + this.startDay);
-    if (this.endDay != '') console.log("enddate: " + enddate); else console.log("no endDay set")
+    if (this.sampleRequest.endDay != '') console.log("enddate: " + enddate); else console.log("no endDay set")
     console.log("endDay: " + this.endDay);
     if (startdate.getTime() <= yesterday) {
       console.log("day is before today.");
-      this.startDay = '';
+      this.sampleRequest.startDay = '';
       this.sampleRequest.startDate = '';
-      this.sampleRequestStartMonth = '';
-      this.sampleRequestStartDay = '';
+      this.sampleRequest.startMonth = '';
+
       // also clear end date
-      this.endDay = '';
       this.sampleRequest.endDate = '';
-      this.sampleRequestEndDay = '';
-      this.sampleRequestEndMonth = '';
+      this.sampleRequest.endDay = '';
+      this.sampleRequest.endMonth = '';
       
       return;
     }
     console.log("day is in the future");
     
     this.sampleRequest.startDate = this.startCalendar.calendarMonths[0].year + "-" + this.startCalendar.calendarMonths[0].monthNumber + "-" + day;
-    this.sampleRequestStartMonth = this.startCalendar.calendarMonths[0].monthNumber;
-    this.sampleRequestStartDay = day;
+    this.sampleRequest.startMonth = this.startCalendar.calendarMonths[0].monthNumber;
+    this.sampleRequest.startDay = day;
   }
 
   setEndDate(event, dayEvent, day) {
@@ -290,52 +286,52 @@ export class CreateSampleRequestBrand {
       console.log("dates already saved returning");
       return;
     }
-    this.endDay = day;
+    this.sampleRequest.endDay = day;
     var startdate = '';
     let enddate = new Date(this.endCalendar.calendarMonths[0].year, this.endCalendar.calendarMonths[0].monthNumber - 1, day);
-    if (this.startDay != '') startdate = new Date(this.startCalendar.calendarMonths[0].year, this.startCalendar.calendarMonths[0].monthNumber - 1, this.startDay);
+    if (this.sampleRequest.startDay != '') startdate = new Date(this.startCalendar.calendarMonths[0].year, this.startCalendar.calendarMonths[0].monthNumber - 1, this.sampleRequest.startDay);
     var today = new Date();    
     var yesterday = 0;
     var todayMilli = today.getTime();
     yesterday = todayMilli - (24*60*60*1000);
 
     console.log("today: " + today);
-    if (this.startDay != '') console.log("startDay: " + this.startDay);
+    if (this.sampleRequest.startDay != '') console.log("startDay: " + this.sampleRequest.startDay);
     else {
       console.log("no startDay set, exit");
-      this.endDay = '';
+      this.sampleRequest.endDay = '';
       this.sampleRequest.endDate = '';
-      this.sampleRequestEndDay = '';
-      this.sampleRequestEndMonth = '';
+      this.sampleRequest.endDay = '';
+      this.sampleRequest.endMonth = '';
       return;
     }
     console.log("startdate: " + startdate);
     console.log("enddate: " + enddate);
-    console.log("endDay: " + this.endDay);
+    console.log("endDay: " + this.sampleRequest.endDay);
     if (enddate.getTime() <= yesterday) {
       console.log("day is before today.");
-      this.endDay = '';
+      this.sampleRequest.endDay = '';
       this.sampleRequest.endDate = '';
-      this.sampleRequestEndDay = '';
-      this.sampleRequestEndMonth = '';
+      this.sampleRequest.endDay = '';
+      this.sampleRequest.endMonth = '';
       return;
     }
     console.log("day is in the future");
 
-    if (this.startDay === '' || enddate < startdate ) {
+    if (this.sampleRequest.startDay === '' || enddate < startdate ) {
       console.log(" empty, reverse ");
-      this.endDay = '';
+      this.sampleRequest.endDay = '';
       this.sampleRequest.endDate = '';
-      this.sampleRequestEndDay = '';
-      this.sampleRequestEndMonth = '';
+      this.sampleRequest.endDay = '';
+      this.sampleRequest.endMonth = '';
       return;
     }
     console.log("end date" + event);
     console.log("day" + day);
     
     this.sampleRequest.endDate = this.endCalendar.calendarMonths[0].year + "-" + this.endCalendar.calendarMonths[0].monthNumber + "-" + day;
-    this.sampleRequestEndMonth = this.endCalendar.calendarMonths[0].monthNumber;
-    this.sampleRequestEndDay = day;
+    this.sampleRequest.endMonth = this.endCalendar.calendarMonths[0].monthNumber;
+    this.sampleRequest.endDay = day;
   }
 
   dates(){
@@ -406,14 +402,14 @@ export class CreateSampleRequestBrand {
     this.endOffset = 0;
   }
 
-  @computedFrom('startCalendar.calendarMonths[0].monthNumber', 'sampleRequestStartMonth')
+  @computedFrom('startCalendar.calendarMonths[0].monthNumber', 'sampleRequest.startMonth')
   get computedClass() {
-    if (this.startCalendar.calendarMonths[0].monthNumber == this.sampleRequestStartMonth) return true
+    if (this.startCalendar.calendarMonths[0].monthNumber == this.sampleRequest.startMonth) return true
   }
 
-  @computedFrom('endCalendar.calendarMonths[0].monthNumber', 'sampleRequestEndMonth')
+  @computedFrom('endCalendar.calendarMonths[0].monthNumber', 'sampleRequest.endMonth')
   get computedClassEnd() {
-    if (this.endCalendar.calendarMonths[0].monthNumber == this.sampleRequestEndMonth) return true
+    if (this.endCalendar.calendarMonths[0].monthNumber == this.sampleRequest.endMonth) return true
   }
 
 
