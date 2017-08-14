@@ -401,7 +401,7 @@
                                     <div if.bind="user.type === 'brand'" class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
                                     
                                     <!-- hover stuff -->
-                                    <div class="card-look-number-name" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
+                                    <div class="card-look-number-name" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name.toUpperCase()}</div>
                                     <div if.bind="user.type === 'brand'" class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].season}</div>
                                     <div if.bind="user.type === 'press'" class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].brand} <br> ${row.items[i].season}</div>
                                     <div if.bind="user.type === 'prAgency'" class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].brand} <br> ${row.items[i].season}</div>
