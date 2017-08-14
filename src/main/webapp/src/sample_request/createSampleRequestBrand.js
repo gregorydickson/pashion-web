@@ -515,7 +515,7 @@ export class CreateSampleRequestBrand {
     this.sampleRequest.requestStatusBrand = "Approved"
     this.sampleRequestService.updateSampleRequest(this.sampleRequest)
       .then(result =>{
-        this.alertP("Request Updated");
+        this.alertP(result);
         this.controller.close();
       });
   }

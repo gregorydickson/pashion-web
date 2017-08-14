@@ -1,5 +1,6 @@
 <template>
     <require from="./sort"></require>
+    <require from="../common/viewDateFormatter"></require>
     <require from="../common/formSelectSampleRequest"></require>
     <require from="../common/formSelectSample"></require>
     <require from="../common/formSelectObject"></require>
@@ -73,6 +74,15 @@
                         </div>
                     </div>
                     <div if.bind="startFinalize">
+                        <!-- Requested -->
+                        <div class="grid-content shrink">
+                            <div class="inline-label">
+                                <span class="slim-text-box-label">Start</span>
+                                <span class="slim-text-box">
+                                    ${sampleRequest.bookingStartDate | viewDateFormat}
+                                </span>
+                            </div>
+                        </div>
                         <!-- Required By -->
                         <div class="grid-content shrink" style="margin-top: 1.5rem;">
                             <span class="inline-label">
@@ -91,7 +101,8 @@
                             <span class="inline-label" style="margin-bottom: 0px;">
                             <span class="slim-text-box-label" style="">Attention</span>
                             <div>
-                                <input type="text" class="slim-text-box" value.bind="selectedAddress.name">
+                                <span class="slim-text-box">${selectedAddress.name}
+                                </span>
                             </div>
                             </span>
                         </div>
@@ -100,7 +111,8 @@
                             <span class="inline-label" style="margin-bottom: 0px;">
                             <span class="slim-text-box-label" style="">Phone</span>
                             <div>
-                                <input type="text" class="slim-text-box" value.bind="selectedAddress.contactPhone">
+                                <span class="slim-text-box">${selectedAddress.contactPhone}
+                                </span>
                             </div>
                             </span>
                         </div>
@@ -109,7 +121,8 @@
                             <span class="inline-label" style="margin-bottom: 0px;">
                             <span class="slim-text-box-label" style="">Company</span>
                             <div>
-                                <input type="text" class="slim-text-box" value.bind="selectedAddress.company">
+                                <span class="slim-text-box"> ${selectedAddress.company}
+                                </span>
                             </div>
                             </span>
                         </div>
@@ -118,7 +131,7 @@
                             <span class="inline-label" style="margin-bottom: 0px;">
                             <span class="slim-text-box-label" style="">Address 1</span>
                             <div>
-                                <input type="text" class="slim-text-box" value.bind="selectedAddress.address1">
+                                <span class="slim-text-box"> ${selectedAddress.address1}
                             </div>
                             </span>
                         </div>
@@ -127,7 +140,7 @@
                             <span class="inline-label" style="margin-bottom: 0px;">
                             <span class="slim-text-box-label" style="">City</span>
                             <div>
-                                <input type="text" class="slim-text-box" value.bind="selectedAddress.city">
+                                <span class="slim-text-box"> ${selectedAddress.city}
                             </div>
                             </span>
                         </div>
@@ -136,7 +149,7 @@
                             <span class="inline-label" style="margin-bottom: 0px;">
                             <span class="slim-text-box-label" style="">Country</span>
                             <div>
-                                <input type="text" class="slim-text-box" value.bind="selectedAddress.country">
+                                <span class="slim-text-box"> ${selectedAddress.country}
                             </div>
                             </span>
                         </div>
@@ -145,7 +158,7 @@
                             <span class="inline-label" style="margin-bottom: 0px;">
                             <span class="slim-text-box-label">Postal Code</span>
                             <div>
-                                <input type="text" class="slim-text-box" value.bind="selectedAddress.postalCode">
+                                <span class="slim-text-box"> ${selectedAddress.postalCode}
                             </div>
                             </span>
                         </div>
@@ -154,7 +167,7 @@
                             <span class="inline-label" style="margin-bottom: 0px;">
                             <span class="slim-text-box-label">Comment</span>
                             <div>
-                                <input type="text" class="slim-text-box" value.bind="selectedAddress.comment">
+                                <span class="slim-text-box"> ${selectedAddress.comment}
                             </div>
                             </span>
                         </div>
@@ -221,6 +234,15 @@
                         </div>
                     </div>
                     <div if.bind="startFinalize">
+                         <!-- Due -->
+                        <div class="grid-content shrink">
+                            <div class="inline-label">
+                                <span class="slim-text-box-label">End</span>
+                                <span class="slim-text-box">
+                                    ${sampleRequest.bookingEndDate | viewDateFormat}
+                                </span>
+                            </div>
+                        </div>
                         <!-- Return By Time -->
                         <div class="grid-content shrink" style="margin-top: 1.5rem;">
                             <span class="inline-label">
@@ -345,8 +367,8 @@
             <button class="hollow button" click.delegate="cancel()">Close</button>
             <button if.bind="(!sampleRequest.datesSaved)" id="saveDates" class="button" click.delegate="dates()">Save Dates</button>
             <button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="continue" class="button" click.delegate="continue()">Continue</button>
-            <button if.bind="(sampleRequest.datesSaved && startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="send()">Send</button>
-            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="update()">Update</button>
+            <button if.bind="(sampleRequest.datesSaved && sampleRequest.finalize)" id="CreateSampleRequestButton" class="button" click.delegate="send()">Send</button>
+            <button if.bind="(sampleRequest.datesSaved && startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="update()">Update</button>
         </ai-dialog-footer>
     </ai-dialog>
 </template>

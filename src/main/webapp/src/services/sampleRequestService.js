@@ -103,13 +103,13 @@ export class SampleRequestService{
             body: json(sr)
         })
           .then(response => response.json())
-          .then(result =>{
+          .then(message =>{
             if(result.session == 'invalid'){
                 window.location.href = '/user/login';
                 return;
             }
-            this.sampleRequest = this.collectStatus(result);
-            resolve(this.sampleRequest);
+            
+            resolve(message);
           });
       });
       return promise;
