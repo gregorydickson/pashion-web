@@ -108,13 +108,13 @@ export class SampleRequestService{
             body: json(sr)
         })
           .then(response => response.json())
-          .then(message =>{
-            if(result.session == 'invalid'){
+          .then(response =>{
+            if(response.session == 'invalid'){
                 window.location.href = '/user/login';
                 return;
             }
             
-            resolve(message);
+            resolve(response.message);
           });
       });
       return promise;
@@ -132,8 +132,8 @@ export class SampleRequestService{
                   window.location.href = '/user/login';
                   return;
               }
-              this.sampleRequest = this.collectStatus(result);
-              resolve(this.sampleRequest);
+              
+              resolve(result.message);
           });
 
       });

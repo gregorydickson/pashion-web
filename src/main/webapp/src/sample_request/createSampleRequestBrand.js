@@ -501,14 +501,14 @@ export class CreateSampleRequestBrand {
     this.controller.close();
   }
 
-  send(){
+  submit(){
     this.sampleRequest.finalize = true;
     this.sampleRequest.requestStatusBrand = "Finalize"
     this.sampleRequestService.saveSampleRequest(this.sampleRequest)
       .then(result =>{
-        this.alertP("Request Sent");
-        let status = this.sampleRequestService.sampleRequestStatus();
-        status = 'none';
+        this.alertP(result);
+        this.sampleRequestService.sampleRequestStatus = 'none';
+        this.sampleRequestService.sampleRequest = null;
         this.controller.close();
       });
   }

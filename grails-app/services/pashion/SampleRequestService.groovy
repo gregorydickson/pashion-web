@@ -344,6 +344,10 @@ class SampleRequestService {
                     sr = destinationAddressBrand(sr,jsonObject)
                 }
             }
+
+            if(jsonObject.requestStatusBrand){
+                sr.requestStatusBrand = jsonObject.requestStatusBrand
+            }
             sr = returnToAddress(sr,jsonObject)
             sr.save(failOnError:true,flush:true)
             log.info "UPDATED SAMPLE REQUEST:"+sr.id

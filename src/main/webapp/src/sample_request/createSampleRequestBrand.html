@@ -13,7 +13,9 @@
             <!-- header -->
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad">BOOKING&nbsp;${brand.name}
+                    <span if.bind="(!sampleRequest.datesSaved)" class="ui-text-label-m-broad">START BOOKING&nbsp;${brand.name}
+                     &nbsp;</span>
+                     <span if.bind="(sampleRequest.datesSaved)" class="ui-text-label-m-broad">CONTINUE BOOKING&nbsp;${brand.name}
                      &nbsp;</span>
                     <span class="ui-text-label-m-broad">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.name}</span>
                 </div>
@@ -367,8 +369,8 @@
             <button class="hollow button" click.delegate="cancel()">Cancel</button>
             <button if.bind="(!sampleRequest.datesSaved)" id="saveDates" class="button" click.delegate="dates()">Save Dates</button>
             <button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="continue" class="button" click.delegate="continue()">Continue Picking</button>
-            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="send()">Submit</button>
-            <button if.bind="(sampleRequest.datesSaved && startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="update()">Finalize</button>
+            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="submit()">Submit</button>
+            <button if.bind="(sampleRequest.datesSaved && startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="update()">Save</button>
         </ai-dialog-footer>
     </ai-dialog>
 </template>
