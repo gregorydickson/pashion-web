@@ -507,6 +507,8 @@ export class CreateSampleRequestBrand {
     this.sampleRequestService.saveSampleRequest(this.sampleRequest)
       .then(result =>{
         this.alertP("Request Sent");
+        let status = this.sampleRequestService.sampleRequestStatus();
+        status = 'none';
         this.controller.close();
       });
   }

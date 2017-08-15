@@ -13,6 +13,9 @@ export class SampleRequestService{
   	    this.http = http;
     }
     sampleRequest = null;
+    sampleRequestStatus = 'none';
+
+    
 
     getCurrentSampleRequest(){
       if(this.sampleRequest){
@@ -27,9 +30,11 @@ export class SampleRequestService{
         //TODO: delete on server
       }
       this.sampleRequest = null;
+      this.sampleRequestStatus = 'none';
     }
 
     startSampleRequest(){
+      this.sampleRequestStatus = 'created';
       this.sampleRequest = {};
       this.sampleRequest.samples = [];
       this.sampleRequest.courierOut = "Pashion Courier";

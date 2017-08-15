@@ -364,11 +364,11 @@
 
 
         <ai-dialog-footer show.bind="!isLoading">
-            <button class="hollow button" click.delegate="cancel()">Close</button>
+            <button class="hollow button" click.delegate="cancel()">Cancel</button>
             <button if.bind="(!sampleRequest.datesSaved)" id="saveDates" class="button" click.delegate="dates()">Save Dates</button>
-            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="continue" class="button" click.delegate="continue()">Continue</button>
-            <button if.bind="(sampleRequest.datesSaved && sampleRequest.finalize)" id="CreateSampleRequestButton" class="button" click.delegate="send()">Send</button>
-            <button if.bind="(sampleRequest.datesSaved && startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="update()">Update</button>
+            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="continue" class="button" click.delegate="continue()">Continue Picking</button>
+            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="send()">Submit</button>
+            <button if.bind="(sampleRequest.datesSaved && startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="update()">Finalize</button>
         </ai-dialog-footer>
     </ai-dialog>
 </template>

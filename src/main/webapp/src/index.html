@@ -364,7 +364,8 @@
                                                 -->
 
                                                 <li class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
-                                                <li class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Booking &nbsp;</a></li>
+                                                <li if.bind="(sampleRequestService.sampleRequestStatus === 'none')" class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Start Booking &nbsp;</a></li>
+                                                <li if.bind="(sampleRequestService.sampleRequestStatus === 'created')" class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Continue Booking &nbsp;</a></li>
 
                                                 <li class="look-menu-item"><a href="#" click.delegate="deleteSearchableItem(row.items[i])" class="look-menu-link">Delete</a></li>
                                             </ul>
@@ -379,7 +380,9 @@
 
                                                 <li class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
                                                 
-                                                <li class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Booking &nbsp;</a></li>
+                                                <li if.bind="(sampleRequestService.sampleRequestStatus === 'none')" class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Start Booking &nbsp;</a></li>
+
+                                                <li if.bind="(sampleRequestService.sampleRequestStatus === 'created')" class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Continue Booking &nbsp;</a></li>
                                             </ul>
                                         </div>
                                     </div>
