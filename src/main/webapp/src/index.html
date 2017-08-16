@@ -352,7 +352,7 @@
                                     <div class="look-menu-absolute" id="look-${row.items[i].id}">
                                         <div class="look-menu-wrap">
                                             <div class="look-menu-heading">
-                                                ${row.items[i].season | seasonAbbreviation:seasons }.${row.items[i].name} <!-- ${i} ${row.numberImagesThisRow} -->
+                                                ${row.items[i].season | seasonAbbreviation:seasons }.${row.items[i].name.toUpperCase()} <!-- ${i} ${row.numberImagesThisRow} -->
                                             </div>
 
                                             <!-- brand -->
@@ -408,7 +408,7 @@
 
                                     <div class="card-hover-overlay" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"></div>
 
-                                </div>  
+                                </div>
                         </div>                  
                     </div>
                 </div>
