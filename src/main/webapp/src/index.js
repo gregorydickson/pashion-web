@@ -322,7 +322,7 @@ export class Index {
                 if (rows.session == 'invalid') {
                     window.location.href = '/user/login';
                     return;
-                }
+                } 
                 this.rows = rows;
                 this.busy.off();
                 if (rows.length > 0) {
