@@ -32,6 +32,7 @@ import moment from 'moment'
 
 @inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, PRAgencyService, busy, PubNubService,  SearchableItemService, TaskQueue)
 export class Index {
+
     //user = {};
     bookings = [];
     rows = [];
@@ -272,11 +273,13 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
-                setTimeout(function () {
-                        window.myblazy.destroy();
-                        window.myblazy.revalidate();
-                        //console.log("subsequent loading Blazy recreation");
-                }, 1000); 
+                this.taskQueue.queueMicroTask(() => {            
+                        setTimeout(function () {
+                                window.myblazy.destroy();
+                                window.myblazy.revalidate();
+                                //console.log("subsequent loading Blazy recreation");
+                        }, 1000); 
+                }); 
                 this.busy.off();
             })
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 500 }, 'slow')) // scroll to top
@@ -327,10 +330,13 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
-                setTimeout(function () {
-                        window.myblazy.destroy();
-                        window.myblazy.revalidate();
-                    }, 1000); 
+                this.taskQueue.queueMicroTask(() => {            
+                        setTimeout(function () {
+                                window.myblazy.destroy();
+                                window.myblazy.revalidate();
+                                //console.log("subsequent loading Blazy recreation");
+                        }, 1000); 
+                });
                 this.busy.off();
             })
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 500 }, 'slow'));
@@ -429,11 +435,13 @@ export class Index {
                 else {
                     console.log ("NOT first time unveil");
                     
-                    setTimeout(function () {
-                        window.myblazy.destroy();
-                        window.myblazy.revalidate();
-                        //console.log("subsequent loading Blazy recreation");
-                    }, 1000); 
+                this.taskQueue.queueMicroTask(() => {            
+                        setTimeout(function () {
+                                window.myblazy.destroy();
+                                window.myblazy.revalidate();
+                                //console.log("subsequent loading Blazy recreation");
+                        }, 1000); 
+                });
                     
                 }
                 this.busy.off();
@@ -510,11 +518,11 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
-                setTimeout(function () {
-                            
-                        window.myblazy.revalidate();
-                        //console.log("subsequent loading Blazy recreation");
-                }, 1000); 
+                this.taskQueue.queueMicroTask(() => {            
+                        setTimeout(function () {
+                                window.myblazy.revalidate();
+                        }, 1000); 
+                }); 
                 this.busy.off();
             })
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 500 }, 'slow')) // scroll to top
@@ -564,11 +572,11 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
-                setTimeout(function () {
-                            
-                        window.myblazy.revalidate();
-                       // console.log("subsequent loading Blazy recreation");
-                }, 1000); 
+                this.taskQueue.queueMicroTask(() => {            
+                        setTimeout(function () {
+                                window.myblazy.revalidate();
+                        }, 1000); 
+                });
                 this.busy.off();
             })
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 500 }, 'slow')) // scroll to top
@@ -618,11 +626,13 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
-                setTimeout(function () {
-                        window.myblazy.destroy();
-                        window.myblazy.revalidate();
-                        //console.log("subsequent loading Blazy recreation");
-                }, 1000); 
+                this.taskQueue.queueMicroTask(() => {            
+                        setTimeout(function () {
+                                window.myblazy.destroy();
+                                window.myblazy.revalidate();
+                                //console.log("subsequent loading Blazy recreation");
+                        }, 1000); 
+                });
                 this.busy.off();
             })
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 500 }, 'slow')) // scroll to top
@@ -677,11 +687,13 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
-                setTimeout(function () {
-                        window.myblazy.destroy();
-                        window.myblazy.revalidate();
-                        //console.log("subsequent loading Blazy recreation");
-                }, 1000); 
+                this.taskQueue.queueMicroTask(() => {            
+                        setTimeout(function () {
+                                window.myblazy.destroy();
+                                window.myblazy.revalidate();
+                                //console.log("subsequent loading Blazy recreation");
+                        }, 1000); 
+                });
                 this.busy.off();
             })
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 500 }, 'slow')) // scroll to top
@@ -745,11 +757,13 @@ export class Index {
                         this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                         if (this.numberImages == this.maxR) this.maxRReached = true;
                     }
-                    setTimeout(function () {
-                            window.myblazy.destroy();
-                            window.myblazy.revalidate();
-                            // console.log("subsequent loading Blazy recreation");
-                    }, 1000); 
+                this.taskQueue.queueMicroTask(() => {            
+                        setTimeout(function () {
+                                window.myblazy.destroy();
+                                window.myblazy.revalidate();
+                                //console.log("subsequent loading Blazy recreation");
+                        }, 1000); 
+                });
                     this.busy.off();
                 })
                 .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 500 }, 'slow')) // scroll to top
