@@ -342,7 +342,8 @@
                 <div class="grid-content accordion">
                     <table class="" style="margin-bottom:4px; table-layout:fixed;">
                         <tr>
-                            <td class="accordion ${(sampleRequest.samples.length == 0) ? 'red-deco' : ''}" style="width:100px;">SAMPLES IN REQUEST</td>
+                            <td class="accordion ${(sampleRequest.samples.length == 0) ? 'red-deco' : ''}" style="width:369px;">SAMPLES IN REQUEST</td>
+                            <td if.bind="sampleRequest.datesSaved" class="" style="width:10px;">REMOVE</td>
                         </tr>
                     </table>
                 </div>
@@ -355,6 +356,9 @@
 
                                 <td class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:70px; max-width:70px;">${sample.id}</td>
                                 <td class="accordion to-u-c ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:300px; max-width:300px; overflow:hidden; padding-right:20px;">${sample.attributes}</td>
+                                <td if.bind="sampleRequest.datesSaved" class="accordion" style="width:10px; max-width:10px;">
+                                    <input type="checkbox" click.delegate="removeSample(sample)" >
+                                </td>
                                 
                                
                             </tr>

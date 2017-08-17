@@ -340,13 +340,12 @@ export class CreateSampleRequestBrand {
 
   
 
-  addSample(sample){
-    let already = this.sampleRequest.samples.find(item => {return sample.id === item.id});
-    if(already){
-      this.alertP("Sample Already In Request")
-    } else{
-      this.sampleRequest.samples.push(sample);
-    }
+  removeSample(sample){
+    console.log("sample:"+sample.id);
+    let toRemove = this.sampleRequest.samples.findIndex(item => {return sample.id == item.id});
+    
+    console.log("removing:"+toRemove);
+    this.sampleRequest.samples.splice(toRemove,1);
     
   }
 
@@ -421,7 +420,6 @@ export class CreateSampleRequestBrand {
     return false
   }
 
-
   prepareToSave() {
     if(this.selectedAddress)
       this.sampleRequest.deliverTo = this.selectedAddress;
@@ -470,14 +468,11 @@ export class CreateSampleRequestBrand {
 
         if(this.sampleRequest.shippingReturn.stuartJobId == undefined)
           document.getElementById('bookReturn').style.visibility = 'visible';
-        
-      
-
-        
       });
     });
-
   }
+
+
 
   // BUTTONS
 
