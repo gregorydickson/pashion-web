@@ -36,7 +36,7 @@ export class SampleRequestService{
     startSampleRequest(){
       this.sampleRequestStatus = 'created';
       this.sampleRequest = {};
-      this.sampleRequest.samples = [];
+      this.sampleRequest.searchableItemsProposed = [];
       this.sampleRequest.courierOut = "Pashion Courier";
       this.sampleRequest.courierReturn = "Pashion Courier";
       this.sampleRequest.returnBy = "Afternoon";
@@ -116,6 +116,26 @@ export class SampleRequestService{
             
             resolve(response.message);
           });
+      });
+      return promise;
+    }
+
+    saveTrolley(sr){
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/sampleRequest/saveTrolley.json', {
+            method: 'post',
+            body: json(sr)
+          })
+          .then(response => response.json())
+          .then(trolley => {
+              if(trolley.session == 'invalid'){
+                  window.location.href = '/user/login';
+                  return;
+              }
+              this.sampleRequest = trolley;
+              resolve(trolley);
+          });
+
       });
       return promise;
     }

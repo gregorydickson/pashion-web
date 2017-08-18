@@ -57,31 +57,61 @@ class SampleRequestService {
         if(user?.prAgency){
 
             def agency = PRAgency.get(user.prAgency.id)
-            def brands = agency.brands
             
-            brands.each{ Brand brand ->
-                def brandCriteria = SampleRequest.createCriteria()
-                def aBrandResults = brandCriteria.listDistinct () {
-                        fetchMode 'brand', FM.JOIN
-                        fetchMode 'pressHouse', FM.JOIN
-                        fetchMode 'searchableItemsProposed', FM.JOIN 
-                        fetchMode 'shippingOut', FM.JOIN
-                        fetchMode 'shippingReturn', FM.JOIN
-                        fetchMode 'addressDestination', FM.JOIN
-                        fetchMode 'returnToAddress', FM.JOIN
-                        fetchMode 'requestingUser', FM.JOIN
-                        fetchMode 'deliverTo', FM.JOIN
-                        fetchMode 'returnToAddress', FM.JOIN
+            def agencyCriteria = SampleRequest.createCriteria()
+            results = agencyCriteria.listDistinct () {
+                fetchMode 'prAgency', FM.JOIN
+                fetchMode 'searchableItemsProposed', FM.JOIN 
+                fetchMode 'shippingOut', FM.JOIN
+                fetchMode 'shippingReturn', FM.JOIN
+                fetchMode 'addressDestination', FM.JOIN
+                fetchMode 'returnToAddress', FM.JOIN
+                fetchMode 'requestingUser', FM.JOIN
+                fetchMode 'deliverTo', FM.JOIN
+                fetchMode 'returnToAddress', FM.JOIN
 
-                        eq('brand', brand)
-                        cache true
-                    }
-                results.addAll(aBrandResults)
+                eq('prAgency', agency)
+                cache true
             }
-            
         }
-
         results
+    }
+
+    def saveTrolley(JSONObject jsonObject, User user){
+        SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
+        def sr = null
+        if(jsonObject.id){
+            sr = SampleRequest.get(jsonObject.id.toInteger())
+            
+            def ids = sr.searchableItemsProposed.collect{it.id}
+            ids.each{sr.removeFromSearchableItemsProposed(SearchableItem.get(it))}
+
+            jsonObject.searchableItemsProposed.each{
+                def item = SearchableItem.get(it.id)
+                sr.addToSearchableItemsProposed(item)
+            }
+
+        } else{
+            sr = new SampleRequest()
+            sr.datesSaved = true
+            if(user.prAgency) sr.prAgency = PRAgency.get(user.prAgency.id)
+            if(user.brand) sr.brand = Brand.get(user.brand.id)
+            sr.bookingStartDate = dateFormat.parse(jsonObject.startDate)
+            sr.bookingEndDate = dateFormat.parse(jsonObject.endDate)
+            jsonObject.searchableItemsProposed.each{
+                def item = SearchableItem.get(it.id)
+                sr.addToSearchableItemsProposed(item)
+            }
+        }
+        if(jsonObject.requestStatusBrand){
+            sr.requestStatusBrand = jsonObject.requestStatusBrand
+        } else{
+            sr.requestStatusBrand = "Picking"
+            sr.requestStatusPress = "Picking"
+        }
+        sr.save(failOnError:true, flush:true)
+        log.info "sample request trolly saved:"+sr
+        sr
     }
 
     def initialSaveSampleRequest(JSONObject jsonObject, User requestingUser){
@@ -99,7 +129,6 @@ class SampleRequestService {
             sr.bookingEndDate = dateFormat.parse(jsonObject.endDate)
             sr.requiredBy = jsonObject.requiredBy
             
-            
             sr.returnBy = jsonObject.returnBy
 
             if(jsonObject.requestStatusBrand){
@@ -109,8 +138,6 @@ class SampleRequestService {
                 sr.requestStatusPress = "Pending"
             }
 
-            
-         
 
             SearchableItem item
 

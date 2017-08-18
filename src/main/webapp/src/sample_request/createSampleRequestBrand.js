@@ -17,7 +17,7 @@ import { SampleRequestService } from 'services/sampleRequestService';
 
 @inject(HttpClient, DialogController, BrandService, DialogService, UserService, OutReasonService, PRAgencyService,SampleRequestService)
 export class CreateSampleRequestBrand {
-  static inject = [DialogController];
+
   
   currentItem = null;
   startCalendar = null;
@@ -80,7 +80,7 @@ export class CreateSampleRequestBrand {
     if(this.sampleRequest.requestStatusBrand === 'Finalize'){
       this.startFinalize = true;
       this.sampleRequest.datesSaved = true;
-      this.sampleRequest.samples = this.sampleRequest.searchableItems;
+      
       return Promise.all([
         this.userService.getUser().then(user => {
           this.user = user;
@@ -182,7 +182,7 @@ export class CreateSampleRequestBrand {
         this.restrictOutsideBooking = result;
         var theUser = this.user;
 
-        var ids = this.sampleRequest.samples;
+        var ids = this.sampleRequest.searchableItemsProposed;
         this.currentItem.samples.forEach(function (item,index,object) {
           if(result){
             if(item.sampleCity.name == theUser.city.name ){
@@ -204,7 +204,7 @@ export class CreateSampleRequestBrand {
         this.restrictOutsideBooking = result;
         var theUser = this.user;
 
-        var ids = this.sampleRequest.samples;
+        var ids = this.sampleRequest.searchableItemsProposed;
         this.currentItem.samples.forEach(function (item,index,object) {
           if(result){
             if(item.sampleCity.name == theUser.city.name ){
@@ -342,17 +342,17 @@ export class CreateSampleRequestBrand {
 
   removeSample(sample){
     console.log("sample:"+sample.id);
-    let toRemove = this.sampleRequest.samples.findIndex(item => {return sample.id == item.id});
+    let toRemove = this.sampleRequest.searchableItemsProposed.findIndex(item => {return sample.id == item.id});
     
     console.log("removing:"+toRemove);
-    this.sampleRequest.samples.splice(toRemove,1);
+    this.sampleRequest.searchableItemsProposed.splice(toRemove,1);
     
   }
 
   submitCheck() {
 
-    if ((this.sampleRequest.samples === undefined) ||
-      (this.sampleRequest.samples.length == 0) ||
+    if ((this.sampleRequest.searchableItemsProposed === undefined) ||
+      (this.sampleRequest.searchableItemsProposed.length == 0) ||
       (this.sampleRequest.startDate === undefined) ||
       (this.sampleRequest.startDate == '') ||
       (this.sampleRequest.endDate === undefined) ||
@@ -411,7 +411,7 @@ export class CreateSampleRequestBrand {
       let sample = this.currentItem.samples[i];
       if (sample.outReason) {
         if (sample.outReason.id != 0) {
-            if (this.sampleRequest.samples.includes(sample.id)) { //console.log (" found an outReason"); 
+            if (this.sampleRequest.searchableItemsProposed.includes(sample.id)) { //console.log (" found an outReason"); 
               return true}
         } 
       }
@@ -473,14 +473,20 @@ export class CreateSampleRequestBrand {
   }
 
 
+  saveTrolley(){
+    return this.sampleRequestService.saveTrolley(this.sampleRequest);
+  }
+
 
   // BUTTONS
-
   dates(){
     if(this.sampleRequest.startDate && this.sampleRequest.endDate){
       this.sampleRequest.datesSaved = true;
-      this.alertP("Dates Set").then(result => {
-        $("#saveDates").toggle();
+      this.saveTrolley().then(sr => {
+        this.sampleRequest = sr;
+        this.alertP("Sample(s) added to Request").then(result => {
+          $("#saveDates").toggle();
+        });
       });
     } else{
       this.alertP("Dates have not been Set");
@@ -493,13 +499,14 @@ export class CreateSampleRequestBrand {
   }
 
   continue() {
+    this.saveTrolley();
     this.controller.close();
   }
 
   submit(){
     this.sampleRequest.finalize = true;
     this.sampleRequest.requestStatusBrand = "Finalize"
-    this.sampleRequestService.saveSampleRequest(this.sampleRequest)
+    this.sampleRequestService.submitTrolley(this.sampleRequest)
       .then(result =>{
         this.alertP(result);
         this.sampleRequestService.sampleRequestStatus = 'none';
@@ -510,14 +517,12 @@ export class CreateSampleRequestBrand {
 
   update(){
     this.sampleRequest.requestStatusBrand = "Approved"
-    this.sampleRequestService.updateSampleRequest(this.sampleRequest)
+    this.sampleRequestService.updateTrolley(this.sampleRequest)
       .then(result =>{
         this.alertP(result);
         this.controller.close();
       });
   }
-
-
 
 
 

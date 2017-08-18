@@ -8,8 +8,8 @@ log.info "render a sample request"
 
 json g.render(sampleRequest,[expand:['searchableItemsStatus','searchableItemsProposed','searchableItems','returnToAddress','shippingOut','shippingReturn','addressDestination'],excludes:['brand','shippingOut','shippingReturn','requestingUser','deliverTo']]){
 	
-	bookingEndDate sampleRequest.bookingEndDate.format('yyyy-MM-dd')+'T00:00:00Z'
-	bookingStartDate sampleRequest.bookingStartDate.format('yyyy-MM-dd')+'T00:00:00Z'
+	bookingEndDate sampleRequest.bookingEndDate?.format('yyyy-MM-dd')+'T00:00:00Z'
+	bookingStartDate sampleRequest.bookingStartDate?.format('yyyy-MM-dd')+'T00:00:00Z'
 	
 	pickupDate sampleRequest.pickupDate?.format('dd-MMM-yyyy')
 	pickupTime sampleRequest.pickupTime
@@ -22,26 +22,26 @@ json g.render(sampleRequest,[expand:['searchableItemsStatus','searchableItemsPro
 		id sampleRequest.prAgency?.id
 	}
 	brand{
-		name sampleRequest.brand.name
-		id sampleRequest.brand.id
+		name sampleRequest.brand?.name
+		id sampleRequest.brand?.id
 	}
 	pressHouse{
 		name sampleRequest.pressHouse?.name
 		id sampleRequest.pressHouse?.id
 	}
 	shippingOut{
-		status sampleRequest.shippingOut.status
-		courier sampleRequest.shippingOut.courier
-		stuartJobId sampleRequest.shippingOut.stuartJobId
-		startDate sampleRequest.shippingOut.startDate?.format('yyyy-MMM-dd HH:mm')
-		endDate sampleRequest.shippingOut.endDate?.format('yyyy-MMM-dd HH:mm')
+		status sampleRequest.shippingOut?.status
+		courier sampleRequest.shippingOut?.courier
+		stuartJobId sampleRequest.shippingOut?.stuartJobId
+		startDate sampleRequest.shippingOut?.startDate?.format('yyyy-MMM-dd HH:mm')
+		endDate sampleRequest.shippingOut?.endDate?.format('yyyy-MMM-dd HH:mm')
 	}
 	shippingReturn{
-		status sampleRequest.shippingReturn.status
-		courier sampleRequest.shippingReturn.courier
-		stuartJobId sampleRequest.shippingReturn.stuartJobId
-		startDate sampleRequest.shippingReturn.startDate?.format('yyyy-MMM-dd HH:mm')
-		endDate sampleRequest.shippingReturn.endDate?.format('yyyy-MMM-dd HH:mm')
+		status sampleRequest.shippingReturn?.status
+		courier sampleRequest.shippingReturn?.courier
+		stuartJobId sampleRequest.shippingReturn?.stuartJobId
+		startDate sampleRequest.shippingReturn?.startDate?.format('yyyy-MMM-dd HH:mm')
+		endDate sampleRequest.shippingReturn?.endDate?.format('yyyy-MMM-dd HH:mm')
 	}
 	requestingUser{
 		id sampleRequest.requestingUser?.id

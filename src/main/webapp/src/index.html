@@ -575,7 +575,13 @@
                                                 <li if.bind="(
                                                     (booking.requestStatusBrand == 'Finalize')
                                                 )"
-                                                class="look-menu-item"><a click.delegate="finalizeSampleRequest(booking.id)" href="#" class="look-menu-link">Finalize</a></li>
+                                                class="look-menu-item"><a click.delegate="trolley(booking.id)" href="#" class="look-menu-link">Finalize</a></li>
+
+                                                <!-- Picking -->
+                                                <li if.bind="(
+                                                    (booking.requestStatusBrand == 'Picking')
+                                                )"
+                                                class="look-menu-item"><a click.delegate="picking(booking.id)" href="#" class="look-menu-link">Picking</a></li>
                                                 
                                                 <!-- Delete -->
                                                 <li class="look-menu-item"><a click.delegate="deleteSampleRequest(booking.id)" href="#" class="look-menu-link">Delete Request</a></li>

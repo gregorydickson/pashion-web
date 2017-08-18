@@ -219,10 +219,23 @@ class SampleRequestController {
         if(sr.emailNotification)
             notify "sampleRequestEmail", sr
         
-        def pressHouse = sr.pressHouse?.name ?: "" 
-        def prAgency = sr.prAgency?.name ?: ""   
+        def pressHouse = requestingUser.pressHouse?.name ?: ""
+
+        def prAgency = requestingUser.prAgency?.name ?: ""   
         notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse, prAgency: prAgency, booking:sr.id, look:lookSeason]
 
+    }
+
+    def saveTrolley(){
+        log.info "save trolley"
+        def requestingUser = session.user
+        def sr = sampleRequestService.saveTrolley(request.JSON,requestingUser)
+        def pressHouse = requestingUser.pressHouse?.name ?: ""
+         
+        def prAgency = requestingUser.prAgency?.name ?: ""
+        log.info "agency:"+prAgency   
+        notify "sampleRequestCacheInvalidate",[brand:sr?.brand?.name,press: pressHouse, prAgency: prAgency, booking:sr.id]
+        respond sr
     }
 
     def updatejson(){

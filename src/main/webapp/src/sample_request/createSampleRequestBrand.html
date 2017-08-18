@@ -329,7 +329,7 @@
                             <td if.bind="(sample.outReason && sample.outReason.id != 0)" class="accordion warm-grey-deco" style="width:90px; max-width:90px;">${outReasons[sample.outReason.id].name}
                             </td>
                             <td if.bind="sampleRequest.datesSaved" class="accordion" style="width:10px; max-width:10px;">
-                                <input disabled.bind="((user.city.name !== sample.sampleCity.name) && (restrictOutsideBooking))" type="checkbox" model.bind="sample"  checked.bind="sampleRequest.samples">
+                                <input disabled.bind="((user.city.name !== sample.sampleCity.name) && (restrictOutsideBooking))" type="checkbox" model.bind="sample"  checked.bind="sampleRequest.searchableItemsProposed">
                             </td>
                         </tr>
                     </table>
@@ -342,7 +342,7 @@
                 <div class="grid-content accordion">
                     <table class="" style="margin-bottom:4px; table-layout:fixed;">
                         <tr>
-                            <td class="accordion ${(sampleRequest.samples.length == 0) ? 'red-deco' : ''}" style="width:369px;">SAMPLES IN REQUEST</td>
+                            <td class="accordion ${(sampleRequest.searchableItemsProposed.length == 0) ? 'red-deco' : ''}" style="width:369px;">SAMPLES IN REQUEST</td>
                             <td if.bind="sampleRequest.datesSaved" class="" style="width:10px;">REMOVE</td>
                         </tr>
                     </table>
@@ -351,7 +351,7 @@
                 <div class="grid-block accordion" style="overflow-x:hidden; max-height:105px;" >
                     
                     <div class="grid-content">
-                        <table  class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of sampleRequest.samples | sort: 'id': 'ascending'">
+                        <table  class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of sampleRequest.searchableItemsProposed | sort: 'id': 'ascending'">
                             <tr>
 
                                 <td class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:70px; max-width:70px;">${sample.id}</td>

@@ -1143,12 +1143,21 @@ export class Index {
             .then(response => {});
     }
 
-    finalizeSampleRequest(id) {
+    trolley(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.getSampleRequest(id)
             .then(result =>{
                 this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: null, lock: true })
                     .then(response => {});
+            });
+    }
+
+    picking(id) {
+        this.closeSampleRequestMenu(id);
+        this.sampleRequestService.sampleRequestStatus = 'created';
+        this.sampleRequestService.getSampleRequest(id)
+            .then(result =>{
+                this.alertP("Trolley Set To Request: "+id)
             });
     }
 

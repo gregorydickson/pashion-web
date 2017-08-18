@@ -18,6 +18,7 @@ class SampleRequest {
 	String requestStatusPress
 	Boolean overdue = false
 	Boolean finalize = false
+	Boolean datesSaved = false
 	Long userCreatedId
 	
 	Brand brand
