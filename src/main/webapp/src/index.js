@@ -846,6 +846,22 @@ export class Index {
 
 
     activate() {
+
+        window.addEventListener("focus", function(event) {
+            var msw = document.getElementById("mainScrollWindow");
+            if (msw) {
+                msw.style.visibility = "visible";
+                console.log("setting MSW visibility to visible");
+                if(window.myblazy){
+                    window.myblazy.destroy();
+                }
+                let bLazy = new Blazy({ 
+                    container: '#mainScrollWindow',
+                    offset: 100 
+                });
+                window.myblazy = bLazy;
+            };
+        });
         this.userService.getUser().then(user =>{
             this.user = user;
 
@@ -853,7 +869,7 @@ export class Index {
             if (this.user.type === "brand") { this.searchType = 'brandSearch'; this.company = this.user.brand; }
             if (this.user.type === "press") { this.searchType = 'filterSearch'; this.company = this.user.pressHouse; }
             if (this.user.type === "prAgency") { 
-                this.searchType = 'brandSearch'; 
+                this.searchType = 'brandSearch';
                 this.company = this.user.prAgency; 
                 this.prAgencyService.getBrands().then(brands => {
                     this.PRbrands = brands;
@@ -900,12 +916,7 @@ export class Index {
                     this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors);
                     this.filterChangeBrand();
             }
-                
-
         });
-        
-
-
     }
 
 
@@ -1159,7 +1170,6 @@ export class Index {
 
 
     alertP(message) {
-
         this.dialogService.open({ viewModel: CreateDialogAlert, model: { title: "Booking", message: message, timeout: 5000 }, lock: false }).then(response => { });
     }
 
