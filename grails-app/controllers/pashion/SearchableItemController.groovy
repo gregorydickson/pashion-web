@@ -515,7 +515,7 @@ class SearchableItemController {
         if(jsonObject.nameNumber)
             item.name = jsonObject.nameNumber.toString() 
         if (jsonObject.nameVariant)
-            item.name = item.name + jsonObject.nameVariant
+            item.name = item.name + jsonObject.nameVariant.toUpperCase()
         
         if(jsonObject.nameNumber){
             if (jsonObject.nameNumber instanceof Integer){
@@ -525,7 +525,7 @@ class SearchableItemController {
             }
         }
         if(jsonObject.nameVariant)
-            item.nameVariant = jsonObject.nameVariant
+            item.nameVariant = jsonObject.nameVariant.toUpperCase()
         item.description = jsonObject.description
         item.attributes = jsonObject.attributes
         item.isPrivate = jsonObject.isPrivate
