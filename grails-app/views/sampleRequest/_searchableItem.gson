@@ -1,3 +1,4 @@
+//Used only by _sampleRequest.gson
 import pashion.SearchableItem
 
 model {  
@@ -10,4 +11,5 @@ json g.render(searchableItem,[expand:['type','samples','sampleCity']]){
 		name searchableItem.brand?.name
 		id searchableItem.brand?.id
 	}
+
 } 

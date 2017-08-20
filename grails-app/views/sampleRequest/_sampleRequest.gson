@@ -7,7 +7,9 @@ model {
 log.info "render a sample request"
 
 json g.render(sampleRequest,[expand:['searchableItemsStatus','searchableItemsProposed','searchableItems','returnToAddress','shippingOut','shippingReturn','addressDestination'],excludes:['brand','shippingOut','shippingReturn','requestingUser','deliverTo']]){
-	
+
+	searchableItemsProposed g.render(template: 'searchableItem', collection: sampleRequest.searchableItemsProposed ?: [], var: 'searchableItem')
+
 	bookingEndDate sampleRequest.bookingEndDate?.format('yyyy-MM-dd')+'T00:00:00Z'
 	bookingStartDate sampleRequest.bookingStartDate?.format('yyyy-MM-dd')+'T00:00:00Z'
 	
