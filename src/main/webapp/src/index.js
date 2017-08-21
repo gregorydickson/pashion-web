@@ -1284,6 +1284,36 @@ export class Index {
             channels: [channel2],
             withPresence: false
         })
+
+        //trolley update no toastr
+        let channel3 = company + '_trolleyCacheInvalidate';
+        console.log("listening on channel:" + channel3);
+        
+
+        var indexListener3 = {
+            message: function updateBookingsIndex(message) {
+                console.log("message in index for  channel:"+channel3);
+                var channelName = message.channel;
+                if (channelName === channel3) {
+                    console.log("reloading sample requests");
+                    sampleRequestService.getSampleRequests(true).then(newBookings => {
+                        while (bookingsToUpdate.length > 0) {
+                            bookingsToUpdate.pop();
+                        }
+                        newBookings.forEach(item => {
+                            bookingsToUpdate.push(item);
+                        });
+                    });
+                }
+            }
+        }
+        pubNub.addListener(indexListener3);
+        this.pubNubService.addIndexListener(indexListener3);
+        pubNub.subscribe({
+            channels: [channel3],
+            withPresence: false
+        })
+
     }
 
     unbind() {

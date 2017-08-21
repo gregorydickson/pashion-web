@@ -146,6 +146,57 @@ class CachingService implements JsonViewTest {
         }
     }
 
+    @Selector('trolleyCacheInvalidate')
+    void trolleyCacheInvalidate(Object data){
+        Thread.sleep(2000);
+        log.info "trolley CacheInvalidate sample data " + data
+        try{
+            def channel
+            if(data.brand){
+                channel = data.brand+'_trolleyCacheInvalidate'
+                log.info "send Bookings Cache invalidate in cachingService Brand:" + channel + " data > " + data
+                // channel = company name
+                // data.booking = SR id
+                // data.look = look id (name)
+                pubnub.publish().message(data.booking + " (look " + data.look + ")").channel(channel).async(new PNCallback<PNPublishResult>() {
+                    @Override
+                    public void onResponse(PNPublishResult result, PNStatus status) {
+                        log.info "pubnub sampleRequestCacheInvalidate publish status code: " + Integer.toString(status.statusCode)
+                        if (status.error) info.log "pubNub.publish Error: " + status.errorData.information
+                        else if (result.hasProperty("timetoken") && result.timetoken != null) log.info "pubnub publish success, timetoken: " + Long.toString(result.timetoken)
+                    }
+                }) 
+            }
+            if(data.press){
+                channel = data.press+'_trolleyCacheInvalidate'
+                log.info "send Bookings Cache invalidate in cachingService press:" + channel + " data > " + data
+                pubnub.publish().message(data.booking + " (look " + data.look + ")").channel(channel).async(new PNCallback<PNPublishResult>() {
+                    @Override
+                    public void onResponse(PNPublishResult result, PNStatus status) {
+                        log.info "pubnub sampleRequestCacheInvalidate publish status code: " + Integer.toString(status.statusCode)
+                        if (status.error) info.log "pubNub.publish Error: " + status.errorData.information
+                        else if (result.hasProperty("timetoken") && result.timetoken != null) log.info "pubnub publish success, timetoken: " + Long.toString(result.timetoken) 
+                    }
+                }) 
+            }
+            if(data.prAgency){
+                channel = data.prAgency+'_trolleyCacheInvalidate'
+                log.info "send Bookings Cache invalidate in cachingService prAgency:" + channel + " data > " + data
+                pubnub.publish().message(data.booking + " (look " + data.look + ")").channel(channel).async(new PNCallback<PNPublishResult>() {
+                    @Override
+                    public void onResponse(PNPublishResult result, PNStatus status) {
+                        log.info "pubnub sampleRequestCacheInvalidate publish status code: " + Integer.toString(status.statusCode)
+                        if (status.error) info.log "pubNub.publish Error: " + status.errorData.information
+                        else if (result.hasProperty("timetoken") && result.timetoken != null) log.info "pubnub publish success, timetoken: " + Long.toString(result.timetoken) 
+                    }
+                }) 
+            }
+        } catch(Exception e){
+            log.error "Exception in CachingService - sample Request Cache Invalidate"
+            log.error e.message
+        }
+    }
+
     @Selector('stuartOneHourNotification')
     void stuartOneHourNotification(Object data){
         Thread.sleep(2000)

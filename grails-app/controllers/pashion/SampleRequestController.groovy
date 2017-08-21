@@ -234,7 +234,7 @@ class SampleRequestController {
          
         def prAgency = requestingUser.prAgency?.name ?: ""
         log.info "agency:"+prAgency   
-        notify "sampleRequestCacheInvalidate",[brand:sr?.brand?.name,press: pressHouse, prAgency: prAgency, booking:sr.id]
+        notify "trolleyCacheInvalidate",[brand:sr?.brand?.name,press: pressHouse, prAgency: prAgency, booking:sr.id]
         respond sr
     }
 
