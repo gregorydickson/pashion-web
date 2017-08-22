@@ -30,7 +30,7 @@ export class CreateSampleRequestBrand {
   availableReturnToItems = [];
   selectedReturnToItems = [''];
 
-
+  hideCalendar = false;
   @bindable user = {};
   
   @bindable restrictOutsideBooking = false;
@@ -483,7 +483,7 @@ export class CreateSampleRequestBrand {
     if(this.sampleRequest.startDate && this.sampleRequest.endDate){
       this.sampleRequest.datesSaved = true;
       this.saveTrolley().then(sr => {
-        this.sampleRequest = sr;
+        this.sampleRequest.id = sr.id;
         this.alertP("Sample(s) added to Request").then(result => {
           $("#saveDates").toggle();
         });
