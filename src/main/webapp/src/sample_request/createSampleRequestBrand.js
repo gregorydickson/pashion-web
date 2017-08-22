@@ -483,7 +483,9 @@ export class CreateSampleRequestBrand {
     if(this.sampleRequest.startDate && this.sampleRequest.endDate){
       this.sampleRequest.datesSaved = true;
       this.saveTrolley().then(sr => {
+
         this.sampleRequest.id = sr.id;
+        console.log("samplerequest id:"+this.sampleRequest.id);
         this.alertP("Sample(s) added to Request").then(result => {
           $("#saveDates").toggle();
         });
@@ -508,7 +510,7 @@ export class CreateSampleRequestBrand {
     this.sampleRequest.requestStatusBrand = "Finalize"
     this.sampleRequestService.submitTrolley(this.sampleRequest)
       .then(result =>{
-        this.alertP(result);
+        this.alertP("Submitted Sample Request");
         this.sampleRequestService.sampleRequestStatus = 'none';
         this.sampleRequestService.sampleRequest = null;
         this.controller.close();
@@ -519,8 +521,8 @@ export class CreateSampleRequestBrand {
     this.sampleRequest.requestStatusBrand = "Approved"
     this.sampleRequestService.updateTrolley(this.sampleRequest)
       .then(result =>{
-        this.alertP(result);
-        this.controller.close();
+        this.alertP("Request "+ this.sampleRequest.id + " Updated")
+          .then(this.controller.close());
       });
   }
 

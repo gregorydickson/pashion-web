@@ -1243,6 +1243,7 @@ export class Index {
                             bookingsToUpdate.pop();
                         }
                         newBookings.forEach(item => {
+                            console.log("id:"+item.id + " status:"+item.requestStatusBrand);
                             bookingsToUpdate.push(item);
                         });
                     });

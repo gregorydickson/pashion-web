@@ -77,6 +77,8 @@ class SampleRequestService {
         results
     }
 
+    // TROLLEY SPECIFIC METHODS
+
     def saveTrolley(JSONObject jsonObject, User user){
         SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
         def sr = null
@@ -111,6 +113,72 @@ class SampleRequestService {
         }
         sr.save(failOnError:true, flush:true)
         log.info "sample request trolly saved:"+sr
+        sr
+    }
+
+    def submitTrolley(JSONObject jsonObject, User user){
+        SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
+        def sr = null
+        
+        sr = SampleRequest.get(jsonObject.id.toInteger())
+        
+        def ids = sr.searchableItemsProposed.collect{it.id}
+        ids.each{sr.removeFromSearchableItemsProposed(SearchableItem.get(it))}
+
+        jsonObject.searchableItemsProposed.each{
+            def item = SearchableItem.get(it.id)
+            sr.addToSearchableItemsProposed(item)
+        }
+        sr.finalize = true
+
+        if(jsonObject.requestStatusBrand){
+            sr.requestStatusBrand = jsonObject.requestStatusBrand
+        } else{
+            sr.requestStatusBrand = "Finalize"
+            sr.requestStatusPress = "Finalize"
+        }
+        sr.save(failOnError:true, flush:true)
+        log.info "sample request trolly submitted:"+sr
+        sr
+    }
+
+    def updateTrolley(JSONObject jsonObject, User user){
+        SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
+        def sr = null
+        log.info "update Trolley:"+jsonObject.id
+        
+        
+        sr = SampleRequest.get(jsonObject.id.toInteger())
+        if(jsonObject.emailNotification)
+            sr.emailNotification = jsonObject.emailNotification
+        
+        if(jsonObject.requestStatusBrand){
+            sr.requestStatusBrand = jsonObject.requestStatusBrand
+        }
+
+        jsonObject.samples.each{
+            def status = new BookingStatus()
+            status.itemId = item.id
+            status.status = "Approved"
+            
+            sr.addToSearchableItemsStatus(status)
+        }
+
+        sr.requiredBy = jsonObject.requiredBy
+        sr.returnBy = jsonObject.returnBy
+        sr.shippingOut = new ShippingEvent(courier:jsonObject.courier,status:'Proposed').save(failOnError:true)
+        sr.shippingReturn = new ShippingEvent(status:'Proposed').save(failOnError:true)
+        sr.paymentOut = jsonObject.paymentOut
+        sr.paymentReturn = jsonObject.paymentReturn
+        sr.courierOut = jsonObject.courierOut
+        sr.courierReturn = jsonObject.courierReturn
+        sr.requestingUser = user
+        sr.dateRequested = new Date()
+        sr = destinationAddressBrand(sr,jsonObject)
+        sr = returnToAddress(sr,jsonObject)
+
+        sr.save(failOnError:true, flush:true)
+        log.info "sample request trolly submitted:"+sr
         sr
     }
 
@@ -178,7 +246,6 @@ class SampleRequestService {
                 else 
                     sr.message = jsonObject.message
             }
-            
             
             sr.dateRequested = new Date()
             if(requestingUser.pressHouse){
@@ -372,9 +439,6 @@ class SampleRequestService {
                 }
             }
 
-            if(jsonObject.requestStatusBrand){
-                sr.requestStatusBrand = jsonObject.requestStatusBrand
-            }
             sr = returnToAddress(sr,jsonObject)
             sr.save(failOnError:true,flush:true)
             log.info "UPDATED SAMPLE REQUEST:"+sr.id

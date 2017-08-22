@@ -97,17 +97,24 @@ class CachingService implements JsonViewTest {
 
     @Selector('sampleRequestCacheInvalidate')
     void sampleRequestCacheInvalidate(Object data){
-        Thread.sleep(2000);
+        Thread.sleep(3000);
         log.info "sampleRequestCacheInvalidate sample data " + data
         try{
             def channel
+            def theMessage = ''
             if(data.brand){
                 channel = data.brand+'_cacheInvalidate'
                 log.info "send Bookings Cache invalidate in cachingService Brand:" + channel + " data > " + data
                 // channel = company name
                 // data.booking = SR id
                 // data.look = look id (name)
-                pubnub.publish().message(data.booking + " (look " + data.look + ")").channel(channel).async(new PNCallback<PNPublishResult>() {
+                
+                if(data.look)
+                    theMessage = data.booking + " (look " + data.look + ")"
+                else 
+                    theMessage = data.booking
+
+                pubnub.publish().message(theMessage).channel(channel).async(new PNCallback<PNPublishResult>() {
                     @Override
                     public void onResponse(PNPublishResult result, PNStatus status) {
                         log.info "pubnub sampleRequestCacheInvalidate publish status code: " + Integer.toString(status.statusCode)
@@ -131,7 +138,12 @@ class CachingService implements JsonViewTest {
             if(data.prAgency){
                 channel = data.prAgency+'_cacheInvalidate'
                 log.info "send Bookings Cache invalidate in cachingService prAgency:" + channel + " data > " + data
-                pubnub.publish().message(data.booking + " (look " + data.look + ")").channel(channel).async(new PNCallback<PNPublishResult>() {
+                
+                if(data.look)
+                    theMessage = data.booking + " (look " + data.look + ")"
+                else 
+                    theMessage = data.booking
+                pubnub.publish().message(theMessage).channel(channel).async(new PNCallback<PNPublishResult>() {
                     @Override
                     public void onResponse(PNPublishResult result, PNStatus status) {
                         log.info "pubnub sampleRequestCacheInvalidate publish status code: " + Integer.toString(status.statusCode)

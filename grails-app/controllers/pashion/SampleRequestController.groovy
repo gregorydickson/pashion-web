@@ -238,6 +238,34 @@ class SampleRequestController {
         respond sr
     }
 
+    def submitTrolley(){
+        log.info "submit trolley"
+        def requestingUser = session.user
+        def sr = sampleRequestService.submitTrolley(request.JSON,requestingUser)
+        def pressHouse = requestingUser.pressHouse?.name ?: ""
+         
+        def prAgency = requestingUser.prAgency?.name ?: ""
+        def brand = requestingUser.brand?.name ?: ""
+
+        log.info "agency:"+prAgency   
+        notify "sampleRequestCacheInvalidate",[brand:brand,press: pressHouse, prAgency: prAgency, booking:sr.id]
+        respond sr
+    }
+
+    def updateTrolley(){
+        log.info "update trolley"
+        def requestingUser = session.user
+        def sr = sampleRequestService.updateTrolley(request.JSON,requestingUser)
+        def pressHouse = requestingUser.pressHouse?.name ?: ""
+         
+        def prAgency = requestingUser.prAgency?.name ?: ""
+        def brand = requestingUser.brand?.name ?: ""
+        
+        log.info "agency:"+prAgency   
+        notify "sampleRequestCacheInvalidate",[brand:brand,press: pressHouse, prAgency: prAgency, booking:sr.id]
+        respond sr
+    }
+
     def updatejson(){
         
         def sr = sampleRequestService.updateSampleRequest(request.JSON)

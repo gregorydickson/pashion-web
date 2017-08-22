@@ -15,7 +15,7 @@
                 <div id="comms_panel" class="grid-block tool-header shrink">
                     <span if.bind="(!sampleRequest.datesSaved)" class="ui-text-label-m-broad">START BOOKING&nbsp;${brand.name}
                      &nbsp;</span>
-                     <span if.bind="(sampleRequest.datesSaved)" class="ui-text-label-m-broad">CONTINUE BOOKING&nbsp;${brand.name}
+                     <span if.bind="(sampleRequest.datesSaved)" class="ui-text-label-m-broad">REQUEST ${sampleRequest.id} CONTINUE BOOKING
                      &nbsp;</span>
                     <span class="ui-text-label-m-broad">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.name}</span>
                 </div>
@@ -343,8 +343,8 @@
                 <div class="grid-content accordion">
                     <table class="" style="margin-bottom:4px; table-layout:fixed;">
                         <tr>
-                            <td class="accordion ${(sampleRequest.searchableItemsProposed.length == 0) ? 'red-deco' : ''}" style="width:460px;">SAMPLES IN REQUEST</td>
-                            <td if.bind="sampleRequest.datesSaved" class="" style="width:10px;">REMOVE</td>
+                            <td class="accordion ${(sampleRequest.searchableItemsProposed.length == 0) ? 'red-deco' : ''}" style="width:400px;">SAMPLES IN REQUEST</td>
+                            <td if.bind="sampleRequest.datesSaved" class="" style="width:110px;">SELECT TO REMOVE</td>
                         </tr>
                     </table>
                 </div>

@@ -140,6 +140,46 @@ export class SampleRequestService{
       return promise;
     }
 
+    submitTrolley(sr){
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/sampleRequest/submitTrolley.json', {
+            method: 'post',
+            body: json(sr)
+          })
+          .then(response => response.json())
+          .then(trolley => {
+              if(trolley.session == 'invalid'){
+                  window.location.href = '/user/login';
+                  return;
+              }
+              this.sampleRequest = trolley;
+              resolve(trolley);
+          });
+
+      });
+      return promise;
+    }
+
+    updateTrolley(sr){
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/sampleRequest/updateTrolley.json', {
+            method: 'post',
+            body: json(sr)
+          })
+          .then(response => response.json())
+          .then(trolley => {
+              if(trolley.session == 'invalid'){
+                  window.location.href = '/user/login';
+                  return;
+              }
+              this.sampleRequest = trolley;
+              resolve(trolley);
+          });
+
+      });
+      return promise;
+    }
+
   	saveSampleRequest(sr){
       var promise = new Promise((resolve, reject) => {
     		this.http.fetch('/sampleRequest/savejson', {
