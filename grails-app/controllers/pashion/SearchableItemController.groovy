@@ -86,45 +86,23 @@ class SearchableItemController {
                 fetchMode 'samples.sampleRequests', FM.JOIN
                 fetchMode 'brand', FM.JOIN
 
-                    if(brandIn) eq('brand', brandIn)
+                if(brandIn) eq('brand', brandIn)
 
-                    // only need keywords to search all items
-                    if(keywords) and {            
-                        or {
-                            keywords.each { ilike('attributes', "%${it}%") }
-                            keywords.each { ilike('message', "%${it}%") }
-                        }
-                    } 
-
-                    if(type) eq('type',type)
-                    /*
-                    if(!keywords) {
-                        // otherwise restrict to looks
-                        isNotNull('image')
-                        log.info "type all"
-                    } else {
-                        
-
-                        log.info "type to match:"+ type
+                if(keywords) and {            
+                    or {
+                        keywords.each { ilike('attributes', "%${it}%") }
+                        keywords.each { ilike('message', "%${it}%") }
                     }
-                    */
+                } 
 
-                    if(seasonIn) eq('season',seasonIn)
-                    
-                    if(city) eq('sampleCity',city)
-                    if(category) brandCollection {
-                        eq('category',category)
-                    }
-
-                    season { order('order','desc') }
-
-                    brand { order ('name', 'asc')}
-
-                    order ('nameNumber', 'asc')
-
-                    order ('nameVariant', 'asc')
-                    
-                    cache true
+                if(type) eq('type',type)
+                if(seasonIn) eq('season',seasonIn)
+                if(city) eq('sampleCity',city)
+                if(category) brandCollection {
+                    eq('category',category)
+                }
+                
+                cache true
             }
 
             log.info "Results from search: " + results.size()
@@ -133,7 +111,15 @@ class SearchableItemController {
             results.collect{ids << it.look.id }
             ids.unique()
             if(ids.size()>0){
-                results = SearchableItem.getAll(ids)
+                def c = SearchableItem.createCriteria()
+                results = c {
+                    'in'("id", ids)
+                    season { order('order','desc') }
+                    brand { order ('name', 'asc')}
+                    order ('nameNumber', 'asc')
+                    order ('nameVariant', 'asc')
+                }
+                
                 log.info "Results from collection: " + results.size()
             } else {
                 results = []
