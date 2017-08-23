@@ -12,10 +12,13 @@ import { CreateDialogAlert } from 'common/dialogAlert';
 import $ from 'jquery';
 import { computedFrom } from 'aurelia-framework';
 import { SampleRequestService } from 'services/sampleRequestService';
+import { SearchableItemService } from 'services/searchableItemService';
 
 
 
-@inject(HttpClient, DialogController, BrandService, DialogService, UserService, OutReasonService, PRAgencyService,SampleRequestService)
+@inject(HttpClient, DialogController, BrandService, 
+    DialogService, UserService, OutReasonService, 
+    PRAgencyService,SampleRequestService, SearchableItemService)
 export class CreateSampleRequestBrand {
 
   
@@ -55,7 +58,7 @@ export class CreateSampleRequestBrand {
   startDay = '';
   endDay = '';
 
-  constructor(http, controller, brandService, dialogService,userService, outReasonService, PRAgencyService,sampleRequestService) {
+  constructor(http, controller, brandService, dialogService,userService, outReasonService, PRAgencyService,sampleRequestService, searchableItemService) {
     this.controller = controller;
     console.log("createSampleRequestBrand");
     http.configure(config => {
@@ -69,6 +72,7 @@ export class CreateSampleRequestBrand {
     this.prAgencyService = PRAgencyService;
     this.outReasonService = outReasonService;
     this.sampleRequestService = sampleRequestService;
+    this.searchableItemService = searchableItemService;
   }
 
 
@@ -145,6 +149,7 @@ export class CreateSampleRequestBrand {
               return;
             }
             this.currentItem = item;
+            this.checkAvailabilty(item);
             this.brandService.getBrand(item.brand.id).then(brand => {this.brand = brand});
           })
       ])
@@ -160,6 +165,17 @@ export class CreateSampleRequestBrand {
       this.checkSamples();
     ga('set', 'page', '/createSampleRequestBrand.html');
     ga('send', 'pageview');
+  }
+
+  checkAvailabilty(item){
+    this.searchableItemService.checkItemsAvailability({item:item,sampleRequest:this.sampleRequest})
+      .then(result =>{
+        result.forEach(sample => {
+          console.log("available:"+sample.availability)
+        });
+        
+      });
+
   }
 
   addressInit(){

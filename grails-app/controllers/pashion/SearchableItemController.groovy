@@ -681,6 +681,16 @@ class SearchableItemController {
 
     }
 
+    def checkItemsAvailability(){
+        def jsonObject = request.JSON
+        log.info "jsonObject"+jsonObject
+        def samples = jsonObject.item.samples
+        samples.each{
+            it.availability = true
+        }
+        respond samples
+    }
+
 
 
     def show(SearchableItem searchableItem) {

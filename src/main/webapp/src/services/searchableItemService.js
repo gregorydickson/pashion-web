@@ -34,6 +34,25 @@ export class SearchableItemService{
 		  return promise;
   	}
 
+    checkItemsAvailability(params){
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/searchableItem/checkItemsAvailability.json', {
+            method: 'post',
+            body: json(params)
+          })
+          .then(response => response.json())
+          .then(items => {
+              if(items.session == 'invalid'){
+                  window.location.href = '/user/login';
+                  return;
+              }
+              resolve(items);
+          });
+
+      });
+      return promise;
+    }
+
 
 
   
