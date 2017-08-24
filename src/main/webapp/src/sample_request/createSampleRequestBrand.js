@@ -150,6 +150,7 @@ export class CreateSampleRequestBrand {
             }
             this.currentItem = item;
             this.checkAvailabilty(item);
+            
             this.brandService.getBrand(item.brand.id).then(brand => {this.brand = brand});
           })
       ])
@@ -170,12 +171,13 @@ export class CreateSampleRequestBrand {
   checkAvailabilty(item){
     this.searchableItemService.checkItemsAvailability({item:item,sampleRequest:this.sampleRequest})
       .then(result =>{
-        result.forEach(sample => {
-          console.log("available:"+sample.availability)
+        item.samples.forEach(function(sample) {
+          sample.availability = result.find(function (availability) {
+            return sample.id === availability.id;
+          }).availability;
         });
         
       });
-
   }
 
   addressInit(){
@@ -394,21 +396,27 @@ export class CreateSampleRequestBrand {
 
   startNext(){
     ++this.startOffset;
+    this.updateAvailability(false);
   }
   startPrevious() {
     --this.startOffset;
+    this.updateAvailability(false);
   }
   startReset() {
     this.startOffset = 0;
+    this.updateAvailability(false);
   }
   endNext() {
     ++this.endOffset;
+    this.updateAvailability(false);
   }
   endPrevious() {
     --this.endOffset;
+    this.updateAvailability(false);
   }
   endReset() {
     this.endOffset = 0;
+    this.updateAvailability(false);
   }
 
   @computedFrom('startCalendar.calendarMonths[0].monthNumber', 'sampleRequest.startMonth')
@@ -491,6 +499,42 @@ export class CreateSampleRequestBrand {
 
   saveTrolley(){
     return this.sampleRequestService.saveTrolley(this.sampleRequest);
+  }
+
+  updateAvailability(clear = true) {
+    console.log ("updateAvailability called");
+    // clear dates as they may no longer be valid for the range
+    if (clear) {
+      this.sampleRequest.startDay = '';
+      this.sampleRequest.startDate = '';
+      this.sampleRequest.startMonth = '';
+      this.sampleRequest.startDay = ''; 
+      //  end date
+      this.sampleRequest.endDay = '';
+      this.sampleRequest.endDate = '';
+      this.sampleRequest.endDay = '';
+      this.sampleRequest.endMonth = '';
+    } 
+
+    var queryString = DateFormat.urlString(this.endOffset, 1) + '&searchType=brand';
+    this.http.fetch('/calendar/showAvailabilitySamples' + queryString, {
+      method: 'post',
+      body: json(this.sampleRequest.samples)
+    })
+      .then(response => response.json())
+      .then(calendar => {
+        this.endCalendar = calendar;
+      });
+
+    queryString = DateFormat.urlString(this.startOffset, 1) + '&searchType=brand';
+    this.http.fetch('/calendar/showAvailabilitySamples' + queryString, {
+      method: 'post',
+      body: json(this.sampleRequest.samples)
+    })
+      .then(response => response.json())
+      .then(calendar => {
+        this.startCalendar = calendar;
+      });
   }
 
 
