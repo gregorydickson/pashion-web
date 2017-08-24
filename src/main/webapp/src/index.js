@@ -32,6 +32,7 @@ import moment from 'moment'
 
 @inject(HttpClient, EventAggregator, DialogService, SampleRequestService, UserService, BrandService, PRAgencyService, busy, PubNubService,  SearchableItemService, TaskQueue)
 export class Index {
+
     //user = {};
     bookings = [];
     rows = [];
@@ -272,11 +273,13 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
-                setTimeout(function () {
-                        window.myblazy.destroy();
-                        window.myblazy.revalidate();
-                        //console.log("subsequent loading Blazy recreation");
-                }, 1000); 
+                this.taskQueue.queueMicroTask(() => {            
+                        setTimeout(function () {
+                                window.myblazy.destroy();
+                                window.myblazy.revalidate();
+                                //console.log("subsequent loading Blazy recreation");
+                        }, 1000); 
+                }); 
                 this.busy.off();
             })
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 500 }, 'slow')) // scroll to top
@@ -319,7 +322,7 @@ export class Index {
                 if (rows.session == 'invalid') {
                     window.location.href = '/user/login';
                     return;
-                }
+                } 
                 this.rows = rows;
                 this.busy.off();
                 if (rows.length > 0) {
@@ -327,10 +330,13 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
-                setTimeout(function () {
-                        window.myblazy.destroy();
-                        window.myblazy.revalidate();
-                    }, 1000); 
+                this.taskQueue.queueMicroTask(() => {            
+                        setTimeout(function () {
+                                window.myblazy.destroy();
+                                window.myblazy.revalidate();
+                                //console.log("subsequent loading Blazy recreation");
+                        }, 1000); 
+                });
                 this.busy.off();
             })
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 500 }, 'slow'));
@@ -429,11 +435,13 @@ export class Index {
                 else {
                     console.log ("NOT first time unveil");
                     
-                    setTimeout(function () {
-                        window.myblazy.destroy();
-                        window.myblazy.revalidate();
-                        //console.log("subsequent loading Blazy recreation");
-                    }, 1000); 
+                this.taskQueue.queueMicroTask(() => {            
+                        setTimeout(function () {
+                                window.myblazy.destroy();
+                                window.myblazy.revalidate();
+                                //console.log("subsequent loading Blazy recreation");
+                        }, 1000); 
+                });
                     
                 }
                 this.busy.off();
@@ -510,11 +518,11 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
-                setTimeout(function () {
-                            
-                        window.myblazy.revalidate();
-                        //console.log("subsequent loading Blazy recreation");
-                }, 1000); 
+                this.taskQueue.queueMicroTask(() => {            
+                        setTimeout(function () {
+                                window.myblazy.revalidate();
+                        }, 1000); 
+                }); 
                 this.busy.off();
             })
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 500 }, 'slow')) // scroll to top
@@ -564,11 +572,11 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
-                setTimeout(function () {
-                            
-                        window.myblazy.revalidate();
-                       // console.log("subsequent loading Blazy recreation");
-                }, 1000); 
+                this.taskQueue.queueMicroTask(() => {            
+                        setTimeout(function () {
+                                window.myblazy.revalidate();
+                        }, 1000); 
+                });
                 this.busy.off();
             })
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 500 }, 'slow')) // scroll to top
@@ -618,11 +626,13 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
-                setTimeout(function () {
-                        window.myblazy.destroy();
-                        window.myblazy.revalidate();
-                        //console.log("subsequent loading Blazy recreation");
-                }, 1000); 
+                this.taskQueue.queueMicroTask(() => {            
+                        setTimeout(function () {
+                                window.myblazy.destroy();
+                                window.myblazy.revalidate();
+                                //console.log("subsequent loading Blazy recreation");
+                        }, 1000); 
+                });
                 this.busy.off();
             })
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 500 }, 'slow')) // scroll to top
@@ -677,11 +687,15 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
-                setTimeout(function () {
-                        //window.myblazy.destroy();
-                        window.myblazy.revalidate();
-                        //console.log("subsequent loading Blazy recreation");
-                }, 1000); 
+
+                this.taskQueue.queueMicroTask(() => {            
+                        setTimeout(function () {
+                                window.myblazy.destroy();
+                                window.myblazy.revalidate();
+                                //console.log("subsequent loading Blazy recreation");
+                        }, 1000); 
+                });
+
                 this.busy.off();
             })
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 500 }, 'slow')) // scroll to top
@@ -745,11 +759,13 @@ export class Index {
                         this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                         if (this.numberImages == this.maxR) this.maxRReached = true;
                     }
-                    setTimeout(function () {
-                            window.myblazy.destroy();
-                            window.myblazy.revalidate();
-                            // console.log("subsequent loading Blazy recreation");
-                    }, 1000); 
+                this.taskQueue.queueMicroTask(() => {            
+                        setTimeout(function () {
+                                window.myblazy.destroy();
+                                window.myblazy.revalidate();
+                                //console.log("subsequent loading Blazy recreation");
+                        }, 1000); 
+                });
                     this.busy.off();
                 })
                 .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 500 }, 'slow')) // scroll to top
@@ -833,6 +849,22 @@ export class Index {
 
 
     activate() {
+
+        window.addEventListener("focus", function(event) {
+            var msw = document.getElementById("mainScrollWindow");
+            if (msw) {
+                msw.style.visibility = "visible";
+                console.log("setting MSW visibility to visible");
+                if(window.myblazy){
+                    window.myblazy.destroy();
+                }
+                let bLazy = new Blazy({ 
+                    container: '#mainScrollWindow',
+                    offset: 100 
+                });
+                window.myblazy = bLazy;
+            };
+        });
         this.userService.getUser().then(user =>{
             this.user = user;
 
@@ -840,7 +872,7 @@ export class Index {
             if (this.user.type === "brand") { this.searchType = 'brandSearch'; this.company = this.user.brand; }
             if (this.user.type === "press") { this.searchType = 'filterSearch'; this.company = this.user.pressHouse; }
             if (this.user.type === "prAgency") { 
-                this.searchType = 'brandSearch'; 
+                this.searchType = 'brandSearch';
                 this.company = this.user.prAgency; 
                 this.prAgencyService.getBrands().then(brands => {
                     this.PRbrands = brands;
@@ -887,12 +919,7 @@ export class Index {
                     this.http.fetch('/dashboard/colors').then(response => response.json()).then(colors => this.colors = colors);
                     this.filterChangeBrand();
             }
-                
-
         });
-        
-
-
     }
 
 
@@ -1146,7 +1173,6 @@ export class Index {
 
 
     alertP(message) {
-
         this.dialogService.open({ viewModel: CreateDialogAlert, model: { title: "Booking", message: message, timeout: 5000 }, lock: false }).then(response => { });
     }
 
