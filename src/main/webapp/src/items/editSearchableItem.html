@@ -16,7 +16,7 @@
             <!-- header -->
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad">EDIT ${currentItem.brandCollection.season | seasonAbbreviation:seasons }.${currentItem.name}</span>
+                    <span class="ui-text-label-m-broad">EDIT ${currentItem.brandCollection.season | seasonAbbreviation:seasons }.${currentItem.name.toUpperCase()}</span>
                 </div>
             </div>
         </ai-dialog-header>  
@@ -63,7 +63,7 @@
                      <span class="inline-label">
                         <span class="slim-text-box-label" style="width:45px;">Version</span>
                         <div>
-                            <input type="text" class="slim-text-box" style="margin-bottom:0px;  max-width: 22px; min-width: 22px;" maxlength="1" value.bind="currentItem.nameVariant">
+                            <input type="text" class="slim-text-box to-u-c" style="margin-bottom:0px;  max-width: 22px; min-width: 22px;" maxlength="1" value.bind="currentItem.nameVariant">
                         </div>
                     </span>
 
