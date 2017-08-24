@@ -2,14 +2,13 @@
 /*
  * Example: Delete a brand's Sample Requests
 */
-select id from sample_request where brand_id = '68';
-delete from booking_status where sample_request_id IN(532) , (533) , (604) , (605) , (617) , (618);
-delete from searchable_item_sample_requests where sample_request_id IN(532) , (533) , (604) , (605) , (617) , (618);
-update sample_request set shipping_out_id = null where id IN(532) , (533) , (604) , (605) , (617) , (618);
-update sample_request set shipping_return_id = null where id IN(532) , (533) , (604) , (605) , (617) , (618);
-delete from shipping_event where sample_request_id IN(532) , (533) , (604) , (605) , (617) , (618);
-delete from sample_request where id IN(532) , (533) , (604) , (605) , (617) , (618);
-
+select id from sample_request where pr_agency_id = '68';
+delete from booking_status where sample_request_id IN(712,766,767,768,769,770,771,772,773,774,775,776,777,778,779,780,781,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,801);
+delete from searchable_item_sample_requests where sample_request_id IN(712,766,767,768,769,770,771,772,773,774,775,776,777,778,779,780,781,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,801);
+update sample_request set shipping_out_id = null where id IN(712,766,767,768,769,770,771,772,773,774,775,776,777,778,779,780,781,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,801);
+update sample_request set shipping_return_id = null where id IN(712,766,767,768,769,770,771,772,773,774,775,776,777,778,779,780,781,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,801);
+delete from shipping_event where sample_request_id IN(712,766,767,768,769,770,771,772,773,774,775,776,777,778,779,780,781,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,801);
+delete from sample_request where id IN(712,766,767,768,769,770,771,772,773,774,775,776,777,778,779,780,781,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,801);
 
 /*
  * Delete all Sample Requests

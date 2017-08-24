@@ -149,8 +149,10 @@ export class CreateSampleRequestBrand {
               return;
             }
             this.currentItem = item;
-            if(this.sampleRequest.datesSaved)
+            if(this.sampleRequest.datesSaved){
+              console.log("checking availability new item");
               this.checkAvailabilty(item);
+            }
             
             this.brandService.getBrand(item.brand.id).then(brand => {this.brand = brand});
           })
@@ -161,6 +163,7 @@ export class CreateSampleRequestBrand {
 
   attached() {
     this.isLoading = false;
+    console.log("dates saved:"+this.sampleRequest.datesSaved);
 
     
     if(this.currentItem)
@@ -177,6 +180,13 @@ export class CreateSampleRequestBrand {
             return sample.id === availability.id;
           }).availability;
         });
+        var ids = this.sampleRequest.searchableItemsProposed;
+        this.currentItem.samples.forEach(function (item,index,object) {
+          if(item.availability){
+            ids.push(item);  
+          }
+          
+        })
         
       });
   }
@@ -205,12 +215,12 @@ export class CreateSampleRequestBrand {
         this.currentItem.samples.forEach(function (item,index,object) {
           if(result){
             if(item.sampleCity.name == theUser.city.name ){
-              ids.push(item);
+              //ids.push(item);
             } else {
               console.log("not adding to selected");
             }
           } else {
-            ids.push(item);
+            //ids.push(item);
           }
           
         })
@@ -227,10 +237,10 @@ export class CreateSampleRequestBrand {
         this.currentItem.samples.forEach(function (item,index,object) {
           if(result){
             if(item.sampleCity.name == theUser.city.name ){
-              ids.push(item);
+              //ids.push(item);
             } 
           } else {
-            ids.push(item);
+            //ids.push(item);
           }
           
         })
@@ -453,6 +463,7 @@ export class CreateSampleRequestBrand {
     }
   }
 
+  //TODO: do Stuart methods/UI
   bookOut() {
     // initiate stuart booking
     if (!(this.sampleRequest.pickupDate) ||
@@ -520,7 +531,7 @@ export class CreateSampleRequestBrand {
     var queryString = DateFormat.urlString(this.endOffset, 1) + '&searchType=brand';
     this.http.fetch('/calendar/showAvailabilitySamples' + queryString, {
       method: 'post',
-      body: json(this.sampleRequest.samples)
+      body: json(this.currentItem.samples)
     })
       .then(response => response.json())
       .then(calendar => {
@@ -530,7 +541,7 @@ export class CreateSampleRequestBrand {
     queryString = DateFormat.urlString(this.startOffset, 1) + '&searchType=brand';
     this.http.fetch('/calendar/showAvailabilitySamples' + queryString, {
       method: 'post',
-      body: json(this.sampleRequest.samples)
+      body: json(this.currentItem.samples)
     })
       .then(response => response.json())
       .then(calendar => {

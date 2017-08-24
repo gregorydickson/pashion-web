@@ -669,10 +669,16 @@ class SearchableItemController {
 
     def checkItemsAvailability(){
         def jsonObject = request.JSON
-        log.info "jsonObject"+jsonObject
+        def sr = SampleRequest.get(jsonObject.sampleRequest.id.toInteger())
+        log.info "checkItemsAvailability"
         def samples = jsonObject.item.samples
+        def item
         samples.each{
-            it.availability = false
+            item = SearchableItem.get(it.id.toInteger())
+            it.availability = true
+            if(item.notAvailable(sr))
+                it.availability = false
+
         }
         respond samples
     }
