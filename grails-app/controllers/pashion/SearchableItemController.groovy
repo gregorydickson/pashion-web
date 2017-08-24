@@ -686,7 +686,7 @@ class SearchableItemController {
         log.info "jsonObject"+jsonObject
         def samples = jsonObject.item.samples
         samples.each{
-            it.availability = true
+            it.availability = false
         }
         respond samples
     }

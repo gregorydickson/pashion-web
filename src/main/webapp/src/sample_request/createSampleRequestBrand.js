@@ -149,7 +149,8 @@ export class CreateSampleRequestBrand {
               return;
             }
             this.currentItem = item;
-            this.checkAvailabilty(item);
+            if(this.sampleRequest.datesSaved)
+              this.checkAvailabilty(item);
             
             this.brandService.getBrand(item.brand.id).then(brand => {this.brand = brand});
           })
@@ -546,9 +547,11 @@ export class CreateSampleRequestBrand {
 
         this.sampleRequest.id = sr.id;
         console.log("samplerequest id:"+this.sampleRequest.id);
-        this.alertP("Sample(s) added to Request").then(result => {
+        this.checkAvailabilty(this.currentItem);
+        this.alertP("Available Sample(s) added to Request").then(result => {
           $("#saveDates").toggle();
         });
+
       });
     } else{
       this.alertP("Dates have not been Set");

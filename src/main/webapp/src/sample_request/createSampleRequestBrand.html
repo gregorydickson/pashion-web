@@ -332,6 +332,9 @@
                             <td if.bind="(sampleRequest.datesSaved && sample.availability)" class="accordion" style="width:10px; max-width:10px;">
                                 <input disabled.bind="((user.city.name !== sample.sampleCity.name) && (restrictOutsideBooking))" type="checkbox" model.bind="sample"  checked.bind="sampleRequest.searchableItemsProposed">
                             </td>
+                            <td if.bind="(sampleRequest.datesSaved && sample.availability == false)" class="accordion" style="width:80px; max-width:80px;">
+                                Not Available
+                            </td>
                         </tr>
                     </table>
                 </div>
