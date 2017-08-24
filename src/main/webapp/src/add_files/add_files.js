@@ -47,9 +47,20 @@ export class AddFilesDialog {
     return iarray;
   }
 
+  sortSeasons (array) {
+
+    var iarray = array.slice(0)
+        .sort(
+          function (a, b) {
+          //console.log (a["order"] + " " + b["order"] + " " + (a["order"] - b["order"] ));
+          return (a["order"] - b["order"]) * -1  }
+          );
+    return iarray;
+  }
+
   attached() {
     this.http.fetch('/dashboard/categories').then(response => response.json()).then(categories => this.categories = this.sortCategories(categories));
-    this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
+    this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = this.sortSeasons(seasons));
     var inputs = document.querySelectorAll( '.input-file' );
     Array.prototype.forEach.call( inputs, function(input) {
       var label  = input.nextElementSibling,

@@ -15,6 +15,7 @@
     <require from="./dashboard_filters/filters-season"></require>
     <require from="./dashboard_filters/filters-season-press"></require>
     <require from="./dashboard_filters/filters-type"></require>
+    <require from="./dashboard_filters/filters-city"></require>
     <require from="./dashboard_filters/filters-show-available"></require>
     <require from="./dashboard_filters/filters-order"></require>
     <require from="./dashboard_filters/filters-category"></require>
@@ -208,10 +209,10 @@
                                 <div class="grid-row-col">
                                     <filters-category change.delegate="filterChangeCategory($event)"></filters-category>
                                 </div>  
-                                <!--                  
+                                                  
                                 <div class="grid-row-col">
                                     <filters-city change.delegate="filterChangeCity($event)"></filters-city>
-                                </div> -->
+                                </div> 
                                 
                             </div>
 
@@ -230,7 +231,7 @@
                                 </div>
                                 <div show.bind="!availableTo"  class="grid-row-col">
                                     <span class="inline-label">
-                                        <span class="form-label" style="font-weight:500; color:#b7b7b7">WHERE</span>
+                                        <span class="form-label" style="font-weight:500; color:#b7b7b7">WHERE (Set Dates)</span>
                                     </span>
                                 </div>
                             </div>
@@ -290,10 +291,14 @@
                                 </div>                                
                                 <div class="grid-row-col">
                                     <filters-category change.delegate="filterChangeCategory($event)"></filters-category>
-                                </div>                   
+                                </div>                
            
                             </div>
                             <div class="grid-row">
+                                <!-- city -->  
+                                <div class="grid-row-col">
+                                    <filters-city change.delegate="filterChangeCity($event)"></filters-city>
+                                </div> 
                                 <!-- start date -->
                                 <div class="grid-row-col grid-row-date-start">
                                     <filters-available-from></filters-available-from>
@@ -398,6 +403,7 @@
 
 
                                     <!-- lower corner look number -->
+
                                     <div if.bind="user.type === 'brand'" class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name.toUpperCase()}</div>
                                     <div if.bind="user.type === 'prAgency'" class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name.toUpperCase()}</div>
                                     
@@ -486,7 +492,7 @@
                                 <th class="accordion w24">LOOK</th>
                                 <th class="accordion w31">OUT</th>
                                 <th class="accordion w27">STATUS</th>
-                                <th class="accordion w10"></th>
+                          <th class="accordion w10"></th>
                             </tr>
                         </table>
                     </div>
