@@ -4,6 +4,7 @@ import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
 import java.text.SimpleDateFormat
 import grails.converters.JSON
+import java.time.LocalDate
 
 
 @Transactional(readOnly = false)
@@ -53,10 +54,21 @@ class SampleRequestController {
     
     def brandApprove(){
         SampleRequest sr = SampleRequest.get(params?.id?.toInteger())
-        if(!sr){
-            sr = sampleRequestService.updateSampleRequest(request.JSON)
-        }
+        def json = request.JSON
 
+        if(json){
+            sr = sampleRequestService.updateSampleRequest(json)
+        }
+        Collection items = sr.searchableItemsProposed
+        
+        
+        def notAvailable = items.any{SearchableItem item -> item.notAvailable(sr) == true}
+        
+        if(notAvailable){
+            def message = [message:'Not Available For Requested Dates']
+            render message as JSON
+            return
+        }
 
         // Need to add check that the smample is still available for the proposed dates before
         // changing the status and approving.
