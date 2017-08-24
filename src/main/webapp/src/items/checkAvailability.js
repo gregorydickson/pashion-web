@@ -49,6 +49,7 @@ export class CheckAvailability {
 
         this.userService.getUser().then(user =>{
 
+          this.user = user;
           var queryString = DateFormat.urlString(0, 1);
           if (this.user.type === "brand")
             queryString = queryString + '&searchType=brand';

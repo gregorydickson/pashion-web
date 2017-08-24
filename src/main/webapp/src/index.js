@@ -687,6 +687,7 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
+
                 this.taskQueue.queueMicroTask(() => {            
                         setTimeout(function () {
                                 window.myblazy.destroy();
@@ -694,6 +695,7 @@ export class Index {
                                 //console.log("subsequent loading Blazy recreation");
                         }, 1000); 
                 });
+
                 this.busy.off();
             })
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 500 }, 'slow')) // scroll to top
@@ -770,7 +772,7 @@ export class Index {
                 ;
             }
     }
-/*
+
     filterChangeCity(event) {
         this.busy.on();
         if(window.myblazy){
@@ -800,6 +802,7 @@ export class Index {
             '&theme=' + this.selectedTheme +
             '&color=' + this.selectedColor +
             '&city=' + this.selectedCity +
+            //'&outToday=' + this.outToday +
             '&maxR=' + this.maxR)
             .then(response => response.json())
             .then(rows => {
@@ -817,7 +820,7 @@ export class Index {
                 setTimeout(function () {
                         window.myblazy.destroy();
                         window.myblazy.revalidate();
-                        console.log("subsequent loading Blazy recreation");
+                        //console.log("subsequent loading Blazy recreation");
                 }, 1000); 
                 this.busy.off();
             })
@@ -825,7 +828,7 @@ export class Index {
             ;
     }
 
-*/
+
     orderChange(event) {
         this.closeAllOpenRequestRows();
         console.log("Order changed ");

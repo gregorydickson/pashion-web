@@ -1,7 +1,10 @@
 package pashion
 
+
 import java.time.LocalDate
 import java.time.ZoneId
+import java.util.TimeZone
+
 
 class SampleRequest {
 
@@ -159,6 +162,20 @@ class SampleRequest {
 			}
 		}
 		pashionCalendar
+	}
+
+	def checkDateRangeForEvents(LocalDate start, LocalDate end){
+		LocalDate startDate = bookingStartDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+		LocalDate endDate = bookingEndDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+
+		if (
+			(start.isEqual(startDate) || start.isAfter(startDate)) &&
+		 	(end.isEqual(endDate) || end.isBefore(endDate))
+		   ){
+		 	return true
+		} else{
+		 	return false
+		 }
 	}
   	
 
