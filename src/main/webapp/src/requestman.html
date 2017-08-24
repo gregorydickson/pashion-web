@@ -166,8 +166,9 @@
                                             <td class="col1 accordion-grey w6" click.delegate="closeExpand($index,booking)">${booking.id}</td>
 
                                             <!-- Look -->
-                                            <td if.bind="user.type === 'brand'" class="col2 accordion-grey w8" click.delegate="closeExpand($index,booking)">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td>
-                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="col2 accordion-grey w8" click.delegate="closeExpand($index,booking)">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td>
+                                            <td if.bind="user.type === 'brand'" class="col2 accordion-grey w8" click.delegate="closeExpand($index,booking)">${booking.season | seasonAbbreviation:seasons }.${booking.look.toUpperCase()}</td>
+                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="col2 accordion-grey w8" click.delegate="closeExpand($index,booking)">${booking.season | seasonAbbreviation:seasons }.${booking.look.toUpperCase()}</td>
+
 
                                             <!-- Start Date -->
                                             <td if.bind="user.type === 'brand'" class="col3 accordion-grey w10 ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''}" click.delegate="closeExpand($index,booking)">${booking.bookingStartDate | viewDateFormat}</td>
@@ -379,9 +380,9 @@
                                             <!-- no images -->
                                             <table class="" style="table-layout:fixed;">
                                                 <tr style="height:1rem;" repeat.for="item of booking.searchableItems" >
-                                                    <td if.bind="(user.type === 'brand') && !(item.clientID)" class="accordion sample-padding"> ${booking.season | seasonAbbreviation:seasons }.${look}.${$index+1} &nbsp; : &nbsp; ${item.status.status} &nbsp; :  &nbsp; <span class="to-u-c">${item.attributes}</span></td>
-                                                    <td if.bind="(user.type === 'brand') && (item.clientID)" class="accordion sample-padding"> ${booking.season | seasonAbbreviation:seasons }.${look}.${$index+1} &nbsp; [ ${item.clientID} ] &nbsp; : &nbsp; ${item.status.status} &nbsp; : &nbsp; <span class="to-u-c">${item.attributes}</span></td>
-                                                    <td if.bind="(user.type === 'press') || (user.type === 'prAgency')"  class="accordion sample-padding">${booking.season | seasonAbbreviation:seasons }.${look}.${$index+1} &nbsp;  : &nbsp;  ${item.status.status} &nbsp;  : &nbsp; <span class="to-u-c">${item.attributes}</span></td>
+                                                    <td if.bind="(user.type === 'brand') && !(item.clientID)" class="accordion sample-padding"> ${booking.season | seasonAbbreviation:seasons }.${look.toUpperCase()}.${$index+1} &nbsp; : &nbsp; ${item.status.status} &nbsp; :  &nbsp; <span class="to-u-c">${item.attributes}</span></td>
+                                                    <td if.bind="(user.type === 'brand') && (item.clientID)" class="accordion sample-padding"> ${booking.season | seasonAbbreviation:seasons }.${look.toUpperCase()}.${$index+1} &nbsp; [ ${item.clientID} ] &nbsp; : &nbsp; ${item.status.status} &nbsp; : &nbsp; <span class="to-u-c">${item.attributes}</span></td>
+                                                    <td if.bind="(user.type === 'press') || (user.type === 'prAgency')"  class="accordion sample-padding">${booking.season | seasonAbbreviation:seasons }.${look.toUpperCase()}.${$index+1} &nbsp;  : &nbsp;  ${item.status.status} &nbsp;  : &nbsp; <span class="to-u-c">${item.attributes}</span></td>
                                                 </tr>
                                             </table>
 
@@ -413,9 +414,9 @@
                         <figure style=" display: inline-block; vertical-align: top; text-align:center; margin-top:129px; margin-right: 42px; margin-left: 0px;" >
                             <img class="request-image-fix" src="${image}">
                             <figcaption style="display:block;margin-top:1rem;">
-                                <span if.bind="brand" class="accordion-grey" style="font-size: 1.1rem; font-weight: 500;">${brand} LOOK ${look}</span><br>
+                                <span if.bind="brand" class="accordion-grey" style="font-size: 1.1rem; font-weight: 500;">${brand} LOOK ${look.toUpperCase()}</span><br>
                                 <span class="accordion-grey">${season}</span><br>
-                            </figcaption>                           
+                            </figcaption>
                         </figure>
                     </div>
 
