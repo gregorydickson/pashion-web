@@ -404,6 +404,7 @@
 
                                     <!-- lower corner look number -->
                                     <div if.bind="user.type === 'brand'" class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
+                                    <div if.bind="user.type === 'prAgency'" class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
                                     
                                     <!-- hover stuff -->
                                     <div class="card-look-number-name" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
