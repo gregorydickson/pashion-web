@@ -395,8 +395,7 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
-            })
-            .then(anything => {
+            
                 if (this.firstTime) {
                     console.log ("first time lazy load");
                     this.firstTime = false;
@@ -435,17 +434,16 @@ export class Index {
                 else {
                     console.log ("NOT first time unveil");
                     
-                this.taskQueue.queueMicroTask(() => {            
-                        setTimeout(function () {
-                                window.myblazy.destroy();
-                                window.myblazy.revalidate();
-                                //console.log("subsequent loading Blazy recreation");
-                        }, 1000); 
-                });
+                    this.taskQueue.queueMicroTask(() => {            
+                            setTimeout(function () {
+                                    window.myblazy.destroy();
+                                    window.myblazy.revalidate();
+                                    //console.log("subsequent loading Blazy recreation");
+                            }, 1000); 
+                    });
                     
                 }
                 this.busy.off();
-                //$("#MainScrollWindow").animate({ scrollTop: $("#MainScrollWindow").offset().top - 500 }, 'slow');
                 
             })
             
