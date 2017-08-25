@@ -395,8 +395,7 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
-            })
-            .then(anything => {
+            
                 if (this.firstTime) {
                     console.log ("first time lazy load");
                     this.firstTime = false;
@@ -435,17 +434,16 @@ export class Index {
                 else {
                     console.log ("NOT first time unveil");
                     
-                this.taskQueue.queueMicroTask(() => {            
-                        setTimeout(function () {
-                                window.myblazy.destroy();
-                                window.myblazy.revalidate();
-                                //console.log("subsequent loading Blazy recreation");
-                        }, 1000); 
-                });
+                    this.taskQueue.queueMicroTask(() => {            
+                            setTimeout(function () {
+                                    window.myblazy.destroy();
+                                    window.myblazy.revalidate();
+                                    //console.log("subsequent loading Blazy recreation");
+                            }, 1000); 
+                    });
                     
                 }
                 this.busy.off();
-                //$("#MainScrollWindow").animate({ scrollTop: $("#MainScrollWindow").offset().top - 500 }, 'slow');
                 
             })
             
@@ -850,6 +848,7 @@ export class Index {
 
     activate() {
 
+
         window.addEventListener("focus", function(event) {
             var msw = document.getElementById("mainScrollWindow");
             if (msw) {
@@ -865,44 +864,65 @@ export class Index {
                 window.myblazy = bLazy;
             };
         });
+
         this.userService.getUser().then(user =>{
             this.user = user;
 
             if (this.user.type === "nosession") window.location.href = '/user/login';
-            if (this.user.type === "brand") { this.searchType = 'brandSearch'; this.company = this.user.brand; }
-            if (this.user.type === "press") { this.searchType = 'filterSearch'; this.company = this.user.pressHouse; }
+
+            if (this.user.type === "press") { 
+                this.searchType = 'filterSearch'; 
+                this.company = this.user.pressHouse;
+                if(this.user.agencyIDForPressUser){
+                    this.prAgencyService.getBrands(this.user.agencyIDForPressUser).then(result=>{
+                        this.selectedBrand = this.prAgencyService.getDefault().id;
+                        this.filterChangeBrand();
+                    });
+                } else{
+                    this.filterChangeBrand();
+                }
+
+            }
             if (this.user.type === "prAgency") { 
+
                 this.searchType = 'brandSearch';
                 this.company = this.user.prAgency; 
                 this.prAgencyService.getBrands().then(brands => {
                     this.PRbrands = brands;
+
                     this.filterChangeBrand();
+                });
+                
+                
+
+                this.prAgencyService.getOnlyShowMySampleRequests(this.user.prAgency.id).then ( result => { 
+                    this.onlyShowMine = result;
+                    console.log("onlyShowmine:" + this.onlyShowMine);
+                    if(this.onlyShowMine) {
+                        // move to company based interpretation of onlyShowMine this.cityFiltering = this.user.city.name;
+                        this.onlyShowMineCompany = this.user.prAgency.name;
+                    }
                 });
             }
 
-            // filtering
-            if(this.user.type === "brand") this.brandService.getOnlyShowMySampleRequests(this.user.brand.id).then ( result => { 
-                this.onlyShowMine = result;
-                console.log("onlyShowMine:" + this.onlyShowMine);
-                if(this.onlyShowMine) {
-                    // move to company based interpretation of onlyShowMine this.cityFiltering = this.user.city.name;
-                    this.onlyShowMineCompany = this.user.brand.name;
-                }
-            });   
+           
+            if(this.user.type === "brand"){
+                this.searchType = 'brandSearch'; 
+                this.company = this.user.brand; 
+                this.brandService.getOnlyShowMySampleRequests(this.user.brand.id).then( result => { 
+                    this.onlyShowMine = result;
+                    console.log("onlyShowMine:" + this.onlyShowMine);
+                    if(this.onlyShowMine) {
+                        // move to company based interpretation of onlyShowMine this.cityFiltering = this.user.city.name;
+                        this.onlyShowMineCompany = this.user.brand.name;
+                    }
+                });
+            }
 
-            if(this.user.type === "prAgency") this.prAgencyService.getOnlyShowMySampleRequests(this.user.prAgency.id).then ( result => { 
-                this.onlyShowMine = result;
-                console.log("onlyShowmine:" + this.onlyShowMine);
-                if(this.onlyShowMine) {
-                    // move to company based interpretation of onlyShowMine this.cityFiltering = this.user.city.name;
-                    this.onlyShowMineCompany = this.user.prAgency.name;
-                }
-            }); 
-            
-            this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub());
             ga('set', 'page', '/index.html');
             ga('send', 'pageview');
             ga('send', 'event', 'index', 'pageview', this.user.email);
+
 
             if (this.user.type === "prAgency"){
                 
@@ -920,6 +940,7 @@ export class Index {
                     this.filterChangeBrand();
             }
         });
+
     }
 
 
