@@ -775,9 +775,7 @@ export class Index {
 
     filterChangeCity(event) {
         this.busy.on();
-        if(window.myblazy){
-            window.myblazy.destroy();
-        }
+        
         this.rows = [];
         console.log("Filter Change changing Change City: from: " + this.selectedCity);
         this.selectedCity = '';
@@ -817,11 +815,13 @@ export class Index {
                     this.numberImages += rows[rows.length - 1].numberImagesThisRow;
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
-                setTimeout(function () {
-                        window.myblazy.destroy();
-                        window.myblazy.revalidate();
-                        //console.log("subsequent loading Blazy recreation");
-                }, 1000); 
+                this.taskQueue.queueMicroTask(() => {            
+                        setTimeout(function () {
+                                window.myblazy.destroy();
+                                window.myblazy.revalidate();
+                                //console.log("subsequent loading Blazy recreation");
+                        }, 1000); 
+                });
                 this.busy.off();
             })
             .then(result => $('div.cards-list-wrap').animate({ scrollTop: $('div.cards-list-wrap').offset().top - 500 }, 'slow')) // scroll to top
