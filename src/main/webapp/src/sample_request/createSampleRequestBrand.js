@@ -180,10 +180,13 @@ export class CreateSampleRequestBrand {
             return sample.id === availability.id;
           }).availability;
         });
+        
         var ids = this.sampleRequest.searchableItemsProposed;
-        this.currentItem.samples.forEach(function (item,index,object) {
-          if(item.availability){
-            ids.push(item);  
+        item.samples.forEach(function (sample) {
+          let inTrolley = ids.find(item => {return sample.id === item.id});
+
+          if(sample.availability && (!inTrolley)){
+            ids.push(sample);  
           }
           
         })
