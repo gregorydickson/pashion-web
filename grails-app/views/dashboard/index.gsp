@@ -3,9 +3,8 @@
 <html>
   <head>
     <meta name="layout" content="header-and-footer-guestpage" /> <!-- nee pashion -->
-    <asset:stylesheet src="pashion/pashion.css"/>    
-    <asset:stylesheet src="pashion/splash.css"/>   
-    <asset:stylesheet src="pashion/toastr.css"/>    
+    <asset:stylesheet src="pashion/pashion.css"/>      
+   
     <link rel="dns-prefetch" href="//dvch4zq3tq7l4.cloudfront.net">
     <link rel="preconnect" href="//dvch4zq3tq7l4.cloudfront.net" crossorigin>
 

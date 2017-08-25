@@ -16,7 +16,7 @@
             <!-- header -->
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad">EDIT ${currentItem.brandCollection.season | seasonAbbreviation:seasons }.${currentItem.name}</span>
+                    <span class="ui-text-label-m-broad">EDIT ${currentItem.brandCollection.season | seasonAbbreviation:seasons }.${currentItem.name.toUpperCase()}</span>
                 </div>
             </div>
         </ai-dialog-header>  
@@ -63,7 +63,7 @@
                      <span class="inline-label">
                         <span class="slim-text-box-label" style="width:45px;">Version</span>
                         <div>
-                            <input type="text" class="slim-text-box" style="margin-bottom:0px;  max-width: 22px; min-width: 22px;" maxlength="1" value.bind="currentItem.nameVariant">
+                            <input type="text" class="slim-text-box to-u-c" style="margin-bottom:0px;  max-width: 22px; min-width: 22px;" maxlength="1" value.bind="currentItem.nameVariant">
                         </div>
                     </span>
 
@@ -158,6 +158,18 @@
                         </div>
                     </div> 
 
+                    <div class="grid-block shrink"> 
+                        <span class="inline-label">
+                            <span class="slim-text-box-label">New Type</span>
+                        
+                            <input id="unl-type" type="text" class="slim-text-box" style="margin-bottom:0px;" value.bind="selectedSample.unlType">
+                        
+
+
+                            <a style= "width: 30px; margin-left: 1rem;" click.delegate="typeNewAdd(selectedSample)">Add</a>
+                        </span>
+                    </div>
+
 
                     <!-- Sample Description -->
                     <div class="grid-block shrink">                       
@@ -205,6 +217,18 @@
                             <a style= "width: 30px; margin-left: 1rem;" click.delegate="colorAdd(selectedSample)">Add</a>
                         </span>
 
+                    </div>
+
+                    <div class="grid-block shrink"> 
+                        <span class="inline-label">
+                            <span class="slim-text-box-label">New Colour</span>
+                        
+                            <input id="unl-col" type="text" class="slim-text-box" style="margin-bottom:0px;" value.bind="selectedSample.unlColour">
+                        
+
+
+                            <a style= "width: 30px; margin-left: 1rem;" click.delegate="colorNewAdd(selectedSample)">Add</a>
+                        </span>
                     </div>
                     
                     <!-- Material -->

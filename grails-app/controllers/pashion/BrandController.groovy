@@ -30,6 +30,15 @@ class BrandController {
         render addresses
     }
 
+    def locations(){ 
+        // log.info "brand/addresses id: " + params.id.toInteger()
+        def brand = Brand.get(params.id.toInteger())  
+        // log.info "brand addresses brand: " + brand
+        def addresses = Address.findAllByBrandAndArchivedAndDestinationIsNull(brand,false,[cache: true]) as JSON
+        // log.info "brand/addresses addresses: " + addresses
+        render addresses
+    }
+
     
     @Transactional
     def addAddress(){
@@ -47,7 +56,7 @@ class BrandController {
         address.contactPhone = jsonObject.contactPhone
         address.comment =      jsonObject.comment
         
-        address.save(failOnError: true)
+        address.save(flush:true,failOnError: true)
         
         Brand brand = Brand.get(session.user.brand.id)
         if(!brand.isAttached()){
@@ -56,11 +65,7 @@ class BrandController {
         brand.addToDestinations(address)
         brand.save(failOnError:true)
         
-        def destinations = brand.destinations
-        def users = brand.users
-        destinations.addAll(users)
-        destinations.sort{it.name}
-        def response = destinations as JSON
+        def response = address as JSON
 
         render response
     }

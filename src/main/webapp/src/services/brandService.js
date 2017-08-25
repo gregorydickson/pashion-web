@@ -151,6 +151,16 @@ export class BrandService {
         return promise;
     }
 
+    getBrandLocations(brandId) {
+        var promise = new Promise((resolve, reject) => {
+                this.http.fetch('/brand/locations/'+brandId)
+                                        .then(response => response.json())
+                                        .then(ad => resolve(ad))
+                                        .catch(err => reject(err));
+                                    });
+        return promise;
+    }
+
     getBrandAddresses(brandId) {
         var promise = new Promise((resolve, reject) => {
                 this.http.fetch('/brand/addresses/'+brandId)

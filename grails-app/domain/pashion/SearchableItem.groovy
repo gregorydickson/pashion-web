@@ -2,6 +2,7 @@ package pashion
 
 import java.time.LocalDate
 import java.time.ZoneId
+import java.util.TimeZone
 
 /*
  * A Searchable Item is the main domain object for Pashion's image search
@@ -110,6 +111,32 @@ class SearchableItem {
 		return name +" sample city:" +sampleCity?.name
 	}
 
+	def notAvailable(SampleRequest sr){
+		if(outReason){
+			return true
+		}
+		TimeZone.setDefault(TimeZone.getTimeZone("Europe/London"))
+		Date start = sr.bookingStartDate
+        Date end = sr.bookingEndDate
+
+        LocalDate startLocal = start.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+        LocalDate endLocal = end.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
+        def notAvailable = false
+        for(sampleRequest in sampleRequests){
+			if(sr.id != sampleRequest.id &&
+					(sampleRequest.requestStatusBrand == "Approved" ||
+					sampleRequest.requestStatusBrand == "Picked Up" ||
+					sampleRequest.requestStatusBrand == "Out")
+			  ){
+				if(sampleRequest.checkDateRangeForEvents(startLocal,endLocal)){
+					notAvailable = true
+					break
+				}
+
+			}
+		}
+		notAvailable
+	}
 
 		
 	/**

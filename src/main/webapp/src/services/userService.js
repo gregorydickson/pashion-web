@@ -75,7 +75,7 @@ export class UserService {
         var promise = new Promise((resolve, reject) => {
             if ((!this.usersOrg) || forceGetFromServer) { // local storage if already loaded
                 console.log("UserService.getUsersByOrganization, getting users from /dashboard/" + method);
-                this.http.fetch('/dashboard/' + method + "/" + id)
+                this.http.fetch('/user/' + method + "/" + id)
                     .then(response => response.json())
                     .then(users => {
                         this.usersOrg = users;
@@ -196,13 +196,11 @@ export class UserService {
         // json side can then decide what to update
         var tempNewUser = this.users[updateUser.id - 1];
         if (updateUser.address) tempNewUser.address = updateUser.address;
-        if (updateUser.name) tempNewUser.name = updateUser.name;
-        if (updateUser.surname) tempNewUser.surname = updateUser.surname;
-        // need to clear out old password to prevent re-hashing
+        if (updateUser.name || updateUser.name == "") tempNewUser.name = updateUser.name;
+        if (updateUser.surname || updateUser.surname == "") tempNewUser.surname = updateUser.surname;
         if (updateUser.password) tempNewUser["password"] = updateUser.password;
-        else tempNewUser["password"] = ''; // there will always be a password field, but use this method any way
-        if (updateUser.title) tempNewUser["title"] = updateUser.title;
-        if (updateUser.phone) tempNewUser["phone"] = updateUser.phone;
+        if (updateUser.title || updateUser.title == "") tempNewUser["title"] = updateUser.title;
+        if (updateUser.phone || updateUser.phone == "") tempNewUser["phone"] = updateUser.phone;
 
         // now write it out
         var promise = new Promise((resolve, reject) => {

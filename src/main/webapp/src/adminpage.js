@@ -14,7 +14,7 @@ import { CityService } from 'services/cityService';
 @inject(DialogService, UserService, BrandService, PRAgencyService, PressHouseService, AddressService, CityService,  TaskQueue)
 export class Adminpage {
 
-    currentUser = {};
+    @observable currentUser = {};
     users = [];
     addresses = [];
     currentAddress = {};
@@ -34,6 +34,28 @@ export class Adminpage {
         this.addressService = addressService;
         this.cityService = cityService;
         this.taskQueue = TaskQueue;
+    }
+
+    activate() {
+        return this.userService.getUser().then(user =>{
+            this.user = user;
+            this.reloadData();
+        });
+        
+    }
+    attached() {
+        $("#passwordCheck").toggle();
+        
+    }
+
+    currentUserChanged(newValue, oldValue){
+        console.log("user changed:"+this.currentUser.name);
+        if(this.currentUser.address){
+            $("#userOfficeSelect").val(this.currentUser.address.name).trigger('change');
+        } else{
+            $("#userOfficeSelect").val("").trigger('change');
+        }
+
     }
 
     currentAddressIdChanged(newValue, oldValue) {
@@ -71,13 +93,7 @@ export class Adminpage {
         }
     }
 
-    activate() {
-        this.userService.getUser().then(user =>{
-            this.user = user;
-            this.reloadData();
-        });
-        
-    }
+    
 
     reloadData() {
         this.reloadUsers();
@@ -143,9 +159,7 @@ export class Adminpage {
             this.userSelect.reset();
     }
 
-    attached() {
-        $("#passwordCheck").toggle();
-    }
+    
 
     deleteOffice() {
         this.addressService.delete(this.currentAddress.id).then(response => {

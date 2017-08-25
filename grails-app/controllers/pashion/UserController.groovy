@@ -17,6 +17,37 @@ class UserController {
     def cookieService
     def cachingService
 
+    def usersBrand(){
+        log.info "UserController  usersBrand()"
+        def company = Brand.get(params.id.toInteger())
+        List users = []
+        company.users.each{
+            users << it
+        }
+        respond userList:users
+    }
+
+    def usersPressHouse(){
+        log.info "UserController  usersPressHouse()"
+        def company = PressHouse.get(params.id.toInteger())
+        List users = []
+        company.users.each{
+            users << it
+        }
+        respond userList:users
+    }
+
+    def usersPRAgency(){    
+        log.info "UserController  usersPRAgency()"
+        def company = PRAgency.get(params.id.toInteger())
+        List users = []
+        company.users.each{
+            users << it
+        }
+        respond userList:users
+        
+    }
+
     def connections(){
         log.info "connections() ***************   STARTING  ********************"
         String json = cachingService.connections()
@@ -100,12 +131,12 @@ class UserController {
     @Transactional
     def doLogin(){
         
-        def user
+        def user = null
        
         
         user = userService.login(params.email,params.password)
                            
-        if(user instanceof User){
+        if((user != null) && (user instanceof User)){
             
             session.user = user 
             redirect(controller:'dashboard',action:'index')

@@ -21,7 +21,6 @@ export class CreateSampleRequestPress {
   brand = [];
   brandAddresses = [];
   returnBy = [];
-  returnTo = [];
   courier = [];
   payment = [];
  // seasons = [];
@@ -31,7 +30,7 @@ export class CreateSampleRequestPress {
   sampleRequestEndDay = '';
 
 
-  //sampleRequest = {requiredBy:"12:00", courierOut:"They Book",paymentOut:"50/50", returnBy:"Afternoon",courierReturn:"Pashion Courier",paymentReturn:"50/50"};
+  
   sampleRequest = {}
   startOffset = 0;
   endOffset = 0;
@@ -56,52 +55,63 @@ export class CreateSampleRequestPress {
   activate(itemId){
 
     var queryString = DateFormat.urlString(0, 2);
-    this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+itemId)
-      .then(response => response.json())
+
+    return Promise.all([
+      this.http.fetch('/calendar/searchableItemPicker' +queryString+ '&item='+itemId)
+        .then(response => response.json())
         .then(calendar => {
-              this.startCalendar = calendar;
-              this.endCalendar = calendar;
-          });
-    
-    this.http.fetch('/searchableItems/'+itemId+'.json')
-      .then(response => response.json())
-      .then(item => {
-          if (item.session == 'invalid') {
-            window.location.href = '/user/login';
-            return;
-          }
-          this.currentItem = item;   
-
-         /* this.http.fetch('/brand/addresses/'+item.brand.id)
-              .then(response => response.json())
-              .then(addresses => this.brandAddresses = addresses); */
-
-          this.brandService.getBrandAddresses(item.brand.id).then(addresses => this.brandAddresses = addresses);
-          this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);
-          this.sampleRequest.samples = [];
-          var ids = this.sampleRequest.samples;
-          item.samples.forEach(function(item){
-            ids.push(item.id);
-          })
-          
-        }
-      )
+          this.startCalendar = calendar;
+          this.endCalendar = calendar;
+        }),
       
-    this.http.fetch('/dashboard/required').then(response => response.json()).then(required => this.required = required);
-    this.http.fetch('/dashboard/deliverTo').then(response => response.json()).then(deliverTo => this.deliverTo = deliverTo);
-    this.http.fetch('/dashboard/returnBy').then(response => response.json()).then(returnBy => this.returnBy = returnBy);
-    this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => this.courier = courier);
-    this.http.fetch('/dashboard/returnTo').then(response => response.json()).then(returnTo => this.returnTo = returnTo);
-    this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => this.payment = payment);
-    this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
-   // this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
-   this.sampleRequest["returnToAddress"] = 0; // defualt return to sender
+      this.http.fetch('/searchableItems/'+itemId+'.json')
+        .then(response => response.json())
+        .then(item => {
+            if (item.session == 'invalid') {
+              window.location.href = '/user/login';
+              return;
+            }
+            this.currentItem = item;   
+
+            this.brandService.getBrandLocations(item.brand.id).then(addresses => {this.brandAddresses = addresses});
+            this.brandService.getBrand(item.brand.id).then(brand => this.brand = brand);
+            this.sampleRequest.samples = [];
+            var ids = this.sampleRequest.samples;
+            item.samples.forEach(function(item){
+              ids.push(item.id);
+            })
+            
+          }
+        ),
+        
+      this.http.fetch('/dashboard/required').then(response => response.json()).then(required => this.required = required),
+      this.http.fetch('/dashboard/deliverTo').then(response => response.json()).then(deliverTo => this.deliverTo = deliverTo),
+      this.http.fetch('/dashboard/returnBy').then(response => response.json()).then(returnBy => this.returnBy = returnBy),
+      this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => this.courier = courier),
+      this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => this.payment = payment)
+    ])
+    
   }
 
   attached(){
     document.getElementById("CreateSampleRequestButton").disabled = true;
     ga('set', 'page', '/createSampleRequestPress.html');
     ga('send', 'pageview');
+    
+    this.sampleRequest.requiredBy = "12:00";
+    this.sampleRequest.courierOut = "They Book";
+    this.sampleRequest.paymentOut = "50/50";
+    this.sampleRequest.returnBy = "Afternoon";
+    this.sampleRequest.courierReturn = "Pashion Courier"
+    this.sampleRequest.paymentReturn = "50/50";
+    this.sampleRequest.returnToAddress = "0";
+    $('#returnToSelect').val('0').trigger('change');
+    $('#requiredBySelect').val('12:00').trigger('change');
+    $('#courierSelect').val('Pashion Courier').trigger('change');
+    $('#courierReturnSelect').val('Pashion Courier').trigger('change');
+    
+    $('#deliverSplitSelect').val('50/50').trigger('change');
+    $('#returnBySelect').val('Afternoon').trigger('change');
   }
 
   alertP (message){
@@ -172,28 +182,10 @@ export class CreateSampleRequestPress {
         this.sampleRequestEndDay = '';
         this.sampleRequestEndMonth = '';
         this.enableCheck();
-        //let element = event.srcElement.parentElement;
-        //let document = element.ownerDocument;
-        //let elems = document.querySelectorAll(".end-selected");
-        //var redraw = this.redraw;
-        //[].forEach.call(elems, function(el) {
-          //if(el.classList.contains("end-selected")){
-         //   el.classList.remove("end-selected");
-          //  redraw(el);
-         // }
-        //});
+        
       }
     }
-    //var element = event.srcElement.parentElement;
-    //var document = element.ownerDocument;
-    //var elems = document.querySelectorAll(".start-selected");
-    //this.sampleRequestStartMonth = '';
-    //this.sampleRequestStartDay = '';
-    //[].forEach.call(elems, function(el) {
-     // el.classList.remove("start-selected");
-    //});
-    //element.className += " start-selected";
-    //this.redraw(element);
+    
     this.sampleRequest.startDate = this.startCalendar.calendarMonths[0].year+"-"+this.startCalendar.calendarMonths[0].monthNumber+"-"+day;
     this.sampleRequestStartMonth = this.startCalendar.calendarMonths[0].monthNumber;
     this.sampleRequestStartDay = day;
