@@ -501,7 +501,7 @@
                     <!-- row with button -->
                     <div style="width:250px;" repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user:seasons:cityFiltering:onlyShowMine:onlyShowMineCompany">
                         <table class="accordion" style="table-layout:fixed;">
-                            <tr class="indexReqRow">
+                            <tr class="indexReqRow  ${(sampleRequestService.sampleRequest.id === booking.id)  ? 'ui-text-label-m' : ''}">
                                 <td class="accordion w7">
                                     <button id="button${booking.id}" class="accordion requestButton expandoHover" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
