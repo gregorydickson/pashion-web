@@ -28,7 +28,7 @@ export class Zoom {
     this.rowNumber = zoomModel.rowNumber;
     this.itemNumber = zoomModel.itemNumber;
     this.image = zoomModel.item.image;
-    this.name = zoomModel.item.name;
+    this.name = zoomModel.item.nameNumber + zoomModel.item.nameVariant.toUpperCase();
     this.imageProvider = zoomModel.item.imageProvider;
 
     console.log("zoom.js row number :" + zoomModel.rowNumber);

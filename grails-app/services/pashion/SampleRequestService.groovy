@@ -114,7 +114,7 @@ class SampleRequestService {
                 if(!sr.brand) sr.brand = item.brand
                 if(!sr.image) sr.image = item.look.image
                 if(!sr.season) sr.season = item.season.name
-                if(!sr.look) sr.look = item.look.name
+                if(!sr.look) sr.look = item.look.nameNumber + item.look.nameVariant.toUpperCase()
                 sr.addToSearchableItemsProposed(item)
                 def status = new BookingStatus()
                 status.itemId = item.id
