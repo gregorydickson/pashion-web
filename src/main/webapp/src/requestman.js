@@ -159,7 +159,7 @@ export class Requestman {
   }
 
   get numberOfRequests() {
-    return document.getElementsByClassName("indexReqRow").length;
+    return document.getElementsByClassName("indexReqRowclass").length;
   }
 
   /*    orderChange(event) {
