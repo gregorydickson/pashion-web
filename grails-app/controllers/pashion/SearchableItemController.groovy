@@ -92,6 +92,8 @@ class SearchableItemController {
                     or {
                         keywords.each { ilike('attributes', "%${it}%") }
                         keywords.each { ilike('message', "%${it}%") }
+                        // keywords.each { ilike('id'.toString(), "%{it}%")}
+                        keywords.each { ilike('clientid', "%{it}%")}
                     }
                 } 
 

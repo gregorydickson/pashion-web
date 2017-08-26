@@ -15,7 +15,7 @@ import java.util.TimeZone
 class SearchableItem {
 
 	Long id
-	String clientID // The sample id that is used by the client
+	String clientid // The sample id that is used by the client ? RM should this be "clientid" /or "clientID"
 	String name //string for ID set by user For Look this is the Look ID which matches Vogue Runway-ish
 	Long nameNumber // 3 digit max number
 	String nameVariant // one character

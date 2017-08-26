@@ -159,7 +159,7 @@ export class Index {
         if (value.searchableItems) {
           var i;
           for (i = 0; i < value.searchableItems.length; i++)
-            itemValue = itemValue + ' ' + value.searchableItems[i].clientID;
+            itemValue = itemValue + ' ' + value.searchableItems[i].clientid;
         }
 
         // console.log("Filter value: " + itemValue);
