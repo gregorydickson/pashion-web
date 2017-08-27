@@ -21,7 +21,9 @@ class BootStrap {
         def returnArray = [:]
         returnArray['image'] = it.image
         returnArray['id'] =  it.id
-        returnArray['name'] =  it.name
+        //returnArray['name'] =  it.name
+        returnArray['nameNumber'] = it.nameNumber
+        returnArray['nameVariant'] = it.nameVariant
         returnArray['season'] = it.season.name
         returnArray['brand'] = it.brand.name
         returnArray['fromDate'] = it.fromDate
