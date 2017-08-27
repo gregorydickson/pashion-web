@@ -92,6 +92,8 @@ class SearchableItemController {
                     or {
                         keywords.each { ilike('attributes', "%${it}%") }
                         keywords.each { ilike('message', "%${it}%") }
+                        // keywords.each { ilike('id'.toString(), "%{it}%")}
+                        keywords.each { ilike('clientid', "%${it}%") }
                     }
                 } 
 
@@ -531,7 +533,7 @@ class SearchableItemController {
                 sample.brand = item.brand
                 sample.type = SearchableItemType.get(2)
             }
-            sample.clientID = it.clientID
+            sample.clientid = it.clientid
             sample.sampleType = it.sampleType
             sample.color = it.color
             sample.name = it.name

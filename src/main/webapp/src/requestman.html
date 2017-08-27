@@ -380,8 +380,8 @@
                                             <!-- no images -->
                                             <table class="" style="table-layout:fixed;">
                                                 <tr style="height:1rem;" repeat.for="item of booking.searchableItems" >
-                                                    <td if.bind="(user.type === 'brand') && !(item.clientID)" class="accordion sample-padding"> ${booking.season | seasonAbbreviation:seasons }.${look.toUpperCase()}.${$index+1} &nbsp; : &nbsp; ${item.status.status} &nbsp; :  &nbsp; <span class="to-u-c">${item.attributes}</span></td>
-                                                    <td if.bind="(user.type === 'brand') && (item.clientID)" class="accordion sample-padding"> ${booking.season | seasonAbbreviation:seasons }.${look.toUpperCase()}.${$index+1} &nbsp; [ ${item.clientID} ] &nbsp; : &nbsp; ${item.status.status} &nbsp; : &nbsp; <span class="to-u-c">${item.attributes}</span></td>
+                                                    <td if.bind="(user.type === 'brand') && !(item.clientid)" class="accordion sample-padding"> ${booking.season | seasonAbbreviation:seasons }.${look.toUpperCase()}.${$index+1} &nbsp; : &nbsp; ${item.status.status} &nbsp; :  &nbsp; <span class="to-u-c">${item.attributes}</span></td>
+                                                    <td if.bind="(user.type === 'brand') && (item.clientid)" class="accordion sample-padding"> ${booking.season | seasonAbbreviation:seasons }.${look.toUpperCase()}.${$index+1} &nbsp; [ ${item.clientid} ] &nbsp; : &nbsp; ${item.status.status} &nbsp; : &nbsp; <span class="to-u-c">${item.attributes}</span></td>
                                                     <td if.bind="(user.type === 'press') || (user.type === 'prAgency')"  class="accordion sample-padding">${booking.season | seasonAbbreviation:seasons }.${look.toUpperCase()}.${$index+1} &nbsp;  : &nbsp;  ${item.status.status} &nbsp;  : &nbsp; <span class="to-u-c">${item.attributes}</span></td>
                                                 </tr>
                                             </table>
