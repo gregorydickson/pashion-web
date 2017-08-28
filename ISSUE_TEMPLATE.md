@@ -1,5 +1,6 @@
-- [ ] Brand
-- [ ] Press
+-[] Brand
+-[] Press
 * login id:
-* Collection / Look ID / Sample Name used:
-* Build Number:
+* Look or Sample used:
+-[] app.pashiontool.com
+-[] test.pashiontool.com
