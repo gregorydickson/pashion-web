@@ -253,7 +253,20 @@ class SampleRequestController {
     def submitTrolley(){
         log.info "submit trolley"
         def requestingUser = session.user
-        def sr = sampleRequestService.submitTrolley(request.JSON,requestingUser)
+        def sr
+        if(params.id){
+            sr = SampleRequest.get(params.id.toInteger())
+            sr.finalize = true
+
+            sr.requestStatusBrand = "Finalize"
+            sr.requestStatusPress = "Finalize"
+        
+            sr.save(failOnError:true, flush:true)
+            log.info "sample request trolly submitted:"+sr
+        } else {
+            sr = sampleRequestService.submitTrolley(request.JSON,requestingUser)
+        }
+
         def pressHouse = requestingUser.pressHouse?.name ?: ""
          
         def prAgency = requestingUser.prAgency?.name ?: ""

@@ -1,6 +1,6 @@
 
 /*
- * Example: Delete a brand's Sample Requests
+ * Example: Delete a PR Agencies's Sample Requests
 */
 select id from sample_request where pr_agency_id = '68';
 delete from booking_status where sample_request_id IN(712,766,767,768,769,770,771,772,773,774,775,776,777,778,779,780,781,782,783,784,785,786,787,788,791,792,793,794,795,796,797,798,799,800,801);

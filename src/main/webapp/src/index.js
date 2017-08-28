@@ -1158,7 +1158,14 @@ export class Index {
         this.sampleRequestService.sampleRequestStatus = 'created';
         this.sampleRequestService.getSampleRequest(id)
             .then(result =>{
-                this.alertP("Trolley Set To Request: "+id)
+                this.alertP("Now Picking For "+id)
+            });
+    }
+    submit(id) {
+        this.closeSampleRequestMenu(id);
+        this.sampleRequestService.submitRequest(id)
+            .then(result =>{
+                this.alertP("Submitted Request "+id)
             });
     }
 

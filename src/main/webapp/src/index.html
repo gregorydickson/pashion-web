@@ -509,7 +509,9 @@
                                 <td class="accordion w31 
                                            ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
                                 <td class="accordion w27
-                                           ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" >${booking.requestStatusBrand}</td>
+                                           ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" >
+                                           ${(sampleRequestService.sampleRequest.id === booking.id)  ? 'Picking' : booking.requestStatusBrand}
+                                           </td>
                                 <!-- ... disabled  -->
                                 <td if.bind="(booking.requestStatusBrand == 'Deleted')" class="accordion w10" style="overflow:visible;">
                                     <div class="look-menu-absolute-wrap">
@@ -583,11 +585,15 @@
                                                 )"
                                                 class="look-menu-item"><a click.delegate="trolley(booking.id)" href="#" class="look-menu-link">Finalize</a></li>
 
-                                                <!-- Picking -->
+                                                <!-- Not Submitted -->
                                                 <li if.bind="(
-                                                    (booking.requestStatusBrand == 'Picking')
+                                                    (booking.requestStatusBrand == 'Not Submitted')
                                                 )"
-                                                class="look-menu-item"><a click.delegate="picking(booking.id)" href="#" class="look-menu-link">Picking</a></li>
+                                                class="look-menu-item"><a click.delegate="picking(booking.id)" href="#" class="look-menu-link">Continue Picking</a></li>
+                                                <li if.bind="(
+                                                    (booking.requestStatusBrand == 'Not Submitted')
+                                                )"
+                                                class="look-menu-item"><a click.delegate="submit(booking.id)" href="#" class="look-menu-link">Submit Request</a></li>
                                                 
                                                 <!-- Delete -->
                                                 <li class="look-menu-item"><a click.delegate="deleteSampleRequest(booking.id)" href="#" class="look-menu-link">Delete Request</a></li>

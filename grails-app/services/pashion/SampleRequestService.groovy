@@ -106,10 +106,11 @@ class SampleRequestService {
             }
         }
         if(jsonObject.requestStatusBrand){
+            log.info "status set client side to:"+jsonObject.requestStatusBrand
             sr.requestStatusBrand = jsonObject.requestStatusBrand
         } else{
-            sr.requestStatusBrand = "Picking"
-            sr.requestStatusPress = "Picking"
+            sr.requestStatusBrand = "Not Submitted"
+            sr.requestStatusPress = "Not Submitted"
         }
         sr.save(failOnError:true, flush:true)
         log.info "sample request trolly saved:"+sr

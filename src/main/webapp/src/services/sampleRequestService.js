@@ -160,6 +160,24 @@ export class SampleRequestService{
       return promise;
     }
 
+    submitRequest(id){
+      var promise = new Promise((resolve, reject) => {
+        this.http.fetch('/sampleRequest/submitTrolley/'+id+'.json', {
+            method: 'get'
+          })
+          .then(response => response.json())
+          .then(trolley => {
+              if(trolley.session == 'invalid'){
+                  window.location.href = '/user/login';
+                  return;
+              }
+              resolve(trolley);
+          });
+
+      });
+      return promise;
+    }
+
     updateTrolley(sr){
       var promise = new Promise((resolve, reject) => {
         this.http.fetch('/sampleRequest/updateTrolley.json', {
