@@ -63,6 +63,7 @@ export class EditSearchableItem {
 
 
   activate(itemId){
+    console.log (`Editing: ${itemId}`);
     var queryString = DateFormat.urlString(0, 1);
     this.cityService.getCities().then(cities => {
       this.cities = cities;
