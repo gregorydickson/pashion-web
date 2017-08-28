@@ -261,10 +261,11 @@ class UserController {
         //RM removed the force to integer
         if(jsonObject.pressHouse){
             owner = PressHouse.get(jsonObject.pressHouse.id)
-        } else if (jsonObject.brand.id){
+        } else if (jsonObject.brand?.id){
             owner = Brand.get(jsonObject.brand.id)
         } else if (jsonObject.prAgency){
-            owner = PRAgency.get(jsonObject.prAgency.id)
+            log.info "pr agency:"+jsonObject.prAgency
+            owner = PRAgency.get(jsonObject.prAgency)
         }
         
         def inNetwork = false
