@@ -503,11 +503,11 @@
                                 <td class="accordion w7">
                                     <button id="button${booking.id}" class="accordion requestButton expandoHover" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
-                                <td class="accordion w24">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td>
+                                <td class="accordion w24" click.delegate="closeExpand(booking.id)" style="cursor: pointer">${booking.season | seasonAbbreviation:seasons }.${booking.look} </td>
                                 <td class="accordion w31 
-                                           ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
+                                           ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''}" click.delegate="closeExpand(booking.id)" style="cursor: pointer">${booking.bookingStartDate | viewDateFormat}</td>
                                 <td class="accordion w27
-                                           ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" >${booking.requestStatusBrand}</td>
+                                           ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" click.delegate="closeExpand(booking.id)" style="cursor: pointer" >${booking.requestStatusBrand}</td>
                                 <!-- ... disabled  -->
                                 <td if.bind="(booking.requestStatusBrand == 'Deleted')" class="accordion w10" style="overflow:visible;">
                                     <div class="look-menu-absolute-wrap">
@@ -623,9 +623,9 @@
                                 <td class="accordion w7">
                                     <button id="button${booking.id}" class="accordion requestButton expandoHover" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
-                                <td class="accordion w24">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td>
-                                <td class="accordion w31 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
-                                <td class.bind="(booking.requestStatusPress=='Pending') ? 'accordion ui-text-label-m-blue w27' :'accordion w27'" >${booking.requestStatusPress}</td>
+                                <td class="accordion w24" click.delegate="closeExpand(booking.id)" style="cursor: pointer">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td>
+                                <td class="accordion w31 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''}" click.delegate="closeExpand(booking.id)" style="cursor: pointer">${booking.bookingStartDate | viewDateFormat}</td>
+                                <td class.bind="(booking.requestStatusPress=='Pending') ? 'accordion ui-text-label-m-blue w27' :'accordion w27'" click.delegate="closeExpand(booking.id)" style="cursor: pointer">${booking.requestStatusPress}</td>
 
                                 <!-- ... disabled -->
                                 <td if.bind="(
