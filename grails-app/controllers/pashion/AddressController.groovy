@@ -93,10 +93,10 @@ class AddressController {
         address.contactPhone = jsonObject.contactPhone
         address.comment = jsonObject.comment
 
-        address.save(failOnError:true)
-        
+        address.save(flush:true,failOnError:true)
+
         respond address, [status: OK] 
-        
+
     }
 
     @Transactional

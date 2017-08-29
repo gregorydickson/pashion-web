@@ -296,18 +296,19 @@ class UserController {
                 user = userService.updateUser(jsonObject,user)
             } else{
                 def response = [error: 'Error No Account'] as JSON
-                render response 
-                return 
+                render response
+                return
             }
-
         } else{
-            user = userService.updateUser(jsonObject)
+            if(user){
+                user = userService.updateUser(jsonObject,user)
+            } else{
+                user = User.get(jsonObject.id) 
+                user = userService.updateUser(jsonObject,user)
+            }
         }
-
-
         
-        
-       respond user, [status: OK] 
+       respond user, [status: OK]
         
     }
 

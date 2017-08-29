@@ -183,21 +183,20 @@
                         <!-- name -->
                         <div class="inline-label">
                             <span class="slim-text-box-label">First Name</span>
-                            <input class="slim-text-box" change.trigger="updateUser()" type='text' name='' value.bind="currentUser.name">
+                            <input class="slim-text-box" input.trigger="updateUser()" type='text' name='' value.bind="currentUser.name">
                         </div>
                         <!-- surname -->
                         <div class="inline-label">
                             <span class="slim-text-box-label">Surname</span>
-                            <input class="slim-text-box" change.trigger="updateUser()" type='text' name='' value.bind="currentUser.surname">
+                            <input class="slim-text-box" input.trigger="updateUser()" type='text' name='' value.bind="currentUser.surname">
                         </div>
 
                         <!-- Office -->
                         <div class="inline-label">
                             <span class="slim-text-box-label">Office</span>
-                            <select id="userOfficeSelect" select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" class="slim-text-box" value.bind="currentUser.address.id">
+                            <select id="userOfficeSelect" select2.bind='{ "placeholder": "Select",  "minimumResultsForSearch": -1} ' style="width: 169px" class="slim-text-box" change.trigger="updateUser()" value.bind="currentUser.address.id">
                                 <option></option>
                                 <option model.bind="address.id" repeat.for="address of addresses">${address.name}</option>
-                                <option value="blah">blah</option>
 
                             </select>
                             <!--<select name="" id="" class="slim-text-box" change.trigger="updateUser()" value.bind="currentUser.address.id">
