@@ -275,9 +275,10 @@ export class Index {
                 }
                 this.taskQueue.queueMicroTask(() => {            
                         setTimeout(function () {
-                                window.myblazy.destroy();
+                                //window.myblazy.destroy();
                                 window.myblazy.revalidate();
                                 //console.log("subsequent loading Blazy recreation");
+                                $('div.menu-stripe').show();
                         }, 1000); 
                 }); 
                 this.busy.off();
@@ -332,8 +333,9 @@ export class Index {
                 }
                 this.taskQueue.queueMicroTask(() => {            
                         setTimeout(function () {
-                                window.myblazy.destroy();
+                                //window.myblazy.destroy();
                                 window.myblazy.revalidate();
+                                $('div.menu-stripe').show();
                                 //console.log("subsequent loading Blazy recreation");
                         }, 1000); 
                 });
@@ -413,6 +415,7 @@ export class Index {
                                 offset: 100 
                             });
                             window.myblazy = bLazy;
+                            $('div.menu-stripe').show();
                         };
                     }, 1000); //wait to set visibile after hiding ugly loading detritus
 
@@ -426,6 +429,7 @@ export class Index {
                                 offset: 100 
                             });
                             window.myblazy = blazy;
+                            $('div.menu-stripe').show();
                             //console.log("window focus Blazy recreation");
                         }, 1000);
                     }, false);
@@ -436,8 +440,9 @@ export class Index {
                     
                     this.taskQueue.queueMicroTask(() => {            
                             setTimeout(function () {
-                                    window.myblazy.destroy();
+                                    //window.myblazy.destroy();
                                     window.myblazy.revalidate();
+                                    $('div.menu-stripe').show();
                                     //console.log("subsequent loading Blazy recreation");
                             }, 1000); 
                     });
@@ -519,6 +524,7 @@ export class Index {
                 this.taskQueue.queueMicroTask(() => {            
                         setTimeout(function () {
                                 window.myblazy.revalidate();
+                                $('div.menu-stripe').show();
                         }, 1000); 
                 }); 
                 this.busy.off();
@@ -573,6 +579,7 @@ export class Index {
                 this.taskQueue.queueMicroTask(() => {            
                         setTimeout(function () {
                                 window.myblazy.revalidate();
+                                $('div.menu-stripe').show();
                         }, 1000); 
                 });
                 this.busy.off();
@@ -626,8 +633,9 @@ export class Index {
                 }
                 this.taskQueue.queueMicroTask(() => {            
                         setTimeout(function () {
-                                window.myblazy.destroy();
+                                //window.myblazy.destroy();
                                 window.myblazy.revalidate();
+                                $('div.menu-stripe').show();
                                 //console.log("subsequent loading Blazy recreation");
                         }, 1000); 
                 });
@@ -688,8 +696,9 @@ export class Index {
 
                 this.taskQueue.queueMicroTask(() => {            
                         setTimeout(function () {
-                                window.myblazy.destroy();
+                                //window.myblazy.destroy();
                                 window.myblazy.revalidate();
+                                $('div.menu-stripe').show();
                                 //console.log("subsequent loading Blazy recreation");
                         }, 1000); 
                 });
@@ -759,8 +768,9 @@ export class Index {
                     }
                 this.taskQueue.queueMicroTask(() => {            
                         setTimeout(function () {
-                                window.myblazy.destroy();
+                                //window.myblazy.destroy();
                                 window.myblazy.revalidate();
+                                $('div.menu-stripe').show();
                                 //console.log("subsequent loading Blazy recreation");
                         }, 1000); 
                 });
@@ -773,6 +783,9 @@ export class Index {
 
     filterChangeCity(event) {
         this.busy.on();
+        if(window.myblazy) {
+                window.myblazy.destroy();
+        } 
         
         this.rows = [];
         console.log("Filter Change changing Change City: from: " + this.selectedCity);
@@ -815,8 +828,9 @@ export class Index {
                 }
                 this.taskQueue.queueMicroTask(() => {            
                         setTimeout(function () {
-                                window.myblazy.destroy();
+                                //window.myblazy.destroy();
                                 window.myblazy.revalidate();
+                                $('div.menu-stripe').show();
                                 //console.log("subsequent loading Blazy recreation");
                         }, 1000); 
                 });
