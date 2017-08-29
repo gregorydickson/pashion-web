@@ -132,7 +132,6 @@ export class SampleRequestService{
                   window.location.href = '/user/login';
                   return;
               }
-              this.sampleRequest = trolley;
               resolve(trolley);
           });
 
