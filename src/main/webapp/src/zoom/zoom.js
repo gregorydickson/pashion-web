@@ -28,7 +28,8 @@ export class Zoom {
     this.rowNumber = zoomModel.rowNumber;
     this.itemNumber = zoomModel.itemNumber;
     this.image = zoomModel.item.image;
-    this.name = zoomModel.item.nameNumber + zoomModel.item.nameVariant.toUpperCase();
+    this.name = zoomModel.item.nameNumber;
+    if (zoomModel.item.nameVariant) this.name = this.name + zoomModel.item.nameVariant.toUpperCase();
     this.imageProvider = zoomModel.item.imageProvider;
 
     console.log("zoom.js row number :" + zoomModel.rowNumber);
@@ -64,7 +65,8 @@ export class Zoom {
       let items = arow.items;
       let item = items[this.itemNumber];
       this.image = item.image;
-      this.name = item.name;
+      this.name = item.nameNumber;
+      if (item.nameVariant) this.name = this.name + item.nameVariant.toUpperCase();
       this.season = item.season;
       this.brand = item.brand;
       console.log("image:" + this.image);
@@ -83,7 +85,8 @@ export class Zoom {
         let items = arow.items;
         let item = items[this.itemNumber];
         this.image = item.image;
-        this.name = item.name;
+        this.name = item.nameNumber;
+        if (item.nameVariant) this.name = this.name + item.nameVariant.toUpperCase();
         this.season = item.season;
         this.brand = item.brand;
       }
@@ -102,7 +105,8 @@ export class Zoom {
       let items = arow.items;
       let item = items[this.itemNumber];
       this.image = item.image;
-      this.name = item.name;
+      this.name = item.nameNumber;
+      if (item.nameVariant) this.name = this.name + item.nameVariant.toUpperCase();
       this.season = item.season;
       this.brand = item.brand;
       console.log("image:" + this.image);
@@ -121,7 +125,8 @@ export class Zoom {
         let items = arow.items;
         let item = items[this.itemNumber];
         this.image = item.image;
-        this.name = item.name;
+        this.name = item.nameNumber;
+        if (item.nameVariant) this.name = this.name + item.nameVariant.toUpperCase();
         this.season = item.season;
         this.brand = item.brand;
       }
