@@ -163,41 +163,41 @@
                                             </td>
 
                                             <!-- ID -->
-                                            <td class="col1 accordion-grey w6" click.delegate="closeExpand($index,booking)">${booking.id}</td>
+                                            <td class="col1 accordion-grey w6" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.id}</td>
 
                                             <!-- Look -->
-                                            <td if.bind="user.type === 'brand'" class="col2 accordion-grey w8" click.delegate="closeExpand($index,booking)">${booking.season | seasonAbbreviation:seasons }.${booking.look.toUpperCase()}</td>
-                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="col2 accordion-grey w8" click.delegate="closeExpand($index,booking)">${booking.season | seasonAbbreviation:seasons }.${booking.look.toUpperCase()}</td>
+                                            <td if.bind="user.type === 'brand'" class="col2 accordion-grey w8" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.season | seasonAbbreviation:seasons }.${booking.look.toUpperCase()}</td>
+                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="col2 accordion-grey w8" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.season | seasonAbbreviation:seasons }.${booking.look.toUpperCase()}</td>
 
 
                                             <!-- Start Date -->
-                                            <td if.bind="user.type === 'brand'" class="col3 accordion-grey w10 ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''}" click.delegate="closeExpand($index,booking)">${booking.bookingStartDate | viewDateFormat}</td>
-                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="col3 accordion-grey w10 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''}" click.delegate="closeExpand($index,booking)">${booking.bookingStartDate | viewDateFormat}</td>
+                                            <td if.bind="user.type === 'brand'" class="col3 accordion-grey w10 ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''}" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.bookingStartDate | viewDateFormat}</td>
+                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="col3 accordion-grey w10 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''}" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.bookingStartDate | viewDateFormat}</td>
 
                                             <!-- BRAND / Company -->
-                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="col4 accordion-grey w12 variable-padding" click.delegate="closeExpand($index,booking)">${booking.brand.name}</td>
-                                            <td if.bind="user.type === 'brand'" class="col4 accordion-grey w12 variable-padding" click.delegate="closeExpand($index,booking)" ref="company">${booking.requestingUserCompany}</td> <!-- TBD -->
+                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="col4 accordion-grey w12 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.brand.name}</td>
+                                            <td if.bind="user.type === 'brand'" class="col4 accordion-grey w12 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer" ref="company">${booking.requestingUserCompany}</td> <!-- TBD -->
 
                                             <!-- Requestor -->
-                                            <td if.bind="((user.type === 'press') || (user.type === 'brand'))" class="col5 accordion-grey w30 variable-padding" click.delegate="closeExpand($index,booking)">${booking.requestingUser.name} ${booking.requestingUser.surname} / ${booking.deliverTo.name} ${booking.deliverTo.surname}</td>
+                                            <td if.bind="((user.type === 'press') || (user.type === 'brand'))" class="col5 accordion-grey w30 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.requestingUser.name} ${booking.requestingUser.surname} / ${booking.deliverTo.name} ${booking.deliverTo.surname}</td>
 
-                                            <td if.bind="(booking.requestingUser.name) && (user.type === 'prAgency')" class="col5 accordion-grey w30 variable-padding" click.delegate="closeExpand($index,booking)">${booking.requestingUser.name} ${booking.requestingUser.surname} ${booking.requestingUserCompany ? '(' + booking.requestingUserCompany + ')' : ''}</td>
+                                            <td if.bind="(booking.requestingUser.name) && (user.type === 'prAgency')" class="col5 accordion-grey w30 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.requestingUser.name} ${booking.requestingUser.surname} ${booking.requestingUserCompany ? '(' + booking.requestingUserCompany + ')' : ''}</td>
 
                                             <!-- END DATE -->
-                                            <td class="col6 accordion-grey w10 variable-padding ${computedOverdue(booking.bookingEndDate, booking.requestStatusBrand) ? 'red-deco' : ''}" click.delegate="closeExpand($index,booking)">${booking.bookingEndDate | viewDateFormat}</td>
+                                            <td class="col6 accordion-grey w10 variable-padding ${computedOverdue(booking.bookingEndDate, booking.requestStatusBrand) ? 'red-deco' : ''}" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.bookingEndDate | viewDateFormat}</td>
 
                                             <!-- Items -->
-                                            <td class="col7 accordion-grey w5" click.delegate="closeExpand($index,booking)" style="padding-left:11px;">${booking.searchableItems.length}</td>
+                                            <td class="col7 accordion-grey w5" click.delegate="closeExpand($index,booking)" style="padding-left:11px; cursor: pointer;">${booking.searchableItems.length}</td>
 
                                             <!-- Status -->
                                             <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" 
                                                 class="col8 accordion-grey w11  
-                                                    ${(booking.requestStatusPress=='Pending') ? 'ui-text-label-m-blue' : ''}" click.delegate="closeExpand($index,booking)" style="padding-left:11px;">
+                                                    ${(booking.requestStatusPress=='Pending') ? 'ui-text-label-m-blue' : ''}" click.delegate="closeExpand($index,booking)" style="padding-left:11px; cursor: pointer;">
                                                     ${booking.requestStatusPress}</td>
 
                                             <td if.bind="user.type === 'brand'" 
                                                 class="col8 accordion-grey w11  
-                                                     ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" click.delegate="closeExpand($index,booking)" style="padding-left:11px;">
+                                                     ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" click.delegate="closeExpand($index,booking)" style="padding-left:11px; cursor: pointer;">
                                                      ${booking.requestStatusBrand}</td>
                                             
 
