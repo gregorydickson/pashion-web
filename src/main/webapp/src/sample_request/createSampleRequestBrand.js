@@ -52,8 +52,7 @@ export class CreateSampleRequestBrand {
   returnToAddress = null;
 
   sampleRequest = null;
-  startOffset = 0;
-  endOffset = 0;
+
 
   startDay = '';
   endDay = '';
@@ -77,9 +76,12 @@ export class CreateSampleRequestBrand {
 
 
   activate(item) {
-    var queryString = DateFormat.urlString(0, 2) + '&searchType=brand';
+    
 
     this.sampleRequest = this.sampleRequestService.getCurrentSampleRequest();
+
+    var queryStringEnd = DateFormat.urlString(this.sampleRequest.endOffset, 1)+ '&searchType=brand';
+    var queryStringStart = DateFormat.urlString(this.sampleRequest.startOffset, 1)+ '&searchType=brand';
 
     if(this.sampleRequest.requestStatusBrand === 'Finalize'){
       this.startFinalize = true;
@@ -130,10 +132,14 @@ export class CreateSampleRequestBrand {
     } else{
       return Promise.all([
         this.userService.getUser().then(user => {this.user = user}),
-        this.http.fetch('/calendar/searchableItemPicker' + queryString + '&item=' + item.id)
+        this.http.fetch('/calendar/searchableItemPicker' + queryStringStart + '&item=' + item.id)
           .then(response => response.json())
           .then(calendar => {
             this.startCalendar = calendar;
+          }),
+        this.http.fetch('/calendar/searchableItemPicker' + queryStringEnd + '&item=' + item.id)
+          .then(response => response.json())
+          .then(calendar => {
             this.endCalendar = calendar;
           }),
         this.outReasonService.getOutReasons().then(outReasons => {
@@ -409,27 +415,27 @@ export class CreateSampleRequestBrand {
   }
 
   startNext(){
-    ++this.startOffset;
+    ++this.sampleRequest.startOffset;
     this.updateAvailability(false);
   }
   startPrevious() {
-    --this.startOffset;
+    --this.sampleRequest.startOffset;
     this.updateAvailability(false);
   }
   startReset() {
-    this.startOffset = 0;
+    this.sampleRequest.startOffset = 0;
     this.updateAvailability(false);
   }
   endNext() {
-    ++this.endOffset;
+    ++this.sampleRequest.endOffset;
     this.updateAvailability(false);
   }
   endPrevious() {
-    --this.endOffset;
+    --this.sampleRequest.endOffset;
     this.updateAvailability(false);
   }
   endReset() {
-    this.endOffset = 0;
+    this.sampleRequest.endOffset = 0;
     this.updateAvailability(false);
   }
 
@@ -531,8 +537,8 @@ export class CreateSampleRequestBrand {
       this.sampleRequest.endMonth = '';
     } 
 
-    var queryString = DateFormat.urlString(this.endOffset, 1) + '&searchType=brand';
-    this.http.fetch('/calendar/showAvailabilitySamples' + queryString, {
+    var queryString = DateFormat.urlString(this.sampleRequest.endOffset, 1) + '&searchType=brand';
+    this.http.fetch('/calendar/showAvailabilityTrolley' + queryString, {
       method: 'post',
       body: json(this.currentItem.samples)
     })
@@ -541,8 +547,8 @@ export class CreateSampleRequestBrand {
         this.endCalendar = calendar;
       });
 
-    queryString = DateFormat.urlString(this.startOffset, 1) + '&searchType=brand';
-    this.http.fetch('/calendar/showAvailabilitySamples' + queryString, {
+    queryString = DateFormat.urlString(this.sampleRequest.startOffset, 1) + '&searchType=brand';
+    this.http.fetch('/calendar/showAvailabilityTrolley' + queryString, {
       method: 'post',
       body: json(this.currentItem.samples)
     })

@@ -131,6 +131,44 @@ class CalendarController {
         render aCalendar as JSON
     }
 
+    def showAvailabilityTrolley(){
+        def jsonObject = request.JSON
+        log.info "showAvailabilitySamples json:"+jsonObject
+        List samples = []
+        jsonObject.each{
+            samples << SearchableItem.get(it.id.toInteger())
+        }
+        
+        def localDate = LocalDate.of(params.year.toInteger(),
+                                     params.month.toInteger(),
+                                     params.day.toInteger())
+
+        def aCalendar = new PashionCalendar( null,
+                                             params.month.toInteger(),
+                                             params.day.toInteger(),
+                                             params.year.toInteger(),
+                                             request.locale.toString(),
+                                             params.offset.toInteger(),
+                                             params.months.toInteger())
+        if (samples == []) {
+            log.info "showAvailabilitySamples no samples, so all available after today"
+            aCalendar = calendarService.pastNotAvailable(localDate,aCalendar)
+        }
+        else {
+            log.info "showAvailabilitySamples"
+            if(params.searchType == "brand" || samples[0].look.brand.hideCalendar == false){
+                log.info "brand sample calendar OR show calenader"
+                aCalendar = calendarService.availableDaysForSamples(samples,localDate,aCalendar)
+                aCalendar = calendarService.pastNotAvailable(localDate,aCalendar)
+            } else if (params.searchType != "brand" && samples[0].look.brand.hideCalendar == true) {
+                log.info "NOT brand sample calendar and hide calenadr"
+                aCalendar = calendarService.pastNotAvailable(localDate,aCalendar)
+            }
+        }
+
+        render aCalendar as JSON
+    }
+
     def showAvailabilitySamples(){
         def jsonObject = request.JSON
         log.info "showAvailabilitySamples json:"+jsonObject

@@ -50,6 +50,8 @@ export class SampleRequestService{
       this.sampleRequest.endDate = '';
       this.sampleRequest.endDay = '';
       this.sampleRequest.endMonth = '';
+      this.sampleRequest.startOffset = 0;
+      this.sampleRequest.endOffset = 0;
       return this.sampleRequest;
     }
 

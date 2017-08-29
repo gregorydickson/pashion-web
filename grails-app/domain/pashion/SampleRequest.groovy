@@ -24,6 +24,8 @@ class SampleRequest {
     String endDay
     String endDate
     String endMonth
+    String startOffset
+    String endOffset
 
 	String requestStatusBrand //Pending ->Approved->Shipped -> Delivered -> Due Back ->Overdue ->Closed
 	String requestStatusPress

@@ -112,6 +112,8 @@ class SampleRequestService {
         sr.endDate = jsonObject.endDate
         sr.endDay = jsonObject.endDay
         sr.endMonth = jsonObject.endMonth
+        sr.startOffset = jsonObject.startOffset
+        sr.endOffset = jsonObject.endOffset
 
         if(jsonObject.requestStatusBrand){
             log.info "status set client side to:"+jsonObject.requestStatusBrand
