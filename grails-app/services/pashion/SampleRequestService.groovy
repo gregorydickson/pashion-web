@@ -105,6 +105,14 @@ class SampleRequestService {
                 sr.addToSearchableItemsProposed(item)
             }
         }
+        sr.startDay = jsonObject.startDay
+        sr.startDate = jsonObject.startDate
+        sr.startMonth = jsonObject.startMonth
+        sr.endDay = jsonObject.endDay
+        sr.endDate = jsonObject.endDate
+        sr.endDay = jsonObject.endDay
+        sr.endMonth = jsonObject.endMonth
+
         if(jsonObject.requestStatusBrand){
             log.info "status set client side to:"+jsonObject.requestStatusBrand
             sr.requestStatusBrand = jsonObject.requestStatusBrand

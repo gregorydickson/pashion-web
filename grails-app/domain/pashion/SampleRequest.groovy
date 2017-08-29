@@ -17,6 +17,14 @@ class SampleRequest {
 
 	Date bookingStartDate
 	Date bookingEndDate
+	//Trolley storage
+	String startDay
+    String startDate
+    String startMonth
+    String endDay
+    String endDate
+    String endMonth
+
 	String requestStatusBrand //Pending ->Approved->Shipped -> Delivered -> Due Back ->Overdue ->Closed
 	String requestStatusPress
 	Boolean overdue = false
