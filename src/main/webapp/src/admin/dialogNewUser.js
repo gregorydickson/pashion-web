@@ -59,7 +59,7 @@ export class CreateDialogNewUser {
   		.then(response =>{
   			if(response.ok){
   				console.log("response ok, user created");
-  				this.controller.close();
+  				this.controller.ok();
   			} else{
   				alert("error");
   			}

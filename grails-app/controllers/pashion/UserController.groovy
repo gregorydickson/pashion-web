@@ -24,6 +24,7 @@ class UserController {
         company.users.each{
             users << it
         }
+        users.sort{it.name}
         respond userList:users
     }
 
@@ -34,6 +35,7 @@ class UserController {
         company.users.each{
             users << it
         }
+        users.sort{it.name}
         respond userList:users
     }
 
@@ -44,6 +46,7 @@ class UserController {
         company.users.each{
             users << it
         }
+        users.sort{it.name}
         respond userList:users
         
     }
