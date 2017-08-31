@@ -304,12 +304,12 @@ export class EditSearchableItem {
   }
 
   sample2Callback(event) {
-    console.log('sample2Callback() called');
+    //console.log('sample2Callback() called');
 
     if (event.detail) {
         console.log('sample2 value:'+event.detail.value)
         let selectedSampleId = event.detail.value;         
-        console.log('sample2Callback() / Selected value:', selectedSampleId); 
+        //console.log('sample2Callback() / Selected value:', selectedSampleId); 
 
         this.selectedSample = this.currentItem.samples.find(x => x.id == selectedSampleId);
         if(!this.selectedSample){
@@ -321,7 +321,7 @@ export class EditSearchableItem {
           let selectedSampleType = this.availableSampleTypeItems.find(x => x.text.toUpperCase() == this.selectedSample.sampleType.toUpperCase());
           
           if (selectedSampleType) {
-            console.log('Found a match for sample type:', selectedSampleType, selectedSampleType.id);
+            //console.log('Found a match for sample type:', selectedSampleType, selectedSampleType.id);
             this.selectedSampleTypeItems = [selectedSampleType.id];
           }
         } else{
@@ -333,7 +333,7 @@ export class EditSearchableItem {
           let selectedLocation = this.selectedSample.sampleCity;
 
           if (selectedLocation) {
-            console.log('Found a match for location:', selectedLocation);
+            //console.log('Found a match for location:', selectedLocation);
             this.selectedLocationItems = [selectedLocation.id];      
           }
         } else{
@@ -355,11 +355,11 @@ export class EditSearchableItem {
   }
 
   onSampleChangeCallback(event) {   
-      console.log('onSampleCallback() called:', event.detail.value);
+      //console.log('onSampleCallback() called:', event.detail.value);
 
       if (event.detail) {
           let selectedValue = event.detail.value;         
-          console.log('Selected value:', selectedValue);    
+          //console.log('Selected value:', selectedValue);    
 
           
           this.selectedSample =  this.availableSampleItems.find(x => x.id == selectedValue);
@@ -369,22 +369,22 @@ export class EditSearchableItem {
   }
 
   onSampleTypeChangeCallback(event) {   
-      console.log('onSampleTypeCallback() called:', event.detail.value);
+      //console.log('onSampleTypeCallback() called:', event.detail.value);
 
       if (event.detail) {
           let selectedValue = event.detail.value;         
-          console.log('Selected value:', selectedValue);     
+          c//onsole.log('Selected value:', selectedValue);     
 
           this.selectedSample.sampleType = selectedValue; 
       }
   }
 
   onLocationChangeCallback(event) {
-      console.log('onLocationChangeCallback() called:', event.detail.value);
+      //console.log('onLocationChangeCallback() called:', event.detail.value);
       if (event.detail) {
           if(event.detail.value){
             let selectedValue = event.detail.value;         
-            console.log('Selected location value:', selectedValue);     
+            //console.log('Selected location value:', selectedValue);     
 
             this.selectedSample.sampleCity.id = selectedValue; 
           }
@@ -392,11 +392,11 @@ export class EditSearchableItem {
   }
 
   onOutReasonChangeCallback(event) {   
-      console.log('onOutReasonChangeCallback() called:', event.detail.value);
+      //console.log('onOutReasonChangeCallback() called:', event.detail.value);
       if (event.detail) {
           if(event.detail.value){
             let selectedValue = event.detail.value;         
-            console.log('Selected out Reason value:', selectedValue);     
+            //console.log('Selected out Reason value:', selectedValue);     
 
             if (this.selectedSample.outReason) this.selectedSample.outReason.id = parseInt(selectedValue); 
             else this.selectedSample["outReason"] = {id:parseInt(selectedValue)};
@@ -405,11 +405,11 @@ export class EditSearchableItem {
   }
 
   onNewColorChangeCallback(event) {   
-      console.log('onNewColorChangeCallback() called:', event.detail.value);
+      //console.log('onNewColorChangeCallback() called:', event.detail.value);
 
       if (event.detail) {
           let selectedValue = event.detail.value;         
-          console.log('Selected value:', selectedValue);      
+          //console.log('Selected value:', selectedValue);      
 
           this.addColor = selectedValue;
       }
@@ -417,11 +417,11 @@ export class EditSearchableItem {
 
 
   onMaterialChangeCallback(event) {   
-      console.log('onMaterialChangeCallback() called:', event.detail.value);
+      //console.log('onMaterialChangeCallback() called:', event.detail.value);
 
       if (event.detail) {
           let selectedValue = event.detail.value;
-          console.log('Selected value:', selectedValue);      
+          //console.log('Selected value:', selectedValue);      
 
           this.addMaterial = selectedValue;
       }

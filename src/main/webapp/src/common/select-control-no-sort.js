@@ -48,7 +48,7 @@ export class SelectControlNoSort {
     }
 
     selectedChanged(value) {
-        console.log('SelectControl.selectedChanged(): Selected values changed');
+        //console.log('SelectControl.selectedChanged(): Selected values changed');
 
         let el = $(this.element).find('select');
 
@@ -131,6 +131,6 @@ export class SelectControlNoSort {
 
     detached() {
         $(this.element).find('select').select2('destroy');
-        console.log('SelectControl.detached(): Component dettached');
+        //console.log('SelectControl.detached(): Component dettached');
     }
 }
