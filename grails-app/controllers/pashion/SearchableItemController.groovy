@@ -740,6 +740,9 @@ class SearchableItemController {
     @Transactional
     def delete(SearchableItem searchableItem) {
         log.info "deleting:" + searchableItem.name
+        def samples = SearchableItem.findAllByLook(searchableItem)
+        if(samples)
+            samples*.delete(failOnError:true,flush:true)
 
         if (searchableItem == null) {
             transactionStatus.setRollbackOnly()
