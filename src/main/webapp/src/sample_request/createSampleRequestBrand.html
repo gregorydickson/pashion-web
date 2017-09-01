@@ -15,7 +15,7 @@
                 <div id="comms_panel" class="grid-block tool-header shrink">
                     <span if.bind="(!sampleRequest.datesSaved)" class="ui-text-label-m-broad">START BOOKING&nbsp;${brand.name}
                      &nbsp;</span>
-                     <span if.bind="(sampleRequest.datesSaved)" class="ui-text-label-m-broad">REQUEST ${sampleRequest.id} CONTINUE BOOKING
+                    <span if.bind="(sampleRequest.datesSaved)" class="ui-text-label-m-broad">REQUEST ${sampleRequest.id} CONTINUE BOOKING
                      &nbsp;</span>
                     <span class="ui-text-label-m-broad">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.name}</span>
                 </div>
@@ -348,7 +348,6 @@
                     <table class="" style="margin-bottom:4px; table-layout:fixed;">
                         <tr>
                             <td class="accordion ${(sampleRequest.searchableItemsProposed.length == 0) ? 'red-deco' : ''}" style="width:400px;">SAMPLES IN REQUEST</td>
-                            <td if.bind="sampleRequest.datesSaved" class="" style="width:110px;">SELECT TO REMOVE</td>
                         </tr>
                     </table>
                 </div>
@@ -363,8 +362,8 @@
                                 <td if.bind="(!sample.clientID)" class="accordion " style="width:70px; max-width:70px;">P${sample.id}:&nbsp;</td>
                                 <td class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:100px; max-width:100px;">${sample.brand.name}</td>
                                 <td class="accordion to-u-c ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:300px; max-width:300px; overflow:hidden; padding-right:20px;">${sample.attributes}</td>
-                                <td if.bind="sampleRequest.datesSaved" class="accordion" style="width:10px; max-width:10px;">
-                                    <input type="checkbox" click.delegate="removeSample(sample)" >
+                                <td if.bind="sampleRequest.datesSaved" class="accordion" style="width:100px; max-width:100px;">
+                                    <button  click.delegate="removeSample(sample)" >Remove</button>
                                 </td>
                                 
                                
