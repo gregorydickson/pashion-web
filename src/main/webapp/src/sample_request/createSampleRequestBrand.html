@@ -17,7 +17,6 @@
                      &nbsp;</span>
                     <span if.bind="(sampleRequest.datesSaved)" class="ui-text-label-m-broad">REQUEST ${sampleRequest.id} CONTINUE BOOKING
                      &nbsp;</span>
-                    <span class="ui-text-label-m-broad">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.name}</span>
                 </div>
             </div>
         </ai-dialog-header>
@@ -380,7 +379,7 @@
             <button if.bind="(!sampleRequest.datesSaved)" id="saveDates" class="button" click.delegate="dates()">Save Dates</button>
             <button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="continue" class="button" click.delegate="continue()">Pick and Continue</button>
             <button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="submit()">Submit Request</button>
-            <button if.bind="(sampleRequest.datesSaved && startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="update()">Save</button>
+            <button if.bind="(sampleRequest.datesSaved && startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="update()">Submit</button>
         </ai-dialog-footer>
     </ai-dialog>
 </template>
