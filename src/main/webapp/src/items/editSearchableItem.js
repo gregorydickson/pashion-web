@@ -373,7 +373,7 @@ export class EditSearchableItem {
 
       if (event.detail) {
           let selectedValue = event.detail.value;         
-          c//onsole.log('Selected value:', selectedValue);     
+          //console.log('Selected value:', selectedValue);     
 
           this.selectedSample.sampleType = selectedValue; 
       }
