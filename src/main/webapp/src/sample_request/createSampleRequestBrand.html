@@ -322,6 +322,7 @@
                 <div class="grid-content">
                     <table  class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples | sort: 'id': 'ascending'">
                         <tr>
+                            <td  class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:50px; max-width:50px;">${sample.seasonAbbreviation}.${sample.lookNameNumber}${sample.lookNameVariant}</td>
 
                             <td if.bind="sample.clientID" class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:70px; max-width:70px;">${sample.clientID}:&nbsp;</td>
                             <td if.bind="(!sample.clientID)" class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:70px; max-width:70px;">P${sample.id}:&nbsp;</td>
@@ -357,7 +358,7 @@
                     <div class="grid-content">
                         <table  class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of sampleRequest.searchableItemsProposed | sort: 'id': 'ascending'">
                             <tr>
-
+                                <td  class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:50px; max-width:50px;">${sample.seasonAbbreviation}.${sample.lookNameNumber}${sample.lookNameVariant}</td>
                                 <td if.bind="sample.clientID" class="accordion " style="width:70px; max-width:70px;">${sample.clientID}:&nbsp;</td>
                                 <td if.bind="(!sample.clientID)" class="accordion " style="width:70px; max-width:70px;">P${sample.id}:&nbsp;</td>
                                 <td class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:100px; max-width:100px;">${sample.brand.name}</td>
