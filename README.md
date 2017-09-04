@@ -66,15 +66,16 @@ To setup the Development Environment:
 * The aurelia app can be bundled for a faster application load.
 
 
-## Deployment of the Single Page Application 
+## Deployment to app.pashiontool.com and test.pashiontool.com
 
 ### To deploy the application
-* from your gulp terminal run `gulp bundle` (This is optional)
+* from your gulp terminal run `gulp bundle` 
 * after gulp bundle completes, from your grails command line run `war`
 * login to Amazon Web Services
 * Under Services (in header, left side), choose Elastic Beanstalk
 * Ensure that you are in Ireland region, (in header, right side)
-* Under the pashion-spa application, choose the pashion-SpA environment
+* Under the pashion-spa application, choose the pashion-SpA environment to deploy app.pashiontool.com.
+* If you are deploying test.pashiontool.com choose the pashion-NG environment.
 * In the center of the screen, under where it says 'Running Version', click on Upload and Deploy. Note the existing version number of the application.
 * Input a new version number by incrementing the last version number. Put this number into the Version Label.
 * Click on 'Choose File' and navigate to your pashion-web/build/libs directory.
