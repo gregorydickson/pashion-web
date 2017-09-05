@@ -78,14 +78,14 @@
                         <!-- Requested -->
                         <div class="grid-content shrink">
                             <div class="inline-label">
-                                <span class="slim-text-box-label">Start</span>
+                                <span class="slim-text-box-label">START DATE</span>
                                 <span class="slim-text-box">
                                     ${sampleRequest.bookingStartDate | viewDateFormat}
                                 </span>
                             </div>
                         </div>
                         <!-- Required By -->
-                        <div class="grid-content shrink" style="margin-top: 1.5rem;">
+                        <div class="grid-content shrink">
                             <span class="inline-label">
                                 <span class="slim-text-box-label">Required By</span>
                                 <form-select-sr class="to-u-c" name="requiredby" selected.bind="sampleRequest.requiredBy" options.bind="required"></form-select-sr>
@@ -238,14 +238,14 @@
                          <!-- Due -->
                         <div class="grid-content shrink">
                             <div class="inline-label">
-                                <span class="slim-text-box-label">End</span>
+                                <span class="slim-text-box-label">END DATE</span>
                                 <span class="slim-text-box">
                                     ${sampleRequest.bookingEndDate | viewDateFormat}
                                 </span>
                             </div>
                         </div>
                         <!-- Return By Time -->
-                        <div class="grid-content shrink" style="margin-top: 1.5rem;">
+                        <div class="grid-content shrink">
                             <span class="inline-label">
                             <span class="slim-text-box-label">Return By</span>
                             <form-select-sr class="to-u-c" name="returnBy" selected.bind="sampleRequest.returnBy" options.bind="returnBy"></form-select-sr>
@@ -344,7 +344,7 @@
             <!-- SAMPLES IN REQUEST-->
             <div if.bind="sampleRequest.datesSaved">
                 <div class="grid-content accordion">
-                    <table class="" style="margin-bottom:4px; table-layout:fixed;">
+                    <table class="" style="margin-bottom:0px; margin-top: 1rem; table-layout:fixed;">
                         <tr>
                             <td class="accordion ${(sampleRequest.searchableItemsProposed.length == 0) ? 'red-deco' : ''}" style="width:400px;">SAMPLES IN REQUEST</td>
                         </tr>
@@ -355,7 +355,7 @@
                     
                     <div class="grid-content">
                         <table  class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of sampleRequest.searchableItemsProposed | sort: 'id': 'ascending'">
-                            <tr>
+                            <tr style="height:25px;"> 
                                 <td  class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:50px; max-width:50px;">${sample.seasonAbbreviation}.${sample.lookNameNumber}${sample.lookNameVariant}</td>
                                 <td if.bind="sample.clientID" class="accordion " style="width:70px; max-width:70px;">${sample.clientID}:&nbsp;</td>
                                 <td if.bind="(!sample.clientID)" class="accordion " style="width:70px; max-width:70px;">P${sample.id}:&nbsp;</td>
