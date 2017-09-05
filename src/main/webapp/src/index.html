@@ -4,6 +4,7 @@
     <require from="./common/customSelect"></require>
     <require from="./common/viewDateFormatter"></require>
     <require from="./common/seasonAbbreviationFormatter"></require>
+    <require from="./common/seasonAbbreviationIdFormatter"></require>
 
     <require from="./dashboard_filters/filters-search"></require>
     <require from="./dashboard_filters/filters-available-from"></require>
@@ -491,10 +492,10 @@
                         <table class="accordion" style="table-layout:fixed;">
                             <tr> 
                                 <th class="accordion w7"></th>
-                                <th class="accordion w24">REQUEST</th>
-                                <th class="accordion w31">OUT</th>
-                                <th class="accordion w27">STATUS</th>
-                          <th class="accordion w10"></th>
+                                <th class="accordion w16">ID</th>
+                                <th class="accordion w33">OUT</th>
+                                <th class="accordion w34">STATUS</th>
+                                <th class="accordion w10"></th>
                             </tr>
                         </table>
                     </div>
@@ -505,10 +506,10 @@
                                 <td class="accordion w7">
                                     <button id="button${booking.id}" class="accordion requestButton expandoHover" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
-                                <td class="accordion w24">${booking.id}</td>
-                                <td class="accordion w31 
+                                <td class="accordion w16">${booking.id}</td>
+                                <td class="accordion w33 
                                            ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
-                                <td class="accordion w27
+                                <td class="accordion w34
                                            ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" >
                                            ${(sampleRequestService.sampleRequest.id === booking.id)  ? 'Picking' : booking.requestStatusBrand}
                                            </td>
@@ -606,14 +607,20 @@
 
                         <!-- expanding data -->
                         <div id="panel${booking.id}" class="panel requestPanel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
-                            <span class="accordion expanded" style="background-color: #fafafa; width:100%; padding-top:7px; padding-left:10px; padding-bottom:7px;">Request: ${booking.id}</span>
-                            <span if.bind="booking.pressHouse.name" class="accordion expanded" style="background-color: #fafafa;width:100%; padding-left:10px; padding-bottom:7px;">Press House: ${booking.pressHouse.name}</span>
-                            <table class="accordion expanded" style="table-layout:fixed;">                          
-                                <tr style="padding-top: 7px;" repeat.for="sample of booking.searchableItems">
-                                    <td class="accordion" style="width:10px; max-width:10px; padding-left:10px; padding-bottom:7px;"> ${$index+1} :</td>
-                                    <td class="accordion to-u-c" style="width:142px; max-width:142px; overflow: hidden; padding-right:10px; padding-bottom:7px;"> ${sample.attributes}</td>
+                           <!--  <span class="accordion expanded" style="background-color: #fafafa; width:100%; padding-top:7px; padding-left:10px; padding-bottom:7px;">Request: ${booking.id}</span> -->
+                            
+                            
+
+                            <table class="accordion expanded" style="table-layout:fixed;">
+                                <tr style="padding-bottom:7px;" repeat.for="sample of booking.searchableItems">
+     
+                                    <td if.bind="(sample.clientID)" class="accordion to-u-c" style="width:142px; max-width:142px; overflow: hidden; padding-right:10px; padding-bottom:3px;"">${sample.brand.name}/${sample.season.id | seasonAbbreviationId:seasons }.${sample.lookNameNumber}${sample.lookNameVariant}.${sample.clientID}/${sample.sampleType}</td>
+                                    <td if.bind="!(sample.clientID)" class="accordion to-u-c" style="width:142px; max-width:142px; overflow: hidden; padding-right:10px; padding-bottom:3px;"">${sample.brand.name}/${sample.season.id | seasonAbbreviationId:seasons }.${sample.lookNameNumber}${sample.lookNameVariant}.P${sample.id}/${sample.sampleType}</td>
                                 </tr>
+
                             </table>
+
+
                         </div>
                     </div>
                     <!-- Empty notice -->
