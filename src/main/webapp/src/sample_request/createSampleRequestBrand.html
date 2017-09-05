@@ -356,12 +356,14 @@
                     <div class="grid-content">
                         <table  class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of sampleRequest.searchableItemsProposed | sort: 'id': 'ascending'">
                             <tr style="height:25px;"> 
-                                <td  class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:50px; max-width:50px;">${sample.seasonAbbreviation}.${sample.lookNameNumber}${sample.lookNameVariant}</td>
-                                <td if.bind="sample.clientID" class="accordion " style="width:70px; max-width:70px;">${sample.clientID}:&nbsp;</td>
-                                <td if.bind="(!sample.clientID)" class="accordion " style="width:70px; max-width:70px;">P${sample.id}:&nbsp;</td>
-                                <td class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:100px; max-width:100px;">${sample.brand.name}</td>
-                                <td class="accordion to-u-c ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:300px; max-width:300px; overflow:hidden; padding-right:20px;">${sample.attributes}</td>
-                                <td if.bind="sampleRequest.datesSaved" class="accordion" style="width:100px; max-width:100px;">
+                                <td class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:110px; max-width:110px;">${sample.brand.name}</td>
+
+                                <td  if.bind="sample.clientID"  class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:130px; max-width:130px;">${sample.seasonAbbreviation}.${sample.lookNameNumber}${sample.lookNameVariant}.${sample.clientID}</td>
+                                <td  if.bind="(!sample.clientID)"  class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:130px; max-width:130px;">${sample.seasonAbbreviation}.${sample.lookNameNumber}${sample.lookNameVariant}.P${sample.id}</td>
+
+                                
+                                <td class="accordion to-u-c ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:245px; max-width:245px; overflow:hidden; padding-right:20px;">${sample.sampleType} ${sample.color} ${sample.material}</td>
+                                <td if.bind="sampleRequest.datesSaved" class="accordion" style="width:55px; max-width:55px;">
                                     <button  click.delegate="removeSample(sample)" >Remove</button>
                                 </td>
                                 
