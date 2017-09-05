@@ -13,10 +13,9 @@
             <!-- header -->
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
-                    <span if.bind="(!sampleRequest.datesSaved)" class="ui-text-label-m-broad">START BOOKING&nbsp;${brand.name}
+                    <span if.bind="(!sampleRequest.datesSaved)" class="ui-text-label-m-broad">SET DATES FOR NEW BOOKING
                      &nbsp;</span>
-                    <span if.bind="(sampleRequest.datesSaved)" class="ui-text-label-m-broad">REQUEST ${sampleRequest.id} CONTINUE BOOKING
-                     &nbsp;</span>
+                    <span if.bind="(sampleRequest.datesSaved)" class="ui-text-label-m-broad">PICK SAMPLES FOR BOOKING ${sampleRequest.id}</span>
                 </div>
             </div>
         </ai-dialog-header>
@@ -307,9 +306,9 @@
 
             <!-- SAMPLES TO ADD -->
             <div class="grid-content accordion" if.bind="currentItem">
-                <table class="" style="margin-bottom:4px; table-layout:fixed;">
+                <table class="" style="margin-bottom:4px; margin-top: 1rem; table-layout:fixed;">
                     <tr>
-                        <td class="accordion ${(sampleRequest.samples.length == 0) ? 'red-deco' : ''}" style="width:100px;">ADD SAMPLES</td>
+                        <td class="accordion ${(sampleRequest.samples.length == 0) ? 'red-deco' : ''}" style="width:100px;">ADD SAMPLES TO BOOKING</td>
                     </tr>
                 </table>
             </div>
@@ -321,17 +320,22 @@
                 <div class="grid-content">
                     <table  class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples | sort: 'id': 'ascending'">
                         <tr>
-                            <td  class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:50px; max-width:50px;">${sample.seasonAbbreviation}.${sample.lookNameNumber}${sample.lookNameVariant}</td>
+                            <td if.bind="(sampleRequest.datesSaved && sample.availability)" class="accordion" style="width:20px; max-width:20px;">
+                                <input disabled.bind="((user.city.name !== sample.sampleCity.name) && (restrictOutsideBooking))" type="checkbox" model.bind="sample"  checked.bind="sampleRequest.searchableItemsProposed">
+                            </td>
 
-                            <td if.bind="sample.clientID" class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:70px; max-width:70px;">${sample.clientID}:&nbsp;</td>
-                            <td if.bind="(!sample.clientID)" class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:70px; max-width:70px;">P${sample.id}:&nbsp;</td>
-                            <td class="accordion to-u-c ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:200px; max-width:200px; overflow:hidden; padding-right:20px;">${sample.attributes}</td>
+                            <td if.bind="!(sampleRequest.datesSaved && sample.availability)" class="accordion" style="width:20px; max-width:20px;">
+                                <input disabled type="checkbox" model.bind="sample"  checked.bind="sampleRequest.searchableItemsProposed">
+                            </td>
+
+                            <td if.bind="sample.clientID" class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:130px; max-width:130px;">${sample.seasonAbbreviation}.${sample.lookNameNumber}${sample.lookNameVariant}.${sample.clientID}</td>
+                            <td if.bind="(!sample.clientID)" class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:130px; max-width:130px;">${sample.seasonAbbreviation}.${sample.lookNameNumber}${sample.lookNameVariant}.P${sample.id}</td>
+
+                            <td class="accordion to-u-c ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:170px; max-width:170px; overflow:hidden; padding-right:20px;">${sample.sampleType} ${sample.color} ${sample.material}</td>
                             
                             <td if.bind="(sample.outReason && sample.outReason.id != 0)" class="accordion warm-grey-deco" style="width:90px; max-width:90px;">${outReasons[sample.outReason.id].name}
                             </td>
-                            <td if.bind="(sampleRequest.datesSaved && sample.availability)" class="accordion" style="width:10px; max-width:10px;">
-                                <input disabled.bind="((user.city.name !== sample.sampleCity.name) && (restrictOutsideBooking))" type="checkbox" model.bind="sample"  checked.bind="sampleRequest.searchableItemsProposed">
-                            </td>
+                            
                             <td if.bind="(sampleRequest.datesSaved && sample.availability == false)" class="accordion" style="width:80px; max-width:80px;">
                                 Not Available
                             </td>
@@ -346,12 +350,12 @@
                 <div class="grid-content accordion">
                     <table class="" style="margin-bottom:0px; margin-top: 1rem; table-layout:fixed;">
                         <tr>
-                            <td class="accordion ${(sampleRequest.searchableItemsProposed.length == 0) ? 'red-deco' : ''}" style="width:400px;">SAMPLES IN REQUEST</td>
+                            <td class="accordion ${(sampleRequest.searchableItemsProposed.length == 0) ? 'red-deco' : ''}" style="width:400px;">SAMPLES IN BOOKING</td>
                         </tr>
                     </table>
                 </div>
 
-                <div class="grid-block accordion" style="overflow-x:hidden; max-height:105px;" >
+                <div class="grid-block accordion" style="overflow-x:hidden; max-height:250px;" >
                     
                     <div class="grid-content">
                         <table  class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of sampleRequest.searchableItemsProposed | sort: 'id': 'ascending'">
@@ -362,9 +366,9 @@
                                 <td  if.bind="(!sample.clientID)"  class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:130px; max-width:130px;">${sample.seasonAbbreviation}.${sample.lookNameNumber}${sample.lookNameVariant}.P${sample.id}</td>
 
                                 
-                                <td class="accordion to-u-c ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:245px; max-width:245px; overflow:hidden; padding-right:20px;">${sample.sampleType} ${sample.color} ${sample.material}</td>
-                                <td if.bind="sampleRequest.datesSaved" class="accordion" style="width:55px; max-width:55px;">
-                                    <button  click.delegate="removeSample(sample)" >Remove</button>
+                                <td class="accordion to-u-c ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:215px; max-width:215px; overflow:hidden; padding-right:20px;">${sample.sampleType} ${sample.color} ${sample.material}</td>
+                                <td if.bind="sampleRequest.datesSaved" class="accordion" style="width:65px; max-width:65px;">
+                                    <button class="small button hollow" style="margin-bottom: 2px;" click.delegate="removeSample(sample)" >Remove</button>
                                 </td>
                                 
                                
@@ -380,7 +384,7 @@
             <button class="hollow button" click.delegate="cancel()">Cancel</button>
             <button if.bind="(!sampleRequest.datesSaved)" id="saveDates" class="button" click.delegate="dates()">Save Dates</button>
             <button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="continue" class="button" click.delegate="continue()">Pick and Continue</button>
-            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="submit()">Submit Request</button>
+            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="submit()">Submit Booking</button>
             <button if.bind="(sampleRequest.datesSaved && startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="update()">Submit</button>
         </ai-dialog-footer>
     </ai-dialog>

@@ -371,7 +371,7 @@
 
                                                 <li class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
                                                 <li if.bind="(sampleRequestService.sampleRequestStatus === 'none')" class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Start Booking &nbsp;</a></li>
-                                                <li if.bind="(sampleRequestService.sampleRequestStatus === 'created')" class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Continue Booking &nbsp;</a></li>
+                                                <li if.bind="(sampleRequestService.sampleRequestStatus === 'created')" class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Pick &nbsp;</a></li>
 
                                                 <li class="look-menu-item"><a href="#" click.delegate="deleteSearchableItem(row.items[i])" class="look-menu-link">Delete</a></li>
                                             </ul>
@@ -388,7 +388,7 @@
                                                 
                                                 <li if.bind="(sampleRequestService.sampleRequestStatus === 'none')" class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Start Booking &nbsp;</a></li>
 
-                                                <li if.bind="(sampleRequestService.sampleRequestStatus === 'created')" class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Continue Booking &nbsp;</a></li>
+                                                <li if.bind="(sampleRequestService.sampleRequestStatus === 'created')" class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Pick &nbsp;</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -439,7 +439,7 @@
                     <div class="grid-block align-left tool-header tool-header-spacer">
                     </div>
                     <div class="grid-block align-left tool-header-spacer">
-                        <span class="ui-text-label-m-broad ">REQUEST MANAGER (${numberOfRequests})</span>
+                        <span class="ui-text-label-m-broad ">BOOKING MANAGER (${numberOfRequests})</span>
                         <!-- <span class="alert-box">3</span> -->
                     </div>
                     <div class="grid-block align-right tool-header-spacer" style="padding-right:7px;">
@@ -525,7 +525,7 @@
                                         <span class="edit-box" ><a href="#" class="expandoHover" click.delegate="sampleRequestMenu(booking.id)">...</a></span>
                                         <!-- edit request modal BRAND popup -->
                                          <div class="look-menu-absolute" id="requestTest${booking.id}">
-                                            <span class="look-menu-heading">REQUEST ${booking.id}</span>
+                                            <span class="look-menu-heading">BOOKING ${booking.id}</span>
                                             <ul class="look-menu-list">
                                                 <!-- Edit -->
                                                 <li if.bind="(
@@ -594,10 +594,10 @@
                                                 <li if.bind="(
                                                     (booking.requestStatusBrand == 'Not Submitted')
                                                 )"
-                                                class="look-menu-item"><a click.delegate="submit(booking.id)" href="#" class="look-menu-link">Submit Request</a></li>
+                                                class="look-menu-item"><a click.delegate="submit(booking.id)" href="#" class="look-menu-link">Submit Booking</a></li>
                                                 
                                                 <!-- Delete -->
-                                                <li class="look-menu-item"><a click.delegate="deleteSampleRequest(booking.id)" href="#" class="look-menu-link">Delete Request</a></li>
+                                                <li class="look-menu-item"><a click.delegate="deleteSampleRequest(booking.id)" href="#" class="look-menu-link">Delete Booking</a></li>
                                             </ul>
                                         </div>
                                     </div>    
@@ -625,7 +625,7 @@
                     </div>
                     <!-- Empty notice -->
                     <div if.bind="(numberOfRequests == 0)">
-                        <span style="margin-top: 2rem; display:block; text-align:center;"> - No Requests Match Your Search - </span>
+                        <span style="margin-top: 2rem; display:block; text-align:center;"> - No Bookings Match Your Search - </span>
                     </div>
                      
                 </div>
@@ -684,7 +684,7 @@
                                         <span class="edit-box" ><a href="#" class="expandoHover"  click.delegate="sampleRequestMenu(booking.id)">...</a></span>
                                         <!-- edit request modal PRESS popup -->
                                          <div class="look-menu-absolute" id="requestTest${booking.id}">
-                                            <span class="look-menu-heading">REQUEST ${booking.id}</span>
+                                            <span class="look-menu-heading">BOOKING ${booking.id}</span>
                                             <ul class="look-menu-list">
                                                 <!-- Edit -->
                                                 <li if.bind="(
@@ -716,7 +716,7 @@
                                                     (booking.requestStatusPress == 'Pending') ||                                                   
                                                     (booking.requestStatusPress == 'Approved')
                                                 )"
-                                                class="look-menu-item"><a href="#" click.delegate="pressDeleteSampleRequest(booking.id)"  class="look-menu-link">Withdraw Request</a></li>
+                                                class="look-menu-item"><a href="#" click.delegate="pressDeleteSampleRequest(booking.id)"  class="look-menu-link">Withdraw Booking</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -726,7 +726,7 @@
 
                         <!-- expanding data -->
                         <div id="panel${booking.id}" class="panel requestPanel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
-                            <span class="accordion expanded" style="background-color: #fafafa; width:100%; padding-top:7px; padding-left:10px; padding-bottom:7px;">Request: ${booking.id}</span>
+                            <span class="accordion expanded" style="background-color: #fafafa; width:100%; padding-top:7px; padding-left:10px; padding-bottom:7px;">Booking: ${booking.id}</span>
                             <span if.bind="booking.brand.name" class="accordion expanded" style="background-color: #fafafa;width:100%; padding-left:10px; padding-bottom:7px;">Brand: ${booking.brand.name}</span>
                             <table class="accordion expanded" style="table-layout:fixed;">
                                 <tr style="padding-bottom:7px;" repeat.for="sample of booking.searchableItems">
