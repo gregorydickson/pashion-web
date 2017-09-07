@@ -582,7 +582,7 @@
 
                                                 <!-- Finalize -->
                                                 <li if.bind="(
-                                                    (booking.requestStatusBrand == 'Finalize')
+                                                    (booking.requestStatusBrand == 'Finalizing')
                                                 )"
                                                 class="look-menu-item"><a click.delegate="trolley(booking.id)" href="#" class="look-menu-link">Finalize</a></li>
 
@@ -594,7 +594,7 @@
                                                 <li if.bind="(
                                                     (booking.requestStatusBrand == 'Not Submitted')
                                                 )"
-                                                class="look-menu-item"><a click.delegate="submit(booking.id)" href="#" class="look-menu-link">Submit Booking</a></li>
+                                                class="look-menu-item"><a click.delegate="submit(booking.id)" href="#" class="look-menu-link">Finish Picking</a></li>
                                                 
                                                 <!-- Delete -->
                                                 <li class="look-menu-item"><a click.delegate="deleteSampleRequest(booking.id)" href="#" class="look-menu-link">Delete Booking</a></li>

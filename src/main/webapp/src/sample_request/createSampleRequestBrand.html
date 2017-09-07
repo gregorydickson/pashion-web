@@ -6,7 +6,7 @@
     <require from="../common/formSelectObject"></require>
     <require from="../common/select-control"></require>
     <require from="../address/selectAddress"></require>
-    <require from="../common/seasonAbbreviationFormatterId"></require>
+    <require from="../common/seasonAbbreviationIdFormatter"></require>
 
     <ai-dialog>
         <ai-dialog-header>
@@ -383,8 +383,8 @@
         <ai-dialog-footer show.bind="!isLoading">
             <button class="hollow button" click.delegate="cancel()">Cancel</button>
             <button if.bind="(!sampleRequest.datesSaved)" id="saveDates" class="button" click.delegate="dates()">Save Dates</button>
-            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="continue" class="button" click.delegate="continue()">Pick and Continue</button>
-            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="submit()">Submit Booking</button>
+            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="continue" class="button" click.delegate="continue()">Add to Booking</button>
+            <!--<button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="submit()">Pick and Finish</button> -->
             <button if.bind="(sampleRequest.datesSaved && startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="update()">Submit</button>
         </ai-dialog-footer>
     </ai-dialog>

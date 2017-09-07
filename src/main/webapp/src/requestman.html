@@ -4,6 +4,7 @@
 
     <require from="./common/viewDateFormatter"></require>
     <require from="./common/seasonAbbreviationFormatter"></require>
+    <require from="./common/seasonAbbreviationIdFormatter"></require>
     <require from="./calendars/datepicker"></require>
     <require from="./contacts/sort"></require>
     <require from="./common/filter"></require>
@@ -47,7 +48,7 @@
                     <div style="margin-left:34px;" class="grid-block tool-header tool-header-spacer"> 
                     </div>
                     <div class="grid-block align-left tool-header-spacer">
-                        <span class="ui-text-label-m-broad ">REQUEST MANAGER (${numberOfRequests})</span>
+                        <span class="ui-text-label-m-broad ">BOOKING MANAGER (${numberOfRequests})</span>
                        <!-- <span class="alert-box">3</span> -->
                     </div>
                     <div class="grid-block align-right tool-header-spacer shrink" style="padding-right:7px;">
@@ -134,7 +135,7 @@
                                     </tr>
                                 </table>
                             </div>
-                            <div if.bind="(user.type === 'press') || (user.type === 'prAgency')"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
+                            <div if.bind="(user.type === 'press')"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
                                 <table class="big-accordion"  cellspacing="2"  style="table-layout: fixed;">
                                     <tr>
                                         <td class="accordion-underline w3"></td>
@@ -149,7 +150,21 @@
                                         <td class="accordion-underline w5"></td>
                                     </tr>
                                 </table>
-                            </div>                            
+                            </div> 
+                            <div if.bind="(user.type === 'prAgency')"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
+                                <table class="big-accordion"  cellspacing="2"  style="table-layout: fixed;">
+                                    <tr>
+                                        <td class="accordion-underline w3"></td>
+                                        <td class="accordion-underline w6">ID</td>
+                                        <td class="accordion-underline w15">START DATE</td>
+                                        <td class="accordion-underline w34">REQUESTOR</td>
+                                        <td class="accordion-underline w15">END DATE</td>
+                                        <td class="accordion-underline w7"><img style="width:25px;" src="/assets/shoppingcart60x47.png" height=47 width=60></img></td>
+                                        <td class="accordion-underline w15" style="padding-left:10px;">STATUS</td>
+                                        <td class="accordion-underline w5"></td>
+                                    </tr>
+                                </table>
+                            </div>                           
                             <!-- Content Container-->
                             <!-- Rows of content View-->
                             <div  class="grid-content" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left: 1rem; margin-right: 1rem;">
@@ -166,39 +181,51 @@
                                             <td class="col1 accordion-grey w6">${booking.id}</td>
 
                                             <!-- Look -->
-                                            <td if.bind="user.type === 'brand'" class="col2 accordion-grey w8">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td>
-                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="col2 accordion-grey w8">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td>
+                                            <td if.bind="(user.type === 'brand')" class="col2 accordion-grey w8">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td>
+                                            <td if.bind="(user.type === 'press')" class="col2 accordion-grey w8">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td>
+                                            <!-- <td if.bind="(user.type === 'prAgency')" class="col2 accordion-grey w8">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td> -->
 
                                             <!-- Start Date -->
-                                            <td if.bind="user.type === 'brand'" class="col3 accordion-grey w10 ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''} ">${booking.bookingStartDate | viewDateFormat}</td>
-                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="col3 accordion-grey w10 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''} ">${booking.bookingStartDate | viewDateFormat}</td>
+                                            <td if.bind="(user.type === 'brand')" class="col3 accordion-grey w10 ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''} ">${booking.bookingStartDate | viewDateFormat}</td>
+                                            <td if.bind="(user.type === 'press')" class="col3 accordion-grey w10 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''} ">${booking.bookingStartDate | viewDateFormat}</td>
+                                            <td if.bind="(user.type === 'prAgency')" class="col2 accordion-grey w15 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''} ">${booking.bookingStartDate | viewDateFormat}</td>
 
                                             <!-- BRAND / Company -->
-                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="col4 accordion-grey w12 variable-padding">${booking.brand.name}</td>
-                                            <td if.bind="user.type === 'brand'" class="col4 accordion-grey w12 variable-padding" ref="company">${booking.requestingUserCompany}</td> <!-- TBD -->
+                                            <td if.bind="(user.type === 'brand')" class="col4 accordion-grey w12 variable-padding" ref="company">${booking.requestingUserCompany}</td>
+                                            <td if.bind="(user.type === 'press')" class="col4 accordion-grey w12 variable-padding">${booking.brand.name}</td>
+                                            <!-- <td if.bind="(user.type === 'prAgency')" class="col4 accordion-grey w12 variable-padding">${booking.brand.name}</td> -->
 
                                             <!-- Requestor -->
-                                            <td if.bind="((user.type === 'press') || (user.type === 'brand'))" class="col5 accordion-grey w30 variable-padding">${booking.requestingUser.name} ${booking.requestingUser.surname} / ${booking.deliverTo.name} ${booking.deliverTo.surname} ${booking.addressDestination.name}</td>
-
-                                            <td if.bind="(booking.requestingUser.name) && (user.type === 'prAgency')" class="col5 accordion-grey w30 variable-padding">${booking.requestingUser.name} ${booking.requestingUser.surname} ${booking.requestingUserCompany ? '(' + booking.requestingUserCompany + ')' : ''}</td>
+                                            <td if.bind="(user.type === 'brand')" class="col5 accordion-grey w30 variable-padding">${booking.requestingUser.name} ${booking.requestingUser.surname} / ${booking.deliverTo.name} ${booking.deliverTo.surname} ${booking.addressDestination.name}</td>
+                                            <td if.bind="(user.type === 'press')" class="col5 accordion-grey w30 variable-padding">${booking.requestingUser.name} ${booking.requestingUser.surname} / ${booking.deliverTo.name} ${booking.deliverTo.surname} ${booking.addressDestination.name}</td>
+                                            <td if.bind="(booking.requestingUser.name) && (user.type === 'prAgency')" class="col3 accordion-grey w34 variable-padding">${booking.requestingUser.name} ${booking.requestingUser.surname} ${booking.requestingUserCompany ? '(' + booking.requestingUserCompany + ')' : ''}</td>
+                                            <td if.bind="!(booking.requestingUser.name) && (user.type === 'prAgency')" class="col3 accordion-grey w34 variable-padding">-</td>
 
                                             <!-- END DATE -->
-                                            <td class="col6 accordion-grey w10 variable-padding ${computedOverdue(booking.bookingEndDate, booking.requestStatusBrand) ? 'red-deco' : ''}">${booking.bookingEndDate | viewDateFormat}</td>
+                                            <td if.bind="(user.type === 'brand')" class="col6 accordion-grey w10 variable-padding ${computedOverdue(booking.bookingEndDate, booking.requestStatusBrand) ? 'red-deco' : ''}">${booking.bookingEndDate | viewDateFormat}</td>
+                                            <td if.bind="(user.type === 'press')" class="col6 accordion-grey w10 variable-padding ${computedOverdue(booking.bookingEndDate, booking.requestStatusBrand) ? 'red-deco' : ''}">${booking.bookingEndDate | viewDateFormat}</td>
+                                            <td if.bind="(user.type === 'prAgency')" class="col4 accordion-grey w15 variable-padding ${computedOverdue(booking.bookingEndDate, booking.requestStatusBrand) ? 'red-deco' : ''}">${booking.bookingEndDate | viewDateFormat}</td>
 
                                             <!-- Items -->
-                                            <td class="col7 accordion-grey w5" style="padding-left:11px;">${booking.searchableItems.length}</td>
+                                            <td if.bind="(user.type === 'brand')" class="col7 accordion-grey w5" style="padding-left:11px;">${booking.searchableItems.length}</td>
+                                            <td if.bind="(user.type === 'press')" class="col7 accordion-grey w5" style="padding-left:11px;">${booking.searchableItems.length}</td>
+                                            <td if.bind="(user.type === 'prAgency')"  class="col5 accordion-grey w7" style="padding-left:11px;">${booking.searchableItems.length}</td>
 
                                             <!-- Status -->
-                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" 
-                                                class="col8 accordion-grey w11  
-                                                    ${(booking.requestStatusPress=='Pending') ? 'ui-text-label-m-blue' : ''}" style="padding-left:11px;">
-                                                    ${booking.requestStatusPress}</td>
-
                                             <td if.bind="user.type === 'brand'" 
                                                 class="col8 accordion-grey w11  
                                                      ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" style="padding-left:11px;">
                                                      ${booking.requestStatusBrand}</td>
+                                            <td if.bind="(user.type === 'press')" 
+                                                class="col8 accordion-grey w11  
+                                                    ${(booking.requestStatusPress=='Pending') ? 'ui-text-label-m-blue' : ''}" style="padding-left:11px;">
+                                                    ${booking.requestStatusPress}</td>                                                 
+                                            <td if.bind="(user.type === 'prAgency')" 
+                                                class="col6 accordion-grey w15  
+                                                    ${(booking.requestStatusPress=='Pending') ? 'ui-text-label-m-blue' : ''}" style="padding-left:11px;">
+                                                    ${booking.requestStatusPress}</td>
 
+                                            <!--  Menu ... section -->
                                             <td class="accordion-grey w5" style="overflow:visible;"> 
                                                 <div class="look-menu-absolute-wrap">
                                                     <!-- ... -->
@@ -223,9 +250,10 @@
                                                             (booking.requestStatusPress != 'Picked Up') &&
                                                             (booking.requestStatusPress != 'Withdrawn') 
                                                             ))" class="edit-box" ><a href="#" class="expandoHover" click.delegate="lookEditMenu(booking.id)">...</a></span>
+
                                                     <!-- edit request modal popup -->
                                                      <div class="look-menu-absolute" id="requestManTest${booking.id}">
-                                                        <span class="look-menu-heading">REQUEST ${booking.id}</span>
+                                                        <span class="look-menu-heading">BOOKING ${booking.id}</span>
                                                         <ul if.bind="(user.type === 'brand') || (user.type === 'prAgency')"  class="look-menu-list">
 
                                                             <!-- Edit -->
@@ -316,7 +344,7 @@
                                                                 (booking.requestStatusPress == 'Pending') ||                                                   
                                                                 (booking.requestStatusPress == 'Approved')
                                                             )"
-                                                            class="look-menu-item"><a href="#" click.delegate="pressDeleteSampleRequest(booking.id)"  class="look-menu-link">Withdraw Request</a></li>
+                                                            class="look-menu-item"><a href="#" click.delegate="pressDeleteSampleRequest(booking.id)"  class="look-menu-link">Withdraw Booking</a></li>
                                                         </ul>
                                                     </div>
                                                 </div>

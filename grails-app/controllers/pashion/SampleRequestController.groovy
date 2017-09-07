@@ -258,8 +258,8 @@ class SampleRequestController {
             sr = SampleRequest.get(params.id.toInteger())
             sr.finalize = true
 
-            sr.requestStatusBrand = "Finalize"
-            sr.requestStatusPress = "Finalize"
+            sr.requestStatusBrand = "Finalizing"
+            sr.requestStatusPress = "Finalizing"
         
             sr.save(failOnError:true, flush:true)
             log.info "sample request trolly submitted:"+sr
