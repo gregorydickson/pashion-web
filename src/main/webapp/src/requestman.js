@@ -1,4 +1,4 @@
-import { inject, bindable, bindingMode } from 'aurelia-framework';
+import { inject, bindable, bindingMode, observable, BindingEngine } from 'aurelia-framework';
 import { SampleRequestService } from './services/sampleRequestService';
 import { PubNubService } from './services/pubNubService';
 import { DialogService } from 'aurelia-dialog';
@@ -15,10 +15,12 @@ import { BrandService } from './services/brandService';
 import { UserService } from './services/userService';
 import moment from 'moment'
 
-@inject(HttpClient, DialogService, PDFService, SampleRequestService, busy, EventAggregator, PubNubService, BrandService, PRAgencyService, UserService)
+@inject(BindingEngine, HttpClient, DialogService, PDFService, SampleRequestService, busy, EventAggregator, PubNubService, BrandService, PRAgencyService, UserService)
 export class Requestman {
 
   @bindable({ defaultBindingMode: bindingMode.twoWay }) bookings = [];
+  // @observable bookingsImages = [];
+  @observable bookingsImagesView = [];
   searchTest = "";
   status = [];
   selectedStatus = "";
@@ -40,7 +42,7 @@ export class Requestman {
 
 
 
-  constructor(http, dialogService, pDFService, sampleRequestService, busy, eventAggregator, pubNubService, brandService, PRAgencyService, userService) {
+  constructor(bindingEngine, http, dialogService, pDFService, sampleRequestService, busy, eventAggregator, pubNubService, brandService, PRAgencyService, userService) {
     http.configure(config => {
       config
         .useStandardConfiguration();
@@ -56,14 +58,45 @@ export class Requestman {
     this.brandService = brandService;
     this.userService = userService;
     this.prAgencyService = PRAgencyService;
+    this.bindingEngine = bindingEngine;
+
+    //this.bookingsImages = [];
 
   }
 
+ /*
+  listChanged(splices){
+    console.log("bookingsImages changed");
+  }
+  */
+
   activate() {
     this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
+
+    //this.bookingsImages[6319] = '//dvch4zq3tq7l4.cloudfront.net/eudon-choi/2017/fall/ready-to-wear/0004.jpg';
+    //this.bookingsImages = [];
+    //this.bookingsImagesView[50000] = '';
     this.sampleRequestService.getSampleRequests()
       .then(bookings => {
         this.bookings = bookings;
+        let i = 0;
+        for (i;i < bookings.length ;i++) {
+          let y = 0;
+          for (y;y<bookings[i].searchableItems.length ;y++) {
+            //this.bookingsImages[bookings[i].searchableItems[y].look.id] = 
+            //this.computedImage (bookings[i].searchableItems[y].look);
+            let lookId = bookings[i].searchableItems[y].look.id;
+            this.http.fetch('/searchableItem/fetchSI/'+lookId+'.json')
+              .then(response => response.json())
+              .then(item => { 
+                console.log ("image to show: " + item.image);
+                //this.bookingsImagesView = [];
+                //this.bookingsImages[lookId] = item.image;
+                //this.bookingsImagesView = this.bookingsImages;
+                this.bookingsImagesView[lookId] = item.image;
+              })
+            }
+          }
       });
 
     this.userService.getUser().then(user=>{
@@ -84,17 +117,19 @@ export class Requestman {
               this.onlyShowMineCompany = this.user.prAgency.name;
           }
       });
-
-
     });
-    
-
-    // filtering
-     
-
   }
 
+  /*
+  computedImage(sampleLook) {
+ 
+  }
+  */
+
   attached() {
+    // array observer
+
+    // this.subscription = this.bindingEngine.collectionObserver(this.bookingsImages).subscribe(splices => { this.listChanged(splices);});
     // Three dots Menu dropdown close when click outside
     $('body').click(function () {
       $(".look-menu-absolute").each(function () {
@@ -158,6 +193,10 @@ export class Requestman {
       ga('send', 'pageview');
   }
 
+  detached () {
+    //this.subscription.dispose();
+  }
+
   get numberOfRequests() {
     return document.getElementsByClassName("indexReqRow").length;
   }
@@ -183,6 +222,7 @@ export class Requestman {
     //console.log("computedOverdue function, booking: " + booking + " today: " + this.today + " computed: " +  computedDate + " overdue: " + (this.today > computedDate));
     return overdue;
   }
+
 
 /*
 // VERY SLOW and clunky and kludge ? side effects on currentContact ??

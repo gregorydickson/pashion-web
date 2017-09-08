@@ -413,7 +413,7 @@
                                         </div>
                                         <!-- SAMPLES PR Agency -->
                                         <div if.bind="(user.type === 'prAgency')" class="grid-content" style="margin-bottom: 1rem;">
-                                        <!-- with sample images 
+                                        <!-- with OLD sample images 
                                             <table class="" style="table-layout:fixed;">
                                                 <tr  style="height:1rem;">
                                                     <td repeat.for="item of booking.searchableItems" class="accordion"><img if.bind="item.image !== undefined"  src="${item.image}" width="60px;" /></td> 
@@ -425,14 +425,15 @@
                                                     <td repeat.for="status of booking.searchableItemsStatus" class="accordion sample-padding">${status.brandStatus}</td>
                                                 </tr> 
                                             </table> -->
-                                            <!-- no images -->
+                                            <!-- inline images new -->
                                             <table class="" style="table-layout:fixed;">
                                                 <tr style="height:1rem;" repeat.for="sample of booking.searchableItems" >
-                                                    <td class="accordion sample-padding"> ${sample.brand.name}</td>
+                                                    <td class="accordion sample-padding">  <img if.bind="bookingsImagesView[sample.look.id]" src="${bookingsImagesView[sample.look.id]}" width="60px;" /></td>
+                                                    <td class="accordion sample-padding">${sample.brand.name}</td>
                                                     <td if.bind="(sample.clientID)" class="accordion sample-padding"> ${sample.season.id | seasonAbbreviationId:seasons}.${sample.lookNameNumber}${sample.lookNameVariant}.${sample.clientID}</td>
                                                     <td if.bind="!(sample.clientID)" class="accordion sample-padding"> ${sample.season.id | seasonAbbreviationId:seasons}.${sample.lookNameNumber}${sample.lookNameVariant}.P${sample.id}</td>
-                                                    <td class="accordion sample-padding">${sample.sampleType} ${sample.color} ${sample.material}
-                                                    <td class="accordion sample-padding">${sample.status.status}</td>
+                                                    <td class="accordion sample-padding">${sample.sampleType} ${sample.color} ${sample.material}</td>
+                                                    <!-- <td class="accordion sample-padding">Status: ${sample.status.status}</td> -->
                                                 </tr>
                                             </table>
                                         </div>

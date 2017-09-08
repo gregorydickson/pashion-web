@@ -562,6 +562,11 @@ class SearchableItemController {
         respond item
     }
 
+    def fetchSI(){
+        def item = SearchableItem.findById(params.id.toInteger())
+        respond item
+    }
+
     @Transactional
     def upload(){
         log.info "upload params:"+params
