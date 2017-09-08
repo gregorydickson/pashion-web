@@ -197,6 +197,10 @@ export class Requestman {
     //this.subscription.dispose();
   }
 
+  get imagesFetched () {
+    return this.bookingsImagesView.length > 0;
+  }
+
   get numberOfRequests() {
     return document.getElementsByClassName("indexReqRow").length;
   }

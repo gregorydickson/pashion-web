@@ -412,7 +412,7 @@
                                             </table>
                                         </div>
                                         <!-- SAMPLES PR Agency -->
-                                        <div if.bind="(user.type === 'prAgency')" class="grid-content" style="margin-bottom: 1rem;">
+                                        <div if.bind="(user.type === 'prAgency') && imagesFetched"  class="grid-content" style="margin-bottom: 1rem;">
                                         <!-- with OLD sample images 
                                             <table class="" style="table-layout:fixed;">
                                                 <tr  style="height:1rem;">
@@ -428,7 +428,7 @@
                                             <!-- inline images new -->
                                             <table class="" style="table-layout:fixed;">
                                                 <tr style="height:1rem;" repeat.for="sample of booking.searchableItems" >
-                                                    <td class="accordion sample-padding">  <img if.bind="bookingsImagesView[sample.look.id]" src="${bookingsImagesView[sample.look.id]}" width="60px;" /></td>
+                                                    <td if.bind="bookingsImagesView[sample.look.id]!=null" class="accordion sample-padding">  <img  src="${bookingsImagesView[sample.look.id]}" width="60px;" /></td>
                                                     <td class="accordion sample-padding">${sample.brand.name}</td>
                                                     <td if.bind="(sample.clientID)" class="accordion sample-padding"> ${sample.season.id | seasonAbbreviationId:seasons}.${sample.lookNameNumber}${sample.lookNameVariant}.${sample.clientID}</td>
                                                     <td if.bind="!(sample.clientID)" class="accordion sample-padding"> ${sample.season.id | seasonAbbreviationId:seasons}.${sample.lookNameNumber}${sample.lookNameVariant}.P${sample.id}</td>
