@@ -385,7 +385,7 @@
         <ai-dialog-footer show.bind="!isLoading">
             <button class="hollow button" click.delegate="cancel()">Cancel</button>
             <button if.bind="(!sampleRequest.datesSaved)" id="saveDates" class="button" click.delegate="dates()">Set Dates</button>
-            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="continue" class="button" click.delegate="continue()">Add to Booking</button>
+            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" disabled.bind="sampleRequest.searchableItemsProposed.length == 0" id="continue" class="button" click.delegate="continue()">Add to Booking</button>
             <!--<button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="submit()">Pick and Finish</button> -->
             <button if.bind="(sampleRequest.datesSaved && startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="update()">Submit</button>
         </ai-dialog-footer>
