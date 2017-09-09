@@ -6,6 +6,7 @@
     <!-- <require from="common/dateTimeFormatter"></require> -->
     <require from="calendars/datepicker"></require>
     <require from="common/seasonAbbreviationFormatter"></require>
+    <require from="common/seasonAbbreviationIdFormatter"></require>
     <require from="calendars/datetimepicker"></require>
     <require from="common/formSelectSampleRequest"></require>
     <require from="common/select2-custom-attribute"></require>
@@ -29,8 +30,14 @@
         <!-- header -->
         <ai-dialog-header>
             <div class="grid-block align-center tool-header shrink ">
-                <div id="" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad">EDIT REQUEST ${sampleRequest.id} FOR LOOK ${sampleRequest.season | seasonAbbreviation:seasons}.${sampleRequest.look}</span>
+                <div id="" if.bind="user.type === 'brand'" class="grid-block tool-header shrink">
+                    <span class="ui-text-label-m-broad">EDIT REQUEST ${sampleRequest.id} FOR LOOK ${sampleRequest.season | seasonAbbreviation:seasons}.${sampleRequest.lookNameNumber}.${sampleRequest.lookNameVariant}</span>
+                </div>
+                <div id="" if.bind="user.type === 'press'" class="grid-block tool-header shrink">
+                    <span class="ui-text-label-m-broad">EDIT REQUEST ${sampleRequest.id} FOR LOOK ${sampleRequest.season | seasonAbbreviation:seasons}.${sampleRequest.lookNameNumber}.${sampleRequest.lookNameVariant}</span>
+                </div>
+                <div id="" if.bind="user.type === 'prAgency'" class="grid-block tool-header shrink">
+                    <span class="ui-text-label-m-broad">EDIT REQUEST ${sampleRequest.id}</span>
                 </div>
             </div>
         </ai-dialog-header>
@@ -323,16 +330,16 @@
 
                 </div>
             </div>
-            <!-- Bottom Row -->
+            <!-- Bottom Row SAMPLES  -->
             <div class="grid-block slim-form-wrap" style="margin-bottom: 0px;">
-                <span class="title-form">SAMPLES</span>
+                <span class="title-form">SAMPLES (${sampleRequest.searchableItems.length})</span>
             </div>
 
             <!-- brand -->
-            <div if.bind="(user.type === 'brand') || (user.type === 'prAgency')" class="vertical grid-content accordion modal-table-wrap" style="margin-top: 0px;">
+            <div if.bind="(user.type === 'brand')" class="vertical grid-content accordion modal-table-wrap" style="margin-top: 0px;">
                 <!-- scroll after n items -->
                 <!-- row -->
-                <table repeat.for="sample of sampleRequest.searchableItemsProposed | sort: 'id': 'ascending'" class="" style="table-layout:fixed">
+                <table repeat.for="sample of sampleRequest.searchableItems | sort: 'id': 'ascending'" class="" style="table-layout:fixed">
                     <tr>
                         <!-- <td class="accordion w3">${$index+1}</td> -->
                         <td class="accordion" style="width:65px; max-width:65px;">${sampleRequest.season | seasonAbbreviation:seasons}.${sampleRequest.look}.${$index+1}</td>
@@ -362,7 +369,7 @@
             <div if.bind="(user.type === 'press')" class="vertical grid-content accordion" style="overflow-x:hidden; max-height:10rem;">
                 <!-- scroll after n items -->
                 <!-- row -->
-                <table repeat.for="sample of sampleRequest.searchableItemsProposed" class="" style="margin-bottom:7px; table-layout:fixed">
+                <table repeat.for="sample of sampleRequest.searchableItems" class="" style="margin-bottom:7px; table-layout:fixed">
                     <tr>
                         <!--  <td class="accordion w3">${$index+1}</td> -->
                         <td class="accordion" style="width:65px; max-width:65px;">${sampleRequest.season | seasonAbbreviation:seasons}.${sampleRequest.look}.${$index+1} </td>
@@ -373,6 +380,30 @@
                         </td>
                         <td if.bind="sampleRequest.requestStatusBrand === 'Pending'" class="accordion" style="text-align:right; width:70px; max-width:70px;">
                             <a click.delegate="removeSample(sample.id,$index)" style="padding:7px 6px 5px 6px; margin-right:0; margin-bottom:0px; font-size: 1rem;" class="hollow button" href="#">Remove</a>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- pr Agency -->
+            <div if.bind="(user.type === 'prAgency')" class="vertical grid-content accordion modal-table-wrap" style="margin-top: 0px;">
+                <!-- scroll after n items -->
+                <!-- row -->
+                <table  class="" style="table-layout:fixed">
+                    <tr repeat.for="sample of sampleRequest.searchableItems | sort: 'id': 'ascending'">
+                        <td class="accordion sample-padding">${sample.brand.name}</td>
+                        <td if.bind="(sample.clientID)" class="accordion sample-padding"> ${sample.season.id | seasonAbbreviationId:seasons}.${sample.lookNameNumber}${sample.lookNameVariant}.${sample.clientID}</td>
+                        <td if.bind="!(sample.clientID)" class="accordion sample-padding"> ${sample.season.id | seasonAbbreviationId:seasons}.${sample.lookNameNumber}${sample.lookNameVariant}.P${sample.id}</td>
+                        <td class="accordion sample-padding">${sample.sampleType} ${sample.color} ${sample.material}</td>
+
+                        <td if.bind="sampleRequest.requestStatusBrand == 'Pending'" class="accordion" style="text-align:right;width:70px; max-width:70px; padding-bottom:4px;">
+
+                            <select select2.bind='{ "placeholder": "Action",  "minimumResultsForSearch": -1}' value.bind="sample.status.status" style="margin:0;">
+                                <option></option>
+                                <option value="Pending">Pending</option>
+                                <option value="Approved">Approve</option>
+                                <option value="Denied">Deny</option>
+                            </select>
                         </td>
                     </tr>
                 </table>
