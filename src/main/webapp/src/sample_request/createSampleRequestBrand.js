@@ -568,7 +568,7 @@ export class CreateSampleRequestBrand {
         this.sampleRequest.id = sr.id;
         console.log("samplerequest id:"+this.sampleRequest.id);
         this.checkAvailabilty(this.currentItem);
-        this.alertP("Available Sample(s) added to Request").then(result => {
+        this.alertP("Dates Set").then(result => {
           $("#saveDates").toggle();
         });
 
