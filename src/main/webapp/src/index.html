@@ -593,7 +593,7 @@
                                                 )"
                                                 class="look-menu-item"><a click.delegate="picking(booking.id)" href="#" class="look-menu-link">Continue Picking</a></li>
                                                 <li if.bind="(
-                                                    (booking.requestStatusBrand == 'Not Submitted')
+                                                    (booking.requestStatusBrand == 'Not Submitted' && booking.searchableItemsProposed.length != 0)
                                                 )"
                                                 class="look-menu-item"><a click.delegate="submit(booking.id)" href="#" class="look-menu-link">Finish Picking</a></li>
                                                 
