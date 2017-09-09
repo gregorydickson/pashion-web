@@ -511,7 +511,8 @@
                                            ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
                                 <td class="accordion w34
                                            ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" >
-                                           ${(sampleRequestService.sampleRequest.id === booking.id)  ? 'Picking' : booking.requestStatusBrand}
+                                           ${(sampleRequestService.sampleRequest.id === booking.id && booking.requestStatusBrand != 'Finalizing') 
+                                                ? 'Picking' : booking.requestStatusBrand}
                                            </td>
                                 <!-- ... disabled  -->
                                 <td if.bind="(booking.requestStatusBrand == 'Deleted')" class="accordion w10" style="overflow:visible;">
