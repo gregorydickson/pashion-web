@@ -165,6 +165,9 @@ class SampleRequestService {
         
         if(jsonObject.requestStatusBrand){
             sr.requestStatusBrand = jsonObject.requestStatusBrand
+        } else{
+            sr.requestStatusBrand = "Approved"
+            sr.requestStatusPress = "Approved"
         }
 
         jsonObject.samples.each{

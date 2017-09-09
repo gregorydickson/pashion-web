@@ -502,7 +502,7 @@
                     <!-- row with button -->
                     <div style="width:250px;" repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user:seasons:cityFiltering:onlyShowMine:onlyShowMineCompany">
                         <table class="accordion" style="table-layout:fixed;">
-                            <tr class="indexReqRow  ${(sampleRequestService.sampleRequest.id === booking.id)  ? 'ui-text-label-m' : ''}">
+                            <tr class="indexReqRow  ${(sampleRequestService.sampleRequest.id === booking.id && booking.requestStatusBrand != 'Finalizing' && booking.requestStatusBrand != 'Approved')  ? 'ui-text-label-m' : ''}">
                                 <td class="accordion w7">
                                     <button id="button${booking.id}" class="accordion requestButton expandoHover" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
@@ -511,7 +511,7 @@
                                            ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
                                 <td class="accordion w34
                                            ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" >
-                                           ${(sampleRequestService.sampleRequest.id === booking.id && booking.requestStatusBrand != 'Finalizing') 
+                                           ${(sampleRequestService.sampleRequest.id === booking.id && booking.requestStatusBrand != 'Finalizing' && booking.requestStatusBrand != 'Approved') 
                                                 ? 'Picking' : booking.requestStatusBrand}
                                            </td>
                                 <!-- ... disabled  -->
