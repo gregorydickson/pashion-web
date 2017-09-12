@@ -223,7 +223,7 @@
                                             <td if.bind="(user.type === 'prAgency')" 
                                                 class="col8 accordion-grey w15  
                                                     ${(booking.requestStatusPress=='Pending') ? 'ui-text-label-m-blue' : ''}" style="padding-left:11px;">
-                                                    ${booking.requestStatusPress}</td>
+                                                    ${booking.requestStatusBrand}</td>
 
                                             <!--  Menu ... section -->
                                             <td class="accordion-grey w5" style="overflow:visible;"> 
@@ -252,6 +252,8 @@
                                                             ))" class="edit-box" ><a href="#" class="expandoHover" click.delegate="lookEditMenu(booking.id)">...</a></span>
 
                                                     <!-- edit request modal popup -->
+
+                                                    <!-- brand and PR -->
                                                      <div class="look-menu-absolute" id="requestManTest${booking.id}">
                                                         <span class="look-menu-heading">BOOKING ${booking.id}</span>
                                                         <ul if.bind="(user.type === 'brand') || (user.type === 'prAgency')"  class="look-menu-list">
@@ -309,10 +311,23 @@
                                                             )"
                                                             class="look-menu-item"><a click.delegate="restockedSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Restocked</a></li>
 
+                                                            <!-- Finalize -->
+                                                            <li if.bind="(
+                                                                (booking.requestStatusBrand == 'Finalizing')
+                                                            )"
+                                                            class="look-menu-item"><a click.delegate="trolley(booking.id)" href="#" class="look-menu-link">Finalize</a></li>
+
+                                                            <!-- Not Submitted -->
+                                                            <li if.bind="(
+                                                                (booking.requestStatusBrand == 'Not Submitted' && booking.searchableItemsProposed.length != 0)
+                                                            )"
+                                                            class="look-menu-item"><a click.delegate="submit(booking.id)" href="#" class="look-menu-link">Finish Picking</a></li>
+
                                                             <!-- Delete -->
                                                             <li class="look-menu-item"><a click.delegate="deleteSampleRequest($index,booking.id)" href="#" class="look-menu-link">Delete Request</a></li>
                                                         </ul>
 
+                                                        <!-- Press menu options -->
                                                         <ul if.bind="(user.type === 'press')" class="look-menu-list">
                                                             <!-- Edit -->
                                                             <li if.bind="(

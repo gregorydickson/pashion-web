@@ -5,6 +5,8 @@ import { DialogService } from 'aurelia-dialog';
 import { CreateDialogNewContact } from './contacts/dialogNewContact';
 import { CreateDialogImportContacts } from './contacts/dialogImportContacts';
 import { EditSampleRequest } from './sample_request/editSampleRequest';
+import { CreateSampleRequestPress } from './sample_request/createSampleRequestPress';
+import { CreateSampleRequestBrand } from './sample_request/createSampleRequestBrand';
 import { busy } from './services/busy';
 import { CreateDialogAlert } from './common/dialogAlert';
 import { HttpClient } from 'aurelia-fetch-client';
@@ -616,6 +618,25 @@ export class Requestman {
       this.alertP(message.message);
     });
   }
+
+  // Trolley Stuff
+  submit(id) {
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.submitRequest(id)
+        .then(result =>{
+            this.alertP("Submitted Request "+id)
+        });
+    }
+
+  trolley(id) {
+  this.closeSampleRequestMenu(id);
+  this.sampleRequestService.getSampleRequest(id)
+      .then(result =>{
+          this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: null, lock: true })
+              .then(response => {});
+      });
+    }
+
 
   delete(id) {
     console.log("delete hack");
