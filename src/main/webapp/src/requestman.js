@@ -622,6 +622,7 @@ export class Requestman {
   // Trolley Stuff
   submit(id) {
     this.closeSampleRequestMenu(id);
+    this.sampleRequestService.sampleRequestStatus = 'none';
     this.sampleRequestService.submitRequest(id)
         .then(result =>{
             this.alertP("Submitted Request "+id)
@@ -630,6 +631,7 @@ export class Requestman {
 
   trolley(id) {
   this.closeSampleRequestMenu(id);
+  this.sampleRequestService.sampleRequestStatus = 'none';
   this.sampleRequestService.getSampleRequest(id)
       .then(result =>{
           this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: null, lock: true })
