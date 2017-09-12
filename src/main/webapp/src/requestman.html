@@ -188,7 +188,7 @@
                                             <!-- Start Date -->
                                             <td if.bind="(user.type === 'brand')" class="col3 accordion-grey w10 ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''} ">${booking.bookingStartDate | viewDateFormat}</td>
                                             <td if.bind="(user.type === 'press')" class="col3 accordion-grey w10 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''} ">${booking.bookingStartDate | viewDateFormat}</td>
-                                            <td if.bind="(user.type === 'prAgency')" class="col2 accordion-grey w15 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''} ">${booking.bookingStartDate | viewDateFormat}</td>
+                                            <td if.bind="(user.type === 'prAgency')" class="col3 accordion-grey w15 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''} ">${booking.bookingStartDate | viewDateFormat}</td>
 
                                             <!-- BRAND / Company -->
                                             <td if.bind="(user.type === 'brand')" class="col4 accordion-grey w12 variable-padding" ref="company">${booking.requestingUserCompany}</td>
@@ -198,18 +198,18 @@
                                             <!-- Requestor -->
                                             <td if.bind="(user.type === 'brand')" class="col5 accordion-grey w30 variable-padding">${booking.requestingUser.name} ${booking.requestingUser.surname} / ${booking.deliverTo.name} ${booking.deliverTo.surname} ${booking.addressDestination.name}</td>
                                             <td if.bind="(user.type === 'press')" class="col5 accordion-grey w30 variable-padding">${booking.requestingUser.name} ${booking.requestingUser.surname} / ${booking.deliverTo.name} ${booking.deliverTo.surname} ${booking.addressDestination.name}</td>
-                                            <td if.bind="(booking.requestingUser.name) && (user.type === 'prAgency')" class="col3 accordion-grey w34 variable-padding">${booking.requestingUser.name} ${booking.requestingUser.surname} ${booking.requestingUserCompany ? '(' + booking.requestingUserCompany + ')' : ''}</td>
-                                            <td if.bind="!(booking.requestingUser.name) && (user.type === 'prAgency')" class="col3 accordion-grey w34 variable-padding">-</td>
+                                            <td if.bind="(booking.requestingUser.name) && (user.type === 'prAgency')" class="col5 accordion-grey w34 variable-padding">${booking.requestingUser.name} ${booking.requestingUser.surname} ${booking.requestingUserCompany ? '(' + booking.requestingUserCompany + ')' : ''}</td>
+                                            <td if.bind="!(booking.requestingUser.name) && (user.type === 'prAgency')" class="col5 accordion-grey w34 variable-padding">-</td>
 
                                             <!-- END DATE -->
                                             <td if.bind="(user.type === 'brand')" class="col6 accordion-grey w10 variable-padding ${computedOverdue(booking.bookingEndDate, booking.requestStatusBrand) ? 'red-deco' : ''}">${booking.bookingEndDate | viewDateFormat}</td>
                                             <td if.bind="(user.type === 'press')" class="col6 accordion-grey w10 variable-padding ${computedOverdue(booking.bookingEndDate, booking.requestStatusBrand) ? 'red-deco' : ''}">${booking.bookingEndDate | viewDateFormat}</td>
-                                            <td if.bind="(user.type === 'prAgency')" class="col4 accordion-grey w15 variable-padding ${computedOverdue(booking.bookingEndDate, booking.requestStatusBrand) ? 'red-deco' : ''}">${booking.bookingEndDate | viewDateFormat}</td>
+                                            <td if.bind="(user.type === 'prAgency')" class="col6 accordion-grey w15 variable-padding ${computedOverdue(booking.bookingEndDate, booking.requestStatusBrand) ? 'red-deco' : ''}">${booking.bookingEndDate | viewDateFormat}</td>
 
                                             <!-- Items -->
                                             <td if.bind="(user.type === 'brand')" class="col7 accordion-grey w5" style="padding-left:11px;">${booking.searchableItems.length}</td>
                                             <td if.bind="(user.type === 'press')" class="col7 accordion-grey w5" style="padding-left:11px;">${booking.searchableItems.length}</td>
-                                            <td if.bind="(user.type === 'prAgency')"  class="col5 accordion-grey w7" style="padding-left:11px;">${booking.searchableItems.length}</td>
+                                            <td if.bind="(user.type === 'prAgency')"  class="col7 accordion-grey w7" style="padding-left:11px;">${booking.searchableItems.length}</td>
 
                                             <!-- Status -->
                                             <td if.bind="user.type === 'brand'" 
@@ -221,7 +221,7 @@
                                                     ${(booking.requestStatusPress=='Pending') ? 'ui-text-label-m-blue' : ''}" style="padding-left:11px;">
                                                     ${booking.requestStatusPress}</td>                                                 
                                             <td if.bind="(user.type === 'prAgency')" 
-                                                class="col6 accordion-grey w15  
+                                                class="col8 accordion-grey w15  
                                                     ${(booking.requestStatusPress=='Pending') ? 'ui-text-label-m-blue' : ''}" style="padding-left:11px;">
                                                     ${booking.requestStatusPress}</td>
 

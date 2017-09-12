@@ -136,7 +136,7 @@ export class PDFService {
                 y = pageKeepOut; // (pageCount -1)  * pageHeight + pageKeepOut;
             }
           if (nodeList1[i]) cellText1 = nodeList1[i].outerText; else cellText1 = "-";
-          if (nodeList2[i]) cellText2 = nodeList2[i].outerText; else cellText2 = "-";
+          if (nodeList2[i]) cellText2 = nodeList2[i].outerText; else cellText2 = "...";
           if (nodeList3[i]) cellText3 = nodeList3[i].outerText; else cellText3 = "-";
           if (nodeList4[i]) cellText4 = nodeList4[i].outerText; else cellText4 = "-";
           if (nodeList5[i]) cellText5 = nodeList5[i].outerText; else cellText5 = "-";
