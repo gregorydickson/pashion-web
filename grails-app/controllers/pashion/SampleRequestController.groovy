@@ -108,8 +108,6 @@ class SampleRequestController {
         notify "sampleRequestCacheInvalidate",[brand:sr.brand.name,press: pressHouse, prAgency: prAgency, booking:sr.id, look:lookSeason] // add season abbrev to methods
     }
     
-
-    
     def brandMarkPickedUp(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
         sampleRequest.requestStatusBrand = "Picked Up"
@@ -154,14 +152,31 @@ class SampleRequestController {
         sampleRequest.requestStatusPress = "Deleted"
         sampleRequest.save(flush:true)
 
-        def lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
-        def sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Deleted']
-        render sent as JSON
+        def lookSeason = ''
+        def sent = ''
         def pressHouse = sampleRequest.pressHouse?.name ?: "" 
         def prAgency = sampleRequest.prAgency?.name ?: ""  
-        notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
+        if (sampleRequest.season) {
+            lookSeason = Season.findByName(sampleRequest.season.trim()).abbreviation + '.' + sampleRequest.look
+            sent = [message:'Sample Request ' + sampleRequest.id + ' (look ' + lookSeason + ') Deleted']
+            render sent as JSON
+            notify "sampleRequestCacheInvalidate",[brand:sampleRequest.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
+        }
+        else {
+            sampleRequest.searchableItems.each{ sample ->
+                log.info "sample: " + sample.id
+                lookSeason = Season.get(sample.seasonId).abbreviation + '.' + SearchableItem.get(sample.lookId).nameNumber  + SearchableItem.get(sample.lookId).nameVariant
+                log.info "lookSeason: " + lookSeason
+                notify "sampleRequestCacheInvalidate",[brand:sample.brand.name,press: pressHouse, prAgency: prAgency, booking:sampleRequest.id, look:lookSeason]
+            }
+            sent = [message:'Sample Request ' + sampleRequest.id +  ' Deleted']
+            log.info "sent: " + sent
+            render sent as JSON
+        }
     }
+    
     //Press only methods
+    // assume no trolley for now RM
 
     def pressMarkReceived(){
         def sampleRequest = SampleRequest.get(params.id.toInteger())
