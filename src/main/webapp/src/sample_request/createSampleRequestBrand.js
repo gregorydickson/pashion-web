@@ -583,6 +583,11 @@ export class CreateSampleRequestBrand {
     this.controller.close();
   }
 
+  cancelKeepSR(){
+    //this.sampleRequestService.cancelCurrentSampleRequest();
+    this.controller.close();
+  }
+
   continue() {
     this.saveTrolley();
     this.controller.close();
