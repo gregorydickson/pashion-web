@@ -63,14 +63,23 @@ export class EditSampleRequest {
 
   attached() {
 
-    
-    this.http.fetch('/brand/addresses/' + this.sampleRequest.brand.id)
-      .then(response => response.json())
-      .then(addresses => this.brandAddresses = addresses);
-    this.http.fetch('/brand/users/' + this.sampleRequest.brand.id)
-      .then(response => response.json())
-      .then(brandUsers => this.brandUsers = brandUsers);
-    
+    // Not necessarily a brand here... hhmmm
+    if (this.sampleRequest.brand.id) {
+      this.http.fetch('/brand/addresses/' + this.sampleRequest.brand.id)
+          .then(response => response.json())
+          .then(addresses => this.brandAddresses = addresses);
+        this.http.fetch('/brand/users/' + this.sampleRequest.brand.id)
+          .then(response => response.json())
+          .then(brandUsers => this.brandUsers = brandUsers);
+    } else {
+      this.http.fetch('/prAgency/addresses/' + this.sampleRequest.prAgency.id)
+          .then(response => response.json())
+          .then(addresses => this.brandAddresses = addresses);
+        this.http.fetch('/prAgency/users/' + this.sampleRequest.prAgency.id)
+          .then(response => response.json())
+          .then(brandUsers => this.brandUsers = brandUsers);
+    }
+
     if(this.sampleRequest.pickupTime == undefined)
       this.sampleRequest.pickupTime = '09:00';
     if(this.sampleRequest.pickupTimeReturn == undefined)

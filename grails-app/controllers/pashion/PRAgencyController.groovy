@@ -98,6 +98,12 @@ class PRAgencyController {
         render addresses
     }
 
+     def users(){
+        PRAgency prAgency = PRAgency.get(params.id)
+        def users = User.findAllByPrAgency(prAgency) as JSON
+        render users
+    }
+
     @Transactional
     def addAddress(){
         log.info "addAddress called"
