@@ -36,7 +36,7 @@ export class Requestman {
   closed = true;
   searchTextReqMan = '';
   ordering = 'bookingStartDate';
-  filtering = 'ACTIVE REQUESTS'; // IE all
+  filtering = 'ACTIVE BOOKINGS'; // IE all
   today = new Date(); // Do we have a problem with freshness of this variable, say login at 11:59PM?
   onlyShowMine = false;
   onlyShowMineCompany = '';
@@ -286,12 +286,12 @@ export class Requestman {
     if (event)
       if (event.detail)
         if (event.detail.value) {
-          if (event.detail.value == 'ALL REQUESTS') this.filtering = '';
-          if (event.detail.value == 'MY REQUESTS') this.filtering = 'MY REQUESTS';
-          if (event.detail.value == 'OVERDUE REQUESTS') this.filtering = 'OVERDUE REQUESTS';
-          if (event.detail.value == 'ACTIVE REQUESTS') this.filtering = 'ACTIVE REQUESTS';
-          if (event.detail.value == 'INACTIVE REQUESTS') this.filtering = 'INACTIVE REQUESTS';
-          //console.log("value:" + event.detail.value + " filtering: " +this.filtering);
+          if (event.detail.value == 'ALL BOOKINGS') this.filtering = '';
+          if (event.detail.value == 'MY BOOKINGS') this.filtering = 'MY BOOKINGS';
+          if (event.detail.value == 'OVERDUE BOOKINGS') this.filtering = 'OVERDUE BOOKINGS';
+          if (event.detail.value == 'ACTIVE BOOKINGS') this.filtering = 'ACTIVE BOOKINGS';
+          if (event.detail.value == 'INACTIVE BOOKINGS') this.filtering = 'INACTIVE BOOKINGS';
+          console.log("value:" + event.detail.value + " filtering: " +this.filtering);
         }
   }
 
@@ -404,16 +404,16 @@ export class Requestman {
     //console.log("Search value: " + itemValue);
     if (searchExpression && itemValue) searchVal = itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;
 
-    if (filter == 'MY REQUESTS') {
+    if (filter == 'MY BOOKINGS') {
       filterVal = (value.requestingUser.id == user.id);
     }
-    if (filter == 'OVERDUE REQUESTS') {
+    if (filter == 'OVERDUE BOOKINGS') {
       var computedDate = new Date(value.bookingStartDate);
       var today = new Date();
       if (user.type == "brand" || user.type == "prAgency") filterVal = ((today > computedDate) && (value.requestStatusBrand == 'Pending'));
       if (user.type == "press") filterVal = ((today > computedDate) && (value.requestStatusPress == 'Pending'));
     }
-    if (filter == 'ACTIVE REQUESTS') {
+    if (filter == 'ACTIVE BOOKINGS') {
       if (user.type == "brand" || user.type == "prAgency") filterVal = (
         (value.requestStatusBrand != 'Closed') &&
         (value.requestStatusBrand != 'Denied') &&
@@ -431,7 +431,7 @@ export class Requestman {
         (value.requestStatusPress != 'Withdrawn')
       );
     }
-    if (filter == 'INACTIVE REQUESTS') {
+    if (filter == 'INACTIVE BOOKINGS') {
       if (user.type == "brand" || user.type == "prAgency") filterVal = (
         (value.requestStatusBrand == 'Closed') ||
         (value.requestStatusBrand == 'Denied') ||
