@@ -72,10 +72,10 @@ export class EditSampleRequest {
           .then(response => response.json())
           .then(brandUsers => this.brandUsers = brandUsers);
     } else {
-      this.http.fetch('/prAgency/addresses/' + this.sampleRequest.prAgency.id)
+      this.http.fetch('/PRAgency/addresses/' + this.sampleRequest.prAgency.id)
           .then(response => response.json())
           .then(addresses => this.brandAddresses = addresses);
-        this.http.fetch('/prAgency/users/' + this.sampleRequest.prAgency.id)
+        this.http.fetch('/PRAgency/users/' + this.sampleRequest.prAgency.id)
           .then(response => response.json())
           .then(brandUsers => this.brandUsers = brandUsers);
     }

@@ -157,7 +157,7 @@
                                         <td class="accordion-underline w3"></td>
                                         <td class="accordion-underline w6">ID</td>
                                         <td class="accordion-underline w15">START DATE</td>
-                                        <td class="accordion-underline w34">REQUESTOR</td>
+                                        <td class="accordion-underline w34">REQUESTOR  / GOING TO</td>
                                         <td class="accordion-underline w15">END DATE</td>
                                         <td class="accordion-underline w7"><img style="width:25px;" src="/assets/shoppingcart60x47.png" height=47 width=60></img></td>
                                         <td class="accordion-underline w15" style="padding-left:10px;">STATUS</td>
@@ -198,7 +198,7 @@
                                             <!-- Requestor -->
                                             <td if.bind="(user.type === 'brand')" class="col5 accordion-grey w30 variable-padding">${booking.requestingUser.name} ${booking.requestingUser.surname} / ${booking.deliverTo.name} ${booking.deliverTo.surname} ${booking.addressDestination.name}</td>
                                             <td if.bind="(user.type === 'press')" class="col5 accordion-grey w30 variable-padding">${booking.requestingUser.name} ${booking.requestingUser.surname} / ${booking.deliverTo.name} ${booking.deliverTo.surname} ${booking.addressDestination.name}</td>
-                                            <td if.bind="(booking.requestingUser.name) && (user.type === 'prAgency')" class="col5 accordion-grey w34 variable-padding">${booking.requestingUser.name} ${booking.requestingUser.surname} ${booking.requestingUserCompany ? '(' + booking.requestingUserCompany + ')' : ''}</td>
+                                            <td if.bind="(booking.requestingUser.name) && (user.type === 'prAgency')" class="col5 accordion-grey w34 variable-padding">${booking.requestingUser.name} ${booking.requestingUser.surname} ${booking.requestingUserCompany ? '(' + booking.requestingUserCompany + ')' : ''}  ${booking.deliverTo.name ? '/' + booking.deliverTo.name + ' ' + booking.deliverTo.surname : ''}</td>
                                             <td if.bind="!(booking.requestingUser.name) && (user.type === 'prAgency')" class="col5 accordion-grey w34 variable-padding">-</td>
 
                                             <!-- END DATE -->

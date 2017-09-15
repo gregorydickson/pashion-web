@@ -401,13 +401,30 @@ class SampleRequestService {
             
             jsonObject.searchableItemsProposed.each{ sample ->
                 
+                // RM deal with empty status fields, assumed they are approved.
+                // not sure why it is empty
                 def statusJSON = jsonObject.searchableItemsStatus.find { it.itemId == sample.id }
-                def statusObject = sr.searchableItemsStatus.find { it.itemId == sample.id }
-                log.info "status:"+statusJSON.status
-                if(statusJSON.status == "Approved"){
-                    statusObject.status = "Approved"
+                def statusObject = new BookingStatus ()
+                log.info "searchableItemsStatus: " +  sr?.searchableItemsStatus
+                if (sr.searchableItemsStatus) statusObject = sr.searchableItemsStatus.find { it.itemId == sample.id }
+                if (statusJSON) {
+                        log.info "status:"+statusJSON.status
+                    } else {
+                        log.info "no statusJSON, assumed to be approved"
+                    }
+                if(statusJSON == null || statusJSON.status == "Approved"){
+                    if (statusObject == null) {
+                        // statusObject = new BookingStatus()
+                        statusObject.itemId = sample.id
+                        statusObject.status = "Approved"      
+                    }
+                    else {
+                        statusObject.status = "Approved"
+                    }
+                    log.info "item id:"+statusObject.itemId
                     log.info "item status:"+statusObject.status
-                    statusObject.save(failOnError:true)
+                    sr.searchableItemsStatus [sample.id] = statusObject
+                    // statusObject.save(failOnError:true)
                     def item = sr.searchableItems.find{it.id == sample.id}
                     if(!item){
                         sr.addToSearchableItems(sample)
@@ -415,7 +432,8 @@ class SampleRequestService {
                 } else if(statusJSON.status == "Denied"){
                     statusObject.status = "Denied"
                     log.info "item status:"+statusObject.status
-                    statusObject.save(failOnError:true)
+                    sr.searchableItemsStatus [sample.id] = statusObject
+                    //statusObject.save(failOnError:true)
                 }
             }
 
