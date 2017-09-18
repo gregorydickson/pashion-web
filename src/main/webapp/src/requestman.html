@@ -409,11 +409,18 @@
 
                                         <!-- SAMPLES BRAND -->
                                         <div if.bind="(user.type === 'brand')" class="grid-content" style="margin-bottom: 1rem;">
-                                            <!-- no images -->
                                             <table class="" style="table-layout:fixed;">
-                                                <tr style="height:1rem;" repeat.for="item of booking.searchableItems" >
+                                              <!--  <tr style="height:1rem;" repeat.for="item of booking.searchableItems" >
                                                     <td if.bind="!(item.clientID)" class="accordion sample-padding"> ${booking.season | seasonAbbreviation:seasons }.${look}.${$index+1} &nbsp; : &nbsp; ${item.status.status} &nbsp; :  &nbsp; <span class="to-u-c">${item.attributes}</span></td>
                                                     <td if.bind="(item.clientID)" class="accordion sample-padding"> ${booking.season | seasonAbbreviation:seasons }.${look}.${$index+1} &nbsp; [ ${item.clientID} ] &nbsp; : &nbsp; ${item.status.status} &nbsp; : &nbsp; <span class="to-u-c">${item.attributes}</span></td>
+                                                </tr> -->
+                                                <tr style="height:1rem;" repeat.for="sample of booking.searchableItems" >
+                                                    <td if.bind="bookingsImagesView[sample.look.id]!=null" class="accordion sample-padding">  <img  src="${bookingsImagesView[sample.look.id]}" width="60px;" /></td>
+                                                    <td class="accordion sample-padding">${sample.brand.name}</td>
+                                                    <td if.bind="(sample.clientID)" class="accordion sample-padding"> ${sample.season.id | seasonAbbreviationId:seasons}.${sample.lookNameNumber}${sample.lookNameVariant}.${sample.clientID}</td>
+                                                    <td if.bind="!(sample.clientID)" class="accordion sample-padding"> ${sample.season.id | seasonAbbreviationId:seasons}.${sample.lookNameNumber}${sample.lookNameVariant}.P${sample.id}</td>
+                                                    <td class="accordion sample-padding">${sample.sampleType} ${sample.color} ${sample.material}</td>
+                                                    <!-- <td class="accordion sample-padding">Status: ${sample.status.status}</td> -->
                                                 </tr>
                                             </table>
                                         </div>
@@ -480,8 +487,8 @@
                         <figure style=" display: inline-block; vertical-align: top; text-align:center; margin-top:129px; margin-right: 42px; margin-left: 0px;" >
                             <img class="request-image-fix" src="${image}">
                             <figcaption style="display:block;margin-top:1rem;">
-                                <span if.bind="brand" class="accordion-grey" style="font-size: 1.1rem; font-weight: 500;">${brand} LOOK ${look}</span><br>
-                                <span class="accordion-grey">${season}</span><br>
+                                <span if.bind="image" class="accordion-grey" style="font-size: 1.1rem; font-weight: 500;">${brand} LOOK ${look}</span><br>
+                                <span if.bind="image" class="accordion-grey">${season}</span><br>
                             </figcaption>                           
                         </figure>
                     </div>
