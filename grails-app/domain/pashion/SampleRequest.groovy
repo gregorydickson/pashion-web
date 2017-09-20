@@ -6,6 +6,26 @@ import java.time.ZoneId
 import java.util.TimeZone
 
 
+/**
+ * SampleRequest.groovy
+ *
+ * DeliverTo is the User that is set if a sampleRequest is to a User.
+ * A SampleRequest may be sent to an ad-hoc address. if that is the case
+ * then no DeliverTo User is set. The service will attempt to set 
+ * an addressDestination from the DeliverTo user or an ad-hoc address returned
+ * in the DeliverTo json, which can be a user or an address.
+ * 
+ * receivingUser is from the original data modeling and is deprecated.
+ * 
+ * returnToAddress will be the address of the  or the
+ * default address for the Brand or PR Agency.
+ * 
+ * use of requestingUser was originally to be a Press User as the idea was
+ * requests would be Press to Brand. However, a requestingUser is the user that
+ * originated the request which may be Brand, Press, or PR Agency.
+ *
+ * 
+ */
 class SampleRequest {
 
 	
@@ -48,7 +68,11 @@ class SampleRequest {
 	Boolean courierReturnNotification = false
 	String paymentOut
 	String paymentReturn
+	
+	//receivingUser deprecated - not used
 	User receivingUser 
+	//
+	
 	User requestingUser 
 	User approvingUser
 	String approvingUserCompany

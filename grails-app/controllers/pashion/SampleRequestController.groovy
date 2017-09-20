@@ -343,22 +343,21 @@ class SampleRequestController {
         respond sr
     }
 
-    def submitTrolley(){
+    // only triggered from the request manager menu item so no data updated
+    def finishPicking(){
         log.info "submit trolley"
         def requestingUser = session.user
         def sr
-        if(params.id){
-            sr = SampleRequest.get(params.id.toInteger())
-            sr.finalize = true
+       
+        sr = SampleRequest.get(params.id.toInteger())
+        sr.finalize = true
 
-            sr.requestStatusBrand = "Finalizing"
-            sr.requestStatusPress = "Finalizing"
+        sr.requestStatusBrand = "Finalizing"
+        sr.requestStatusPress = "Finalizing"
+    
+        sr.save(failOnError:true, flush:true)
+        log.info "sample request trolly submitted:"+sr
         
-            sr.save(failOnError:true, flush:true)
-            log.info "sample request trolly submitted:"+sr
-        } else {
-            sr = sampleRequestService.submitTrolley(request.JSON,requestingUser)
-        }
 
         def pressHouse = requestingUser.pressHouse?.name ?: ""
          
@@ -370,6 +369,7 @@ class SampleRequestController {
         respond sr
     }
 
+    //After the user 'finishes picking' then they can save address information
     def updateTrolley(){
         log.info "update trolley"
         def requestingUser = session.user
@@ -384,6 +384,9 @@ class SampleRequestController {
         respond sr
     }
 
+
+
+    // Pre Trolley update of sample request
     def updatejson(){
         
         def sr = sampleRequestService.updateSampleRequest(request.JSON)

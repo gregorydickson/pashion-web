@@ -161,9 +161,9 @@ export class SampleRequestService{
       return promise;
     }
 
-    submitRequest(id){
+    finishPicking(id){
       var promise = new Promise((resolve, reject) => {
-        this.http.fetch('/sampleRequest/submitTrolley/'+id+'.json', {
+        this.http.fetch('/sampleRequest/finishPicking/'+id+'.json', {
             method: 'get'
           })
           .then(response => response.json())

@@ -1162,10 +1162,10 @@ export class Index {
                 this.alertP("Now Picking For "+id)
             });
     }
-    submit(id) {
+    finishPicking(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.sampleRequestStatus = 'none';
-        this.sampleRequestService.submitRequest(id)
+        this.sampleRequestService.finishPicking(id)
             .then(result =>{
                 this.alertP("Submitted Request "+id)
             });

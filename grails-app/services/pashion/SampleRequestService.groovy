@@ -79,6 +79,12 @@ class SampleRequestService {
 
     // TROLLEY SPECIFIC METHODS
 
+    /*
+    *  This method is to save items in the trolley during picking.
+    *  It may be used to save and update current trolley items.
+    *  So there may be an existing sample request or a new one
+    *  may need to be created. In other words this is save and update.
+    */
     def saveTrolley(JSONObject jsonObject, User user){
         SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
         def sr = null
@@ -127,32 +133,10 @@ class SampleRequestService {
         sr
     }
 
-    def submitTrolley(JSONObject jsonObject, User user){
-        SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
-        def sr = null
-        
-        sr = SampleRequest.get(jsonObject.id.toInteger())
-        
-        def ids = sr.searchableItemsProposed.collect{it.id}
-        ids.each{sr.removeFromSearchableItemsProposed(SearchableItem.get(it))}
-
-        jsonObject.searchableItemsProposed.each{
-            def item = SearchableItem.get(it.id)
-            sr.addToSearchableItemsProposed(item)
-        }
-        sr.finalize = true
-
-        if(jsonObject.requestStatusBrand){
-            sr.requestStatusBrand = jsonObject.requestStatusBrand
-        } else{
-            sr.requestStatusBrand = "Finalizing"
-            sr.requestStatusPress = "Finalizing"
-        }
-        sr.save(failOnError:true, flush:true)
-        log.info "sample request trolly submitted:"+sr
-        sr
-    }
-
+    /*
+    * This is saving the trolleys address information, the second step in the process after
+    * picking. May also remove samples to they have to be updated.
+    */
     def updateTrolley(JSONObject jsonObject, User user){
         SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
         def sr = null
@@ -160,6 +144,23 @@ class SampleRequestService {
         
         
         sr = SampleRequest.get(jsonObject.id.toInteger())
+
+        def ids = sr.searchableItemsProposed.collect{it.id}
+        ids.each{sr.removeFromSearchableItemsProposed(SearchableItem.get(it))}
+
+        jsonObject.searchableItemsProposed.each{ sample ->
+            def item = SearchableItem.get(sample.id)
+            sr.addToSearchableItemsProposed(item)
+            def status = sr.searchableItemsStatus.find { it.id == sample.id }
+            if(!status){
+                status = new BookingStatus()
+                status.itemId = sample.id
+                status.status = "Approved"
+                sr.addToSearchableItemsStatus(status)
+            }
+        
+        }
+
         if(jsonObject.emailNotification)
             sr.emailNotification = jsonObject.emailNotification
         
@@ -170,18 +171,12 @@ class SampleRequestService {
             sr.requestStatusPress = "Approved"
         }
 
-        jsonObject.samples.each{
-            def status = new BookingStatus()
-            status.itemId = item.id
-            status.status = "Approved"
-            
-            sr.addToSearchableItemsStatus(status)
-        }
-
         sr.requiredBy = jsonObject.requiredBy
         sr.returnBy = jsonObject.returnBy
-        sr.shippingOut = new ShippingEvent(courier:jsonObject.courier,status:'Proposed').save(failOnError:true)
-        sr.shippingReturn = new ShippingEvent(status:'Proposed').save(failOnError:true)
+        if(!sr.shippingOut)
+            sr.shippingOut = new ShippingEvent(courier:jsonObject.courier,status:'Proposed').save(failOnError:true)
+        if(!sr.shippingReturn)
+            sr.shippingReturn = new ShippingEvent(status:'Proposed').save(failOnError:true)
         sr.paymentOut = jsonObject.paymentOut
         sr.paymentReturn = jsonObject.paymentReturn
         sr.courierOut = jsonObject.courierOut
@@ -195,6 +190,8 @@ class SampleRequestService {
         log.info "sample request trolly submitted:"+sr
         sr
     }
+
+
 
     def initialSaveSampleRequest(JSONObject jsonObject, User requestingUser){
         SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
@@ -211,26 +208,28 @@ class SampleRequestService {
             sr.bookingEndDate = dateFormat.parse(jsonObject.endDate)
             sr.requiredBy = jsonObject.requiredBy
             
+            
             sr.returnBy = jsonObject.returnBy
 
-            if(jsonObject.requestStatusBrand){
-                sr.requestStatusBrand = jsonObject.requestStatusBrand
-            } else{
-                sr.requestStatusBrand = "Pending"
-                sr.requestStatusPress = "Pending"
-            }
-
+            sr.requestStatusBrand = "Pending"
+            sr.requestStatusPress = "Pending"
+         
 
             SearchableItem item
 
             jsonObject.samples.each{
-                log.info "a sample"+it
-                item = SearchableItem.get(it.id.toInteger())
-                log.info "sample request item:"+item
+                item = SearchableItem.get(it)
+                log.info "sample request item:"+item.id
                 if(!sr.brand) sr.brand = item.brand
                 if(!sr.image) sr.image = item.look.image
                 if(!sr.season) sr.season = item.season.name
-                if(!sr.look) sr.look = item.look.name
+                if(item?.look?.nameNumber && (!sr.look)){
+                    log.info "adding look name to sr"
+                    sr.look = item?.look?.nameNumber
+                    if(item?.look?.nameVariant)
+                        sr.look = sr.look + item?.look?.nameVariant?.toUpperCase()
+                }
+
                 sr.addToSearchableItemsProposed(item)
                 def status = new BookingStatus()
                 status.itemId = item.id
@@ -260,6 +259,7 @@ class SampleRequestService {
                 else 
                     sr.message = jsonObject.message
             }
+            
             
             sr.dateRequested = new Date()
             if(requestingUser.pressHouse){
@@ -341,6 +341,7 @@ class SampleRequestService {
             //DeliverTo may be a User or an ad-hoc address on initial save
             //UI updates DeliverTo and we update addressDestination here
             def destino = jsonObject.deliverTo 
+            log.info "deliverTo:"+destino
             if(destino.type){
                 if(jsonObject.deliverTo.type  == 'user') {
                     log.info "deliver To type is User"
@@ -401,30 +402,13 @@ class SampleRequestService {
             
             jsonObject.searchableItemsProposed.each{ sample ->
                 
-                // RM deal with empty status fields, assumed they are approved.
-                // not sure why it is empty
                 def statusJSON = jsonObject.searchableItemsStatus.find { it.itemId == sample.id }
-                def statusObject = new BookingStatus ()
-                log.info "searchableItemsStatus: " +  sr?.searchableItemsStatus
-                if (sr.searchableItemsStatus) statusObject = sr.searchableItemsStatus.find { it.itemId == sample.id }
-                if (statusJSON) {
-                        log.info "status:"+statusJSON.status
-                    } else {
-                        log.info "no statusJSON, assumed to be approved"
-                    }
-                if(statusJSON == null || statusJSON.status == "Approved"){
-                    if (statusObject == null) {
-                        // statusObject = new BookingStatus()
-                        statusObject.itemId = sample.id
-                        statusObject.status = "Approved"      
-                    }
-                    else {
-                        statusObject.status = "Approved"
-                    }
-                    log.info "item id:"+statusObject.itemId
+                def statusObject = sr.searchableItemsStatus.find { it.itemId == sample.id }
+                log.info "status:"+statusJSON.status
+                if(statusJSON.status == "Approved"){
+                    statusObject.status = "Approved"
                     log.info "item status:"+statusObject.status
-                    sr.searchableItemsStatus [sample.id] = statusObject
-                    // statusObject.save(failOnError:true)
+                    statusObject.save(failOnError:true)
                     def item = sr.searchableItems.find{it.id == sample.id}
                     if(!item){
                         sr.addToSearchableItems(sample)
@@ -432,8 +416,7 @@ class SampleRequestService {
                 } else if(statusJSON.status == "Denied"){
                     statusObject.status = "Denied"
                     log.info "item status:"+statusObject.status
-                    sr.searchableItemsStatus [sample.id] = statusObject
-                    //statusObject.save(failOnError:true)
+                    statusObject.save(failOnError:true)
                 }
             }
 
@@ -470,7 +453,6 @@ class SampleRequestService {
                     sr = destinationAddressBrand(sr,jsonObject)
                 }
             }
-
             sr = returnToAddress(sr,jsonObject)
             sr.save(failOnError:true,flush:true)
             log.info "UPDATED SAMPLE REQUEST:"+sr.id

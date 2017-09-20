@@ -587,24 +587,14 @@ export class CreateSampleRequestBrand {
     //this.sampleRequestService.cancelCurrentSampleRequest();
     this.controller.close();
   }
-
+  // While picking this saves the updated items in the trolley
   continue() {
     this.saveTrolley();
     this.controller.close();
   }
 
-  submit(){
-    this.sampleRequest.finalize = true;
-    this.sampleRequest.requestStatusBrand = "Finalizing"
-    this.sampleRequestService.submitTrolley(this.sampleRequest)
-      .then(result =>{
-        this.alertP("Submitted Sample Request");
-        this.sampleRequestService.sampleRequestStatus = 'none';
-        this.sampleRequestService.sampleRequest = null;
-        this.controller.close();
-      });
-  }
 
+  // save address information, etc.
   update(){
     this.sampleRequest.requestStatusBrand = "Approved"
     this.sampleRequestService.updateTrolley(this.sampleRequest)
