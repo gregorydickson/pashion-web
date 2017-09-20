@@ -13,18 +13,13 @@
             <!-- header -->
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
-<<<<<<< HEAD
+
                     <span if.bind="(!sampleRequest.requestStatusBrand && sampleRequest.datesSaved)" class="ui-text-label-m-broad">PICK SAMPLES FOR NEW BOOKING</span>
                     <span if.bind="(!sampleRequest.datesSaved)" class="ui-text-label-m-broad">SET DATES FOR NEW BOOKING ${sampleRequest.id}</span>
                     <span if.bind="(sampleRequest.datesSaved && sampleRequest.requestStatusBrand == 'Not Submitted')" class="ui-text-label-m-broad">PICK SAMPLES FOR BOOKING ${sampleRequest.id}</span>
                     <span if.bind="(sampleRequest.datesSaved && sampleRequest.requestStatusBrand == 'Finalizing')" class="ui-text-label-m-broad">FINALIZING BOOKING ${sampleRequest.id}</span>
                     <span if.bind="(sampleRequest.datesSaved && sampleRequest.requestStatusBrand == 'Approved')" class="ui-text-label-m-broad">EDIT BOOKING ${sampleRequest.id}</span>
-=======
-                    <span class="ui-text-label-m-broad">BOOKING&nbsp;${brand.name}
-                     <!-- ${currentItem.season.id}&nbsp;-->
-                     &nbsp;</span>
-                    <span class="ui-text-label-m-broad">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.nameNumber}${currentItem.nameVariant.toUpperCase()}</span>
->>>>>>> master
+
                 </div>
             </div>
         </ai-dialog-header>
@@ -340,12 +335,12 @@
                             <td if.bind="sample.clientID" class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:130px; max-width:130px;">${sample.seasonAbbreviation}.${sample.lookNameNumber}${sample.lookNameVariant}.${sample.clientID}</td>
                             <td if.bind="(!sample.clientID)" class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:130px; max-width:130px;">${sample.seasonAbbreviation}.${sample.lookNameNumber}${sample.lookNameVariant}.P${sample.id}</td>
 
-<<<<<<< HEAD
+<!-- HEAD -->
                             <td class="accordion to-u-c ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:170px; max-width:170px; overflow:hidden; padding-right:20px;">${sample.sampleType} ${sample.color} ${sample.material}</td>
-=======
+<!-- 
                             <td class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:70px; max-width:70px;">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.nameNumber}${currentItem.nameVariant.toUpperCase()}.${$index+1} :&nbsp;</td>
                             <td class="accordion to-u-c ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:300px; max-width:300px; overflow:hidden; padding-right:20px;">${sample.attributes}</td>
->>>>>>> master
+>>>>>>> master -->
                             
                             <td if.bind="(sample.outReason && sample.outReason.id != 0)" class="accordion warm-grey-deco" style="width:90px; max-width:90px;">${outReasons[sample.outReason.id].name}
                             </td>
