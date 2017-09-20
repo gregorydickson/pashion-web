@@ -323,11 +323,11 @@
                     <table  class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples | sort: 'id': 'ascending'">
                         <tr>
                             <td if.bind="(sampleRequest.datesSaved && sample.availability)" class="accordion" style="width:20px; max-width:20px;">
-                                <input disabled.bind="((user.city.name !== sample.sampleCity.name) && (restrictOutsideBooking))" type="checkbox" model.bind="sample"  checked.bind="sampleRequest.searchableItemsProposed">
+                                <input disabled.bind="((user.city.name !== sample.sampleCity.name) && (restrictOutsideBooking))" type="checkbox" model.bind="sample"  checked.bind="sampleRequest.searchableItems">
                             </td>
 
                             <td if.bind="!(sampleRequest.datesSaved && sample.availability)" class="accordion" style="width:20px; max-width:20px;">
-                                <input disabled type="checkbox" model.bind="sample"  checked.bind="sampleRequest.searchableItemsProposed">
+                                <input disabled type="checkbox" model.bind="sample"  checked.bind="sampleRequest.searchableItems">
                             </td>
 
                             <td if.bind="sample.clientID" class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:130px; max-width:130px;">${sample.seasonAbbreviation}.${sample.lookNameNumber}${sample.lookNameVariant}.${sample.clientID}</td>
@@ -352,7 +352,7 @@
                 <div class="grid-content accordion">
                     <table class="" style="margin-bottom:0px; margin-top: 1rem; table-layout:fixed;">
                         <tr>
-                            <td class="accordion ${(sampleRequest.searchableItemsProposed.length == 0) ? 'red-deco' : ''}" style="width:400px;">SAMPLES IN BOOKING</td>
+                            <td class="accordion ${(sampleRequest.searchableItems.length == 0) ? 'red-deco' : ''}" style="width:400px;">SAMPLES IN BOOKING</td>
                         </tr>
                     </table>
                 </div>
@@ -360,7 +360,7 @@
                 <div class="grid-block accordion" style="overflow-x:hidden; max-height:250px;" >
                     
                     <div class="grid-content">
-                        <table  class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of sampleRequest.searchableItemsProposed | sort: 'id': 'ascending'">
+                        <table  class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of sampleRequest.searchableItems | sort: 'id': 'ascending'">
                             <tr style="height:25px;"> 
                                 <td class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:110px; max-width:110px;">${sample.brand.name}</td>
 
@@ -386,7 +386,7 @@
             <button if.bind="!(sampleRequest.datesSaved)" class="hollow button" click.delegate="cancel()">Cancel</button>
             <button if.bind="(sampleRequest.datesSaved)" class="hollow button" click.delegate="cancelKeepSR()">Cancel</button>
             <button if.bind="(!sampleRequest.datesSaved)" id="saveDates" class="button" disabled.bind="!(sampleRequest.startDate && sampleRequest.endDate)" click.delegate="dates()">Set Dates</button>
-            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" disabled.bind="sampleRequest.searchableItemsProposed.length == 0" id="continue" class="button" click.delegate="continue()">Add to Booking</button>
+            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" disabled.bind="sampleRequest.searchableItems.length == 0" id="continue" class="button" click.delegate="continue()">Add to Booking</button>
             <!--<button if.bind="(sampleRequest.datesSaved && !startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="submit()">Pick and Finish</button> -->
             <button if.bind="(sampleRequest.datesSaved && startFinalize)" id="CreateSampleRequestButton" class="button" click.delegate="update()">Submit</button>
         </ai-dialog-footer>

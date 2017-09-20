@@ -620,11 +620,11 @@
                                                 )"
                                                 class="look-menu-item"><a click.delegate="picking(booking.id)" href="#" class="look-menu-link">Continue Picking</a></li>
                                                 <li if.bind="(
-                                                    (booking.requestStatusBrand == 'Not Submitted' && booking.searchableItemsProposed.length != 0)
+                                                    (booking.requestStatusBrand == 'Not Submitted' && booking.searchableItems.length != 0)
                                                 )"
                                                 class="look-menu-item"><a click.delegate="finishPicking(booking.id)" href="#" class="look-menu-link">Finish Picking</a></li>
                                                 <li if.bind="(
-                                                    (booking.requestStatusBrand == 'Picking' && booking.searchableItemsProposed.length != 0)
+                                                    (booking.requestStatusBrand == 'Picking' && booking.searchableItems.length != 0)
                                                 )"
                                                 class="look-menu-item"><a click.delegate="finishPicking(booking.id)" href="#" class="look-menu-link">Finish Picking</a></li>
                                                 

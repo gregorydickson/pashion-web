@@ -319,7 +319,7 @@
 
                                                             <!-- Not Submitted -->
                                                             <li if.bind="(
-                                                                (booking.requestStatusBrand == 'Not Submitted' && booking.searchableItemsProposed.length != 0)
+                                                                (booking.requestStatusBrand == 'Not Submitted' && booking.searchableItems.length != 0)
                                                             )"
                                                             class="look-menu-item"><a click.delegate="submit(booking.id)" href="#" class="look-menu-link">Finish Picking</a></li>
 
