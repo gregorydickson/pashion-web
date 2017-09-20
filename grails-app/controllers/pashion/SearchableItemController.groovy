@@ -92,6 +92,8 @@ class SearchableItemController {
                     or {
                         keywords.each { ilike('attributes', "%${it}%") }
                         keywords.each { ilike('message', "%${it}%") }
+                        // keywords.each { ilike('id'.toString(), "%{it}%")}
+                        keywords.each { ilike('clientid', "%${it}%") }
                     }
                 } 
 
@@ -501,7 +503,7 @@ class SearchableItemController {
         if(jsonObject.nameNumber)
             item.name = jsonObject.nameNumber.toString() 
         if (jsonObject.nameVariant)
-            item.name = item.name + jsonObject.nameVariant
+            item.name = item.name + jsonObject.nameVariant.toUpperCase()
         
         if(jsonObject.nameNumber){
             if (jsonObject.nameNumber instanceof Integer){
@@ -511,7 +513,7 @@ class SearchableItemController {
             }
         }
         if(jsonObject.nameVariant)
-            item.nameVariant = jsonObject.nameVariant
+            item.nameVariant = jsonObject.nameVariant.toUpperCase()
         item.description = jsonObject.description
         item.attributes = jsonObject.attributes
         item.isPrivate = jsonObject.isPrivate
@@ -531,7 +533,7 @@ class SearchableItemController {
                 sample.brand = item.brand
                 sample.type = SearchableItemType.get(2)
             }
-            sample.clientID = it.clientID
+            sample.clientid = it.clientid
             sample.sampleType = it.sampleType
             sample.color = it.color
             sample.name = it.name
@@ -759,6 +761,9 @@ class SearchableItemController {
     @Transactional
     def delete(SearchableItem searchableItem) {
         log.info "deleting:" + searchableItem.name
+        def samples = SearchableItem.findAllByLook(searchableItem)
+        if(samples)
+            samples*.delete(failOnError:true,flush:true)
 
         if (searchableItem == null) {
             transactionStatus.setRollbackOnly()

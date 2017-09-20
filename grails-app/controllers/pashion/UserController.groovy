@@ -24,6 +24,7 @@ class UserController {
         company.users.each{
             users << it
         }
+        users.sort{it.name}
         respond userList:users
     }
 
@@ -34,6 +35,7 @@ class UserController {
         company.users.each{
             users << it
         }
+        users.sort{it.name}
         respond userList:users
     }
 
@@ -44,6 +46,7 @@ class UserController {
         company.users.each{
             users << it
         }
+        users.sort{it.name}
         respond userList:users
         
     }
@@ -261,10 +264,11 @@ class UserController {
         //RM removed the force to integer
         if(jsonObject.pressHouse){
             owner = PressHouse.get(jsonObject.pressHouse.id)
-        } else if (jsonObject.brand.id){
+        } else if (jsonObject.brand?.id){
             owner = Brand.get(jsonObject.brand.id)
         } else if (jsonObject.prAgency){
-            owner = PRAgency.get(jsonObject.prAgency.id)
+            log.info "pr agency:"+jsonObject.prAgency
+            owner = PRAgency.get(jsonObject.prAgency)
         }
         
         def inNetwork = false
@@ -292,18 +296,19 @@ class UserController {
                 user = userService.updateUser(jsonObject,user)
             } else{
                 def response = [error: 'Error No Account'] as JSON
-                render response 
-                return 
+                render response
+                return
             }
-
         } else{
-            user = userService.updateUser(jsonObject)
+            if(user){
+                user = userService.updateUser(jsonObject,user)
+            } else{
+                user = User.get(jsonObject.id) 
+                user = userService.updateUser(jsonObject,user)
+            }
         }
-
-
         
-        
-       respond user, [status: OK] 
+       respond user, [status: OK]
         
     }
 

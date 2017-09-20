@@ -340,25 +340,25 @@
                             <div class="card" repeat.for="i of row.numberImagesThisRow" css="width: ${row.numberImagesThisRowPC}%;">
                                 <!-- Three dots menu press -->
                                 <div if.bind="user.type === 'press'" class="look-menu-absolute-wrap">
-                                    <a href="#" class="look-menu-click " click.delegate="createSampleRequestPress(row.items[i].id )">
-                                        <div class="menu-stripe" ></div>
-                                        <div class="menu-stripe" ></div> 
-                                        <div class="menu-stripe" ></div>
+                                    <a href="#" class="look-menu-click" click.delegate="createSampleRequestPress(row.items[i].id )">
+                                        <div class="menu-stripe" style="display:none;" ></div>
+                                        <div class="menu-stripe" style="display:none;"></div> 
+                                        <div class="menu-stripe" style="display:none;"></div>
                                     </a>
                                 </div>
                                 <!-- Three dots menu brand and prAgency-->
                                 <div if.bind="user.type !== 'press'" class="look-menu-absolute-wrap" >
                                     <a href="#" id="image-${row.items[i].id}" class="look-menu-click" click.delegate="lookMenu(row.items[i].id)" >
-                                        <div class="menu-stripe" ></div>
-                                        <div class="menu-stripe" ></div>
-                                        <div class="menu-stripe" ></div>
+                                        <div class="menu-stripe" style="display:none;"></div>
+                                        <div class="menu-stripe" style="display:none;"></div>
+                                        <div class="menu-stripe" style="display:none;"></div>
                                     </a>
 
                                     <!-- Menu on image when three dots clicked -->                            
                                     <div class="look-menu-absolute" id="look-${row.items[i].id}">
                                         <div class="look-menu-wrap">
                                             <div class="look-menu-heading">
-                                                ${row.items[i].season | seasonAbbreviation:seasons }.${row.items[i].name} <!-- ${i} ${row.numberImagesThisRow} -->
+                                                ${row.items[i].season | seasonAbbreviation:seasons }.${row.items[i].nameNumber}${row.items[i].nameVariant.toUpperCase()} <!-- ${i} ${row.numberImagesThisRow} -->
                                             </div>
 
                                             <!-- brand -->
@@ -407,17 +407,19 @@
 
 
                                     <!-- lower corner look number -->
-                                    <div if.bind="user.type === 'brand'" class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
+
+                                    <div if.bind="user.type === 'brand'" class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].nameNumber}${row.items[i].nameVariant.toUpperCase()}</div>
+                                    <div if.bind="user.type === 'prAgency'" class="card-look-number" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].nameNumber}${row.items[i].nameVariant.toUpperCase()}</div>
                                     
                                     <!-- hover stuff -->
-                                    <div class="card-look-number-name" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].name}</div>
+                                    <div class="card-look-number-name" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].nameNumber}${row.items[i].nameVariant.toUpperCase()}</div>
                                     <div if.bind="user.type === 'brand'" class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].season}</div>
                                     <div if.bind="user.type === 'press'" class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].brand} <br> ${row.items[i].season}</div>
                                     <div if.bind="user.type === 'prAgency'" class="card-look-number-brand-season" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)">${row.items[i].brand} <br> ${row.items[i].season}</div>
 
                                     <div class="card-hover-overlay" click.delegate="createZoomDialog(row.items[i],$parent.$index, i)"></div>
 
-                                </div>  
+                                </div>
                         </div>                  
                     </div>
                 </div>
@@ -520,6 +522,7 @@
                                 <td class="accordion w7">
                                     <button id="button${booking.id}" class="accordion requestButton expandoHover" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
+<<<<<<< HEAD
                                 <td class="accordion w16">${booking.id}</td>
                                 <td class="accordion w33 
                                            ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
@@ -540,6 +543,13 @@
                                            booking.requestStatusBrand != 'Delivering' ) 
                                                 ? 'Picking' : booking.requestStatusBrand}
                                            </td>
+=======
+                                <td class="accordion w24" click.delegate="closeExpand(booking.id)" style="cursor: pointer">${booking.season | seasonAbbreviation:seasons }.${booking.look} </td>
+                                <td class="accordion w31 
+                                           ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''}" click.delegate="closeExpand(booking.id)" style="cursor: pointer">${booking.bookingStartDate | viewDateFormat}</td>
+                                <td class="accordion w27
+                                           ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" click.delegate="closeExpand(booking.id)" style="cursor: pointer" >${booking.requestStatusBrand}</td>
+>>>>>>> master
                                 <!-- ... disabled  -->
                                 <td if.bind="(booking.requestStatusBrand == 'Deleted')" class="accordion w10" style="overflow:visible;">
                                     <div class="look-menu-absolute-wrap">
@@ -682,9 +692,9 @@
                                 <td class="accordion w7">
                                     <button id="button${booking.id}" class="accordion requestButton expandoHover" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
-                                <td class="accordion w24">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td>
-                                <td class="accordion w31 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''}">${booking.bookingStartDate | viewDateFormat}</td>
-                                <td class.bind="(booking.requestStatusPress=='Pending') ? 'accordion ui-text-label-m-blue w27' :'accordion w27'" >${booking.requestStatusPress}</td>
+                                <td class="accordion w24" click.delegate="closeExpand(booking.id)" style="cursor: pointer">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td>
+                                <td class="accordion w31 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''}" click.delegate="closeExpand(booking.id)" style="cursor: pointer">${booking.bookingStartDate | viewDateFormat}</td>
+                                <td class.bind="(booking.requestStatusPress=='Pending') ? 'accordion ui-text-label-m-blue w27' :'accordion w27'" click.delegate="closeExpand(booking.id)" style="cursor: pointer">${booking.requestStatusPress}</td>
 
                                 <!-- ... disabled -->
                                 <td if.bind="(

@@ -12,6 +12,7 @@ class User {
 	String surname
 	String email
 	Boolean isInPashionNetwork = false
+	Long agencyIDForPressUser
 
 	String avatar
 

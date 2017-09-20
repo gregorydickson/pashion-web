@@ -160,7 +160,7 @@ class UserService {
     }
 
     def updateUser(def params,def user){
-            
+            log.info "update user:"+params
             User.withTransaction { status ->
                 
                 user = User.get(user.id)

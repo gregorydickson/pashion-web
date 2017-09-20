@@ -204,7 +204,7 @@ export class Requestman {
   }
 
   get numberOfRequests() {
-    return document.getElementsByClassName("indexReqRow").length;
+    return document.getElementsByClassName("indexReqRowclass").length;
   }
 
   /*    orderChange(event) {
@@ -386,7 +386,7 @@ export class Requestman {
     if (value.searchableItems) {
       var i;
       for (i = 0; i < value.searchableItems.length; i++)
-        itemValue = itemValue + ' ' + value.searchableItems[i].clientID;
+        itemValue = itemValue + ' ' + value.searchableItems[i].clientid;
     }
 
 

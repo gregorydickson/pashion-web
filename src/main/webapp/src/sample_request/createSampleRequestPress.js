@@ -63,6 +63,8 @@ export class CreateSampleRequestPress {
           this.startCalendar = calendar;
           this.endCalendar = calendar;
         }),
+
+      this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
       
       this.http.fetch('/searchableItems/'+itemId+'.json')
         .then(response => response.json())

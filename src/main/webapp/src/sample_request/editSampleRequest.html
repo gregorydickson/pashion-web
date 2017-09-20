@@ -344,8 +344,8 @@
                         <!-- <td class="accordion w3">${$index+1}</td> -->
                         <td class="accordion" style="width:65px; max-width:65px;">${sampleRequest.season | seasonAbbreviation:seasons}.${sampleRequest.look}.${$index+1}</td>
 
-                        <td if.bind="sample.clientID" class="accordion to-u-c" style="width:320px; max-width:320px; overflow:hidden; padding-right:10px;">[ ${sample.clientID} ] : ${sample.attributes}</td>
-                        <td if.bind="!sample.clientID" class="accordion to-u-c" style="width:320px; max-width:320px; overflow:hidden; padding-right:10px;">${sample.attributes}</td>
+                        <td if.bind="sample.clientid" class="accordion to-u-c" style="width:320px; max-width:320px; overflow:hidden; padding-right:10px;">[ ${sample.clientid} ] : ${sample.attributes}</td>
+                        <td if.bind="!sample.clientid" class="accordion to-u-c" style="width:320px; max-width:320px; overflow:hidden; padding-right:10px;">${sample.attributes}</td>
 
                         <td class="accordion" style="width:60px; max-width:60px;">
                             <span style="margin-bottom:0px;">${sample.status.status}</span>

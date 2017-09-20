@@ -65,6 +65,7 @@
 		cursor: pointer; 
 		overflow: hidden;
 		/*height: 20vw;*/
+		min-height:150px;
 	}
 
 
@@ -112,7 +113,7 @@ font-weight: 500;
 	bottom: auto; 
 	 overflow: hidden;
 }
-.card-image:hover .card-look-number-name {
+.card-image:hover .card-look-number-name { 
 	display: block;
 	color: $white-two;
 	font-size: $font-size-e-extra-large;
@@ -141,7 +142,8 @@ font-weight: 500;
 }
 
 .card-image:hover .indigital-and-align{
-	display: none; 
+	/*display: none;*/
+	opacity: 0; 
 }
 .card .look-menu-click {
 	z-index: 3; 
@@ -156,7 +158,7 @@ font-weight: 500;
 }
 @media (max-width: $screen-big) {
 	.card-image:hover {
-		min-height: 190px;
+		min-height: 150px;
 	}
 }
 @media (max-width: $screen-medium) {

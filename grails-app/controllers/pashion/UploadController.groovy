@@ -57,7 +57,7 @@ class UploadController {
                                     item.brand = brand
                                     Season season = Season.findOrSaveWhere(name:row.values[1].toString().trim()).save()
                                     item.season = season
-                                    SearchableItem look = SearchableItem.findByBrandAndSeasonAndName(brand,season,row.values[2].toString().trim())
+                                    SearchableItem look = SearchableItem.findByBrandAndSeasonAndName(brand,season,row.values[2].toString())
                                     item.look           = look
                                     item.name           = row.values[3].toString().trim()
                                     item.sampleType     = row.values[4].toString().trim()

@@ -8,6 +8,9 @@ model {
 //log.info "Rendering a User in _user.gson"
 
 json g.render(user,[expand:['pressHouse','brand','prAgency','city','connections'],excludes:['password']]){
+  if(user.pressHouse){
+		agencyIDForPressUser user.agencyIDForPressUser
+	}
 	if(user.brand)
 		onlyShowMySampleRequests  user.brand.onlyShowMySampleRequests
 	if(user.prAgency)

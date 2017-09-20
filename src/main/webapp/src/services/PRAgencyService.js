@@ -143,14 +143,19 @@ export class PRAgencyService {
     }
 
     // Change to be specific list of brands supported by the Agency
-    getBrands() {
+    getBrands(agencyId) {
         var promise = new Promise((resolve, reject) => {
             if (!this.brands) {
 
                 var PRAgencyId;
                 this.userService.getUser().then(user => {
                     //console.log("Getting user brand: " + user);
-                    PRAgencyId = user.companyId;
+                    if(agencyId){
+                        PRAgencyId = agencyId;
+                    } else{
+                        PRAgencyId = user.companyId;
+                    }
+
                 }).then(result => {
                     //console.log("Getting PR brands pragencycontroll.groovy + id:" + PRAgencyId);
                     this.http.fetch('/PRAgency/brands/' + PRAgencyId)

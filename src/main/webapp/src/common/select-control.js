@@ -134,6 +134,6 @@ export class SelectControl {
 
     detached() {
         $(this.element).find('select').select2('destroy');
-        console.log('SelectControl.detached(): Component dettached');
+        //console.log('SelectControl.detached(): Component dettached');
     }
 }
