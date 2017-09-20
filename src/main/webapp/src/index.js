@@ -1144,9 +1144,23 @@ export class Index {
             .then(response => {});
     }
 
+    editSampleRequestTrolley(id) {
+        this.closeSampleRequestMenu(id);
+        // this.sampleRequestService.sampleRequestStatus = 'none';
+        this.sampleRequestService.getSampleRequest(id)
+            .then(result =>{
+                this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: id, lock: true })
+                    .then(response => {
+
+        //this.sampleRequestService.sampleRequestStatus = 'none';
+
+
+                    });
+            });
+    }
+
     trolley(id) {
         this.closeSampleRequestMenu(id);
-        this.sampleRequestService.sampleRequestStatus = 'none';
         this.sampleRequestService.getSampleRequest(id)
             .then(result =>{
                 this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: null, lock: true })

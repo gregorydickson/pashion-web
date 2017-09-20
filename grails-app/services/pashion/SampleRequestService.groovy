@@ -163,6 +163,9 @@ class SampleRequestService {
 
         if(jsonObject.emailNotification)
             sr.emailNotification = jsonObject.emailNotification
+
+        if(jsonObject.message)
+            sr.message = jsonObject.message
         
         if(jsonObject.requestStatusBrand){
             sr.requestStatusBrand = jsonObject.requestStatusBrand
@@ -359,7 +362,9 @@ class SampleRequestService {
                     log.info "new destination is:" +sr.addressDestination.name
                     sr.deliverTo = null
                 }
-            } 
+            } else {
+                // if no destino.type ...?
+            }
         
         } 
         sr

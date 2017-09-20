@@ -83,7 +83,7 @@ export class CreateSampleRequestBrand {
     var queryStringEnd = DateFormat.urlString(this.sampleRequest.endOffset, 1)+ '&searchType=brand';
     var queryStringStart = DateFormat.urlString(this.sampleRequest.startOffset, 1)+ '&searchType=brand';
 
-    if(this.sampleRequest.requestStatusBrand === 'Finalizing'){
+    if(this.sampleRequest.requestStatusBrand === 'Finalizing' || this.sampleRequest.requestStatusBrand === 'Approved'){
       this.startFinalize = true;
       this.sampleRequest.datesSaved = true;
       
