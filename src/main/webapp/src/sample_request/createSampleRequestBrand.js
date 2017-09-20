@@ -261,6 +261,7 @@ export class CreateSampleRequestBrand {
     console.log('onSelectAddressChangeCallback() called:', event.detail.value);
     if (event.detail.value.selectedAddress) {
       this.selectedAddress = event.detail.value.selectedAddress;
+      this.sampleRequest.deliverTo = event.detail.value.selectedAddress
     }
   }
 
