@@ -177,20 +177,67 @@
                             </span>
                         </div>
 
-                        <!-- Courier Section -->
-                        <div class="grid-content shrink">
-                            <span class="inline-label">
-                            <span class="slim-text-box-label">Courier</span>
-                            <form-select-sr class="to-u-c" name="courierOut" selected.two-way="sampleRequest.courierOut" options.bind="courier"></form-select-sr>
-                            </span>
+                           <!-- Courier Section -->
+                        <div if.bind="(!sampleRequest.shippingOut.stuartJobId)" class="grid-block shrink">
+                            <div class="inline-label">
+                                <span class="slim-text-box-label">Courier</span>
+                                <form-select-sr class="to-u-c" name="courierOut" selected.two-way="sampleRequest.courierOut" options.bind="courier"></form-select-sr>
+                            </div>
+                            <span id="bookOut" if.bind="sampleRequest.courierOut=='Pashion Courier'" class="slim-text-box-label" style="text-align:left; margin-left:10px;"><a click.delegate="bookOut()" style="">Book</a></span>
+                        </div>
+
+                        <!-- Courier Section after Stuart ID is set -->
+                        <div if.bind="sampleRequest.shippingOut.stuartJobId" class="grid-block shrink">
+                            <div class="inline-label">
+                                <span class="slim-text-box-label">Courier</span>
+
+                                <input class="to-u-c slim-text-box" value.bind="sampleRequest.courierOut" disabled="disabled" style="width:169px">
+                            </div>
+                        </div>
+
+                        <!-- Pickup Date/Time for Stuart -->
+                        <div if.bind="sampleRequest.courierOut=='Pashion Courier'" class="grid-block shrink">
+                            <div class="inline-label">
+                                <span class="slim-text-box-label">Pickup Date</span>
+                                <input if.bind="(!sampleRequest.shippingOut.stuartJobId)" datepicker type="text" class="slim-text-box" value.bind="sampleRequest.pickupDate | viewDateFormat">
+                                <input if.bind="sampleRequest.shippingOut.stuartJobId" type="text" class="slim-text-box" value.bind="sampleRequest.pickupDate | viewDateFormat" disabled="disabled">
+                            </div>
+                        </div>
+
+                        <div if.bind="((sampleRequest.courierOut=='Pashion Courier') && (!sampleRequest.shippingOut.stuartJobId))" class="grid-block shrink">
+                            <div class="inline-label">
+                                <span class=" slim-text-box-label">Pickup Time</span>
+                                <form-select-sr class="to-u-c" name="pickupTime" selected.two-way="sampleRequest.pickupTime" options.bind="times"></form-select-sr>
+                            </div>
+                        </div>
+
+                        <div if.bind="((sampleRequest.courierOut=='Pashion Courier') && (sampleRequest.shippingOut.stuartJobId))" class="grid-block shrink">
+                            <div class="inline-label">
+                                <span class=" slim-text-box-label">Pickup Time</span>
+                                <input class="to-u-c slim-text-box" name="pickupTime" value.bind="sampleRequest.pickupTime" disabled="disabled" style="width:169px">
+                            </div>
                         </div>
 
                         <!--  split -->
-                        <div class="grid-content shrink" style="margin-bottom:0.5rem;">
-                            <span class="inline-label">
-                            <span class=" slim-text-box-label">Split</span>
-                            <form-select-sr class="to-u-c" name="paymentOut" selected.two-way="sampleRequest.paymentOut" options.bind="payment"></form-select-sr>
-                            </span>
+                        <div if.bind="(!sampleRequest.courierOut.sampleRequest.shippingOut.stuartJobId)" class="grid-block shrink">
+                            <div class="inline-label">
+                                <span class=" slim-text-box-label">Split</span>
+                                <form-select-sr class="to-u-c" name="paymentOut" selected.two-way="sampleRequest.paymentOut" options.bind="payment" width="169px"></form-select-sr>
+                            </div>
+                        </div>
+                        <div if.bind="sampleRequest.courierOut.sampleRequest.shippingOut.stuartJobId" class="grid-block shrink">
+                            <div class="inline-label">
+                                <span class=" slim-text-box-label">Split</span>
+                                <input class="to-u-c" name="paymentOut" value.bind="sampleRequest.paymentOut">
+                            </div>
+                        </div>
+
+                        <!-- ID -->
+                        <div if.bind="sampleRequest.courierOut=='Pashion Courier'" class="grid-block shrink">
+                            <div class="inline-label">
+                                <span class="slim-text-box-label">ID</span>
+                                <input type="text" disabled="disabled" class="slim-text-box" value.bind="sampleRequest.shippingOut.stuartJobId">
+                            </div>
                         </div>
                     </div>
 
@@ -331,7 +378,7 @@
                         </div>
 
                         <!-- ID -->
-                        <div class="grid-block shrink">
+                        <div if.bind="sampleRequest.courierOut.sampleRequest.shippingReturn.stuartJobId" class="grid-block shrink">
                             <div class="inline-label">
                                 <span class="slim-text-box-label">ID</span>
                                 <input type="text" disabled="disabled" class="slim-text-box" value.bind="sampleRequest.shippingReturn.stuartJobId">
