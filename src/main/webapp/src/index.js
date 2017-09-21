@@ -1232,7 +1232,7 @@ export class Index {
         this.sampleRequestService.sampleRequestStatus = 'created';
         this.sampleRequestService.getSampleRequest(id)
             .then(result =>{
-                this.alertP("Now Picking For "+id)
+                this.alertP("Picking For "+id)
             });
     }
     finishPicking(id) {

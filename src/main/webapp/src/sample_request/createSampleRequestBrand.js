@@ -596,10 +596,18 @@ export class CreateSampleRequestBrand {
     this.controller.close();
   }
 
-  cancelKeepSR(){
+  cancelKeepSR(id){
     //this.sampleRequestService.cancelCurrentSampleRequest();
+    this.sampleRequestService.sampleRequestStatus = 'created';
+    this.sampleRequestService.getSampleRequest(id)
+      .then(result =>{
+          this.alertP("Picking For "+id)
+      });
     this.controller.close();
   }
+
+
+
   // While picking this saves the updated items in the trolley
   continue() {
     this.saveTrolley();
