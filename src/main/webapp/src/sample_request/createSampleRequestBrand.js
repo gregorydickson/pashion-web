@@ -13,12 +13,13 @@ import $ from 'jquery';
 import { computedFrom } from 'aurelia-framework';
 import { SampleRequestService } from 'services/sampleRequestService';
 import { SearchableItemService } from 'services/searchableItemService';
+import { busy } from 'services/busy';
 
 
 
 @inject(HttpClient, DialogController, BrandService, 
     DialogService, UserService, OutReasonService, 
-    PRAgencyService,SampleRequestService, SearchableItemService)
+    PRAgencyService,SampleRequestService, SearchableItemService, busy)
 export class CreateSampleRequestBrand {
 
   
@@ -54,11 +55,11 @@ export class CreateSampleRequestBrand {
 
   sampleRequest = null;
 
-
+  times = [];
   startDay = '';
   endDay = '';
 
-  constructor(http, controller, brandService, dialogService,userService, outReasonService, PRAgencyService,sampleRequestService, searchableItemService) {
+  constructor(http, controller, brandService, dialogService,userService, outReasonService, PRAgencyService,sampleRequestService, searchableItemService, busy) {
     this.controller = controller;
     console.log("createSampleRequestBrand");
     http.configure(config => {
@@ -73,6 +74,7 @@ export class CreateSampleRequestBrand {
     this.outReasonService = outReasonService;
     this.sampleRequestService = sampleRequestService;
     this.searchableItemService = searchableItemService;
+    this.busy = busy;
   }
 
 
@@ -133,6 +135,7 @@ export class CreateSampleRequestBrand {
         this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => {
           this.courier = courier;
         }),
+        this.http.fetch('/dashboard/times').then(response => response.json()).then(times => this.times = times),
         this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => {
           this.payment = payment;
         })

@@ -1,6 +1,7 @@
 <template>
     <require from="./sort"></require>
     <require from="../common/viewDateFormatter"></require>
+    <require from="calendars/datepicker"></require>
     <require from="../common/formSelectSampleRequest"></require>
     <require from="../common/formSelectSample"></require>
     <require from="../common/formSelectObject"></require>
@@ -257,7 +258,7 @@
 
 
                         <!-- generic drown down used, so no ME. Consider a bespoke one -->
-                        <div class="grid-content shrink">
+                        <div if.bind="(!sampleRequest.shippingReturn.stuartJobId)" class="grid-content shrink">
                             <span class="inline-label">
                                 <span class="slim-text-box-label">Return To</span>
 
@@ -267,20 +268,77 @@
                             </span>
                         </div>
 
-                        <!-- Courier Section -->
-                        <div class="grid-content shrink">
-                            <span class="inline-label">
-                            <span class="slim-text-box-label">Courier</span>
-                            <form-select-sr class="to-u-c" name="courierReturn" selected.two-way="sampleRequest.courierReturn" options.bind="courier"></form-select-sr>
-                            </span>
+                        <!-- Return To if stuart booked -->
+                        <div if.bind="sampleRequest.shippingReturn.stuartJobId" class="grid-block shrink">
+                            <div class="inline-label">
+                                <span class="slim-text-box-label">Return To</span>
+                                <input class="to-u-c slim-text-box" name="courierOut" value.bind="sampleRequest.returnToAddress.name" disabled="disabled" style="width:169px">
+                            </div>
                         </div>
 
-                        <div class="grid-content shrink">
-                            <span class="inline-label">
-                            <span class=" slim-text-box-label">Split</span>
-                            <form-select-sr class="to-u-c" name="paymentReturn" selected.two-way="sampleRequest.paymentReturn" options.bind="payment"></form-select-sr>
-                            </span>
+                        <!-- Courier Section -->
+                        <div if.bind="(!sampleRequest.shippingReturn.stuartJobId)" class="grid-block shrink">
+                            <div class="inline-label">
+                                <span class="slim-text-box-label">Courier</span>
+                                <form-select-sr class="to-u-c" name="courierOut" selected.two-way="sampleRequest.courierReturn" options.bind="courier"></form-select-sr>
+                            </div>
+                            <span id="bookReturn" if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="slim-text-box-label" style="text-align:left; margin-left:10px;"><a click.delegate="bookReturn()" style="">Book</a></span>
                         </div>
+
+                        <!-- Courier Section after Stuart booking -->
+                        <div if.bind="sampleRequest.shippingReturn.stuartJobId" class="grid-block shrink">
+                            <div class="inline-label">
+                                <span class="slim-text-box-label">Courier</span>
+                                <input class="to-u-c slim-text-box" name="courierOut" value.bind="sampleRequest.courierReturn" disabled="disabled" style="width:169px">
+                            </div>
+                        </div>
+
+                        <!-- Pickup Date for Stuart -->
+                        <div if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="grid-block shrink">
+                            <div class="inline-label">
+                                <span class="slim-text-box-label">Pickup Date</span>
+                                <input if.bind="(!sampleRequest.shippingReturn.stuartJobId)" datepicker type="text" class="slim-text-box" value.bind="sampleRequest.pickupDateReturn  | viewDateFormat">
+                                <input if.bind="sampleRequest.shippingReturn.stuartJobId" type="text" class="slim-text-box" value.bind="sampleRequest.pickupDateReturn  | viewDateFormat" disabled="disabled">
+                            </div>
+                        </div>
+
+                        <!-- Pickup Time for Stuart -->
+                        <div if.bind="((sampleRequest.courierReturn=='Pashion Courier') && (!sampleRequest.shippingReturn.stuartJobId))" class="grid-block shrink">
+                            <div class="inline-label">
+                                <span class=" slim-text-box-label">Pickup Time</span>
+                                <form-select-sr class="to-u-c" name="pickupTime" selected.two-way="sampleRequest.pickupTimeReturn" options.bind="times"></form-select-sr>
+                            </div>
+                        </div>
+                        <div if.bind="((sampleRequest.courierReturn=='Pashion Courier') && sampleRequest.shippingReturn.stuartJobId)" class="grid-block shrink">
+                            <div class="inline-label">
+                                <span class=" slim-text-box-label">Pickup Time</span>
+                                <input class="to-u-c slim-text-box" name="pickupTime" value.bind="sampleRequest.pickupTimeReturn" disabled="disabled" style="width:169px">
+                            </div>
+                        </div>
+
+                        <!--  split -->
+                        <div if.bind="(!sampleRequest.courierOut.sampleRequest.shippingReturn.stuartJobId)" class="grid-block shrink">
+                            <div class="inline-label">
+                                <span class=" slim-text-box-label">Split</span>
+                                <form-select-sr class="to-u-c" name="paymentOut" selected.two-way="sampleRequest.paymentReturn" options.bind="payment" width="169px"></form-select-sr>
+                            </div>
+                        </div>
+                        <div if.bind="sampleRequest.courierOut.sampleRequest.shippingReturn.stuartJobId" class="grid-block shrink">
+                            <div class="inline-label">
+                                <span class=" slim-text-box-label">Split</span>
+                                <input class="to-u-c" name="paymentReturn" value.bind="sampleRequest.paymentReturn">
+                            </div>
+                        </div>
+
+                        <!-- ID -->
+                        <div class="grid-block shrink">
+                            <div class="inline-label">
+                                <span class="slim-text-box-label">ID</span>
+                                <input type="text" disabled="disabled" class="slim-text-box" value.bind="sampleRequest.shippingReturn.stuartJobId">
+                            </div>
+                        </div>
+
+
 
                         <!--  email -->
                         <div class="grid-content shrink" style="margin-bottom:0.5rem;">
@@ -289,8 +347,8 @@
                             <form-select-sr class="to-u-c" name="emailOptions" selected.two-way="email" options.bind="emailOptions" place-holder="NONE"></form-select-sr>
                             </span>
                             <span if.bind="email" class="inline-label">
-                            <span class=" slim-text-box-label">Email</span>
-                            <input type="text" class="slim-text-box" value.bind="sampleRequest.emailNotification">
+                                <span class=" slim-text-box-label">Email</span>
+                                <input type="text" class="slim-text-box" value.bind="sampleRequest.emailNotification">
                             </span>
                         </div>
 
