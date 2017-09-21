@@ -27,11 +27,12 @@ export class CreateSampleRequestBrand {
   endCalendar = null;
   isLoading = true;
   @bindable startFinalize = false;
+  @bindable edit = false;
   selectAll = true;
   required = [];
 
   availableReturnToItems = [];
-  selectedReturnToItems = [''];
+  selectedReturnToItems = [""];
 
   hideCalendar = false;
   @bindable user = {};
@@ -83,7 +84,15 @@ export class CreateSampleRequestBrand {
     var queryStringEnd = DateFormat.urlString(this.sampleRequest.endOffset, 1)+ '&searchType=brand';
     var queryStringStart = DateFormat.urlString(this.sampleRequest.startOffset, 1)+ '&searchType=brand';
 
-    if(this.sampleRequest.requestStatusBrand === 'Finalizing' || this.sampleRequest.requestStatusBrand === 'Approved'){
+    if(this.sampleRequest.requestStatusBrand === 'Finalizing' ||
+     this.sampleRequest.requestStatusBrand === 'Approved' ||
+     this.sampleRequestService.sampleRequestStatus == 'edit'){
+      
+      console.log("sr status:"+this.sampleRequestService.sampleRequestStatus);
+      if(this.sampleRequestService.sampleRequestStatus == 'edit')
+        this.edit = true;
+      
+
       this.startFinalize = true;
       this.sampleRequest.datesSaved = true;
       
@@ -170,8 +179,10 @@ export class CreateSampleRequestBrand {
   attached() {
     this.isLoading = false;
     console.log("dates saved:"+this.sampleRequest.datesSaved);
+    if(this.sampleRequest.addressDestination){
+      this.selectedAddress = this.sampleRequest.addressDestination;
+    }
 
-    
     if(this.currentItem)
       this.checkSamples();
     ga('set', 'page', '/createSampleRequestBrand.html');
@@ -207,6 +218,13 @@ export class CreateSampleRequestBrand {
       let selectedReturnTo = availableReturnToItems.find(item => item.id == defaultAddress.id);
       this.sampleRequest.returnToAddress = selectedReturnTo.id;
       this.selectedReturnToItems = [selectedReturnTo.id];
+    }
+
+    if(this.sampleRequest.returnToAddress){
+      let availableReturnToItems = this.availableReturnToItems;
+      let selectedReturnTo = availableReturnToItems.find(item => item.id == this.sampleRequest.returnToAddress.id);
+      this.selectedReturnToItems = [selectedReturnTo.id];
+      
     }
   }
 
@@ -261,7 +279,7 @@ export class CreateSampleRequestBrand {
     console.log('onSelectAddressChangeCallback() called:', event.detail.value);
     if (event.detail.value.selectedAddress) {
       this.selectedAddress = event.detail.value.selectedAddress;
-      this.sampleRequest.deliverTo = event.detail.value.selectedAddress
+      this.sampleRequest.deliverTo = event.detail.value.selectedAddress;
     }
   }
 
@@ -465,13 +483,7 @@ export class CreateSampleRequestBrand {
     return false
   }
 
-  prepareToSave() {
-    if(this.selectedAddress)
-      this.sampleRequest.deliverTo = this.selectedAddress;
-    if (this.user.type=="prAgency"){
-      this.sampleRequest["prAgency"] = this.user.prAgency.id
-    }
-  }
+  
 
   //TODO: do Stuart methods/UI
   bookOut() {
@@ -595,9 +607,18 @@ export class CreateSampleRequestBrand {
   }
 
 
+
   // save address information, etc.
-  update(){
+  submit(){
     this.sampleRequest.requestStatusBrand = "Approved"
+    this.sampleRequestService.updateTrolley(this.sampleRequest)
+      .then(result =>{
+        this.alertP("Request "+ this.sampleRequest.id + " Updated")
+          .then(this.controller.close());
+      });
+  }
+
+  save(){
     this.sampleRequestService.updateTrolley(this.sampleRequest)
       .then(result =>{
         this.alertP("Request "+ this.sampleRequest.id + " Updated")
