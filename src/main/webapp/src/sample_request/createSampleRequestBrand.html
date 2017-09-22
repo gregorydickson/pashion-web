@@ -15,8 +15,8 @@
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
 
-                    <span if.bind="(!sampleRequest.requestStatusBrand && sampleRequest.datesSaved)" class="ui-text-label-m-broad">PICK SAMPLES FOR NEW BOOKING</span>
-                    <span if.bind="(!sampleRequest.datesSaved)" class="ui-text-label-m-broad">SET DATES FOR NEW BOOKING ${sampleRequest.id}</span>
+                    <span if.bind="(!sampleRequest.id)" class="ui-text-label-m-broad">PICK SAMPLES FOR NEW BOOKING</span>
+                    <span if.bind="sampleRequest.id" class="ui-text-label-m-broad">SET DATES FOR NEW BOOKING ${sampleRequest.id}</span>
                     <span if.bind="(sampleRequest.datesSaved && sampleRequest.requestStatusBrand == 'Not Submitted')" class="ui-text-label-m-broad">PICK SAMPLES FOR BOOKING ${sampleRequest.id}</span>
                     <span if.bind="(sampleRequest.datesSaved && sampleRequest.requestStatusBrand == 'Finalizing')" class="ui-text-label-m-broad">FINALIZING BOOKING ${sampleRequest.id}</span>
                     <span if.bind="(sampleRequest.datesSaved && sampleRequest.requestStatusBrand == 'Approved')" class="ui-text-label-m-broad">EDIT BOOKING ${sampleRequest.id}</span>
