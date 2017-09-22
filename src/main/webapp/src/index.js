@@ -1134,8 +1134,26 @@ export class Index {
 
     createSampleRequestBrand(itemId) {
         // this.lookMenu(itemId);
+        console.log ("index.createSampleRequestBrand: " + itemId);
+        let bookingsToUpdate = this.bookings;
+        let sampleRequestService = this.sampleRequestService;
+
         this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: itemId, lock: true })
             .then(response => {
+
+                console.log("reloading sample requests");
+                    sampleRequestService.getSampleRequests(true).then(newBookings => {
+                        while (bookingsToUpdate.length > 0) {
+                            bookingsToUpdate.pop();
+                        }
+                        newBookings.forEach(item => {
+                            console.log("id:"+item.id + " status:"+item.requestStatusBrand);
+                            bookingsToUpdate.push(item);
+                        });
+                    });
+
+                console.log("current SR " + this.sampleRequestService.sampleRequest.id);
+                // this.alertP("Picking For "+sr.id)
 
             });
     }
@@ -1243,7 +1261,7 @@ export class Index {
         this.sampleRequestService.sampleRequestStatus = 'none';
         this.sampleRequestService.finishPicking(id)
             .then(result =>{
-                this.alertP("Submitted Request "+id)
+                this.alertP("Submitted Booking Request "+id)
             });
     }
 
@@ -1341,7 +1359,7 @@ export class Index {
                     toastr.options.preventDuplicates = true;
                     toastr.options.closeButton = true;
                     toastr.options.timeOut = 0;
-                    toastr.info('Request ' + message.message + " updated");
+                    toastr.info('Booking ' + message.message + " updated");
                 }
             }
         }

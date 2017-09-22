@@ -556,7 +556,7 @@ export class Requestman {
           toastr.options.preventDuplicates = true;
           toastr.options.closeButton = true;
           toastr.options.timeOut = 0;
-          toastr.info('Request ' + message.message + " updated");
+          toastr.info('Booking ' + message.message + " updated");
         }
       }
     }
@@ -639,7 +639,7 @@ export class Requestman {
     this.sampleRequestService.sampleRequestStatus = 'none';
     this.sampleRequestService.submitRequest(id)
         .then(result =>{
-            this.alertP("Submitted Request "+id)
+            this.alertP("Submitted Booking Request"+id)
         });
     }
 

@@ -624,7 +624,7 @@ export class CreateSampleRequestBrand {
     this.sampleRequest.requestStatusBrand = "Approved"
     this.sampleRequestService.updateTrolley(this.sampleRequest)
       .then(result =>{
-        this.alertP("Request "+ this.sampleRequest.id + " Updated")
+        this.alertP("Booking "+ this.sampleRequest.id + " Updated")
           .then(this.controller.close());
       });
   }
@@ -632,7 +632,7 @@ export class CreateSampleRequestBrand {
   save(){
     this.sampleRequestService.updateTrolley(this.sampleRequest)
       .then(result =>{
-        this.alertP("Request "+ this.sampleRequest.id + " Updated")
+        this.alertP("Booking "+ this.sampleRequest.id + " Updated")
           .then(this.controller.close());
       });
   }
