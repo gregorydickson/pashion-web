@@ -1235,6 +1235,7 @@ export class Index {
                 this.alertP("Picking For "+id)
             });
     }
+
     finishPicking(id) {
         this.closeSampleRequestMenu(id);
         this.sampleRequestService.sampleRequestStatus = 'none';
@@ -1242,6 +1243,12 @@ export class Index {
             .then(result =>{
                 this.alertP("Submitted Request "+id)
             });
+    }
+
+    stopPicking(id) {
+        this.closeSampleRequestMenu(id);
+        this.sampleRequestService.sampleRequestStatus = 'none';
+        this.sampleRequestService.stopPicking();
     }
 
 

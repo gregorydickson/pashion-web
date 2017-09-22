@@ -25,6 +25,12 @@ export class SampleRequestService{
       }
 
     }
+
+    stopPicking () {
+      this.sampleRequest = null;
+      this.sampleRequestStatus = 'none';
+    }
+    
     cancelCurrentSampleRequest(){
       if(this.sampleRequest.id){
         //TODO: delete on server

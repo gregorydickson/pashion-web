@@ -623,14 +623,22 @@
                                                     (sampleRequestService.sampleRequest.id != booking.id)
                                                 )"
                                                 class="look-menu-item"><a click.delegate="picking(booking.id)" href="#" class="look-menu-link">Continue Picking</a></li>
+
+                                                <li if.bind="(
+                                                    (booking.requestStatusBrand == 'Not Submitted') &&
+                                                    (sampleRequestService.sampleRequest.id == booking.id)
+                                                )"
+                                                class="look-menu-item"><a click.delegate="stopPicking(booking.id)" href="#" class="look-menu-link">Stop Picking</a></li>
+
+
                                                 <li if.bind="(
                                                     (booking.requestStatusBrand == 'Not Submitted' && booking.searchableItems.length != 0)
                                                 )"
-                                                class="look-menu-item"><a click.delegate="finishPicking(booking.id)" href="#" class="look-menu-link">Finish Picking</a></li>
+                                                class="look-menu-item"><a click.delegate="finishPicking(booking.id)" href="#" class="look-menu-link">Submit Booking</a></li>
                                                 <li if.bind="(
                                                     (booking.requestStatusBrand == 'Picking' && booking.searchableItems.length != 0)
                                                 )"
-                                                class="look-menu-item"><a click.delegate="finishPicking(booking.id)" href="#" class="look-menu-link">Finish Picking</a></li>
+                                                class="look-menu-item"><a click.delegate="finishPicking(booking.id)" href="#" class="look-menu-link">Submit Booking</a></li>
                                                 
                                                 <!-- Delete -->
                                                 <li class="look-menu-item"><a click.delegate="deleteSampleRequest(booking.id)" href="#" class="look-menu-link">Delete Booking</a></li>
