@@ -1214,6 +1214,8 @@ export class Index {
             .then(result =>{
                 this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: id, lock: true })
                     .then(response => {
+                        this.sampleRequestService.sampleRequestStatus = 'none';
+                        this.sampleRequestService.stopPicking();
                     });
             });
     }
