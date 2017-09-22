@@ -323,10 +323,10 @@
                                                             <li if.bind="(
                                                                 (booking.requestStatusBrand == 'Not Submitted' && booking.searchableItems.length != 0)
                                                             )"
-                                                            class="look-menu-item"><a click.delegate="submit(booking.id)" href="#" class="look-menu-link">Finish Picking</a></li>
+                                                            class="look-menu-item"><a click.delegate="submit(booking.id)" href="#" class="look-menu-link">Submit Booking</a></li>
 
                                                             <!-- Delete -->
-                                                            <li class="look-menu-item"><a click.delegate="deleteSampleRequest($index,booking.id)" href="#" class="look-menu-link">Delete Request</a></li>
+                                                            <li class="look-menu-item"><a click.delegate="deleteSampleRequest($index,booking.id)" href="#" class="look-menu-link">Delete Booking</a></li>
                                                         </ul>
 
                                                         <!-- Press menu options -->
@@ -474,7 +474,7 @@
                                 
                                 <!-- Empty notice -->
                                 <div if.bind="(numberOfRequests == 0)">
-                                    <span style="margin-top: 2rem; display:block; text-align:center;"> - No Requests Match Your Search - </span>
+                                    <span style="margin-top: 2rem; display:block; text-align:center;"> - No Bookings Match Your Search - </span>
                                 </div>
                             </div>
                        
