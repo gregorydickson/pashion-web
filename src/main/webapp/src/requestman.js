@@ -553,7 +553,7 @@ export class Requestman {
               bookingsToUpdate.push(item);
             });
           });
-          toastr.options.preventDuplicates = false;
+          toastr.options.preventDuplicates = true;
           toastr.options.closeButton = true;
           toastr.options.timeOut = 0;
           toastr.info('Request ' + message.message + " updated");

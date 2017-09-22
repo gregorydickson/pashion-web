@@ -1338,7 +1338,7 @@ export class Index {
                             bookingsToUpdate.push(item);
                         });
                     });
-                    toastr.options.preventDuplicates = false;
+                    toastr.options.preventDuplicates = true;
                     toastr.options.closeButton = true;
                     toastr.options.timeOut = 0;
                     toastr.info('Request ' + message.message + " updated");
@@ -1363,7 +1363,7 @@ export class Index {
 
                 var channelName = message.channel;
                 if (channelName === channel2) {
-                    toastr.options.preventDuplicates = false;
+                    toastr.options.preventDuplicates = true;
                     toastr.options.closeButton = true;
                     toastr.options.timeOut = 0;
                     toastr.info(message.message + ' (' + time + ')');
