@@ -604,7 +604,7 @@ export class CreateSampleRequestBrand {
     this.sampleRequestService.sampleRequestStatus = 'created';
     this.sampleRequestService.getSampleRequest(id)
       .then(result =>{
-          this.alertP("Picking For "+id)
+          //this.alertP("Picking For "+id)
       });
     this.controller.close();
   }

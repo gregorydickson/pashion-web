@@ -457,7 +457,7 @@
                 <div class="grid-content accordion">
                     <table class="" style="margin-bottom:0px; margin-top: 1rem; table-layout:fixed;">
                         <tr>
-                            <td class="accordion ${(sampleRequest.searchableItems.length == 0) ? 'red-deco' : ''}" style="width:400px;">SAMPLES IN BOOKING</td>
+                            <td class="accordion ${(sampleRequest.searchableItems.length == 0) ? 'red-deco' : ''}" style="width:400px;">SAMPLES IN BOOKING (${sampleRequest.searchableItems.length})</td>
                         </tr>
                     </table>
                 </div>
@@ -465,7 +465,7 @@
                 <div class="grid-block accordion" style="overflow-x:hidden; max-height:250px;" >
                     
                     <div class="grid-content">
-                        <table  class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of sampleRequest.searchableItems | sort: 'id': 'ascending'">
+                        <table  class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of sampleRequest.searchableItemsProposed | sort: 'id': 'ascending'">
                             <tr style="height:25px;"> 
                                 <td class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:110px; max-width:110px;">${sample.brand.name}</td>
 
