@@ -81,18 +81,18 @@
                     <div if.bind="startFinalize">
                         <!-- Requested -->
                         <div class="grid-content shrink">
-                            <div class="inline-label">
+                            <span class="inline-label">
                                 <span class="slim-text-box-label">START DATE</span>
                                 <span class="slim-text-box">
                                     ${sampleRequest.bookingStartDate | viewDateFormat}
                                 </span>
-                            </div>
+                            </span>
                         </div>
                         <!-- Required By -->
                         <div class="grid-content shrink">
                             <span class="inline-label">
                                 <span class="slim-text-box-label">Required By</span>
-                                <form-select-sr class="to-u-c" name="requiredby" selected.bind="sampleRequest.requiredBy" options.bind="required"></form-select-sr>
+                                <form-select-sr class="slim-text-box" name="requiredby" selected.bind="sampleRequest.requiredBy" options.bind="required"></form-select-sr>
                             </span>
                         </div>
 
@@ -104,140 +104,140 @@
                         <!-- Name-->
                         <div class="grid-content shrink">
                             <span class="inline-label" style="margin-bottom: 0px;">
-                            <span class="slim-text-box-label" style="">Attention</span>
-                            <div>
-                                <span class="slim-text-box">${selectedAddress.name}
-                                </span>
-                            </div>
+                                <span class="slim-text-box-label" style="">Attention</span>
+                                <div>
+                                    <span class="slim-text-box">${selectedAddress.name}
+                                    </span>
+                                </div>
                             </span>
                         </div>
                         <!-- Contact Phone-->
                         <div class="grid-content shrink">
                             <span class="inline-label" style="margin-bottom: 0px;">
-                            <span class="slim-text-box-label" style="">Phone</span>
-                            <div>
-                                <span class="slim-text-box">${selectedAddress.contactPhone}
-                                </span>
-                            </div>
+                                <span class="slim-text-box-label" style="">Phone</span>
+                                <div>
+                                    <span class="slim-text-box">${selectedAddress.contactPhone}
+                                    </span>
+                                </div>
                             </span>
                         </div>
                         <!-- Company-->
                         <div class="grid-content shrink">
                             <span class="inline-label" style="margin-bottom: 0px;">
-                            <span class="slim-text-box-label" style="">Company</span>
-                            <div>
-                                <span class="slim-text-box"> ${selectedAddress.company}
-                                </span>
-                            </div>
+                                <span class="slim-text-box-label" style="">Company</span>
+                                <div>
+                                    <span class="slim-text-box"> ${selectedAddress.company}
+                                    </span>
+                                </div>
                             </span>
                         </div>
                         <!-- Address 1 -->
                         <div class="grid-content shrink">
                             <span class="inline-label" style="margin-bottom: 0px;">
-                            <span class="slim-text-box-label" style="">Address 1</span>
-                            <div>
-                                <span class="slim-text-box"> ${selectedAddress.address1}
-                            </div>
+                                <span class="slim-text-box-label" style="">Address 1</span>
+                                <div>
+                                    <span class="slim-text-box"> ${selectedAddress.address1}
+                                </div>
                             </span>
                         </div>
                         <!-- City -->
                         <div class="grid-content shrink">
                             <span class="inline-label" style="margin-bottom: 0px;">
-                            <span class="slim-text-box-label" style="">City</span>
-                            <div>
-                                <span class="slim-text-box"> ${selectedAddress.city}
-                            </div>
+                                <span class="slim-text-box-label" style="">City</span>
+                                <div>
+                                    <span class="slim-text-box"> ${selectedAddress.city}
+                                </div>
                             </span>
                         </div>
                         <!-- Country -->
                         <div class="grid-content shrink">
                             <span class="inline-label" style="margin-bottom: 0px;">
-                            <span class="slim-text-box-label" style="">Country</span>
-                            <div>
-                                <span class="slim-text-box"> ${selectedAddress.country}
-                            </div>
+                                <span class="slim-text-box-label" style="">Country</span>
+                                <div>
+                                    <span class="slim-text-box"> ${selectedAddress.country}
+                                </div>
                             </span>
                         </div>
                         <!-- Postal Code -->
                         <div class="grid-content shrink">
                             <span class="inline-label" style="margin-bottom: 0px;">
-                            <span class="slim-text-box-label">Postal Code</span>
-                            <div>
-                                <span class="slim-text-box"> ${selectedAddress.postalCode}
-                            </div>
+                                <span class="slim-text-box-label">Postal Code</span>
+                                <div>
+                                    <span class="slim-text-box"> ${selectedAddress.postalCode}
+                                </div>
                             </span>
                         </div>
                         <!-- Comment  -->
                         <div class="grid-content shrink">
                             <span class="inline-label" style="margin-bottom: 0px;">
-                            <span class="slim-text-box-label">Comment</span>
-                            <div>
-                                <span class="slim-text-box"> ${selectedAddress.comment}
-                            </div>
+                                <span class="slim-text-box-label">Comment</span>
+                                <div>
+                                    <span class="slim-text-box"> ${selectedAddress.comment}
+                                </div>
                             </span>
                         </div>
 
-                           <!-- Courier Section -->
+                        <!-- Courier Section -->
                         <div if.bind="(!sampleRequest.shippingOut.stuartJobId)" class="grid-block shrink">
-                            <div class="inline-label">
+                            <span class="inline-label">
                                 <span class="slim-text-box-label">Courier</span>
-                                <form-select-sr class="to-u-c" name="courierOut" selected.two-way="sampleRequest.courierOut" options.bind="courier"></form-select-sr>
-                            </div>
+                                <form-select-sr class="slim-text-box" name="courierOut" selected.two-way="sampleRequest.courierOut" options.bind="courier"></form-select-sr>
+                            </span>
                             <span id="bookOut" if.bind="sampleRequest.courierOut=='Pashion Courier'" class="slim-text-box-label" style="text-align:left; margin-left:10px;"><a click.delegate="bookOut()" style="">Book</a></span>
                         </div>
 
                         <!-- Courier Section after Stuart ID is set -->
-                        <div if.bind="sampleRequest.shippingOut.stuartJobId" class="grid-block shrink">
-                            <div class="inline-label">
+                        <div if.bind="sampleRequest.shippingOut.stuartJobId" class="grid-content shrink">
+                            <span class="inline-label">
                                 <span class="slim-text-box-label">Courier</span>
 
-                                <input class="to-u-c slim-text-box" value.bind="sampleRequest.courierOut" disabled="disabled" style="width:169px">
-                            </div>
+                                <input class="slim-text-box" value.bind="sampleRequest.courierOut" disabled="disabled" >
+                            </span>
                         </div>
 
                         <!-- Pickup Date/Time for Stuart -->
-                        <div if.bind="sampleRequest.courierOut=='Pashion Courier'" class="grid-block shrink">
-                            <div class="inline-label">
+                        <div if.bind="sampleRequest.courierOut=='Pashion Courier'" class="grid-content shrink">
+                            <span class="inline-label">
                                 <span class="slim-text-box-label">Pickup Date</span>
                                 <input if.bind="(!sampleRequest.shippingOut.stuartJobId)" datepicker type="text" class="slim-text-box" value.bind="sampleRequest.pickupDate | viewDateFormat">
                                 <input if.bind="sampleRequest.shippingOut.stuartJobId" type="text" class="slim-text-box" value.bind="sampleRequest.pickupDate | viewDateFormat" disabled="disabled">
-                            </div>
+                            </span>
                         </div>
 
-                        <div if.bind="((sampleRequest.courierOut=='Pashion Courier') && (!sampleRequest.shippingOut.stuartJobId))" class="grid-block shrink">
-                            <div class="inline-label">
-                                <span class=" slim-text-box-label">Pickup Time</span>
-                                <form-select-sr class="to-u-c" name="pickupTime" selected.two-way="sampleRequest.pickupTime" options.bind="times"></form-select-sr>
-                            </div>
+                        <div if.bind="((sampleRequest.courierOut=='Pashion Courier') && (!sampleRequest.shippingOut.stuartJobId))" class="grid-content shrink">
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">Pickup Time</span>
+                                <form-select-sr class="slim-text-box" name="pickupTime" selected.two-way="sampleRequest.pickupTime" options.bind="times"></form-select-sr>
+                            </span>
                         </div>
 
-                        <div if.bind="((sampleRequest.courierOut=='Pashion Courier') && (sampleRequest.shippingOut.stuartJobId))" class="grid-block shrink">
-                            <div class="inline-label">
+                        <div if.bind="((sampleRequest.courierOut=='Pashion Courier') && (sampleRequest.shippingOut.stuartJobId))" class="grid-content shrink">
+                            <span class="inline-label">
                                 <span class=" slim-text-box-label">Pickup Time</span>
-                                <input class="to-u-c slim-text-box" name="pickupTime" value.bind="sampleRequest.pickupTime" disabled="disabled" style="width:169px">
-                            </div>
+                                <input class="" name="pickupTime" value.bind="sampleRequest.pickupTime" disabled="disabled" style="">
+                            </span>
                         </div>
 
                         <!--  split -->
-                        <div if.bind="(!sampleRequest.courierOut.sampleRequest.shippingOut.stuartJobId)" class="grid-block shrink">
-                            <div class="inline-label">
+                        <div if.bind="(!sampleRequest.courierOut.sampleRequest.shippingOut.stuartJobId)" class="grid-content shrink">
+                            <span class="inline-label">
                                 <span class=" slim-text-box-label">Split</span>
-                                <form-select-sr class="to-u-c" name="paymentOut" selected.two-way="sampleRequest.paymentOut" options.bind="payment" width="169px"></form-select-sr>
-                            </div>
+                                <form-select-sr class="to-u-c" name="paymentOut" selected.two-way="sampleRequest.paymentOut" options.bind="payment" ></form-select-sr>
+                            </span>
                         </div>
-                        <div if.bind="sampleRequest.courierOut.sampleRequest.shippingOut.stuartJobId" class="grid-block shrink">
-                            <div class="inline-label">
+                        <div if.bind="sampleRequest.courierOut.sampleRequest.shippingOut.stuartJobId" class="grid-content shrink">
+                            <span class="inline-label">
                                 <span class=" slim-text-box-label">Split</span>
-                                <input class="to-u-c" name="paymentOut" value.bind="sampleRequest.paymentOut">
-                            </div>
+                                <input class="slim-text-box" name="paymentOut" value.bind="sampleRequest.paymentOut">
+                            </span>
                         </div>
 
                         <!-- ID -->
-                        <div if.bind="sampleRequest.courierOut=='Pashion Courier'" class="grid-block shrink">
-                            <div class="inline-label">
+                        <div if.bind="sampleRequest.courierOut=='Pashion Courier'" class="grid-content shrink">
+                            <span class="inline-label">
                                 <span class="slim-text-box-label">ID</span>
                                 <input type="text" disabled="disabled" class="slim-text-box" value.bind="sampleRequest.shippingOut.stuartJobId">
-                            </div>
+                            </span>
                         </div>
                     </div>
 
@@ -288,18 +288,18 @@
                     <div if.bind="startFinalize">
                          <!-- Due -->
                         <div class="grid-content shrink">
-                            <div class="inline-label">
+                            <span class="inline-label">
                                 <span class="slim-text-box-label">END DATE</span>
                                 <span class="slim-text-box">
                                     ${sampleRequest.bookingEndDate | viewDateFormat}
                                 </span>
-                            </div>
+                            </span>
                         </div>
                         <!-- Return By Time -->
                         <div class="grid-content shrink">
                             <span class="inline-label">
-                            <span class="slim-text-box-label">Return By</span>
-                            <form-select-sr class="to-u-c" name="returnBy" selected.bind="sampleRequest.returnBy" options.bind="returnBy"></form-select-sr>
+                                <span class="slim-text-box-label">Return By</span>
+                                <form-select-sr class="slim-text-box" name="returnBy" selected.bind="sampleRequest.returnBy" options.bind="returnBy"></form-select-sr>
                             </span>
                         </div>
 
@@ -316,73 +316,73 @@
                         </div>
 
                         <!-- Return To if stuart booked -->
-                        <div if.bind="sampleRequest.shippingReturn.stuartJobId" class="grid-block shrink">
-                            <div class="inline-label">
+                        <div if.bind="sampleRequest.shippingReturn.stuartJobId" class="grid-content shrink">
+                            <span class="inline-label">
                                 <span class="slim-text-box-label">Return To</span>
                                 <input class="to-u-c slim-text-box" name="courierOut" value.bind="sampleRequest.returnToAddress.name" disabled="disabled" style="width:169px">
-                            </div>
+                            </span>
                         </div>
 
                         <!-- Courier Section -->
-                        <div if.bind="(!sampleRequest.shippingReturn.stuartJobId)" class="grid-block shrink">
-                            <div class="inline-label">
+                        <div if.bind="(!sampleRequest.shippingReturn.stuartJobId)" class="grid-content shrink">
+                            <span class="inline-label">
                                 <span class="slim-text-box-label">Courier</span>
                                 <form-select-sr class="to-u-c" name="courierOut" selected.two-way="sampleRequest.courierReturn" options.bind="courier"></form-select-sr>
-                            </div>
+                            </span>
                             <span id="bookReturn" if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="slim-text-box-label" style="text-align:left; margin-left:10px;"><a click.delegate="bookReturn()" style="">Book</a></span>
                         </div>
 
                         <!-- Courier Section after Stuart booking -->
-                        <div if.bind="sampleRequest.shippingReturn.stuartJobId" class="grid-block shrink">
-                            <div class="inline-label">
+                        <div if.bind="sampleRequest.shippingReturn.stuartJobId" class="grid-content shrink">
+                            <span class="inline-label">
                                 <span class="slim-text-box-label">Courier</span>
                                 <input class="to-u-c slim-text-box" name="courierOut" value.bind="sampleRequest.courierReturn" disabled="disabled" style="width:169px">
-                            </div>
+                            </span>
                         </div>
 
                         <!-- Pickup Date for Stuart -->
-                        <div if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="grid-block shrink">
-                            <div class="inline-label">
+                        <div if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="grid-content shrink">
+                            <span class="inline-label">
                                 <span class="slim-text-box-label">Pickup Date</span>
                                 <input if.bind="(!sampleRequest.shippingReturn.stuartJobId)" datepicker type="text" class="slim-text-box" value.bind="sampleRequest.pickupDateReturn  | viewDateFormat">
                                 <input if.bind="sampleRequest.shippingReturn.stuartJobId" type="text" class="slim-text-box" value.bind="sampleRequest.pickupDateReturn  | viewDateFormat" disabled="disabled">
-                            </div>
+                            </span>
                         </div>
 
                         <!-- Pickup Time for Stuart -->
-                        <div if.bind="((sampleRequest.courierReturn=='Pashion Courier') && (!sampleRequest.shippingReturn.stuartJobId))" class="grid-block shrink">
-                            <div class="inline-label">
+                        <div if.bind="((sampleRequest.courierReturn=='Pashion Courier') && (!sampleRequest.shippingReturn.stuartJobId))" class="grid-content shrink">
+                            <span class="inline-label">
                                 <span class=" slim-text-box-label">Pickup Time</span>
                                 <form-select-sr class="to-u-c" name="pickupTime" selected.two-way="sampleRequest.pickupTimeReturn" options.bind="times"></form-select-sr>
-                            </div>
+                            </span>
                         </div>
-                        <div if.bind="((sampleRequest.courierReturn=='Pashion Courier') && sampleRequest.shippingReturn.stuartJobId)" class="grid-block shrink">
-                            <div class="inline-label">
+                        <div if.bind="((sampleRequest.courierReturn=='Pashion Courier') && sampleRequest.shippingReturn.stuartJobId)" class="grid-content shrink">
+                            <span class="inline-label">
                                 <span class=" slim-text-box-label">Pickup Time</span>
                                 <input class="to-u-c slim-text-box" name="pickupTime" value.bind="sampleRequest.pickupTimeReturn" disabled="disabled" style="width:169px">
-                            </div>
+                            </span>
                         </div>
 
                         <!--  split -->
-                        <div if.bind="(!sampleRequest.courierOut.sampleRequest.shippingReturn.stuartJobId)" class="grid-block shrink">
-                            <div class="inline-label">
+                        <div if.bind="(!sampleRequest.courierOut.sampleRequest.shippingReturn.stuartJobId)" class="grid-content shrink">
+                            <span class="inline-label">
                                 <span class=" slim-text-box-label">Split</span>
                                 <form-select-sr class="to-u-c" name="paymentOut" selected.two-way="sampleRequest.paymentReturn" options.bind="payment" width="169px"></form-select-sr>
-                            </div>
+                            </span>
                         </div>
-                        <div if.bind="sampleRequest.courierOut.sampleRequest.shippingReturn.stuartJobId" class="grid-block shrink">
-                            <div class="inline-label">
+                        <div if.bind="sampleRequest.courierOut.sampleRequest.shippingReturn.stuartJobId" class="grid-content shrink">
+                            <span class="inline-label">
                                 <span class=" slim-text-box-label">Split</span>
                                 <input class="to-u-c" name="paymentReturn" value.bind="sampleRequest.paymentReturn">
-                            </div>
+                            </span>
                         </div>
 
                         <!-- ID -->
-                        <div if.bind="sampleRequest.courierOut.sampleRequest.shippingReturn.stuartJobId" class="grid-block shrink">
-                            <div class="inline-label">
+                        <div if.bind="sampleRequest.courierOut.sampleRequest.shippingReturn.stuartJobId" class="grid-content shrink">
+                            <span class="inline-label">
                                 <span class="slim-text-box-label">ID</span>
                                 <input type="text" disabled="disabled" class="slim-text-box" value.bind="sampleRequest.shippingReturn.stuartJobId">
-                            </div>
+                            </span>
                         </div>
 
 
@@ -390,8 +390,8 @@
                         <!--  email -->
                         <div class="grid-content shrink" style="margin-bottom:0.5rem;">
                             <span class="inline-label">
-                            <span class=" slim-text-box-label">Confirmation</span>
-                            <form-select-sr class="to-u-c" name="emailOptions" selected.two-way="email" options.bind="emailOptions" place-holder="NONE"></form-select-sr>
+                                <span class=" slim-text-box-label">Confirmation</span>
+                                <form-select-sr class="to-u-c" name="emailOptions" selected.two-way="email" options.bind="emailOptions" place-holder="NONE"></form-select-sr>
                             </span>
                             <span if.bind="email" class="inline-label">
                                 <span class=" slim-text-box-label">Email</span>
