@@ -339,7 +339,16 @@ export class CreateSampleRequestBrand {
       return;
     }
     console.log("day is in the future");
-    
+    if(this.sampleRequest.endDay != ''){
+      if(startdate.getTime() > enddate.getTime() ) {
+        console.log(" startDate after end date ");
+        
+        this.sampleRequest.endDate = '';
+        this.sampleRequest.endDay = '';
+        this.sampleRequest.endMonth = '';
+        
+      }
+    }
     this.sampleRequest.startDate = this.startCalendar.calendarMonths[0].year + "-" + this.startCalendar.calendarMonths[0].monthNumber + "-" + day;
     this.sampleRequest.startMonth = this.startCalendar.calendarMonths[0].monthNumber;
     this.sampleRequest.startDay = day;
@@ -363,7 +372,7 @@ export class CreateSampleRequestBrand {
     if (this.sampleRequest.startDay != '') console.log("startDay: " + this.sampleRequest.startDay);
     else {
       console.log("no startDay set, exit");
-      this.sampleRequest.endDay = '';
+      
       this.sampleRequest.endDate = '';
       this.sampleRequest.endDay = '';
       this.sampleRequest.endMonth = '';
@@ -376,7 +385,6 @@ export class CreateSampleRequestBrand {
       console.log("day is before today.");
       this.sampleRequest.endDay = '';
       this.sampleRequest.endDate = '';
-      this.sampleRequest.endDay = '';
       this.sampleRequest.endMonth = '';
       return;
     }
