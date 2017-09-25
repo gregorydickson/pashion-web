@@ -932,7 +932,7 @@ export class Index {
                     }
                 });
             }
-
+            this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub());
             ga('set', 'page', '/index.html');
             ga('send', 'pageview');
             ga('send', 'event', 'index', 'pageview', this.user.email);
@@ -1141,19 +1141,7 @@ export class Index {
         this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: itemId, lock: true })
             .then(response => {
 
-                console.log("reloading sample requests");
-                    sampleRequestService.getSampleRequests(true).then(newBookings => {
-                        while (bookingsToUpdate.length > 0) {
-                            bookingsToUpdate.pop();
-                        }
-                        newBookings.forEach(item => {
-                            console.log("id:"+item.id + " status:"+item.requestStatusBrand);
-                            bookingsToUpdate.push(item);
-                        });
-                    });
-
-                console.log("current SR " + this.sampleRequestService.sampleRequest.id);
-                // this.alertP("Picking For "+sr.id)
+                
 
             });
     }
@@ -1397,15 +1385,15 @@ export class Index {
 
         //trolley update no toastr
         let channel3 = company + '_trolleyCacheInvalidate';
-        console.log("listening on channel:" + channel3);
+        console.log("TROLLEY listening on channel:" + channel3);
         
 
         var indexListener3 = {
             message: function updateBookingsIndex(message) {
-                console.log("message in index for  channel:"+channel3);
+                console.log("message in index for channel:"+channel3);
                 var channelName = message.channel;
                 if (channelName === channel3) {
-                    console.log("reloading sample requests");
+                    console.log("trolley cache message reloading sample requests");
                     sampleRequestService.getSampleRequests(true).then(newBookings => {
                         while (bookingsToUpdate.length > 0) {
                             bookingsToUpdate.pop();
