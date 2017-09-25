@@ -487,8 +487,6 @@ export class CreateSampleRequestBrand {
   }
 
   
-
-  //TODO: do Stuart methods/UI
   bookOut() {
     // initiate stuart booking
     if (!(this.sampleRequest.pickupDate) ||
@@ -600,7 +598,16 @@ export class CreateSampleRequestBrand {
   }
 
   cancelKeepSR(id){
-    //this.sampleRequestService.cancelCurrentSampleRequest();
+    let sampleRequest = this.sampleRequest;
+    this.currentItem.samples.forEach(function (sample) {
+      let inTrolley = sampleRequest.searchableItemsProposed.indexOf(item => {return sample.id === item});
+
+      if(inTrolley){
+          sampleRequest.searchableItemsProposed.splice(inTrolley,1);  
+      }
+          
+     }); 
+    
     this.sampleRequestService.sampleRequestStatus = 'created';
     this.sampleRequestService.getSampleRequest(id)
       .then(result =>{
