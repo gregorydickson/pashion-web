@@ -374,10 +374,7 @@ export class CreateSampleRequestBrand {
   }
 
   setEndDate(event, dayEvent, day) {
-    if(this.sampleRequest.datesSaved){
-      console.log("dates already saved returning");
-      return;
-    }
+    
     this.sampleRequest.endDay = day;
     var startdate = '';
     let enddate = new Date(this.endCalendar.calendarMonths[0].year, this.endCalendar.calendarMonths[0].monthNumber - 1, day);

@@ -145,6 +145,19 @@ class SampleRequestService {
         
         sr = SampleRequest.get(jsonObject.id.toInteger())
 
+        sr.bookingStartDate = dateFormat.parse(jsonObject.startDate)
+        sr.bookingEndDate = dateFormat.parse(jsonObject.endDate)
+            
+        sr.startDay = jsonObject.startDay
+        sr.startDate = jsonObject.startDate
+        sr.startMonth = jsonObject.startMonth
+        sr.endDay = jsonObject.endDay
+        sr.endDate = jsonObject.endDate
+        sr.endDay = jsonObject.endDay
+        sr.endMonth = jsonObject.endMonth
+        sr.startOffset = jsonObject.startOffset
+        sr.endOffset = jsonObject.endOffset
+
         def ids = sr.searchableItemsProposed.collect{it.id}
         ids.each{sr.removeFromSearchableItemsProposed(SearchableItem.get(it))}
 
