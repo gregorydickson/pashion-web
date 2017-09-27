@@ -44,6 +44,8 @@ export class CreateSampleRequestBrand {
 
   returnBy = [];
 
+  ids = [];
+
   courier = [];
   payment = [];
 
@@ -82,9 +84,15 @@ export class CreateSampleRequestBrand {
     
 
     this.sampleRequest = this.sampleRequestService.getCurrentSampleRequest();
+    let ids = this.ids;
+    
+    if(this.sampleRequest.searchableItemsProposed){
+      this.sampleRequest.searchableItemsProposed.forEach(function (sample){
+        ids.push(sample.id);
+      })
+    }
 
-    var queryStringEnd = DateFormat.urlString(this.sampleRequest.endOffset, 1)+ '&searchType=brand';
-    var queryStringStart = DateFormat.urlString(this.sampleRequest.startOffset, 1)+ '&searchType=brand';
+    
 
     if(this.sampleRequest.requestStatusBrand === 'Finalizing' ||
      this.sampleRequest.requestStatusBrand === 'Approved' ||
@@ -97,7 +105,9 @@ export class CreateSampleRequestBrand {
 
       this.startFinalize = true;
       this.sampleRequest.datesSaved = true;
-      
+
+      this.calendar();
+
       return Promise.all([
         this.userService.getUser().then(user => {
           this.user = user;
@@ -144,18 +154,8 @@ export class CreateSampleRequestBrand {
     } else{
       return Promise.all([
         this.userService.getUser().then(user => {this.user = user}),
-        this.http.fetch('/calendar/searchableItemPicker' + queryStringStart + '&item=' + item.id)
-          .then(response => response.json())
-          .then(calendar => {
-            this.startCalendar = calendar;
-          }),
-        this.http.fetch('/calendar/searchableItemPicker' + queryStringEnd + '&item=' + item.id)
-          .then(response => response.json())
-          .then(calendar => {
-            this.endCalendar = calendar;
-          }),
+        
         this.outReasonService.getOutReasons().then(outReasons => {
-          //sparse array?
           this.outReasons = outReasons.map(value => {return {id: value.id, name:value.name.toUpperCase()} } )
         }),
         this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
@@ -167,10 +167,10 @@ export class CreateSampleRequestBrand {
               return;
             }
             this.currentItem = item;
-            if(this.sampleRequest.datesSaved){
-              console.log("checking availability new item");
-              this.checkAvailabilty(item);
-            }
+            item.samples.forEach(function (sample) {
+              ids.push(sample.id);  
+            })
+            this.calendar();
             
             this.brandService.getBrand(item.brand.id).then(brand => {this.brand = brand});
           })
@@ -208,10 +208,32 @@ export class CreateSampleRequestBrand {
           if(sample.availability && (!inTrolley)){
             ids.push(sample);  
           }
-          
         })
         
       });
+  }
+
+  calendar(){
+    let queryStringEnd = DateFormat.urlString(this.sampleRequest.endOffset, 1)+ '&searchType=brand';
+    let queryStringStart = DateFormat.urlString(this.sampleRequest.startOffset, 1)+ '&searchType=brand';
+    
+    this.http.fetch('/calendar/showAvailabilitySamples'+queryStringEnd, {
+            method: 'post',
+            body: json(this.ids)
+          })
+          .then(response => response.json())
+          .then(calendar => {
+              this.endCalendar = calendar;
+          });
+
+    this.http.fetch('/calendar/showAvailabilitySamples'+queryStringStart, {
+            method: 'post',
+            body: json(this.ids)
+          })
+          .then(response => response.json())
+          .then(calendar => {
+              this.startCalendar = calendar;
+          });
   }
 
   addressInit(){
@@ -303,10 +325,7 @@ export class CreateSampleRequestBrand {
   setStartDate(event, dayEvent, day) {
     console.log("set start date: " + event);
     console.log("parameterday: " + day);
-    if(this.sampleRequest.datesSaved){
-      console.log("dates already saved returning");
-      return;
-    }
+    
     console.log("dates not saved, setting start date");
     var today = new Date();    
     var yesterday = 0;
@@ -481,16 +500,18 @@ export class CreateSampleRequestBrand {
 
 
   get aSampleHasOutReason() {
-    for (let i = 0; i < this.currentItem.samples.length; i++) {
-      let sample = this.currentItem.samples[i];
-      if (sample.outReason) {
-        if (sample.outReason.id != 0) {
-            if (this.sampleRequest.searchableItemsProposed.includes(sample.id)) { //console.log (" found an outReason"); 
-              return true}
-        } 
+    if(this.currentItem){
+      for (let i = 0; i < this.currentItem.samples.length; i++) {
+        let sample = this.currentItem.samples[i];
+        if (sample.outReason) {
+          if (sample.outReason.id != 0) {
+              if (this.sampleRequest.searchableItemsProposed.includes(sample.id)) { //console.log (" found an outReason"); 
+                return true}
+          } 
+        }
       }
+      return false
     }
-    //console.log (" no outReason"); 
     return false
   }
 
@@ -560,9 +581,9 @@ export class CreateSampleRequestBrand {
     } 
 
     var queryString = DateFormat.urlString(this.sampleRequest.endOffset, 1) + '&searchType=brand';
-    this.http.fetch('/calendar/showAvailabilityTrolley' + queryString, {
+    this.http.fetch('/calendar/showAvailabilitySamples' + queryString, {
       method: 'post',
-      body: json(this.currentItem.samples)
+      body: json(this.ids)
     })
       .then(response => response.json())
       .then(calendar => {
@@ -570,9 +591,9 @@ export class CreateSampleRequestBrand {
       });
 
     queryString = DateFormat.urlString(this.sampleRequest.startOffset, 1) + '&searchType=brand';
-    this.http.fetch('/calendar/showAvailabilityTrolley' + queryString, {
+    this.http.fetch('/calendar/showAvailabilitySamples' + queryString, {
       method: 'post',
-      body: json(this.currentItem.samples)
+      body: json(this.ids)
     })
       .then(response => response.json())
       .then(calendar => {

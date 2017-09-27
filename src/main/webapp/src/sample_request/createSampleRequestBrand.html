@@ -15,8 +15,7 @@
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
 
-                    <span if.bind="(!sampleRequest.id)" class="ui-text-label-m-broad">PICK SAMPLES FOR NEW BOOKING</span>
-                    <span if.bind="sampleRequest.id" class="ui-text-label-m-broad">SET DATES FOR NEW BOOKING ${sampleRequest.id}</span>
+                    <span if.bind="(!sampleRequest.id)" class="ui-text-label-m-broad">SET DATES FOR NEW BOOKING</span>
                     <span if.bind="(sampleRequest.datesSaved && sampleRequest.requestStatusBrand == 'Not Submitted')" class="ui-text-label-m-broad">PICK SAMPLES FOR BOOKING ${sampleRequest.id}</span>
                     <span if.bind="(sampleRequest.datesSaved && sampleRequest.requestStatusBrand == 'Finalizing')" class="ui-text-label-m-broad">FINALIZING BOOKING ${sampleRequest.id}</span>
                     <span if.bind="(sampleRequest.datesSaved && sampleRequest.requestStatusBrand == 'Approved')" class="ui-text-label-m-broad">EDIT BOOKING ${sampleRequest.id}</span>
@@ -78,16 +77,8 @@
                             </table>
                         </div>
                     </div>
-                    <div if.bind="startFinalize">
-                        <!-- Requested -->
-                        <div class="grid-content shrink">
-                            <span class="inline-label">
-                                <span class="slim-text-box-label">START DATE</span>
-                                <span class="slim-text-box">
-                                    ${sampleRequest.bookingStartDate | viewDateFormat}
-                                </span>
-                            </span>
-                        </div>
+                    <div if.bind="startFinalize" style="margin-top: 5px;">
+                        
                         <!-- Required By -->
                         <div class="grid-content shrink">
                             <span class="inline-label">
@@ -285,16 +276,7 @@
                             </table>
                         </div>
                     </div>
-                    <div if.bind="startFinalize">
-                         <!-- Due -->
-                        <div class="grid-content shrink">
-                            <span class="inline-label">
-                                <span class="slim-text-box-label">END DATE</span>
-                                <span class="slim-text-box">
-                                    ${sampleRequest.bookingEndDate | viewDateFormat}
-                                </span>
-                            </span>
-                        </div>
+                    <div if.bind="startFinalize" style="margin-top: 5px;">
                         <!-- Return By Time -->
                         <div class="grid-content shrink">
                             <span class="inline-label">
@@ -304,7 +286,6 @@
                         </div>
 
 
-                        <!-- generic drown down used, so no ME. Consider a bespoke one -->
                         <div if.bind="(!sampleRequest.shippingReturn.stuartJobId)" class="grid-content shrink">
                             <span class="inline-label">
                                 <span class="slim-text-box-label">Return To</span>
@@ -491,7 +472,7 @@
             <button if.bind="!(sampleRequest.datesSaved)" class="hollow button" click.delegate="cancel()">Cancel</button>
             <button if.bind="(sampleRequest.datesSaved && !startFinalize)" class="hollow button" click.delegate="cancelKeepSR(sampleRequest.id)">Cancel</button>
             <button if.bind="(sampleRequest.datesSaved && startFinalize)" class="hollow button" click.delegate="cancel()">Cancel</button>
-            <button if.bind="(!sampleRequest.datesSaved)" id="saveDates" class="button" disabled.bind="!(sampleRequest.startDate && sampleRequest.endDate)" click.delegate="dates()">Set Dates</button>
+            <button if.bind="(!sampleRequest.datesSaved)" id="saveDates" class="button" disabled.bind="!(sampleRequest.startDate && sampleRequest.endDate)" click.delegate="dates()">Choose Dates</button>
             <button if.bind="(sampleRequest.datesSaved && !startFinalize)" disabled.bind="sampleRequest.searchableItems.length == 0" id="continue" class="button" click.delegate="continue()">Add to Booking</button>
             <button if.bind="((sampleRequest.datesSaved) && (startFinalize) && !edit)" disabled.bind="!(selectedAddress.name)" id="CreateSampleRequestButton" class="button" click.delegate="submit()">Submit</button>
             <button if.bind="edit" id="CreateSampleRequestButton" class="button" click.delegate="save()">Save</button>
