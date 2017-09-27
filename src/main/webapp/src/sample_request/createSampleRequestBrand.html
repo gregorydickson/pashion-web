@@ -19,7 +19,7 @@
                     <span if.bind="(sampleRequest.id && (!sampleRequest.requestStatusBrand))" class="ui-text-label-m-broad">PICK SAMPLES FOR BOOKING ${sampleRequest.id}</span>
                     <span if.bind="(sampleRequest.datesSaved && sampleRequest.requestStatusBrand == 'Not Submitted')" class="ui-text-label-m-broad">PICK SAMPLES FOR BOOKING ${sampleRequest.id}</span>
                     <span if.bind="(sampleRequest.datesSaved && sampleRequest.requestStatusBrand == 'Finalizing')" class="ui-text-label-m-broad">FINALIZING BOOKING ${sampleRequest.id}</span>
-                    <span if.bind="(sampleRequest.datesSaved && sampleRequest.requestStatusBrand == 'Approved')" class="ui-text-label-m-broad">EDIT BOOKING ${sampleRequest.id}</span>
+                    <span if.bind="(sampleRequest.datesSaved && (sampleRequest.requestStatusBrand === 'Approved' || sampleRequest.requestStatusBrand === 'Picked Up'))" class="ui-text-label-m-broad">EDIT BOOKING ${sampleRequest.id}</span>
 
                 </div>
             </div>
