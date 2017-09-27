@@ -102,6 +102,7 @@ class SampleRequestService {
         } else{
             sr = new SampleRequest()
             sr.datesSaved = true
+            sr.requestingUser = user
             if(user.prAgency) sr.prAgency = PRAgency.get(user.prAgency.id)
             if(user.brand) sr.brand = Brand.get(user.brand.id)
             sr.bookingStartDate = dateFormat.parse(jsonObject.startDate)
@@ -197,7 +198,7 @@ class SampleRequestService {
         sr.paymentReturn = jsonObject.paymentReturn
         sr.courierOut = jsonObject.courierOut
         sr.courierReturn = jsonObject.courierReturn
-        sr.requestingUser = user
+        
         sr.dateRequested = new Date()
         sr = destinationAddressBrand(sr,jsonObject)
         sr = returnToAddress(sr,jsonObject)

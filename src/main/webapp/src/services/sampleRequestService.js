@@ -168,6 +168,7 @@ export class SampleRequestService{
     }
 
     finishPicking(id){
+      this.sampleRequest = null;
       var promise = new Promise((resolve, reject) => {
         this.http.fetch('/sampleRequest/finishPicking/'+id+'.json', {
             method: 'get'
