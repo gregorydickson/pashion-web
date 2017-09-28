@@ -119,7 +119,7 @@
                         <!-- Accordion -->
                         <!--Header -->
                         
-                            <div if.bind="user.type === 'brand'"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
+                           <!-- <div if.bind="user.type === 'brand'"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
                                 <table class="big-accordion"  cellspacing="2"  style="table-layout: fixed;">
                                     <tr>
                                         <td class="accordion-underline w3"></td>
@@ -134,7 +134,7 @@
                                         <td class="accordion-underline w5"></td>
                                     </tr>
                                 </table>
-                            </div>
+                            </div> -->
                             <div if.bind="(user.type === 'press')"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
                                 <table class="big-accordion"  cellspacing="2"  style="table-layout: fixed;">
                                     <tr>
@@ -151,7 +151,7 @@
                                     </tr>
                                 </table>
                             </div> 
-                            <div if.bind="(user.type === 'prAgency')"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
+                            <div if.bind="(user.type === 'prAgency' || user.type === 'brand')"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
                                 <table class="big-accordion"  cellspacing="2"  style="table-layout: fixed;">
                                     <tr>
                                         <td class="accordion-underline w3"></td>
@@ -181,7 +181,7 @@
                                             <td class="col1 accordion-grey w6" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.id}</td>
 
                                             <!-- Look -->
-                                            <td if.bind="(user.type === 'brand')" class="col2 accordion-grey w8" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td>
+                                            <!-- <td if.bind="(user.type === 'brand')" class="col2 accordion-grey w8" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td> -->
                                             <td if.bind="(user.type === 'press')" class="col2 accordion-grey w8" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td>
                                             <!-- <td if.bind="(user.type === 'prAgency')" class="col2 accordion-grey w8">${booking.season | seasonAbbreviation:seasons }.${booking.look}</td> -->
 
@@ -191,12 +191,12 @@
                                             <td if.bind="(user.type === 'prAgency')" class="col3 accordion-grey w15 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''} " click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.bookingStartDate | viewDateFormat}</td>
 
                                             <!-- BRAND / Company -->
-                                            <td if.bind="(user.type === 'brand')" class="col4 accordion-grey w12 variable-padding" ref="company" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.requestingUserCompany}</td>
+                                            <!-- <td if.bind="(user.type === 'brand')" class="col4 accordion-grey w12 variable-padding" ref="company" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.requestingUserCompany}</td> -->
                                             <td if.bind="(user.type === 'press')" class="col4 accordion-grey w12 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.brand.name}</td>
                                             <!-- <td if.bind="(user.type === 'prAgency')" class="col4 accordion-grey w12 variable-padding">${booking.brand.name}</td> -->
 
                                             <!-- Requestor -->
-                                            <td if.bind="(user.type === 'brand')" class="col5 accordion-grey w30 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.requestingUser.name} ${booking.requestingUser.surname} / ${booking.deliverTo.name} ${booking.deliverTo.surname} ${booking.addressDestination.name}</td>
+                                            <td if.bind="(user.type === 'brand')" class="col5 accordion-grey w30 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.requestingUser.name} ${booking.requestingUser.surname} ${booking.requestingUserCompany ? '(' + booking.requestingUserCompany + ')' : ''}  ${booking.deliverTo.name ? '/' + booking.deliverTo.name + ' ' + booking.deliverTo.surname : ''}</td> 
                                             <td if.bind="(user.type === 'press')" class="col5 accordion-grey w30 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.requestingUser.name} ${booking.requestingUser.surname} / ${booking.deliverTo.name} ${booking.deliverTo.surname} ${booking.addressDestination.name}</td>
                                             <td if.bind="(booking.requestingUser.name) && (user.type === 'prAgency')" class="col5 accordion-grey w34 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.requestingUser.name} ${booking.requestingUser.surname} ${booking.requestingUserCompany ? '(' + booking.requestingUserCompany + ')' : ''}  ${booking.deliverTo.name ? '/' + booking.deliverTo.name + ' ' + booking.deliverTo.surname : ''}</td>
                                             <td if.bind="!(booking.requestingUser.name) && (user.type === 'prAgency')" class="col5 accordion-grey w34 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer">-</td>
