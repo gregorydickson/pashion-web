@@ -98,7 +98,7 @@ export class Index {
         let today = new Date();
         var computedDate = new Date(booking);
         var overdue = today > computedDate;
-        overdue = (overdue && (status == 'Pending'))
+        overdue = (overdue && ((status == 'Pending') || (status=='Not Submitted') || (status == 'Finalizing')))
         //console.log("computedOverdue function, booking: " + booking + " today: " + this.today + " computed: " +  computedDate + " overdue: " + (this.today > computedDate));
         return overdue;
     }

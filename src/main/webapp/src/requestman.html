@@ -191,7 +191,7 @@
                                             <!-- Start Date -->
                                             <td if.bind="(user.type === 'brand')" class="col3 accordion-grey w10 ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''} " click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.bookingStartDate | viewDateFormat}</td>
                                             <td if.bind="(user.type === 'press')" class="col3 accordion-grey w10 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''} " click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.bookingStartDate | viewDateFormat}</td>
-                                            <td if.bind="(user.type === 'prAgency')" class="col3 accordion-grey w10 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''} " click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.bookingStartDate | viewDateFormat}</td>
+                                            <td if.bind="(user.type === 'prAgency')" class="col3 accordion-grey w10 ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''} " click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.bookingStartDate | viewDateFormat}</td>
 
                                         
                                             <!-- Requestor -->
