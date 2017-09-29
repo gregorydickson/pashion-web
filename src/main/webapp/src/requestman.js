@@ -35,7 +35,7 @@ export class Requestman {
   season = '';
   closed = true;
   searchTextReqMan = '';
-  ordering = 'bookingStartDate';
+  ordering = 'dateCreated';
   filtering = 'ACTIVE BOOKINGS'; // IE all
   today = new Date(); // Do we have a problem with freshness of this variable, say login at 11:59PM?
   onlyShowMine = false;
@@ -255,8 +255,9 @@ export class Requestman {
     if (this.searchFrom) dates = "From: " + this.searchFrom;
     if (this.searchTo) dates = dates + " to " + this.searchTo;
     // var headerText = {};
-    if (this.user.type == 'brand' || this.user.type == 'prAgency') var headerText = ['ID', 'LOOK', 'DUE DATE', 'COMPANY', 'REQUESTOR', 'END DATE', '#', 'STATUS'];
-    if (this.user.type == 'press') var headerText = ['ID', 'LOOK', 'REQUESTED', 'BRAND', 'REQUESTOR', 'END DATE', '#', 'STATUS'];
+    //if (this.user.type == 'brand' || this.user.type == 'prAgency') var headerText = ['ID', 'CREATED', 'DUE DATE', 'COMPANY', 'REQUESTOR/GOING TO', 'END DATE', '#', 'STATUS'];
+    //if (this.user.type == 'press') 
+    var headerText = ['ID', 'CREATED', 'START DATE', 'REQUESTOR / GOING TO', 'END DATE', '#', 'STATUS'];
     this.pDFService.generatePDF(this.user.name, this.user.surname, dates, search, filter, headerText);
     //console.log("container to text: " + container);
   }
@@ -269,9 +270,8 @@ export class Requestman {
       if (event.detail)
         if (event.detail.value) {
           if (event.detail.value == 'BY START DATE') this.ordering = 'bookingStartDate';
-          if ((this.user.type == "brand") && (event.detail.value == 'BY NUMBER')) this.ordering = 'id'; //RM ditto below
-          if ((this.user.type == "prAgency") && (event.detail.value == 'BY NUMBER')) this.ordering = 'id'; //RM ditto below
-          if ((this.user.type == "press") && (event.detail.value == 'BY NUMBER')) this.ordering = 'id'; //RM changes needed here to properly order strings
+          if (event.detail.value == 'BY NUMBER') this.ordering = 'id'; //RM changes needed here to properly order strings
+          if (event.detail.value == 'BY DATE CREATED') this.ordering = 'dateCreated';
           if ((this.user.type == "brand") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusBrand';
           if ((this.user.type == "prAgency") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusBrand'; //RM double check this
           if ((this.user.type == "press") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusPress';

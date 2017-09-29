@@ -57,7 +57,7 @@ export class Index {
     maxRReached = false;
     numberImages = 0;
     busy;
-    ordering = 'bookingStartDate';
+    ordering = 'dateCreated';
     filtering = 'ACTIVE BOOKINGS';
     firstTime = true;
     onlyShowMine = false;
@@ -848,9 +848,8 @@ export class Index {
             if (event.detail)
                 if (event.detail.value) {
                     if (event.detail.value == 'BY START DATE') this.ordering = 'bookingStartDate';
-                    if ((this.user.type == "brand") && (event.detail.value == 'BY NUMBER')) this.ordering = 'id'; 
-                    if ((this.user.type == "prAgency") && (event.detail.value == 'BY NUMBER')) this.ordering = 'id'; 
-                    if ((this.user.type == "press") && (event.detail.value == 'BY NUMBER')) this.ordering = 'id'; //RM switch to request number
+                    if (event.detail.value == 'BY NUMBER') this.ordering = 'id'; //RM switch to request number
+                    if (event.detail.value == 'BY DATE CREATED') this.ordering = 'dateCreated';
                     if ((this.user.type == "brand") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusBrand';
                     if ((this.user.type == "prAgency") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusBrand'; //RM double check this
                     if ((this.user.type == "press") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusPress';
