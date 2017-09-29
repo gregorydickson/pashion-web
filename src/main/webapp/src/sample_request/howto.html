@@ -1,0 +1,32 @@
+<template>
+    
+   <ai-dialog style="width: auto;">
+        <ai-dialog-header>
+            <!-- header -->
+            <div class="grid-block align-center tool-header shrink ">
+                <div id="comms_panel" class="grid-block tool-header shrink fix-align-header">
+                    <span class="welcome-header">How to Make a Booking</span> <!-- fudge to take account of the X -->
+                    
+                </div>
+            </div>
+        </ai-dialog-header>
+      <ai-dialog-body style="width:400px;">
+
+        <ul style="margin-bottom: 0px;">
+            <li class="welcome-text">Choose "Start Booking" from any look</li>
+            <li class="welcome-text">Set the dates for the booking</li>
+            <li class="welcome-text">Add sample from that look if you want</li>
+            <li class="welcome-text">Continue picking from other looks</li>
+            <li class="welcome-text">Choose "Submit Booking" to approve</li>
+            <li class="welcome-text">Finalize the booking by adding shipping information</li>  
+            <li class="welcome-text">Pick to other bookings by choosing "Continue Picking" from the booking list</li>
+        </ul>
+
+
+      </ai-dialog-body>
+      <ai-dialog-footer>
+         
+         <button click.delegate="close()">OK</button>
+      </ai-dialog-footer>
+   </ai-dialog>
+</template>

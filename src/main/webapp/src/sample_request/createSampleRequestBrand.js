@@ -9,6 +9,7 @@ import { PRAgencyService } from 'services/PRAgencyService';
 import { UserService } from 'services/userService';
 import { DialogService } from 'aurelia-dialog';
 import { CreateDialogAlert } from 'common/dialogAlert';
+import { Howto } from 'sample_request/howto';
 import $ from 'jquery';
 import { computedFrom } from 'aurelia-framework';
 import { SampleRequestService } from 'services/sampleRequestService';
@@ -190,6 +191,12 @@ export class CreateSampleRequestBrand {
       this.checkSamples();
     ga('set', 'page', '/createSampleRequestBrand.html');
     ga('send', 'pageview');
+
+    if (!this.sampleRequest.id) {
+            this.dialogService.open({ viewModel: Howto, model: "no-op", lock: false }).then(response => {
+                this.userService.introShown();
+            });
+        }
   }
 
   checkAvailabilty(item){
