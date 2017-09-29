@@ -253,7 +253,7 @@ export class CreateSampleRequestBrand {
 
     if(this.sampleRequest.returnToAddress){
       let availableReturnToItems = this.availableReturnToItems;
-      let selectedReturnTo = availableReturnToItems.find(item => item.id == this.sampleRequest.returnToAddress.id);
+      let selectedReturnTo = availableReturnToItems.find(item => item.id == this.sampleRequest.returnToAddress);
       this.selectedReturnToItems = [selectedReturnTo.id];
       
     }
