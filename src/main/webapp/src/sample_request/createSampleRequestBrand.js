@@ -192,11 +192,10 @@ export class CreateSampleRequestBrand {
     ga('set', 'page', '/createSampleRequestBrand.html');
     ga('send', 'pageview');
 
-    if (!this.sampleRequest.id) {
-            this.dialogService.open({ viewModel: Howto, model: "no-op", lock: false }).then(response => {
-                this.userService.introShown();
-            });
-        }
+  }
+
+  showHowTo() {
+    this.dialogService.open({ viewModel: Howto, model: "no-op", lock: false });
   }
 
   checkAvailabilty(item){
