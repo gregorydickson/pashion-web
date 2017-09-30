@@ -37,6 +37,7 @@ json{
 	requestingUserCompany sampleRequest.requestingUserCompany
 
 	addressDestination{
+		id sampleRequest.addressDestination?.id
 		company sampleRequest.addressDestination?.company
 	 	name sampleRequest.addressDestination?.name
 	 	address1 sampleRequest.addressDestination?.address1
@@ -49,8 +50,9 @@ json{
 	 	stuartId sampleRequest.addressDestination?.stuartId
 	 	comment sampleRequest.addressDestination?.comment
 	}
-	
+
 	returnToAddress{
+		id sampleRequest.returnToAddress?.id
 		company sampleRequest.returnToAddress?.company
 	 	name sampleRequest.returnToAddress?.name
 	 	address1 sampleRequest.returnToAddress?.address1
