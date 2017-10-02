@@ -47,7 +47,7 @@ class SampleRequest {
     String startOffset
     String endOffset
 
-	String requestStatusBrand //Pending ->Approved->Shipped -> Delivered -> Due Back ->Overdue ->Closed
+	String requestStatusBrand 
 	String requestStatusPress
 	Boolean overdue = false
 	Boolean finalize = false

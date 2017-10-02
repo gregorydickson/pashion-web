@@ -18,6 +18,9 @@ json{
 	paymentOut sampleRequest.paymentOut
 	paymentReturn sampleRequest.paymentReturn
 
+	returnBy sampleRequest.returnBy
+	requiredBy sampleRequest.requiredBy
+
 	//log.info "about to render searchable items proposed"
 	searchableItemsProposed g.render(template: 'searchableItem', collection: sampleRequest.searchableItemsProposed ?: [], var: 'searchableItem')
 	//log.info "rendered searchable items proposed"
