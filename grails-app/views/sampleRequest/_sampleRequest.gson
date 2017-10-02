@@ -84,6 +84,7 @@ json{
     endMonth sampleRequest.endMonth
     startOffset sampleRequest.startOffset
     endOffset sampleRequest.endOffset
+    datesSaved sampleRequest.datesSaved
 
 	prAgency{
 		name sampleRequest.prAgency?.name

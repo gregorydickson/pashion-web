@@ -474,7 +474,7 @@
             <button if.bind="(sampleRequest.datesSaved && !startFinalize)" class="hollow button" click.delegate="cancelKeepSR(sampleRequest.id)">Cancel</button>
             <button if.bind="(sampleRequest.datesSaved && startFinalize)" class="hollow button" click.delegate="cancel()">Cancel</button>
             <button if.bind="(!sampleRequest.datesSaved)" id="saveDates" class="button" disabled.bind="!(sampleRequest.startDate && sampleRequest.endDate)" click.delegate="dates()">Choose Dates</button>
-            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" disabled.bind="sampleRequest.searchableItems.length == 0" id="continue" class="button" click.delegate="continue()">Add to Booking</button>
+            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" disabled.bind="sampleRequest.searchableItemsProposed.length == 0" id="continue" class="button" click.delegate="continue()">Add to Booking</button>
             <button if.bind="((sampleRequest.datesSaved) && (startFinalize) && !edit)" disabled.bind="!(selectedAddress.name)" id="CreateSampleRequestButton" class="button" click.delegate="submit()">Submit</button>
             <button if.bind="edit" id="CreateSampleRequestButton" class="button" click.delegate="save()">Save</button>
             <span id="showHowTo" class="slim-text-box-label" style="text-align:left; margin-left:10px; vertical-align:top; margin-top:4px;"><a click.delegate="showHowTo()">Help</a></span>

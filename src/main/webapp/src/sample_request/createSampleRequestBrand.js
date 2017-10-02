@@ -86,7 +86,7 @@ export class CreateSampleRequestBrand {
 
     this.sampleRequest = this.sampleRequestService.getCurrentSampleRequest();
     let ids = this.ids;
-    
+    let sr = this.sampleRequest;
     if(this.sampleRequest.searchableItemsProposed){
       this.sampleRequest.searchableItemsProposed.forEach(function (sample){
         ids.push(sample.id);
@@ -172,7 +172,7 @@ export class CreateSampleRequestBrand {
               ids.push(sample.id);  
             })
             this.calendar();
-            
+            this.checkAvailabilty(item);
             this.brandService.getBrand(item.brand.id).then(brand => {this.brand = brand});
           })
       ])
@@ -199,6 +199,7 @@ export class CreateSampleRequestBrand {
   }
 
   checkAvailabilty(item){
+    let sr = this.sampleRequest;
     this.searchableItemService.checkItemsAvailability({item:item,sampleRequest:this.sampleRequest})
       .then(result =>{
         item.samples.forEach(function(sample) {
@@ -207,12 +208,16 @@ export class CreateSampleRequestBrand {
           }).availability;
         });
         
-        var ids = this.sampleRequest.searchableItemsProposed;
+        
         item.samples.forEach(function (sample) {
-          let inTrolley = ids.find(item => {return sample.id === item.id});
+          let inTrolley = sr.searchableItemsProposed.find(item => {return sample.id === item.id});
 
           if(sample.availability && (!inTrolley)){
-            ids.push(sample);  
+            console.log("available and adding to trolley - searchableItemsProposed");
+            console.log(JSON.stringify(sample));
+            sr.searchableItemsProposed.push(sample); 
+          } else{
+            console.log("not available or in trolley");
           }
         })
         
