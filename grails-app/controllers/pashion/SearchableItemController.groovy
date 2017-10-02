@@ -771,7 +771,7 @@ class SearchableItemController {
         }
     }
 
-/*
+    /*
     def pad(){
         SearchableItemType type = SearchableItemType.findByDisplay('Looks')
         def ids = SearchableItem.executeQuery('select id from SearchableItem')
@@ -800,4 +800,61 @@ class SearchableItemController {
 
         
     } */
+
+    // Run by entering http://localhost:8080/searchableItem/makeprivate
+    //
+    // For each row in the spreadsheet, change the two variables
+    // 1. brand 
+    // 2. mapToProcess (season's and categories)
+    def makeprivate(){
+        
+
+        SearchableItemType type = SearchableItemType.findByDisplay('Looks')
+        
+        //*****   CHANGE THIS *********//
+        Brand brand = Brand.findByName('Theory')
+        
+        // FYI, A map's keys are automatically strings, we copy the list from the spreadsheet and edit
+        // it into a map with the strings for the season as keys and the category as the value
+        // both can be accesses in the each loop.
+        
+        //*****   CHANGE THIS *********//
+        Map mapToProcess = [SS18:'RTW', PF17:'RTW', SS17:'RTW',SS17:'mensw',FW16:'mensw',SS16:'mensw',
+                            FW15:'mensw',PF15:'mensw',other:'mensw',other:'RTW']
+        
+        Category category = null
+        Season season = null
+        BrandCollection brandCollection = null
+        
+
+        mapToProcess.each{ key, value ->
+            List searchableItems = []
+            season = Season.findByAbbreviation(key)
+            if(!season)
+                season = Season.findByNameIlike(key)
+            
+
+            category = Category.findByAbbreviation(value)
+            if(!category)
+                category = Category.findByNameIlike('%'+value+'%')
+
+
+            brandCollection = BrandCollection.findByBrandAndSeasonAndCategory(brand,season,category)
+            searchableItems = SearchableItem.findAllByBrandCollection(brandCollection)
+            searchableItems*.isPrivate = true
+            searchableItems*.save(failOnError:true,flush:true)
+            
+
+
+        }
+            
+        
+        log.info "done"
+        render 'done'
+
+        
+    } 
+
+
+
 }
