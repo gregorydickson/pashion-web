@@ -196,17 +196,17 @@
                                         
                                             <!-- Requestor -->
                                             <td if.bind="(user.type === 'brand')" class="col4 accordion-grey w34 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.requestingUser.name} ${booking.requestingUser.surname} ${booking.requestingUserCompany ? '(' + booking.requestingUserCompany + ')' : ''} 
-                                                <div if.bind="booking.deliverTo.name">${booking.deliverTo.name ? '/' + booking.deliverTo.name + ' ' + booking.deliverTo.surname : ''}</div>
-                                                <div if.bind="(!booking.deliverTo.name)">${ '/' + ' ' +booking.addressDestination.name}</div>
+                                                <span if.bind="booking.deliverTo.name">${booking.deliverTo.name ? '/ ' + booking.deliverTo.name + ' ' + booking.deliverTo.surname : ''}</span>
+                                                <span if.bind="(!booking.deliverTo.name)">${ '/' + ' ' +booking.addressDestination.name}</span>
                                             </td> 
                                             <td if.bind="(user.type === 'press')" class="col4 accordion-grey w34 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.requestingUser.name} ${booking.requestingUser.surname} / ${booking.deliverTo.name} ${booking.deliverTo.surname} ${booking.addressDestination.name}</td>
                                             <td if.bind="(booking.requestingUser.name) && (user.type === 'prAgency')" class="col5 accordion-grey w34 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.requestingUser.name} ${booking.requestingUser.surname} ${booking.requestingUserCompany ? '(' + booking.requestingUserCompany + ')' : ''}  
-                                                <div if.bind="booking.deliverTo.name">${booking.deliverTo.name ? '/' + booking.deliverTo.name + ' ' + booking.deliverTo.surname : ''}</div>
-                                                <div if.bind="((!booking.deliverTo.name) && booking.addressDestination.name)">${ '/' + ' ' +booking.addressDestination.name}</div>
+                                                <span if.bind="booking.deliverTo.name">${booking.deliverTo.name ? '/ ' + booking.deliverTo.name + ' ' + booking.deliverTo.surname : ''}</span>
+                                                <span if.bind="((!booking.deliverTo.name) && booking.addressDestination.name)">${ '/' + ' ' +booking.addressDestination.name}</span>
                                             </td>
                                             <td if.bind="!(booking.requestingUser.name) && (user.type === 'prAgency')" class="col4 accordion-grey w34 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer">
-                                                <div if.bind="booking.deliverTo.name">${booking.deliverTo.name ? '/' + booking.deliverTo.name + ' ' + booking.deliverTo.surname : ''}</div>
-                                                <div if.bind="(!booking.deliverTo.name)">${booking.addressDestination.name}</div>
+                                                <span if.bind="booking.deliverTo.name">${booking.deliverTo.name ? '/ ' + booking.deliverTo.name + ' ' + booking.deliverTo.surname : ''}</span>
+                                                <span if.bind="(!booking.deliverTo.name)">${booking.addressDestination.name}</span>
                                             </td>
 
                                             <!-- END DATE -->
