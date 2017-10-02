@@ -15,6 +15,9 @@ json{
 	image sampleRequest.image
 	look sampleRequest.look
 
+	paymentOut sampleRequest.paymentOut
+	paymentReturn sampleRequest.paymentReturn
+
 	//log.info "about to render searchable items proposed"
 	searchableItemsProposed g.render(template: 'searchableItem', collection: sampleRequest.searchableItemsProposed ?: [], var: 'searchableItem')
 	//log.info "rendered searchable items proposed"
