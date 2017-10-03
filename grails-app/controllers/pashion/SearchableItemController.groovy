@@ -812,15 +812,19 @@ class SearchableItemController {
         SearchableItemType type = SearchableItemType.findByDisplay('Looks')
         
         //*****   CHANGE THIS *********//
-        Brand brand = Brand.findByName('Theory')
+        Brand brand = Brand.findByName("Marcelo Burlon")
         
         // FYI, A map's keys are automatically strings, we copy the list from the spreadsheet and edit
         // it into a map with the strings for the season as keys and the category as the value
         // both can be accesses in the each loop.
         
         //*****   CHANGE THIS *********//
-        Map mapToProcess = [SS18:'RTW', PF17:'RTW', SS17:'RTW',SS17:'mensw',FW16:'mensw',SS16:'mensw',
-                            FW15:'mensw',PF15:'mensw',other:'mensw',other:'RTW']
+        // theory Map mapToProcess = [SS18:'RTW', PF17:'RTW', SS17:'RTW',SS17:'mensw',FW16:'mensw',SS16:'mensw',
+                            //FW15:'mensw',PF15:'mensw',other:'mensw',other:'RTW']
+
+
+        Map mapToProcess = [SS17:'mensw', OTHER:'ACC']
+
         
         Category category = null
         Season season = null
@@ -852,8 +856,8 @@ class SearchableItemController {
         }
             
         
-        log.info "done"
-        render 'done'
+        log.info "done: " + brand.name
+        render 'done' + brand.name
 
         
     } 
