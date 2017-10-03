@@ -248,19 +248,23 @@ export class CreateSampleRequestBrand {
   }
 
   addressInit(){
-    let defaultAddress = this.returnTo.find(item => item.defaultAddress == true);
-    if (defaultAddress) {
-      let availableReturnToItems = this.availableReturnToItems;
-      let selectedReturnTo = availableReturnToItems.find(item => item.id == defaultAddress.id);
-      this.sampleRequest.returnToAddress = selectedReturnTo.id;
-      this.selectedReturnToItems = [selectedReturnTo.id];
+    if(!this.sampleRequest.returnToAddress.name){
+      let defaultAddress = this.returnTo.find(item => item.defaultAddress == true);
+      if (defaultAddress) {
+        let availableReturnToItems = this.availableReturnToItems;
+        let selectedReturnTo = availableReturnToItems.find(item => item.id == defaultAddress.id);
+        this.sampleRequest.returnToAddress = selectedReturnTo.id;
+        this.selectedReturnToItems = [selectedReturnTo.id];
+      }
     }
 
     if(this.sampleRequest.returnToAddress){
+      //console.log(" return to in booking:");
+      //console.log(JSON.stringify(this.sampleRequest.returnToAddress));
       let availableReturnToItems = this.availableReturnToItems;
       let selectedReturnTo = availableReturnToItems.find(item => item.id == this.sampleRequest.returnToAddress.id);
-      console.log("selected return to");
-      console.log(JSON.stringify(selectedReturnTo));
+      //console.log("selected return to");
+      //console.log(JSON.stringify(selectedReturnTo));
       this.selectedReturnToItems = [selectedReturnTo.id];
       
     }
