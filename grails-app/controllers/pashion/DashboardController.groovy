@@ -63,12 +63,19 @@ class DashboardController {
             if(it.address){
                 address = extractAddressProperties(it.address,it.id)
             } else{
-                address = extractAddressProperties(Address.findByPrAgencyAndDefaultAddress(agency,true),it.id)
+                def defaultAddress = Address.findByPrAgencyAndDefaultAddress(agency,true)
+                if(defaultAddress)
+                    address = extractAddressProperties(defaultAddress,it.id)
             }
-            
-            address << [id:id,name:it.name +" "+ it.surname,type: 'user']
+            if(address){
+                address << [id:id,name:it.name +" "+ it.surname,type: 'user']
+                returnList.add(address)
+            } else{
+                returnList.add([id:id,originalId:it.id,address1:"No default office address",name:it.name +" "+ it.surname,type: 'user'])
+            }
+
             ++id
-            returnList.add(address)
+            
         }
         returnList.sort{it.name}
         def response = returnList as JSON
