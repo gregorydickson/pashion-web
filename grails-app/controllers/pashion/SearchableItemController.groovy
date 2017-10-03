@@ -828,7 +828,7 @@ class SearchableItemController {
         
 
         mapToProcess.each{ key, value ->
-            List searchableItems = []
+            List searchableItems = null
             season = Season.findByAbbreviation(key)
             if(!season)
                 season = Season.findByNameIlike(key)
@@ -841,8 +841,11 @@ class SearchableItemController {
 
             brandCollection = BrandCollection.findByBrandAndSeasonAndCategory(brand,season,category)
             searchableItems = SearchableItem.findAllByBrandCollection(brandCollection)
-            searchableItems*.isPrivate = true
-            searchableItems*.save(failOnError:true,flush:true)
+            log.info "updating :"+searchableItems.size()
+            if(searchableItems){
+                searchableItems*.isPrivate = true
+                searchableItems*.save(failOnError:true,flush:true)
+            }
             
 
 
