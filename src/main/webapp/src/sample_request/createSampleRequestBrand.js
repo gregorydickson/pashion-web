@@ -248,6 +248,7 @@ export class CreateSampleRequestBrand {
   }
 
   addressInit(){
+    let defaultSet = false;
     if(!this.sampleRequest.returnToAddress.name){
       let defaultAddress = this.returnTo.find(item => item.defaultAddress == true);
       if (defaultAddress) {
@@ -255,10 +256,11 @@ export class CreateSampleRequestBrand {
         let selectedReturnTo = availableReturnToItems.find(item => item.id == defaultAddress.id);
         this.sampleRequest.returnToAddress = selectedReturnTo.id;
         this.selectedReturnToItems = [selectedReturnTo.id];
+        defaultSet = true;
       }
     }
 
-    if(this.sampleRequest.returnToAddress){
+    if(this.sampleRequest.returnToAddress.name && !defaultSet){
       //console.log(" return to in booking:");
       //console.log(JSON.stringify(this.sampleRequest.returnToAddress));
       let availableReturnToItems = this.availableReturnToItems;
