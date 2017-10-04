@@ -356,7 +356,7 @@ export class UserService {
         let allChannels = [];
         for (let i = 0; i < user.connections.length; i++) {
             // console.log (`Adding ${this.users[ this.users[id - 1].connections[i].connectedUserId -1].email}`);
-            let connectedUser = this.users.find(item => {return item.id = user.connections[i].connectedUserId;});
+            let connectedUser = this.users.find(item => {return item.id == user.connections[i].connectedUserId;});
             allChannels.push (user.email + connectedUser.email )
         } 
         return allChannels;
