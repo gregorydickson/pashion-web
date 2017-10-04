@@ -12,4 +12,10 @@ json g.render(searchableItem,[expand:['type','samples','sampleCity']]){
 		id searchableItem.brand?.id
 	}
 
+	if(searchableItem.look){
+		seasonAbbreviation searchableItem?.look?.season?.abbreviation
+		lookNameNumber searchableItem?.look?.nameNumber
+		lookNameVariant searchableItem?.look?.nameVariant
+	}
+
 } 
