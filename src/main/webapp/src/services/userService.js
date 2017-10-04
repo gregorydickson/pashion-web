@@ -41,6 +41,7 @@ export class UserService {
                 this.http.fetch('/user/connections')
                     .then(response => response.json())
                     .then(users => {
+                        console.log("got the users");
                         this.users = users;
                         // need to zero saved message count as about to re create it from pubnub
                         // do it in getAllMessages in messages
@@ -485,9 +486,14 @@ export class UserService {
 
     clearUnreadMessages(withUserId) {
         // assume for the logged in user
+        console.log("clear unread messages")
+        if(!this.users && this.user)
+            return
 
-        let user = this.users.find(item => {
-            return item.id == this.user.id;
+        let id = this.user.id;
+        let user = this.users.find((item) => {
+            console.log("user:"+item.id);
+            return item.id == id;
         });
 
         
