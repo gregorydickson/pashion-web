@@ -379,7 +379,9 @@ class SampleRequestController {
         def prAgency = requestingUser.prAgency?.name ?: ""
         def brand = requestingUser.brand?.name ?: ""
         
-        log.info "agency:"+prAgency   
+        log.info "agency:"+prAgency
+        if(sr.emailNotification)
+            notify "sampleRequestEmail", sr
         notify "sampleRequestCacheInvalidate",[brand:brand,press: pressHouse, prAgency: prAgency, booking:sr.id]
         respond sr
     }

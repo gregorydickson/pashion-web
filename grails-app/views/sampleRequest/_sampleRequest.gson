@@ -86,6 +86,8 @@ json{
     endOffset sampleRequest.endOffset
     datesSaved sampleRequest.datesSaved
 
+    emailNotification sampleRequest.emailNotification
+
 	prAgency{
 		name sampleRequest.prAgency?.name
 		id sampleRequest.prAgency?.id

@@ -189,6 +189,8 @@ export class CreateSampleRequestBrand {
 
     if(this.currentItem)
       this.checkSamples();
+    if(this.sampleRequest.emailNotification)
+      this.email = 'EMAIL';
     ga('set', 'page', '/createSampleRequestBrand.html');
     ga('send', 'pageview');
 
