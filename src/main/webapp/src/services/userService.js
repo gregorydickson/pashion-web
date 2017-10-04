@@ -474,12 +474,15 @@ export class UserService {
     }
 
     clearAllUnreadMessagesForTheCurrentUser() {
-        
+        let id = this.user.id;
+        let user = this.users.find((item) => {
+            return item.id == id;
+        });
         var i;
         // my connections
-        if(this.user.connections){
-            for (i = 0; i < this.user.connections.length; i++) {
-                this.clearUnreadMessages(this.user.connections[i].connectedUserId);
+        if(user && user.connections){
+            for (i = 0; i < user.connections.length; i++) {
+                this.clearUnreadMessages(user.connections[i].connectedUserId);
             }
         }
     }
@@ -492,14 +495,13 @@ export class UserService {
 
         let id = this.user.id;
         let user = this.users.find((item) => {
-            console.log("user:"+item.id);
             return item.id == id;
         });
 
         
         var connectionId1 = -1;
         var i;
-        if(user.connections){
+        if(user && user.connections){
             for (i = 0; i < user.connections.length; i++) {
                 if (user.connections[i].connectedUserId == withUserId) {
                     user.connections[i].numberNewMessages = 0;
