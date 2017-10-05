@@ -540,7 +540,8 @@
                                            booking.requestStatusBrand != 'Withdrawn' && 
                                            booking.requestStatusBrand != 'Denied' && 
                                            booking.requestStatusBrand != 'In House' && 
-                                           booking.requestStatusBrand != 'Delivering' ) 
+                                           booking.requestStatusBrand != 'Delivering' &&
+                                           booking.startDay) 
                                                 ? 'Picking' : booking.requestStatusBrand}
                                            </td>
 
