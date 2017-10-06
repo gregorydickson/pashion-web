@@ -117,9 +117,8 @@ export class EditAddress {
         console.log("editAddress.update");
         this.addressService.update(this.newAddress)
             .then(response => { 
-                this.controller.ok(response);
+                this.controller.ok(this.newAddress);
             });
-
 
     }
 

@@ -1221,6 +1221,7 @@ export class Index {
             .then(result =>{
 
                 if(this.sampleRequestService.getCurrentSampleRequest().startDay){
+                    console.log("trolley editing");
                     this.sampleRequestService.sampleRequestStatus = "edit";
                     this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: id, lock: true })
                         .then(response => {
@@ -1228,6 +1229,7 @@ export class Index {
                             this.sampleRequestService.stopPicking();
                         });
                 } else {
+                    console.log("NON trolley editing");
                     this.dialogService.open({ viewModel: EditSampleRequest, model: id, lock: true })
                         .then(response => {});
                 }

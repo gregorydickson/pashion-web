@@ -29,7 +29,7 @@ export class FormSelectSampleRequest {
     }
 
     selectedChanged(){
-      console.log("select 2 (formSelect.js) Changed");
+      //console.log("select 2 (formSelect.js) Changed");
       //console.log(JSON.stringify(this.selected));
       if(this.selected && this.sel){
         
@@ -65,12 +65,12 @@ export class FormSelectSampleRequest {
         });
         
 
-        console.log("*****************   select2 setup ***********************");
+        
     }
 
     unbind() {
         $(this.element).find('select')
             .select2("destroy").off('change');
-        console.log("select2 unbound");
+        //console.log("select2 unbound");
     }
 }

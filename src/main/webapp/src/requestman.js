@@ -582,18 +582,27 @@ export class Requestman {
   }
 
   editSampleRequestTrolley(id) {
-    this.closeSampleRequestMenu(id);
-    this.sampleRequestService.sampleRequestStatus = "edit";
     
+    this.closeSampleRequestMenu(id);
+        
     this.sampleRequestService.getSampleRequest(id)
         .then(result =>{
-            this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: id, lock: true })
-                .then(response => {
-                  this.sampleRequestService.sampleRequestStatus = 'none';
+
+            if(this.sampleRequestService.getCurrentSampleRequest().startDay){
+                console.log("trolley editing");
+                this.sampleRequestService.sampleRequestStatus = "edit";
+                this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: id, lock: true })
+                    .then(response => {
+                        this.sampleRequestService.sampleRequestStatus = 'none';
                         this.sampleRequestService.stopPicking();
-                });
+                    });
+            } else {
+                console.log("NON trolley editing");
+                this.dialogService.open({ viewModel: EditSampleRequest, model: id, lock: true })
+                    .then(response => {});
+            }
         });
-    }
+  }
 
 
   denySampleRequest(id) {

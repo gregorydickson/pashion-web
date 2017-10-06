@@ -40,6 +40,7 @@ export class CreateSampleRequestBrand {
   @bindable user = {};
   
   @bindable restrictOutsideBooking = false;
+  @bindable sampleRequest = {};
 
   brand = [];
 
@@ -53,7 +54,6 @@ export class CreateSampleRequestBrand {
   emailOptions = ['EMAIL'];
   email = null;
 
-  selectedAddress = {};
   returnToAddress = null;
 
   sampleRequest = null;
@@ -263,8 +263,7 @@ export class CreateSampleRequestBrand {
     }
 
     if(this.sampleRequest.returnToAddress.name && !defaultSet){
-      //console.log(" return to in booking:");
-      //console.log(JSON.stringify(this.sampleRequest.returnToAddress));
+
       let availableReturnToItems = this.availableReturnToItems;
       let selectedReturnTo = availableReturnToItems.find(item => item.id == this.sampleRequest.returnToAddress.id);
       //console.log("selected return to");
@@ -272,6 +271,7 @@ export class CreateSampleRequestBrand {
       this.selectedReturnToItems = [selectedReturnTo.id];
       
     }
+    
   }
 
   checkSamples(){
@@ -324,7 +324,7 @@ export class CreateSampleRequestBrand {
   onSelectAddressChangeCallback(event) {
     console.log('onSelectAddressChangeCallback() called:', event.detail.value);
     if (event.detail.value.selectedAddress) {
-      this.selectedAddress = event.detail.value.selectedAddress;
+      this.sampleRequest.addressDestination = event.detail.value.selectedAddress;
       this.sampleRequest.deliverTo = event.detail.value.selectedAddress;
     }
   }

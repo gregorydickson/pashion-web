@@ -94,7 +94,6 @@ export class EditSampleRequest {
     if (event.detail.value.selectedAddress) {
       this.sampleRequest.addressDestination = event.detail.value.selectedAddress;
       this.sampleRequest.deliverTo = event.detail.value.selectedAddress;
-      console.log(JSON.stringify(this.sampleRequest.deliverTo))
     }
   }
 

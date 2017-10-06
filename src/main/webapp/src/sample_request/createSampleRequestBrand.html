@@ -89,8 +89,8 @@
                         </div>
 
                         <!-- Deliver To-->
-                        <select-address change.delegate="onSelectAddressChangeCallback($event)" show-menu="true" width="105"
-                        class="${selectedAddress.name ? '' : 'red-deco' }">
+                        <select-address change.delegate="onSelectAddressChangeCallback($event)" show-menu="true" width="105" booking.bind="sampleRequest"
+                        class="${sampleRequest.addressDestination.name ? '' : 'red-deco' }">
                         </select-address>
 
                         <!-- Name-->
@@ -98,7 +98,7 @@
                             <span class="inline-label" style="margin-bottom: 0px;">
                                 <span class="slim-text-box-label" style="">Attention</span>
                                 <div>
-                                    <span class="slim-text-box">${selectedAddress.name}
+                                    <span class="slim-text-box">${sampleRequest.addressDestination.name}
                                     </span>
                                 </div>
                             </span>
@@ -108,7 +108,7 @@
                             <span class="inline-label" style="margin-bottom: 0px;">
                                 <span class="slim-text-box-label" style="">Phone</span>
                                 <div>
-                                    <span class="slim-text-box">${selectedAddress.contactPhone}
+                                    <span class="slim-text-box">${sampleRequest.addressDestination.contactPhone}
                                     </span>
                                 </div>
                             </span>
@@ -118,7 +118,7 @@
                             <span class="inline-label" style="margin-bottom: 0px;">
                                 <span class="slim-text-box-label" style="">Company</span>
                                 <div>
-                                    <span class="slim-text-box"> ${selectedAddress.company}
+                                    <span class="slim-text-box"> ${sampleRequest.addressDestination.company}
                                     </span>
                                 </div>
                             </span>
@@ -128,7 +128,7 @@
                             <span class="inline-label" style="margin-bottom: 0px;">
                                 <span class="slim-text-box-label" style="">Address 1</span>
                                 <div>
-                                    <span class="slim-text-box"> ${selectedAddress.address1}
+                                    <span class="slim-text-box"> ${sampleRequest.addressDestination.address1}
                                 </div>
                             </span>
                         </div>
@@ -137,7 +137,7 @@
                             <span class="inline-label" style="margin-bottom: 0px;">
                                 <span class="slim-text-box-label" style="">City</span>
                                 <div>
-                                    <span class="slim-text-box"> ${selectedAddress.city}
+                                    <span class="slim-text-box"> ${sampleRequest.addressDestination.city}
                                 </div>
                             </span>
                         </div>
@@ -146,7 +146,7 @@
                             <span class="inline-label" style="margin-bottom: 0px;">
                                 <span class="slim-text-box-label" style="">Country</span>
                                 <div>
-                                    <span class="slim-text-box"> ${selectedAddress.country}
+                                    <span class="slim-text-box"> ${sampleRequest.addressDestination.country}
                                 </div>
                             </span>
                         </div>
@@ -155,7 +155,7 @@
                             <span class="inline-label" style="margin-bottom: 0px;">
                                 <span class="slim-text-box-label">Postal Code</span>
                                 <div>
-                                    <span class="slim-text-box"> ${selectedAddress.postalCode}
+                                    <span class="slim-text-box"> ${sampleRequest.addressDestination.postalCode}
                                 </div>
                             </span>
                         </div>
@@ -164,7 +164,7 @@
                             <span class="inline-label" style="margin-bottom: 0px;">
                                 <span class="slim-text-box-label">Comment</span>
                                 <div>
-                                    <span class="slim-text-box"> ${selectedAddress.comment}
+                                    <span class="slim-text-box"> ${sampleRequest.addressDestination.comment}
                                 </div>
                             </span>
                         </div>

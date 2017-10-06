@@ -15,12 +15,11 @@ export class SelectAddress {
     @bindable title = 'Deliver To';
     @bindable placeholder = 'Select';
     @bindable width = 170;
+    @bindable booking = {};
     style = 'width: 170px';
 
     @observable deliverTo = [];
-    availableDeliverToItems = [];
-    selectedDeliverToItems = [''];
-    selectedDeliverToId = null;
+
 
     selectedDeliverToId = null;
     editMode = false;
@@ -38,11 +37,33 @@ export class SelectAddress {
             .then(deliverTo => {
                 this.deliverTo = deliverTo;
                 console.log("set deliver to");
+                if(this.booking && this.booking.addressDestination){
+                    console.log("Address component loading ad-hoc address");
+                    let address = this.booking.addressDestination;
+
+                    let theDeliverTo = this.deliverTo.find(function (item) {
+                        return ((item.address1 === address.address1) && 
+                        (item.name ===  address.name));
+                    });
+
+                    console.log('The booking deliver to:', theDeliverTo);
+
+                    this.selectedAddress = theDeliverTo;
+                    this.selectedDeliverToId = theDeliverTo.id;
+                    this.selectedDeliverToItems = [this.selectedDeliverToId];
+                
+                }
             });
+
+        
+
+        
+        
     }
 
     selectedAddressChanged(newValue, oldValue) {
         this.editMode = !this.helpers.isEmptyObject(newValue);
+
     }
 
 
@@ -106,7 +127,7 @@ export class SelectAddress {
         this.selectedDeliverToId = event.detail.value;
         this.selectedAddress = this.deliverTo.find(item => item.id == this.selectedDeliverToId);
         console.log('Selected deliverTo:', this.selectedAddress);
-        this.addressSelect.reset();
+        
         // lets bubble this event with a generic event bubbler
         this.helpers.dispatchEvent(this.element, 'change', {
             selectedAddress: this.selectedAddress
@@ -166,8 +187,11 @@ export class SelectAddress {
                 if (!response.wasCancelled) {
                     console.log('good - ', response.output, newAddressModel);
 
-                    this.addressSelect.reset();
-                    this.selectNewestDeliverTo(newAddressModel.newAddress);
+                    //this.addressSelect.reset();
+                    //this.selectNewestDeliverTo(newAddressModel.newAddress);
+                    console.log(JSON.stringify(newAddressModel.newAddress));
+                    this.booking.addressDestination = newAddressModel.newAddress;
+                    console.log(JSON.stringify(this.booking.addressDestination));
                 } else {
                     console.log('bad');
                 }
@@ -177,11 +201,10 @@ export class SelectAddress {
 
     
     selectNewestDeliverTo(address) {
-        console.log("finding:");
-        console.log(JSON.stringify(address));
+        
         this.deliverToChanged();
         let newestDeliverTo = this.deliverTo.find(function (item) {
-            console.log(JSON.stringify(item));
+            
             return ((item.address1 === address.address1) && 
                 (item.name ===  address.name));
         });
