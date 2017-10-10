@@ -77,7 +77,7 @@ class StuartController {
         def returnTo = sr.returnToAddress
         if(sr.pressHouse && sr.brand && (sr.returnToAddress == null)){
         	def brandAddress = Address.findByBrandAndDefaultAddress(sr.brand,true)
-        	log.info "Brand address:"+brandAddress.name
+        	log.info "Brand address:"+brandAddress?.name
 
         	if(brandAddress) returnTo = brandAddress
         }
