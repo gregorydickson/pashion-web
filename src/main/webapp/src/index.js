@@ -346,9 +346,7 @@ export class Index {
 
     filterChangeBrand(event) {
         this.busy.on();
-        if(window.myblazy){
-            window.myblazy.destroy();
-        }
+        let firstTime = this.firstTime;
         this.rows = []; //RM can do this to prevent the loading over existing images, but have to deal with detritus 
         //had to reset rows as lazy loading was broken
         
@@ -398,9 +396,9 @@ export class Index {
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
             
-                if (this.firstTime) {
+                if (firstTime) {
                     console.log ("first time lazy load");
-                    this.firstTime = false;
+                    firstTime = false;
 
                     setTimeout(function () {
                         var msw = document.getElementById("mainScrollWindow");
@@ -434,14 +432,14 @@ export class Index {
                         }, 1000);
                     }, false);
                     
-                }
-                else {
+                } else {
                     console.log ("NOT first time unveil");
                     
                     this.taskQueue.queueMicroTask(() => {            
                             setTimeout(function () {
                                     //window.myblazy.destroy();
-                                    window.myblazy.revalidate();
+                                    if(window.myblazy)
+                                        window.myblazy.revalidate();
                                     $('div.menu-stripe').show();
                                     //console.log("subsequent loading Blazy recreation");
                             }, 1000); 
