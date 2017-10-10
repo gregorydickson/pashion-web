@@ -4,6 +4,7 @@
 
     <require from="./common/viewDateFormatter"></require>
     <require from="./common/seasonAbbreviationFormatter"></require>
+    <require from="./common/seasonAbbreviationIdFormatter"></require>
     <require from="./calendars/datepicker"></require>
     <require from="./contacts/sort"></require>
     <require from="./common/filter"></require>
@@ -47,7 +48,7 @@
                     <div style="margin-left:34px;" class="grid-block tool-header tool-header-spacer"> 
                     </div>
                     <div class="grid-block align-left tool-header-spacer">
-                        <span class="ui-text-label-m-broad ">REQUEST MANAGER (${numberOfRequests})</span>
+                        <span class="ui-text-label-m-broad ">BOOKING MANAGER (${numberOfRequests})</span>
                        <!-- <span class="alert-box">3</span> -->
                     </div>
                     <div class="grid-block align-right tool-header-spacer shrink" style="padding-right:7px;">
@@ -118,7 +119,7 @@
                         <!-- Accordion -->
                         <!--Header -->
                         
-                            <div if.bind="user.type === 'brand'"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
+                           <!-- <div if.bind="user.type === 'brand'"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
                                 <table class="big-accordion"  cellspacing="2"  style="table-layout: fixed;">
                                     <tr>
                                         <td class="accordion-underline w3"></td>
@@ -133,23 +134,37 @@
                                         <td class="accordion-underline w5"></td>
                                     </tr>
                                 </table>
-                            </div>
-                            <div if.bind="(user.type === 'press') || (user.type === 'prAgency')"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
+                            </div> -->
+                            <div if.bind="(user.type === 'press')"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
                                 <table class="big-accordion"  cellspacing="2"  style="table-layout: fixed;">
                                     <tr>
                                         <td class="accordion-underline w3"></td>
                                         <td class="accordion-underline w6">ID</td>
-                                        <td class="accordion-underline w8">LOOK</td>
+                                        <td class="accordion-underline w10">CREATED</td>
                                         <td class="accordion-underline w10">START DATE</td>
-                                        <td class="accordion-underline w12">BRAND</td>
-                                        <td class="accordion-underline w30">REQUESTOR</td>
+                                        <td class="accordion-underline w34">REQUESTOR / DELIVER TO</td> <!-- change this to brand I guess -->
                                         <td class="accordion-underline w10">END DATE</td>
-                                        <td class="accordion-underline w5"><img style="width:25px;" src="/assets/shoppingcart60x47.png" height=47 width=60></img></td>
-                                        <td class="accordion-underline w11" style="padding-left:10px;">STATUS</td>
+                                        <td class="accordion-underline w7"><img style="width:25px;" src="/assets/shoppingcart60x47.png" height=47 width=60></img></td>
+                                        <td class="accordion-underline w15" style="padding-left:10px;">STATUS</td>
                                         <td class="accordion-underline w5"></td>
                                     </tr>
                                 </table>
-                            </div>                            
+                            </div> 
+                            <div if.bind="(user.type === 'prAgency' || user.type === 'brand')"  class="grid-content shrink" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left:1rem; margin-right:1rem; margin-top:1rem;">
+                                <table class="big-accordion"  cellspacing="2"  style="table-layout: fixed;">
+                                    <tr>
+                                        <td class="accordion-underline w3"></td>
+                                        <td class="accordion-underline w6">ID</td>
+                                        <td class="accordion-underline w10">CREATED</td>
+                                        <td class="accordion-underline w10">START DATE</td>
+                                        <td class="accordion-underline w34">REQUESTOR / GOING TO</td>
+                                        <td class="accordion-underline w10">END DATE</td>
+                                        <td class="accordion-underline w7"><img style="width:25px;" src="/assets/shoppingcart60x47.png" height=47 width=60></img></td>
+                                        <td class="accordion-underline w15" style="padding-left:10px;">STATUS</td>
+                                        <td class="accordion-underline w5"></td>
+                                    </tr>
+                                </table>
+                            </div>                           
                             <!-- Content Container-->
                             <!-- Rows of content View-->
                             <div  class="grid-content" style="overflow-x: hidden; overflow-y: scroll; padding:0; margin-left: 1rem; margin-right: 1rem;">
@@ -166,41 +181,61 @@
                                             <td class="col1 accordion-grey w6" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.id}</td>
 
                                             <!-- Look -->
-                                            <td if.bind="user.type === 'brand'" class="col2 accordion-grey w8" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.season | seasonAbbreviation:seasons }.${booking.look.toUpperCase()}</td>
-                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="col2 accordion-grey w8" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.season | seasonAbbreviation:seasons }.${booking.look.toUpperCase()}</td>
-
+                                            
+                                            
+                                            <!-- Created -->
+                                            <td if.bind="(user.type === 'brand')" class="col2 accordion-grey w10" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.dateCreated | viewDateFormat}</td>
+                                            <td if.bind="(user.type === 'press')" class="col2 accordion-grey w10" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.dateCreated | viewDateFormat}</td>
+                                            <td if.bind="(user.type === 'prAgency')" class="col2 accordion-grey w10" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.dateCreated | viewDateFormat}</td>
 
                                             <!-- Start Date -->
-                                            <td if.bind="user.type === 'brand'" class="col3 accordion-grey w10 ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''}" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.bookingStartDate | viewDateFormat}</td>
-                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="col3 accordion-grey w10 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''}" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.bookingStartDate | viewDateFormat}</td>
+                                            <td if.bind="(user.type === 'brand')" class="col3 accordion-grey w10 ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''} " click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.bookingStartDate | viewDateFormat}</td>
+                                            <td if.bind="(user.type === 'press')" class="col3 accordion-grey w10 ${computedOverdue(booking.bookingStartDate, booking.requestStatusPress) ? 'red-deco' : ''} " click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.bookingStartDate | viewDateFormat}</td>
+                                            <td if.bind="(user.type === 'prAgency')" class="col3 accordion-grey w10 ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''} " click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.bookingStartDate | viewDateFormat}</td>
 
-                                            <!-- BRAND / Company -->
-                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" class="col4 accordion-grey w12 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.brand.name}</td>
-                                            <td if.bind="user.type === 'brand'" class="col4 accordion-grey w12 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer" ref="company">${booking.requestingUserCompany}</td> <!-- TBD -->
-
+                                        
                                             <!-- Requestor -->
-                                            <td if.bind="((user.type === 'press') || (user.type === 'brand'))" class="col5 accordion-grey w30 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.requestingUser.name} ${booking.requestingUser.surname} / ${booking.deliverTo.name} ${booking.deliverTo.surname}</td>
-
-                                            <td if.bind="(booking.requestingUser.name) && (user.type === 'prAgency')" class="col5 accordion-grey w30 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.requestingUser.name} ${booking.requestingUser.surname} ${booking.requestingUserCompany ? '(' + booking.requestingUserCompany + ')' : ''}</td>
+                                            <td if.bind="(user.type === 'brand')" class="col4 accordion-grey w34 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.requestingUser.name} ${booking.requestingUser.surname} ${booking.requestingUserCompany ? '(' + booking.requestingUserCompany + ')' : ''} 
+                                                <span if.bind="booking.deliverTo.name">${booking.deliverTo.name ? '/ ' + booking.deliverTo.name + ' ' + booking.deliverTo.surname : ''}</span>
+                                                <span if.bind="(!booking.deliverTo.name)">${ '/' + ' ' +booking.addressDestination.name}</span>
+                                            </td> 
+                                            <td if.bind="(user.type === 'press')" class="col4 accordion-grey w34 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.requestingUser.name} ${booking.requestingUser.surname} / ${booking.deliverTo.name} ${booking.deliverTo.surname} ${booking.addressDestination.name}</td>
+                                            <td if.bind="(booking.requestingUser.name) && (user.type === 'prAgency')" class="col4 accordion-grey w34 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.requestingUser.name} ${booking.requestingUser.surname} ${booking.requestingUserCompany ? '(' + booking.requestingUserCompany + ')' : ''}  
+                                                <span if.bind="booking.deliverTo.name">${booking.deliverTo.name ? '/ ' + booking.deliverTo.name + ' ' + booking.deliverTo.surname : ''}</span>
+                                                <span if.bind="((!booking.deliverTo.name) && booking.addressDestination.name)">${ '/' + ' ' +booking.addressDestination.name}</span>
+                                            </td>
+                                            <td if.bind="!(booking.requestingUser.name) && (user.type === 'prAgency')" class="col4 accordion-grey w34 variable-padding" click.delegate="closeExpand($index,booking)" style="cursor: pointer">
+                                                <span if.bind="booking.deliverTo.name">${booking.deliverTo.name ? '/ ' + booking.deliverTo.name + ' ' + booking.deliverTo.surname : ''}</span>
+                                                <span if.bind="(!booking.deliverTo.name)">${booking.addressDestination.name}</span>
+                                            </td>
 
                                             <!-- END DATE -->
-                                            <td class="col6 accordion-grey w10 variable-padding ${computedOverdue(booking.bookingEndDate, booking.requestStatusBrand) ? 'red-deco' : ''}" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.bookingEndDate | viewDateFormat}</td>
+                                            <td if.bind="(user.type === 'brand')" class="col5 accordion-grey w10 variable-padding ${computedOverdue(booking.bookingEndDate, booking.requestStatusBrand) ? 'red-deco' : ''}" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.bookingEndDate | viewDateFormat}</td>
+                                            <td if.bind="(user.type === 'press')" class="col5 accordion-grey w10 variable-padding ${computedOverdue(booking.bookingEndDate, booking.requestStatusBrand) ? 'red-deco' : ''}" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.bookingEndDate | viewDateFormat}</td>
+                                            <td if.bind="(user.type === 'prAgency')" class="col5 accordion-grey w10 variable-padding ${computedOverdue(booking.bookingEndDate, booking.requestStatusBrand) ? 'red-deco' : ''}" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.bookingEndDate | viewDateFormat}</td>
 
                                             <!-- Items -->
-                                            <td class="col7 accordion-grey w5" click.delegate="closeExpand($index,booking)" style="padding-left:11px; cursor: pointer;">${booking.searchableItems.length}</td>
+                                            <td if.bind="(user.type === 'brand')" class="col6 accordion-grey w7" style="padding-left:11px;" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.searchableItems.length}</td>
+                                            <td if.bind="(user.type === 'press')" class="col6 accordion-grey w7" style="padding-left:11px;" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.searchableItems.length}</td>
+                                            <td if.bind="(user.type === 'prAgency')"  class="col6 accordion-grey w7" style="padding-left:11px;" click.delegate="closeExpand($index,booking)" style="cursor: pointer">${booking.searchableItems.length}</td>
 
                                             <!-- Status -->
-                                            <td if.bind="(user.type === 'press') || (user.type === 'prAgency')" 
-                                                class="col8 accordion-grey w11  
-                                                    ${(booking.requestStatusPress=='Pending') ? 'ui-text-label-m-blue' : ''}" click.delegate="closeExpand($index,booking)" style="padding-left:11px; cursor: pointer;">
-                                                    ${booking.requestStatusPress}</td>
-
                                             <td if.bind="user.type === 'brand'" 
-                                                class="col8 accordion-grey w11  
+                                                class="col7 accordion-grey w15  
                                                      ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" click.delegate="closeExpand($index,booking)" style="padding-left:11px; cursor: pointer;">
                                                      ${booking.requestStatusBrand}</td>
-                                            
 
+                                            <td if.bind="(user.type === 'press')" 
+                                                class="col7 accordion-grey w15  
+                                                    ${(booking.requestStatusPress=='Pending') ? 'ui-text-label-m-blue' : ''}" style="padding-left:11px;">
+                                                    ${booking.requestStatusPress}</td>    
+
+                                            <td if.bind="(user.type === 'prAgency')" 
+                                                class="col7 accordion-grey w15  
+                                                    ${(booking.requestStatusPress=='Pending') ? 'ui-text-label-m-blue' : ''}" style="padding-left:11px;">
+                                                    ${booking.requestStatusBrand}</td>
+
+                                            <!--  Menu ... section -->
                                             <td class="accordion-grey w5" style="overflow:visible;"> 
                                                 <div class="look-menu-absolute-wrap">
                                                     <!-- ... -->
@@ -225,9 +260,12 @@
                                                             (booking.requestStatusPress != 'Picked Up') &&
                                                             (booking.requestStatusPress != 'Withdrawn') 
                                                             ))" class="edit-box" ><a href="#" class="expandoHover" click.delegate="lookEditMenu(booking.id)">...</a></span>
+
                                                     <!-- edit request modal popup -->
+
+                                                    <!-- brand and PR -->
                                                      <div class="look-menu-absolute" id="requestManTest${booking.id}">
-                                                        <span class="look-menu-heading">REQUEST ${booking.id}</span>
+                                                        <span class="look-menu-heading">BOOKING ${booking.id}</span>
                                                         <ul if.bind="(user.type === 'brand') || (user.type === 'prAgency')"  class="look-menu-list">
 
                                                             <!-- Edit -->
@@ -238,7 +276,7 @@
                                                                 (booking.requestStatusBrand == 'Out') ||
                                                                 (booking.requestStatusBrand == 'Picked Up')
                                                             )" 
-                                                            class="look-menu-item"><a click.delegate="editSampleRequest(booking.id)" href="#" class="look-menu-link">Edit</a></li>
+                                                            class="look-menu-item"><a click.delegate="editSampleRequestTrolley(booking.id)" href="#" class="look-menu-link">Edit</a></li>
 
                                                             <!--Deny -->
                                                             <li if.bind="(
@@ -283,10 +321,23 @@
                                                             )"
                                                             class="look-menu-item"><a click.delegate="restockedSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Restocked</a></li>
 
+                                                            <!-- Finalize -->
+                                                            <li if.bind="(
+                                                                (booking.requestStatusBrand == 'Finalizing')
+                                                            )"
+                                                            class="look-menu-item"><a click.delegate="trolley(booking.id)" href="#" class="look-menu-link">Finalize</a></li>
+
+                                                            <!-- Not Submitted -->
+                                                            <li if.bind="(
+                                                                (booking.requestStatusBrand == 'Not Submitted' && booking.searchableItems.length != 0)
+                                                            )"
+                                                            class="look-menu-item"><a click.delegate="submit(booking.id)" href="#" class="look-menu-link">Submit Booking</a></li>
+
                                                             <!-- Delete -->
-                                                            <li class="look-menu-item"><a click.delegate="deleteSampleRequest($index,booking.id)" href="#" class="look-menu-link">Delete Request</a></li>
+                                                            <li class="look-menu-item"><a click.delegate="deleteSampleRequest($index,booking.id)" href="#" class="look-menu-link">Delete Booking</a></li>
                                                         </ul>
 
+                                                        <!-- Press menu options -->
                                                         <ul if.bind="(user.type === 'press')" class="look-menu-list">
                                                             <!-- Edit -->
                                                             <li if.bind="(
@@ -318,7 +369,7 @@
                                                                 (booking.requestStatusPress == 'Pending') ||                                                   
                                                                 (booking.requestStatusPress == 'Approved')
                                                             )"
-                                                            class="look-menu-item"><a href="#" click.delegate="pressDeleteSampleRequest(booking.id)"  class="look-menu-link">Withdraw Request</a></li>
+                                                            class="look-menu-item"><a href="#" click.delegate="pressDeleteSampleRequest(booking.id)"  class="look-menu-link">Withdraw Booking</a></li>
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -329,9 +380,9 @@
                                     <!-- expanding data -->
                                     <div id="panel${$index}" class="panel grid-block vertical" style="margin-left: 0.5rem; margin-top:1rem;">
                                         <div class="grid-content">
-                                            <span class="ui-text-label-m-blue">Delivery Pickup:</span><span style="margin-left:0.5rem;"> ${booking.shippingOut.id} ${booking.shippingOut.tracking}</span>
+                                            <span class="ui-text-label-m-blue">Delivery Pickup</span><span style="margin-left:0.5rem;"> ${booking.shippingOut.id} ${booking.shippingOut.tracking}</span>
                                         </div>
-                                        <div if.bind="(booking.shippingOut.status!='Proposed')" class="grid-content">
+                                        <div if.bind="(booking.shippingOut.status) && (booking.shippingOut.status!='Proposed')" class="grid-content">
                                             <span class="">${booking.shippingOut.status}</span>
                                             <span> for ${booking.pickupDate | viewDateFormat} ${booking.pickupTime} by ${booking.courierOut} (${booking.paymentOut})</span> 
                                             <span> to </span>
@@ -344,13 +395,13 @@
                                             <span if.bind="booking.pickedupAt"> at ${booking.pickedupAt} </span>
                                             <span if.bind="booking.signedBy"> signed by ${booking.signedBy} </span>
                                         </div>
-                                        <div if.bind="(booking.shippingOut.status=='Proposed')" class="grid-content">
+                                        <div if.bind="!((booking.shippingOut.status) && (booking.shippingOut.status!='Proposed'))" class="grid-content">
                                             <span>TBD</span>
                                         </div>
                                         <div class="grid-content" style="margin-top:1rem;">
-                                            <span class="ui-text-label-m-blue">Return Pickup:</span><span style="margin-left:0.5rem;"> ${booking.shippingReturn.id} ${booking.shippingReturn.tracking}</span>
+                                            <span class="ui-text-label-m-blue">Return Pickup</span><span style="margin-left:0.5rem;"> ${booking.shippingReturn.id} ${booking.shippingReturn.tracking}</span>
                                         </div>
-                                        <div if.bind="(booking.shippingReturn.status!='Proposed')" class="grid-content">
+                                        <div if.bind="(booking.shippingReturn.status) && (booking.shippingReturn.status!='Proposed')" class="grid-content">
                                             <span class="">${booking.shippingReturn.status}</span>
                                             <span>for ${booking.pickupDateReturn | viewDateFormat} ${booking.pickupTimeReturn} by ${booking.courierReturn} (${booking.paymentReturn}) </span>
                                             <span if.bind="booking.returnToAddress">coming back to ${booking.returnToAddress.name} </span>
@@ -358,14 +409,42 @@
                                             <span if.bind="booking.returnToName"> to ${booking.returnToName} ${booking.returnToSurname}</span>
                                             <!-- <span if.bind="!booking.returnToName"> to me</span> -->
                                         </div>
-                                        <div if.bind="(booking.shippingReturn.status=='Proposed')" class="grid-content">
+                                        <div if.bind="!((booking.shippingReturn.status) && (booking.shippingReturn.status!='Proposed'))" class="grid-content">
                                             <span>TBD</span>
                                         </div>
                                         <div class="grid-content" style="margin-top:1rem;">
                                             <span class="ui-text-label-m-blue">Samples:</span><span style="margin-left:0.5rem;">${booking.searchableItems.length}</span>
                                         </div>
-                                        <div class="grid-content" style="margin-bottom: 1rem;">
-                                        <!-- with sample images 
+
+                                        <!-- SAMPLES BRAND -->
+                                        <div if.bind="(user.type === 'brand')" class="grid-content" style="margin-bottom: 1rem;">
+                                            <table class="" style="table-layout:fixed;">
+                                              <!--  <tr style="height:1rem;" repeat.for="item of booking.searchableItems" >
+                                                    <td if.bind="!(item.clientID)" class="accordion sample-padding"> ${booking.season | seasonAbbreviation:seasons }.${look}.${$index+1} &nbsp; : &nbsp; ${item.status.status} &nbsp; :  &nbsp; <span class="to-u-c">${item.attributes}</span></td>
+                                                    <td if.bind="(item.clientID)" class="accordion sample-padding"> ${booking.season | seasonAbbreviation:seasons }.${look}.${$index+1} &nbsp; [ ${item.clientID} ] &nbsp; : &nbsp; ${item.status.status} &nbsp; : &nbsp; <span class="to-u-c">${item.attributes}</span></td>
+                                                </tr> -->
+                                                <tr style="height:1rem;" repeat.for="sample of booking.searchableItems" >
+                                                    <td if.bind="bookingsImagesView[sample.look.id]!=null" class="accordion sample-padding">  <img  src="${bookingsImagesView[sample.look.id]}" width="60px;" /></td>
+                                                    <td class="accordion sample-padding">${sample.brand.name}</td>
+                                                    <td if.bind="(sample.clientID)" class="accordion sample-padding"> ${sample.season.id | seasonAbbreviationId:seasons}.${sample.lookNameNumber}${sample.lookNameVariant}.${sample.clientID}</td>
+                                                    <td if.bind="!(sample.clientID)" class="accordion sample-padding"> ${sample.season.id | seasonAbbreviationId:seasons}.${sample.lookNameNumber}${sample.lookNameVariant}.P${sample.id}</td>
+                                                    <td class="accordion sample-padding">${sample.sampleType} ${sample.color} ${sample.material}</td>
+                                                    <!-- <td class="accordion sample-padding">Status: ${sample.status.status}</td> -->
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <!-- SAMPLES PRESS -->
+                                        <div if.bind="(user.type === 'press')" class="grid-content" style="margin-bottom: 1rem;">
+                                            <!-- no images -->
+                                            <table class="" style="table-layout:fixed;">
+                                                <tr style="height:1rem;" repeat.for="item of booking.searchableItems" >
+                                                    <td class="accordion sample-padding">${booking.season | seasonAbbreviation:seasons }.${look}.${$index+1} &nbsp;  : &nbsp;  ${item.status.status} &nbsp;  : &nbsp; <span class="to-u-c">${item.attributes}</span></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                        <!-- SAMPLES PR Agency -->
+                                        <div if.bind="(user.type === 'prAgency') && imagesFetched"  class="grid-content" style="margin-bottom: 1rem;">
+                                        <!-- with OLD sample images 
                                             <table class="" style="table-layout:fixed;">
                                                 <tr  style="height:1rem;">
                                                     <td repeat.for="item of booking.searchableItems" class="accordion"><img if.bind="item.image !== undefined"  src="${item.image}" width="60px;" /></td> 
@@ -377,16 +456,19 @@
                                                     <td repeat.for="status of booking.searchableItemsStatus" class="accordion sample-padding">${status.brandStatus}</td>
                                                 </tr> 
                                             </table> -->
-                                            <!-- no images -->
+                                            <!-- inline images new -->
                                             <table class="" style="table-layout:fixed;">
-                                                <tr style="height:1rem;" repeat.for="item of booking.searchableItems" >
-                                                    <td if.bind="(user.type === 'brand') && !(item.clientid)" class="accordion sample-padding"> ${booking.season | seasonAbbreviation:seasons }.${look.toUpperCase()}.${$index+1} &nbsp; : &nbsp; ${item.status.status} &nbsp; :  &nbsp; <span class="to-u-c">${item.attributes}</span></td>
-                                                    <td if.bind="(user.type === 'brand') && (item.clientid)" class="accordion sample-padding"> ${booking.season | seasonAbbreviation:seasons }.${look.toUpperCase()}.${$index+1} &nbsp; [ ${item.clientid} ] &nbsp; : &nbsp; ${item.status.status} &nbsp; : &nbsp; <span class="to-u-c">${item.attributes}</span></td>
-                                                    <td if.bind="(user.type === 'press') || (user.type === 'prAgency')"  class="accordion sample-padding">${booking.season | seasonAbbreviation:seasons }.${look.toUpperCase()}.${$index+1} &nbsp;  : &nbsp;  ${item.status.status} &nbsp;  : &nbsp; <span class="to-u-c">${item.attributes}</span></td>
+                                                <tr style="height:1rem;" repeat.for="sample of booking.searchableItems" >
+                                                    <td if.bind="bookingsImagesView[sample.look.id]!=null" class="accordion sample-padding">  <img  src="${bookingsImagesView[sample.look.id]}" width="60px;" /></td>
+                                                    <td class="accordion sample-padding">${sample.brand.name}</td>
+                                                    <td if.bind="(sample.clientID)" class="accordion sample-padding"> ${sample.season.id | seasonAbbreviationId:seasons}.${sample.lookNameNumber}${sample.lookNameVariant}.${sample.clientID}</td>
+                                                    <td if.bind="!(sample.clientID)" class="accordion sample-padding"> ${sample.season.id | seasonAbbreviationId:seasons}.${sample.lookNameNumber}${sample.lookNameVariant}.P${sample.id}</td>
+                                                    <td class="accordion sample-padding">${sample.sampleType} ${sample.color} ${sample.material}</td>
+                                                    <!-- <td class="accordion sample-padding">Status: ${sample.status.status}</td> -->
                                                 </tr>
                                             </table>
-
                                         </div>
+
 
                                         <div if.bind="(booking.message)" class="grid-content">
                                             <span class="ui-text-label-m-blue">Notes:</span>
@@ -400,7 +482,7 @@
                                 
                                 <!-- Empty notice -->
                                 <div if.bind="(numberOfRequests == 0)">
-                                    <span style="margin-top: 2rem; display:block; text-align:center;"> - No Requests Match Your Search - </span>
+                                    <span style="margin-top: 2rem; display:block; text-align:center;"> - No Bookings Match Your Search - </span>
                                 </div>
                             </div>
                        
@@ -414,9 +496,10 @@
                         <figure style=" display: inline-block; vertical-align: top; text-align:center; margin-top:129px; margin-right: 42px; margin-left: 0px;" >
                             <img class="request-image-fix" src="${image}">
                             <figcaption style="display:block;margin-top:1rem;">
-                                <span if.bind="brand" class="accordion-grey" style="font-size: 1.1rem; font-weight: 500;">${brand} LOOK ${look.toUpperCase()}</span><br>
-                                <span class="accordion-grey">${season}</span><br>
-                            </figcaption>
+                                <span if.bind="image" class="accordion-grey" style="font-size: 1.1rem; font-weight: 500;">${brand} LOOK ${look}</span><br>
+                                <span if.bind="image" class="accordion-grey">${season}</span><br>
+                            </figcaption>                           
+
                         </figure>
                     </div>
 

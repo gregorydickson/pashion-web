@@ -564,6 +564,11 @@ class SearchableItemController {
         respond item
     }
 
+    def fetchSI(){
+        def item = SearchableItem.findById(params.id.toInteger())
+        respond item
+    }
+
     @Transactional
     def upload(){
         log.info "upload params:"+params
@@ -667,6 +672,22 @@ class SearchableItemController {
         sent = [message:'Items Updated', error: false]
         render sent as JSON
 
+    }
+
+    def checkItemsAvailability(){
+        def jsonObject = request.JSON
+        def sr = SampleRequest.get(jsonObject.sampleRequest.id.toInteger())
+        log.info "checkItemsAvailability"
+        def samples = jsonObject.item.samples
+        def item
+        samples.each{
+            item = SearchableItem.get(it.id.toInteger())
+            it.availability = true
+            if(item.notAvailable(sr))
+                it.availability = false
+
+        }
+        respond samples
     }
 
 

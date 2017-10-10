@@ -1,21 +1,26 @@
 <template>
     <require from="./sort"></require>
+    <require from="../common/viewDateFormatter"></require>
+    <require from="calendars/datepicker"></require>
     <require from="../common/formSelectSampleRequest"></require>
     <require from="../common/formSelectSample"></require>
     <require from="../common/formSelectObject"></require>
     <require from="../common/select-control"></require>
     <require from="../address/selectAddress"></require>
-    <require from="../common/seasonAbbreviationFormatterId"></require>
+    <require from="../common/seasonAbbreviationIdFormatter"></require>
 
     <ai-dialog>
         <ai-dialog-header>
             <!-- header -->
             <div class="grid-block align-center tool-header shrink ">
                 <div id="comms_panel" class="grid-block tool-header shrink">
-                    <span class="ui-text-label-m-broad">BOOKING&nbsp;${brand.name}
-                     <!-- ${currentItem.season.id}&nbsp;-->
-                     &nbsp;</span>
-                    <span class="ui-text-label-m-broad">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.nameNumber}${currentItem.nameVariant.toUpperCase()}</span>
+
+                    <span if.bind="(!sampleRequest.id)" class="ui-text-label-m-broad">SET DATES FOR NEW BOOKING</span>
+                    <span if.bind="(sampleRequest.id && (!sampleRequest.requestStatusBrand))" class="ui-text-label-m-broad">PICK SAMPLES FOR BOOKING ${sampleRequest.id}</span>
+                    <span if.bind="(sampleRequest.datesSaved && sampleRequest.requestStatusBrand == 'Not Submitted')" class="ui-text-label-m-broad">PICK SAMPLES FOR BOOKING ${sampleRequest.id}</span>
+                    <span if.bind="(sampleRequest.datesSaved && sampleRequest.requestStatusBrand == 'Finalizing')" class="ui-text-label-m-broad">FINALIZING BOOKING ${sampleRequest.id}</span>
+                    <span if.bind="(sampleRequest.datesSaved && (sampleRequest.requestStatusBrand === 'Approved' || sampleRequest.requestStatusBrand === 'Picked Up'))" class="ui-text-label-m-broad">EDIT BOOKING ${sampleRequest.id}</span>
+
                 </div>
             </div>
         </ai-dialog-header>
@@ -30,303 +35,449 @@
                 </div>
             </div>
 
-            <!-- <div class="grid-block">Status: ${status}</div> RM not sure of this attribute for now -->
-            <div class="grid-block row" if.bind="!isLoading">
+            
+            <div class="grid-block row">
                 <!--Start Left column -->
                 <div class="vertical grid-block">
-                    <div class="grid-block">
-                        <span class="calendarnav ui-text-label-m-blue ${sampleRequest.startDate ? '' : 'red-deco'}" style="text-align:center;">START BOOKING</span>
+                    <div if.bind="startCalendar">
+                        <div class="grid-block">
+                            <span class="calendarnav ui-text-label-m-blue ${sampleRequest.startDate ? '' : 'red-deco'}" style="text-align:center;">START BOOKING</span>
+                        </div>
+                        <div class="grid-block calendar-header-align">
+                            <span click.delegate="startPrevious()" class="calendarnav prev">
+                            <a><img src="/assets/calendar/prev.png"  /></a>
+                         </span>
+                            <span class="calendarnav calendar-title">
+                            <a id="titlelink" click.delegate="startReset()">TODAY</a>
+                         </span>
+                            <span click.delegate="startNext()" class="calendarnav next">
+                            <a><img src="/assets/calendar/next.png" /></a>
+                         </span>
+                        </div>
+                        <div class="grid-block calendar-header-align">
+                            <span class="calendarnav ui-text-label-m-broad monthyear">${startCalendar.calendarMonths[0].monthName}&emsp;${startCalendar.calendarMonths[0].year}</span>
+                        </div>
+                        <div class="grid-block  calendar-header-align">
+                            <table class="calendar calendar-day-numbers">
+                                <thead>
+                                    <tr>
+                                        <td repeat.for="cell of startCalendar.calendarMonths[0].dayNames[0]">${cell.dayString}
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr repeat.for="row of startCalendar.calendarMonths[0].rows">
+                                        
+                                        <td class="${cell.event} ${aSampleHasOutReason ? 'not-available' : ''}" repeat.for="cell of row">
+                                            <a class=" ${(computedClass && (cell.dayString === sampleRequest.startDay)) ? 'start-selected' : ''} " href="#" click.delegate="setStartDate($event,cell.event,cell.dayString)">
+                                            ${cell.dayString}
+                                        </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="grid-block calendar-header-align">
-                        <span click.delegate="startPrevious()" class="calendarnav prev">
-                        <a><img src="/assets/calendar/prev.png"  /></a>
-                     </span>
-                        <span class="calendarnav calendar-title">
-                        <a id="titlelink" click.delegate="startReset()">TODAY</a>
-                     </span>
-                        <span click.delegate="startNext()" class="calendarnav next">
-                        <a><img src="/assets/calendar/next.png" /></a>
-                     </span>
-                    </div>
-                    <div class="grid-block calendar-header-align">
-                        <span class="calendarnav ui-text-label-m-broad monthyear">${startCalendar.calendarMonths[0].monthName}&emsp;${startCalendar.calendarMonths[0].year}</span>
-                    </div>
-                    <div class="grid-block  calendar-header-align">
-                        <table class="calendar calendar-day-numbers">
-                            <thead>
-                                <tr>
-                                    <td repeat.for="cell of startCalendar.calendarMonths[0].dayNames[0]">${cell.dayString}
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr repeat.for="row of startCalendar.calendarMonths[0].rows">
-                                    <!-- <td class.bind="startCalendar.calendarMonths[0].monthNumber == sampleRequestStartMonth ? 'start-selected' : '' "  repeat.for="cell of row"> -->
-                                    <!-- <td class.bind="sampleRequestStartDay == cell.dayNumber ? computedClass : '' "  repeat.for="cell of row"> -->
-                                    <!-- <td class=" ${cell.event==' today' ? ' today' : ''} ${computedClass ? 'start-selected' : 'start-not-selected' }" repeat.for="cell of row"> -->
-                                    <!--  <td if.bind="startCalendar.calendarMonths[0].monthNumber == sampleRequestStartMonth" class="start-selected"  repeat.for="cell of row">
-                                <td if.bind="startCalendar.calendarMonths[0].monthNumber != sampleRequestStartMonth" class=""  repeat.for="cell of row"> -->
-                                    <td class="${cell.event} ${aSampleHasOutReason ? 'not-available' : ''}" repeat.for="cell of row">
-                                        <a class=" ${(computedClass && (cell.dayString === sampleRequestStartDay)) ? 'start-selected' : ''} " href="#" click.delegate="setStartDate($event,cell.event,cell.dayString)">
-                                        ${cell.dayString}
-                                    </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- Required By -->
-                    <div class="grid-content shrink" style="margin-top: 1.5rem;">
-                        <span class="inline-label">
-                        <span class="slim-text-box-label">Required By</span>
-                        <form-select-sr class="to-u-c" name="requiredby" selected.bind="sampleRequest.requiredBy" options.bind="required"></form-select-sr>
-                        </span>
-                    </div>
+                    <div if.bind="startFinalize" style="margin-top: 5px;">
+                        
+                        <!-- Required By -->
+                        <div class="grid-content shrink">
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">Required By</span>
+                                <form-select-sr class="slim-text-box" name="requiredby" selected.bind="sampleRequest.requiredBy" options.bind="required"></form-select-sr>
+                            </span>
+                        </div>
 
-                    <!-- Deliver To-->
-                    <select-address change.delegate="onSelectAddressChangeCallback($event)" show-menu="true" width="105"
-                    class="${selectedAddress.name ? '' : 'red-deco' }">
-                    </select-address>
+                        <!-- Deliver To-->
+                        <select-address change.delegate="onSelectAddressChangeCallback($event)" show-menu="true" width="105" booking.bind="sampleRequest"
+                        class="${sampleRequest.addressDestination.name ? '' : 'red-deco' }">
+                        </select-address>
 
-                    <!-- Name-->
-                    <div class="grid-content shrink">
-                        <span class="inline-label" style="margin-bottom: 0px;">
-                        <span class="slim-text-box-label" style="">Attention</span>
-                        <div>
-                            <input type="text" class="slim-text-box" value.bind="selectedAddress.name">
+                        <!-- Name-->
+                        <div class="grid-content shrink">
+                            <span class="inline-label" style="margin-bottom: 0px;">
+                                <span class="slim-text-box-label" style="">Attention</span>
+                                <div>
+                                    <span class="slim-text-box">${sampleRequest.addressDestination.name}
+                                    </span>
+                                </div>
+                            </span>
                         </div>
-                        </span>
-                    </div>
-                    <!-- Contact Phone-->
-                    <div class="grid-content shrink">
-                        <span class="inline-label" style="margin-bottom: 0px;">
-                        <span class="slim-text-box-label" style="">Phone</span>
-                        <div>
-                            <input type="text" class="slim-text-box" value.bind="selectedAddress.contactPhone">
+                        <!-- Contact Phone-->
+                        <div class="grid-content shrink">
+                            <span class="inline-label" style="margin-bottom: 0px;">
+                                <span class="slim-text-box-label" style="">Phone</span>
+                                <div>
+                                    <span class="slim-text-box">${sampleRequest.addressDestination.contactPhone}
+                                    </span>
+                                </div>
+                            </span>
                         </div>
-                        </span>
-                    </div>
-                    <!-- Company-->
-                    <div class="grid-content shrink">
-                        <span class="inline-label" style="margin-bottom: 0px;">
-                        <span class="slim-text-box-label" style="">Company</span>
-                        <div>
-                            <input type="text" class="slim-text-box" value.bind="selectedAddress.company">
+                        <!-- Company-->
+                        <div class="grid-content shrink">
+                            <span class="inline-label" style="margin-bottom: 0px;">
+                                <span class="slim-text-box-label" style="">Company</span>
+                                <div>
+                                    <span class="slim-text-box"> ${sampleRequest.addressDestination.company}
+                                    </span>
+                                </div>
+                            </span>
                         </div>
-                        </span>
-                    </div>
-                    <!-- Address 1 -->
-                    <div class="grid-content shrink">
-                        <span class="inline-label" style="margin-bottom: 0px;">
-                        <span class="slim-text-box-label" style="">Address 1</span>
-                        <div>
-                            <input type="text" class="slim-text-box" value.bind="selectedAddress.address1">
+                        <!-- Address 1 -->
+                        <div class="grid-content shrink">
+                            <span class="inline-label" style="margin-bottom: 0px;">
+                                <span class="slim-text-box-label" style="">Address 1</span>
+                                <div>
+                                    <span class="slim-text-box"> ${sampleRequest.addressDestination.address1}
+                                </div>
+                            </span>
                         </div>
-                        </span>
-                    </div>
-                    <!-- City -->
-                    <div class="grid-content shrink">
-                        <span class="inline-label" style="margin-bottom: 0px;">
-                        <span class="slim-text-box-label" style="">City</span>
-                        <div>
-                            <input type="text" class="slim-text-box" value.bind="selectedAddress.city">
+                        <!-- City -->
+                        <div class="grid-content shrink">
+                            <span class="inline-label" style="margin-bottom: 0px;">
+                                <span class="slim-text-box-label" style="">City</span>
+                                <div>
+                                    <span class="slim-text-box"> ${sampleRequest.addressDestination.city}
+                                </div>
+                            </span>
                         </div>
-                        </span>
-                    </div>
-                    <!-- Country -->
-                    <div class="grid-content shrink">
-                        <span class="inline-label" style="margin-bottom: 0px;">
-                        <span class="slim-text-box-label" style="">Country</span>
-                        <div>
-                            <input type="text" class="slim-text-box" value.bind="selectedAddress.country">
+                        <!-- Country -->
+                        <div class="grid-content shrink">
+                            <span class="inline-label" style="margin-bottom: 0px;">
+                                <span class="slim-text-box-label" style="">Country</span>
+                                <div>
+                                    <span class="slim-text-box"> ${sampleRequest.addressDestination.country}
+                                </div>
+                            </span>
                         </div>
-                        </span>
-                    </div>
-                    <!-- Postal Code -->
-                    <div class="grid-content shrink">
-                        <span class="inline-label" style="margin-bottom: 0px;">
-                        <span class="slim-text-box-label">Postal Code</span>
-                        <div>
-                            <input type="text" class="slim-text-box" value.bind="selectedAddress.postalCode">
+                        <!-- Postal Code -->
+                        <div class="grid-content shrink">
+                            <span class="inline-label" style="margin-bottom: 0px;">
+                                <span class="slim-text-box-label">Postal Code</span>
+                                <div>
+                                    <span class="slim-text-box"> ${sampleRequest.addressDestination.postalCode}
+                                </div>
+                            </span>
                         </div>
-                        </span>
-                    </div>
-                    <!-- Comment  -->
-                    <div class="grid-content shrink">
-                        <span class="inline-label" style="margin-bottom: 0px;">
-                        <span class="slim-text-box-label">Comment</span>
-                        <div>
-                            <input type="text" class="slim-text-box" value.bind="selectedAddress.comment">
+                        <!-- Comment  -->
+                        <div class="grid-content shrink">
+                            <span class="inline-label" style="margin-bottom: 0px;">
+                                <span class="slim-text-box-label">Comment</span>
+                                <div>
+                                    <span class="slim-text-box"> ${sampleRequest.addressDestination.comment}
+                                </div>
+                            </span>
                         </div>
-                        </span>
-                    </div>
 
-                    <!-- Courier Section -->
-                    <div class="grid-content shrink">
-                        <span class="inline-label">
-                        <span class="slim-text-box-label">Courier</span>
-                        <form-select-sr class="to-u-c" name="courierOut" selected.two-way="sampleRequest.courierOut" options.bind="courier"></form-select-sr>
-                        </span>
-                    </div>
+                        <!-- Courier Section -->
+                        <div if.bind="(!sampleRequest.shippingOut.stuartJobId)" class="grid-block shrink">
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">Courier</span>
+                                <form-select-sr class="slim-text-box" name="courierOut" selected.two-way="sampleRequest.courierOut" options.bind="courier"></form-select-sr>
+                            </span>
+                            <span id="bookOut" if.bind="sampleRequest.courierOut=='Pashion Courier'" class="slim-text-box-label" style="text-align:left; margin-left:10px;"><a click.delegate="bookOut()" style="">Book</a></span>
+                        </div>
 
-                    <!--  split -->
-                    <div class="grid-content shrink" style="margin-bottom:0.5rem;">
-                        <span class="inline-label">
-                        <span class=" slim-text-box-label">Split</span>
-                        <form-select-sr class="to-u-c" name="paymentOut" selected.two-way="sampleRequest.paymentOut" options.bind="payment"></form-select-sr>
-                        </span>
-                    </div>
+                        <!-- Courier Section after Stuart ID is set -->
+                        <div if.bind="sampleRequest.shippingOut.stuartJobId" class="grid-content shrink">
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">Courier</span>
 
+                                <input class="slim-text-box" value.bind="sampleRequest.courierOut" disabled="disabled" >
+                            </span>
+                        </div>
+
+                        <!-- Pickup Date/Time for Stuart -->
+                        <div if.bind="sampleRequest.courierOut=='Pashion Courier'" class="grid-content shrink">
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">Pickup Date</span>
+                                <input if.bind="(!sampleRequest.shippingOut.stuartJobId)" datepicker type="text" class="slim-text-box" value.bind="sampleRequest.pickupDate | viewDateFormat">
+                                <input if.bind="sampleRequest.shippingOut.stuartJobId" type="text" class="slim-text-box" value.bind="sampleRequest.pickupDate | viewDateFormat" disabled="disabled">
+                            </span>
+                        </div>
+
+                        <div if.bind="((sampleRequest.courierOut=='Pashion Courier') && (!sampleRequest.shippingOut.stuartJobId))" class="grid-content shrink">
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">Pickup Time</span>
+                                <form-select-sr class="slim-text-box" name="pickupTime" selected.two-way="sampleRequest.pickupTime" options.bind="times"></form-select-sr>
+                            </span>
+                        </div>
+
+                        <div if.bind="((sampleRequest.courierOut=='Pashion Courier') && (sampleRequest.shippingOut.stuartJobId))" class="grid-content shrink">
+                            <span class="inline-label">
+                                <span class=" slim-text-box-label">Pickup Time</span>
+                                <input class="" name="pickupTime" value.bind="sampleRequest.pickupTime" disabled="disabled" style="">
+                            </span>
+                        </div>
+
+                        <!--  split -->
+                        <div if.bind="(!sampleRequest.courierOut.sampleRequest.shippingOut.stuartJobId)" class="grid-content shrink">
+                            <span class="inline-label">
+                                <span class=" slim-text-box-label">Split</span>
+                                <form-select-sr class="to-u-c" name="paymentOut" selected.two-way="sampleRequest.paymentOut" options.bind="payment" ></form-select-sr>
+                            </span>
+                        </div>
+                        <div if.bind="sampleRequest.courierOut.sampleRequest.shippingOut.stuartJobId" class="grid-content shrink">
+                            <span class="inline-label">
+                                <span class=" slim-text-box-label">Split</span>
+                                <input class="slim-text-box" name="paymentOut" value.bind="sampleRequest.paymentOut">
+                            </span>
+                        </div>
+
+                        <!-- ID -->
+                        <div if.bind="sampleRequest.courierOut=='Pashion Courier'" class="grid-content shrink">
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">ID</span>
+                                <input type="text" disabled="disabled" class="slim-text-box" value.bind="sampleRequest.shippingOut.stuartJobId">
+                            </span>
+                        </div>
+                    </div>
 
                 </div>
+                
+
+
+
                 <!--Start Right column -->
                 <div class="vertical grid-block">
-                    <div class="grid-block shrink">
-                        <span class="calendarnav ui-text-label-m-blue ${sampleRequest.endDate ? '' : 'red-deco'}" style="text-align:center;">END BOOKING</span>
+                    <div if.bind="endCalendar">
+                        <div class="grid-block shrink">
+                            <span class="calendarnav ui-text-label-m-blue ${sampleRequest.endDate ? '' : 'red-deco'}" style="text-align:center;">END BOOKING</span>
+                        </div>
+                        <div class="grid-block shrink calendar-header-align">
+                            <span click.delegate="endPrevious()" class="calendarnav prev">
+                                <a ><img src="/assets/calendar/prev.png"  /></a>
+                            </span>
+                            <span class="calendarnav calendar-title"><a id="titlelink" click.delegate="endReset()">TODAY</a></span>
+                            <span click.delegate="endNext()" class="calendarnav next">
+                                <a ><img src="/assets/calendar/next.png" /></a>
+                            </span>
+                        </div>
+                        <div class="grid-block shrink calendar-header-align">
+                            <span class="calendarnav ui-text-label-m-broad monthyear">${endCalendar.calendarMonths[0].monthName}&emsp;${endCalendar.calendarMonths[0].year}</span>
+                        </div>
+                        <div class="grid-block shrink calendar-header-align">
+                            <table class="calendar calendar-day-numbers">
+                                <thead>
+                                    <tr>
+                                        <td repeat.for="cell of endCalendar.calendarMonths[0].dayNames[0]">${cell.dayString}
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr repeat.for="row of endCalendar.calendarMonths[0].rows">
+                                       
+                                        <td class="${cell.event} ${aSampleHasOutReason ? 'not-available' : ''}" repeat.for="cell of row">
+                                            <a class=" ${(computedClassEnd && (cell.dayString === sampleRequest.endDay)) ? 'end-selected' : ''} " href="#" click.delegate="setEndDate($event,cell.event,cell.dayString)">
+                                            ${cell.dayString}
+                                        </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="grid-block shrink calendar-header-align">
-                        <span click.delegate="endPrevious()" class="calendarnav prev">
-                     <a ><img src="/assets/calendar/prev.png"  /></a>
-                  </span>
-                        <span class="calendarnav calendar-title"><a id="titlelink" click.delegate="endReset()">TODAY</a></span>
-                        <span click.delegate="endNext()" class="calendarnav next">
-                     <a ><img src="/assets/calendar/next.png" /></a>
-                  </span>
-                    </div>
-                    <div class="grid-block shrink calendar-header-align">
-                        <span class="calendarnav ui-text-label-m-broad monthyear">${endCalendar.calendarMonths[0].monthName}&emsp;${endCalendar.calendarMonths[0].year}</span>
-                    </div>
-                    <div class="grid-block shrink calendar-header-align">
-                        <table class="calendar calendar-day-numbers">
-                            <thead>
-                                <tr>
-                                    <td repeat.for="cell of endCalendar.calendarMonths[0].dayNames[0]">${cell.dayString}
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr repeat.for="row of endCalendar.calendarMonths[0].rows">
-                                    <!-- <td class="${cell.event}"  repeat.for="cell of row">
-                                    <a href="#" click.delegate="setEndDate($event,cell.dayString)">
-                                        ${cell.dayString}
-                                    </a>
-                                </td> -->
-                                    <td class="${cell.event} ${aSampleHasOutReason ? 'not-available' : ''}" repeat.for="cell of row">
-                                        <a class=" ${(computedClassEnd && (cell.dayString === sampleRequestEndDay)) ? 'end-selected' : ''} " href="#" click.delegate="setEndDate($event,cell.event,cell.dayString)">
-                                        ${cell.dayString}
-                                    </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- Return By Time -->
-                    <div class="grid-content shrink" style="margin-top: 1.5rem;">
-                        <span class="inline-label">
-                        <span class="slim-text-box-label">Return By</span>
-                        <form-select-sr class="to-u-c" name="returnBy" selected.bind="sampleRequest.returnBy" options.bind="returnBy"></form-select-sr>
-                        </span>
-                    </div>
+                    <div if.bind="startFinalize" style="margin-top: 5px;">
+                        <!-- Return By Time -->
+                        <div class="grid-content shrink">
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">Return By</span>
+                                <form-select-sr class="slim-text-box" name="returnBy" selected.bind="sampleRequest.returnBy" options.bind="returnBy"></form-select-sr>
+                            </span>
+                        </div>
 
 
-                    <!-- generic drown down used, so no ME. Consider a bespoke one -->
-                    <div class="grid-content shrink">
-                        <span class="inline-label">
-                        <span class="slim-text-box-label">Return To</span>
+                        <div if.bind="(!sampleRequest.shippingReturn.stuartJobId)" class="grid-content shrink">
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">Return To</span>
 
-                        <select-control ref="selectControlReturnTo" name="returnToAddress" change.delegate="onReturnToChangeCallback($event)" selected.bind="selectedReturnToItems"
-                            options.bind="availableReturnToItems" placeholder="SELECT ONE" allow_clear="true" width="110px">
-                        </select-control>
-                        <!--<form-select-sr 
-                        id="returnTo" class="to-u-c" 
-                        name="returnToAddress" 
-                        selected.bind="sampleRequest.returnToAddress" 
-                        options.bind="brandAddresses" ></form-select-sr>-->
-                        </span>
+                                <select-control ref="selectControlReturnTo" name="returnToAddress" change.delegate="onReturnToChangeCallback($event)" selected.bind="selectedReturnToItems"
+                                    options.bind="availableReturnToItems" placeholder="SELECT ONE" allow_clear="true" width="110px">
+                                </select-control>
+                            </span>
+                        </div>
+
+                        <!-- Return To if stuart booked -->
+                        <div if.bind="sampleRequest.shippingReturn.stuartJobId" class="grid-content shrink">
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">Return To</span>
+                                <input class="to-u-c slim-text-box" name="courierOut" value.bind="sampleRequest.returnToAddress.name" disabled="disabled" style="width:169px">
+                            </span>
+                        </div>
+
+                        <!-- Courier Section -->
+                        <div if.bind="(!sampleRequest.shippingReturn.stuartJobId)" class="grid-content shrink">
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">Courier</span>
+                                <form-select-sr class="to-u-c" name="courierOut" selected.two-way="sampleRequest.courierReturn" options.bind="courier"></form-select-sr>
+                            </span>
+                            <span id="bookReturn" if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="slim-text-box-label" style="text-align:left; margin-left:10px;"><a click.delegate="bookReturn()" style="">Book</a></span>
+                        </div>
+
+                        <!-- Courier Section after Stuart booking -->
+                        <div if.bind="sampleRequest.shippingReturn.stuartJobId" class="grid-content shrink">
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">Courier</span>
+                                <input class="to-u-c slim-text-box" name="courierOut" value.bind="sampleRequest.courierReturn" disabled="disabled" style="width:169px">
+                            </span>
+                        </div>
+
+                        <!-- Pickup Date for Stuart -->
+                        <div if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="grid-content shrink">
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">Pickup Date</span>
+                                <input if.bind="(!sampleRequest.shippingReturn.stuartJobId)" datepicker type="text" class="slim-text-box" value.bind="sampleRequest.pickupDateReturn  | viewDateFormat">
+                                <input if.bind="sampleRequest.shippingReturn.stuartJobId" type="text" class="slim-text-box" value.bind="sampleRequest.pickupDateReturn  | viewDateFormat" disabled="disabled">
+                            </span>
+                        </div>
+
+                        <!-- Pickup Time for Stuart -->
+                        <div if.bind="((sampleRequest.courierReturn=='Pashion Courier') && (!sampleRequest.shippingReturn.stuartJobId))" class="grid-content shrink">
+                            <span class="inline-label">
+                                <span class=" slim-text-box-label">Pickup Time</span>
+                                <form-select-sr class="to-u-c" name="pickupTime" selected.two-way="sampleRequest.pickupTimeReturn" options.bind="times"></form-select-sr>
+                            </span>
+                        </div>
+                        <div if.bind="((sampleRequest.courierReturn=='Pashion Courier') && sampleRequest.shippingReturn.stuartJobId)" class="grid-content shrink">
+                            <span class="inline-label">
+                                <span class=" slim-text-box-label">Pickup Time</span>
+                                <input class="to-u-c slim-text-box" name="pickupTime" value.bind="sampleRequest.pickupTimeReturn" disabled="disabled" style="width:169px">
+                            </span>
+                        </div>
+
+                        <!--  split -->
+                        <div if.bind="(!sampleRequest.courierOut.sampleRequest.shippingReturn.stuartJobId)" class="grid-content shrink">
+                            <span class="inline-label">
+                                <span class=" slim-text-box-label">Split</span>
+                                <form-select-sr class="to-u-c" name="paymentOut" selected.two-way="sampleRequest.paymentReturn" options.bind="payment" width="169px"></form-select-sr>
+                            </span>
+                        </div>
+                        <div if.bind="sampleRequest.courierOut.sampleRequest.shippingReturn.stuartJobId" class="grid-content shrink">
+                            <span class="inline-label">
+                                <span class=" slim-text-box-label">Split</span>
+                                <input class="to-u-c" name="paymentReturn" value.bind="sampleRequest.paymentReturn">
+                            </span>
+                        </div>
+
+                        <!-- ID -->
+                        <div if.bind="sampleRequest.courierOut.sampleRequest.shippingReturn.stuartJobId" class="grid-content shrink">
+                            <span class="inline-label">
+                                <span class="slim-text-box-label">ID</span>
+                                <input type="text" disabled="disabled" class="slim-text-box" value.bind="sampleRequest.shippingReturn.stuartJobId">
+                            </span>
+                        </div>
+
+
+
+                        <!--  email -->
+                        <div class="grid-content shrink" style="margin-bottom:0.5rem;">
+                            <span class="inline-label">
+                                <span class=" slim-text-box-label">Confirmation</span>
+                                <form-select-sr class="to-u-c" name="emailOptions" selected.two-way="email" options.bind="emailOptions" place-holder="NONE"></form-select-sr>
+                            </span>
+                            <span if.bind="email" class="inline-label">
+                                <span class=" slim-text-box-label">Email</span>
+                                <input type="text" class="slim-text-box" value.bind="sampleRequest.emailNotification">
+                            </span>
+                        </div>
+
+                        <!-- Notes -->
+                        <div class="grid-content shrink" style="margin-bottom:0.5rem;">                       
+                            <span class="inline-label">
+                                <span class="slim-text-box-label" style="white-space: normal;">Notes</span>
+                                    <textarea rows="2" type="textarea" class="slim-text-box" style="width:169px;" value.bind="sampleRequest.message"></textarea>
+                            </span>
+                        </div>
                     </div>
-
-                    <!-- Courier Section -->
-                    <div class="grid-content shrink">
-                        <span class="inline-label">
-                        <span class="slim-text-box-label">Courier</span>
-                        <form-select-sr class="to-u-c" name="courierReturn" selected.two-way="sampleRequest.courierReturn" options.bind="courier"></form-select-sr>
-                        </span>
-                    </div>
-
-                    <div class="grid-content shrink">
-                        <span class="inline-label">
-                        <span class=" slim-text-box-label">Split</span>
-                        <form-select-sr class="to-u-c" name="paymentReturn" selected.two-way="sampleRequest.paymentReturn" options.bind="payment"></form-select-sr>
-                        </span>
-                    </div>
-
-                    <!--  email -->
-                    <div class="grid-content shrink" style="margin-bottom:0.5rem;">
-                        <span class="inline-label">
-                        <span class=" slim-text-box-label">Confirmation</span>
-                        <form-select-sr class="to-u-c" name="emailOptions" selected.two-way="email" options.bind="emailOptions" place-holder="NONE"></form-select-sr>
-                        </span>
-                        <span if.bind="email" class="inline-label">
-                        <span class=" slim-text-box-label">Email</span>
-                        <input type="text" class="slim-text-box" value.bind="sampleRequest.emailNotification">
-                        </span>
-                    </div>
-
-                    <!-- Notes -->
-                    <div class="grid-content shrink" style="margin-bottom:0.5rem;">                       
-                        <span class="inline-label">
-                            <span class="slim-text-box-label" style="white-space: normal;">Notes</span>
-                                <textarea rows="2" type="textarea" class="slim-text-box" style="width:169px;" value.bind="sampleRequest.message"></textarea>
-                        </span>
-                    </div>
-
-
                 </div>
                 <!--end Right column -->
             </div>
 
-            <!-- Bottom Row -->
-            <div class="grid-content accordion" if.bind="!isLoading">
-                <table class="" style="margin-bottom:4px; table-layout:fixed;">
+
+
+            <!-- SAMPLES TO ADD -->
+            <div class="grid-content accordion" if.bind="currentItem">
+                <table class="" style="margin-bottom:4px; margin-top: 1rem; table-layout:fixed;">
                     <tr>
-                        <td class="accordion ${(sampleRequest.samples.length == 0) ? 'red-deco' : ''}" style="width:100px;">SELECT SAMPLES</td>
-                        <td class="accordion" style="width:447px;text-align:right; padding-right: 0.5rem;">Select All</td>
-                        <td class="accordion" style="width:10px;">
-                            <input type="checkbox" checked.bind="selectAll" change.delegate="allsamples($event)">
-                        </td>
+                        <td class="accordion ${(sampleRequest.samples.length == 0) ? 'red-deco' : ''}" style="width:100px;">ADD SAMPLES TO BOOKING</td>
                     </tr>
                 </table>
             </div>
 
-            <div class="grid-block accordion" style="overflow-x:hidden; max-height:105px;" if.bind="!isLoading">
+            <div class="grid-block accordion" style="overflow-x:hidden; max-height:105px;" if.bind="currentItem">
                 <div class="grid-content shrink" style="width:88px;">
                     <img src="/assets/bg.jpg" alt="" src.bind="currentItem.image" style="height:100px;" />
                 </div>
                 <div class="grid-content">
-                    <table if.bind="currentItem.samples" class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples | sort: 'id': 'ascending'">
+                    <table  class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples | sort: 'id': 'ascending'">
                         <tr>
+                            <td if.bind="(sampleRequest.datesSaved && sample.availability)" class="accordion" style="width:20px; max-width:20px;">
+                                <input disabled.bind="((user.city.name !== sample.sampleCity.name) && (restrictOutsideBooking))" type="checkbox" model.bind="sample"  checked.bind="sampleRequest.searchableItemsProposed">
+                            </td>
 
-                            <td class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:70px; max-width:70px;">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.nameNumber}${currentItem.nameVariant.toUpperCase()}.${$index+1} :&nbsp;</td>
-                            <td class="accordion to-u-c ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:300px; max-width:300px; overflow:hidden; padding-right:20px;">${sample.attributes}</td>
-                            
-                           <td if.bind="!(sample.outReason && sample.outReason.id != 0)" class="accordion" style="width:90px; max-width:90px;">
-                            </td> 
+                            <td if.bind="!(sampleRequest.datesSaved && sample.availability)" class="accordion" style="width:20px; max-width:20px;">
+                                <input disabled type="checkbox" model.bind="sample"  checked.bind="sampleRequest.searchableItemsProposed">
+                            </td>
+
+                            <td if.bind="sample.clientID" class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:130px; max-width:130px;">${sample.seasonAbbreviation}.${sample.lookNameNumber}${sample.lookNameVariant}.${sample.clientID}</td>
+                            <td if.bind="(!sample.clientID)" class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:130px; max-width:130px;">${sample.seasonAbbreviation}.${sample.lookNameNumber}${sample.lookNameVariant}.P${sample.id}</td>
+                            <td class="accordion to-u-c ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:170px; max-width:170px; overflow:hidden; padding-right:20px;">${sample.sampleType} ${sample.color} ${sample.material}</td>                
                             <td if.bind="(sample.outReason && sample.outReason.id != 0)" class="accordion warm-grey-deco" style="width:90px; max-width:90px;">${outReasons[sample.outReason.id].name}
                             </td>
-                            <td class="accordion" style="width:10px; max-width:10px;">
-                                <input disabled.bind="((user.city.name !== sample.sampleCity.name) && (restrictOutsideBooking))" type="checkbox" model.bind="sample.id" change.delegate="updateAvailability()" checked.bind="sampleRequest.samples">
+                            
+                            <td if.bind="(sampleRequest.datesSaved && sample.availability == false)" class="accordion" style="width:80px; max-width:80px;">
+                                Not Available
                             </td>
                         </tr>
                     </table>
                 </div>
-
             </div>
 
 
+            <!-- SAMPLES IN REQUEST-->
+            <div if.bind="sampleRequest.datesSaved">
+                <div class="grid-content accordion">
+                    <table class="" style="margin-bottom:0px; margin-top: 1rem; table-layout:fixed;">
+                        <tr>
+                            <td class="accordion ${(sampleRequest.searchableItemsProposed.length == 0) ? 'red-deco' : ''}" style="width:400px;">SAMPLES IN BOOKING (${sampleRequest.searchableItemsProposed.length})</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="grid-block accordion" style="overflow-x:hidden; max-height:250px;" >
+                    
+                    <div class="grid-content">
+                        <table  class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of sampleRequest.searchableItemsProposed | sort: 'id': 'ascending'">
+                            <tr style="height:25px;"> 
+                                <td class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:110px; max-width:110px;">${sample.brand.name}</td>
+
+                                <td  if.bind="sample.clientID"  class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:130px; max-width:130px;">${sample.seasonAbbreviation}.${sample.lookNameNumber}${sample.lookNameVariant}.${sample.clientID}</td>
+                                <td  if.bind="(!sample.clientID)"  class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:130px; max-width:130px;">${sample.seasonAbbreviation}.${sample.lookNameNumber}${sample.lookNameVariant}.P${sample.id}</td>
+
+                                
+                                <td class="accordion to-u-c ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:215px; max-width:215px; overflow:hidden; padding-right:20px;">${sample.sampleType} ${sample.color} ${sample.material}</td>
+                                <td if.bind="sampleRequest.datesSaved" class="accordion" style="width:65px; max-width:65px;">
+                                    <button class="small button hollow" style="margin-bottom: 2px;" click.delegate="removeSample(sample)" >Remove</button>
+                                </td>
+                                
+                               
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </ai-dialog-body>
-        <ai-dialog-footer show.bind="!isLoading">
-            <a class="hollow button" click.delegate="close()">Cancel</a>
-            <button id="CreateSampleRequestButton" class="button" click.delegate="submit()">Request</button>
+
+
+        <ai-dialog-footer show.bind="!isLoading" style="padding-left:100px;">
+            <button if.bind="!(sampleRequest.datesSaved)" class="hollow button" click.delegate="cancel()">Cancel</button>
+            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" class="hollow button" click.delegate="cancelKeepSR(sampleRequest.id)">Cancel</button>
+            <button if.bind="(sampleRequest.datesSaved && startFinalize)" class="hollow button" click.delegate="cancel()">Cancel</button>
+            <button if.bind="(!sampleRequest.datesSaved)" id="saveDates" class="button" disabled.bind="!(sampleRequest.startDate && sampleRequest.endDate)" click.delegate="dates()">Choose Dates</button>
+            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" disabled.bind="sampleRequest.searchableItemsProposed.length == 0" id="continue" class="button" click.delegate="continue()">Add to Booking</button>
+            <button if.bind="((sampleRequest.datesSaved) && (startFinalize) && !edit)" disabled.bind="!(selectedAddress.name)" id="CreateSampleRequestButton" class="button" click.delegate="submit()">Submit</button>
+            <button if.bind="edit" id="CreateSampleRequestButton" class="button" click.delegate="save()">Save</button>
+            <span id="showHowTo" class="slim-text-box-label" style="text-align:left; margin-left:10px; vertical-align:top; margin-top:4px;"><a click.delegate="showHowTo()">Help</a></span>
         </ai-dialog-footer>
     </ai-dialog>
 </template>

@@ -83,7 +83,10 @@ class EmailService {
             messageTxt = messageTxt + '<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center">'
             messageTxt = messageTxt + '<br/><img src="https://app.pashiontool.com/assets/PashionRMPlainBlack.png" style="max-width:350px;">'
             messageTxt = messageTxt + "<br/><br/>"
-            messageTxt = messageTxt + "Booking confirmation of samples from <b>" + sr.brand.name+ "</b> Look "+sr.look+"<br/><br/><br/>" 
+            if(sr.brand)
+                messageTxt = messageTxt + "Booking confirmation of samples from <b>" + sr?.brand?.name+ "</b><br/><br/><br/>" 
+            else
+                messageTxt = messageTxt + "Booking confirmation of samples <br/><br/><br/>" 
 
             messageTxt = messageTxt + '<img src="https:' + sr.image + '" style="max-width:258px;"><br/><br/>'
             messageTxt = messageTxt + '</td> </tr></table><br/>'
@@ -100,7 +103,7 @@ class EmailService {
             messageTxt = messageTxt + "<b>Required By: </b>" +sr.requiredBy+"<br/>"
             if (sr.deliverTo) { 
                 log.info "sr.deliverTo OK"
-                if (sr.deliverTo.name) {
+                if (sr.deliverTo?.name) {
                     messageTxt = messageTxt + "<b>Deliver To: </b>" +sr.deliverTo?.name + " " + sr.deliverTo?.surname +"<br/>"
                     log.info "sr.deliverTo.name OK"
             
@@ -136,7 +139,12 @@ class EmailService {
             log.info "created message text"
 
             Email from = new Email("support@pashiontool.com")
-            String subject =  "From the PASHION platform: booking confirmation of " + sr.brand.name + " look "+sr.look
+            String subject
+            if(sr.brand)
+                subject =  "From the PASHION platform: booking confirmation of " + sr?.brand?.name + " look "+sr.look
+            else
+                subject =  "From the PASHION platform: booking confirmation for Booking " + sr.id
+
             Email to = new Email(sr.emailNotification)
             Content content = new Content("text/html", messageTxt)
             Mail mail = new Mail(from, subject, to, content)

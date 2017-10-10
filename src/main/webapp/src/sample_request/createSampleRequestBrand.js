@@ -9,37 +9,44 @@ import { PRAgencyService } from 'services/PRAgencyService';
 import { UserService } from 'services/userService';
 import { DialogService } from 'aurelia-dialog';
 import { CreateDialogAlert } from 'common/dialogAlert';
+import { Howto } from 'sample_request/howto';
 import $ from 'jquery';
 import { computedFrom } from 'aurelia-framework';
+import { SampleRequestService } from 'services/sampleRequestService';
+import { SearchableItemService } from 'services/searchableItemService';
+import { busy } from 'services/busy';
 
 
 
-@inject(HttpClient, DialogController, BrandService, DialogService, UserService, OutReasonService, PRAgencyService)
+@inject(HttpClient, DialogController, BrandService, 
+    DialogService, UserService, OutReasonService, 
+    PRAgencyService,SampleRequestService, SearchableItemService, busy)
 export class CreateSampleRequestBrand {
-  static inject = [DialogController];
-  currentItem = {};
-  startCalendar = {};
-  endCalendar = {};
+
+  
+  currentItem = null;
+  startCalendar = null;
+  endCalendar = null;
   isLoading = true;
-
-
+  @bindable startFinalize = false;
+  @bindable edit = false;
   selectAll = true;
   required = [];
 
   availableReturnToItems = [];
-  selectedReturnToItems = [''];
-  sampleRequestStartMonth = '';
-  sampleRequestStartDay = '';
-  sampleRequestEndMonth = '';
-  sampleRequestEndDay = '';
+  selectedReturnToItems = [""];
 
+  hideCalendar = false;
   @bindable user = {};
   
   @bindable restrictOutsideBooking = false;
+  @bindable sampleRequest = {};
 
   brand = [];
 
   returnBy = [];
+
+  ids = [];
 
   courier = [];
   payment = [];
@@ -47,18 +54,15 @@ export class CreateSampleRequestBrand {
   emailOptions = ['EMAIL'];
   email = null;
 
-  selectedAddress = {};
   returnToAddress = null;
 
+  sampleRequest = null;
 
-  sampleRequest = {};
-  startOffset = 0;
-  endOffset = 0;
-
+  times = [];
   startDay = '';
   endDay = '';
 
-  constructor(http, controller, brandService, dialogService,userService, outReasonService, PRAgencyService) {
+  constructor(http, controller, brandService, dialogService,userService, outReasonService, PRAgencyService,sampleRequestService, searchableItemService, busy) {
     this.controller = controller;
     console.log("createSampleRequestBrand");
     http.configure(config => {
@@ -71,195 +75,287 @@ export class CreateSampleRequestBrand {
     this.userService = userService;
     this.prAgencyService = PRAgencyService;
     this.outReasonService = outReasonService;
-
+    this.sampleRequestService = sampleRequestService;
+    this.searchableItemService = searchableItemService;
+    this.busy = busy;
   }
 
 
-   
+  activate(item) {
+    
+
+    this.sampleRequest = this.sampleRequestService.getCurrentSampleRequest();
+    let ids = this.ids;
+    let sr = this.sampleRequest;
+    if(this.sampleRequest.searchableItemsProposed){
+      this.sampleRequest.searchableItemsProposed.forEach(function (sample){
+        ids.push(sample.id);
+      })
+    }
 
     
 
-  activate(item) {
-    var queryString = DateFormat.urlString(0, 2) + '&searchType=brand';
-
-    let sampleRequest = this.sampleRequest;
-    this.sampleRequest.samples = [];
-    let availableReturnToItems = this.availableReturnToItems;
-
-    Promise.all([
-      this.http.fetch('/calendar/searchableItemPicker' + queryString + '&item=' + item.id)
-        .then(response => response.json())
-        .then(calendar => {
-          this.startCalendar = calendar;
-          this.endCalendar = calendar;
-        }),
-
-      this.http.fetch('/dashboard/required').then(response => response.json()).then(required => {
-        this.required = required;
-        this.sampleRequest.requiredBy = "12:00";
-      }),
-
-      this.http.fetch('/dashboard/returnBy').then(response => response.json()).then(returnBy => {
-        this.returnBy = returnBy;
-        this.sampleRequest.returnBy = "Afternoon";
-      }),
-      this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => {
-        this.courier = courier;
-        this.sampleRequest.courierOut = "Pashion Courier";
-        this.sampleRequest.courierReturn = "They Book";
-
-      }),
-
-      this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => {
-        this.payment = payment;
-        this.sampleRequest.paymentOut = "50/50";
-        this.sampleRequest.paymentReturn = "50/50";
-      }),
-
-      this.outReasonService.getOutReasons().then(outReasons => {
-        //sparse array?
-        this.outReasons = outReasons.map(value => {return {id: value.id, name:value.name.toUpperCase()};});}),
+    if(this.sampleRequest.requestStatusBrand === 'Finalizing' ||
+     this.sampleRequest.requestStatusBrand === 'Approved' ||
+     this.sampleRequestService.sampleRequestStatus == 'edit'){
       
-      this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
+      console.log("sr status:"+this.sampleRequestService.sampleRequestStatus);
+      if(this.sampleRequestService.sampleRequestStatus == 'edit')
+        this.edit = true;
+      
 
-      this.http.fetch('/searchableItems/' + item.id + '.json')
-        .then(response => response.json())
-        .then(item => {
-          if (item.session == 'invalid') {
-            window.location.href = '/user/login';
-            return;
+      this.startFinalize = true;
+      this.sampleRequest.datesSaved = true;
+
+      this.calendar();
+
+      return Promise.all([
+        this.userService.getUser().then(user => {
+          this.user = user;
+          if(user.prAgency){
+            this.prAgencyService.getPRAgencyAddresses(user.prAgency.id).then(addresses => {
+              this.returnTo = addresses;
+              addresses.forEach(item => {
+                this.availableReturnToItems.push({
+                  id: item.id,
+                  text: item.name
+                });
+              });
+              this.addressInit();
+            })
+          } else{
+            this.brandService.getBrandAddresses(user.brand.id).then(addresses => {
+              this.returnTo = addresses;
+              addresses.forEach(item => {
+                this.availableReturnToItems.push({
+                  id: item.id,
+                  text: item.name
+                });
+              });
+              this.addressInit();
+            })
           }
-          this.currentItem = item;
-
-          this.userService.getUser().then(user => {
-            this.user = user;
-            if (user.type=="brand"){
-              this.brandService.getRestrictOutsideBooking(this.user.brand.id).then(result => {
-                console.log("restrict Outside booking:"+result)
-                // currently disabled, so always false
-                // but can use for not-available locations??
-                this.restrictOutsideBooking = result;
-                var theUser = this.user;
-
-                var ids = this.sampleRequest.samples;
-                item.samples.forEach(function (item,index,object) {
-                  if(result){
-                    if(item.sampleCity.name == theUser.city.name ){
-                      ids.push(item.id);
-                    } else {
-                      console.log("not adding to selected");
-                    }
-                  } else {
-                    ids.push(item.id);
-                  }
-                  
-                })
-
-              });
-            }
-            if (user.type=="prAgency"){
-              this.prAgencyService.getRestrictOutsideBooking(this.user.prAgency.id).then(result =>{ 
-                console.log("restrict Outside booking:"+result)
-                this.restrictOutsideBooking = result;
-                var theUser = this.user;
-
-                var ids = this.sampleRequest.samples;
-                item.samples.forEach(function (item,index,object) {
-                  if(result){
-                    if(item.sampleCity.name == theUser.city.name ){
-                      ids.push(item.id);
-                    } 
-                  } else {
-                    ids.push(item.id);
-                  }
-                  
-                })
-              });
-            }
-          })
-
-
-          //
-          this.brandService.getBrandAddresses(item.brand.id).then(addresses => {
-            this.returnTo = addresses;
-
-            addresses.forEach(item => {
-              this.availableReturnToItems.push({
-                id: item.id,
-                text: item.name
-              });
-            });
-
-            let defaultAddress = addresses.find(item => item.defaultAddress == true);
-            if (defaultAddress) {
-              let selectedReturnTo = availableReturnToItems.find(item => item.id == defaultAddress.id);
-              sampleRequest.returnToAddress = selectedReturnTo.id;
-              this.selectedReturnToItems = [selectedReturnTo.id];
-            }
-
-
-
-          }),
-          
-          this.brandService.getBrand(item.brand.id).then(brand => {
-            this.brand = brand;
-          });
-          
-          
-
+        }),
+        
+        this.http.fetch('/dashboard/required').then(response => response.json()).then(required => {
+          this.required = required;
+        }),
+        this.http.fetch('/dashboard/returnBy').then(response => response.json()).then(returnBy => {
+          this.returnBy = returnBy;
+        }),
+        this.http.fetch('/dashboard/courier').then(response => response.json()).then(courier => {
+          this.courier = courier;
+        }),
+        this.http.fetch('/dashboard/times').then(response => response.json()).then(times => this.times = times),
+        this.http.fetch('/dashboard/payment').then(response => response.json()).then(payment => {
+          this.payment = payment;
         })
-    ]).then(() => {
-      this.isLoading = false
+          
+      ])
+    } else{
+      return Promise.all([
+        this.userService.getUser().then(user => {this.user = user}),
+        
+        this.outReasonService.getOutReasons().then(outReasons => {
+          this.outReasons = outReasons.map(value => {return {id: value.id, name:value.name.toUpperCase()} } )
+        }),
+        this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons),
+        this.http.fetch('/searchableItems/' + item.id + '.json')
+          .then(response => response.json())
+          .then(item => {
+            if (item.session == 'invalid') {
+              window.location.href = '/user/login';
+              return;
+            }
+            this.currentItem = item;
+            item.samples.forEach(function (sample) {
+              ids.push(sample.id);  
+            })
+            this.calendar();
+            this.checkAvailabilty(item);
+            this.brandService.getBrand(item.brand.id).then(brand => {this.brand = brand});
+          })
+      ])
+    }
+  }
 
 
-    });
+  attached() {
+    this.isLoading = false;
+    console.log("dates saved:"+this.sampleRequest.datesSaved);
+    if(this.sampleRequest.addressDestination){
+      this.selectedAddress = this.sampleRequest.addressDestination;
+    }
+
+    if(this.currentItem)
+      this.checkSamples();
+    if(this.sampleRequest.emailNotification)
+      this.email = 'EMAIL';
+    ga('set', 'page', '/createSampleRequestBrand.html');
+    ga('send', 'pageview');
+
+  }
+
+  showHowTo() {
+    this.dialogService.open({ viewModel: Howto, model: "no-op", lock: false });
+  }
+
+  checkAvailabilty(item){
+    let sr = this.sampleRequest;
+    this.searchableItemService.checkItemsAvailability({item:item,sampleRequest:this.sampleRequest})
+      .then(result =>{
+        item.samples.forEach(function(sample) {
+          sample.availability = result.find(function (availability) {
+            return sample.id === availability.id;
+          }).availability;
+        });
+        
+        
+        item.samples.forEach(function (sample) {
+          let inTrolley = sr.searchableItemsProposed.find(item => {return sample.id === item.id});
+
+          if(sample.availability && (!inTrolley)){
+            console.log("available and adding to trolley - searchableItemsProposed");
+            console.log(JSON.stringify(sample));
+            sr.searchableItemsProposed.push(sample); 
+          } else{
+            console.log("not available or in trolley");
+          }
+        })
+        
+      });
+  }
+
+  calendar(){
+    let queryStringEnd = DateFormat.urlString(this.sampleRequest.endOffset, 1)+ '&searchType=brand';
+    let queryStringStart = DateFormat.urlString(this.sampleRequest.startOffset, 1)+ '&searchType=brand';
+    
+    this.http.fetch('/calendar/showAvailabilitySamples'+queryStringEnd, {
+            method: 'post',
+            body: json(this.ids)
+          })
+          .then(response => response.json())
+          .then(calendar => {
+              this.endCalendar = calendar;
+          });
+
+    this.http.fetch('/calendar/showAvailabilitySamples'+queryStringStart, {
+            method: 'post',
+            body: json(this.ids)
+          })
+          .then(response => response.json())
+          .then(calendar => {
+              this.startCalendar = calendar;
+          });
+  }
+
+  addressInit(){
+    let defaultSet = false;
+    if(!this.sampleRequest.returnToAddress.name){
+      let defaultAddress = this.returnTo.find(item => item.defaultAddress == true);
+      if (defaultAddress) {
+        let availableReturnToItems = this.availableReturnToItems;
+        let selectedReturnTo = availableReturnToItems.find(item => item.id == defaultAddress.id);
+        this.sampleRequest.returnToAddress = selectedReturnTo.id;
+        this.selectedReturnToItems = [selectedReturnTo.id];
+        defaultSet = true;
+      }
+    }
+
+    if(this.sampleRequest.returnToAddress.name && !defaultSet){
+
+      let availableReturnToItems = this.availableReturnToItems;
+      let selectedReturnTo = availableReturnToItems.find(item => item.id == this.sampleRequest.returnToAddress.id);
+      //console.log("selected return to");
+      //console.log(JSON.stringify(selectedReturnTo));
+      this.selectedReturnToItems = [selectedReturnTo.id];
+      
+    }
+    
+  }
+
+  checkSamples(){
+    let user = this.user;
+    if (user.type == "brand"){
+      this.brandService.getRestrictOutsideBooking(this.user.brand.id).then(result => {
+        console.log("restrict Outside booking:"+result)
+        // currently disabled, so always false
+        // but can use for not-available locations??
+        this.restrictOutsideBooking = result;
+        var theUser = this.user;
+
+        var ids = this.sampleRequest.searchableItemsProposed;
+        this.currentItem.samples.forEach(function (item,index,object) {
+          if(result){
+            if(item.sampleCity.name == theUser.city.name ){
+              //ids.push(item);
+            } else {
+              console.log("not adding to selected");
+            }
+          } else {
+            //ids.push(item);
+          }
+          
+        })
+
+      });
+    }
+    if (user.type=="prAgency"){
+      this.prAgencyService.getRestrictOutsideBooking(this.user.prAgency.id).then(result =>{ 
+        console.log("restrict Outside booking:"+result)
+        this.restrictOutsideBooking = result;
+        var theUser = this.user;
+
+        var ids = this.sampleRequest.searchableItemsProposed;
+        this.currentItem.samples.forEach(function (item,index,object) {
+          if(result){
+            if(item.sampleCity.name == theUser.city.name ){
+              //ids.push(item);
+            } 
+          } else {
+            //ids.push(item);
+          }
+          
+        })
+      });
+    }
   }
 
   onSelectAddressChangeCallback(event) {
     console.log('onSelectAddressChangeCallback() called:', event.detail.value);
     if (event.detail.value.selectedAddress) {
-      this.selectedAddress = event.detail.value.selectedAddress;
+      this.sampleRequest.addressDestination = event.detail.value.selectedAddress;
+      this.sampleRequest.deliverTo = event.detail.value.selectedAddress;
     }
-    this.enableCheck();
   }
 
   onReturnToChangeCallback(event) {
     console.log('onReturnToChangeCallback() called:', event.detail.value);
-
     if (event.detail.value) {
       let selectedReturnToId = event.detail.value;
       let selectedReturnTo = this.returnTo.find(item => item.id == selectedReturnToId);
       console.log('Selected returnTo:', selectedReturnTo);
       this.sampleRequest.returnToAddress = selectedReturnToId;
-
-
     }
-    this.enableCheck();
-  }
-
-
-  attached() {
-    document.getElementById("CreateSampleRequestButton").disabled = true;
-    ga('set', 'page', '/createSampleRequestBrand.html');
-    ga('send', 'pageview');
   }
 
   alertP(message) {
-    this.dialogService.open({ viewModel: CreateDialogAlert, model: { title: "Booking", message: message, timeout: 5000 }, lock: false }).then(response => { });
+    return this.dialogService.open({ viewModel: CreateDialogAlert, model: { title: "Booking", message: message, timeout: 5000 }, lock: false });
   }
 
   setStartDate(event, dayEvent, day) {
     console.log("set start date: " + event);
     console.log("parameterday: " + day);
-
+    
+    console.log("dates not saved, setting start date");
     var today = new Date();    
     var yesterday = 0;
     var todayMilli = today.getTime();
     yesterday = todayMilli - (24*60*60*1000);
 
-    this.startDay = day;
+    this.sampleRequest.startDay = day;
     var enddate = '';
-    if (this.endDay != '') enddate = new Date(this.endCalendar.calendarMonths[0].year, this.endCalendar.calendarMonths[0].monthNumber - 1, this.endDay);
+    if (this.sampleRequest.endDay != '') enddate = new Date(this.endCalendar.calendarMonths[0].year, this.endCalendar.calendarMonths[0].monthNumber - 1, this.sampleRequest.endDay);
     let startdate = new Date(this.startCalendar.calendarMonths[0].year, this.startCalendar.calendarMonths[0].monthNumber - 1, day);
 
     // quit if in the past
@@ -267,180 +363,117 @@ export class CreateSampleRequestBrand {
     console.log("today: " + today);
     console.log("startdate: " + startdate);
     console.log("startDay: " + this.startDay);
-    if (this.endDay != '') console.log("enddate: " + enddate); else console.log("no endDay set")
+    if (this.sampleRequest.endDay != '') console.log("enddate: " + enddate); else console.log("no endDay set")
     console.log("endDay: " + this.endDay);
     if (startdate.getTime() <= yesterday) {
       console.log("day is before today.");
-      this.startDay = '';
+      this.sampleRequest.startDay = '';
       this.sampleRequest.startDate = '';
-      this.sampleRequestStartMonth = '';
-      this.sampleRequestStartDay = '';
+      this.sampleRequest.startMonth = '';
+
       // also clear end date
-      this.endDay = '';
       this.sampleRequest.endDate = '';
-      this.sampleRequestEndDay = '';
-      this.sampleRequestEndMonth = '';
-      this.enableCheck();
+      this.sampleRequest.endDay = '';
+      this.sampleRequest.endMonth = '';
+      
       return;
     }
     console.log("day is in the future");
-
-    //check availability
-    var dayIsNotAvailable = dayEvent.indexOf("not-available") >= 0;
-    console.log("setStartDate, calendar day contains unavailable: " + dayIsNotAvailable);
-    if (dayIsNotAvailable) {
-      this.startDay = '';
-      this.sampleRequest.startDate = '';
-      this.sampleRequestStartMonth = '';
-      this.sampleRequestStartDay = '';
-      // also clear end date
-      this.endDay = '';
-      this.sampleRequest.endDate = '';
-      this.sampleRequestEndDay = '';
-      this.sampleRequestEndMonth = '';
-      this.enableCheck();
-      return;
-    }
-
-    if (this.endDay != '') {
-      console.log("setting start date END DATE not empty");
-      if (enddate < startdate) {
-        console.log("setting start date AND it is after end date");
-        this.endDay = '';
+    if(this.sampleRequest.endDay != ''){
+      if(startdate.getTime() > enddate.getTime() ) {
+        console.log(" startDate after end date ");
+        
         this.sampleRequest.endDate = '';
-        this.sampleRequestEndDay = '';
-        this.sampleRequestEndMonth = '';
-        this.enableCheck();
-        //let element = event.srcElement.parentElement;
-        //let document = element.ownerDocument;
-        //let elems = document.querySelectorAll(".end-selected");
-        //var redraw = this.redraw;
-        //[].forEach.call(elems, function(el) {
-        //  if(el.classList.contains("end-selected")){
-        //   el.classList.remove("end-selected");
-        //   redraw(el);
-        // }
-        //});
+        this.sampleRequest.endDay = '';
+        this.sampleRequest.endMonth = '';
+        
       }
     }
-    //var element = event.srcElement;
-    //console.log ("createSampleRequestBrand: " + element);
-    //var document = element.ownerDocument;
-    //var elems = document.querySelectorAll(".start-selected");
-    //[].forEach.call(elems, function(el) {
-    //  el.classList.remove("start-selected");
-    //});
-    //element.className = " start-selected";
-    //this.redraw(element);
     this.sampleRequest.startDate = this.startCalendar.calendarMonths[0].year + "-" + this.startCalendar.calendarMonths[0].monthNumber + "-" + day;
-    this.sampleRequestStartMonth = this.startCalendar.calendarMonths[0].monthNumber;
-    this.sampleRequestStartDay = day;
-    this.enableCheck();
+    this.sampleRequest.startMonth = this.startCalendar.calendarMonths[0].monthNumber;
+    this.sampleRequest.startDay = day;
   }
-
-  @computedFrom('startCalendar.calendarMonths[0].monthNumber', 'sampleRequestStartMonth')
-  get computedClass() {
-    if (this.startCalendar.calendarMonths[0].monthNumber == this.sampleRequestStartMonth) return true
-  }
-
-  @computedFrom('endCalendar.calendarMonths[0].monthNumber', 'sampleRequestEndMonth')
-  get computedClassEnd() {
-    if (this.endCalendar.calendarMonths[0].monthNumber == this.sampleRequestEndMonth) return true
-  }
-
 
   setEndDate(event, dayEvent, day) {
-    this.endDay = day;
+    
+    this.sampleRequest.endDay = day;
     var startdate = '';
     let enddate = new Date(this.endCalendar.calendarMonths[0].year, this.endCalendar.calendarMonths[0].monthNumber - 1, day);
-    if (this.startDay != '') startdate = new Date(this.startCalendar.calendarMonths[0].year, this.startCalendar.calendarMonths[0].monthNumber - 1, this.startDay);
+    if (this.sampleRequest.startDay != '') startdate = new Date(this.startCalendar.calendarMonths[0].year, this.startCalendar.calendarMonths[0].monthNumber - 1, this.sampleRequest.startDay);
     var today = new Date();    
     var yesterday = 0;
     var todayMilli = today.getTime();
     yesterday = todayMilli - (24*60*60*1000);
 
     console.log("today: " + today);
-    if (this.startDay != '') console.log("startDay: " + this.startDay);
+    if (this.sampleRequest.startDay != '') console.log("startDay: " + this.sampleRequest.startDay);
     else {
       console.log("no startDay set, exit");
-      this.endDay = '';
+      
       this.sampleRequest.endDate = '';
-      this.sampleRequestEndDay = '';
-      this.sampleRequestEndMonth = '';
-      this.enableCheck();
+      this.sampleRequest.endDay = '';
+      this.sampleRequest.endMonth = '';
       return;
     }
     console.log("startdate: " + startdate);
     console.log("enddate: " + enddate);
-    console.log("endDay: " + this.endDay);
+    console.log("endDay: " + this.sampleRequest.endDay);
     if (enddate.getTime() <= yesterday) {
       console.log("day is before today.");
-      this.endDay = '';
+      this.sampleRequest.endDay = '';
       this.sampleRequest.endDate = '';
-      this.sampleRequestEndDay = '';
-      this.sampleRequestEndMonth = '';
-      this.enableCheck();
+      this.sampleRequest.endMonth = '';
       return;
     }
     console.log("day is in the future");
 
-    if (this.startDay === '' || enddate < startdate ) {
+    if (this.sampleRequest.startDay === '' || enddate < startdate ) {
       console.log(" empty, reverse ");
-      this.endDay = '';
+      this.sampleRequest.endDay = '';
       this.sampleRequest.endDate = '';
-      this.sampleRequestEndDay = '';
-      this.sampleRequestEndMonth = '';
-      this.enableCheck();
+      this.sampleRequest.endDay = '';
+      this.sampleRequest.endMonth = '';
       return;
     }
-
-    //check availability
-    var dayIsNotAvailable = dayEvent.indexOf("not-available") >= 0;
-    console.log("setEndDate, calendar day contains unavailable: " + dayIsNotAvailable);
-    if (dayIsNotAvailable) {
-      this.endDay = '';
-      this.sampleRequest.endDate = '';
-      this.sampleRequestEndDay = '';
-      this.sampleRequestEndMonth = '';
-      this.enableCheck();
-      return;
-    }
-
     console.log("end date" + event);
     console.log("day" + day);
-    //let element = event.srcElement.parentElement;
-    //let document = element.ownerDocument;
-    //let elems = document.querySelectorAll(".end-selected");
-    //[].forEach.call(elems, function(el) {
-    //el.classList.remove("end-selected");
-    //});
-    //element.className += " end-selected";
-    //this.redraw(element);
+    
     this.sampleRequest.endDate = this.endCalendar.calendarMonths[0].year + "-" + this.endCalendar.calendarMonths[0].monthNumber + "-" + day;
-    this.sampleRequestEndMonth = this.endCalendar.calendarMonths[0].monthNumber;
-    this.sampleRequestEndDay = day;
-    this.enableCheck();
-
+    this.sampleRequest.endMonth = this.endCalendar.calendarMonths[0].monthNumber;
+    this.sampleRequest.endDay = day;
   }
 
-  enableCheck() {
+  
 
-    if ((this.sampleRequest.samples === undefined) ||
-      (this.sampleRequest.samples.length == 0) ||
+  removeSample(sample){
+    console.log("sample:"+sample.id);
+    let toRemove = this.sampleRequest.searchableItemsProposed.findIndex(item => {return sample.id == item.id});
+    
+    console.log("removing:"+toRemove);
+    this.sampleRequest.searchableItemsProposed.splice(toRemove,1);
+    
+  }
+
+  submitCheck() {
+
+    if ((this.sampleRequest.searchableItemsProposed === undefined) ||
+      (this.sampleRequest.searchableItemsProposed.length == 0) ||
       (this.sampleRequest.startDate === undefined) ||
       (this.sampleRequest.startDate == '') ||
       (this.sampleRequest.endDate === undefined) ||
       (this.selectedAddress.name === undefined) ||
       (this.sampleRequest.returnToAddress === undefined) ||
       (this.sampleRequest.endDate == '')) {
-      document.getElementById("CreateSampleRequestButton").disabled = true;
-      console.log("button DIS abled");
-    } else {
-      document.getElementById("CreateSampleRequestButton").disabled = false;
-      console.log("button ENabled");
-    }
-  }
+        this.isLoading = true;
+        this.sampleReqestService.updateSampleRequest()
+            .then(result => {
+              this.isLoading = false;
+              this.alertP("Request Sent");
+              this.controller.ok();
+            });
 
+      }
+  }
 
   redraw(element) {
     element.style.display = 'none';
@@ -449,142 +482,215 @@ export class CreateSampleRequestBrand {
   }
 
   startNext(){
-    ++this.startOffset;
+    ++this.sampleRequest.startOffset;
     this.updateAvailability(false);
   }
   startPrevious() {
-    --this.startOffset;
+    --this.sampleRequest.startOffset;
     this.updateAvailability(false);
   }
   startReset() {
-    this.startOffset = 0;
+    this.sampleRequest.startOffset = 0;
     this.updateAvailability(false);
   }
   endNext() {
-    ++this.endOffset;
+    ++this.sampleRequest.endOffset;
     this.updateAvailability(false);
   }
   endPrevious() {
-    --this.endOffset;
+    --this.sampleRequest.endOffset;
     this.updateAvailability(false);
   }
   endReset() {
-    this.endOffset = 0;
+    this.sampleRequest.endOffset = 0;
     this.updateAvailability(false);
   }
 
-  allsamples(event) {
-    console.log("all samples:" + event.srcElement.checked);
-    if (event.srcElement.checked) {
-      for (var i = 0, len = this.currentItem.samples.length; i < len; i++) {
-        if (!(this.sampleRequest.samples.includes(this.currentItem.samples[i].id))) {
-          this.sampleRequest.samples.push(this.currentItem.samples[i].id);
-        }
-      }
-
-    } else {
-      this.sampleRequest.samples = [];
-      document.getElementById("CreateSampleRequestButton").disabled = true;
-    }
-    this.enableCheck();
-    this.updateAvailability(true);
+  @computedFrom('startCalendar.calendarMonths[0].monthNumber', 'sampleRequest.startMonth')
+  get computedClass() {
+    if (this.startCalendar.calendarMonths[0].monthNumber == this.sampleRequest.startMonth) return true
   }
 
+  @computedFrom('endCalendar.calendarMonths[0].monthNumber', 'sampleRequest.endMonth')
+  get computedClassEnd() {
+    if (this.endCalendar.calendarMonths[0].monthNumber == this.sampleRequest.endMonth) return true
+  }
+
+
   get aSampleHasOutReason() {
-    for (let i = 0; i < this.currentItem.samples.length; i++) {
-      let sample = this.currentItem.samples[i];
-      if (sample.outReason) {
-        if (sample.outReason.id != 0) {
-            if (this.sampleRequest.samples.includes(sample.id)) { //console.log (" found an outReason"); 
-              return true}
-        } 
+    if(this.currentItem){
+      for (let i = 0; i < this.currentItem.samples.length; i++) {
+        let sample = this.currentItem.samples[i];
+        if (sample.outReason) {
+          if (sample.outReason.id != 0) {
+              if (this.sampleRequest.searchableItemsProposed.includes(sample.id)) { //console.log (" found an outReason"); 
+                return true}
+          } 
+        }
       }
+      return false
     }
-    //console.log (" no outReason"); 
     return false
+  }
+
+  
+  bookOut() {
+    // initiate stuart booking
+    if (!(this.sampleRequest.pickupDate) ||
+      !(this.sampleRequest.pickupTime) ||
+      !(this.sampleRequest.addressDestination)) {
+      this.alertP("Please pick a Date and Time and Address");
+      return
+    }
+    this.busy.on();
+    console.log("Initiate Stuart booking from editSampleRequest Out");
+    document.getElementById('bookOut').style.visibility = 'hidden';
+    this.sampleRequestService.bookOutSampleRequest(this.sampleRequest).then(sr => {
+      this.sampleRequestService.getSampleRequest(this.sampleRequest.id).then(sampleRequest => {
+        this.sampleRequest = sampleRequest;
+        this.busy.off();
+        this.alertP(sr.message);
+        if(this.sampleRequest.shippingOut.stuartJobId == undefined)
+          document.getElementById('bookOut').style.visibility = 'visible';
+      });
+    });
+
+  }
+
+  bookReturn() {
+    // initiate stuart booking
+    if (!(this.sampleRequest.pickupDateReturn) || !(this.sampleRequest.pickupTimeReturn)) {
+      this.alertP("Please pick a Date and Time");
+      return
+    }
+    this.busy.on();
+    document.getElementById('bookReturn').style.visibility = 'hidden';
+    console.log("Initiate Stuart booking from editSampleRequest Return");
+    this.sampleRequestService.bookReturnSampleRequest(this.sampleRequest).then(sr => {
+      this.sampleRequestService.getSampleRequest(this.sampleRequest.id).then(sampleRequest => {
+        this.sampleRequest = sampleRequest;
+        this.busy.off();
+        this.alertP(sr.message);
+
+        if(this.sampleRequest.shippingReturn.stuartJobId == undefined)
+          document.getElementById('bookReturn').style.visibility = 'visible';
+      });
+    });
+  }
+
+
+  saveTrolley(){
+    return this.sampleRequestService.saveTrolley(this.sampleRequest);
   }
 
   updateAvailability(clear = true) {
     console.log ("updateAvailability called");
     // clear dates as they may no longer be valid for the range
     if (clear) {
-      this.startDay = '';
+      this.sampleRequest.startDay = '';
       this.sampleRequest.startDate = '';
-      this.sampleRequestStartMonth = '';
-      this.sampleRequestStartDay = ''; 
+      this.sampleRequest.startMonth = '';
+      this.sampleRequest.startDay = ''; 
       //  end date
-      this.endDay = '';
+      this.sampleRequest.endDay = '';
       this.sampleRequest.endDate = '';
-      this.sampleRequestEndDay = '';
-      this.sampleRequestEndMonth = '';
-    }
-    this.enableCheck()
-    this.allSamplesSelected();
-    if (this.sampleRequest.samples.length == 0) {
-      console.log("no samples");
-      document.getElementById("CreateSampleRequestButton").disabled = true;
+      this.sampleRequest.endDay = '';
+      this.sampleRequest.endMonth = '';
     } 
 
-    var queryString = DateFormat.urlString(this.endOffset, 1) + '&searchType=brand';
+    var queryString = DateFormat.urlString(this.sampleRequest.endOffset, 1) + '&searchType=brand';
     this.http.fetch('/calendar/showAvailabilitySamples' + queryString, {
       method: 'post',
-      body: json(this.sampleRequest.samples)
+      body: json(this.ids)
     })
       .then(response => response.json())
       .then(calendar => {
         this.endCalendar = calendar;
       });
 
-    queryString = DateFormat.urlString(this.startOffset, 1) + '&searchType=brand';
+    queryString = DateFormat.urlString(this.sampleRequest.startOffset, 1) + '&searchType=brand';
     this.http.fetch('/calendar/showAvailabilitySamples' + queryString, {
       method: 'post',
-      body: json(this.sampleRequest.samples)
+      body: json(this.ids)
     })
       .then(response => response.json())
       .then(calendar => {
         this.startCalendar = calendar;
       });
-  
-
   }
 
-  allSamplesSelected() {
-    let samplesSelected = this.sampleRequest.samples;
-    let samples = this.currentItem.samples;
 
-    if (samples.length != samplesSelected.length) {
-      this.selectAll = false;
-      console.log("length not equal");
-      //return;
-    } else {
-      this.selectAll = true;
-    }
-    this.enableCheck();
-  }
+  // BUTTONS
+  dates(){
+    if(this.sampleRequest.startDate && this.sampleRequest.endDate){
+      this.sampleRequest.datesSaved = true;
+      this.saveTrolley().then(sr => {
 
-  submit() {
-
-    this.sampleRequest.deliverTo = this.selectedAddress;
-    if (this.user.type=="prAgency"){
-      this.sampleRequest["prAgency"] = this.user.prAgency.id
-    }
-    console.log("submitting Sample Request: " + JSON.stringify(this.sampleRequest));
-    this.http.fetch('/sampleRequest/savejson', {
-      method: 'post',
-      body: json(this.sampleRequest)
-    })
-      .then(response => response.json())
-      .then(result => {
-        this.result = result;
-        this.alertP('Request Sent');
-        this.controller.ok();
+        this.sampleRequest.id = sr.id;
+        console.log("samplerequest id:"+this.sampleRequest.id);
+        this.checkAvailabilty(this.currentItem);
+        this.alertP("Dates Set").then(result => {
+          $("#saveDates").toggle();
+        });
 
       });
-
+    } else{
+      this.alertP("Dates have not been Set");
+    }
   }
 
-  close() {
+  cancel(){
+    this.sampleRequestService.cancelCurrentSampleRequest();
     this.controller.close();
   }
+
+  cancelKeepSR(id){
+    let sampleRequest = this.sampleRequest;
+    this.currentItem.samples.forEach(function (sample) {
+      let inTrolley = sampleRequest.searchableItemsProposed.indexOf(item => {return sample.id === item});
+
+      if(inTrolley){
+          sampleRequest.searchableItemsProposed.splice(inTrolley,1);  
+      }
+          
+     }); 
+    
+    this.sampleRequestService.sampleRequestStatus = 'created';
+    this.sampleRequestService.getSampleRequest(id)
+      .then(result =>{
+          //this.alertP("Picking For "+id)
+      });
+    this.controller.close();
+  }
+
+
+
+  // While picking this saves the updated items in the trolley
+  continue() {
+    this.saveTrolley();
+    this.controller.close();
+  }
+
+
+
+  // save address information, etc.
+  submit(){
+    this.sampleRequest.requestStatusBrand = "Approved"
+    this.sampleRequestService.updateTrolley(this.sampleRequest)
+      .then(result =>{
+        this.alertP("Booking "+ this.sampleRequest.id + " Updated")
+          .then(this.controller.close());
+      });
+  }
+
+  save(){
+    this.sampleRequestService.updateTrolley(this.sampleRequest)
+      .then(result =>{
+        this.alertP("Booking "+ this.sampleRequest.id + " Updated")
+          .then(this.controller.close());
+      });
+  }
+
+
 
 }

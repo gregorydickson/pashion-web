@@ -34,12 +34,13 @@ export class PDFService {
         var yGap = 7;
         // cols gaps
         var xGap1 = 15;
-        var xGap2 = 20;
-        var xGap3 = 30;
-        var xGap4 = 50;
-        var xGap5 = 80;
-        var xGap6 = 55;
-        var xGap7 = 10;
+        var xGap2 = 25;
+        var xGap3 = 25;
+        var xGap4 = 150;
+        var xGap5 = 25;
+        var xGap6 = 10;
+        // var xGap8 = 10;
+        // var xGap9 = 10;
         var pageHeight = doc.internal.pageSize.height;
         var pageWidth = doc.internal.pageSize.width;
         var pageCount = 1;
@@ -65,7 +66,8 @@ export class PDFService {
         var nodeList5 = document.getElementsByClassName('col5');
         var nodeList6 = document.getElementsByClassName('col6');
         var nodeList7 = document.getElementsByClassName('col7');
-        var nodeList8 = document.getElementsByClassName('col8');
+        // var nodeList8 = document.getElementsByClassName('col7');
+        // var nodeList9 = document.getElementsByClassName('col8');
         doc.text("Sample Requests Report: " + nodeList1.length + " entries", x, y);
 
         y = y + yGap;
@@ -107,8 +109,8 @@ export class PDFService {
         doc.text(headerText[5].substring(0,xGap6), x, y);
         x = x + xGap6;
         doc.text(headerText[6], x, y);
-        x = x + xGap7;      
-        doc.text(headerText[7], x, y);
+        //x = x + xGap7;      
+        //doc.text(headerText[7], x, y);
         // header line
         doc.setFillColor(200,200,200);
         doc.rect(5,y+1,pageWidth-10,0.3,'F');
@@ -123,7 +125,8 @@ export class PDFService {
         var cellText5 = '';
         var cellText6 = '';
         var cellText7 = '';
-        var cellText8 = '';
+        // var cellText8 = '';
+        // var cellText9 = '';
         for (i = 0; i < nodeList1.length; i++) {
             // New Page? 
             if (y >= (pageHeight - pageKeepOut)) {
@@ -136,13 +139,14 @@ export class PDFService {
                 y = pageKeepOut; // (pageCount -1)  * pageHeight + pageKeepOut;
             }
           if (nodeList1[i]) cellText1 = nodeList1[i].outerText; else cellText1 = "-";
-          if (nodeList2[i]) cellText2 = nodeList2[i].outerText; else cellText2 = "-";
+          if (nodeList2[i]) cellText2 = nodeList2[i].outerText; else cellText2 = "...";
           if (nodeList3[i]) cellText3 = nodeList3[i].outerText; else cellText3 = "-";
           if (nodeList4[i]) cellText4 = nodeList4[i].outerText; else cellText4 = "-";
           if (nodeList5[i]) cellText5 = nodeList5[i].outerText; else cellText5 = "-";
           if (nodeList6[i]) cellText6 = nodeList6[i].outerText; else cellText6 = "-";
           if (nodeList7[i]) cellText7 = nodeList7[i].outerText; else cellText7 = "-";
-          if (nodeList8[i]) cellText8 = nodeList8[i].outerText; else cellText8 = "-";
+          //if (nodeList8[i]) cellText8 = nodeList8[i].outerText; else cellText8 = "-";
+          //if (nodeList9[i]) cellText9 = nodeList9[i].outerText; else cellText9 = "-";
           //rowText = rowText.replace(/(\r\n|\n|\r)/gm,""); // remove line feeds
           //rowText = rowText.replace(/\./g,''); // remove dots
           y = y + yGap;
@@ -166,8 +170,10 @@ export class PDFService {
           doc.text(cellText6, x, y);
           x = x + xGap6;
           doc.text(cellText7, x, y);
-          x = x + xGap7;
-          doc.text(cellText8, x, y);
+          //x = x + xGap7;
+          //doc.text(cellText8, x, y);
+          //x = x + xGap8;
+          //doc.text(cellText9, x, y);
         }
         //doc.fromHTML(text,15,15,{'width': 180});
         doc.save('PashionRequestReport_' + today + '.pdf');

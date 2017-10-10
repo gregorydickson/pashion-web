@@ -45,7 +45,6 @@ export class Adminpage {
     }
     attached() {
         $("#passwordCheck").toggle();
-        
     }
 
     currentUserChanged(newValue, oldValue){

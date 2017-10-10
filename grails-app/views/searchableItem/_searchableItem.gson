@@ -4,4 +4,17 @@ model {
     SearchableItem searchableItem
 }
 
-json g.render(searchableItem,[expand:['type','samples','sampleCity']])  
+json g.render(searchableItem,[expand:['type','samples','sampleCity']]){
+	
+	brand{
+		name searchableItem.brand?.name
+		id searchableItem.brand?.id
+	}
+	
+	
+	if(searchableItem.look){
+		seasonAbbreviation searchableItem?.look?.season?.abbreviation
+		lookNameNumber searchableItem?.look?.nameNumber
+		lookNameVariant searchableItem?.look?.nameVariant
+	}
+} 

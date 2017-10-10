@@ -1,6 +1,6 @@
 <template>
 <require from="./sort"></require>
-<require from="../common/seasonAbbreviationFormatterId"></require>
+<require from="../common/seasonAbbreviationIdFormatter"></require>
     
    <ai-dialog>
         <ai-dialog-header>
@@ -81,12 +81,19 @@
                 <div class="vertical grid-content accordion" style="overflow-x:hidden; max-height:8rem;"> 
                     <table class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples | sort: 'id': 'ascending' ">
                                   <tr>
-                                     <!-- <td class="accordion" style="width:15px; max-width:15px;">${$index + 1}</td> -->
+<!--                                     
                                       <td class="accordion 
                                         ${(sample.outReason && sample.outReason.id != 0) ? 'warm-grey-deco' : ''}" 
                                           style="width:65px; max-width:65px;">${currentItem.season.id | seasonAbbreviationId:seasons}.${currentItem.nameNumber}${currentItem.nameVariant.toUpperCase()}.${$index+1} :</td>
-                                      <td class="accordion to-u-c ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:250px; max-width:250px; overflow:hidden; padding-right:10px;">${sample.attributes}</td>
+-->
 
+                            <td if.bind="sample.clientID" class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:130px; max-width:130px;">${sample.seasonAbbreviation}.${sample.lookNameNumber}${sample.lookNameVariant}.${sample.clientID}</td>
+                            <td if.bind="(!sample.clientID)" class="accordion ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:130px; max-width:130px;">${sample.seasonAbbreviation}.${sample.lookNameNumber}${sample.lookNameVariant}.P${sample.id}</td>
+                            <td class="accordion to-u-c ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:170px; max-width:170px; overflow:hidden; padding-right:20px;">${sample.sampleType} ${sample.color} ${sample.material}</td>                
+
+<!--
+                                      <td class="accordion to-u-c ${(sample.outReason && sample.outReason.id != 0)  ? 'warm-grey-deco' : ''}" style="width:250px; max-width:250px; overflow:hidden; padding-right:10px;">${sample.attributes}</td>
+-->
                             <td if.bind="!(sample.outReason && sample.outReason.id != 0)" class="accordion" style="width:90px; max-width:90px;">
                             </td> 
                             <td if.bind="(sample.outReason && sample.outReason.id != 0)" class="accordion warm-grey-deco" style="width:90px; max-width:90px;">${outReasons[sample.outReason.id].name}

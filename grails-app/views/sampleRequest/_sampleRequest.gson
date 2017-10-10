@@ -4,12 +4,36 @@ import pashion.SampleRequest
 model {  
     SampleRequest sampleRequest
 }
-log.info "render a sample request"
+//log.info "render a sample request"
+//log.info "pr agency id:"+sampleRequest?.prAgency.id
 
-json g.render(sampleRequest,[expand:['searchableItemsStatus','searchableItemsProposed','searchableItems','returnToAddress','shippingOut','shippingReturn','addressDestination'],excludes:['brand','shippingOut','shippingReturn','requestingUser','deliverTo']]){
+json{
+	
+	id sampleRequest.id
+	
+	season sampleRequest.season
+	image sampleRequest.image
+	look sampleRequest.look
 
+	paymentOut sampleRequest.paymentOut
+	paymentReturn sampleRequest.paymentReturn
+
+	returnBy sampleRequest.returnBy
+	requiredBy sampleRequest.requiredBy
+
+	//log.info "about to render searchable items proposed"
 	searchableItemsProposed g.render(template: 'searchableItem', collection: sampleRequest.searchableItemsProposed ?: [], var: 'searchableItem')
+	//log.info "rendered searchable items proposed"
 
+	searchableItems g.render(template: 'searchableItem', collection: sampleRequest.searchableItems ?: [], var: 'searchableItem')
+
+	searchableItemsStatus g.render(sampleRequest.searchableItemsStatus)
+
+	requestStatusBrand sampleRequest.requestStatusBrand
+	requestStatusPress sampleRequest.requestStatusPress
+
+	dateCreated sampleRequest.dateCreated?.format('yyyy-MM-dd')+'T00:00:00Z'
+	
 	bookingEndDate sampleRequest.bookingEndDate?.format('yyyy-MM-dd')+'T00:00:00Z'
 	bookingStartDate sampleRequest.bookingStartDate?.format('yyyy-MM-dd')+'T00:00:00Z'
 	
@@ -19,6 +43,51 @@ json g.render(sampleRequest,[expand:['searchableItemsStatus','searchableItemsPro
 	pickupTimeReturn sampleRequest.pickupTimeReturn
 	
 	requestingUserCompany sampleRequest.requestingUserCompany
+
+	addressDestination{
+		id sampleRequest.addressDestination?.id
+		company sampleRequest.addressDestination?.company
+	 	name sampleRequest.addressDestination?.name
+	 	address1 sampleRequest.addressDestination?.address1
+	 	address2 sampleRequest.addressDestination?.address2
+	 	city sampleRequest.addressDestination?.city
+	 	country sampleRequest.addressDestination?.country
+	 	postalCode sampleRequest.addressDestination?.postalCode
+	 	attention sampleRequest.addressDestination?.attention
+	 	contactPhone sampleRequest.addressDestination?.contactPhone
+	 	stuartId sampleRequest.addressDestination?.stuartId
+	 	comment sampleRequest.addressDestination?.comment
+	}
+
+	returnToAddress{
+		id sampleRequest.returnToAddress?.id
+		company sampleRequest.returnToAddress?.company
+	 	name sampleRequest.returnToAddress?.name
+	 	address1 sampleRequest.returnToAddress?.address1
+	 	address2 sampleRequest.returnToAddress?.address2
+	 	city sampleRequest.returnToAddress?.city
+	 	country sampleRequest.returnToAddress?.country
+	 	postalCode sampleRequest.returnToAddress?.postalCode
+	 	attention sampleRequest.returnToAddress?.attention
+	 	contactPhone sampleRequest.returnToAddress?.contactPhone
+	 	stuartId sampleRequest.returnToAddress?.stuartId
+	 	comment sampleRequest.returnToAddress?.comment
+	 	defaultAddress sampleRequest.returnToAddress?.defaultAddress
+	}
+	
+	//Trolley storage
+	startDay sampleRequest.startDay
+    startDate sampleRequest.startDate
+    startMonth sampleRequest.startMonth
+    endDay sampleRequest.endDay
+    endDate sampleRequest.endDate
+    endMonth sampleRequest.endMonth
+    startOffset sampleRequest.startOffset
+    endOffset sampleRequest.endOffset
+    datesSaved sampleRequest.datesSaved
+
+    emailNotification sampleRequest.emailNotification
+
 	prAgency{
 		name sampleRequest.prAgency?.name
 		id sampleRequest.prAgency?.id

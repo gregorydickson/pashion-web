@@ -57,32 +57,158 @@ class SampleRequestService {
         if(user?.prAgency){
 
             def agency = PRAgency.get(user.prAgency.id)
-            def brands = agency.brands
             
-            brands.each{ Brand brand ->
-                def brandCriteria = SampleRequest.createCriteria()
-                def aBrandResults = brandCriteria.listDistinct () {
-                        fetchMode 'brand', FM.JOIN
-                        fetchMode 'pressHouse', FM.JOIN
-                        fetchMode 'searchableItemsProposed', FM.JOIN 
-                        fetchMode 'shippingOut', FM.JOIN
-                        fetchMode 'shippingReturn', FM.JOIN
-                        fetchMode 'addressDestination', FM.JOIN
-                        fetchMode 'returnToAddress', FM.JOIN
-                        fetchMode 'requestingUser', FM.JOIN
-                        fetchMode 'deliverTo', FM.JOIN
-                        fetchMode 'returnToAddress', FM.JOIN
+            def agencyCriteria = SampleRequest.createCriteria()
+            results = agencyCriteria.listDistinct () {
+                fetchMode 'prAgency', FM.JOIN
+                fetchMode 'searchableItemsProposed', FM.JOIN 
+                fetchMode 'shippingOut', FM.JOIN
+                fetchMode 'shippingReturn', FM.JOIN
+                fetchMode 'addressDestination', FM.JOIN
+                fetchMode 'returnToAddress', FM.JOIN
+                fetchMode 'requestingUser', FM.JOIN
+                fetchMode 'deliverTo', FM.JOIN
+                fetchMode 'returnToAddress', FM.JOIN
 
-                        eq('brand', brand)
-                        cache true
-                    }
-                results.addAll(aBrandResults)
+                eq('prAgency', agency)
+                cache true
             }
-            
         }
-
         results
     }
+
+    // TROLLEY SPECIFIC METHODS
+
+    /*
+    *  This method is to save items in the trolley during picking.
+    *  It may be used to save and update current trolley items.
+    *  So there may be an existing sample request or a new one
+    *  may need to be created. In other words this is save and update.
+    */
+    def saveTrolley(JSONObject jsonObject, User user){
+        SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
+        def sr = null
+        if(jsonObject.id){
+            sr = SampleRequest.get(jsonObject.id.toInteger())
+            
+            def ids = sr.searchableItemsProposed.collect{it.id}
+            ids.each{sr.removeFromSearchableItemsProposed(SearchableItem.get(it))}
+
+            jsonObject.searchableItemsProposed.each{
+                def item = SearchableItem.get(it.id)
+                sr.addToSearchableItemsProposed(item)
+            }
+
+        } else{
+            sr = new SampleRequest()
+            sr.datesSaved = true
+            sr.requestingUser = user
+            if(user.prAgency) sr.prAgency = PRAgency.get(user.prAgency.id)
+            if(user.brand) sr.brand = Brand.get(user.brand.id)
+            sr.bookingStartDate = dateFormat.parse(jsonObject.startDate)
+            sr.bookingEndDate = dateFormat.parse(jsonObject.endDate)
+            jsonObject.searchableItemsProposed.each{
+                def item = SearchableItem.get(it.id)
+                sr.addToSearchableItemsProposed(item)
+            }
+        }
+        sr.startDay = jsonObject.startDay
+        sr.startDate = jsonObject.startDate
+        sr.startMonth = jsonObject.startMonth
+        sr.endDay = jsonObject.endDay
+        sr.endDate = jsonObject.endDate
+        sr.endDay = jsonObject.endDay
+        sr.endMonth = jsonObject.endMonth
+        sr.startOffset = jsonObject.startOffset
+        sr.endOffset = jsonObject.endOffset
+
+        if(jsonObject.requestStatusBrand){
+            log.info "status set client side to:"+jsonObject.requestStatusBrand
+            sr.requestStatusBrand = jsonObject.requestStatusBrand
+        } else{
+            sr.requestStatusBrand = "Not Submitted"
+            sr.requestStatusPress = "Not Submitted"
+        }
+        sr.save(failOnError:true, flush:true)
+        log.info "sample request trolly saved:"+sr
+        sr
+    }
+
+    /*
+    * This is saving the trolleys address information, the second step in the process after
+    * picking. May also remove samples to they have to be updated.
+    */
+    def updateTrolley(JSONObject jsonObject, User user){
+        SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
+        def sr = null
+        log.info "update Trolley:"+jsonObject.id
+        
+        
+        sr = SampleRequest.get(jsonObject.id.toInteger())
+
+        sr.bookingStartDate = dateFormat.parse(jsonObject.startDate)
+        sr.bookingEndDate = dateFormat.parse(jsonObject.endDate)
+            
+        sr.startDay = jsonObject.startDay
+        sr.startDate = jsonObject.startDate
+        sr.startMonth = jsonObject.startMonth
+        sr.endDay = jsonObject.endDay
+        sr.endDate = jsonObject.endDate
+        sr.endDay = jsonObject.endDay
+        sr.endMonth = jsonObject.endMonth
+        sr.startOffset = jsonObject.startOffset
+        sr.endOffset = jsonObject.endOffset
+
+        def ids = sr.searchableItemsProposed.collect{it.id}
+        ids.each{sr.removeFromSearchableItemsProposed(SearchableItem.get(it))}
+
+        jsonObject.searchableItemsProposed.each{ sample ->
+            def item = SearchableItem.get(sample.id)
+            sr.addToSearchableItemsProposed(item)
+            def status = sr.searchableItemsStatus.find { it.id == sample.id }
+            if(!status){
+                status = new BookingStatus()
+                status.itemId = sample.id
+                status.status = "Approved"
+                sr.addToSearchableItemsStatus(status)
+            }
+        
+        }
+
+        if(jsonObject.emailNotification)
+            sr.emailNotification = jsonObject.emailNotification
+
+        if(jsonObject.message)
+            sr.message = jsonObject.message
+        
+        if(jsonObject.requestStatusBrand){
+            sr.requestStatusBrand = jsonObject.requestStatusBrand
+        } else{
+            sr.requestStatusBrand = "Approved"
+            sr.requestStatusPress = "Approved"
+        }
+
+        sr.requiredBy = jsonObject.requiredBy
+        sr.returnBy = jsonObject.returnBy
+        if(!sr.shippingOut)
+            sr.shippingOut = new ShippingEvent(courier:jsonObject.courier,status:'Proposed').save(failOnError:true)
+        if(!sr.shippingReturn)
+            sr.shippingReturn = new ShippingEvent(status:'Proposed').save(failOnError:true)
+        sr.paymentOut = jsonObject.paymentOut
+        sr.paymentReturn = jsonObject.paymentReturn
+        sr.courierOut = jsonObject.courierOut
+        sr.courierReturn = jsonObject.courierReturn
+        
+        sr.dateRequested = new Date()
+        sr = destinationAddressBrand(sr,jsonObject)
+        sr = returnToAddress(sr,jsonObject)
+
+        sr.save(failOnError:true, flush:true)
+        log.info "sample request trolly submitted:"+sr
+        sr
+    }
+
+
 
     def initialSaveSampleRequest(JSONObject jsonObject, User requestingUser){
         SimpleDateFormat dateFormat =  new SimpleDateFormat(dateFormatString)
@@ -168,7 +294,9 @@ class SampleRequestService {
 
 
     def returnToAddress(SampleRequest sr, JSONObject jsonObject){
+        log.info "return to Address in SampleRequestService"
         if(jsonObject.has('returnToAddress')){
+
             log.info "returnTo Address:"+jsonObject.returnToAddress
             def returnToAddress = jsonObject.returnToAddress
             log.info ""
@@ -176,13 +304,12 @@ class SampleRequestService {
 
                 sr.returnToAddress = Address.findByBrandAndDefaultAddress(sr.brand, true)
                 log.info "return to brand default"+sr.returnToAddress
-            } else if(returnToAddress instanceof Integer){
-                sr.returnToAddress = Address.get(jsonObject.returnToAddress)
             } else if(returnToAddress instanceof String){
+                log.info "STRING return to address"
                 sr.returnToAddress = Address.get(jsonObject.returnToAddress.toInteger())
-            } else if(returnToAddress.has('address1')){
+
+            } else if(returnToAddress.has('address1') && jsonObject.returnToAddress.address1 != null){
                 sr.returnToAddress = Address.get(jsonObject.returnToAddress.id.toInteger())
-                
             }
         } 
         sr
@@ -232,6 +359,7 @@ class SampleRequestService {
             //DeliverTo may be a User or an ad-hoc address on initial save
             //UI updates DeliverTo and we update addressDestination here
             def destino = jsonObject.deliverTo 
+            log.info "deliverTo:"+destino
             if(destino.type){
                 if(jsonObject.deliverTo.type  == 'user') {
                     log.info "deliver To type is User"
@@ -249,7 +377,9 @@ class SampleRequestService {
                     log.info "new destination is:" +sr.addressDestination.name
                     sr.deliverTo = null
                 }
-            } 
+            } else {
+                // if no destino.type ...?
+            }
         
         } 
         sr

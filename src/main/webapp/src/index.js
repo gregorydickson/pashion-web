@@ -57,8 +57,8 @@ export class Index {
     maxRReached = false;
     numberImages = 0;
     busy;
-    ordering = 'bookingStartDate';
-    filtering = 'ACTIVE REQUESTS';
+    ordering = 'dateCreated';
+    filtering = 'ACTIVE BOOKINGS';
     firstTime = true;
     onlyShowMine = false;
     onlyShowMineCompany = '';
@@ -98,7 +98,7 @@ export class Index {
         let today = new Date();
         var computedDate = new Date(booking);
         var overdue = today > computedDate;
-        overdue = (overdue && (status == 'Pending'))
+        overdue = (overdue && ((status == 'Pending') || (status=='Not Submitted') || (status == 'Finalizing')))
         //console.log("computedOverdue function, booking: " + booking + " today: " + this.today + " computed: " +  computedDate + " overdue: " + (this.today > computedDate));
         return overdue;
     }
@@ -165,17 +165,17 @@ export class Index {
         // console.log("Filter value: " + itemValue);
         if (searchExpression && itemValue) searchVal = itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;
 
-        if (filter == 'MY REQUESTS') {
+        if (filter == 'MY BOOKINGS') {
             filterVal = (value.requestingUser.id == user.id);
         }
-        if (filter == 'OVERDUE REQUESTS') {
+        if (filter == 'OVERDUE BOOKINGS') {
             //console.log ("Overdue request: date: " + var computedDate =     new Date(booking););
             var computedDate = new Date(value.bookingStartDate);
             var today = new Date();
             if (user.type == "brand" || user.type == "prAgency") filterVal = ((today > computedDate) && (value.requestStatusBrand == 'Pending'));
             if (user.type == "press") filterVal = ((today > computedDate) && (value.requestStatusPress == 'Pending'));
         }
-        if (filter == 'ACTIVE REQUESTS') {
+        if (filter == 'ACTIVE BOOKINGS') {
             if (user.type == "brand" || user.type == "prAgency") filterVal = (
                 (value.requestStatusBrand != 'Closed') &&
                 (value.requestStatusBrand != 'Denied') &&
@@ -193,7 +193,7 @@ export class Index {
                 (value.requestStatusPress != 'Withdrawn')
             );
         }
-        if (filter == 'INACTIVE REQUESTS') {
+        if (filter == 'INACTIVE BOOKINGS') {
             if (user.type == "brand" || user.type == "prAgency") filterVal = (
                 (value.requestStatusBrand == 'Closed') ||
                 (value.requestStatusBrand == 'Denied') ||
@@ -223,11 +223,11 @@ export class Index {
         if (event)
             if (event.detail)
                 if (event.detail.value) {
-                    if (event.detail.value == 'ALL REQUESTS') this.filtering = '';
-                    if (event.detail.value == 'MY REQUESTS') this.filtering = 'MY REQUESTS';
-                    if (event.detail.value == 'OVERDUE REQUESTS') this.filtering = 'OVERDUE REQUESTS';
-                    if (event.detail.value == 'ACTIVE REQUESTS') this.filtering = 'ACTIVE REQUESTS';
-                    if (event.detail.value == 'INACTIVE REQUESTS') this.filtering = 'INACTIVE REQUESTS';
+                    if (event.detail.value == 'ALL BOOKINGS') this.filtering = '';
+                    if (event.detail.value == 'MY BOOKINGS') this.filtering = 'MY BOOKINGS';
+                    if (event.detail.value == 'OVERDUE BOOKINGS') this.filtering = 'OVERDUE BOOKINGS';
+                    if (event.detail.value == 'ACTIVE BOOKINGS') this.filtering = 'ACTIVE BOOKINGS';
+                    if (event.detail.value == 'INACTIVE BOOKINGS') this.filtering = 'INACTIVE BOOKINGS';
                     console.log("value:" + event.detail.value + " filtering: " + this.filtering);
                 }
     }
@@ -346,9 +346,7 @@ export class Index {
 
     filterChangeBrand(event) {
         this.busy.on();
-        if(window.myblazy){
-            window.myblazy.destroy();
-        }
+        let firstTime = this.firstTime;
         this.rows = []; //RM can do this to prevent the loading over existing images, but have to deal with detritus 
         //had to reset rows as lazy loading was broken
         
@@ -398,9 +396,9 @@ export class Index {
                     if (this.numberImages == this.maxR) this.maxRReached = true;
                 }
             
-                if (this.firstTime) {
+                if (firstTime) {
                     console.log ("first time lazy load");
-                    this.firstTime = false;
+                    firstTime = false;
 
                     setTimeout(function () {
                         var msw = document.getElementById("mainScrollWindow");
@@ -434,14 +432,14 @@ export class Index {
                         }, 1000);
                     }, false);
                     
-                }
-                else {
+                } else {
                     console.log ("NOT first time unveil");
                     
                     this.taskQueue.queueMicroTask(() => {            
                             setTimeout(function () {
                                     //window.myblazy.destroy();
-                                    window.myblazy.revalidate();
+                                    if(window.myblazy)
+                                        window.myblazy.revalidate();
                                     $('div.menu-stripe').show();
                                     //console.log("subsequent loading Blazy recreation");
                             }, 1000); 
@@ -848,9 +846,8 @@ export class Index {
             if (event.detail)
                 if (event.detail.value) {
                     if (event.detail.value == 'BY START DATE') this.ordering = 'bookingStartDate';
-                    if ((this.user.type == "brand") && (event.detail.value == 'BY NUMBER')) this.ordering = 'id'; 
-                    if ((this.user.type == "prAgency") && (event.detail.value == 'BY NUMBER')) this.ordering = 'id'; 
-                    if ((this.user.type == "press") && (event.detail.value == 'BY NUMBER')) this.ordering = 'id'; //RM switch to request number
+                    if (event.detail.value == 'BY NUMBER') this.ordering = 'id'; //RM switch to request number
+                    if (event.detail.value == 'BY DATE CREATED') this.ordering = 'dateCreated';
                     if ((this.user.type == "brand") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusBrand';
                     if ((this.user.type == "prAgency") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusBrand'; //RM double check this
                     if ((this.user.type == "press") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusPress';
@@ -932,7 +929,7 @@ export class Index {
                     }
                 });
             }
-
+            this.listenForBookingsCacheInvalidation(this.pubNubService.getPubNub());
             ga('set', 'page', '/index.html');
             ga('send', 'pageview');
             ga('send', 'event', 'index', 'pageview', this.user.email);
@@ -1134,8 +1131,14 @@ export class Index {
 
     createSampleRequestBrand(itemId) {
         // this.lookMenu(itemId);
+        console.log ("index.createSampleRequestBrand: " + itemId);
+        let bookingsToUpdate = this.bookings;
+        let sampleRequestService = this.sampleRequestService;
+
         this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: itemId, lock: true })
             .then(response => {
+
+                
 
             });
     }
@@ -1204,6 +1207,64 @@ export class Index {
         this.closeSampleRequestMenu(id);
         this.dialogService.open({ viewModel: EditSampleRequest, model: id, lock: true })
             .then(response => {});
+    }
+
+    editSampleRequestTrolley(id) {
+
+
+        
+        this.closeSampleRequestMenu(id);
+        
+        this.sampleRequestService.getSampleRequest(id)
+            .then(result =>{
+
+                if(this.sampleRequestService.getCurrentSampleRequest().startDay){
+                    console.log("trolley editing");
+                    this.sampleRequestService.sampleRequestStatus = "edit";
+                    this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: id, lock: true })
+                        .then(response => {
+                            this.sampleRequestService.sampleRequestStatus = 'none';
+                            this.sampleRequestService.stopPicking();
+                        });
+                } else {
+                    console.log("NON trolley editing");
+                    this.dialogService.open({ viewModel: EditSampleRequest, model: id, lock: true })
+                        .then(response => {});
+                }
+            });
+    }
+
+    trolley(id) {
+        this.closeSampleRequestMenu(id);
+        this.sampleRequestService.getSampleRequest(id)
+            .then(result =>{
+                this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: null, lock: true })
+                    .then(response => {});
+            });
+    }
+
+    picking(id) {
+        this.closeSampleRequestMenu(id);
+        this.sampleRequestService.sampleRequestStatus = 'created';
+        this.sampleRequestService.getSampleRequest(id)
+            .then(result =>{
+                this.alertP("Picking For "+id)
+            });
+    }
+
+    finishPicking(id) {
+        this.closeSampleRequestMenu(id);
+        this.sampleRequestService.sampleRequestStatus = 'none';
+        this.sampleRequestService.finishPicking(id)
+            .then(result =>{
+                this.alertP("Submitted Booking Request "+id)
+            });
+    }
+
+    stopPicking(id) {
+        this.closeSampleRequestMenu(id);
+        this.sampleRequestService.sampleRequestStatus = 'none';
+        this.sampleRequestService.stopPicking();
     }
 
 
@@ -1287,13 +1348,14 @@ export class Index {
                             bookingsToUpdate.pop();
                         }
                         newBookings.forEach(item => {
+                            console.log("id:"+item.id + " status:"+item.requestStatusBrand);
                             bookingsToUpdate.push(item);
                         });
                     });
-                    toastr.options.preventDuplicates = false;
+                    toastr.options.preventDuplicates = true;
                     toastr.options.closeButton = true;
                     toastr.options.timeOut = 0;
-                    toastr.info('Request ' + message.message + " updated");
+                    toastr.info('Booking ' + message.message + " updated");
                 }
             }
         }
@@ -1315,7 +1377,7 @@ export class Index {
 
                 var channelName = message.channel;
                 if (channelName === channel2) {
-                    toastr.options.preventDuplicates = false;
+                    toastr.options.preventDuplicates = true;
                     toastr.options.closeButton = true;
                     toastr.options.timeOut = 0;
                     toastr.info(message.message + ' (' + time + ')');
@@ -1328,6 +1390,36 @@ export class Index {
             channels: [channel2],
             withPresence: false
         })
+
+        //trolley update no toastr
+        let channel3 = company + '_trolleyCacheInvalidate';
+        console.log("TROLLEY listening on channel:" + channel3);
+        
+
+        var indexListener3 = {
+            message: function updateBookingsIndex(message) {
+                console.log("message in index for channel:"+channel3);
+                var channelName = message.channel;
+                if (channelName === channel3) {
+                    console.log("trolley cache message reloading sample requests");
+                    sampleRequestService.getSampleRequests(true).then(newBookings => {
+                        while (bookingsToUpdate.length > 0) {
+                            bookingsToUpdate.pop();
+                        }
+                        newBookings.forEach(item => {
+                            bookingsToUpdate.push(item);
+                        });
+                    });
+                }
+            }
+        }
+        pubNub.addListener(indexListener3);
+        this.pubNubService.addIndexListener(indexListener3);
+        pubNub.subscribe({
+            channels: [channel3],
+            withPresence: false
+        })
+
     }
 
     unbind() {

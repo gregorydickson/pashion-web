@@ -4,6 +4,7 @@
     <require from="./common/customSelect"></require>
     <require from="./common/viewDateFormatter"></require>
     <require from="./common/seasonAbbreviationFormatter"></require>
+    <require from="./common/seasonAbbreviationIdFormatter"></require>
 
     <require from="./dashboard_filters/filters-search"></require>
     <require from="./dashboard_filters/filters-available-from"></require>
@@ -369,7 +370,8 @@
                                                 -->
 
                                                 <li class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
-                                                <li class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Booking &nbsp;</a></li>
+                                                <li if.bind="(sampleRequestService.sampleRequestStatus === 'none')" class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Start Booking &nbsp;</a></li>
+                                                <li if.bind="(sampleRequestService.sampleRequestStatus === 'created')" class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Pick &nbsp;</a></li>
 
                                                 <li class="look-menu-item"><a href="#" click.delegate="deleteSearchableItem(row.items[i])" class="look-menu-link">Delete</a></li>
                                             </ul>
@@ -384,7 +386,9 @@
 
                                                 <li class="pure-menu-item"><a href="#" click.delegate="checkAvailabilitySearchableItem(row.items[i].id)" class="look-menu-link">Check Availability</a></li>
                                                 
-                                                <li class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Booking &nbsp;</a></li>
+                                                <li if.bind="(sampleRequestService.sampleRequestStatus === 'none')" class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Start Booking &nbsp;</a></li>
+
+                                                <li if.bind="(sampleRequestService.sampleRequestStatus === 'created')" class="look-menu-item"><a href="#" click.delegate="createSampleRequestBrand(row.items[i] )" class="look-menu-link">Pick &nbsp;</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -426,8 +430,9 @@
             <!-- spacer -->
             <div class="grid-block shrink spa-h-spacer">
             </div>
+
 <!-- -->
-<!-- Calendar + Request  Panel -->
+<!-- SMALL REQUEST MANAGER -->
 <!-- -->
 
             <div if.bind="imagePanelSize <= 2" id="left-panel" class="vertical grid-block grid-block-vertical-shadow">
@@ -436,7 +441,7 @@
                     <div class="grid-block align-left tool-header tool-header-spacer">
                     </div>
                     <div class="grid-block align-left tool-header-spacer">
-                        <span class="ui-text-label-m-broad ">REQUEST MANAGER (${numberOfRequests})</span>
+                        <span class="ui-text-label-m-broad ">BOOKING MANAGER (${numberOfRequests})</span>
                         <!-- <span class="alert-box">3</span> -->
                     </div>
                     <div class="grid-block align-right tool-header-spacer" style="padding-right:7px;">
@@ -489,25 +494,57 @@
                         <table class="accordion" style="table-layout:fixed;">
                             <tr> 
                                 <th class="accordion w7"></th>
-                                <th class="accordion w24">LOOK</th>
-                                <th class="accordion w31">OUT</th>
-                                <th class="accordion w27">STATUS</th>
-                          <th class="accordion w10"></th>
+                                <th class="accordion w16">ID</th>
+                                <th class="accordion w33">OUT</th>
+                                <th class="accordion w34">STATUS</th>
+                                <th class="accordion w10"></th>
                             </tr>
                         </table>
                     </div>
                     <!-- row with button -->
                     <div style="width:250px;" repeat.for="booking of bookings | sort: ordering : 'ascending' | filter:searchTextRequests:filterFunc:filtering:user:seasons:cityFiltering:onlyShowMine:onlyShowMineCompany">
                         <table class="accordion" style="table-layout:fixed;">
-                            <tr class="indexReqRow">
+                            <tr class="indexReqRow  
+                                    ${(sampleRequestService.sampleRequest.id === booking.id && 
+                                    booking.requestStatusBrand != 'Finalizing' && 
+                                    booking.requestStatusBrand != 'Approved' && 
+                                    booking.requestStatusBrand != 'Returning' && 
+                                    booking.requestStatusBrand != 'Out' && 
+                                    booking.requestStatusBrand != 'Picked Up' && 
+                                    booking.requestStatusBrand != 'Picking Up' && 
+                                    booking.requestStatusBrand != 'Returning' && 
+                                    booking.requestStatusBrand != 'Returned' && 
+                                    booking.requestStatusBrand != 'Withdrawn' && 
+                                    booking.requestStatusBrand != 'Denied' && 
+                                    booking.requestStatusBrand != 'In House' && 
+                                    booking.requestStatusBrand != 'Delivering' )  
+                                        ? 'ui-text-label-m' : ''}">
                                 <td class="accordion w7">
                                     <button id="button${booking.id}" class="accordion requestButton expandoHover" style="background-color: white" click.delegate="closeExpand(booking.id)"></button>
                                 </td>
-                                <td class="accordion w24" click.delegate="closeExpand(booking.id)" style="cursor: pointer">${booking.season | seasonAbbreviation:seasons }.${booking.look} </td>
-                                <td class="accordion w31 
+
+                                <td class="accordion w16" click.delegate="closeExpand(booking.id)" style="cursor: pointer">${booking.id}</td>
+                                <td class="accordion w33 
                                            ${computedOverdue(booking.bookingStartDate, booking.requestStatusBrand) ? 'red-deco' : ''}" click.delegate="closeExpand(booking.id)" style="cursor: pointer">${booking.bookingStartDate | viewDateFormat}</td>
-                                <td class="accordion w27
-                                           ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" click.delegate="closeExpand(booking.id)" style="cursor: pointer" >${booking.requestStatusBrand}</td>
+                                <td class="accordion w34
+                                           ${(booking.requestStatusBrand=='Pending') ? 'ui-text-label-m-blue' : ''}" click.delegate="closeExpand(booking.id)" style="cursor: pointer">
+                                           ${(sampleRequestService.sampleRequest.id === booking.id && 
+                                           booking.requestStatusBrand != 'Finalizing' && 
+                                           booking.requestStatusBrand != 'Approved' && 
+                                           booking.requestStatusBrand != 'Returning' && 
+                                           booking.requestStatusBrand != 'Out' && 
+                                           booking.requestStatusBrand != 'Picked Up' && 
+                                           booking.requestStatusBrand != 'Picking Up' && 
+                                           booking.requestStatusBrand != 'Returning' && 
+                                           booking.requestStatusBrand != 'Returned' && 
+                                           booking.requestStatusBrand != 'Withdrawn' && 
+                                           booking.requestStatusBrand != 'Denied' && 
+                                           booking.requestStatusBrand != 'In House' && 
+                                           booking.requestStatusBrand != 'Delivering' &&
+                                           booking.startDay) 
+                                                ? 'Picking' : booking.requestStatusBrand}
+                                           </td>
+
                                 <!-- ... disabled  -->
                                 <td if.bind="(booking.requestStatusBrand == 'Deleted')" class="accordion w10" style="overflow:visible;">
                                     <div class="look-menu-absolute-wrap">
@@ -520,7 +557,7 @@
                                         <span class="edit-box" ><a href="#" class="expandoHover" click.delegate="sampleRequestMenu(booking.id)">...</a></span>
                                         <!-- edit request modal BRAND popup -->
                                          <div class="look-menu-absolute" id="requestTest${booking.id}">
-                                            <span class="look-menu-heading">REQUEST ${booking.id}</span>
+                                            <span class="look-menu-heading">BOOKING ${booking.id}</span>
                                             <ul class="look-menu-list">
                                                 <!-- Edit -->
                                                 <li if.bind="(
@@ -530,7 +567,7 @@
                                                     (booking.requestStatusBrand == 'Out') ||
                                                     (booking.requestStatusBrand == 'Picked Up')
                                                 )" 
-                                                class="look-menu-item"><a click.delegate="editSampleRequest(booking.id)" href="#" class="look-menu-link">Edit</a></li>
+                                                class="look-menu-item"><a click.delegate="editSampleRequestTrolley(booking.id)" href="#" class="look-menu-link">Edit</a></li>
 
                                                 <!--Deny -->
                                                 <li if.bind="(
@@ -575,8 +612,37 @@
                                                 )"
                                                 class="look-menu-item"><a click.delegate="restockedSampleRequest(booking.id)" href="#" class="look-menu-link">Mark Restocked</a></li>
 
+                                                <!-- Finalize -->
+                                                <li if.bind="(
+                                                    (booking.requestStatusBrand == 'Finalizing')
+                                                )"
+                                                class="look-menu-item"><a click.delegate="trolley(booking.id)" href="#" class="look-menu-link">Finalize</a></li>
+
+                                                <!-- Not Submitted -->
+                                                <li if.bind="(
+                                                    (booking.requestStatusBrand == 'Not Submitted') &&
+                                                    (sampleRequestService.sampleRequest.id != booking.id)
+                                                )"
+                                                class="look-menu-item"><a click.delegate="picking(booking.id)" href="#" class="look-menu-link">Continue Picking</a></li>
+
+                                                <li if.bind="(
+                                                    (booking.requestStatusBrand == 'Not Submitted') &&
+                                                    (sampleRequestService.sampleRequest.id == booking.id)
+                                                )"
+                                                class="look-menu-item"><a click.delegate="stopPicking(booking.id)" href="#" class="look-menu-link">Stop Picking</a></li>
+
+
+                                                <li if.bind="(
+                                                    (booking.requestStatusBrand == 'Not Submitted' && booking.searchableItems.length != 0)
+                                                )"
+                                                class="look-menu-item"><a click.delegate="finishPicking(booking.id)" href="#" class="look-menu-link">Submit Booking</a></li>
+                                                <li if.bind="(
+                                                    (booking.requestStatusBrand == 'Picking' && booking.searchableItems.length != 0)
+                                                )"
+                                                class="look-menu-item"><a click.delegate="finishPicking(booking.id)" href="#" class="look-menu-link">Submit Booking</a></li>
+                                                
                                                 <!-- Delete -->
-                                                <li class="look-menu-item"><a click.delegate="deleteSampleRequest(booking.id)" href="#" class="look-menu-link">Delete Request</a></li>
+                                                <li class="look-menu-item"><a click.delegate="deleteSampleRequest(booking.id)" href="#" class="look-menu-link">Delete Booking</a></li>
                                             </ul>
                                         </div>
                                     </div>    
@@ -586,19 +652,25 @@
 
                         <!-- expanding data -->
                         <div id="panel${booking.id}" class="panel requestPanel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
-                            <span class="accordion expanded" style="background-color: #fafafa; width:100%; padding-top:7px; padding-left:10px; padding-bottom:7px;">Request: ${booking.id}</span>
-                            <span if.bind="booking.pressHouse.name" class="accordion expanded" style="background-color: #fafafa;width:100%; padding-left:10px; padding-bottom:7px;">Press House: ${booking.pressHouse.name}</span>
-                            <table class="accordion expanded" style="table-layout:fixed;">                          
-                                <tr style="padding-top: 7px;" repeat.for="sample of booking.searchableItems">
-                                    <td class="accordion" style="width:65px; max-width:65px; padding-left:10px; padding-bottom:7px;"> ${booking.season | seasonAbbreviation:seasons }.${booking.look}.${$index+1} :</td>
-                                    <td class="accordion to-u-c" style="width:142px; max-width:142px; overflow: hidden; padding-right:10px; padding-bottom:7px;"> ${sample.attributes}</td>
+                           <!--  <span class="accordion expanded" style="background-color: #fafafa; width:100%; padding-top:7px; padding-left:10px; padding-bottom:7px;">Request: ${booking.id}</span> -->
+                            
+                            
+
+                            <table class="accordion expanded" style="table-layout:fixed;">
+                                <tr style="padding-bottom:7px;" repeat.for="sample of booking.searchableItems">
+     
+                                    <td if.bind="(sample.clientID)" class="accordion to-u-c" style="width:142px; max-width:142px; overflow: hidden; padding-right:10px; padding-bottom:3px;"">${sample.brand.name}/${sample.season.id | seasonAbbreviationId:seasons }.${sample.lookNameNumber}${sample.lookNameVariant}.${sample.clientID}/${sample.sampleType}</td>
+                                    <td if.bind="!(sample.clientID)" class="accordion to-u-c" style="width:142px; max-width:142px; overflow: hidden; padding-right:10px; padding-bottom:3px;"">${sample.brand.name}/${sample.season.id | seasonAbbreviationId:seasons }.${sample.lookNameNumber}${sample.lookNameVariant}.P${sample.id}/${sample.sampleType}</td>
                                 </tr>
+
                             </table>
+
+
                         </div>
                     </div>
                     <!-- Empty notice -->
                     <div if.bind="(numberOfRequests == 0)">
-                        <span style="margin-top: 2rem; display:block; text-align:center;"> - No Requests Match Your Search - </span>
+                        <span style="margin-top: 2rem; display:block; text-align:center;"> - No Bookings Match Your Search - </span>
                     </div>
                      
                 </div>
@@ -657,7 +729,7 @@
                                         <span class="edit-box" ><a href="#" class="expandoHover"  click.delegate="sampleRequestMenu(booking.id)">...</a></span>
                                         <!-- edit request modal PRESS popup -->
                                          <div class="look-menu-absolute" id="requestTest${booking.id}">
-                                            <span class="look-menu-heading">REQUEST ${booking.id}</span>
+                                            <span class="look-menu-heading">BOOKING ${booking.id}</span>
                                             <ul class="look-menu-list">
                                                 <!-- Edit -->
                                                 <li if.bind="(
@@ -689,7 +761,7 @@
                                                     (booking.requestStatusPress == 'Pending') ||                                                   
                                                     (booking.requestStatusPress == 'Approved')
                                                 )"
-                                                class="look-menu-item"><a href="#" click.delegate="pressDeleteSampleRequest(booking.id)"  class="look-menu-link">Withdraw Request</a></li>
+                                                class="look-menu-item"><a href="#" click.delegate="pressDeleteSampleRequest(booking.id)"  class="look-menu-link">Withdraw Booking</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -699,7 +771,7 @@
 
                         <!-- expanding data -->
                         <div id="panel${booking.id}" class="panel requestPanel vertical grid-block" style="margin-left: 0rem; margin-bottom: 1rem;overflow:hidden;">
-                            <span class="accordion expanded" style="background-color: #fafafa; width:100%; padding-top:7px; padding-left:10px; padding-bottom:7px;">Request: ${booking.id}</span>
+                            <span class="accordion expanded" style="background-color: #fafafa; width:100%; padding-top:7px; padding-left:10px; padding-bottom:7px;">Booking: ${booking.id}</span>
                             <span if.bind="booking.brand.name" class="accordion expanded" style="background-color: #fafafa;width:100%; padding-left:10px; padding-bottom:7px;">Brand: ${booking.brand.name}</span>
                             <table class="accordion expanded" style="table-layout:fixed;">
                                 <tr style="padding-bottom:7px;" repeat.for="sample of booking.searchableItems">
@@ -711,7 +783,7 @@
                     </div>
                     <!-- Empty notice -->
                     <div if.bind="(numberOfRequests == 0)">
-                        <span style="margin-top: 2rem; display:block; text-align:center;"> - No Requests Match Your Search - </span>
+                        <span style="margin-top: 2rem; display:block; text-align:center;"> - No Bookings Match Your Search - </span>
                     </div>  
                 
                 </div>

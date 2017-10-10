@@ -41,6 +41,7 @@ export class UserService {
                 this.http.fetch('/user/connections')
                     .then(response => response.json())
                     .then(users => {
+                        console.log("got the users");
                         this.users = users;
                         // need to zero saved message count as about to re create it from pubnub
                         // do it in getAllMessages in messages
@@ -152,11 +153,14 @@ export class UserService {
         // Note id not email
         // errors for wrong status: -1 = already connected and -2 = pending request
         // Assume current user as one side of the match
-
+        let id = this.user.id;
+        let user = this.users.find(item => {
+            return item.id == id;
+        });
         var j;
         var item2;
-        for (j = 0; j < this.users[this.user.id - 1].connections.length; j++) {
-            item2 = this.users[this.user.id - 1].connections[j];
+        for (j = 0; j < user.connections.length; j++) {
+            item2 = user.connections[j];
             // console.log("incoming userId: " + userId + " item2.connectedUserId: " + item2.connectedUserId + " item2.user.id: " + item2.user.id + " this.user.id: " + this.user.id);
             if ((item2.connectedUserId == userId) && (item2.connectingStatus == 'Accepted')) return (-1);
             if ((item2.connectedUserId == userId) && (item2.connectingStatus == 'PendingIn')) return (-2);
@@ -275,16 +279,24 @@ export class UserService {
     addContactRequest(idIn) {
 
         console.log("UserService.addContactRequest, for id: " + idIn);
+        let id = this.user.id;
+        let user = this.users.find(item => {
+            return item.id == id;
+        });
+        
+        let userIn = this.users.find(item => {
+            return item.id == idIn;
+        });
         // first connection record
-        var nameString1 = this.users[this.user.id - 1].name + ' ' + this.users[this.user.id - 1].surname + this.users[this.user.id - 1].email; // spaces to match name display and prvent run on match for the other fields
-        if (this.users[this.user.id - 1].brand) nameString1 += this.users[this.user.id - 1].brand.name;
-        if (this.users[this.user.id - 1].pressHouse) nameString1 += this.users[this.user.id - 1].pressHouse.name;
-        if (this.users[this.user.id - 1].prAgency) nameString1 += this.users[this.user.id - 1].prAgency.name;
+        var nameString1 = user.name + ' ' + user.surname + user.email; // spaces to match name display and prvent run on match for the other fields
+        if (user.brand) nameString1 += user.brand.name;
+        if (user.pressHouse) nameString1 += user.pressHouse.name;
+        if (user.prAgency) nameString1 += user.prAgency.name;
 
-        var nameString2 = this.users[idIn - 1].name + ' ' + this.users[idIn - 1].surname + this.users[idIn - 1].email;
-        if (this.users[idIn - 1].brand) nameString2 += this.users[idIn - 1].brand.name;
-        if (this.users[idIn - 1].pressHouse) nameString2 += this.users[idIn - 1].pressHouse.name;
-        if (this.users[idIn - 1].prAgency) nameString2 += this.users[idIn - 1].prAgency.name;
+        var nameString2 = userIn.name + ' ' + userIn.surname + userIn.email;
+        if (user.brand) nameString2 += userIn.brand.name;
+        if (userIn.pressHouse) nameString2 += userIn.pressHouse.name;
+        if (userIn.prAgency) nameString2 += userIn.prAgency.name;
         var conn1 = {
             user: {
                 id: this.user.id
@@ -310,8 +322,8 @@ export class UserService {
         };
 
         // save out
-        var connectedEmail = this.users[idIn - 1].email;
-        parent = this;
+        var connectedEmail = userIn.email;
+        
         var promise = new Promise((resolve, reject) => {
             this.http.fetch('/connection/addContactRequest/', {
                     method: 'post',
@@ -327,8 +339,8 @@ export class UserService {
                     // locally
                     conn1.id = result.id1; // add in the connection id from the create, locally
                     conn2.id = result.id2; // add in the connection id from the create, locally
-                    parent.users[parent.user.id - 1].connections.push(conn1);
-                    parent.users[idIn - 1].connections.push(conn2);
+                    user.connections.push(conn1);
+                    userIn.connections.push(conn2);
                 }).catch(err => reject(err));
         });
         return promise;
@@ -337,24 +349,34 @@ export class UserService {
 
 
     channelList(id) {
-
+        let user = this.users.find(item => {
+            return item.id == id;
+        });
         // Build list of channels 
         let allChannels = [];
-        for (let i = 0; i < this.users[id - 1].connections.length; i++) {
+        for (let i = 0; i < user.connections.length; i++) {
             // console.log (`Adding ${this.users[ this.users[id - 1].connections[i].connectedUserId -1].email}`);
-            allChannels.push (this.users[id- 1].email + this.users[ this.users[id- 1].connections[i].connectedUserId -1].email )
+            let connectedUser = this.users.find(item => {return item.id == user.connections[i].connectedUserId;});
+            allChannels.push (user.email + connectedUser.email )
         } 
         return allChannels;
 
     }
 
     connectionsList(id) {
+        let user = this.users.find(item => {
+            return item.id == id;
+        });
 
         // Build list of channels 
         let allConnections = [];
-        for (let i = 0; i < this.users[id - 1].connections.length; i++) {
+        for (let i = 0; i < user.connections.length; i++) {
             // console.log (`Adding ${this.users[ this.users[id - 1].connections[i].connectedUserId -1].email}`);
-            allConnections.push (this.users[ this.users[id- 1].connections[i].connectedUserId -1].email )
+            let anId = user.connections[i].connectedUserId
+            let aUser = this.users.find(item => {
+                return item.id == anId;
+            });
+            allConnections.push (aUser.email )
         } 
         return allConnections;
 
@@ -368,14 +390,17 @@ export class UserService {
         // get id for email;
         var fromUserId = this.checkValidUser(fromEmail);
         var connectionId = -1;
+        let user = this.users.find(item => {
+            return item.id == this.user.id;
+        });
         // console.log("UserService.addMessgeCount, update message count from:" + fromEmail + " id:" + fromUserId + ' pushToServer: ' + pushToServer);
 
         var i;
-        for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
-            if (this.users[this.user.id - 1].connections[i].connectedUserId == fromUserId) {
+        for (i = 0; i < user.connections.length; i++) {
+            if (user.connections[i].connectedUserId == fromUserId) {
                 // console.log("UserService.addMessgeCount 1 actually added from: " + fromUserId + " to: " + this.user.id);
-                this.users[this.user.id - 1].connections[i].numberNewMessages++;
-                connectionId = this.users[this.user.id - 1].connections[i].id;
+                user.connections[i].numberNewMessages++;
+                connectionId = user.connections[i].id;
                 break;
             }
         }
@@ -408,17 +433,19 @@ export class UserService {
         // get id for email;
         var fromUserId = this.checkValidUser(fromEmail);
         var connectionId = -1;
+        let user = this.users.find(item => {
+            return item.id == this.user.id;
+        });
 
         var i;
-        for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
-            if (this.users[this.user.id - 1].connections[i].connectedUserId == fromUserId) {
+        for (i = 0; i < user.connections.length; i++) {
+            if (user.connections[i].connectedUserId == fromUserId) {
 
-                if ( (this.users[this.user.id - 1].connections[i].lastMessageStamp == undefined)
-                    || (this.users[this.user.id - 1].connections[i].lastMessageStamp < messageStamp) ) {
-                    this.users[this.user.id - 1].connections[i].lastMessage = message;
-                    this.users[this.user.id - 1].connections[i].lastMessageStamp = messageStamp;
+                if ( (user.connections[i].lastMessageStamp == undefined)
+                    || (user.connections[i].lastMessageStamp < messageStamp) ) {
+                    user.connections[i].lastMessage = message;
+                    user.connections[i].lastMessageStamp = messageStamp;
                     // console.log("UserService.updateLastMessage from: " + fromUserId + " to: " + this.user.id + " message: " + message);
-                    //connectionId = this.users[this.user.id - 1].connections[i].id;
                 }
                 break;
 
@@ -447,29 +474,38 @@ export class UserService {
     }
 
     clearAllUnreadMessagesForTheCurrentUser() {
-        if (this.users[this.user.id - 1] == 'undefined' || 
-            this.users[this.user.id - 1] == null ||
-            this.users[this.user.id - 1] == '' ||
-            this.users[this.user.id - 1] == undefined) { console.error ("** userService.clearAllUnreadMessagesForTheCurrentUser NO USER DEFINED in users structure **"); return;} 
+        let id = this.user.id;
+        let user = this.users.find((item) => {
+            return item.id == id;
+        });
         var i;
         // my connections
-        if(this.users[this.user.id - 1].connections){
-            for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
-                this.clearUnreadMessages(this.users[this.user.id - 1].connections[i].connectedUserId);
+        if(user && user.connections){
+            for (i = 0; i < user.connections.length; i++) {
+                this.clearUnreadMessages(user.connections[i].connectedUserId);
             }
         }
     }
 
     clearUnreadMessages(withUserId) {
         // assume for the logged in user
-        if (this.users[this.user.id - 1] == undefined) return;
+        console.log("clear unread messages")
+        if(!this.users && this.user)
+            return
+
+        let id = this.user.id;
+        let user = this.users.find((item) => {
+            return item.id == id;
+        });
+
+        
         var connectionId1 = -1;
         var i;
-        if(this.users[this.user.id - 1].connections){
-            for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
-                if (this.users[this.user.id - 1].connections[i].connectedUserId == withUserId) {
-                    this.users[this.user.id - 1].connections[i].numberNewMessages = 0;
-                    connectionId1 = this.users[this.user.id - 1].connections[i].id;
+        if(user && user.connections){
+            for (i = 0; i < user.connections.length; i++) {
+                if (user.connections[i].connectedUserId == withUserId) {
+                    user.connections[i].numberNewMessages = 0;
+                    connectionId1 = user.connections[i].id;
                     console.log("UserService.cleanUnreadMessages, from: " + withUserId + " on id: " + connectionId1);
                     break;
                 }
@@ -503,11 +539,16 @@ export class UserService {
             console.log("UserService.getMostRecentRead, from: " + fromEmail + " invalid email");
             return (0);
         }
+        let id = this.user.id;
+        let user = this.users.find(item => {
+            return item.id == id;
+        });
+
         var i;
-        for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
-            if (this.users[this.user.id - 1].connections[i].connectedUserId == withUserId) {
+        for (i = 0; i < user.connections.length; i++) {
+            if (user.connections[i].connectedUserId == withUserId) {
                 // console.log("UserService.getMostRecentRead, from: " + withUserId + " on id: " + " stamp: " + this.users[this.user.id - 1].connections[i].mostRecentRead);
-                return (this.users[this.user.id - 1].connections[i].mostRecentRead);
+                return (user.connections[i].mostRecentRead);
             }
         }
         console.log("UserService.getMostRecentRead, from: " + withUserId + " on id: " + " stamp: not found");
@@ -517,12 +558,17 @@ export class UserService {
     saveMostRecentRead(withUserId, mostRecentDateStamp) {
         // once only for each connection
         // store locally
+        let id = this.user.id;
+        let user = this.users.find(item => {
+            return item.id == id;
+        });
+
         var connectionId1 = -1;
         var i;
-        for (i = 0; i < this.users[this.user.id - 1].connections.length; i++) {
-            if (this.users[this.user.id - 1].connections[i].connectedUserId == withUserId) {
-                this.users[this.user.id - 1].connections[i].mostRecentRead = mostRecentDateStamp;
-                connectionId1 = this.users[this.user.id - 1].connections[i].id;
+        for (i = 0; i < user.connections.length; i++) {
+            if (user.connections[i].connectedUserId == withUserId) {
+                user.connections[i].mostRecentRead = mostRecentDateStamp;
+                connectionId1 = user.connections[i].id;
                 console.log("UserService.saveMostRecentRead, from: " + withUserId + " on id: " + connectionId1 + " stamp: " + mostRecentDateStamp);
                 break;
             }
@@ -554,7 +600,8 @@ export class UserService {
 
 
     //RM need to check this code carefully as not kept up to date
-    deleteContact(user, id) { // id=connection id 
+    // userId is the user id and id is the connection id
+    deleteContact(userId, id) { 
         console.log("UserService.deleteContact, id: " + id + " from user " + user);
         // local
         if (typeof (id) == 'undefined') {
@@ -568,14 +615,21 @@ export class UserService {
             return Promise.reject(new Error('fail'));
         }
 
+        
+        let user = this.users.find(item => {
+            return item.id == userId;
+        });
         var connectedUserId;
         var connectedEmail;
         var i;
-        for (i = 0; i < this.users[user - 1].connections.length; i++) {
-            if (this.users[user - 1].connections[i].id == id) {
-                connectedUserId = this.users[user - 1].connections[i].connectedUserId;
-                connectedEmail = this.users[connectedUserId - 1].email;
-                this.users[user - 1].connections.splice(i, 1);
+        for (i = 0; i < user.connections.length; i++) {
+            if (user.connections[i].id == id) {
+                connectedUserId = user.connections[i].connectedUserId;
+                let connected = this.users.find(item => {
+                        return item.id == connectedUserId;
+                });
+                connectedEmail = connected.email;
+                user.connections.splice(i, 1);
                 break;
             }
         }
@@ -601,10 +655,13 @@ export class UserService {
         payload = {
             fromEmail: email2
         };
-        for (i = 0; i < this.users[connectedUserId - 1].connections.length; i++) {
-            if (this.users[connectedUserId - 1].connections[i].connectedUserId == user) {
-                id2 = this.users[connectedUserId - 1].connections[i].id;
-                this.users[connectedUserId - 1].connections.splice(i, 1);
+        for (i = 0; i < user.connections.length; i++) {
+            if (user.connections[i].connectedUserId == user) {
+                id2 = user.connections[i].id;
+                let connected = this.users.find(item => {
+                        return item.id == connectedUserId;
+                });
+                connected.connections.splice(i, 1);
                 break;
             }
         }
@@ -653,11 +710,15 @@ export class UserService {
         var connectedUserId;
         var connectedConnId;
         var connectedEmail;
+        let theUser = this.users.find(item => {
+                return item.id == user;
+            });
+
         for (i = 0; i < this.users[user - 1].connections.length; i++) {
-            if (this.users[user - 1].connections[i].id == id) {
-                this.users[user - 1].connections[i].connectingStatus = "Accepted";
-                connectedUserId = this.users[user - 1].connections[i].connectedUserId;
-                connectedEmail = this.users[connectedUserId - 1].email;
+            if (theUser.connections[i].id == id) {
+                theUser.connections[i].connectingStatus = "Accepted";
+                connectedUserId = theUser.connections[i].connectedUserId;
+                connectedEmail = theUser.email;
                 break;
             }
         }

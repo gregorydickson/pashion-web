@@ -1,10 +1,12 @@
-import { inject, bindable, bindingMode } from 'aurelia-framework';
+import { inject, bindable, bindingMode, observable, BindingEngine } from 'aurelia-framework';
 import { SampleRequestService } from './services/sampleRequestService';
 import { PubNubService } from './services/pubNubService';
 import { DialogService } from 'aurelia-dialog';
 import { CreateDialogNewContact } from './contacts/dialogNewContact';
 import { CreateDialogImportContacts } from './contacts/dialogImportContacts';
 import { EditSampleRequest } from './sample_request/editSampleRequest';
+import { CreateSampleRequestPress } from './sample_request/createSampleRequestPress';
+import { CreateSampleRequestBrand } from './sample_request/createSampleRequestBrand';
 import { busy } from './services/busy';
 import { CreateDialogAlert } from './common/dialogAlert';
 import { HttpClient } from 'aurelia-fetch-client';
@@ -15,10 +17,12 @@ import { BrandService } from './services/brandService';
 import { UserService } from './services/userService';
 import moment from 'moment'
 
-@inject(HttpClient, DialogService, PDFService, SampleRequestService, busy, EventAggregator, PubNubService, BrandService, PRAgencyService, UserService)
+@inject(BindingEngine, HttpClient, DialogService, PDFService, SampleRequestService, busy, EventAggregator, PubNubService, BrandService, PRAgencyService, UserService)
 export class Requestman {
 
   @bindable({ defaultBindingMode: bindingMode.twoWay }) bookings = [];
+  // @observable bookingsImages = [];
+  @observable bookingsImagesView = [];
   searchTest = "";
   status = [];
   selectedStatus = "";
@@ -31,8 +35,8 @@ export class Requestman {
   season = '';
   closed = true;
   searchTextReqMan = '';
-  ordering = 'bookingStartDate';
-  filtering = 'ACTIVE REQUESTS'; // IE all
+  ordering = 'dateCreated';
+  filtering = 'ACTIVE BOOKINGS'; // IE all
   today = new Date(); // Do we have a problem with freshness of this variable, say login at 11:59PM?
   onlyShowMine = false;
   onlyShowMineCompany = '';
@@ -40,7 +44,7 @@ export class Requestman {
 
 
 
-  constructor(http, dialogService, pDFService, sampleRequestService, busy, eventAggregator, pubNubService, brandService, PRAgencyService, userService) {
+  constructor(bindingEngine, http, dialogService, pDFService, sampleRequestService, busy, eventAggregator, pubNubService, brandService, PRAgencyService, userService) {
     http.configure(config => {
       config
         .useStandardConfiguration();
@@ -56,14 +60,45 @@ export class Requestman {
     this.brandService = brandService;
     this.userService = userService;
     this.prAgencyService = PRAgencyService;
+    this.bindingEngine = bindingEngine;
+
+    //this.bookingsImages = [];
 
   }
 
+ /*
+  listChanged(splices){
+    console.log("bookingsImages changed");
+  }
+  */
+
   activate() {
     this.http.fetch('/dashboard/seasons').then(response => response.json()).then(seasons => this.seasons = seasons);
+
+    //this.bookingsImages[6319] = '//dvch4zq3tq7l4.cloudfront.net/eudon-choi/2017/fall/ready-to-wear/0004.jpg';
+    //this.bookingsImages = [];
+    //this.bookingsImagesView[50000] = '';
     this.sampleRequestService.getSampleRequests()
       .then(bookings => {
         this.bookings = bookings;
+        let i = 0;
+        for (i;i < bookings.length ;i++) {
+          let y = 0;
+          for (y;y<bookings[i].searchableItems.length ;y++) {
+            //this.bookingsImages[bookings[i].searchableItems[y].look.id] = 
+            //this.computedImage (bookings[i].searchableItems[y].look);
+            let lookId = bookings[i].searchableItems[y].look.id;
+            this.http.fetch('/searchableItem/fetchSI/'+lookId+'.json')
+              .then(response => response.json())
+              .then(item => { 
+                console.log ("image to show: " + item.image);
+                //this.bookingsImagesView = [];
+                //this.bookingsImages[lookId] = item.image;
+                //this.bookingsImagesView = this.bookingsImages;
+                this.bookingsImagesView[lookId] = item.image;
+              })
+            }
+          }
       });
 
     this.userService.getUser().then(user=>{
@@ -84,17 +119,19 @@ export class Requestman {
               this.onlyShowMineCompany = this.user.prAgency.name;
           }
       });
-
-
     });
-    
-
-    // filtering
-     
-
   }
 
+  /*
+  computedImage(sampleLook) {
+ 
+  }
+  */
+
   attached() {
+    // array observer
+
+    // this.subscription = this.bindingEngine.collectionObserver(this.bookingsImages).subscribe(splices => { this.listChanged(splices);});
     // Three dots Menu dropdown close when click outside
     $('body').click(function () {
       $(".look-menu-absolute").each(function () {
@@ -158,6 +195,14 @@ export class Requestman {
       ga('send', 'pageview');
   }
 
+  detached () {
+    //this.subscription.dispose();
+  }
+
+  get imagesFetched () {
+    return this.bookingsImagesView.length > 0;
+  }
+
   get numberOfRequests() {
     return document.getElementsByClassName("indexReqRowclass").length;
   }
@@ -179,10 +224,11 @@ export class Requestman {
   computedOverdue(booking, status) {
     var computedDate = new Date(booking);
     var overdue = this.today > computedDate;
-    overdue = (overdue && (status == 'Pending'))
+    overdue = (overdue && ((status == 'Pending') || (status=='Not Submitted') || (status == 'Finalizing')))
     //console.log("computedOverdue function, booking: " + booking + " today: " + this.today + " computed: " +  computedDate + " overdue: " + (this.today > computedDate));
     return overdue;
   }
+
 
 /*
 // VERY SLOW and clunky and kludge ? side effects on currentContact ??
@@ -209,8 +255,9 @@ export class Requestman {
     if (this.searchFrom) dates = "From: " + this.searchFrom;
     if (this.searchTo) dates = dates + " to " + this.searchTo;
     // var headerText = {};
-    if (this.user.type == 'brand' || this.user.type == 'prAgency') var headerText = ['ID', 'LOOK', 'DUE DATE', 'COMPANY', 'REQUESTOR', 'END DATE', '#', 'STATUS'];
-    if (this.user.type == 'press') var headerText = ['ID', 'LOOK', 'REQUESTED', 'BRAND', 'REQUESTOR', 'END DATE', '#', 'STATUS'];
+    //if (this.user.type == 'brand' || this.user.type == 'prAgency') var headerText = ['ID', 'CREATED', 'DUE DATE', 'COMPANY', 'REQUESTOR/GOING TO', 'END DATE', '#', 'STATUS'];
+    //if (this.user.type == 'press') 
+    var headerText = ['ID', 'CREATED', 'START DATE', 'REQUESTOR / GOING TO', 'END DATE', '#', 'STATUS'];
     this.pDFService.generatePDF(this.user.name, this.user.surname, dates, search, filter, headerText);
     //console.log("container to text: " + container);
   }
@@ -223,9 +270,8 @@ export class Requestman {
       if (event.detail)
         if (event.detail.value) {
           if (event.detail.value == 'BY START DATE') this.ordering = 'bookingStartDate';
-          if ((this.user.type == "brand") && (event.detail.value == 'BY NUMBER')) this.ordering = 'id'; //RM ditto below
-          if ((this.user.type == "prAgency") && (event.detail.value == 'BY NUMBER')) this.ordering = 'id'; //RM ditto below
-          if ((this.user.type == "press") && (event.detail.value == 'BY NUMBER')) this.ordering = 'id'; //RM changes needed here to properly order strings
+          if (event.detail.value == 'BY NUMBER') this.ordering = 'id'; //RM changes needed here to properly order strings
+          if (event.detail.value == 'BY DATE CREATED') this.ordering = 'dateCreated';
           if ((this.user.type == "brand") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusBrand';
           if ((this.user.type == "prAgency") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusBrand'; //RM double check this
           if ((this.user.type == "press") && (event.detail.value == 'BY STATUS')) this.ordering = 'requestStatusPress';
@@ -240,12 +286,12 @@ export class Requestman {
     if (event)
       if (event.detail)
         if (event.detail.value) {
-          if (event.detail.value == 'ALL REQUESTS') this.filtering = '';
-          if (event.detail.value == 'MY REQUESTS') this.filtering = 'MY REQUESTS';
-          if (event.detail.value == 'OVERDUE REQUESTS') this.filtering = 'OVERDUE REQUESTS';
-          if (event.detail.value == 'ACTIVE REQUESTS') this.filtering = 'ACTIVE REQUESTS';
-          if (event.detail.value == 'INACTIVE REQUESTS') this.filtering = 'INACTIVE REQUESTS';
-          //console.log("value:" + event.detail.value + " filtering: " +this.filtering);
+          if (event.detail.value == 'ALL BOOKINGS') this.filtering = '';
+          if (event.detail.value == 'MY BOOKINGS') this.filtering = 'MY BOOKINGS';
+          if (event.detail.value == 'OVERDUE BOOKINGS') this.filtering = 'OVERDUE BOOKINGS';
+          if (event.detail.value == 'ACTIVE BOOKINGS') this.filtering = 'ACTIVE BOOKINGS';
+          if (event.detail.value == 'INACTIVE BOOKINGS') this.filtering = 'INACTIVE BOOKINGS';
+          console.log("value:" + event.detail.value + " filtering: " +this.filtering);
         }
   }
 
@@ -358,16 +404,16 @@ export class Requestman {
     //console.log("Search value: " + itemValue);
     if (searchExpression && itemValue) searchVal = itemValue.toUpperCase().indexOf(searchExpression.toUpperCase()) !== -1;
 
-    if (filter == 'MY REQUESTS') {
+    if (filter == 'MY BOOKINGS') {
       filterVal = (value.requestingUser.id == user.id);
     }
-    if (filter == 'OVERDUE REQUESTS') {
+    if (filter == 'OVERDUE BOOKINGS') {
       var computedDate = new Date(value.bookingStartDate);
       var today = new Date();
       if (user.type == "brand" || user.type == "prAgency") filterVal = ((today > computedDate) && (value.requestStatusBrand == 'Pending'));
       if (user.type == "press") filterVal = ((today > computedDate) && (value.requestStatusPress == 'Pending'));
     }
-    if (filter == 'ACTIVE REQUESTS') {
+    if (filter == 'ACTIVE BOOKINGS') {
       if (user.type == "brand" || user.type == "prAgency") filterVal = (
         (value.requestStatusBrand != 'Closed') &&
         (value.requestStatusBrand != 'Denied') &&
@@ -385,7 +431,7 @@ export class Requestman {
         (value.requestStatusPress != 'Withdrawn')
       );
     }
-    if (filter == 'INACTIVE REQUESTS') {
+    if (filter == 'INACTIVE BOOKINGS') {
       if (user.type == "brand" || user.type == "prAgency") filterVal = (
         (value.requestStatusBrand == 'Closed') ||
         (value.requestStatusBrand == 'Denied') ||
@@ -507,10 +553,10 @@ export class Requestman {
               bookingsToUpdate.push(item);
             });
           });
-          toastr.options.preventDuplicates = false;
+          toastr.options.preventDuplicates = true;
           toastr.options.closeButton = true;
           toastr.options.timeOut = 0;
-          toastr.info('Request ' + message.message + " updated");
+          toastr.info('Booking ' + message.message + " updated");
         }
       }
     }
@@ -533,6 +579,29 @@ export class Requestman {
       .then(response => {
 
       });
+  }
+
+  editSampleRequestTrolley(id) {
+    
+    this.closeSampleRequestMenu(id);
+        
+    this.sampleRequestService.getSampleRequest(id)
+        .then(result =>{
+
+            if(this.sampleRequestService.getCurrentSampleRequest().startDay){
+                console.log("trolley editing");
+                this.sampleRequestService.sampleRequestStatus = "edit";
+                this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: id, lock: true })
+                    .then(response => {
+                        this.sampleRequestService.sampleRequestStatus = 'none';
+                        this.sampleRequestService.stopPicking();
+                    });
+            } else {
+                console.log("NON trolley editing");
+                this.dialogService.open({ viewModel: EditSampleRequest, model: id, lock: true })
+                    .then(response => {});
+            }
+        });
   }
 
 
@@ -572,6 +641,27 @@ export class Requestman {
       this.alertP(message.message);
     });
   }
+
+  // Trolley Stuff
+  submit(id) {
+    this.closeSampleRequestMenu(id);
+    this.sampleRequestService.sampleRequestStatus = 'none';
+    this.sampleRequestService.submitRequest(id)
+        .then(result =>{
+            this.alertP("Submitted Booking Request"+id)
+        });
+    }
+
+  trolley(id) {
+  this.closeSampleRequestMenu(id);
+  this.sampleRequestService.sampleRequestStatus = 'none';
+  this.sampleRequestService.getSampleRequest(id)
+      .then(result =>{
+          this.dialogService.open({ viewModel: CreateSampleRequestBrand, model: null, lock: true })
+              .then(response => {});
+      });
+    }
+
 
   delete(id) {
     console.log("delete hack");
