@@ -47,10 +47,11 @@ export class SelectAddress {
                     });
 
                     console.log('The booking deliver to:', theDeliverTo);
-
-                    this.selectedAddress = theDeliverTo;
-                    this.selectedDeliverToId = theDeliverTo.id;
-                    this.selectedDeliverToItems = [this.selectedDeliverToId];
+                    if(theDeliverTo){
+                        this.selectedAddress = theDeliverTo;
+                        this.selectedDeliverToId = theDeliverTo.id;
+                        this.selectedDeliverToItems = [this.selectedDeliverToId];
+                    }
                 
                 }
             });
