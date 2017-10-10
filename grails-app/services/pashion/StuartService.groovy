@@ -5,15 +5,16 @@ import groovyx.net.http.ApacheHttpBuilder
 import groovyx.net.http.HttpException
 import grails.transaction.Transactional
 import reactor.spring.context.annotation.*
+import grails.core.*
 
 @Transactional
 @Consumer
 class StuartService {
 
     static scope = "singleton"
-    def uri =  'https://sandbox-api.stuart.com'
-
-    def retries  =0
+    GrailsApplication grailsApplication
+    def uri 
+    def retries = 0
 
     def clientID = "a9a96844e2a2e78208b3327d03ac105f6cdf842d404cec8006c12e7969104630"
 	def secret = "60d76bb547879450f03927dc501f5c2ef8d00c2188c684bc955fb06edde1f0c3"
@@ -22,6 +23,7 @@ class StuartService {
     
     
 	def newToken(){
+		uri = grailsApplication.config.getProperty('stuart')
 		def newToken = null
 		KeyValue.withTransaction { status ->
 			def current = KeyValue.findByItemKey("stuart")
