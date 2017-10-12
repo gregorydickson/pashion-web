@@ -536,8 +536,11 @@ export class CreateSampleRequestBrand {
   
   bookOut() {
     // initiate stuart booking
+    if(this.sampleRequest.pickupTime == undefined)
+      this.sampleRequest.pickupTime = '09:00';
+
+
     if (!(this.sampleRequest.pickupDate) ||
-      !(this.sampleRequest.pickupTime) ||
       !(this.sampleRequest.addressDestination)) {
       this.alertP("Please pick a Date and Time and Address");
       return
@@ -559,7 +562,11 @@ export class CreateSampleRequestBrand {
 
   bookReturn() {
     // initiate stuart booking
-    if (!(this.sampleRequest.pickupDateReturn) || !(this.sampleRequest.pickupTimeReturn)) {
+
+    if(this.sampleRequest.pickupTimeReturn == undefined)
+      this.sampleRequest.pickupTimeReturn = '09:00';
+
+    if (!(this.sampleRequest.pickupDateReturn)) {
       this.alertP("Please pick a Date and Time");
       return
     }
