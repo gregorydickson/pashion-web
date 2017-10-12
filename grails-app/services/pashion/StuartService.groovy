@@ -13,7 +13,7 @@ class StuartService {
 
     static scope = "singleton"
     GrailsApplication grailsApplication
-    def uri 
+    String uri 
     def retries = 0
 
     def clientID = "a9a96844e2a2e78208b3327d03ac105f6cdf842d404cec8006c12e7969104630"
@@ -96,6 +96,9 @@ class StuartService {
 	*/
 	def createJobQuote(Address fromAddress, Address toAddress,
 					 ShippingEvent shippingEvent, String transport){
+
+		uri = grailsApplication.config.getProperty('stuart')
+		
 		if(fromAddress == null || toAddress == null)
 			return [error:"Address Missing"]
 

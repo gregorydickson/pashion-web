@@ -17,6 +17,9 @@ json{
 
 	paymentOut sampleRequest.paymentOut
 	paymentReturn sampleRequest.paymentReturn
+	courierOut sampleRequest.courierOut
+	courierReturn sampleRequest.courierReturn
+	
 
 	returnBy sampleRequest.returnBy
 	requiredBy sampleRequest.requiredBy
