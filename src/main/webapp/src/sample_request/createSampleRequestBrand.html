@@ -78,7 +78,7 @@
                             </table>
                         </div>
                     </div>
-                    <div if.bind="startFinalize" style="margin-top: 5px;">
+                    <div if.bind="startFinalize" style="margin-top: 1rem;">
                         
                         <!-- Required By -->
                         <div class="grid-content shrink">
@@ -169,21 +169,22 @@
                             </span>
                         </div>
 
+
                         <!-- Courier Section -->
-                        <div if.bind="(!sampleRequest.shippingOut.stuartJobId)" class="grid-block shrink">
-                            <span class="inline-label">
+                        <div if.bind="(!sampleRequest.shippingOut.stuartJobId)" class="grid-content shrink" style="margin-bottom:11px;">
+                            <span class="inline-label" style="display:inline;">
                                 <span class="slim-text-box-label">Courier</span>
-                                <form-select-sr class="slim-text-box" name="courierOut" selected.two-way="sampleRequest.courierOut" options.bind="courier"></form-select-sr>
+                                <form-select-sr class="slim-text-box to-u-c" name="courierOut" selected.two-way="sampleRequest.courierOut" options.bind="courier" width="110"></form-select-sr>
                             </span>
-                            <span id="bookOut" if.bind="sampleRequest.courierOut=='Pashion Courier'" class="slim-text-box-label" style="text-align:left; margin-left:10px;"><a click.delegate="bookOut()" style="">Book</a></span>
+                            <span id="bookOut" if.bind="sampleRequest.courierOut=='Pashion Courier'" class="slim-text-box-label" style="text-align:left; margin-left:10px; width: 50px;"><a click.delegate="bookOut()" style="">Book</a></span>
                         </div>
 
                         <!-- Courier Section after Stuart ID is set -->
-                        <div if.bind="sampleRequest.shippingOut.stuartJobId" class="grid-content shrink">
+                        <div if.bind="sampleRequest.shippingOut.stuartJobId" class="grid-content shrink" style="margin-bottom:11px;">
                             <span class="inline-label">
                                 <span class="slim-text-box-label">Courier</span>
 
-                                <input class="slim-text-box" value.bind="sampleRequest.courierOut" disabled="disabled" >
+                                <input class="slim-text-box to-u-c" type="text" value.bind="sampleRequest.courierOut" disabled="disabled" style="width: 110px; max-width: 110px; min-width: 110px;">
                             </span>
                         </div>
 
@@ -191,8 +192,8 @@
                         <div if.bind="sampleRequest.courierOut=='Pashion Courier'" class="grid-content shrink">
                             <span class="inline-label">
                                 <span class="slim-text-box-label">Pickup Date</span>
-                                <input if.bind="(!sampleRequest.shippingOut.stuartJobId)" datepicker type="text" class="slim-text-box" value.bind="sampleRequest.pickupDate | viewDateFormat">
-                                <input if.bind="sampleRequest.shippingOut.stuartJobId" type="text" class="slim-text-box" value.bind="sampleRequest.pickupDate | viewDateFormat" disabled="disabled">
+                                <input if.bind="(!sampleRequest.shippingOut.stuartJobId)" datepicker type="text" class="slim-text-box" value.bind="sampleRequest.pickupDate | viewDateFormat" style="width:110px; max-width:110px; min-width:110px;">
+                                <input if.bind="sampleRequest.shippingOut.stuartJobId" type="text" class="slim-text-box" value.bind="sampleRequest.pickupDate | viewDateFormat" disabled="disabled" style="width:110px; max-width:110px; min-width:110px;">
                             </span>
                         </div>
 
@@ -206,7 +207,7 @@
                         <div if.bind="((sampleRequest.courierOut=='Pashion Courier') && (sampleRequest.shippingOut.stuartJobId))" class="grid-content shrink">
                             <span class="inline-label">
                                 <span class=" slim-text-box-label">Pickup Time</span>
-                                <input class="" name="pickupTime" value.bind="sampleRequest.pickupTime" disabled="disabled" style="">
+                                <input class="" name="pickupTime" value.bind="sampleRequest.pickupTime" disabled="disabled" type="text" style="width:110px; max-width:110px; min-width:110px;">
                             </span>
                         </div>
 
@@ -228,7 +229,7 @@
                         <div if.bind="sampleRequest.courierOut=='Pashion Courier'" class="grid-content shrink">
                             <span class="inline-label">
                                 <span class="slim-text-box-label">ID</span>
-                                <input type="text" disabled="disabled" class="slim-text-box" value.bind="sampleRequest.shippingOut.stuartJobId">
+                                <input type="text" disabled="disabled" class="slim-text-box" value.bind="sampleRequest.shippingOut.stuartJobId" style="width:110px; max-width:110px; min-width:110px;">
                             </span>
                         </div>
                     </div>
@@ -277,7 +278,7 @@
                             </table>
                         </div>
                     </div>
-                    <div if.bind="startFinalize" style="margin-top: 5px;">
+                    <div if.bind="startFinalize" style="margin-top: 1rem;">
                         <!-- Return By Time -->
                         <div class="grid-content shrink">
                             <span class="inline-label">
@@ -301,24 +302,24 @@
                         <div if.bind="sampleRequest.shippingReturn.stuartJobId" class="grid-content shrink">
                             <span class="inline-label">
                                 <span class="slim-text-box-label">Return To</span>
-                                <input class="to-u-c slim-text-box" name="courierOut" value.bind="sampleRequest.returnToAddress.name" disabled="disabled" style="width:169px">
+                                <input type="text" class="to-u-c slim-text-box" name="courierOut" value.bind="sampleRequest.returnToAddress.name" disabled="disabled" style="width:110px; max-width:110px; min-width:110px;">
                             </span>
                         </div>
 
                         <!-- Courier Section -->
-                        <div if.bind="(!sampleRequest.shippingReturn.stuartJobId)" class="grid-content shrink">
-                            <span class="inline-label">
+                        <div if.bind="(!sampleRequest.shippingReturn.stuartJobId)" class="grid-content shrink" style="margin-bottom:11px;">
+                            <span class="inline-label" style="display:inline;">
                                 <span class="slim-text-box-label">Courier</span>
-                                <form-select-sr class="to-u-c" name="courierOut" selected.two-way="sampleRequest.courierReturn" options.bind="courier"></form-select-sr>
+                                <form-select-sr class="slim-text-box to-u-c" name="courierReturn" selected.two-way="sampleRequest.courierReturn" options.bind="courier"></form-select-sr>
                             </span>
-                            <span id="bookReturn" if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="slim-text-box-label" style="text-align:left; margin-left:10px;"><a click.delegate="bookReturn()" style="">Book</a></span>
+                            <span id="bookReturn" if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="slim-text-box-label" style="text-align:left; margin-left:10px; width: 50px;"><a click.delegate="bookReturn()" style="">Book</a></span>
                         </div>
 
                         <!-- Courier Section after Stuart booking -->
-                        <div if.bind="sampleRequest.shippingReturn.stuartJobId" class="grid-content shrink">
-                            <span class="inline-label">
+                        <div if.bind="sampleRequest.shippingReturn.stuartJobId" class="grid-content shrink" style="margin-bottom:11px;">
+                            <span class="inline-label" >
                                 <span class="slim-text-box-label">Courier</span>
-                                <input class="to-u-c slim-text-box" name="courierOut" value.bind="sampleRequest.courierReturn" disabled="disabled" style="width:169px">
+                                <input class="to-u-c slim-text-box" name="courierReturn" type="text" value.bind="sampleRequest.courierReturn" disabled="disabled" style="width: 110px; max-width: 110px; min-width: 110px;">
                             </span>
                         </div>
 
@@ -326,8 +327,8 @@
                         <div if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="grid-content shrink">
                             <span class="inline-label">
                                 <span class="slim-text-box-label">Pickup Date</span>
-                                <input if.bind="(!sampleRequest.shippingReturn.stuartJobId)" datepicker type="text" class="slim-text-box" value.bind="sampleRequest.pickupDateReturn  | viewDateFormat">
-                                <input if.bind="sampleRequest.shippingReturn.stuartJobId" type="text" class="slim-text-box" value.bind="sampleRequest.pickupDateReturn  | viewDateFormat" disabled="disabled">
+                                <input if.bind="(!sampleRequest.shippingReturn.stuartJobId)" datepicker type="text" class="slim-text-box" value.bind="sampleRequest.pickupDateReturn  | viewDateFormat" style="width:110px; max-width:110px; min-width:110px;">
+                                <input if.bind="sampleRequest.shippingReturn.stuartJobId" type="text" class="slim-text-box" value.bind="sampleRequest.pickupDateReturn  | viewDateFormat" disabled="disabled" style="width: 110px; max-width: 110px; min-width: 110px;">
                             </span>
                         </div>
 
@@ -341,7 +342,7 @@
                         <div if.bind="((sampleRequest.courierReturn=='Pashion Courier') && sampleRequest.shippingReturn.stuartJobId)" class="grid-content shrink">
                             <span class="inline-label">
                                 <span class=" slim-text-box-label">Pickup Time</span>
-                                <input class="to-u-c slim-text-box" name="pickupTime" value.bind="sampleRequest.pickupTimeReturn" disabled="disabled" style="width:169px">
+                                <input type="text" class="to-u-c slim-text-box" name="pickupTime" value.bind="sampleRequest.pickupTimeReturn" disabled="disabled" style="width: 110px; max-width: 110px; min-width: 110px;">
                             </span>
                         </div>
 
@@ -349,7 +350,7 @@
                         <div if.bind="(!sampleRequest.courierOut.sampleRequest.shippingReturn.stuartJobId)" class="grid-content shrink">
                             <span class="inline-label">
                                 <span class=" slim-text-box-label">Split</span>
-                                <form-select-sr class="to-u-c" name="paymentOut" selected.two-way="sampleRequest.paymentReturn" options.bind="payment" width="169px"></form-select-sr>
+                                <form-select-sr class="to-u-c" name="paymentOut" selected.two-way="sampleRequest.paymentReturn" options.bind="payment"></form-select-sr>
                             </span>
                         </div>
                         <div if.bind="sampleRequest.courierOut.sampleRequest.shippingReturn.stuartJobId" class="grid-content shrink">
@@ -363,7 +364,7 @@
                         <div if.bind="sampleRequest.courierOut.sampleRequest.shippingReturn.stuartJobId" class="grid-content shrink">
                             <span class="inline-label">
                                 <span class="slim-text-box-label">ID</span>
-                                <input type="text" disabled="disabled" class="slim-text-box" value.bind="sampleRequest.shippingReturn.stuartJobId">
+                                <input type="text" disabled="disabled" class="slim-text-box" value.bind="sampleRequest.shippingReturn.stuartJobId" style="width:110px; max-width:110px; min-width:110px;">
                             </span>
                         </div>
 
