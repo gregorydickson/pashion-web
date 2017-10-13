@@ -396,7 +396,7 @@ class SampleRequestService {
 
         SampleRequest.withTransaction { status ->
             
-            sr.shippingOut.tracking = jsonObject.shippingOut.tracking
+            
             
             if(jsonObject.shippingOut.startDate){
                 log.info "start date:"+jsonObject.shippingOut.startDate
@@ -405,7 +405,7 @@ class SampleRequestService {
                 sr.shippingOut.save(failOnError:true)
             }
             
-            sr.shippingReturn.tracking = jsonObject.shippingReturn.tracking
+            
             if(jsonObject.shippingReturn.endDate){
                 log.info "end date:"+jsonObject.shippingReturn.endDate
                 sr.shippingReturn.endDate = dateTimeFormat.parse(jsonObject.shippingReturn.endDate)
