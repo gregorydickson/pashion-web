@@ -361,14 +361,13 @@
                         </div>
 
                         <!-- ID -->
-                        <div if.bind="sampleRequest.courierOut.sampleRequest.shippingReturn.stuartJobId" class="grid-content shrink">
+                       <!-- <div if.bind="sampleRequest.courierOut.sampleRequest.shippingReturn.stuartJobId" class="grid-content shrink"> -->
+                        <div if.bind="sampleRequest.courierReturn=='Pashion Courier'" class="grid-content shrink">
                             <span class="inline-label">
                                 <span class="slim-text-box-label">ID</span>
                                 <input type="text" disabled="disabled" class="slim-text-box" value.bind="sampleRequest.shippingReturn.stuartJobId" style="width:110px; max-width:110px; min-width:110px;">
                             </span>
                         </div>
-
-
 
                         <!--  email -->
                         <div class="grid-content shrink" style="margin-bottom:0.5rem;">
