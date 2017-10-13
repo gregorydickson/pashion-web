@@ -62,6 +62,8 @@ export class CreateSampleRequestBrand {
   startDay = '';
   endDay = '';
 
+  switchButtonToExit = 'Cancel';
+
   constructor(http, controller, brandService, dialogService,userService, outReasonService, PRAgencyService,sampleRequestService, searchableItemService, busy) {
     this.controller = controller;
     console.log("createSampleRequestBrand");
@@ -552,7 +554,8 @@ export class CreateSampleRequestBrand {
       this.sampleRequestService.getSampleRequest(this.sampleRequest.id).then(sampleRequest => {
         this.sampleRequest = sampleRequest;
         this.busy.off();
-        this.alertP(sr.message);
+        this.alertP(sr.message);     
+        this.switchButtonToExit = 'Exit';
         if(this.sampleRequest.shippingOut.stuartJobId == undefined)
           document.getElementById('bookOut').style.visibility = 'visible';
       });
@@ -578,6 +581,7 @@ export class CreateSampleRequestBrand {
         this.sampleRequest = sampleRequest;
         this.busy.off();
         this.alertP(sr.message);
+        this.switchButtonToExit = 'Exit';
 
         if(this.sampleRequest.shippingReturn.stuartJobId == undefined)
           document.getElementById('bookReturn').style.visibility = 'visible';

@@ -88,7 +88,7 @@ class StuartController {
         shippingEvent = stuartService.createJobQuote(returnTo,sr.addressDestination,shippingEvent,"Scooter")
         log.info "quote:"+shippingEvent
         if(shippingEvent instanceof Map){
-        	log.error "quote ERROR"
+        	log.error "quote ERROR 1 : " + shippingEvent
         	message = stuartMessage(shippingEvent)
         	message = [message:message]
         	render message as JSON
@@ -141,8 +141,9 @@ class StuartController {
         								returnTo,shippingEvent,"Scooter")
         log.info "quote:"+shippingEvent
         if(shippingEvent instanceof Map){
-        	log.error "quote ERROR"
+        	log.error "quote ERROR 2"
         	message = stuartMessage(shippingEvent)
+        	message = [message:message]
         	render message as JSON
         	return
         }
@@ -158,8 +159,9 @@ class StuartController {
         
 		shippingEvent = stuartService.createJob(theDate,sr.addressDestination,returnTo,shippingEvent)
         if(shippingEvent instanceof Map){
-        	log.error "quote ERROR"
+        	log.error "quote ERROR 3"
         	message = stuartMessage(shippingEvent)
+        	message = [message:message]
 
         }else{
         	message = [message:"Messenger Booked"]
@@ -263,6 +265,11 @@ class StuartController {
 	        case 'JOB_DISTANCE_NOT_ALLOWED':
 	        	log.error "job distance not allowed"
 	        	result = "Addresses must be in same city"
+	        	return result
+	        	break
+	        case 'Address Missing':
+	        	log.error "address is missing"
+	        	result = "Return address is missing"
 	        	return result
 	        	break
 	        default:

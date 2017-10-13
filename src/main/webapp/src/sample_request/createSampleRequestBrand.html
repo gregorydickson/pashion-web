@@ -470,9 +470,9 @@
 
 
         <ai-dialog-footer show.bind="!isLoading" style="padding-left:100px;">
-            <button if.bind="!(sampleRequest.datesSaved)" class="hollow button" click.delegate="cancel()">Cancel</button>
-            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" class="hollow button" click.delegate="cancelKeepSR(sampleRequest.id)">Cancel</button>
-            <button if.bind="(sampleRequest.datesSaved && startFinalize)" class="hollow button" click.delegate="cancel()">Cancel</button>
+            <button if.bind="!(sampleRequest.datesSaved)" class="hollow button" click.delegate="cancel()">${switchButtonToExit}</button>
+            <button if.bind="(sampleRequest.datesSaved && !startFinalize)" class="hollow button" click.delegate="cancelKeepSR(sampleRequest.id)">${switchButtonToExit}</button>
+            <button if.bind="(sampleRequest.datesSaved && startFinalize)" class="hollow button" click.delegate="cancel()">${switchButtonToExit}</button>
             <button if.bind="(!sampleRequest.datesSaved)" id="saveDates" class="button" disabled.bind="!(sampleRequest.startDate && sampleRequest.endDate)" click.delegate="dates()">Choose Dates</button>
             <button if.bind="(sampleRequest.datesSaved && !startFinalize)" disabled.bind="sampleRequest.searchableItemsProposed.length == 0" id="continue" class="button" click.delegate="continue()">Add to Booking</button>
             <button if.bind="((sampleRequest.datesSaved) && (startFinalize) && !edit)" disabled.bind="!(sampleRequest.deliverTo)" id="CreateSampleRequestButton" class="button" click.delegate="submit()">Submit</button>
