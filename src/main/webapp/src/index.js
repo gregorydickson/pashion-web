@@ -864,7 +864,6 @@ export class Index {
             var msw = document.getElementById("mainScrollWindow");
             if (msw) {
                 msw.style.visibility = "visible";
-                console.log("setting MSW visibility to visible");
                 if(window.myblazy){
                     window.myblazy.destroy();
                 }

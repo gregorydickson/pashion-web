@@ -19,7 +19,6 @@ export class AddressService {
 
 
     getAll() {
-        console.log("addressService.getAll  called");
         let url = '/dashboard/deliverTo/';
         
         var promise = new Promise((resolve, reject) => {
