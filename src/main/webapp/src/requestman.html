@@ -380,7 +380,7 @@
                                     <!-- expanding data -->
                                     <div id="panel${$index}" class="panel grid-block vertical" style="margin-left: 0.5rem; margin-top:1rem;">
                                         <div class="grid-content">
-                                            <span class="ui-text-label-m-blue">Delivery Pickup</span><span style="margin-left:0.5rem;"> ${booking.shippingOut.id} ${booking.shippingOut.tracking}</span>
+                                            <span class="ui-text-label-m-blue">Delivery Pickup</span><span style="margin-left:0.5rem;">  ${booking.shippingOut.stuartJobId}</span>
                                         </div>
                                         <div if.bind="(booking.shippingOut.status) && (booking.shippingOut.status!='Proposed')" class="grid-content">
                                             <span class="">${booking.shippingOut.status}</span>
@@ -399,7 +399,7 @@
                                             <span>TBD</span>
                                         </div>
                                         <div class="grid-content" style="margin-top:1rem;">
-                                            <span class="ui-text-label-m-blue">Return Pickup</span><span style="margin-left:0.5rem;"> ${booking.shippingReturn.id} ${booking.shippingReturn.tracking}</span>
+                                            <span class="ui-text-label-m-blue">Return Pickup</span><span style="margin-left:0.5rem;"> ${booking.shippingReturn.stuartJobId}</span>
                                         </div>
                                         <div if.bind="(booking.shippingReturn.status) && (booking.shippingReturn.status!='Proposed')" class="grid-content">
                                             <span class="">${booking.shippingReturn.status}</span>
