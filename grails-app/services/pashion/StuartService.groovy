@@ -6,6 +6,7 @@ import groovyx.net.http.HttpException
 import grails.transaction.Transactional
 import reactor.spring.context.annotation.*
 import grails.core.*
+import grails.util.Environment
 
 @Transactional
 @Consumer
@@ -24,7 +25,22 @@ class StuartService {
     
 	def newToken(){
 		uri = grailsApplication.config.getProperty('stuart')
+
+		if (Environment.current == Environment.DEVELOPMENT) {
+            clientID = "a9a96844e2a2e78208b3327d03ac105f6cdf842d404cec8006c12e7969104630"
+	 		secret = "60d76bb547879450f03927dc501f5c2ef8d00c2188c684bc955fb06edde1f0c3"
+        } else 
+        if (Environment.current == Environment.TEST) {
+            clientID = "a9a96844e2a2e78208b3327d03ac105f6cdf842d404cec8006c12e7969104630"
+	 		secret = "60d76bb547879450f03927dc501f5c2ef8d00c2188c684bc955fb06edde1f0c3"
+        } else 
+        if (Environment.current == Environment.PRODUCTION) {
+            clientID = "177ac6510503d7e377c37e88682564f42042e9370b8a1afd657cb176e3aeed7d"
+	 		secret = "d38245b134fe18a20de73bb2bc2841a55fdf8e116a4bb94e0e18f78d838e14bf"
+        } 
+
 		def newToken = null
+
 		KeyValue.withTransaction { status ->
 			def current = KeyValue.findByItemKey("stuart")
 			if(current == null)

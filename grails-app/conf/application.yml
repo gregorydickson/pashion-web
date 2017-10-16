@@ -66,7 +66,7 @@ environments:
             url: jdbc:mysql://pashion-prod.cnjmlfc6tctw.eu-west-1.rds.amazonaws.com:3306/pashionprod
             username: pashionprod
             password: 2Mc9Nf17gBzyGs*a4$WS
-        stuart: https://sandbox-api.stuart.com
+        stuart: https://api.stuart.com
         # grails:
         #    plugin:
          #     awssdk:
