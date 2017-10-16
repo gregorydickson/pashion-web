@@ -60,6 +60,7 @@ environments:
             plugin:
                 forceSSL:
                     enabled: false
+        stuart: https://sandbox-api.stuart.com
     production:
         dataSource:
             dbCreate: update
