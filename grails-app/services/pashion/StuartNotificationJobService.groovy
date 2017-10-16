@@ -100,7 +100,7 @@ class StuartNotificationJobService implements SchwartzJob {
 			Date theirTime
 			use(TimeCategory){
 				
-				def timeArray = sr.pickupTime.split(":")
+				def timeArray = sr.pickupTimeReturn.split(":")
         		theirTime = today + timeArray[0].toInteger().hours + timeArray[1].toInteger().minutes
         		//println "STUART NOTIFICATION LONDON  ******  sr pickup time: "+theirTime
         		if(theirTime < inOneHour && theirTime > now ){
