@@ -122,6 +122,11 @@ class SampleRequestService {
         sr.startOffset = jsonObject.startOffset
         sr.endOffset = jsonObject.endOffset
 
+        if(!sr.shippingOut)
+            sr.shippingOut = new ShippingEvent(courier:jsonObject.courier,status:'Proposed').save(failOnError:true)
+        if(!sr.shippingReturn)
+            sr.shippingReturn = new ShippingEvent(status:'Proposed').save(failOnError:true)
+
         if(jsonObject.requestStatusBrand){
             log.info "status set client side to:"+jsonObject.requestStatusBrand
             sr.requestStatusBrand = jsonObject.requestStatusBrand
@@ -398,7 +403,7 @@ class SampleRequestService {
             
             
             
-            if(jsonObject.shippingOut.startDate){
+            if(jsonObject?.shippingOut?.startDate){
                 log.info "start date:"+jsonObject.shippingOut.startDate
                 sr.shippingOut.startDate = dateTimeFormat.parse(jsonObject.shippingOut.startDate)
                 log.info "start date parsed:"+sr.shippingOut.startDate
@@ -406,7 +411,7 @@ class SampleRequestService {
             }
             
             
-            if(jsonObject.shippingReturn.endDate){
+            if(jsonObject?.shippingReturn?.endDate){
                 log.info "end date:"+jsonObject.shippingReturn.endDate
                 sr.shippingReturn.endDate = dateTimeFormat.parse(jsonObject.shippingReturn.endDate)
                 log.info "end date parsed:"+sr.shippingReturn.endDate
@@ -424,8 +429,8 @@ class SampleRequestService {
                 
                 def statusJSON = jsonObject.searchableItemsStatus.find { it.itemId == sample.id }
                 def statusObject = sr.searchableItemsStatus.find { it.itemId == sample.id }
-                log.info "status:"+statusJSON.status
-                if(statusJSON.status == "Approved"){
+                log.info "status:"+statusJSON?.status
+                if(statusJSON?.status == "Approved"){
                     statusObject.status = "Approved"
                     log.info "item status:"+statusObject.status
                     statusObject.save(failOnError:true)
@@ -433,7 +438,7 @@ class SampleRequestService {
                     if(!item){
                         sr.addToSearchableItems(sample)
                     }
-                } else if(statusJSON.status == "Denied"){
+                } else if(statusJSON?.status == "Denied"){
                     statusObject.status = "Denied"
                     log.info "item status:"+statusObject.status
                     statusObject.save(failOnError:true)
@@ -466,13 +471,13 @@ class SampleRequestService {
                     sr.message = jsonObject.message
             }
 
-            if(sr.shippingOut.stuartQuoteId == null){
-                if(sr.pressHouse){
-                    sr = destinationAddressPress(sr,jsonObject)
-                } else {
-                    sr = destinationAddressBrand(sr,jsonObject)
-                }
+            
+            if(sr.pressHouse){
+                sr = destinationAddressPress(sr,jsonObject)
+            } else {
+                sr = destinationAddressBrand(sr,jsonObject)
             }
+            
             sr = returnToAddress(sr,jsonObject)
             sr.save(failOnError:true,flush:true)
             log.info "UPDATED SAMPLE REQUEST:"+sr.id
