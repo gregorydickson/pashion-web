@@ -5,8 +5,8 @@
         <span class="inline-label" style="">
             <span class="slim-text-box-label">${title}</span>
 
-        <select select2.bind='{ "placeholder": placeholder}' select2.ref="addressSelect" change.delegate="onAddressSelectChanged($event)"
-            style.bind="style">
+        <select select2.bind='{ "placeholder": placeholder,"selected":selectedDeliverToItems}' select2.ref="addressSelect" change.delegate="onAddressSelectChanged($event)"
+            style.bind="style" >
             <option></option>
             <option repeat.for="option of availableDeliverToItems" value.bind="option.id">${option.text}</option>
         </select>
