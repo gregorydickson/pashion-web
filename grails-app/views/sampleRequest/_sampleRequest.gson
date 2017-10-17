@@ -34,8 +34,9 @@ json{
 
 	requestStatusBrand sampleRequest.requestStatusBrand
 	requestStatusPress sampleRequest.requestStatusPress
+	
 
-	dateCreated sampleRequest.dateCreated?.format('yyyy-MM-dd')+'T00:00:00Z'
+	dateCreated sampleRequest.dateCreated?.format('yyyy-MM-dd') + "T" + sampleRequest.dateCreated?.format('hh:mm:ss') + "Z"
 	
 	bookingEndDate sampleRequest.bookingEndDate?.format('yyyy-MM-dd')+'T00:00:00Z'
 	bookingStartDate sampleRequest.bookingStartDate?.format('yyyy-MM-dd')+'T00:00:00Z'
