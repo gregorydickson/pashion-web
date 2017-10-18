@@ -369,7 +369,11 @@ class SampleRequestService {
                 if(jsonObject.deliverTo.type  == 'user') {
                     log.info "deliver To type is User"
                     def aUser = User.get(jsonObject.deliverTo.userId.toInteger())
-                    if(aUser.address){
+                    
+                    if(jsonObject.deliverTo.originalId){
+                        sr.addressDestination = Address.get(jsonObject.deliverTo.originalId.toInteger())
+                        log.info "address destination:"+sr.addressDestination.id
+                    } else if(aUser.address){
                         sr.addressDestination = aUser.address
                     } else {
                         sr.addressDestination = Address.findByBrandAndDefaultAddress(aUser.brand, true)
