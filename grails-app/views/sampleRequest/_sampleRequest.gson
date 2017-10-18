@@ -7,6 +7,8 @@ model {
 //log.info "render a sample request"
 //log.info "pr agency id:"+sampleRequest?.prAgency.id
 
+TimeZone.setDefault(TimeZone.getTimeZone("Europe/London"))
+
 json{
 	
 	id sampleRequest.id
@@ -36,7 +38,12 @@ json{
 	requestStatusPress sampleRequest.requestStatusPress
 	
 
-	dateCreated sampleRequest.dateCreated?.format('yyyy-MM-dd') + "T" + sampleRequest.dateCreated?.format('hh:mm:ss') + "Z"
+	dateCreated sampleRequest.dateCreated
+
+	timezoneOffset sampleRequest.dateCreated.getTimezoneOffset()
+
+	dateCreatedSeconds sampleRequest.dateCreated.getTime()
+	
 	
 	bookingEndDate sampleRequest.bookingEndDate?.format('yyyy-MM-dd')+'T00:00:00Z'
 	bookingStartDate sampleRequest.bookingStartDate?.format('yyyy-MM-dd')+'T00:00:00Z'
