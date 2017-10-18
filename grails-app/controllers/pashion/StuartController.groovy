@@ -107,7 +107,7 @@ class StuartController {
 		shippingEvent = stuartService.createJob(theDate,returnTo,sr.addressDestination,shippingEvent)
         if(shippingEvent instanceof Map){
         	log.error "stuart error message:"+shippingEvent.message
-        	message = stuartMessage(shippingEvent)
+        	message = [message:stuartMessage(shippingEvent)]
         }else{
         	message = [message:"Messenger Booked"]
         	response.status = 200
@@ -246,9 +246,12 @@ class StuartController {
 		log.info "response:"+response
 		def result
 		def message 
-		if(response.error) message = response.error
-		if(response.message) message = response.message
-		switch (response.error) {
+		if(response.message)
+			message = response.message
+		else if(response.error)
+			message = response.error
+
+		switch (message) {
 	        case 'JOB_DELIVERIES_INVALID':
 	            //that the delivery is invalid
 	            log.error "JOB_DELIVERIES_INVALID"
@@ -259,7 +262,7 @@ class StuartController {
 	        	log.error "Job PICKUP AT Invalid"
 	        	// invalid time -after 
 	        	//email support
-	        	result = "Invalid time"
+	        	result = "Invalid date or time for courier"
 	        	return result
 	        	break
 	        case 'JOB_DISTANCE_NOT_ALLOWED':
