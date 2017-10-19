@@ -86,12 +86,12 @@ class EmailService {
             if(sr.brand)
                 messageTxt = messageTxt + "Pashion Booking <b>" + sr.id  + "</b> of samples from <b>" + sr?.brand?.name+ "</b><br/><br/><br/>" 
             else
-                messageTxt = messageTxt + "Booking Booking <b>" + sr.id  + "</b><br/><br/><br/>"
+                messageTxt = messageTxt + "Booking <b>" + sr.id  + "</b><br/><br/><br/>"
 
              messageTxt = messageTxt + '</td> </tr></table><br/>'
 
             sr.searchableItemsProposed.each{
-                messageTxt = messageTxt + '<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center">'
+                messageTxt = messageTxt + '<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="left">'
                 messageTxt = messageTxt + "<b>Sample: </b>" +it?.attributes+"<br/>"
                 messageTxt = messageTxt + '<img src="https:' + it.look.image + '" style="max-width:258px;"><br/><br/>'
                 messageTxt = messageTxt + '</td> </tr></table><br/>'

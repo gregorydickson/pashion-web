@@ -26,7 +26,7 @@ class BrandCollection {
 
 	
 
-	static hasMany = [ permissions:Permission, searchableItems:SearchableItem]
+	static hasMany = [searchableItems:SearchableItem]
 
 	static mapping = {
 		season index: 'season_idx'

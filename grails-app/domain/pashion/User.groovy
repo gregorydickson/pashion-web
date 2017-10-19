@@ -33,7 +33,6 @@ class User {
 	static belongsTo = [ pressHouse:PressHouse,brand:Brand,prAgency:PRAgency]
 
 	static hasMany = [connections:Connection,
-	                 permissions:Permission,
 	                 sampleRequestsSent: SampleRequest,
 	                 sampleRequestsReceived: SampleRequest]
 

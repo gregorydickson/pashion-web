@@ -74,7 +74,7 @@ class SearchableItem {
 
 	static belongsTo = [brandCollection: BrandCollection]
 	
-	static hasMany = [ permissions:Permission, sampleRequests:SampleRequest, samples:SearchableItem]
+	static hasMany = [ sampleRequests:SampleRequest, samples:SearchableItem]
 
 	static mapping = {
 
