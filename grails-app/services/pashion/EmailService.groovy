@@ -79,23 +79,28 @@ class EmailService {
             
             SampleRequest sr = data
             def messageTxt = "<br/>" 
-            log.info "email notificaiton start message: " + sr
+            log.info "email notification start message: " + sr
             messageTxt = messageTxt + '<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center">'
             messageTxt = messageTxt + '<br/><img src="https://app.pashiontool.com/assets/PashionRMPlainBlack.png" style="max-width:350px;">'
             messageTxt = messageTxt + "<br/><br/>"
             if(sr.brand)
-                messageTxt = messageTxt + "Booking confirmation of samples from <b>" + sr?.brand?.name+ "</b><br/><br/><br/>" 
+                messageTxt = messageTxt + "Pashion Booking <b>" + sr.id  + "</b> of samples from <b>" + sr?.brand?.name+ "</b><br/><br/><br/>" 
             else
-                messageTxt = messageTxt + "Booking confirmation of samples <br/><br/><br/>" 
+                messageTxt = messageTxt + "Booking Booking <b>" + sr.id  + "</b><br/><br/><br/>"
 
-            messageTxt = messageTxt + '<img src="https:' + sr.image + '" style="max-width:258px;"><br/><br/>'
-            messageTxt = messageTxt + '</td> </tr></table><br/>'
+             messageTxt = messageTxt + '</td> </tr></table><br/>'
+
+            sr.searchableItemsProposed.each{
+                messageTxt = messageTxt + '<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center">'
+                messageTxt = messageTxt + "<b>Sample: </b>" +it?.attributes+"<br/>"
+                messageTxt = messageTxt + '<img src="https:' + it.look.image + '" style="max-width:258px;"><br/><br/>'
+                messageTxt = messageTxt + '</td> </tr></table><br/>'
+            }
+            
 
             log.info "message text + image address: " + messageTxt
             
-            sr.searchableItemsProposed.each{
-                messageTxt = messageTxt + "<b>Sample: </b>" +it?.attributes+"<br/>"
-            }
+            
             messageTxt = messageTxt +"<br/>"
             
             messageTxt = messageTxt + "<b>Start Date: </b>" +sr.bookingStartDate?.format('yyyy-MMM-dd')+"<br/>"
@@ -128,7 +133,9 @@ class EmailService {
             // Do we need this for press too? Idea is not, as press will always be reuesting on the platform.
             */
             messageTxt = messageTxt + "<b>Courier Return: </b>" +sr.courierReturn+"<br/>"
-            messageTxt = messageTxt + "<b>Payment: </b>" +sr.paymentReturn+"<br/><br/><br/>"
+            messageTxt = messageTxt + "<b>Payment: </b>" +sr.paymentReturn+"<br/>"
+
+            messageTxt = messageTxt + '<b>Notes: </b>' + sr.message + '<br/><br/><br/>'
 
             messageTxt = messageTxt + '<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="center">'
             messageTxt = messageTxt + 'Thanks from the team. <br/> http://www.pashiontool.com <br/><br/>' 
@@ -140,10 +147,8 @@ class EmailService {
 
             Email from = new Email("support@pashiontool.com")
             String subject
-            if(sr.brand)
-                subject =  "From the PASHION platform: booking confirmation of " + sr?.brand?.name + " look "+sr.look
-            else
-                subject =  "From the PASHION platform: booking confirmation for Booking " + sr.id
+            
+            subject =  "From the PASHION platform: booking confirmation for booking " + sr.id
 
             Email to = new Email(sr.emailNotification)
             Content content = new Content("text/html", messageTxt)

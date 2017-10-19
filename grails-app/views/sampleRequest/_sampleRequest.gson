@@ -98,6 +98,7 @@ json{
     datesSaved sampleRequest.datesSaved
 
     emailNotification sampleRequest.emailNotification
+    message sampleRequest.message
 
 	prAgency{
 		name sampleRequest.prAgency?.name
