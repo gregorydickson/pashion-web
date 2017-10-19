@@ -112,7 +112,7 @@ class SearchableItem {
 	}
 
 	def notAvailable(SampleRequest sr){
-		if(outReason){
+		if(outReason && outReason.id != 0){
 			return true
 		}
 		TimeZone.setDefault(TimeZone.getTimeZone("Europe/London"))
