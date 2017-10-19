@@ -272,7 +272,7 @@ class StuartController {
 	        	break
 	        case 'Address Missing':
 	        	log.error "address is missing"
-	        	result = "Return address is missing"
+	        	result = "Address is missing. Please choose a Deliver and Return Address."
 	        	return result
 	        	break
 	        default:
