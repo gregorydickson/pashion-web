@@ -275,8 +275,13 @@ class StuartController {
 	        	result = "Address is missing. Please choose a Deliver and Return Address."
 	        	return result
 	        	break
+	        case 'Unprocessable Entity':
+	        	log.error "Unprocessable Entity"
+	        	result = "Data would not validate - check address data, ensure phone number and address are valid."
+	        	return result
+	        	break
 	        default:
-	            result = response
+	            result = "Error; notify support@pashiontool.com"
 	            return result
 	            break
 	    } 

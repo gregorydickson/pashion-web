@@ -192,7 +192,8 @@ class StuartService {
 				log.info "quote:"+quote
 				return quote
 			} else {
-				log.error "other exception"
+				log.error "other exception Stuart Quote",ex
+				log.error ex.printStackTrace()
 				return [error:ex.message]
 			}
 		}
