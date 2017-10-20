@@ -81,24 +81,6 @@ export class Requestman {
     this.sampleRequestService.getSampleRequests()
       .then(bookings => {
         this.bookings = bookings;
-        let i = 0;
-        for (i;i < bookings.length ;i++) {
-          let y = 0;
-          for (y;y<bookings[i].searchableItems.length ;y++) {
-            //this.bookingsImages[bookings[i].searchableItems[y].look.id] = 
-            //this.computedImage (bookings[i].searchableItems[y].look);
-            let lookId = bookings[i].searchableItems[y].look.id;
-            this.http.fetch('/searchableItem/fetchSI/'+lookId+'.json')
-              .then(response => response.json())
-              .then(item => { 
-                console.log ("image to show: " + item.image);
-                //this.bookingsImagesView = [];
-                //this.bookingsImages[lookId] = item.image;
-                //this.bookingsImagesView = this.bookingsImages;
-                this.bookingsImagesView[lookId] = item.image;
-              })
-            }
-          }
       });
 
     this.userService.getUser().then(user=>{

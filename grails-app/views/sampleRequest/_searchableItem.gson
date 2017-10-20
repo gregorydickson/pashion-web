@@ -16,6 +16,8 @@ json g.render(searchableItem,[expand:['type','samples','sampleCity']]){
 		seasonAbbreviation searchableItem?.look?.season?.abbreviation
 		lookNameNumber searchableItem?.look?.nameNumber
 		lookNameVariant searchableItem?.look?.nameVariant
+		image searchableItem?.look?.image
 	}
+
 
 } 
