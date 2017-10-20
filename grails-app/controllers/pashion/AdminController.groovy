@@ -33,10 +33,17 @@ class AdminController {
     		
     	
     		Brand brand = Brand.findByNameIlike("Aloura London")//Add name here to enable
-	    	PRAgency agency = PRAgency.findByBrand(brand)
-	    	if(agency){
-	    		agency.removeFromBrands(brand)
-	    		agency.save(flush:true,failOnError:true)
+    		log.info "brand:"+brand.name
+	    	
+	    	def agencies = brand.prAgencies
+	    	List agencyIds = agencies.collect{it.id}
+	    	if(agencyIds){
+	    		agencyIds.each{
+	    			PRAgency agency = PRAgency.get(it)
+	    			agency.removeFromBrands(brand)
+	    			agency.save(flush:true,failOnError:true)
+	    		}
+	    		
 	    	}
 
 	        List bookings = SampleRequest.findAllByBrand(brand)
@@ -52,6 +59,13 @@ class AdminController {
 
 	        bookings*.delete(flush:true,failOnError:true)
 	        List items = SearchableItem.findAllByBrand(brand)
+	        items.each{
+	        	it.look = null
+	        	it.save(flush:true,failOnError:true)
+	        }
+	        items*.delete(flush:true,failOnError:true)
+
+	        items = BrandCollection.findAllByBrand(removeBrand)
 	        items*.delete(flush:true,failOnError:true)
 
 	        brand.delete(flush:true,failOnError:true)
