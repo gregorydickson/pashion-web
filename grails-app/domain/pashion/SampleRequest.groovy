@@ -113,6 +113,7 @@ class SampleRequest {
 
 
 	static mapping = {
+		children cascade:"all-delete-orphan"
         cache true
         searchableItems lazy:false
         brand lazy:false
@@ -138,7 +139,8 @@ class SampleRequest {
 
 	static hasMany = [ searchableItems:SearchableItem,
 					   searchableItemsProposed:SearchableItem,
-					   searchableItemsDenied:SearchableItem ]
+					   searchableItemsDenied:SearchableItem,
+					   searchableItemsStatus:BookingStatus ]
 
 	PashionCalendar checkMonthForEvents(LocalDate localDate,
 										PashionCalendar pashionCalendar){
