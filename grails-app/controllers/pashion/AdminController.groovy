@@ -29,11 +29,13 @@ class AdminController {
     }
 
     def removeBrand() {
+
+    	Brand brand
     	Brand.withTransaction { status ->
     		
     	
-    		Brand brand = Brand.findByNameIlike("Aloura London")//Add name here to enable
-    		log.info "brand:"+brand.name
+    		brand = Brand.findByNameIlike("")//Add name here to enable
+    		log.info "removing brand:"+brand.name
 	    	
 	    	def agencies = brand.prAgencies
 	    	List agencyIds = agencies.collect{it.id}
@@ -65,12 +67,12 @@ class AdminController {
 	        }
 	        items*.delete(flush:true,failOnError:true)
 
-	        items = BrandCollection.findAllByBrand(removeBrand)
+	        items = BrandCollection.findAllByBrand(brand)
 	        items*.delete(flush:true,failOnError:true)
 
 	        brand.delete(flush:true,failOnError:true)
     	}
-        render "done"
+        render "done with " + brand.name
         return
         
     }
