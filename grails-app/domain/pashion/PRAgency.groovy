@@ -12,6 +12,7 @@ class PRAgency {
 	Date lastUpdated
     Collection destinations
     Collection addresses
+    Collection brands
     Boolean onlyShowMySampleRequests = true
     Boolean restrictOutsideBooking = true
 
