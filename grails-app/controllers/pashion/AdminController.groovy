@@ -9,7 +9,7 @@ class AdminController {
 
 
     def removeAgencyBookings(Integer id) {
-    	PRAgency agency = PRAgency.get(id)
+    	PRAgency agency = PRAgency.get()//Add id here to enable
 
         List bookings = SampleRequest.findAllByPrAgency(agency)
         
@@ -22,11 +22,14 @@ class AdminController {
         	ids.each{booking.removeFromSearchableItemsDenied(SearchableItem.get(it))}
         }
 
-        //bookings*.delete(flush:true,failOnError:true)
+        bookings*.delete(flush:true,failOnError:true)
         render "done"
         return
         
     }
+
+
+
 
 
 }
