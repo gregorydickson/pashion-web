@@ -66,22 +66,21 @@ To setup the Development Environment:
 * The aurelia app can be bundled for a faster application load.
 
 
-## Deployment to app.pashiontool.com and test.pashiontool.com
+## Deployment to test.pashiontool.com
 
-### To deploy the application
+### To deploy the application to test
 * from your gulp terminal run `gulp bundle` 
-* after gulp bundle completes, from your grails command line run `war`
+* after gulp bundle completes, from your grails command line run `test war`
 * login to Amazon Web Services
 * Under Services (in header, left side), choose Elastic Beanstalk
 * Ensure that you are in Ireland region, (in header, right side)
-* Under the pashion-spa application, choose the pashion-SpA environment to deploy app.pashiontool.com.
 * If you are deploying test.pashiontool.com choose the pashion-NG environment.
 * In the center of the screen, under where it says 'Running Version', click on Upload and Deploy. Note the existing version number of the application.
-* Input a new version number by incrementing the last version number. Put this number into the Version Label.
+* Input a new version number by incrementing the last version number. Put this number into the Version Label. Also indicate in the decription that this is a test build by typing "TEST".
 * Click on 'Choose File' and navigate to your pashion-web/build/libs directory.
 * Choose the 'pashion-web-0.1.war' file to upload.
 * wait for the upload and allow about two to five minutes on the deployment and then check the site from a browser.
-* The first time you access it, it might say 'Proxy Error'. Try again after two minutes.
+* The first time you access it, it might say 'Proxy Error'. Try again after one minute.
 * If you bundled the application in the first step, run `gulp unbundle` in your gulp terminal to return to development mode. (then run `gulp watch`)
 
 
