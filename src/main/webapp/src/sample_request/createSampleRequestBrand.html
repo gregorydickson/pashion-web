@@ -412,7 +412,7 @@
                     <table  class="" style="margin-bottom:0px; table-layout:fixed;" repeat.for="sample of currentItem.samples | sort: 'id': 'ascending'">
                         <tr>
                             <td if.bind="(sampleRequest.datesSaved && sample.availability)" class="accordion" style="width:20px; max-width:20px;">
-                                <input disabled.bind="((user.city.name !== sample.sampleCity.name) && (restrictOutsideBooking))" type="checkbox" model.bind="sample"  checked.bind="sampleRequest.searchableItemsProposed">
+                                <input id="${sample.id}checkbox" type="checkbox" model.bind="sample"  checked.bind="sampleRequest.searchableItemsProposed">
                             </td>
 
                             <td if.bind="!(sampleRequest.datesSaved && sample.availability)" class="accordion" style="width:20px; max-width:20px;">

@@ -1,7 +1,7 @@
 import { DialogController } from 'aurelia-dialog';
 import { HttpClient, json } from 'aurelia-fetch-client';
 import 'fetch';
-import { inject, bindable } from 'aurelia-framework';
+import { inject, bindable, TaskQueue } from 'aurelia-framework';
 import { DateFormat } from 'common/dateFormat';
 import { BrandService } from 'services/brandService';
 import { OutReasonService } from 'services/outReasonService';
@@ -20,7 +20,7 @@ import { busy } from 'services/busy';
 
 @inject(HttpClient, DialogController, BrandService, 
     DialogService, UserService, OutReasonService, 
-    PRAgencyService,SampleRequestService, SearchableItemService, busy)
+    PRAgencyService,SampleRequestService, SearchableItemService, busy,TaskQueue)
 export class CreateSampleRequestBrand {
 
   
@@ -64,7 +64,7 @@ export class CreateSampleRequestBrand {
 
   switchButtonToExit = 'Cancel';
 
-  constructor(http, controller, brandService, dialogService,userService, outReasonService, PRAgencyService,sampleRequestService, searchableItemService, busy) {
+  constructor(http, controller, brandService, dialogService,userService, outReasonService, PRAgencyService,sampleRequestService, searchableItemService, busy,TaskQueue) {
     this.controller = controller;
     console.log("createSampleRequestBrand");
     http.configure(config => {
@@ -80,6 +80,7 @@ export class CreateSampleRequestBrand {
     this.sampleRequestService = sampleRequestService;
     this.searchableItemService = searchableItemService;
     this.busy = busy;
+    this.taskQueue = TaskQueue;
   }
 
 
@@ -195,6 +196,21 @@ export class CreateSampleRequestBrand {
       this.email = 'EMAIL';
     ga('set', 'page', '/createSampleRequestBrand.html');
     ga('send', 'pageview');
+    
+    let ids = this.sampleRequest.searchableItemsProposed;
+    let samples = this.currentItem.samples;
+    this.taskQueue.queueMicroTask(() => {  
+      samples.forEach(function (sample,index,object) {
+        let inTrolley = ids.find(item => {return sample.id === item.id});
+        if(inTrolley){
+          let element = document.getElementById(sample.id+"checkbox")
+          if(element){
+            console.log("CHECKBOX DISABLED");
+            element.disabled = true;
+          }
+        }
+      });
+    });
 
   }
 
@@ -221,6 +237,12 @@ export class CreateSampleRequestBrand {
             console.log(JSON.stringify(sample));
             sr.searchableItemsProposed.push(sample); 
           } else{
+            let element = document.getElementById(sample.id+"checkbox")
+            if(element){
+              console.log("CHECKBOX DISABLED");
+              element.disabled = true;
+            }
+
             console.log("not available or in trolley");
           }
         })
@@ -278,28 +300,13 @@ export class CreateSampleRequestBrand {
 
   checkSamples(){
     let user = this.user;
+
     if (user.type == "brand"){
       this.brandService.getRestrictOutsideBooking(this.user.brand.id).then(result => {
         console.log("restrict Outside booking:"+result)
         // currently disabled, so always false
         // but can use for not-available locations??
         this.restrictOutsideBooking = result;
-        var theUser = this.user;
-
-        var ids = this.sampleRequest.searchableItemsProposed;
-        this.currentItem.samples.forEach(function (item,index,object) {
-          if(result){
-            if(item.sampleCity.name == theUser.city.name ){
-              //ids.push(item);
-            } else {
-              console.log("not adding to selected");
-            }
-          } else {
-            //ids.push(item);
-          }
-          
-        })
-
       });
     }
     if (user.type=="prAgency"){
@@ -533,6 +540,17 @@ export class CreateSampleRequestBrand {
       return false
     }
     return false
+  }
+
+  aSampleInTrolley(sample) {
+    let inTrolley = sampleRequest.searchableItemsProposed.indexOf(item => {return sample.id === item});
+    console.log("In trolley for checkbox:"+inTrolley)
+    if(inTrolley){
+      console.log("YES IT IS IN THE TROLLEY");
+      return true
+    } else {
+      return false
+    }
   }
 
   
