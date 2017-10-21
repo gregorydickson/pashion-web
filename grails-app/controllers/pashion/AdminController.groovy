@@ -28,6 +28,26 @@ class AdminController {
         
     }
 
+    def removeBrandBookings(Integer id) {
+    	Brand brand = Brand.get()//Add id here to enable
+
+        List bookings = SampleRequest.findAllByBrand(brand)
+        
+        bookings.each{ booking ->
+        	def ids = booking.searchableItems.collect{it.id}
+        	ids.each{booking.removeFromSearchableItems(SearchableItem.get(it))}
+        	ids = booking.searchableItemsProposed.collect{it.id}
+        	ids.each{booking.removeFromSearchableItemsProposed(SearchableItem.get(it))}
+        	ids = booking.searchableItemsDenied.collect{it.id}
+        	ids.each{booking.removeFromSearchableItemsDenied(SearchableItem.get(it))}
+        }
+
+        bookings*.delete(flush:true,failOnError:true)
+        render "done"
+        return
+        
+    }
+
     def removeBrand() {
 
     	Brand brand
