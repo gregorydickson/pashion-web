@@ -28,8 +28,9 @@ class AdminController {
         
     }
 
-    def removeBrandBookings(Integer id) {
-    	Brand brand = Brand.get()//Add id here to enable
+    def removeBrandBookings() {
+    	// add the name of the brand here
+    	Brand brand = Brand.findByNameIlike("") 
 
         List bookings = SampleRequest.findAllByBrand(brand)
         
