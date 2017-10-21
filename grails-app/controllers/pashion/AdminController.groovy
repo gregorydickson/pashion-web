@@ -43,7 +43,7 @@ class AdminController {
         }
 
         bookings*.delete(flush:true,failOnError:true)
-        render "done"
+        render "removed bookings for:"+brand.name
         return
         
     }
