@@ -197,20 +197,23 @@ export class CreateSampleRequestBrand {
     ga('set', 'page', '/createSampleRequestBrand.html');
     ga('send', 'pageview');
     
-    let ids = this.sampleRequest.searchableItemsProposed;
-    let samples = this.currentItem.samples;
-    this.taskQueue.queueMicroTask(() => {  
-      samples.forEach(function (sample,index,object) {
-        let inTrolley = ids.find(item => {return sample.id === item.id});
-        if(inTrolley){
-          let element = document.getElementById(sample.id+"checkbox")
-          if(element){
-            console.log("CHECKBOX DISABLED");
-            element.disabled = true;
+    if(this.currentItem){
+      let ids = this.sampleRequest.searchableItemsProposed;
+      let samples = this.currentItem.samples;
+    
+      this.taskQueue.queueMicroTask(() => {  
+        samples.forEach(function (sample,index,object) {
+          let inTrolley = ids.find(item => {return sample.id === item.id});
+          if(inTrolley){
+            let element = document.getElementById(sample.id+"checkbox")
+            if(element){
+              console.log("CHECKBOX DISABLED");
+              element.disabled = true;
+            }
           }
-        }
+        });
       });
-    });
+    }
 
   }
 
