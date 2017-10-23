@@ -113,18 +113,37 @@ json{
 		id sampleRequest.pressHouse?.id
 	}
 	shippingOut{
-		status sampleRequest.shippingOut?.status
+		
 		courier sampleRequest.shippingOut?.courier
 		stuartJobId sampleRequest.shippingOut?.stuartJobId
 		startDate sampleRequest.shippingOut?.startDate?.format('yyyy-MMM-dd HH:mm')
 		endDate sampleRequest.shippingOut?.endDate?.format('yyyy-MMM-dd HH:mm')
+
+		//from stuart webhook
+		status 	sampleRequest.shippingOut?.status
+		stuartStatus sampleRequest.shippingOut?.stuartStatus 
+		transportType sampleRequest.shippingOut?.transportType
+		driverStatus sampleRequest.shippingOut?.driverStatus
+		latitude sampleRequest.shippingOut?.latitude
+		longitude sampleRequest.shippingOut?.longitude
+		driverPhone sampleRequest.shippingOut?.driverPhone
+		driverName sampleRequest.shippingOut?.driverName
 	}
 	shippingReturn{
-		status sampleRequest.shippingReturn?.status
 		courier sampleRequest.shippingReturn?.courier
 		stuartJobId sampleRequest.shippingReturn?.stuartJobId
 		startDate sampleRequest.shippingReturn?.startDate?.format('yyyy-MMM-dd HH:mm')
 		endDate sampleRequest.shippingReturn?.endDate?.format('yyyy-MMM-dd HH:mm')
+
+		//from stuart webhook
+		status 	sampleRequest.shippingReturn?.status
+		stuartStatus sampleRequest.shippingReturn?.stuartStatus 
+		transportType sampleRequest.shippingReturn?.transportType
+		driverStatus sampleRequest.shippingReturn?.driverStatus
+		latitude sampleRequest.shippingReturn?.latitude
+		longitude sampleRequest.shippingReturn?.longitude
+		driverPhone sampleRequest.shippingReturn?.driverPhone
+		driverName sampleRequest.shippingReturn?.driverName
 	}
 	requestingUser{
 		id sampleRequest.requestingUser?.id
