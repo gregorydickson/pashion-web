@@ -128,6 +128,8 @@ json{
 		longitude sampleRequest.shippingOut?.longitude
 		driverPhone sampleRequest.shippingOut?.driverPhone
 		driverName sampleRequest.shippingOut?.driverName
+		pickedUpAt sampleRequest.shippingOut?.pickedUpAt
+		deliveredAt sampleRequest.shippingOut?.deliveredAt
 	}
 	shippingReturn{
 		courier sampleRequest.shippingReturn?.courier
@@ -144,6 +146,8 @@ json{
 		longitude sampleRequest.shippingReturn?.longitude
 		driverPhone sampleRequest.shippingReturn?.driverPhone
 		driverName sampleRequest.shippingReturn?.driverName
+		pickedUpAt sampleRequest.shippingReturn?.pickedUpAt
+		deliveredAt sampleRequest.shippingReturn?.deliveredAt
 	}
 	requestingUser{
 		id sampleRequest.requestingUser?.id

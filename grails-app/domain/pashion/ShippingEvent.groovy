@@ -6,11 +6,14 @@ class ShippingEvent {
 	String status
 	Date startDate
 	Date endDate
+
 	String courier
 	String tracking
 	String stuartQuoteId
 	String stuartJobId
 	String stuartStatus
+	Date pickedUpAt
+	Date deliveredAt
 	String stuartJSON
 	String transportType
 	BigDecimal finalAmount

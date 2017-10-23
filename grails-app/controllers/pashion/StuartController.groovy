@@ -44,13 +44,19 @@ class StuartController {
 	*/
 	def update(){
 		if(request.JSON){
+			
 			def update = request.JSON
+			log.info "STUART UPDATE "+update
 			ShippingEvent shippingEvent = ShippingEvent.findByStuartJobId(update.data.id)
 			shippingEvent.status = update.data.status.capitalize()
 			shippingEvent.stuartStatus = update.data.status
 			
-			shippingEvent.transportType = update.data.currentDelivery.driver.transportType
+			shippingEvent.transportType = update.data.currentDelivery.driver.transportType.code
 			shippingEvent.driverStatus = update.data.currentDelivery.driver.status
+			if(update.data.currentDelivery.driver.status == "picking" && shippingEvent.pickedUpAt == null)
+				shippingEvent.pickedUpAt = new Date()
+			if(update.data.currentDeliver.driver.status == "delivered" && shippingEvent.deliveredAt == null)
+				shippingEvent.deliveredAt = new Date()
 			shippingEvent.latitude = new BigDecimal(update.data.currentDelivery.driver.latitude)
 			shippingEvent.longitude = new BigDecimal(update.data.currentDelivery.driver.longitude)
 			shippingEvent.driverPhone = update.data.currentDelivery.driver.phone
