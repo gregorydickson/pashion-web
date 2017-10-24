@@ -14,6 +14,8 @@ class ShippingEvent {
 	String stuartStatus
 	Date pickedUpAt
 	Date deliveredAt
+	Date etaToDestination
+	Date etaToOrigin
 	String stuartJSON
 	String transportType
 	BigDecimal finalAmount
@@ -23,6 +25,7 @@ class ShippingEvent {
 	String driverPhone
 	String driverName
 	String driverStatus
+	Boolean pickArrivalNotification = false
 	
 
 	//auto fields
