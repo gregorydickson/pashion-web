@@ -49,7 +49,8 @@ class StuartController {
 			log.info "STUART UPDATE "+update
 			try{
 				ShippingEvent.withTransaction{
-					ShippingEvent shippingEvent = ShippingEvent.findByStuartJobId(update.data.id)
+					
+					ShippingEvent shippingEvent = ShippingEvent.get(update.data.job.jobReference.toInteger())
 					if(shippingEvent){
 						shippingEvent.lock()
 						shippingEvent.status = update.data.status.capitalize()
