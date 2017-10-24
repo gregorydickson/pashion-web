@@ -2,6 +2,7 @@ package pashion
 
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+import java.text.SimpleDateFormat
 import grails.converters.JSON
 import groovy.time.*
 import java.util.TimeZone
@@ -49,13 +50,18 @@ class StuartController {
 			log.info "STUART UPDATE "+update
 			try{
 				ShippingEvent.withTransaction{
-					
+
 					ShippingEvent shippingEvent = ShippingEvent.get(update.data.job.jobReference.toInteger())
 					if(shippingEvent){
 						shippingEvent.lock()
 						shippingEvent.status = update.data.status.capitalize()
 						shippingEvent.stuartStatus = update.data.status
 						
+						DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+						
+						shippingEvent.etaToDestination = df1.parse(update.data.job.currentDelivery.etaToDestination)
+						shippingEvent.etaToOrigin = df1.parse(update.data.job.currentDelivery.etaToOrigin)
+
 						shippingEvent.transportType = update.data.job.currentDelivery.driver.transportType.code
 						shippingEvent.driverStatus = update.data.job.currentDelivery.driver.status
 						if(update.data.job.currentDelivery.driver.status == "picking" && shippingEvent.pickedUpAt == null)
