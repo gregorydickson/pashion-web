@@ -51,6 +51,33 @@ class CachingService implements JsonViewTest {
         pubnub = new PubNub(pnConfiguration)
     }
 
+    @Selector('shippingEventAlmostPicking')
+    void shippingEventAlmostPicking(Object data){
+        log.info "shippingEventAlmostPicking"
+        ShippingEvent event = ShippingEvent.get(data.shippingEventId)
+        def channel
+        
+        if(event.sampleRequest.prAgency){
+            channel = event.sampleRequest.prAgency.name + '_courier'
+        } else if(event.sampleRequest.brand){
+            channel = event.sampleRequest.brand.brand + '_courier'
+        }
+
+        log.info "cache service shippingEvent AlmostPicking on:" + channel
+        pubnub.publish()
+            .message("Courier Arriving For Booking "+event.sampleRequest.id)
+            .channel(channel)
+            .async(new PNCallback<PNPublishResult>() {
+                @Override
+                public void onResponse(PNPublishResult result, PNStatus status) {
+                    log.info "pubnub invalidateConnectionsPubNub publish status code: " + Integer.toString(status.statusCode)
+                    if (status.error) info.log "pubNub.publish Error: " + status.errorData.information
+                    else if (result.hasProperty("timetoken") && result.timetoken != null) log.info "pubnub publish success, timetoken: " + Long.toString(result.timetoken)
+                }
+            }) 
+
+    }
+
     @Selector('connectionsUpdate')
     void invalidateConnectionsPubNub(Object data){
         log.info "invalidateConnectionsPubNub "

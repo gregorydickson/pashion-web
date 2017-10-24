@@ -69,7 +69,7 @@ class StuartController {
 						if(update.data.job.currentDelivery.driver.status == "delivered" && shippingEvent.deliveredAt == null)
 							shippingEvent.deliveredAt = new Date()
 						if(update.data.job.currentDelivery.driver.status == "almost_picking" && (!shippingEvent.pickArrivalNotification)){
-							//TODO: add notify here to send Toastr to relevant party
+							notify "shippingEventAlmostPicking",[shippingEventId:shippingEvent.id]
 							shippingEvent.pickArrivalNotification = true
 						}
 						shippingEvent.latitude = new BigDecimal(update.data.job.currentDelivery.driver.latitude)
