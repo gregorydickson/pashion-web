@@ -183,8 +183,8 @@ class EmailService {
         sampleRequests.each{SampleRequest sr ->
             
             
-            def  theEmail = sr.requestingUser.email
-            def  secondEmail = sr.approvingUser.email
+            def  theEmail = sr?.requestingUser?.email
+            def  secondEmail = sr?.approvingUser?.email
             try {
                 def messageTxt = "<br/>" 
                 log.info "email notificaiton start message: " + sr
@@ -279,8 +279,8 @@ class EmailService {
         sampleRequests.each{SampleRequest sr ->
             
             
-            def  theEmail = sr.requestingUser.email
-            def  secondEmail = sr.approvingUser.email
+            def  theEmail = sr.requestingUser?.email
+            def  secondEmail = sr.approvingUser?.email
             try {
                 def messageTxt = "<br/>" 
                 log.info "email notificaiton start message: " + sr
@@ -337,20 +337,30 @@ class EmailService {
                 String encoded = new String(x.encode(messageTxt.getBytes()));
 
                 SendGrid sg = new SendGrid("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");
-                Request request = new Request()
-        
-                request.method = Method.POST
-                request.endpoint = "mail/send"
-                request.body = mail.build()
-                Response response = sg.api(request)
-                log.info response.statusCode.toString()
-                
-                request = new Request()
-                request.method = Method.POST
-                request.endpoint = "mail/send"
-                request.body = mail2.build()
-                response = sg.api(request)
-                log.info response.statusCode.toString()
+                if(theEmail){
+                    try{
+                        Request request = new Request()
+                        request.method = Method.POST
+                        request.endpoint = "mail/send"
+                        request.body = mail.build()
+                        Response response = sg.api(request)
+                        log.info response.statusCode.toString()
+                    } catch(Exception exEmail1){
+                        log.error "Exception with first email Return Notify ", exEmail1
+                    }
+                }
+                if(secondEmail){
+                    try{
+                        Request request = new Request()
+                        request.method = Method.POST
+                        request.endpoint = "mail/send"
+                        request.body = mail2.build()
+                        Response response = sg.api(request)
+                        log.info response.statusCode.toString()
+                    } catch(Exception exEmail2){
+                        log.error "Exception with second email Return Notify ", exEmail2
+                    }
+                }
 
                 sr.courierReturnNotification = true
                 sr.save(flush:true, failOnError:true)
