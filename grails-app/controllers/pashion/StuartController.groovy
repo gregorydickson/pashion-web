@@ -47,24 +47,35 @@ class StuartController {
 			
 			def update = request.JSON
 			log.info "STUART UPDATE "+update
-			ShippingEvent shippingEvent = ShippingEvent.findByStuartJobId(update.data.id)
-			if(shippingEvent){
-				shippingEvent.status = update.data.status.capitalize()
-				shippingEvent.stuartStatus = update.data.status
-				
-				shippingEvent.transportType = update.data.job.currentDelivery.driver.transportType.code
-				shippingEvent.driverStatus = update.data.job.currentDelivery.driver.status
-				if(update.data.job.currentDelivery.driver.status == "picking" && shippingEvent.pickedUpAt == null)
-					shippingEvent.pickedUpAt = new Date()
-				if(update.data.job.currentDelivery.driver.status == "delivered" && shippingEvent.deliveredAt == null)
-					shippingEvent.deliveredAt = new Date()
-				shippingEvent.latitude = new BigDecimal(update.data.job.currentDelivery.driver.latitude)
-				shippingEvent.longitude = new BigDecimal(update.data.job.currentDelivery.driver.longitude)
-				shippingEvent.driverPhone = update.data.job.currentDelivery.driver.phone
-				shippingEvent.driverName = update.data.job.currentDelivery.driver.firstname + " " + update.data.job.currentDelivery.driver.lastname
-				shippingEvent.save(failOnError:true,flush:true)
-
-
+			try{
+				ShippingEvent.withTransaction{
+					ShippingEvent shippingEvent = ShippingEvent.findByStuartJobId(update.data.id)
+					if(shippingEvent){
+						shippingEvent.lock()
+						shippingEvent.status = update.data.status.capitalize()
+						shippingEvent.stuartStatus = update.data.status
+						
+						shippingEvent.transportType = update.data.job.currentDelivery.driver.transportType.code
+						shippingEvent.driverStatus = update.data.job.currentDelivery.driver.status
+						if(update.data.job.currentDelivery.driver.status == "picking" && shippingEvent.pickedUpAt == null)
+							shippingEvent.pickedUpAt = new Date()
+						if(update.data.job.currentDelivery.driver.status == "delivered" && shippingEvent.deliveredAt == null)
+							shippingEvent.deliveredAt = new Date()
+						if(update.data.job.currentDelivery.driver.status == "almost_picking" && (!shippingEvent.pickArrivalNotification)){
+							//TODO: add notify here to send Toastr to relevant party
+							shippingEvent.pickArrivalNotification = true
+						}
+						shippingEvent.latitude = new BigDecimal(update.data.job.currentDelivery.driver.latitude)
+						shippingEvent.longitude = new BigDecimal(update.data.job.currentDelivery.driver.longitude)
+						shippingEvent.driverPhone = update.data.job.currentDelivery.driver.phone
+						shippingEvent.driverName = update.data.job.currentDelivery.driver.firstname + " " + update.data.job.currentDelivery.driver.lastname
+						shippingEvent.save(failOnError:true,flush:true)
+						log.info "stuart webhook update complete for booking:"+shippingEvent?.sampleRequest?.id
+					}
+				}
+			} catch (Exception e){
+				log.error "Exception with Stuart Webhook update",e
+				log.error e.printStackTrace()
 			}
 		}
 		response.status = 200
