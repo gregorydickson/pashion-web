@@ -241,20 +241,32 @@ class EmailService {
                 String encoded = new String(x.encode(messageTxt.getBytes()));
 
                 SendGrid sg = new SendGrid("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");
-                Request request = new Request()
-        
-                request.method = Method.POST
-                request.endpoint = "mail/send"
-                request.body = mail.build()
-                Response response = sg.api(request)
-                log.info response.statusCode.toString()
                 
-                request = new Request()
-                request.method = Method.POST
-                request.endpoint = "mail/send"
-                request.body = mail2.build()
-                response = sg.api(request)
-                log.info response.statusCode.toString()
+                if(theEmail){
+                    try{
+                        Request request = new Request()
+                        request.method = Method.POST
+                        request.endpoint = "mail/send"
+                        request.body = mail.build()
+                        Response response = sg.api(request)
+                        log.info response.statusCode.toString()
+                    } catch(Exception exEmail1){
+                            log.error "Exception with first email Out Notify ", exEmail1
+                    }
+                }
+
+                if(secondEmail){
+                    try{
+                        request = new Request()
+                        request.method = Method.POST
+                        request.endpoint = "mail/send"
+                        request.body = mail2.build()
+                        response = sg.api(request)
+                        log.info response.statusCode.toString()
+                    } catch(Exception exEmail2){
+                            log.error "Exception with second email Out Notify ", exEmail2
+                    }
+                }
 
                 sr.courierOutNotification = true
                 sr.save(flush:true, failOnError:true)
