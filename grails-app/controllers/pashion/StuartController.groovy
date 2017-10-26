@@ -57,10 +57,11 @@ class StuartController {
 						shippingEvent.status = update.data.status.capitalize()
 						shippingEvent.stuartStatus = update.data.status
 						
-						DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
-						
-						shippingEvent.etaToDestination = df1.parse(update.data.job.currentDelivery.etaToDestination)
-						shippingEvent.etaToOrigin = df1.parse(update.data.job.currentDelivery.etaToOrigin)
+						SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+						if(update?.data?.job?.currentDelivery?.etaToDestination)
+							shippingEvent.etaToDestination = df1.parse(update.data.job.currentDelivery.etaToDestination)
+						if(update?.data?.job?.currentDelivery?.etaToOrigin)
+							shippingEvent.etaToOrigin = df1.parse(update.data.job.currentDelivery.etaToOrigin)
 
 						shippingEvent.transportType = update.data.job.currentDelivery.driver.transportType.code
 						shippingEvent.driverStatus = update.data.job.currentDelivery.driver.status
