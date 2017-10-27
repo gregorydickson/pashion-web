@@ -30,7 +30,7 @@ class AdminController {
 
     def removeBrandBookings() {
     	// add the name of the brand here
-    	Brand brand = Brand.findByNameIlike("Huishan Zhang") 
+    	Brand brand = Brand.findByNameIlike("") 
         if(brand){
             SampleRequest.withTransaction{
                 List bookings = SampleRequest.findAllByBrand(brand)
