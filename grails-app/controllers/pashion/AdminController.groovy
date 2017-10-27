@@ -30,22 +30,27 @@ class AdminController {
 
     def removeBrandBookings() {
     	// add the name of the brand here
-    	Brand brand = Brand.findByNameIlike("") 
+    	Brand brand = Brand.findByNameIlike("Huishan Zhang") 
+        if(brand){
+            SampleRequest.withTransaction{
+                List bookings = SampleRequest.findAllByBrand(brand)
+                
+                bookings.each{ booking ->
+                	def ids = booking.searchableItems.collect{it.id}
+                	ids.each{booking.removeFromSearchableItems(SearchableItem.get(it))}
+                	ids = booking.searchableItemsProposed.collect{it.id}
+                	ids.each{booking.removeFromSearchableItemsProposed(SearchableItem.get(it))}
+                	ids = booking.searchableItemsDenied.collect{it.id}
+                	ids.each{booking.removeFromSearchableItemsDenied(SearchableItem.get(it))}
+                }
 
-        List bookings = SampleRequest.findAllByBrand(brand)
-        
-        bookings.each{ booking ->
-        	def ids = booking.searchableItems.collect{it.id}
-        	ids.each{booking.removeFromSearchableItems(SearchableItem.get(it))}
-        	ids = booking.searchableItemsProposed.collect{it.id}
-        	ids.each{booking.removeFromSearchableItemsProposed(SearchableItem.get(it))}
-        	ids = booking.searchableItemsDenied.collect{it.id}
-        	ids.each{booking.removeFromSearchableItemsDenied(SearchableItem.get(it))}
+                bookings*.delete(flush:true,failOnError:true)
+                render "removed bookings for:"+brand.name
+            }
+        } else{
+            render "Brand not found"
         }
-
-        bookings*.delete(flush:true,failOnError:true)
-        render "removed bookings for:"+brand.name
-        return
+        
         
     }
 
