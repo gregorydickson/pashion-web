@@ -47,40 +47,43 @@ class StuartController {
 		if(request.JSON){
 			
 			def update = request.JSON
+			ShippingEvent shippingEvent
 			log.info "STUART UPDATE "+update
 			try{
-				ShippingEvent.withTransaction{
+				if(update?.data?.job?.jobReference){
+					ShippingEvent.withTransaction{
+						shippingEvent = ShippingEvent.get(update.data.job.jobReference.toInteger())
+						if(shippingEvent){
+							shippingEvent.lock()
+							shippingEvent.status = update.data.status.capitalize()
+							shippingEvent.stuartStatus = update.data.status
+							
+							SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
+							if(update?.data?.job?.currentDelivery?.etaToDestination)
+								shippingEvent.etaToDestination = df1.parse(update.data.job.currentDelivery.etaToDestination)
+							if(update?.data?.job?.currentDelivery?.etaToOrigin)
+								shippingEvent.etaToOrigin = df1.parse(update.data.job.currentDelivery.etaToOrigin)
 
-					ShippingEvent shippingEvent = ShippingEvent.get(update.data.job.jobReference.toInteger())
-					if(shippingEvent){
-						shippingEvent.lock()
-						shippingEvent.status = update.data.status.capitalize()
-						shippingEvent.stuartStatus = update.data.status
-						
-						SimpleDateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
-						if(update?.data?.job?.currentDelivery?.etaToDestination)
-							shippingEvent.etaToDestination = df1.parse(update.data.job.currentDelivery.etaToDestination)
-						if(update?.data?.job?.currentDelivery?.etaToOrigin)
-							shippingEvent.etaToOrigin = df1.parse(update.data.job.currentDelivery.etaToOrigin)
-
-						shippingEvent.transportType = update.data.job.currentDelivery.driver.transportType.code
-						shippingEvent.driverStatus = update.data.job.currentDelivery.driver.status
-						if(update.data.job.currentDelivery.driver.status == "picking" && shippingEvent.pickedUpAt == null)
-							shippingEvent.pickedUpAt = new Date()
-						if(update.data.job.currentDelivery.driver.status == "delivered" && shippingEvent.deliveredAt == null)
-							shippingEvent.deliveredAt = new Date()
-						if(update.data.job.currentDelivery.driver.status == "almost_picking" && (!shippingEvent.pickArrivalNotification)){
-							notify "shippingEventAlmostPicking",[shippingEventId:shippingEvent.id]
-							shippingEvent.pickArrivalNotification = true
+							shippingEvent.transportType = update.data.job.currentDelivery.driver.transportType.code
+							shippingEvent.driverStatus = update.data.job.currentDelivery.driver.status
+							if(update.data.job.currentDelivery.driver.status == "picking" && shippingEvent.pickedUpAt == null)
+								shippingEvent.pickedUpAt = new Date()
+							if(update.data.job.currentDelivery.driver.status == "delivered" && shippingEvent.deliveredAt == null)
+								shippingEvent.deliveredAt = new Date()
+							if(update.data.job.currentDelivery.driver.status == "almost_picking" && (!shippingEvent.pickArrivalNotification)){
+								notify "shippingEventAlmostPicking",[shippingEventId:shippingEvent.id]
+								shippingEvent.pickArrivalNotification = true
+							}
+							shippingEvent.latitude = new BigDecimal(update.data.job.currentDelivery.driver.latitude)
+							shippingEvent.longitude = new BigDecimal(update.data.job.currentDelivery.driver.longitude)
+							shippingEvent.driverPhone = update.data.job.currentDelivery.driver.phone
+							shippingEvent.driverName = update.data.job.currentDelivery.driver.firstname + " " + update.data.job.currentDelivery.driver.lastname
+							shippingEvent.save(failOnError:true,flush:true)
+							log.info "stuart webhook update complete for booking:"+shippingEvent?.sampleRequest?.id
 						}
-						shippingEvent.latitude = new BigDecimal(update.data.job.currentDelivery.driver.latitude)
-						shippingEvent.longitude = new BigDecimal(update.data.job.currentDelivery.driver.longitude)
-						shippingEvent.driverPhone = update.data.job.currentDelivery.driver.phone
-						shippingEvent.driverName = update.data.job.currentDelivery.driver.firstname + " " + update.data.job.currentDelivery.driver.lastname
-						shippingEvent.save(failOnError:true,flush:true)
-						log.info "stuart webhook update complete for booking:"+shippingEvent?.sampleRequest?.id
-					}
+					} 
 				}
+
 			} catch (Exception e){
 				log.error "Exception with Stuart Webhook update",e
 				log.error e.printStackTrace()
